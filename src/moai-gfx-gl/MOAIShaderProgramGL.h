@@ -12,7 +12,7 @@
 #define		WEBGL_PREPROC		"precision mediump int;\n precision mediump float;\n"
 
 class MOAIShaderGL;
-class MOAITextureBaseGL;
+class MOAITextureGL;
 
 //================================================================//
 // MOAIShaderProgramGlobalGL
@@ -44,7 +44,7 @@ private:
 
 	u32							mName;
 	ZLIndex						mUnit;
-	ZLStrongPtr < MOAITextureBaseGL >	mTexture;
+	ZLStrongPtr < MOAITextureGL >	mTexture;
 
 public:
 
@@ -136,8 +136,8 @@ public:
 	void				ReserveTextures				( ZLSize nTextures );
 	void				ReserveUniforms				( ZLSize nUniforms );
 	void				SetGlobal					( ZLIndex idx, u32 globalID, ZLIndex uniformID, ZLIndex index );
-	void				SetTexture					( ZLIndex idx, u32 name, ZLIndex unit, MOAITextureBaseGL* fallback );
-	void				SetTexture					( ZLIndex idx, MOAITextureBaseGL* texture, ZLIndex unit );
+	void				SetTexture					( ZLIndex idx, u32 name, ZLIndex unit, MOAITextureGL* fallback );
+	void				SetTexture					( ZLIndex idx, MOAITextureGL* texture, ZLIndex unit );
 	void				SetVertexAttribute			( u32 idx, cc8* attribute );
 						MOAIShaderProgramGL			();
 						~MOAIShaderProgramGL		();

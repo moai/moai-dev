@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIABSTRACTVERTEXFORMATGL_H
-#define	MOAIABSTRACTVERTEXFORMATGL_H
+#ifndef	MOAIVERTEXFORMAT_H
+#define	MOAIVERTEXFORMAT_H
 
 class ZLGfx;
 
@@ -22,12 +22,12 @@ public:
 };
 
 //================================================================//
-// MOAIAbstractVertexFormat
+// MOAIVertexFormat
 //================================================================//
-/**	@lua	MOAIAbstractVertexFormat
+/**	@lua	MOAIVertexFormat
 	@text	Vertex format class.
 */
-class MOAIAbstractVertexFormat :
+class MOAIVertexFormat :
 	public virtual MOAILuaObject {
 public:
 
@@ -50,7 +50,7 @@ protected:
 
 	friend class MOAIGfxPipelineClerkGL;
 	friend class ZLGfxStateGPUCacheGL;
-	friend class MOAIAbstractVertexArray;
+	friend class MOAIVertexArray;
 	
 	static const u32 COLOR_SIZE				= 4;
 	static const u32 NORMAL_SIZE			= 3;
@@ -174,8 +174,8 @@ public:
 	void							WriteNormal						( ZLStream& stream, ZLIndex idx, float x, float y, float z ) const;
 	void							WriteUV							( ZLStream& stream, ZLIndex idx, float x, float y, float z ) const;
 	
-									MOAIAbstractVertexFormat		();
-									~MOAIAbstractVertexFormat		();
+									MOAIVertexFormat		();
+									~MOAIVertexFormat		();
 	
 	//----------------------------------------------------------------//
 	inline void* GetAttributeAddress ( const MOAIVertexAttribute& attribute, void* vertexBuffer, u32 vtxIdx ) const {

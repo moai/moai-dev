@@ -2,33 +2,33 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx/MOAIAbstractShaderUniformSchema.h>
+#include <moai-gfx/MOAIShaderUniformSchema.h>
 
 //================================================================//
-// MOAIAbstractShaderUniformSchema
+// MOAIShaderUniformSchema
 //================================================================//
 
 //----------------------------------------------------------------//
-u32 MOAIAbstractShaderUniformSchema::GetAttributeID ( u32 uniformID, u32 index ) const {
+u32 MOAIShaderUniformSchema::GetAttributeID ( u32 uniformID, u32 index ) const {
 
 	return ( uniformID * MAX_UNIFORM_ARRAY_SIZE ) + index;
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformHandle MOAIAbstractShaderUniformSchema::GetUniformHandle ( void* buffer, ZLIndex uniformID ) const {
+MOAIShaderUniformHandle MOAIShaderUniformSchema::GetUniformHandle ( void* buffer, ZLIndex uniformID ) const {
 
 	return this->ZLAbstractShaderUniformSchema_GetUniformHandle ( buffer, uniformID );
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformHandle MOAIAbstractShaderUniformSchema::GetUniformHandle ( void* buffer, ZLIndex uniformID, ZLIndex index ) const {
+MOAIShaderUniformHandle MOAIShaderUniformSchema::GetUniformHandle ( void* buffer, ZLIndex uniformID, ZLIndex index ) const {
 
 	MOAIShaderUniformHandle uniform = this->GetUniformHandle ( buffer, uniformID );
 	return uniform.IsValid () ? uniform.Offset ( index ) : uniform;
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformHandle MOAIAbstractShaderUniformSchema::GetUniformHandleForAttributeID ( void* buffer, ZLAttrID attrID ) const {
+MOAIShaderUniformHandle MOAIShaderUniformSchema::GetUniformHandleForAttributeID ( void* buffer, ZLAttrID attrID ) const {
 
 	// TODO: check for overflow
 
@@ -41,11 +41,9 @@ MOAIShaderUniformHandle MOAIAbstractShaderUniformSchema::GetUniformHandleForAttr
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractShaderUniformSchema::MOAIAbstractShaderUniformSchema () {
-
-	RTTI_SINGLE ( RTTIBase )
+MOAIShaderUniformSchema::MOAIShaderUniformSchema () {
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractShaderUniformSchema::~MOAIAbstractShaderUniformSchema () {
+MOAIShaderUniformSchema::~MOAIShaderUniformSchema () {
 }

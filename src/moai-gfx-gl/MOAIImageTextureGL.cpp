@@ -44,7 +44,7 @@ MOAIImageTextureGL::MOAIImageTextureGL () {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIImage )
-		RTTI_EXTEND ( MOAITextureBaseGL )
+		RTTI_EXTEND ( MOAITextureGL )
 	RTTI_END
 	
 	this->mDebugName = "(stacktrace from MOAIImageTextureGL)";
@@ -57,13 +57,13 @@ MOAIImageTextureGL::~MOAIImageTextureGL () {
 //----------------------------------------------------------------//
 void MOAIImageTextureGL::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIImage::RegisterLuaClass ( state );
-	MOAITextureBaseGL::RegisterLuaClass ( state );
+	MOAITextureGL::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIImageTextureGL::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIImage::RegisterLuaFuncs ( state );
-	MOAITextureBaseGL::RegisterLuaFuncs ( state );
+	MOAITextureGL::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {
 		{ "invalidate",					_updateRegion }, // TODO: deprecate
@@ -146,5 +146,5 @@ bool MOAIImageTextureGL::ZLAbstractGfxResource_OnGPUUpdate () {
 		result = this->UpdateTextureFromImage ( *this, this->mRegion );
 		this->mRegion.Clear ();
 	}
-	return result && MOAITextureBaseGL::ZLAbstractGfxResource_OnGPUUpdate ();
+	return result && MOAITextureGL::ZLAbstractGfxResource_OnGPUUpdate ();
 }

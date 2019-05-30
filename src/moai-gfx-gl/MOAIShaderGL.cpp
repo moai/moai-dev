@@ -92,7 +92,7 @@ bool MOAIShaderGL::HasDirtyUniforms () {
 MOAIShaderGL::MOAIShaderGL () {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIAbstractShader )
+		RTTI_EXTEND ( MOAIShader )
 		RTTI_EXTEND ( MOAINode )
 	RTTI_END
 }

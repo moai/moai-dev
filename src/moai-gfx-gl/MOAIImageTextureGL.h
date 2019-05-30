@@ -4,7 +4,7 @@
 #ifndef	MOAIIMAGETEXTUREGL_H
 #define	MOAIIMAGETEXTUREGL_H
 
-#include <moai-gfx-gl/MOAITextureBaseGL.h>
+#include <moai-gfx-gl/MOAITextureGL.h>
 
 //================================================================//
 // MOAIImageTextureGL
@@ -17,7 +17,7 @@
 */
 class MOAIImageTextureGL :
 	public MOAIImage,
-	public MOAITextureBaseGL {
+	public MOAITextureGL {
 private:
 
 	ZLIntRect	mRegion;

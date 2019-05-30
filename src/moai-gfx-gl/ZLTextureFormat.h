@@ -4,7 +4,7 @@
 #ifndef	ZLTEXTUREFORMAT_H
 #define	ZLTEXTUREFORMAT_H
 
-class MOAITextureBaseGL;
+class MOAITextureGL;
 
 //================================================================//
 // ZLTextureInfo
@@ -24,13 +24,13 @@ class ZLTextureFormat :
 protected:
 
 	//----------------------------------------------------------------//
-	void				CleanupTexture				( MOAITextureBaseGL& texture );
-	void				SetGLTexture				( MOAITextureBaseGL& texture, const ZLGfxHandle& glTexture, int internalFormat, int pixelType, size_t textureSize );
+	void				CleanupTexture				( MOAITextureGL& texture );
+	void				SetGLTexture				( MOAITextureGL& texture, const ZLGfxHandle& glTexture, int internalFormat, int pixelType, size_t textureSize );
 
 public:
 
 	//----------------------------------------------------------------//
-	virtual bool		CreateTexture				( MOAITextureBaseGL& texture, const void* data, size_t size ) = 0;
+	virtual bool		CreateTexture				( MOAITextureGL& texture, const void* data, size_t size ) = 0;
 	virtual bool		GetTextureInfo				( ZLStream& stream, ZLTextureInfo& info ) = 0;
 						ZLTextureFormat				();
 	virtual				~ZLTextureFormat			();

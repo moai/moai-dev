@@ -172,7 +172,7 @@ MOAIIndexBufferGL::MOAIIndexBufferGL () :
 	mIndexSize ( 2 ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIAbstractIndexBuffer )
+		RTTI_EXTEND ( MOAIIndexBuffer )
 		RTTI_EXTEND ( MOAIAbstractGfxBufferGL )
 	RTTI_END
 	
@@ -202,13 +202,13 @@ void MOAIIndexBufferGL::PrintIndices () {
 
 //----------------------------------------------------------------//
 void MOAIIndexBufferGL::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAIAbstractIndexBuffer::RegisterLuaClass ( state );
+	MOAIIndexBuffer::RegisterLuaClass ( state );
 	MOAIAbstractGfxBufferGL::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIIndexBufferGL::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAIAbstractIndexBuffer::RegisterLuaFuncs ( state );
+	MOAIIndexBuffer::RegisterLuaFuncs ( state );
 	MOAIAbstractGfxBufferGL::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {

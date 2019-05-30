@@ -3,7 +3,7 @@
 
 #include "pch.h"
 
-#include <moai-gfx/MOAIAbstractTexture.h>
+#include <moai-gfx/MOAITexture.h>
 #include <moai-gfx/MOAILight.h>
 #include <moai-gfx/MOAIMaterial.h>
 #include <moai-gfx/MOAIMaterialMgr.h>
@@ -16,7 +16,7 @@
 void MOAIMaterial::Clear () {
 
 	this->ClearNamedGlobalList < MOAILight >( this->mLights );
-	this->ClearNamedGlobalList < MOAIAbstractTexture >( this->mTextures );
+	this->ClearNamedGlobalList < MOAITexture >( this->mTextures );
 	
 	this->MOAIMaterialBase::Clear ();
 }
@@ -29,17 +29,17 @@ MOAILight* MOAIMaterial::GetLight ( u32 name ) {
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractTexture* MOAIMaterial::GetTexture () {
+MOAITexture* MOAIMaterial::GetTexture () {
 
 	return this->MOAIMaterialBase::GetTexture ();
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractTexture* MOAIMaterial::GetTexture ( u32 name ) {
+MOAITexture* MOAIMaterial::GetTexture ( u32 name ) {
 
 	if ( name < MOAIMaterialMgr::MAX_GLOBAL_TEXTURES ) {
-		MOAIMaterialNamedGlobal < MOAIAbstractTexture >* global = this->FindNamedGlobal < MOAIAbstractTexture >( this->mTextures, name );
-		return global ? ( MOAIAbstractTexture* )global->mValue : 0;
+		MOAIMaterialNamedGlobal < MOAITexture >* global = this->FindNamedGlobal < MOAITexture >( this->mTextures, name );
+		return global ? ( MOAITexture* )global->mValue : 0;
 	}
 	return this->MOAIMaterialBase::GetTexture ();
 }
@@ -77,7 +77,7 @@ void MOAIMaterial::SetTexture () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterial::SetTexture ( MOAIAbstractTexture* texture ) {
+void MOAIMaterial::SetTexture ( MOAITexture* texture ) {
 
 	this->MOAIMaterialBase::SetTexture ( texture );
 }
@@ -89,9 +89,9 @@ void MOAIMaterial::SetTexture ( u32 name ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterial::SetTexture ( u32 name, MOAIAbstractTexture* texture ) {
+void MOAIMaterial::SetTexture ( u32 name, MOAITexture* texture ) {
 
 	if ( name < MOAIMaterialMgr::MAX_GLOBAL_TEXTURES ) {
-		this->SetNamedGlobal < MOAIAbstractTexture >( this->mTextures, name, texture );
+		this->SetNamedGlobal < MOAITexture >( this->mTextures, name, texture );
 	}
 }

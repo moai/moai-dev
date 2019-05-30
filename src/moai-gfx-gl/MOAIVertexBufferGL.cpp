@@ -119,7 +119,7 @@ int MOAIVertexBufferGL::_printVertices ( lua_State* L ) {
 MOAIVertexBufferGL::MOAIVertexBufferGL () {
 		
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIAbstractVertexBuffer )
+		RTTI_EXTEND ( MOAIVertexBuffer )
 		RTTI_EXTEND ( MOAIAbstractGfxBufferGL )
 	RTTI_END
 	
@@ -143,13 +143,13 @@ void MOAIVertexBufferGL::PrintVertices ( MOAIVertexFormatGL& vertexFormat ) {
 
 //----------------------------------------------------------------//
 void MOAIVertexBufferGL::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAIAbstractVertexBuffer::RegisterLuaClass ( state );
+	MOAIVertexBuffer::RegisterLuaClass ( state );
 	MOAIAbstractGfxBufferGL::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIVertexBufferGL::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAIAbstractVertexBuffer::RegisterLuaFuncs ( state );
+	MOAIVertexBuffer::RegisterLuaFuncs ( state );
 	MOAIAbstractGfxBufferGL::RegisterLuaFuncs ( state );
 	
 	luaL_Reg regTable [] = {

@@ -15,7 +15,7 @@ class MOAIVertexBufferGL;
 class MOAIVertexFormatGL;
 class MOAIAbstractGfxResourceGL;
 class MOAIVertexBufferWithFormatGL;
-class MOAITextureBaseGL;
+class MOAITextureGL;
 
 //================================================================//
 // MOAIGfxStateGPUCacheFrameGL
@@ -50,7 +50,7 @@ protected:
 
 	ZLRect									mViewRect;
 	
-	ZLLeanArray < ZLStrongPtr < MOAITextureBaseGL > >		mTextureUnits;
+	ZLLeanArray < ZLStrongPtr < MOAITextureGL > >		mTextureUnits;
 	
 	//----------------------------------------------------------------//
 	void			Clear							();
@@ -106,7 +106,7 @@ protected:
 
 	// don't think these need to be lua shared pointers...
 	ZLStrongPtr < MOAIFrameBufferGL >			mDefaultFrameBuffer;
-	ZLStrongPtr < MOAITextureBaseGL >			mDefaultTexture;
+	ZLStrongPtr < MOAITextureGL >			mDefaultTexture;
 
 	ZLSharedConstBuffer*					mBoundIdxBuffer;
 	ZLSharedConstBuffer*					mBoundVtxBuffer;
@@ -124,7 +124,7 @@ protected:
 	void			FlushPenWidth					( float penWidth );
 	void			FlushScissorRect				( bool scissorEnabled, ZLRect rect );
 	void			FlushShader						( MOAIShaderGL* shader );
-	void			FlushTexture					( ZLIndex textureUnit, MOAITextureBaseGL* texture );
+	void			FlushTexture					( ZLIndex textureUnit, MOAITextureGL* texture );
 	void			FlushVertexArray				( MOAIVertexArrayGL* vtxArray );
 	void			FlushVertexBuffer				( MOAIVertexBufferGL* buffer );
 	void			FlushVertexFormat				( MOAIVertexFormatGL* vtxFormat );
@@ -146,11 +146,11 @@ protected:
 	MOAIBlendMode			ZLAbstractGPU_GetBlendMode				() const;
 	u32						ZLAbstractGPU_GetBufferHeight			() const;
 	u32						ZLAbstractGPU_GetBufferWidth			() const;
-	MOAIAbstractFrameBuffer*		ZLAbstractGPU_GetCurrentFrameBuffer		();
-	MOAIAbstractShader*		ZLAbstractGPU_GetCurrentShader			();
-	MOAIAbstractVertexFormat*		ZLAbstractGPU_GetCurrentVtxFormat		();
-	MOAIAbstractFrameBuffer*		ZLAbstractGPU_GetDefaultFrameBuffer		();
-	MOAIAbstractTexture*	ZLAbstractGPU_GetDefaultTexture			();
+	MOAIFrameBuffer*		ZLAbstractGPU_GetCurrentFrameBuffer		();
+	MOAIShader*		ZLAbstractGPU_GetCurrentShader			();
+	MOAIVertexFormat*		ZLAbstractGPU_GetCurrentVtxFormat		();
+	MOAIFrameBuffer*		ZLAbstractGPU_GetDefaultFrameBuffer		();
+	MOAITexture*	ZLAbstractGPU_GetDefaultTexture			();
 	bool					ZLAbstractGPU_GetDepthMask				() const;
 	float					ZLAbstractGPU_GetViewHeight				() const;
 	ZLRect					ZLAbstractGPU_GetViewRect				() const;
@@ -161,21 +161,21 @@ protected:
 	void					ZLAbstractGPU_SetBlendMode				( int srcFactor, int dstFactor, int equation );
 	void					ZLAbstractGPU_SetCullFunc				();
 	void					ZLAbstractGPU_SetCullFunc				( int cullFunc );
-	void					ZLAbstractGPU_SetDefaultFrameBuffer		( MOAIAbstractFrameBuffer* frameBuffer );
-	void					ZLAbstractGPU_SetDefaultTexture			( MOAIAbstractTexture* texture );
+	void					ZLAbstractGPU_SetDefaultFrameBuffer		( MOAIFrameBuffer* frameBuffer );
+	void					ZLAbstractGPU_SetDefaultTexture			( MOAITexture* texture );
 	void					ZLAbstractGPU_SetDepthFunc				();
 	void					ZLAbstractGPU_SetDepthFunc				( int depthFunc );
 	void					ZLAbstractGPU_SetDepthMask				( bool depthMask );
-	bool					ZLAbstractGPU_SetFrameBuffer			( MOAIAbstractFrameBuffer* frameBuffer );
-	bool					ZLAbstractGPU_SetIndexBuffer			( MOAIAbstractIndexBuffer* buffer );
+	bool					ZLAbstractGPU_SetFrameBuffer			( MOAIFrameBuffer* frameBuffer );
+	bool					ZLAbstractGPU_SetIndexBuffer			( MOAIIndexBuffer* buffer );
 	void					ZLAbstractGPU_SetPenWidth				( float penWidth );
 	void					ZLAbstractGPU_SetScissorRect			();
 	void					ZLAbstractGPU_SetScissorRect			( ZLRect rect );
-	bool					ZLAbstractGPU_SetShader					( MOAIAbstractShader* shader );
-	bool					ZLAbstractGPU_SetTexture				( MOAIAbstractTexture* texture, ZLIndex textureUnit );
-	bool					ZLAbstractGPU_SetVertexArray			( MOAIAbstractVertexArray* vtxArray );
-	bool					ZLAbstractGPU_SetVertexBuffer			( MOAIAbstractVertexBuffer* buffer );
-	void					ZLAbstractGPU_SetVertexFormat			( MOAIAbstractVertexFormat* format );
+	bool					ZLAbstractGPU_SetShader					( MOAIShader* shader );
+	bool					ZLAbstractGPU_SetTexture				( MOAITexture* texture, ZLIndex textureUnit );
+	bool					ZLAbstractGPU_SetVertexArray			( MOAIVertexArray* vtxArray );
+	bool					ZLAbstractGPU_SetVertexBuffer			( MOAIVertexBuffer* buffer );
+	void					ZLAbstractGPU_SetVertexFormat			( MOAIVertexFormat* format );
 	void					ZLAbstractGPU_SetViewRect				();
 	void					ZLAbstractGPU_SetViewRect				( ZLRect rect );
 	void					ZLAbstractGPU_UnbindAll					();

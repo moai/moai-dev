@@ -2,30 +2,30 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx/MOAIAbstractTexture.h>
+#include <moai-gfx/MOAITexture.h>
 
 //================================================================//
-// MOAIAbstractTexture
+// MOAITexture
 //================================================================//
 
 //----------------------------------------------------------------//
-u32 MOAIAbstractTexture::GetHeight () const {
+u32 MOAITexture::GetHeight () const {
 
-	return this->ZLAbstractTexture_GetHeight ();
+	return this->MOAITexture_GetHeight ();
 }
 
 //----------------------------------------------------------------//
-u32 MOAIAbstractTexture::GetWidth () const {
+u32 MOAITexture::GetWidth () const {
 
-	return this->ZLAbstractTexture_GetWidth ();
+	return this->MOAITexture_GetWidth ();
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractTexture::MOAIAbstractTexture () {
+MOAITexture::MOAITexture () {
 
 	RTTI_SINGLE ( RTTIBase )
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractTexture::~MOAIAbstractTexture () {
+MOAITexture::~MOAITexture () {
 }

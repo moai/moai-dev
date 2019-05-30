@@ -42,7 +42,7 @@ private:
 	friend class MOAIMaterialMgr;
 	
 	union {
-		MOAIAbstractTexture*	mTexture;
+		MOAITexture*	mTexture;
 		MOAILight*			mLight;
 		void*				mPtr;
 	};
@@ -106,7 +106,7 @@ public:
 
 	//----------------------------------------------------------------//
 	MOAILight*			GetLight					( u32 lightID );
-	MOAIAbstractTexture*	GetTexture					( u32 textureID );
+	MOAITexture*	GetTexture					( u32 textureID );
 	void				LoadGfxState				();
 						MOAIMaterialMgr				();
 						~MOAIMaterialMgr			();
@@ -118,9 +118,9 @@ public:
 	void				SetDepthTest				( int depthTest );
 	void				SetLight					( u32 lightID, MOAILight* light );
 	void				SetShader					( u32 shaderID );
-	void				SetShader					( MOAIAbstractShader* shader );
-	void				SetTexture					( MOAIAbstractTexture* texture );
-	void				SetTexture					( u32 textureID, MOAIAbstractTexture* texture );
+	void				SetShader					( MOAIShader* shader );
+	void				SetTexture					( MOAITexture* texture );
+	void				SetTexture					( u32 textureID, MOAITexture* texture );
 };
 
 #endif

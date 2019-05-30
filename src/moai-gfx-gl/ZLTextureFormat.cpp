@@ -3,7 +3,7 @@
 
 #include "pch.h"
 
-#include <moai-gfx-gl/MOAITextureBaseGL.h>
+#include <moai-gfx-gl/MOAITextureGL.h>
 #include <moai-gfx-gl/ZLTextureFormat.h>
 
 //================================================================//
@@ -11,7 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void ZLTextureFormat::CleanupTexture ( MOAITextureBaseGL& texture ) {
+void ZLTextureFormat::CleanupTexture ( MOAITextureGL& texture ) {
 
 	texture.CleanupOnError ();
 }
@@ -27,7 +27,7 @@ ZLTextureFormat::~ZLTextureFormat () {
 }
 
 //----------------------------------------------------------------//
-void ZLTextureFormat::SetGLTexture ( MOAITextureBaseGL& texture, const ZLGfxHandle& glTexture, int internalFormat, int pixelType, size_t textureSize ) {
+void ZLTextureFormat::SetGLTexture ( MOAITextureGL& texture, const ZLGfxHandle& glTexture, int internalFormat, int pixelType, size_t textureSize ) {
 
 	texture.SetGLTexture ( glTexture, internalFormat, pixelType, textureSize );
 }

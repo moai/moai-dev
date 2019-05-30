@@ -10,7 +10,7 @@
 #include <moai-gfx-gl/MOAIIndexBufferGL.h>
 #include <moai-gfx-gl/MOAIShaderGL.h>
 #include <moai-gfx-gl/MOAIShaderProgramGL.h>
-#include <moai-gfx-gl/MOAITextureBaseGL.h>
+#include <moai-gfx-gl/MOAITextureGL.h>
 #include <moai-gfx-gl/MOAIVertexArrayGL.h>
 #include <moai-gfx-gl/MOAIVertexBufferGL.h>
 #include <moai-gfx-gl/MOAIVertexFormatGL.h>
@@ -474,15 +474,15 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushShader ( MOAIShaderGL* shader ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrGL_GPUCacheGL::FlushTexture ( ZLIndex textureUnit, MOAITextureBaseGL* texture ) {
+void MOAIGfxMgrGL_GPUCacheGL::FlushTexture ( ZLIndex textureUnit, MOAITextureGL* texture ) {
 
 	assert ( this->mApplyingStateChanges );
 	
 	MOAIGfxStateGPUCacheFrameGL& active = this->mActiveState;
 	ZLGfx& gfx = this->GetPipelineClerkGL ().GetDrawingAPI ();
 	
-	texture = texture && texture->Affirm () ? texture : ( MOAITextureBaseGL* )this->mDefaultTexture;
-	MOAITextureBaseGL* prevTexture = active.mTextureUnits [ textureUnit ];
+	texture = texture && texture->Affirm () ? texture : ( MOAITextureGL* )this->mDefaultTexture;
+	MOAITextureGL* prevTexture = active.mTextureUnits [ textureUnit ];
 
 	if ( prevTexture != texture ) {
 
@@ -827,27 +827,27 @@ u32 MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_GetBufferWidth () const {
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractFrameBuffer* MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_GetCurrentFrameBuffer () {
+MOAIFrameBuffer* MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_GetCurrentFrameBuffer () {
 	return this->mCurrentState->mFrameBuffer;
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractShader* MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_GetCurrentShader () {
+MOAIShader* MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_GetCurrentShader () {
 	return this->mCurrentState->mShader;
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractVertexFormat* MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_GetCurrentVtxFormat () {
+MOAIVertexFormat* MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_GetCurrentVtxFormat () {
 	return this->mCurrentState->mVtxFormat;
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractFrameBuffer* MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_GetDefaultFrameBuffer () {
+MOAIFrameBuffer* MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_GetDefaultFrameBuffer () {
 	return this->mDefaultFrameBuffer;
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractTexture* MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_GetDefaultTexture () {
+MOAITexture* MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_GetDefaultTexture () {
 	return this->mDefaultTexture;
 }
 
@@ -996,7 +996,7 @@ void MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_SetCullFunc ( int cullFunc ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_SetDefaultFrameBuffer ( MOAIAbstractFrameBuffer* frameBuffer ) {
+void MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_SetDefaultFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 
 	MOAIFrameBufferGL* frameBufferGL = MOAICast < MOAIFrameBufferGL >( frameBuffer );
 	assert ( frameBufferGL || ( frameBufferGL == NULL ));
@@ -1005,9 +1005,9 @@ void MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_SetDefaultFrameBuffer ( MOAIAbstract
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_SetDefaultTexture ( MOAIAbstractTexture* texture ) {
+void MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_SetDefaultTexture ( MOAITexture* texture ) {
 
-	MOAITextureBaseGL* textureGL = MOAICast < MOAITextureBaseGL >( texture );
+	MOAITextureGL* textureGL = MOAICast < MOAITextureGL >( texture );
 	assert ( textureGL || ( texture == NULL ));
 
 	this->mDefaultTexture = textureGL;
@@ -1038,7 +1038,7 @@ void MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_SetDepthMask ( bool depthMask ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_SetFrameBuffer ( MOAIAbstractFrameBuffer* frameBuffer ) {
+bool MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 
 	MOAIFrameBufferGL* frameBufferGL = MOAICast < MOAIFrameBufferGL >( frameBuffer );
 	assert ( frameBufferGL || ( frameBufferGL == NULL ));
@@ -1053,7 +1053,7 @@ bool MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_SetFrameBuffer ( MOAIAbstractFrameBu
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_SetIndexBuffer ( MOAIAbstractIndexBuffer* buffer ) {
+bool MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_SetIndexBuffer ( MOAIIndexBuffer* buffer ) {
 	
 	MOAIIndexBufferGL* indexBufferGL = MOAICast < MOAIIndexBufferGL >( buffer );
 	assert ( indexBufferGL || ( indexBufferGL == NULL ));
@@ -1097,7 +1097,7 @@ void MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_SetScissorRect ( ZLRect rect ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_SetShader ( MOAIAbstractShader* shader ) {
+bool MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_SetShader ( MOAIShader* shader ) {
 
 	assert ( !this->mApplyingStateChanges );
 	
@@ -1116,11 +1116,11 @@ bool MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_SetShader ( MOAIAbstractShader* shad
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_SetTexture ( MOAIAbstractTexture* texture, ZLIndex textureUnit ) {
+bool MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_SetTexture ( MOAITexture* texture, ZLIndex textureUnit ) {
 
 	assert ( !this->mApplyingStateChanges );
 
-	MOAITextureBaseGL* textureGL = MOAICast < MOAITextureBaseGL >( texture );
+	MOAITextureGL* textureGL = MOAICast < MOAITextureGL >( texture );
 	assert ( textureGL || ( texture == NULL ));
 
 	u32 mask = 1 << textureUnit;
@@ -1136,7 +1136,7 @@ bool MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_SetTexture ( MOAIAbstractTexture* te
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_SetVertexArray ( MOAIAbstractVertexArray* vtxArray ) {
+bool MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_SetVertexArray ( MOAIVertexArray* vtxArray ) {
 
 	MOAIVertexArrayGL* vertexArrayGL = MOAICast < MOAIVertexArrayGL >( vtxArray );
 	assert ( vertexArrayGL || ( vertexArrayGL == NULL ));
@@ -1156,7 +1156,7 @@ bool MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_SetVertexArray ( MOAIAbstractVertexA
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_SetVertexBuffer ( MOAIAbstractVertexBuffer* buffer ) {
+bool MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_SetVertexBuffer ( MOAIVertexBuffer* buffer ) {
 
 	MOAIVertexBufferGL* vertexBufferGL = MOAICast < MOAIVertexBufferGL >( buffer );
 	assert ( vertexBufferGL || ( vertexBufferGL == NULL ));
@@ -1175,7 +1175,7 @@ bool MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_SetVertexBuffer ( MOAIAbstractVertex
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_SetVertexFormat ( MOAIAbstractVertexFormat* format ) {
+void MOAIGfxMgrGL_GPUCacheGL::ZLAbstractGPU_SetVertexFormat ( MOAIVertexFormat* format ) {
 
 	MOAIVertexFormatGL* vertexFormatGL = MOAICast < MOAIVertexFormatGL >( format );
 	assert ( vertexFormatGL || ( vertexFormatGL == NULL ));

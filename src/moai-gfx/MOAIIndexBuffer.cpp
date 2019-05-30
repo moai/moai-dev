@@ -2,18 +2,18 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx/MOAIAbstractShader.h>
+#include <moai-gfx/MOAIIndexBuffer.h>
 
 //================================================================//
 // ZLShaderGL
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIAbstractShader::MOAIAbstractShader () {
+MOAIIndexBuffer::MOAIIndexBuffer () {
 
 	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractShader::~MOAIAbstractShader () {
+MOAIIndexBuffer::~MOAIIndexBuffer () {
 }

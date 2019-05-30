@@ -11,7 +11,7 @@
 	@text	Vertex format class.
 */
 class MOAIVertexFormatGL :
-	public virtual MOAIAbstractVertexFormat {
+	public virtual MOAIVertexFormat {
 public:
 	
 	DECL_LUA_FACTORY ( MOAIVertexFormatGL )

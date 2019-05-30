@@ -15,7 +15,7 @@ class MOAIVertexFormatGL;
 	@text	Buffer for vertices.
 */
 class MOAIVertexBufferGL :
-	public virtual MOAIAbstractVertexBuffer,
+	public virtual MOAIVertexBuffer,
 	public virtual MOAIAbstractGfxBufferGL {
 private:
 	

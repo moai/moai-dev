@@ -7,8 +7,8 @@
 #include <moai-gfx-gl/MOAIGfxMgrGL.h>
 #include <moai-gfx-gl/MOAIShaderGL.h>
 #include <moai-gfx-gl/MOAIShaderMgrGL.h>
+#include <moai-gfx-gl/MOAITexture2DGL.h>
 #include <moai-gfx-gl/MOAITextureGL.h>
-#include <moai-gfx-gl/MOAITextureBaseGL.h>
 
 //================================================================//
 // local
@@ -417,7 +417,7 @@ MOAIGfxMgrGL::~MOAIGfxMgrGL () {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIAbstractShader* MOAIGfxMgrGL::MOAIAbstractGfxMgr_AffirmShader ( MOAILuaState& state, int idx ) const {
+MOAIShader* MOAIGfxMgrGL::MOAIAbstractGfxMgr_AffirmShader ( MOAILuaState& state, int idx ) const {
 
 	MOAIShaderGL* shader = 0;
 
@@ -431,14 +431,14 @@ MOAIAbstractShader* MOAIGfxMgrGL::MOAIAbstractGfxMgr_AffirmShader ( MOAILuaState
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractTexture* MOAIGfxMgrGL::MOAIAbstractGfxMgr_AffirmTexture ( MOAILuaState& state, int idx ) const {
+MOAITexture* MOAIGfxMgrGL::MOAIAbstractGfxMgr_AffirmTexture ( MOAILuaState& state, int idx ) const {
 
-	MOAITextureBaseGL* textureBase = 0;
+	MOAITextureGL* textureBase = 0;
 	
-	textureBase = state.GetLuaObject < MOAITextureBaseGL >( idx, false );
+	textureBase = state.GetLuaObject < MOAITextureGL >( idx, false );
 	if ( textureBase ) return textureBase;
 	
-	MOAITextureGL* texture = new MOAITextureGL ();
+	MOAITexture2DGL* texture = new MOAITexture2DGL ();
 	if ( !texture->Init ( state, idx )) {
 		// TODO: report error
 		delete texture;

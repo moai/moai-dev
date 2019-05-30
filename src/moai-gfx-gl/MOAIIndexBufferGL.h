@@ -13,7 +13,7 @@
 	@text	Buffer for vertex indices.
 */
 class MOAIIndexBufferGL :
-	public virtual MOAIAbstractIndexBuffer,
+	public virtual MOAIIndexBuffer,
 	public virtual MOAIAbstractGfxBufferGL {
 private:
 

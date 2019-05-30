@@ -5,14 +5,14 @@
 #define	MOAIFRAMEBUFFERTEXTUREGL_H
 
 #include <moai-gfx-gl/MOAIFrameBufferGL.h>
-#include <moai-gfx-gl/MOAITextureBaseGL.h>
+#include <moai-gfx-gl/MOAITextureGL.h>
 
 //================================================================//
 // MOAIFrameBufferTextureGL
 //================================================================//
 class MOAIFrameBufferTextureGL :
 	public virtual MOAIFrameBufferGL,
-	public virtual MOAITextureBaseGL {
+	public virtual MOAITextureGL {
 private:
 	
 	ZLGfxHandle			mGLColorBuffer;

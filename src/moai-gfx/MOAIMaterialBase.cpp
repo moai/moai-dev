@@ -3,8 +3,8 @@
 
 #include "pch.h"
 
-#include <moai-gfx/MOAIAbstractShader.h>
-#include <moai-gfx/MOAIAbstractTexture.h>
+#include <moai-gfx/MOAIShader.h>
+#include <moai-gfx/MOAITexture.h>
 #include <moai-gfx/MOAIMaterialBase.h>
 
 //================================================================//
@@ -138,7 +138,7 @@ void MOAIMaterialBase::SetShader () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBase::SetShader ( MOAIAbstractShader* shader ) {
+void MOAIMaterialBase::SetShader ( MOAIShader* shader ) {
 
 	this->mShader = shader;
 	
@@ -157,7 +157,7 @@ void MOAIMaterialBase::SetTexture () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBase::SetTexture ( MOAIAbstractTexture* texture ) {
+void MOAIMaterialBase::SetTexture ( MOAITexture* texture ) {
 
 	this->mTexture = texture;
 

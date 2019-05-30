@@ -10,13 +10,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIAbstractShader* MOAIGfxMgr::AffirmShader ( MOAILuaState& state, int idx ) const {
+MOAIShader* MOAIGfxMgr::AffirmShader ( MOAILuaState& state, int idx ) const {
 
 	return this->MOAIAbstractGfxMgr_AffirmShader ( state, idx );
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractTexture* MOAIGfxMgr::AffirmTexture ( MOAILuaState& state, int idx ) const {
+MOAITexture* MOAIGfxMgr::AffirmTexture ( MOAILuaState& state, int idx ) const {
 
 	return this->MOAIAbstractGfxMgr_AffirmTexture ( state, idx );
 }

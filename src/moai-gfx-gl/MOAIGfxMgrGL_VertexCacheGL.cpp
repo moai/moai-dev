@@ -44,7 +44,7 @@ void MOAIGfxMgrGL_VertexCacheGL::ZLAbstractVertexCache_AffirmBuffers () {
 bool MOAIGfxMgrGL_VertexCacheGL::ZLAbstractVertexCache_BeginPrim ( u32 primType, u32 vtxCount, u32 idxCount ) {
 	
 	MOAIGfxMgrGL_GPUCacheGL& gpuCache = this->GetGPUCacheGL ();
-	MOAIAbstractVertexFormat* format = gpuCache.GetCurrentVtxFormat ();
+	MOAIVertexFormat* format = gpuCache.GetCurrentVtxFormat ();
 	
 	u32 vtxSize = format ? format->GetVertexSize () : 0;
 	if ( !vtxSize ) return false;

@@ -1,18 +1,17 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIABSTRACTSHADERUNIFORMSCHEMA_H
-#define	MOAIABSTRACTSHADERUNIFORMSCHEMA_H
+#ifndef	MOAISHADERUNIFORMSCHEMA_H
+#define	MOAISHADERUNIFORMSCHEMA_H
 
 #include <moai-gfx/MOAIShaderUniformHandle.h>
 
 class ZLAttribute;
 
 //================================================================//
-// MOAIAbstractShaderUniformSchema
+// MOAIShaderUniformSchema
 //================================================================//
-class MOAIAbstractShaderUniformSchema :
-	public virtual RTTIBase {
+class MOAIShaderUniformSchema {
 protected:
 
 	static const ZLSize					MAX_UNIFORM_ARRAY_SIZE = 256;
@@ -27,8 +26,8 @@ public:
 	MOAIShaderUniformHandle			GetUniformHandle					( void* buffer, ZLIndex uniformID ) const;
 	MOAIShaderUniformHandle			GetUniformHandle					( void* buffer, ZLIndex uniformID, ZLIndex index ) const;
 	MOAIShaderUniformHandle			GetUniformHandleForAttributeID		( void* buffer, ZLAttrID attrID ) const;
-									MOAIAbstractShaderUniformSchema		();
-	virtual							~MOAIAbstractShaderUniformSchema		();
+									MOAIShaderUniformSchema		();
+	virtual							~MOAIShaderUniformSchema		();
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >

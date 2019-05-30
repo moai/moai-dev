@@ -123,7 +123,7 @@ MOAIVertexArrayGL::MOAIVertexArrayGL () :
 	mUseVAOs ( false ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIAbstractVertexArray )
+		RTTI_EXTEND ( MOAIVertexArray )
 		RTTI_EXTEND ( MOAIAbstractGfxResourceGL )
 	RTTI_END
 }
@@ -137,13 +137,13 @@ MOAIVertexArrayGL::~MOAIVertexArrayGL () {
 
 //----------------------------------------------------------------//
 void MOAIVertexArrayGL::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAIAbstractVertexArray::RegisterLuaClass ( state );
+	MOAIVertexArray::RegisterLuaClass ( state );
 	MOAIAbstractGfxResourceGL::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIVertexArrayGL::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAIAbstractVertexArray::RegisterLuaFuncs ( state );
+	MOAIVertexArray::RegisterLuaFuncs ( state );
 	MOAIAbstractGfxResourceGL::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {

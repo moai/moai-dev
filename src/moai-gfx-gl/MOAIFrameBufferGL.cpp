@@ -154,7 +154,7 @@ MOAIFrameBufferGL::MOAIFrameBufferGL () :
 	mGrabNextFrame ( false ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIAbstractFrameBuffer )
+		RTTI_EXTEND ( MOAIFrameBuffer )
 	RTTI_END
 }
 
@@ -180,13 +180,13 @@ void MOAIFrameBufferGL::NeedsClear ( bool needsClear ) {
 //----------------------------------------------------------------//
 void MOAIFrameBufferGL::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIAbstractFrameBuffer::RegisterLuaClass ( state );
+	MOAIFrameBuffer::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIFrameBufferGL::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIAbstractFrameBuffer::RegisterLuaFuncs ( state );
+	MOAIFrameBuffer::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "getGrabbedImage",			_getGrabbedImage },

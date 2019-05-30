@@ -33,8 +33,8 @@ protected:
 	MOAIGfxMgr_VertexCache&		MOAIAbstractGfxMgrComponents_GetVertexCache		();
 
 	//----------------------------------------------------------------//
-	virtual MOAIAbstractShader*		MOAIAbstractGfxMgr_AffirmShader		( MOAILuaState& state, int idx ) const = 0;
-	virtual MOAIAbstractTexture*	MOAIAbstractGfxMgr_AffirmTexture	( MOAILuaState& state, int idx ) const = 0;
+	virtual MOAIShader*		MOAIAbstractGfxMgr_AffirmShader		( MOAILuaState& state, int idx ) const = 0;
+	virtual MOAITexture*	MOAIAbstractGfxMgr_AffirmTexture	( MOAILuaState& state, int idx ) const = 0;
 
 public:
 	
@@ -44,8 +44,8 @@ public:
 	};
 
 	//----------------------------------------------------------------//
-	MOAIAbstractShader*		AffirmShader		( MOAILuaState& state, int idx ) const;
-	MOAIAbstractTexture*	AffirmTexture		( MOAILuaState& state, int idx ) const;
+	MOAIShader*		AffirmShader		( MOAILuaState& state, int idx ) const;
+	MOAITexture*	AffirmTexture		( MOAILuaState& state, int idx ) const;
 							MOAIGfxMgr			();
 							~MOAIGfxMgr			();
 };

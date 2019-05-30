@@ -4,8 +4,8 @@
 #include "pch.h"
 
 #include <moai-gfx/MOAIGfxMgr.h>
-#include <moai-gfx/MOAIAbstractShader.h>
-#include <moai-gfx/MOAIAbstractTexture.h>
+#include <moai-gfx/MOAIShader.h>
+#include <moai-gfx/MOAITexture.h>
 #include <moai-gfx/MOAILight.h>
 #include <moai-gfx/MOAIMaterialMgr.h>
 
@@ -93,7 +93,7 @@ void MOAIMaterialMgr::Compose ( const MOAIMaterial& material ) {
 		this->SetLight ( namedLightIt->mName, namedLightIt->mValue );
 	}
 	
-	MOAIMaterialNamedGlobal < MOAIAbstractTexture >* namedTexturelIt = material.mTextures;
+	MOAIMaterialNamedGlobal < MOAITexture >* namedTexturelIt = material.mTextures;
 	for ( ; namedTexturelIt; namedTexturelIt = namedTexturelIt->mNext ) {
 		this->SetTexture ( namedTexturelIt->mName, namedTexturelIt->mValue );
 	}
@@ -107,11 +107,11 @@ MOAILight* MOAIMaterialMgr::GetLight ( u32 lightID ) {
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractTexture* MOAIMaterialMgr::GetTexture ( u32 textureID ) {
+MOAITexture* MOAIMaterialMgr::GetTexture ( u32 textureID ) {
 
 	assert ( textureID < MAX_GLOBAL_TEXTURES );
-	MOAIAbstractTexture* texture = this->mNamedTextures [ ZLIndexCast ( textureID )].mTexture;
-	return texture ? texture : ( MOAIAbstractTexture* )this->mTexture;
+	MOAITexture* texture = this->mNamedTextures [ ZLIndexCast ( textureID )].mTexture;
+	return texture ? texture : ( MOAITexture* )this->mTexture;
 }
 
 //----------------------------------------------------------------//
@@ -262,7 +262,7 @@ void MOAIMaterialMgr::SetShader ( u32 shaderID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialMgr::SetShader ( MOAIAbstractShader* shader ) {
+void MOAIMaterialMgr::SetShader ( MOAIShader* shader ) {
 
 	if ( !( this->mFlags & SHADER_FLAG )) {
 		this->mShader = shader;
@@ -271,7 +271,7 @@ void MOAIMaterialMgr::SetShader ( MOAIAbstractShader* shader ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialMgr::SetTexture ( MOAIAbstractTexture* texture ) {
+void MOAIMaterialMgr::SetTexture ( MOAITexture* texture ) {
 
 	if ( !( this->mFlags & TEXTURE_FLAG )) {
 		this->mTexture = texture;
@@ -280,7 +280,7 @@ void MOAIMaterialMgr::SetTexture ( MOAIAbstractTexture* texture ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialMgr::SetTexture ( u32 textureID, MOAIAbstractTexture* texture ) {
+void MOAIMaterialMgr::SetTexture ( u32 textureID, MOAITexture* texture ) {
 	
 	assert ( textureID < MAX_GLOBAL_TEXTURES );
 	this->SetGlobal ( this->mNamedTextures [ ZLIndexCast ( textureID )], texture );

@@ -4,8 +4,8 @@
 #include "pch.h"
 
 #include <moai-gfx/MOAIGfxMgr.h>
-#include <moai-gfx/MOAIAbstractShader.h>
-#include <moai-gfx/MOAIAbstractTexture.h>
+#include <moai-gfx/MOAIShader.h>
+#include <moai-gfx/MOAITexture.h>
 #include <moai-gfx/MOAILight.h>
 #include <moai-gfx/MOAIMaterial.h>
 #include <moai-gfx/MOAIMaterialBatch.h>
@@ -567,16 +567,16 @@ void MOAIMaterialBatch::SetShader ( ZLIndex idx, u32 shaderID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::SetShader ( ZLIndex idx, MOAIAbstractShader* shader ) {
+void MOAIMaterialBatch::SetShader ( ZLIndex idx, MOAIShader* shader ) {
 
 	this->AffirmMaterial ( idx ).SetShader ( shader );
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractShader* MOAIMaterialBatch::SetShader ( MOAILuaState& state, int idx ) {
+MOAIShader* MOAIMaterialBatch::SetShader ( MOAILuaState& state, int idx ) {
 
 	ZLIndex materialID = MOAIMaterialBatch::GetMaterialID ( state, idx );
-	MOAIAbstractShader* shader = MOAIGfxMgr::Get ().AffirmShader ( state, idx );
+	MOAIShader* shader = MOAIGfxMgr::Get ().AffirmShader ( state, idx );
 	this->SetShader ( materialID, shader );
 	return shader;
 }
@@ -590,7 +590,7 @@ void MOAIMaterialBatch::SetTexture ( ZLIndex idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::SetTexture ( ZLIndex idx, MOAIAbstractTexture* texture ) {
+void MOAIMaterialBatch::SetTexture ( ZLIndex idx, MOAITexture* texture ) {
 
 	this->AffirmMaterial ( idx ).SetTexture ( texture );
 }
@@ -604,18 +604,18 @@ void MOAIMaterialBatch::SetTexture ( ZLIndex idx, u32 name ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::SetTexture ( ZLIndex idx, u32 name, MOAIAbstractTexture* texture ) {
+void MOAIMaterialBatch::SetTexture ( ZLIndex idx, u32 name, MOAITexture* texture ) {
 
 	this->AffirmMaterial ( idx ).SetTexture ( name, texture );
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractTexture* MOAIMaterialBatch::SetTexture ( MOAILuaState& state, int idx ) {
+MOAITexture* MOAIMaterialBatch::SetTexture ( MOAILuaState& state, int idx ) {
 	
 	u32 name;
 	ZLIndex materialID = MOAIMaterialBatch::GetNamedGlobalID ( state, idx, name );
 
-	MOAIAbstractTexture* texture = MOAIGfxMgr::Get ().AffirmTexture ( state, idx );
+	MOAITexture* texture = MOAIGfxMgr::Get ().AffirmTexture ( state, idx );
 	if ( name != MOAI_UNKNOWN_MATERIAL_GLOBAL ) {
 		this->SetTexture ( materialID, name, texture );
 	}

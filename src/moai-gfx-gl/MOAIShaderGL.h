@@ -15,7 +15,7 @@ class MOAIShaderProgramGL;
 			uniform values and to expose uniform values as MOAINode attributes.
 */
 class MOAIShaderGL :
-	public virtual MOAIAbstractShader,
+	public virtual MOAIShader,
 	public virtual MOAINode {
 protected:
 

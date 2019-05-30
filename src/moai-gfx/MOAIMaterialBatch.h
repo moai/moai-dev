@@ -109,14 +109,14 @@ public:
 
 	void				SetShader					( ZLIndex idx );
 	void				SetShader					( ZLIndex idx, u32 shaderID );
-	void				SetShader					( ZLIndex idx, MOAIAbstractShader* shader );
-	MOAIAbstractShader*	SetShader					( MOAILuaState& state, int idx );
+	void				SetShader					( ZLIndex idx, MOAIShader* shader );
+	MOAIShader*	SetShader					( MOAILuaState& state, int idx );
 
 	void				SetTexture					( ZLIndex idx );
-	void				SetTexture					( ZLIndex idx, MOAIAbstractTexture* texture );
+	void				SetTexture					( ZLIndex idx, MOAITexture* texture );
 	void				SetTexture					( ZLIndex idx, u32 name );
-	void				SetTexture					( ZLIndex idx, u32 name, MOAIAbstractTexture* texture );
-	MOAIAbstractTexture*	SetTexture					( MOAILuaState& state, int idx );
+	void				SetTexture					( ZLIndex idx, u32 name, MOAITexture* texture );
+	MOAITexture*	SetTexture					( MOAILuaState& state, int idx );
 
 	size_t				Size						();
 

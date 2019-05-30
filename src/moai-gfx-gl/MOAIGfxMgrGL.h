@@ -62,8 +62,8 @@ protected:
 	void						OnGlobalsInitialize			();
 
 	//----------------------------------------------------------------//
-	MOAIAbstractShader*				MOAIAbstractGfxMgr_AffirmShader				( MOAILuaState& state, int idx ) const;
-	MOAIAbstractTexture*			MOAIAbstractGfxMgr_AffirmTexture			( MOAILuaState& state, int idx ) const;
+	MOAIShader*				MOAIAbstractGfxMgr_AffirmShader				( MOAILuaState& state, int idx ) const;
+	MOAITexture*			MOAIAbstractGfxMgr_AffirmTexture			( MOAILuaState& state, int idx ) const;
 	MOAIGfxMgrGL&					MOAIGfxMgrGLComponents_GetGfxMgrGL			();
 	MOAIGfxMgrGL_GPUCacheGL&		MOAIGfxMgrGLComponents_GetGPUCacheGL		();
 	MOAIGfxMgrGL_PipelineClerkGL&	MOAIGfxMgrGLComponents_GetPipelineClerkGL	();

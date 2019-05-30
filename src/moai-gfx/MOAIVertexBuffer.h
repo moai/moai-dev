@@ -1,19 +1,19 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIABSTRACTFRAMEBUFFER_H
-#define	MOAIABSTRACTFRAMEBUFFER_H
+#ifndef	MOAIVERTEXBUFFER_H
+#define	MOAIVERTEXBUFFER_H
 
 //================================================================//
-// MOAIAbstractFrameBuffer
+// MOAIVertexBuffer
 //================================================================//
-class MOAIAbstractFrameBuffer :
+class MOAIVertexBuffer :
 	public virtual MOAILuaObject {
 public:
 
 	//----------------------------------------------------------------//
-					MOAIAbstractFrameBuffer				();
-					~MOAIAbstractFrameBuffer			();
+					MOAIVertexBuffer			();
+					~MOAIVertexBuffer			();
 };
 
 #endif

@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <moai-gfx-gl/MOAIGfxMgrGL.h>
 #include <moai-gfx-gl/MOAIShaderProgramGL.h>
-#include <moai-gfx-gl/MOAITextureBaseGL.h>
+#include <moai-gfx-gl/MOAITextureGL.h>
 
 //================================================================//
 // MOAIShaderProgramGlobalGL
@@ -142,7 +142,7 @@ int MOAIShaderProgramGL::_setTexture ( lua_State* L ) {
 	
 	if ( state.IsType ( 3, LUA_TUSERDATA )) {
 	
-		self->SetTexture ( idx, state.GetLuaObject < MOAITextureBaseGL >( 3, true ), unit );
+		self->SetTexture ( idx, state.GetLuaObject < MOAITextureGL >( 3, true ), unit );
 	}
 	else {
 	
@@ -150,7 +150,7 @@ int MOAIShaderProgramGL::_setTexture ( lua_State* L ) {
 			idx,
 			state.GetValue < u32 >( 3, MOAI_UNKNOWN_MATERIAL_GLOBAL + 1 ) - 1,
 			unit,
-			state.GetLuaObject < MOAITextureBaseGL >( 5, false )
+			state.GetLuaObject < MOAITextureGL >( 5, false )
 		);
 	}
 	return 0;
@@ -321,7 +321,6 @@ MOAIShaderProgramGL::MOAIShaderProgramGL () :
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIAbstractGfxResourceGL )
-		RTTI_EXTEND ( MOAIAbstractShaderUniformSchema )
 	RTTI_END
 }
 
@@ -477,7 +476,7 @@ void MOAIShaderProgramGL::ScheduleTextures () {
 //
 //		MOAIShaderProgramTextureGL& shaderTexture = this->mTextures [ i ];
 //
-//		MOAITextureBaseGL* texture = shaderTexture.mTexture;
+//		MOAITextureGL* texture = shaderTexture.mTexture;
 //
 //		// load texture by name
 //		if ( !texture ) {
@@ -514,7 +513,7 @@ void MOAIShaderProgramGL::SetGlobal ( ZLIndex idx, u32 globalID, ZLIndex uniform
 //}
 
 //----------------------------------------------------------------//
-void MOAIShaderProgramGL::SetTexture ( ZLIndex idx, u32 name, ZLIndex unit, MOAITextureBaseGL* fallback ) {
+void MOAIShaderProgramGL::SetTexture ( ZLIndex idx, u32 name, ZLIndex unit, MOAITextureGL* fallback ) {
 
 	if ( idx < this->mTextures.Size ()) {
 	
@@ -526,7 +525,7 @@ void MOAIShaderProgramGL::SetTexture ( ZLIndex idx, u32 name, ZLIndex unit, MOAI
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderProgramGL::SetTexture ( ZLIndex idx, MOAITextureBaseGL* texture, ZLIndex unit ) {
+void MOAIShaderProgramGL::SetTexture ( ZLIndex idx, MOAITextureGL* texture, ZLIndex unit ) {
 
 	if ( idx < this->mTextures.Size ()) {
 	

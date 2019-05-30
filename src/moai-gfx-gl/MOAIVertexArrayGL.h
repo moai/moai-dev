@@ -30,7 +30,7 @@ public:
 //================================================================//
 // TODO: doxygen
 class MOAIVertexArrayGL :
-	public virtual MOAIAbstractVertexArray,
+	public virtual MOAIVertexArray,
 	public virtual MOAIAbstractGfxResourceGL {
 protected:
 

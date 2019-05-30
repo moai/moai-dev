@@ -2,50 +2,104 @@
 // http://getmoai.com
 
 #include "pch.h"
+
+#include <moai-gfx-gl/MOAIGfxMgrGL.h>
 #include <moai-gfx-gl/MOAITextureGL.h>
-#include <moai-gfx-gl/ZLTextureFormat.h>
 
 //================================================================//
 // lua
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@lua	load
-	@text	Loads a texture from a data buffer or a file. Optionally pass
-			in an image transform (not applicable to PVR textures).
+/**	@lua	getSize
+	@text	Returns the width and height of the texture's source image.
+			Avoid using the texture width and height to compute UV
+			coordinates from pixels, as this will prevent texture
+			resolution swapping.
  
-	@overload
-		@in		MOAITextureGL self
-		@in		string filename
-		@opt	number transform		Any bitwise combination of MOAIImage.QUANTIZE, MOAIImage.TRUECOLOR, MOAIImage.PREMULTIPLY_ALPHA
-		@opt	string debugname		Name used when reporting texture debug information
-		@out	nil
- 
-	@overload
-		@in		MOAITextureGL self
-		@in		MOAIImage image
-		@opt	string debugname		Name used when reporting texture debug information
-		@opt	boolean autoClear		Default value is 'false.' Only used if there is a reloader in play.
-		@out	nil
- 
-	@overload
-		@in		MOAITextureGL self
-		@in		MOAIDataBuffer buffer
-		@opt	number transform		Any bitwise combination of MOAIImage.QUANTIZE, MOAIImage.TRUECOLOR, MOAIImage.PREMULTIPLY_ALPHA
-		@opt	string debugname		Name used when reporting texture debug information
-		@out	nil
- 
-	@overload
-		@in		MOAITextureGL self
-		@in		MOAIStream buffer
-		@opt	number transform		Any bitwise combination of MOAIImage.QUANTIZE, MOAIImage.TRUECOLOR, MOAIImage.PREMULTIPLY_ALPHA
-		@opt	string debugname		Name used when reporting texture debug information
-		@out	nil
+	@in		MOAITextureGL self
+	@out	number width
+	@out	number height
 */
-int MOAITextureGL::_load ( lua_State* L ) {
+int MOAITextureGL::_getSize ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextureGL, "U" )
+	
+	self->DoCPUCreate ();
+	
+	lua_pushnumber ( state, self->mWidth );
+	lua_pushnumber ( state, self->mHeight );
+	
+	return 2;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	release
+	@text	Releases any memory associated with the texture.
+ 
+	@in		MOAITextureGL self
+	@out	nil
+*/
+int MOAITextureGL::_release ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextureGL, "U" )
+	
+	self->Destroy ();
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	setDebugName
+	@text	Set a name for the texture to use during memory logging.
+ 
+	@in		MOAITextureGL self
+	@in		string debugName
+	@out	nil
+*/
+int MOAITextureGL::_setDebugName ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextureGL, "U" )
 
-	self->Init ( state, 2 );
+	self->mDebugName = state.GetValue < cc8* >( 2, "" );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	setFilter
+	@text	Set default filtering mode for texture.
+ 
+	@in		MOAITextureGL self
+	@in		number min			One of MOAITextureGL.GL_LINEAR, MOAITextureGL.GL_LINEAR_MIPMAP_LINEAR, MOAITextureGL.GL_LINEAR_MIPMAP_NEAREST,
+								MOAITextureGL.GL_NEAREST, MOAITextureGL.GL_NEAREST_MIPMAP_LINEAR, MOAITextureGL.GL_NEAREST_MIPMAP_NEAREST
+	@opt	number mag			Defaults to value passed to 'min'.
+	@out	nil
+*/
+int MOAITextureGL::_setFilter ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextureGL, "UN" )
+
+	int min = state.GetValue < int >( 2, ZGL_SAMPLE_LINEAR );
+	int mag = state.GetValue < int >( 3, min );
+
+	MOAITextureGL::CheckFilterModes ( min, mag );
+
+	self->SetFilter ( min, mag );
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	setWrap
+	@text	Set wrapping mode for texture.
+ 
+	@in		MOAITextureGL self
+	@in		boolean wrap		Texture will wrap if true, clamp if not.
+	@out	nil
+*/
+int MOAITextureGL::_setWrap ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextureGL, "UB" )
+	
+	bool wrap = state.GetValue < bool >( 2, false );
+	
+	self->mWrap = wrap ? ZGL_WRAP_MODE_REPEAT : ZGL_WRAP_MODE_CLAMP;
+
 	return 0;
 }
 
@@ -54,261 +108,246 @@ int MOAITextureGL::_load ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITextureGL::Clear () {
+void MOAITextureGL::CheckFilterModes ( int min, int mag ) {
+	UNUSED ( min );
+	UNUSED ( mag );
 
-	this->Destroy ();
-
-	this->mFilename.clear ();
-	this->mDebugName.clear ();
-	
-	this->ClearImage ();
-
-	if ( this->mTextureData ) {
-		free ( this->mTextureData );
-		this->mTextureData = 0;
-	}
-	this->mTextureDataSize = 0;
-	this->mTextureDataFormat = 0;
-}
-
-//----------------------------------------------------------------//
-void MOAITextureGL::ClearImage () {
-
-	if ( this->mImage ) {
-		delete this->mImage;
-	}
-	this->mImage = NULL;
-}
-
-//----------------------------------------------------------------//
-void MOAITextureGL::CopyImage ( const ZLImage& image ) {
-
-	this->ClearImage ();
-	
-	this->mImage = new ZLImage ();
-	*this->mImage = image;
-}
-
-//----------------------------------------------------------------//
-void MOAITextureGL::Init ( const ZLImage& image, cc8* debugname ) {
-
-	this->Clear ();
-	
-	if ( image.IsOK ()) {
-		this->CopyImage ( image );
-		this->mDebugName = debugname;
-		this->FinishInit ();
-		this->DoCPUCreate (); // If you do not calculate here, it is impossible to get the texture size.
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAITextureGL::Init ( const ZLImage& image, int srcX, int srcY, int width, int height, cc8* debugname ) {
-
-	this->Clear ();
-	
-	if ( image.IsOK ()) {
-	
-		this->mImage = new ZLImage ();
-		
-		this->mImage->Init ( width, height, image.GetColorFormat (), image.GetPixelFormat ());
-		this->mImage->Blit ( image, srcX, srcY, 0, 0, width, height );
-		this->mDebugName = debugname;
-		this->FinishInit ();
-		this->DoCPUCreate (); // If you do not calculate here, it is impossible to get the texture size.
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAITextureGL::Init ( cc8* filename, u32 transform, cc8* debugname ) {
-
-	this->Clear ();
-	
-	if ( ZLFileSys::CheckFileExists ( filename )) {
-		
-		this->mFilename = ZLFileSys::GetAbsoluteFilePath ( filename );
-		if ( debugname ) {
-			this->mDebugName = debugname;
-		}
-		else {
-			this->mDebugName = this->mFilename;
-		}		
-		this->mTransform = transform;
-		this->FinishInit ();
-		this->DoCPUCreate (); // If you do not calculate here, it is impossible to get the texture size.
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAITextureGL::Init ( ZLStream& stream, u32 transform, cc8* debugname ) {
-
-	this->Clear ();
-	this->LoadFromStream ( stream, transform );
-	
-	// if we're OK, store the debugname and load
-	if ( this->mTextureData || ( this->mImage && this->mImage->IsOK ())) {
-		this->mDebugName = debugname;
-		this->FinishInit ();
-		this->DoCPUCreate (); // If you do not calculate here, it is impossible to get the texture size.
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAITextureGL::Init ( const void* data, size_t size, u32 transform, cc8* debugname ) {
-
-	ZLByteStream stream;
-	stream.SetBuffer ( data, size, size );
-	this->Init ( stream, transform, debugname );
-}
-
-//----------------------------------------------------------------//
-bool MOAITextureGL::Init ( MOAILuaState& state, int idx ) {
-
-	u32 transform = MOAITextureGL::DEFAULT_TRANSFORM;
-	cc8* debugName = 0;
-	int debugNameIdx = 1;
-	
-	if ( state.IsType ( idx + 1, LUA_TNUMBER )) {
-		transform = state.GetValue < u32 >( idx + 1, MOAITextureGL::DEFAULT_TRANSFORM );
-		debugNameIdx++;
-	}
-	debugName = state.GetValue < cc8* >( debugNameIdx, 0 );
-	
-	bool done = false;
-
-	if ( state.IsType ( idx, LUA_TSTRING )) {
-		cc8* filename = lua_tostring ( state, idx );
-		transform = state.GetValue < u32 >( idx + 1, MOAITextureGL::DEFAULT_TRANSFORM );
-		this->Init ( filename, transform, debugName ? debugName : filename );
-		done = true;
-	}
-	
-	if ( state.IsType ( idx, LUA_TUSERDATA )) {
-	
-		if ( !done ) {
-			MOAIImage* image = state.GetLuaObject < MOAIImage >( idx, false );
-			if ( image ) {
-				this->Init ( *image, debugName ? debugName : "(texture from MOAIImage)" );
-				done = true;
-			}
-		}
-		
-		if ( !done ) {
-			MOAIDataBuffer* data = state.GetLuaObject < MOAIDataBuffer >( idx, false );
-			if ( data ) {
-				this->Init ( *data, transform, debugName ? debugName : "(texture from MOAIDataBuffer)" );
-				done = true;
-			}
-		}
-		
-		if ( !done ) {
-			MOAIStream* stream = state.GetLuaObject < MOAIStream >( idx, false );
-			if ( stream ) {
-				this->Init ( *stream, transform, debugName ? debugName : "(texture from MOAIStream)" );
-				done = true;
-			}
-		}
-	}
-	return done;
-}
-
-//----------------------------------------------------------------//
-void MOAITextureGL::Init ( MOAIDataBuffer& data, u32 transform, cc8* debugname ) {
-
-	void* bytes;
-	size_t size;
-	data.Lock ( &bytes, &size );
-	this->Init ( bytes, size, transform, debugname );
-	data.Unlock ();
-}
-
-//----------------------------------------------------------------//
-bool MOAITextureGL::LoadFromStream ( ZLStream& stream, u32 transform ) {
-	UNUSED ( transform ); // TODO: why is transform unused?
-
-	bool result = false;
-	ZLImageFormat* imageFormat = ZLImageFormatMgr::Get ().FindFormat ( stream );
-	ZLTextureFormat* textureFormat = imageFormat ? imageFormat->AsType < ZLTextureFormat >() : NULL;
-	
-	if ( imageFormat ) {
-
-		this->mTextureDataFormat = NULL;
-
-		if ( textureFormat ) {
-		
-			ZLTextureInfo textureInfo;
-	
-			if ( textureFormat->GetTextureInfo ( stream, textureInfo )) {
-				
-				void* data = malloc ( textureInfo.mSize );
-				size_t size = stream.ReadBytes ( data, textureInfo.mSize );
-				
-				if ( size == textureInfo.mSize ) {
-				
-					this->mTextureData = data;
-					this->mTextureDataSize = size;
-					this->mTextureDataFormat = textureFormat;
-					
-					this->mWidth = textureInfo.mWidth;
-					this->mHeight = textureInfo.mHeight;
-					
-					result = true;
-				}
-				else {
-					free ( data );
-				}
-			}
-		}
-		
-		if ( !this->mTextureDataFormat ) {
-		
-			ZLImage* image = new ZLImage ();
-			imageFormat->ReadImage ( *image, stream, this->mTransform );
+	#ifdef _DEBUG
+		switch ( min ) {
+			case ZGL_SAMPLE_LINEAR_MIPMAP_LINEAR:
+			case ZGL_SAMPLE_LINEAR_MIPMAP_NEAREST:
+			case ZGL_SAMPLE_NEAREST_MIPMAP_LINEAR:
+			case ZGL_SAMPLE_NEAREST_MIPMAP_NEAREST:
 			
-			if ( image->IsOK ()) {
-				this->mImage = image;
-				this->mWidth = image->GetWidth ();
-				this->mHeight = image->GetHeight ();
-				result = true;
+				if ( !(( mag == ZGL_SAMPLE_LINEAR ) || ( mag == ZGL_SAMPLE_NEAREST ))) {
+
+					ZLLog_Warning ( "WARNING: possibly incompatible filter modes; MIPMAP not supported for mag filter\n" );
+				}
+				break;
+				
+			default:
+				break;
+		}
+	#endif
+}
+
+//----------------------------------------------------------------//
+void MOAITextureGL::CleanupOnError () {
+
+	this->mGfxMgr->GetDrawingAPI ().DeleteResource ( this->mGLTexture );
+
+	this->mTextureSize = 0;
+	this->mWidth = 0;
+	this->mHeight = 0;
+	this->mTextureSize = 0;
+}
+
+//----------------------------------------------------------------//
+bool MOAITextureGL::CreateTextureFromImage ( ZLImage& srcImage ) {
+
+	// TODO: ZLGfx
+//	if ( !MOAIGfxMgr::Get ().GetHasContext ()) return false;
+
+	ZLGfx& gfx = this->mGfxMgr->GetDrawingAPI ();
+
+	ZLImage altImage;
+
+	ZLColor::ColorFormat colorFormat = srcImage.GetColorFormat ();
+	if ( colorFormat == ZLColor::CLR_FMT_UNKNOWN ) return false;
+
+	if (( colorFormat == ZLColor::A_1 ) || ( colorFormat == ZLColor::A_4 )) {
+		colorFormat = ZLColor::A_8;
+	}
+	
+	if (( colorFormat != srcImage.GetColorFormat ()) || ( srcImage.GetPixelFormat () != ZLImage::TRUECOLOR )) {
+		//if ( !altImage.Convert ( srcImage, colorFormat, ZLImage::TRUECOLOR )); // TODO: what was this? add error handling?
+		altImage.Convert ( srcImage, colorFormat, ZLImage::TRUECOLOR );
+	}
+	
+	ZLImage& image = altImage.IsOK () ? altImage : srcImage;
+	if ( !image.IsOK ()) return false;
+
+	//MOAIGfxMgr::Get ().ClearErrors ();
+	this->mGLTexture = gfx.CreateTexture ();
+	//if ( !this->mGLTexture ) return false;
+
+	// get the dimensions before trying to get the OpenGL texture ID
+	this->mWidth = image.GetWidth ();
+	this->mHeight = image.GetHeight ();
+
+	// warn if not a power of two (if we're supposed to generate mipmaps)
+//	if ( this->ShouldGenerateMipmaps () && !image.IsPow2 ()) {
+//		MOAILogF ( 0, ZLLog::LOG_WARNING, MOAISTRING_MOAITexture_NonPowerOfTwo_SDD, ( cc8* )this->mDebugName, this->mWidth, this->mHeight );
+//	}
+
+	// GL_ALPHA
+	// GL_RGB
+	// GL_RGBA
+	// GL_LUMINANCE
+	// GL_LUMINANCE_ALPHA
+
+	// GL_UNSIGNED_BYTE
+	// GL_UNSIGNED_SHORT_5_6_5
+	// GL_UNSIGNED_SHORT_4_4_4_4
+	// GL_UNSIGNED_SHORT_5_5_5_1
+
+	switch ( colorFormat ) {
+		
+		case ZLColor::A_8:
+			this->mGLInternalFormat = ZGL_PIXEL_FORMAT_ALPHA;
+			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
+			break;
+		
+		case ZLColor::LA_8:
+			this->mGLInternalFormat = ZGL_PIXEL_FORMAT_LUMINANCE_ALPHA;
+			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
+			break;
+		
+		case ZLColor::RGB_888:
+			this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGB;
+			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
+			break;
+		
+		case ZLColor::RGB_565:
+			this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGB;
+			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_SHORT_5_6_5;
+			break;
+		
+		case ZLColor::RGBA_5551:
+			this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGBA;
+			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_SHORT_5_5_5_1;
+			break;
+		
+		case ZLColor::RGBA_4444:
+			this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGBA;
+			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_SHORT_4_4_4_4;
+			break;
+		
+		case ZLColor::RGBA_8888:
+			this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGBA;
+			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
+			break;
+			
+		default:
+			this->CleanupOnError ();
+			return false;
+	}
+
+	gfx.BindTexture ( this->mGLTexture );
+
+	gfx.TexImage2D (
+		0,
+		this->mGLInternalFormat,
+		this->mWidth,  
+		this->mHeight,  
+		this->mGLInternalFormat,
+		this->mGLPixelType,
+		image.GetBitmapBuffer ()
+	);
+	
+	this->mTextureSize = image.GetBitmapSize ();
+
+	// TODO: error handling
+//	if ( MOAIGfxMgr::Get ().LogErrors ()) {
+//		this->CleanupOnError ( gfx );
+//		return false;
+//	}
+//	else if ( this->ShouldGenerateMipmaps ()) {
+	
+	if ( this->ShouldGenerateMipmaps ()) {
+	
+		u32 mipLevel = 1;
+		
+		ZLImage mipmap;
+		mipmap.Copy ( image );
+		
+		while ( mipmap.MipReduce ()) {
+			
+			gfx.TexImage2D (
+				mipLevel++,  
+				this->mGLInternalFormat,
+				mipmap.GetWidth (),  
+				mipmap.GetHeight (),  
+				this->mGLInternalFormat,
+				this->mGLPixelType,
+				mipmap.GetBitmapBuffer ()
+			);
+			
+			if ( this->mGfxMgr->LogErrors ()) {
+				this->CleanupOnError ();
+				return false;
 			}
-			else {
-				delete image;
-			}
+			this->mTextureSize += mipmap.GetBitmapSize ();
 		}
 	}
-	return result;
+	
+	//MOAIGfxMgr::Get ().ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
+	
+	return true;
 }
 
 //----------------------------------------------------------------//
 MOAITextureGL::MOAITextureGL () :
-	mTransform ( DEFAULT_TRANSFORM ),
-	mTextureData ( 0 ),
-	mTextureDataSize ( 0 ),
-	mTextureDataFormat ( 0 ),
-	mImage ( NULL ) {
-
+	mWidth ( 0 ),
+	mHeight ( 0 ),
+	mMinFilter ( ZGL_SAMPLE_LINEAR ),
+	mMagFilter ( ZGL_SAMPLE_NEAREST ),
+	mWrap ( ZGL_WRAP_MODE_CLAMP ),
+	mTextureSize ( 0 ) {
+	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAITextureBaseGL )
+		RTTI_EXTEND ( MOAITexture )
+		RTTI_EXTEND ( MOAIAbstractGfxResourceGL )
 	RTTI_END
 }
 
 //----------------------------------------------------------------//
 MOAITextureGL::~MOAITextureGL () {
 
-	this->Clear ();
+	this->ZLAbstractGfxResource_OnGPUDeleteOrDiscard ( true );
 }
 
 //----------------------------------------------------------------//
 void MOAITextureGL::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAITextureBaseGL::RegisterLuaClass ( state );
+	MOAITexture::RegisterLuaClass ( state );
+	MOAIAbstractGfxResourceGL::RegisterLuaClass ( state );
+	
+	state.SetField ( -1, "GL_LINEAR",					( u32 )ZGL_SAMPLE_LINEAR );
+	state.SetField ( -1, "GL_LINEAR_MIPMAP_LINEAR",		( u32 )ZGL_SAMPLE_LINEAR_MIPMAP_LINEAR );
+	state.SetField ( -1, "GL_LINEAR_MIPMAP_NEAREST",	( u32 )ZGL_SAMPLE_LINEAR_MIPMAP_NEAREST );
+	
+	state.SetField ( -1, "GL_NEAREST",					( u32 )ZGL_SAMPLE_NEAREST );
+	state.SetField ( -1, "GL_NEAREST_MIPMAP_LINEAR",	( u32 )ZGL_SAMPLE_NEAREST_MIPMAP_LINEAR );
+	state.SetField ( -1, "GL_NEAREST_MIPMAP_NEAREST",	( u32 )ZGL_SAMPLE_NEAREST_MIPMAP_NEAREST );
+	
+	state.SetField ( -1, "GL_RGBA4",					( u32 )ZGL_PIXEL_FORMAT_RGBA4 );
+	state.SetField ( -1, "GL_RGB5_A1",					( u32 )ZGL_PIXEL_FORMAT_RGB5_A1 );
+	state.SetField ( -1, "GL_DEPTH_COMPONENT16",		( u32 )ZGL_PIXEL_FORMAT_DEPTH_COMPONENT16 );
+	//***state.SetField ( -1, "GL_DEPTH_COMPONENT24",	( u32 )GL_DEPTH_COMPONENT24 );
+	//***state.SetField ( -1, "GL_STENCIL_INDEX1",		( u32 )GL_STENCIL_INDEX1 );
+	//***state.SetField ( -1, "GL_STENCIL_INDEX4",		( u32 )GL_STENCIL_INDEX4 );
+	state.SetField ( -1, "GL_STENCIL_INDEX8",			( u32 )ZGL_PIXEL_FORMAT_STENCIL_INDEX8 );
+	//***state.SetField ( -1, "GL_STENCIL_INDEX16",		( u32 )GL_STENCIL_INDEX16 );
+	
+	// TODO:
+	#ifdef MOAI_OS_ANDROID
+		state.SetField ( -1, "GL_RGB565",				( u32 )ZGL_PIXEL_FORMAT_RGB565 );
+	#else
+		state.SetField ( -1, "GL_RGBA8",				( u32 )ZGL_PIXEL_FORMAT_RGBA8 );
+	#endif
 }
 
 //----------------------------------------------------------------//
 void MOAITextureGL::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAITextureBaseGL::RegisterLuaFuncs ( state );
-	
+	MOAITexture::RegisterLuaFuncs ( state );
+	MOAIAbstractGfxResourceGL::RegisterLuaFuncs ( state );
+
 	luaL_Reg regTable [] = {
-		{ "load",					_load },
+		{ "getSize",				_getSize },
+		{ "release",				_release },
+		{ "setDebugName",			_setDebugName },
+		{ "setFilter",				_setFilter },
+		{ "setWrap",				_setWrap },
 		{ NULL, NULL }
 	};
 
@@ -316,20 +355,105 @@ void MOAITextureGL::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextureGL::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	
-	STLString path = state.GetFieldValue ( -1, "mPath", "" );
-	
-	if ( path.size ()) {
-		this->Init ( path, DEFAULT_TRANSFORM ); // TODO: serialization
-	}
+void MOAITextureGL::SetFilter ( int filter ) {
+
+	this->SetFilter ( filter, filter );
 }
 
 //----------------------------------------------------------------//
-void MOAITextureGL::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAITextureGL::SetFilter ( int min, int mag ) {
+
+	this->mMinFilter = min;
+	this->mMagFilter = mag;
 	
-	STLString path = ZLFileSys::GetRelativePath ( this->mFilename );
-	state.SetField ( -1, "mPath", path.str ());
+	this->ScheduleForGPUUpdate ();
+}
+
+//----------------------------------------------------------------//
+void MOAITextureGL::SetGLTexture ( const ZLGfxHandle& glTexture, int internalFormat, int pixelType, size_t textureSize ) {
+
+	this->mGLTexture = glTexture;
+	this->mGLInternalFormat = internalFormat;
+	this->mGLPixelType = pixelType;
+	this->mTextureSize = textureSize;
+
+	this->ScheduleForGPUUpdate ();
+}
+
+//----------------------------------------------------------------//
+void MOAITextureGL::SetWrap ( int wrap ) {
+
+	this->mWrap = wrap;
+	
+	this->ScheduleForGPUUpdate ();
+}
+
+//----------------------------------------------------------------//
+bool MOAITextureGL::ShouldGenerateMipmaps () {
+
+	return (
+		( this->mMinFilter == ZGL_SAMPLE_LINEAR_MIPMAP_LINEAR ) ||
+		( this->mMinFilter == ZGL_SAMPLE_LINEAR_MIPMAP_NEAREST ) ||
+		( this->mMinFilter == ZGL_SAMPLE_NEAREST_MIPMAP_LINEAR ) ||
+		( this->mMinFilter == ZGL_SAMPLE_NEAREST_MIPMAP_NEAREST )
+	);
+}
+
+//----------------------------------------------------------------//
+bool MOAITextureGL::UpdateTextureFromImage ( ZLImage& image, ZLIntRect rect ) {
+
+	// TODO: what happens when image is an unsupported format?
+
+	// if we need to generate mipmaps or the dimensions have changed, clear out the old texture
+	if ( this->ShouldGenerateMipmaps () || ( this->mWidth != image.GetWidth ()) || ( this->mHeight != image.GetHeight ())) {
+	
+		this->mGfxMgr->ReportTextureFree ( this->mDebugName, this->mTextureSize );
+		this->mGfxMgr->DeleteOrDiscard ( this->mGLTexture, false );
+		
+		if ( this->CreateTextureFromImage ( image )) {
+			this->mGfxMgr->ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
+			return true;
+		}
+		return false;
+	}
+	
+	ZLGfx& gfx = this->mGfxMgr->GetDrawingAPI ();
+	
+	// if the texture exists just update the sub-region
+	// otherwise create a new texture from the image
+	if ( this->mGLTexture.CanBind ()) {
+
+		gfx.BindTexture ( this->mGLTexture );
+
+		rect.Bless ();
+		ZLIntRect imageRect = image.GetRect ();
+		imageRect.Clip ( rect );
+		
+		ZLSharedConstBuffer* bitmapBuffer = image.GetBitmapBuffer ();
+		
+		ZLImage subImage;
+		if (( this->mWidth != ( u32 )rect.Width ()) || ( this->mHeight != ( u32 )rect.Height ())) {
+			subImage.GetSubImage ( image, rect ); // TODO: need to convert to correct format for texture
+			bitmapBuffer = subImage.GetBitmapBuffer ();
+		}
+
+		gfx.TexSubImage2D (
+			0,
+			rect.mXMin,
+			rect.mYMin,
+			rect.Width (),
+			rect.Height (),
+			this->mGLInternalFormat,
+			this->mGLPixelType,  
+			bitmapBuffer
+		);
+		
+		this->mGfxMgr->LogErrors ();
+		
+		return true;
+	}
+	
+	return false;
 }
 
 //================================================================//
@@ -339,54 +463,64 @@ void MOAITextureGL::SerializeOut ( MOAILuaState& state, MOAISerializer& serializ
 //----------------------------------------------------------------//
 bool MOAITextureGL::ZLAbstractGfxResource_OnCPUCreate () {
 
-	if ( this->mFilename.size ()) {
-		ZLFileStream stream;
-		stream.OpenRead ( this->mFilename );
-		this->LoadFromStream ( stream, this->mTransform );
-		stream.Close ();
-	}
-	return (( this->mImage && this->mImage->IsOK ()) || this->mTextureData );
+	return true;
 }
 
 //----------------------------------------------------------------//
 void MOAITextureGL::ZLAbstractGfxResource_OnCPUDestroy () {
-
-	// if we know the filename it is safe to clear out
-	// the image and/or buffer
-	if ( this->HasLoader () || this->mFilename.size ()) {
-		
-		// force cleanup right away - the image is now in OpenGL, why keep it around until the next GC?
-		this->ClearImage ();
-		
-		if ( this->mTextureData ) {
-			free ( this->mTextureData );
-			this->mTextureData = 0;
-		}
-		this->mTextureDataSize = 0;
-		this->mTextureDataFormat = 0;
-	}
-	
-	if ( this->HasLoader ()) {
-		this->mFilename.clear ();
-	}
 }
 
 //----------------------------------------------------------------//
-bool MOAITextureGL::ZLAbstractGfxResource_OnGPUCreate () {
-	
-	bool success = false;
-	
-	if ( this->mImage && this->mImage->IsOK ()) {
-		success =  this->CreateTextureFromImage ( *this->mImage );
+void MOAITextureGL::ZLAbstractGfxResource_OnGPUBind () {
+
+	this->mGfxMgr->GetDrawingAPI ().BindTexture ( this->mGLTexture );
+}
+
+//----------------------------------------------------------------//
+void MOAITextureGL::ZLAbstractGfxResource_OnGPUDeleteOrDiscard ( bool shouldDelete ) {
+
+	if ( this->mGLTexture.CanBind ()) {
+		this->mGfxMgr->ReportTextureFree ( this->mDebugName, this->mTextureSize );
 	}
-	else if ( this->mTextureDataFormat && this->mTextureData ) {
-		success = this->mTextureDataFormat->CreateTexture ( *this, this->mTextureData, this->mTextureDataSize );
-	}
+	this->mGfxMgr->DeleteOrDiscard ( this->mGLTexture, shouldDelete );
+	this->mGLTexture = ZLGfxHandle (); // clear out the handle
+}
+
+//----------------------------------------------------------------//
+void MOAITextureGL::ZLAbstractGfxResource_OnGPUUnbind () {
+
+	this->mGfxMgr->GetDrawingAPI ().BindTexture ( ZLGfxResource::UNBIND );
+}
+
+//----------------------------------------------------------------//
+bool MOAITextureGL::ZLAbstractGfxResource_OnGPUUpdate () {
+
+	ZLGfx& gfx = this->mGfxMgr->GetDrawingAPI ();
+
+	gfx.TexParameteri ( ZGL_TEXTURE_WRAP_S, this->mWrap );
+	gfx.TexParameteri ( ZGL_TEXTURE_WRAP_T, this->mWrap );
 	
-	if ( !success ) {
-		this->Clear ();
-		return false;
-	}
+	gfx.TexParameteri ( ZGL_TEXTURE_MIN_FILTER, this->mMinFilter );
+	gfx.TexParameteri ( ZGL_TEXTURE_MAG_FILTER, this->mMagFilter );
 	
-	return this->ZLAbstractGfxResource_OnGPUUpdate ();
+	return true;
+}
+
+//----------------------------------------------------------------//
+u32 MOAITextureGL::MOAITexture_GetHeight () const {
+
+	return this->mHeight;
+}
+
+//----------------------------------------------------------------//
+u32 MOAITextureGL::MOAITexture_GetWidth () const {
+
+	return this->mWidth;
+}
+
+//----------------------------------------------------------------//
+void MOAITextureGL::ZLGfxListener_OnGfxEvent ( u32 event, void* userdata ) {
+
+	this->mGfxMgr->ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
+	MOAIAbstractGfxResourceGL::ZLGfxListener_OnGfxEvent ( event, userdata );
 }

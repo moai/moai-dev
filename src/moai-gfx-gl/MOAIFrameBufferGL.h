@@ -22,7 +22,7 @@ class MOAIGfxMgrGL;
 			indexed from 1.
 */
 class MOAIFrameBufferGL :
-	public virtual MOAIAbstractFrameBuffer,
+	public virtual MOAIFrameBuffer,
 	public virtual ZLGfxListener {
 protected:
 	

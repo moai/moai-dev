@@ -2,18 +2,18 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx/MOAIAbstractVertexBuffer.h>
+#include <moai-gfx/MOAIVertexBuffer.h>
 
 //================================================================//
 // ZLShaderGL
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIAbstractVertexBuffer::MOAIAbstractVertexBuffer () {
+MOAIVertexBuffer::MOAIVertexBuffer () {
 
 	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractVertexBuffer::~MOAIAbstractVertexBuffer () {
+MOAIVertexBuffer::~MOAIVertexBuffer () {
 }

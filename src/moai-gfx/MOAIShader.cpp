@@ -2,18 +2,18 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx/MOAIAbstractFrameBuffer.h>
+#include <moai-gfx/MOAIShader.h>
 
 //================================================================//
 // ZLShaderGL
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIAbstractFrameBuffer::MOAIAbstractFrameBuffer () {
+MOAIShader::MOAIShader () {
 
 	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractFrameBuffer::~MOAIAbstractFrameBuffer () {
+MOAIShader::~MOAIShader () {
 }

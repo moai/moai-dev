@@ -69,7 +69,7 @@ MOAIFrameBufferTextureGL::MOAIFrameBufferTextureGL () :
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIFrameBufferGL )
-		RTTI_EXTEND ( MOAITextureBaseGL )
+		RTTI_EXTEND ( MOAITextureGL )
 	RTTI_END
  
 	this->mDebugName = "(texture from MOAIFrameBufferTextureGL)";
@@ -84,13 +84,13 @@ MOAIFrameBufferTextureGL::~MOAIFrameBufferTextureGL () {
 //----------------------------------------------------------------//
 void MOAIFrameBufferTextureGL::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIFrameBufferGL::RegisterLuaClass ( state );
-	MOAITextureBaseGL::RegisterLuaClass ( state );
+	MOAITextureGL::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIFrameBufferTextureGL::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIFrameBufferGL::RegisterLuaFuncs ( state );
-	MOAITextureBaseGL::RegisterLuaFuncs ( state );
+	MOAITextureGL::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "init",						_init },
@@ -102,12 +102,12 @@ void MOAIFrameBufferTextureGL::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIFrameBufferTextureGL::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	MOAITextureBaseGL::SerializeIn ( state, serializer );
+	MOAITextureGL::SerializeIn ( state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAIFrameBufferTextureGL::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	MOAITextureBaseGL::SerializeOut ( state, serializer );
+	MOAITextureGL::SerializeOut ( state, serializer );
 }
 
 //================================================================//
@@ -118,7 +118,7 @@ void MOAIFrameBufferTextureGL::SerializeOut ( MOAILuaState& state, MOAISerialize
 void MOAIFrameBufferTextureGL::ZLAbstractGfxResource_OnGPUBind () {
 
 	this->NeedsClear ( true );
-	MOAITextureBaseGL::ZLAbstractGfxResource_OnGPUBind ();
+	MOAITextureGL::ZLAbstractGfxResource_OnGPUBind ();
 }
 
 //----------------------------------------------------------------//
@@ -207,7 +207,7 @@ void MOAIFrameBufferTextureGL::ZLAbstractGfxResource_OnGPUDeleteOrDiscard ( bool
 	this->mGfxMgr->DeleteOrDiscard ( this->mGLDepthBuffer, shouldDelete );
 	this->mGfxMgr->DeleteOrDiscard ( this->mGLStencilBuffer, shouldDelete );
 
-	this->MOAITextureBaseGL::ZLAbstractGfxResource_OnGPUDeleteOrDiscard ( shouldDelete );
+	this->MOAITextureGL::ZLAbstractGfxResource_OnGPUDeleteOrDiscard ( shouldDelete );
 }
 
 //----------------------------------------------------------------//

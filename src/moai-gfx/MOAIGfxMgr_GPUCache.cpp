@@ -39,12 +39,12 @@ u32 MOAIGfxMgr_GPUCache::GetBufferWidth () const {
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractFrameBuffer* MOAIGfxMgr_GPUCache::GetDefaultFrameBuffer () {
+MOAIFrameBuffer* MOAIGfxMgr_GPUCache::GetDefaultFrameBuffer () {
 	return this->ZLAbstractGPU_GetDefaultFrameBuffer ();
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractTexture* MOAIGfxMgr_GPUCache::GetDefaultTexture () {
+MOAITexture* MOAIGfxMgr_GPUCache::GetDefaultTexture () {
 	return this->ZLAbstractGPU_GetDefaultTexture ();
 }
 
@@ -54,17 +54,17 @@ bool MOAIGfxMgr_GPUCache::GetDepthMask () const {
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractFrameBuffer* MOAIGfxMgr_GPUCache::GetCurrentFrameBuffer () {
+MOAIFrameBuffer* MOAIGfxMgr_GPUCache::GetCurrentFrameBuffer () {
 	return this->ZLAbstractGPU_GetCurrentFrameBuffer ();
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractShader* MOAIGfxMgr_GPUCache::GetCurrentShader () {
+MOAIShader* MOAIGfxMgr_GPUCache::GetCurrentShader () {
 	return this->ZLAbstractGPU_GetCurrentShader ();
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractVertexFormat* MOAIGfxMgr_GPUCache::GetCurrentVtxFormat () {
+MOAIVertexFormat* MOAIGfxMgr_GPUCache::GetCurrentVtxFormat () {
 	return this->ZLAbstractGPU_GetCurrentVtxFormat ();
 }
 
@@ -122,12 +122,12 @@ void MOAIGfxMgr_GPUCache::SetCullFunc ( int cullFunc ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgr_GPUCache::SetDefaultFrameBuffer ( MOAIAbstractFrameBuffer* frameBuffer ) {
+void MOAIGfxMgr_GPUCache::SetDefaultFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 	return this->ZLAbstractGPU_SetDefaultFrameBuffer ( frameBuffer );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgr_GPUCache::SetDefaultTexture ( MOAIAbstractTexture* texture ) {
+void MOAIGfxMgr_GPUCache::SetDefaultTexture ( MOAITexture* texture ) {
 	return this->ZLAbstractGPU_SetDefaultTexture ( texture );
 }
 
@@ -147,12 +147,12 @@ void MOAIGfxMgr_GPUCache::SetDepthMask ( bool depthMask ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxMgr_GPUCache::SetFrameBuffer ( MOAIAbstractFrameBuffer* frameBuffer ) {
+bool MOAIGfxMgr_GPUCache::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 	return this->ZLAbstractGPU_SetFrameBuffer ( frameBuffer );
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxMgr_GPUCache::SetIndexBuffer ( MOAIAbstractIndexBuffer* buffer ) {
+bool MOAIGfxMgr_GPUCache::SetIndexBuffer ( MOAIIndexBuffer* buffer ) {
 	return this->ZLAbstractGPU_SetIndexBuffer ( buffer );
 }
 
@@ -172,27 +172,27 @@ void MOAIGfxMgr_GPUCache::SetScissorRect ( ZLRect rect ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxMgr_GPUCache::SetShader ( MOAIAbstractShader* shader ) {
+bool MOAIGfxMgr_GPUCache::SetShader ( MOAIShader* shader ) {
 	return this->ZLAbstractGPU_SetShader ( shader );
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxMgr_GPUCache::SetTexture ( MOAIAbstractTexture* texture, ZLIndex textureUnit ) {
+bool MOAIGfxMgr_GPUCache::SetTexture ( MOAITexture* texture, ZLIndex textureUnit ) {
 	return this->ZLAbstractGPU_SetTexture ( texture, textureUnit );
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxMgr_GPUCache::SetVertexArray ( MOAIAbstractVertexArray* vtxArray ) {
+bool MOAIGfxMgr_GPUCache::SetVertexArray ( MOAIVertexArray* vtxArray ) {
 	return this->ZLAbstractGPU_SetVertexArray ( vtxArray );
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxMgr_GPUCache::SetVertexBuffer ( MOAIAbstractVertexBuffer* buffer ) {
+bool MOAIGfxMgr_GPUCache::SetVertexBuffer ( MOAIVertexBuffer* buffer ) {
 	return this->ZLAbstractGPU_SetVertexBuffer ( buffer );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgr_GPUCache::SetVertexFormat ( MOAIAbstractVertexFormat* format ) {
+void MOAIGfxMgr_GPUCache::SetVertexFormat ( MOAIVertexFormat* format ) {
 	return this->ZLAbstractGPU_SetVertexFormat ( format );
 }
 

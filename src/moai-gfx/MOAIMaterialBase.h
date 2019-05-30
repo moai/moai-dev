@@ -6,8 +6,8 @@
 
 #include <moai-gfx/MOAIBlendMode.h>
 
-class MOAIAbstractShader;
-class MOAIAbstractTexture;
+class MOAIShader;
+class MOAITexture;
 
 //================================================================//
 // MOAIMaterialBase
@@ -35,8 +35,8 @@ protected:
 	static const u32	DRAW_FLAGS	= BLEND_MODE_FLAG | CULL_MODE_FLAG | DEPTH_MASK_FLAG | DEPTH_TEST_FLAG;
 	static const u32	ALL_FLAGS	= MAX_FLAG - 1;
 	
-	ZLStrongPtr < MOAIAbstractShader >	mShader;
-	ZLStrongPtr < MOAIAbstractTexture >	mTexture;
+	ZLStrongPtr < MOAIShader >	mShader;
+	ZLStrongPtr < MOAITexture >	mTexture;
 	
 	MOAIBlendMode		mBlendMode;
 	int					mCullMode;
@@ -54,8 +54,8 @@ public:
 	GET ( int, CullMode, mCullMode );
 	GET ( int, DepthTest, mDepthTest );
 	GET ( bool, DepthMask, mDepthMask );
-	GET ( MOAIAbstractShader*, Shader, mShader );
-	GET ( MOAIAbstractTexture*, Texture, mTexture );
+	GET ( MOAIShader*, Shader, mShader );
+	GET ( MOAITexture*, Texture, mTexture );
 
 	//----------------------------------------------------------------//
 	void			Clear						();
@@ -70,9 +70,9 @@ public:
 	void			SetDepthTest				();
 	void			SetDepthTest				( int depthTest );
 	void			SetShader					();
-	void			SetShader					( MOAIAbstractShader* shader );
+	void			SetShader					( MOAIShader* shader );
 	void			SetTexture					();
-	void			SetTexture					( MOAIAbstractTexture* texture );
+	void			SetTexture					( MOAITexture* texture );
 };
 
 #endif

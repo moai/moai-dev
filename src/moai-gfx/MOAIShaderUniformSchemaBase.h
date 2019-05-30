@@ -4,13 +4,13 @@
 #ifndef	MOAISHADERUNIFORMSCHEMABASE_H
 #define	MOAISHADERUNIFORMSCHEMABASE_H
 
-#include <moai-gfx/MOAIAbstractShaderUniformSchema.h>
+#include <moai-gfx/MOAIShaderUniformSchema.h>
 
 //================================================================//
 // MOAIShaderUniformSchemaBase
 //================================================================//
 class MOAIShaderUniformSchemaBase :
-	public virtual MOAIAbstractShaderUniformSchema {
+	public virtual MOAIShaderUniformSchema {
 public:
 	
 	//----------------------------------------------------------------//

@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx/MOAIAbstractVertexFormat.h>
+#include <moai-gfx/MOAIVertexFormat.h>
 
 //================================================================//
 // local
@@ -10,8 +10,8 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIAbstractVertexFormat::_clear ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractVertexFormat, "U" )
+int MOAIVertexFormat::_clear ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
 	
 	self->Clear ();
 	return 0;
@@ -21,16 +21,16 @@ int MOAIAbstractVertexFormat::_clear ( lua_State* L ) {
 /**	@lua	declareAttribute
 	@text	Declare a custom attribute (for use with programmable pipeline).
  
-	@in		MOAIAbstractVertexFormat self
+	@in		MOAIVertexFormat self
 	@in		number index		Default value is 1.
 	@in		number type			Data type of component elements. See OpenGL ES documentation.
 	@in		number size			Number of elements. See OpenGL ES documentation.
 	@opt	boolean normalized	See OpenGL ES documentation.
-	@opt	number use			One of MOAIAbstractVertexFormat.ATTRIBUTE_COLOR, MOAIAbstractVertexFormat.ATTRIBUTE_NORMAL, MOAIAbstractVertexFormat.ATTRIBUTE_TEX_COORD, MOAIAbstractVertexFormat.ATTRIBUTE_COORD, MOAIAbstractVertexFormat.VERTEX_USER,
+	@opt	number use			One of MOAIVertexFormat.ATTRIBUTE_COLOR, MOAIVertexFormat.ATTRIBUTE_NORMAL, MOAIVertexFormat.ATTRIBUTE_TEX_COORD, MOAIVertexFormat.ATTRIBUTE_COORD, MOAIVertexFormat.VERTEX_USER,
 	@out	nil
 */
-int	MOAIAbstractVertexFormat::_declareAttribute ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractVertexFormat, "UNNN" )
+int	MOAIVertexFormat::_declareAttribute ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVertexFormat, "UNNN" )
 
 	ZLIndex index		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	u32 type			= state.GetValue < u32 >( 3, 0 );
@@ -46,8 +46,8 @@ int	MOAIAbstractVertexFormat::_declareAttribute ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIAbstractVertexFormat::_declareBoneCount ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractVertexFormat, "U" )
+int MOAIVertexFormat::_declareBoneCount ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
 	
 	ZLIndex index		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	u32 type			= state.GetValue < u32 >( 3, ZGL_TYPE_UNSIGNED_BYTE );
@@ -59,8 +59,8 @@ int MOAIAbstractVertexFormat::_declareBoneCount ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIAbstractVertexFormat::_declareBoneIndices ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractVertexFormat, "U" )
+int MOAIVertexFormat::_declareBoneIndices ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
 	
 	ZLIndex index		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	u32 type			= state.GetValue < u32 >( 3, ZGL_TYPE_UNSIGNED_BYTE );
@@ -73,8 +73,8 @@ int MOAIAbstractVertexFormat::_declareBoneIndices ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIAbstractVertexFormat::_declareBoneWeights ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractVertexFormat, "U" )
+int MOAIVertexFormat::_declareBoneWeights ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
 	
 	ZLIndex index		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	u32 type			= state.GetValue < u32 >( 3, ZGL_TYPE_FLOAT );
@@ -89,13 +89,13 @@ int MOAIAbstractVertexFormat::_declareBoneWeights ( lua_State* L ) {
 /**	@lua	declareColor
 	@text	Declare a vertex color.
  
-	@in		MOAIAbstractVertexFormat self
+	@in		MOAIVertexFormat self
 	@in		number index
 	@in		number type			Data type of component elements. See OpenGL ES documentation.
 	@out	nil
 */
-int MOAIAbstractVertexFormat::_declareColor ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractVertexFormat, "U" )
+int MOAIVertexFormat::_declareColor ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
 
 	ZLIndex index		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	u32 type			= state.GetValue < u32 >( 3, ZGL_TYPE_UNSIGNED_BYTE );
@@ -109,14 +109,14 @@ int MOAIAbstractVertexFormat::_declareColor ( lua_State* L ) {
 /**	@lua	declareCoord
 	@text	Declare a vertex coordinate.
  
-	@in		MOAIAbstractVertexFormat self
+	@in		MOAIVertexFormat self
 	@in		number index
 	@in		number type			Data type of coordinate elements. See OpenGL ES documentation.
 	@in		number size			Number of coordinate elements. See OpenGL ES documentation.
 	@out	nil
 */
-int MOAIAbstractVertexFormat::_declareCoord ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractVertexFormat, "U" )
+int MOAIVertexFormat::_declareCoord ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
 
 	ZLIndex index		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	u32 type			= state.GetValue < u32 >( 3, ZGL_TYPE_FLOAT );
@@ -131,13 +131,13 @@ int MOAIAbstractVertexFormat::_declareCoord ( lua_State* L ) {
 /**	@lua	declareNormal
 	@text	Declare a vertex normal.
  
-	@in		MOAIAbstractVertexFormat self
+	@in		MOAIVertexFormat self
 	@in		number index
 	@in		number type			Data type of normal elements. See OpenGL ES documentation.
 	@out	nil
 */
-int MOAIAbstractVertexFormat::_declareNormal ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractVertexFormat, "U" )
+int MOAIVertexFormat::_declareNormal ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
 	
 	ZLIndex index		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	u32 type			= state.GetValue < u32 >( 3, ZGL_TYPE_FLOAT );
@@ -151,14 +151,14 @@ int MOAIAbstractVertexFormat::_declareNormal ( lua_State* L ) {
 /**	@lua	declareUV
 	@text	Declare a vertex texture coordinate.
  
-	@in		MOAIAbstractVertexFormat self
+	@in		MOAIVertexFormat self
 	@in		number index
 	@in		number type			Data type of texture coordinate elements. See OpenGL ES documentation.
 	@in		number size			Number of texture coordinate elements. See OpenGL ES documentation.
 	@out	nil
 */
-int MOAIAbstractVertexFormat::_declareUV ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractVertexFormat, "U" )
+int MOAIVertexFormat::_declareUV ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
 
 	ZLIndex index		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	u32 type			= state.GetValue < u32 >( 3, ZGL_TYPE_FLOAT );
@@ -173,22 +173,22 @@ int MOAIAbstractVertexFormat::_declareUV ( lua_State* L ) {
 /**	@lua	getVertexSize
 	@text	Return the size (in bytes) of the vertex described by the vertex format.
  
-	@in		MOAIAbstractVertexFormat self
+	@in		MOAIVertexFormat self
 	@out	number vertexSizeInBytes
 */
-int MOAIAbstractVertexFormat::_getVertexSize ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractVertexFormat, "U" )
+int MOAIVertexFormat::_getVertexSize ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
 
 	state.Push ( MOAILuaSize ( self->mVertexSize ));
 	return 1;
 }
 
 //================================================================//
-// MOAIAbstractVertexFormat
+// MOAIVertexFormat
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAbstractVertexFormat::Clear () {
+void MOAIVertexFormat::Clear () {
 
 	for ( u32 i = 0; i < TOTAL_ATTRIBUTE_TYPES; ++i ) {
 		this->mAttributeIDsByUse [ i ].Clear ();
@@ -200,7 +200,7 @@ void MOAIAbstractVertexFormat::Clear () {
 }
 
 //----------------------------------------------------------------//
-int MOAIAbstractVertexFormat::Compare ( const void* v0, const void* v1, float componentEpsilon, float normEpsilon ) const {
+int MOAIVertexFormat::Compare ( const void* v0, const void* v1, float componentEpsilon, float normEpsilon ) const {
 
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mTotalAttributes; ++i ) {
 
@@ -211,8 +211,8 @@ int MOAIAbstractVertexFormat::Compare ( const void* v0, const void* v1, float co
 		const void* a0 = ( const void* )(( size_t )v0 + attribute.mOffset );
 		const void* a1 = ( const void* )(( size_t )v1 + attribute.mOffset );
 		
-		ZLVec4D coord0 = MOAIAbstractVertexFormat::UnpackCoord ( a0, attribute );
-		ZLVec4D coord1 = MOAIAbstractVertexFormat::UnpackCoord ( a1, attribute );
+		ZLVec4D coord0 = MOAIVertexFormat::UnpackCoord ( a0, attribute );
+		ZLVec4D coord1 = MOAIVertexFormat::UnpackCoord ( a1, attribute );
 		
 		if ( attribute.mUse == ATTRIBUTE_NORMAL ) {
 		
@@ -259,7 +259,7 @@ int MOAIAbstractVertexFormat::Compare ( const void* v0, const void* v1, float co
 }
 
 //----------------------------------------------------------------//
-bool MOAIAbstractVertexFormat::ComputeAABB ( ZLBox& aabb, const void* buffer, size_t size ) const {
+bool MOAIVertexFormat::ComputeAABB ( ZLBox& aabb, const void* buffer, size_t size ) const {
 
 	ZLByteStream stream;
 	stream.SetBuffer ( buffer, size, size );
@@ -267,7 +267,7 @@ bool MOAIAbstractVertexFormat::ComputeAABB ( ZLBox& aabb, const void* buffer, si
 }
 
 //----------------------------------------------------------------//
-bool MOAIAbstractVertexFormat::ComputeAABB ( ZLBox& aabb, ZLStream& stream, size_t size ) const {
+bool MOAIVertexFormat::ComputeAABB ( ZLBox& aabb, ZLStream& stream, size_t size ) const {
 
 	u32 total = this->mVertexSize ? ( u32 )( size / this->mVertexSize ) : 0; // TODO: cast
 	if ( !total ) return false;
@@ -307,19 +307,19 @@ bool MOAIAbstractVertexFormat::ComputeAABB ( ZLBox& aabb, ZLStream& stream, size
 }
 
 //----------------------------------------------------------------//
-u32 MOAIAbstractVertexFormat::CountAttributesByUse ( u32 useID ) const {
+u32 MOAIVertexFormat::CountAttributesByUse ( u32 useID ) const {
 
 	return useID < TOTAL_ATTRIBUTE_TYPES ? this->mTotalAttributesByUse [ useID ] : 0;
 }
 
 //----------------------------------------------------------------//
-u32 MOAIAbstractVertexFormat::CountAttributeComponents ( ZLIndex attrIdx ) const {
+u32 MOAIVertexFormat::CountAttributeComponents ( ZLIndex attrIdx ) const {
 
 	return attrIdx < this->mAttributes.Size () ? this->mAttributes [ attrIdx ].mSize : 0;
 }
 
 //----------------------------------------------------------------//
-u32 MOAIAbstractVertexFormat::CountAttributeComponents ( u32 useID, ZLIndex idx ) const {
+u32 MOAIVertexFormat::CountAttributeComponents ( u32 useID, ZLIndex idx ) const {
 
 	if (( useID < TOTAL_ATTRIBUTE_TYPES ) && ( idx < this->mAttributeIDsByUse [ useID ].Size ())) {
 		return this->CountAttributeComponents( this->mAttributeIDsByUse [ useID ][ idx ]);
@@ -328,7 +328,7 @@ u32 MOAIAbstractVertexFormat::CountAttributeComponents ( u32 useID, ZLIndex idx 
 }
 
 //----------------------------------------------------------------//
-u32 MOAIAbstractVertexFormat::CountBones () const {
+u32 MOAIVertexFormat::CountBones () const {
 
 	u32 nIndices = this->CountComponentsByUse ( ATTRIBUTE_BONE_INDICES );
 	u32 nWeights = this->CountComponentsByUse ( ATTRIBUTE_BONE_WEIGHTS );
@@ -337,7 +337,7 @@ u32 MOAIAbstractVertexFormat::CountBones () const {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIAbstractVertexFormat::CountComponentsByUse ( u32 useID ) const {
+u32 MOAIVertexFormat::CountComponentsByUse ( u32 useID ) const {
 
 	u32 nComponents = 0;
 	u32 nAttributes = this->mTotalAttributesByUse [ useID ];
@@ -351,7 +351,7 @@ u32 MOAIAbstractVertexFormat::CountComponentsByUse ( u32 useID ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractVertexFormat::DeclareAttribute ( ZLIndex index, u32 type, u32 size, u32 use, bool normalized ) {
+void MOAIVertexFormat::DeclareAttribute ( ZLIndex index, u32 type, u32 size, u32 use, bool normalized ) {
 
 	ZLIndex attrIdx = ZLIndexCast ( this->mTotalAttributes++ );
 	this->mAttributes.Grow ( this->mTotalAttributes );
@@ -365,7 +365,7 @@ void MOAIAbstractVertexFormat::DeclareAttribute ( ZLIndex index, u32 type, u32 s
 	attr.mUse			= use;
 	attr.mNormalized	= normalized;
 	attr.mOffset		= offset;
-	attr.mSizeInBytes	= MOAIAbstractVertexFormat::GetComponentSize ( size, type );
+	attr.mSizeInBytes	= MOAIVertexFormat::GetComponentSize ( size, type );
 	
 	this->mVertexSize	+= attr.mSizeInBytes;
 	
@@ -379,14 +379,14 @@ void MOAIAbstractVertexFormat::DeclareAttribute ( ZLIndex index, u32 type, u32 s
 }
 
 //----------------------------------------------------------------//
-const MOAIVertexAttribute& MOAIAbstractVertexFormat::GetAttribute ( ZLIndex attrIdx ) {
+const MOAIVertexAttribute& MOAIVertexFormat::GetAttribute ( ZLIndex attrIdx ) {
 
 	assert ( attrIdx < this->mAttributes.Size ());
 	return this->mAttributes [ attrIdx ];
 }
 
 //----------------------------------------------------------------//
-const MOAIVertexAttribute* MOAIAbstractVertexFormat::GetAttributeByUse ( u32 useID, ZLIndex attrIndex ) const {
+const MOAIVertexAttribute* MOAIVertexFormat::GetAttributeByUse ( u32 useID, ZLIndex attrIndex ) const {
 
 	if ( attrIndex < this->mTotalAttributesByUse [ useID ]) {
 		return &this->mAttributes [ this->mAttributeIDsByUse [ useID ][ attrIndex ]];
@@ -395,7 +395,7 @@ const MOAIVertexAttribute* MOAIAbstractVertexFormat::GetAttributeByUse ( u32 use
 }
 
 //----------------------------------------------------------------//
-u32 MOAIAbstractVertexFormat::GetComponentSize ( u32 size, u32 type ) {
+u32 MOAIVertexFormat::GetComponentSize ( u32 size, u32 type ) {
 
 	u32 bytes;
 	switch ( type ) {
@@ -424,7 +424,7 @@ u32 MOAIAbstractVertexFormat::GetComponentSize ( u32 size, u32 type ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIAbstractVertexFormat::GetLuaIndexForUseID ( u32 useID ) {
+u32 MOAIVertexFormat::GetLuaIndexForUseID ( u32 useID ) {
 
 	switch ( useID ) {
 		case ATTRIBUTE_BONE_INDICES:	return 'i';
@@ -442,7 +442,7 @@ u32 MOAIAbstractVertexFormat::GetLuaIndexForUseID ( u32 useID ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIAbstractVertexFormat::GetUseIDForLuaIndex ( u32 idx ) {
+u32 MOAIVertexFormat::GetUseIDForLuaIndex ( u32 idx ) {
 
 	switch ( idx ) {
 		case 'i':						return ATTRIBUTE_BONE_INDICES;
@@ -460,7 +460,7 @@ u32 MOAIAbstractVertexFormat::GetUseIDForLuaIndex ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractVertexFormat::MOAIAbstractVertexFormat () :
+MOAIVertexFormat::MOAIVertexFormat () :
 	mTotalAttributes ( 0 ),
 	mVertexSize ( 0 ) {
 	
@@ -474,11 +474,11 @@ MOAIAbstractVertexFormat::MOAIAbstractVertexFormat () :
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractVertexFormat::~MOAIAbstractVertexFormat () {
+MOAIVertexFormat::~MOAIVertexFormat () {
 }
 
 //----------------------------------------------------------------//
-size_t MOAIAbstractVertexFormat::PackAttribute ( void* buffer, const ZLVec4D& coord, const MOAIVertexAttribute& attribute ) {
+size_t MOAIVertexFormat::PackAttribute ( void* buffer, const ZLVec4D& coord, const MOAIVertexAttribute& attribute ) {
 
 	u32 components = attribute.mSize;
 	bool normalized = attribute.mNormalized;
@@ -486,32 +486,32 @@ size_t MOAIAbstractVertexFormat::PackAttribute ( void* buffer, const ZLVec4D& co
 	switch ( attribute.mType ) {
 	
 		case ZGL_TYPE_BYTE:
-			return MOAIAbstractVertexFormat::PackAttribute < s8 >( buffer, coord, components, normalized ? 127.0f : 1.0f );
+			return MOAIVertexFormat::PackAttribute < s8 >( buffer, coord, components, normalized ? 127.0f : 1.0f );
 		
 		case ZGL_TYPE_FLOAT:
-			return MOAIAbstractVertexFormat::PackAttribute < float >( buffer, coord, components, 1.0f );
+			return MOAIVertexFormat::PackAttribute < float >( buffer, coord, components, 1.0f );
 		
 		case ZGL_TYPE_SHORT:
-			return MOAIAbstractVertexFormat::PackAttribute < s16 >( buffer, coord, components, normalized ? 32767.0f : 1.0f );
+			return MOAIVertexFormat::PackAttribute < s16 >( buffer, coord, components, normalized ? 32767.0f : 1.0f );
 		
 		case ZGL_TYPE_UNSIGNED_BYTE:
-			return MOAIAbstractVertexFormat::PackAttribute < u8 >( buffer, coord, components, normalized ? 255.0f : 1.0f );
+			return MOAIVertexFormat::PackAttribute < u8 >( buffer, coord, components, normalized ? 255.0f : 1.0f );
 		
 		case ZGL_TYPE_UNSIGNED_SHORT:
-			return MOAIAbstractVertexFormat::PackAttribute < u16 >( buffer, coord, components, normalized ? 65535.0f : 1.0f );
+			return MOAIVertexFormat::PackAttribute < u16 >( buffer, coord, components, normalized ? 65535.0f : 1.0f );
 	}
 	
 	return 0;
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractVertexFormat::PrintVertices ( ZLStream& stream ) const {
+void MOAIVertexFormat::PrintVertices ( ZLStream& stream ) const {
 
 	this->PrintVertices ( stream, stream.GetLength () - stream.GetCursor ());
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractVertexFormat::PrintVertices ( ZLStream& stream, size_t size ) const {
+void MOAIVertexFormat::PrintVertices ( ZLStream& stream, size_t size ) const {
 
 	u32 total = this->mVertexSize ? ( u32 )( size / this->mVertexSize ) : 0; // TODO: cast
 	if ( !total ) return;
@@ -560,7 +560,7 @@ void MOAIAbstractVertexFormat::PrintVertices ( ZLStream& stream, size_t size ) c
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractVertexFormat::PrintVertices ( const void* buffer, size_t size ) const {
+void MOAIVertexFormat::PrintVertices ( const void* buffer, size_t size ) const {
 
 	ZLByteStream stream;
 	stream.SetBuffer ( buffer, size, size );
@@ -568,7 +568,7 @@ void MOAIAbstractVertexFormat::PrintVertices ( const void* buffer, size_t size )
 }
 
 //----------------------------------------------------------------//
-ZLVec4D MOAIAbstractVertexFormat::ReadAttribute ( ZLStream& stream, ZLIndex attrIdx, float yFallback, float zFallback, float wFallback ) const {
+ZLVec4D MOAIVertexFormat::ReadAttribute ( ZLStream& stream, ZLIndex attrIdx, float yFallback, float zFallback, float wFallback ) const {
 
 	if ( attrIdx < this->mTotalAttributes ) {
 	
@@ -587,7 +587,7 @@ ZLVec4D MOAIAbstractVertexFormat::ReadAttribute ( ZLStream& stream, ZLIndex attr
 }
 
 //----------------------------------------------------------------//
-ZLVec4D MOAIAbstractVertexFormat::ReadAttribute ( ZLStream& stream, u32 useID, ZLIndex idx, float yFallback, float zFallback, float wFallback ) const {
+ZLVec4D MOAIVertexFormat::ReadAttribute ( ZLStream& stream, u32 useID, ZLIndex idx, float yFallback, float zFallback, float wFallback ) const {
 
 	if ( idx < this->mTotalAttributesByUse [ useID ]) {
 		return this->ReadAttribute ( stream, this->mAttributeIDsByUse [ useID ][ idx ], yFallback, zFallback, wFallback);
@@ -596,14 +596,14 @@ ZLVec4D MOAIAbstractVertexFormat::ReadAttribute ( ZLStream& stream, u32 useID, Z
 }
 
 //----------------------------------------------------------------//
-u32 MOAIAbstractVertexFormat::ReadBoneCount ( ZLStream& stream, ZLIndex idx ) const {
+u32 MOAIVertexFormat::ReadBoneCount ( ZLStream& stream, ZLIndex idx ) const {
 
 	ZLVec4D boneCount = this->ReadAttribute ( stream, ATTRIBUTE_BONE_COUNT, idx, 0.0f, 0.0f, 0.0f );
 	return ( u32 )boneCount.mX;
 }
 
 //----------------------------------------------------------------//
-size_t MOAIAbstractVertexFormat::ReadBones ( ZLStream& stream, float* indices, float* weights, size_t size ) const {
+size_t MOAIVertexFormat::ReadBones ( ZLStream& stream, float* indices, float* weights, size_t size ) const {
 	
 	size_t nIndices = this->ReadComponents ( stream, ATTRIBUTE_BONE_INDICES, indices, size );
 	size_t nWeights = this->ReadComponents ( stream, ATTRIBUTE_BONE_WEIGHTS, weights, size );
@@ -612,14 +612,14 @@ size_t MOAIAbstractVertexFormat::ReadBones ( ZLStream& stream, float* indices, f
 }
 
 //----------------------------------------------------------------//
-ZLColorVec MOAIAbstractVertexFormat::ReadColor ( ZLStream& stream, ZLIndex idx ) const {
+ZLColorVec MOAIVertexFormat::ReadColor ( ZLStream& stream, ZLIndex idx ) const {
 
 	ZLVec4D color = this->ReadAttribute ( stream, ATTRIBUTE_COLOR, idx, 0.0f, 0.0f, 1.0f );
 	return ZLColorVec ( color.mX, color.mY, color.mZ, color.mW );
 }
 
 //----------------------------------------------------------------//
-size_t MOAIAbstractVertexFormat::ReadComponents ( ZLStream& stream, u32 useID, float* components, size_t size ) const {
+size_t MOAIVertexFormat::ReadComponents ( ZLStream& stream, u32 useID, float* components, size_t size ) const {
 
 	size_t remaining = size;
 	size_t n = this->mTotalAttributesByUse [ useID ];
@@ -642,25 +642,25 @@ size_t MOAIAbstractVertexFormat::ReadComponents ( ZLStream& stream, u32 useID, f
 }
 
 //----------------------------------------------------------------//
-ZLVec4D MOAIAbstractVertexFormat::ReadCoord ( ZLStream& stream, ZLIndex idx ) const {
+ZLVec4D MOAIVertexFormat::ReadCoord ( ZLStream& stream, ZLIndex idx ) const {
 
 	return this->ReadAttribute ( stream, ATTRIBUTE_COORD, idx, 0.0f, 0.0f, 1.0f );
 }
 
 //----------------------------------------------------------------//
-ZLVec3D MOAIAbstractVertexFormat::ReadNormal ( ZLStream& stream, ZLIndex idx ) const {
+ZLVec3D MOAIVertexFormat::ReadNormal ( ZLStream& stream, ZLIndex idx ) const {
 
 	return this->ReadAttribute ( stream, ATTRIBUTE_NORMAL, idx, 0.0f, 0.0f, 1.0f );
 }
 
 //----------------------------------------------------------------//
-ZLVec3D MOAIAbstractVertexFormat::ReadUV ( ZLStream& stream, ZLIndex idx ) const {
+ZLVec3D MOAIVertexFormat::ReadUV ( ZLStream& stream, ZLIndex idx ) const {
 
 	return this->ReadAttribute ( stream, ATTRIBUTE_TEX_COORD, idx, 0.0f, 0.0f, 1.0f );
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractVertexFormat::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIVertexFormat::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "GL_BYTE",					( u32 )ZGL_TYPE_BYTE );
 	state.SetField ( -1, "GL_FLOAT",				( u32 )ZGL_TYPE_FLOAT );
@@ -678,7 +678,7 @@ void MOAIAbstractVertexFormat::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractVertexFormat::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIVertexFormat::RegisterLuaFuncs ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "clear",					_clear },
@@ -698,14 +698,14 @@ void MOAIAbstractVertexFormat::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-size_t MOAIAbstractVertexFormat::SeekVertex ( ZLStream& stream, size_t base, size_t vertex ) const {
+size_t MOAIVertexFormat::SeekVertex ( ZLStream& stream, size_t base, size_t vertex ) const {
 
 	stream.SetCursor ( base + ( vertex * this->mVertexSize ));
 	return stream.GetCursor ();
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractVertexFormat::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIVertexFormat::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 
 	this->mTotalAttributes		= state.GetFieldValue < cc8*, u32 >( -1, "mTotalAttributes", 0 );
@@ -733,7 +733,7 @@ void MOAIAbstractVertexFormat::SerializeIn ( MOAILuaState& state, MOAIDeserializ
 	state.PushField ( -1, "mAttributeUseTable" );
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < TOTAL_ATTRIBUTE_TYPES; ++i ) {
 		
-		u32 luaUseIdx = MOAIAbstractVertexFormat::GetLuaIndexForUseID ( i );
+		u32 luaUseIdx = MOAIVertexFormat::GetLuaIndexForUseID ( i );
 		state.PushField ( -1, luaUseIdx );
 		
 		u32 nAttributesByUse = ( u32 )state.GetTableSize ( -1 );
@@ -750,7 +750,7 @@ void MOAIAbstractVertexFormat::SerializeIn ( MOAILuaState& state, MOAIDeserializ
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractVertexFormat::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIVertexFormat::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
 
 	state.SetField ( -1, "mTotalAttributes", MOAILuaSize ( this->mTotalAttributes ));
@@ -777,7 +777,7 @@ void MOAIAbstractVertexFormat::SerializeOut ( MOAILuaState& state, MOAISerialize
 	lua_newtable ( state );
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < TOTAL_ATTRIBUTE_TYPES; ++i ) {
 		
-		state.Push ( MOAIAbstractVertexFormat::GetLuaIndexForUseID ( i ));
+		state.Push ( MOAIVertexFormat::GetLuaIndexForUseID ( i ));
 		lua_newtable ( state );
 		
 		ZLSize nAttributesByUse = this->mTotalAttributesByUse [ i ];
@@ -790,7 +790,7 @@ void MOAIAbstractVertexFormat::SerializeOut ( MOAILuaState& state, MOAISerialize
 }
 
 //----------------------------------------------------------------//
-ZLVec4D MOAIAbstractVertexFormat::UnpackAttribute ( const void* buffer, const MOAIVertexAttribute& attribute, float yFallback, float zFallback, float wFallback ) {
+ZLVec4D MOAIVertexFormat::UnpackAttribute ( const void* buffer, const MOAIVertexAttribute& attribute, float yFallback, float zFallback, float wFallback ) {
 
 	u32 components = attribute.mSize;
 	bool normalized = attribute.mNormalized;
@@ -798,32 +798,32 @@ ZLVec4D MOAIAbstractVertexFormat::UnpackAttribute ( const void* buffer, const MO
 	switch ( attribute.mType ) {
 	
 		case ZGL_TYPE_BYTE:
-			return MOAIAbstractVertexFormat::UnpackAttribute < s8 >( buffer, components, yFallback, zFallback, wFallback, normalized ? 127.0f : 1.0f );
+			return MOAIVertexFormat::UnpackAttribute < s8 >( buffer, components, yFallback, zFallback, wFallback, normalized ? 127.0f : 1.0f );
 		
 		case ZGL_TYPE_FLOAT:
-			return MOAIAbstractVertexFormat::UnpackAttribute < float >( buffer, components, yFallback, zFallback, wFallback, 1.0f );
+			return MOAIVertexFormat::UnpackAttribute < float >( buffer, components, yFallback, zFallback, wFallback, 1.0f );
 		
 		case ZGL_TYPE_SHORT:
-			return MOAIAbstractVertexFormat::UnpackAttribute < s16 >( buffer, components, yFallback, zFallback, wFallback, normalized ? 32767.0f : 1.0f );
+			return MOAIVertexFormat::UnpackAttribute < s16 >( buffer, components, yFallback, zFallback, wFallback, normalized ? 32767.0f : 1.0f );
 		
 		case ZGL_TYPE_UNSIGNED_BYTE:
-			return MOAIAbstractVertexFormat::UnpackAttribute < u8 >( buffer, components, yFallback, zFallback, wFallback, normalized ? 255.0f : 1.0f );
+			return MOAIVertexFormat::UnpackAttribute < u8 >( buffer, components, yFallback, zFallback, wFallback, normalized ? 255.0f : 1.0f );
 		
 		case ZGL_TYPE_UNSIGNED_SHORT:
-			return MOAIAbstractVertexFormat::UnpackAttribute < u16 >( buffer, components, yFallback, zFallback, wFallback, normalized ? 65535.0f : 1.0f );
+			return MOAIVertexFormat::UnpackAttribute < u16 >( buffer, components, yFallback, zFallback, wFallback, normalized ? 65535.0f : 1.0f );
 	}
 
 	return ZLVec4D ( 0.0f, 0.0f, 0.0f, 0.0f );
 }
 
 //----------------------------------------------------------------//
-ZLVec4D MOAIAbstractVertexFormat::UnpackCoord ( const void* buffer, const MOAIVertexAttribute& attribute ) {
+ZLVec4D MOAIVertexFormat::UnpackCoord ( const void* buffer, const MOAIVertexAttribute& attribute ) {
 	
-	return MOAIAbstractVertexFormat::UnpackAttribute ( buffer, attribute, 0.0f, 0.0f, 1.0f );
+	return MOAIVertexFormat::UnpackAttribute ( buffer, attribute, 0.0f, 0.0f, 1.0f );
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractVertexFormat::WriteAhead ( ZLStream& stream ) const {
+void MOAIVertexFormat::WriteAhead ( ZLStream& stream ) const {
 
 	size_t base = stream.GetCursor ();
 
@@ -835,7 +835,7 @@ void MOAIAbstractVertexFormat::WriteAhead ( ZLStream& stream ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractVertexFormat::WriteAttribute ( ZLStream& stream, ZLIndex attrIdx, float x, float y, float z, float w ) const {
+void MOAIVertexFormat::WriteAttribute ( ZLStream& stream, ZLIndex attrIdx, float x, float y, float z, float w ) const {
 
 	if ( attrIdx < this->mTotalAttributes ) {
 	
@@ -855,7 +855,7 @@ void MOAIAbstractVertexFormat::WriteAttribute ( ZLStream& stream, ZLIndex attrId
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractVertexFormat::WriteAttribute ( ZLStream& stream, u32 useID, ZLIndex idx, float x, float y, float z, float w ) const {
+void MOAIVertexFormat::WriteAttribute ( ZLStream& stream, u32 useID, ZLIndex idx, float x, float y, float z, float w ) const {
 
 	if ( idx < this->mTotalAttributesByUse [ useID ]) {
 		this->WriteAttribute ( stream, this->mAttributeIDsByUse [ useID ][ idx ], x, y, z, w );
@@ -863,13 +863,13 @@ void MOAIAbstractVertexFormat::WriteAttribute ( ZLStream& stream, u32 useID, ZLI
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractVertexFormat::WriteBoneCount ( ZLStream& stream, ZLIndex idx, u32 count ) const {
+void MOAIVertexFormat::WriteBoneCount ( ZLStream& stream, ZLIndex idx, u32 count ) const {
 
 	this->WriteAttribute ( stream, ATTRIBUTE_BONE_COUNT, idx, ( float )count, 0.0f, 0.0f, 0.0f );
 }
 
 //----------------------------------------------------------------//
-size_t MOAIAbstractVertexFormat::WriteBones ( ZLStream& stream, const float* indices, const float* weights, size_t size ) const {
+size_t MOAIVertexFormat::WriteBones ( ZLStream& stream, const float* indices, const float* weights, size_t size ) const {
 
 	size_t nIndices = this->WriteComponents ( stream, ATTRIBUTE_BONE_INDICES, indices, size );
 	size_t nWeights = this->WriteComponents ( stream, ATTRIBUTE_BONE_WEIGHTS, weights, size );
@@ -878,26 +878,26 @@ size_t MOAIAbstractVertexFormat::WriteBones ( ZLStream& stream, const float* ind
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractVertexFormat::WriteColor ( ZLStream& stream, ZLIndex idx, u32 color ) const {
+void MOAIVertexFormat::WriteColor ( ZLStream& stream, ZLIndex idx, u32 color ) const {
 
 	ZLColorVec colorVec ( color );
 	this->WriteAttribute ( stream, ATTRIBUTE_COLOR, idx, colorVec.mR, colorVec.mG, colorVec.mB, colorVec.mA );
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractVertexFormat::WriteColor ( ZLStream& stream, ZLIndex idx, float r, float g, float b, float a ) const {
+void MOAIVertexFormat::WriteColor ( ZLStream& stream, ZLIndex idx, float r, float g, float b, float a ) const {
 	
 	this->WriteAttribute ( stream, ATTRIBUTE_COLOR, idx, r, g, b, a );
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractVertexFormat::WriteCoord ( ZLStream& stream, ZLIndex idx, float x, float y, float z, float w ) const {
+void MOAIVertexFormat::WriteCoord ( ZLStream& stream, ZLIndex idx, float x, float y, float z, float w ) const {
 
 	this->WriteAttribute ( stream, ATTRIBUTE_COORD, idx, x, y, z, w );
 }
 
 //----------------------------------------------------------------//
-size_t MOAIAbstractVertexFormat::WriteComponents ( ZLStream& stream, u32 useID, const float* components, size_t size ) const {
+size_t MOAIVertexFormat::WriteComponents ( ZLStream& stream, u32 useID, const float* components, size_t size ) const {
 
 	size_t remaining = size;
 	size_t n = this->mTotalAttributesByUse [ useID ];
@@ -921,13 +921,13 @@ size_t MOAIAbstractVertexFormat::WriteComponents ( ZLStream& stream, u32 useID, 
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractVertexFormat::WriteNormal ( ZLStream& stream, ZLIndex idx, float x, float y, float z ) const {
+void MOAIVertexFormat::WriteNormal ( ZLStream& stream, ZLIndex idx, float x, float y, float z ) const {
 
 	this->WriteAttribute ( stream, ATTRIBUTE_NORMAL, idx, x, y, z, 0.0f );
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractVertexFormat::WriteUV ( ZLStream& stream, ZLIndex idx, float x, float y, float z ) const {
+void MOAIVertexFormat::WriteUV ( ZLStream& stream, ZLIndex idx, float x, float y, float z ) const {
 
 	this->WriteAttribute ( stream, ATTRIBUTE_TEX_COORD, idx, x, y, z, 0.0f );
 }
