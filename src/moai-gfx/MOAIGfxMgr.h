@@ -6,6 +6,7 @@
 
 #include <moai-gfx/MOAIGfxMgr_CPUCache.h>
 #include <moai-gfx/MOAIGfxMgr_GPUCache.h>
+#include <moai-gfx/MOAIGfxMgr_RenderTree.h>
 #include <moai-gfx/MOAIGfxMgr_VertexCache.h>
 #include <moai-gfx/MOAIGfxMgrComponents.h>
 
@@ -21,15 +22,17 @@ class MOAIGfxMgr :
 	public ZLContextClassAlias < MOAIGfxMgr >,
 	public virtual MOAIGlobalEventSource,
 	public virtual MOAIGfxMgrComponents,
+	public virtual MOAIGfxMgr_CPUCache,
 	public virtual MOAIGfxMgr_GPUCache,
-	public virtual MOAIGfxMgr_VertexCache,
-	public virtual MOAIGfxMgr_CPUCache {
+	public virtual MOAIGfxMgr_RenderTree,
+	public virtual MOAIGfxMgr_VertexCache {
 protected:
 
 	//----------------------------------------------------------------//
 	MOAIGfxMgr_CPUCache&		MOAIAbstractGfxMgrComponents_GetCPUCache		();
 	MOAIGfxMgr&					MOAIAbstractGfxMgrComponents_GetGfxMgr			();
 	MOAIGfxMgr_GPUCache&		MOAIAbstractGfxMgrComponents_GetGPUCache		();
+	MOAIGfxMgr_RenderTree&		MOAIAbstractGfxMgrComponents_GetRenderTree		();
 	MOAIGfxMgr_VertexCache&		MOAIAbstractGfxMgrComponents_GetVertexCache		();
 
 	//----------------------------------------------------------------//
@@ -44,10 +47,12 @@ public:
 	};
 
 	//----------------------------------------------------------------//
-	MOAIShader*		AffirmShader		( MOAILuaState& state, int idx ) const;
-	MOAITexture*	AffirmTexture		( MOAILuaState& state, int idx ) const;
-							MOAIGfxMgr			();
-							~MOAIGfxMgr			();
+	MOAIShader*			AffirmShader			( MOAILuaState& state, int idx ) const;
+	MOAITexture*		AffirmTexture			( MOAILuaState& state, int idx ) const;
+						MOAIGfxMgr				();
+						~MOAIGfxMgr				();
+	void				RegisterLuaClass		( MOAILuaState& state );
+	void				RegisterLuaFuncs		( MOAILuaState& state );
 };
 
 #endif

@@ -5,9 +5,10 @@
 #define	MOAIGFXMGRCOMPONENTS_H
 
 class MOAIGfxMgr;
-class MOAIGfxMgr_GPUCache;
-class MOAIGfxMgr_VertexCache;
 class MOAIGfxMgr_CPUCache;
+class MOAIGfxMgr_GPUCache;
+class MOAIGfxMgr_RenderTree;
+class MOAIGfxMgr_VertexCache;
 
 //================================================================//
 // MOAIGfxMgrComponents
@@ -19,6 +20,7 @@ protected:
 	virtual MOAIGfxMgr_CPUCache&		MOAIAbstractGfxMgrComponents_GetCPUCache		() = 0;
 	virtual MOAIGfxMgr&					MOAIAbstractGfxMgrComponents_GetGfxMgr			() = 0;
 	virtual MOAIGfxMgr_GPUCache&		MOAIAbstractGfxMgrComponents_GetGPUCache		() = 0;
+	virtual MOAIGfxMgr_RenderTree&		MOAIAbstractGfxMgrComponents_GetRenderTree		() = 0;
 	virtual MOAIGfxMgr_VertexCache&		MOAIAbstractGfxMgrComponents_GetVertexCache		() = 0;
 
 public:
@@ -36,6 +38,11 @@ public:
 	//----------------------------------------------------------------//
 	inline MOAIGfxMgr_GPUCache& GetGPUCache () {
 		return MOAIAbstractGfxMgrComponents_GetGPUCache ();
+	}
+	
+	//----------------------------------------------------------------//
+	inline MOAIGfxMgr_RenderTree& GetRenderTree () {
+		return MOAIAbstractGfxMgrComponents_GetRenderTree ();
 	}
 	
 	//----------------------------------------------------------------//

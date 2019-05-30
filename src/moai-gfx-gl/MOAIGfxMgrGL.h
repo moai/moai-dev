@@ -6,8 +6,9 @@
 
 #include <moai-gfx-gl/MOAIGfxMgrGLComponents.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_PipelineClerkGL.h>
-#include <moai-gfx-gl/MOAIGfxMgrGL_ResourceClerkGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_GPUCacheGL.h>
+#include <moai-gfx-gl/MOAIGfxMgrGL_RenderTreeGL.h>
+#include <moai-gfx-gl/MOAIGfxMgrGL_ResourceClerkGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_VertexCacheGL.h>
 
 //================================================================//
@@ -28,6 +29,7 @@ class MOAIGfxMgrGL :
 	virtual public MOAIGfxMgr,
 	virtual public MOAIGfxMgrGL_GPUCacheGL,
 	virtual public MOAIGfxMgrGL_PipelineClerkGL,
+	virtual public MOAIGfxMgrGL_RenderTreeGL,
 	virtual public MOAIGfxMgrGL_ResourceClerkGL,
 	virtual public MOAIGfxMgrGL_VertexCacheGL {
 protected:
@@ -49,24 +51,25 @@ protected:
 	ZLIndex									mStateStackTop;
 
 	//----------------------------------------------------------------//
-	static int					_enablePipelineLogging		( lua_State* L );
-	static int					_getFrameBuffer				( lua_State* L );
-	static int					_getMaxTextureSize			( lua_State* L );
-	static int					_getMaxTextureUnits			( lua_State* L );
-	static int					_getViewSize				( lua_State* L );
-	static int					_purgeResources				( lua_State* L );
-	static int					_renewResources				( lua_State* L );
+	static int						_enablePipelineLogging		( lua_State* L );
+	static int						_getFrameBuffer				( lua_State* L );
+	static int						_getMaxTextureSize			( lua_State* L );
+	static int						_getMaxTextureUnits			( lua_State* L );
+	static int						_getViewSize				( lua_State* L );
+	static int						_purgeResources				( lua_State* L );
+	static int						_renewResources				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void						OnGlobalsFinalize			();
-	void						OnGlobalsInitialize			();
+	void							OnGlobalsFinalize			();
+	void							OnGlobalsInitialize			();
 
 	//----------------------------------------------------------------//
-	MOAIShader*				MOAIAbstractGfxMgr_AffirmShader				( MOAILuaState& state, int idx ) const;
-	MOAITexture*			MOAIAbstractGfxMgr_AffirmTexture			( MOAILuaState& state, int idx ) const;
+	MOAIShader*						MOAIAbstractGfxMgr_AffirmShader				( MOAILuaState& state, int idx ) const;
+	MOAITexture*					MOAIAbstractGfxMgr_AffirmTexture			( MOAILuaState& state, int idx ) const;
 	MOAIGfxMgrGL&					MOAIGfxMgrGLComponents_GetGfxMgrGL			();
 	MOAIGfxMgrGL_GPUCacheGL&		MOAIGfxMgrGLComponents_GetGPUCacheGL		();
 	MOAIGfxMgrGL_PipelineClerkGL&	MOAIGfxMgrGLComponents_GetPipelineClerkGL	();
+	MOAIGfxMgrGL_RenderTreeGL&		MOAIGfxMgrGLComponents_GetRenderTreeGL		();
 	MOAIGfxMgrGL_ResourceClerkGL&	MOAIGfxMgrGLComponents_GetResourceClerkGL	();
 	MOAIGfxMgrGL_VertexCacheGL&		MOAIGfxMgrGLComponents_GetVertexCacheGL		();
 

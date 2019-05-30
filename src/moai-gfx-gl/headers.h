@@ -18,7 +18,7 @@
 #include <moai-gfx-gl/MOAIGfxMgrGLComponents.h>
 #include <moai-gfx-gl/MOAIImageTextureGL.h>
 #include <moai-gfx-gl/MOAIIndexBufferGL.h>
-#include <moai-gfx-gl/MOAIRenderMgrGL.h>
+#include <moai-gfx-gl/MOAIGfxMgrGL_RenderTreeGL.h>
 #include <moai-gfx-gl/MOAIShaderGL.h>
 #include <moai-gfx-gl/MOAIShaderMgrGL.h>
 #include <moai-gfx-gl/MOAIShaderProgramGL.h>

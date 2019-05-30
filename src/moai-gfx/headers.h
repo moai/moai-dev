@@ -6,13 +6,13 @@
 
 #include <moai-gfx/pch.h>
 
-#include <moai-gfx/MOAIAbstractDrawable.h>
-#include <moai-gfx/MOAIAbstractRenderMgr.h>
 #include <moai-gfx/MOAIBlendMode.h>
+#include <moai-gfx/MOAIDrawable.h>
 #include <moai-gfx/MOAIFrameBuffer.h>
 #include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIGfxMgr_CPUCache.h>
 #include <moai-gfx/MOAIGfxMgr_GPUCache.h>
+#include <moai-gfx/MOAIGfxMgr_RenderTree.h>
 #include <moai-gfx/MOAIGfxMgr_VertexCache.h>
 #include <moai-gfx/MOAIGfxMgrComponents.h>
 #include <moai-gfx/MOAIIndexBuffer.h>

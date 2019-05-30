@@ -463,6 +463,11 @@ MOAIGfxMgrGL_PipelineClerkGL& MOAIGfxMgrGL::MOAIGfxMgrGLComponents_GetPipelineCl
 }
 
 //----------------------------------------------------------------//
+MOAIGfxMgrGL_RenderTreeGL& MOAIGfxMgrGL::MOAIGfxMgrGLComponents_GetRenderTreeGL () {
+	return *this;
+}
+
+//----------------------------------------------------------------//
 MOAIGfxMgrGL_ResourceClerkGL& MOAIGfxMgrGL::MOAIGfxMgrGLComponents_GetResourceClerkGL () {
 	return *this;
 }

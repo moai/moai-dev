@@ -1,31 +1,33 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIRENDERMGRGL_H
-#define	MOAIRENDERMGRGL_H
+#ifndef	MOAIGFXMGRGL_RENDERTREEGL_H
+#define	MOAIGFXMGRGL_RENDERTREEGL_H
+
+#include <moai-gfx-gl/MOAIGfxMgrGLComponents.h>
 
 //================================================================//
-// MOAIRenderMgrGL
+// MOAIGfxMgrGL_RenderTreeGL
 //================================================================//
 // TODO: doxygen
-class MOAIRenderMgrGL :
-	public ZLContextClass < MOAIRenderMgrGL >,
-	public virtual MOAIAbstractRenderMgr {
+class MOAIGfxMgrGL_RenderTreeGL :
+	virtual public MOAIGfxMgrGLComponents,
+	public virtual MOAIGfxMgr_RenderTree {
 private:
 
 	//----------------------------------------------------------------//
-	void			MOAIAbstractRenderMgr_Render	();
+	void			MOAIRenderTree_Render			();
 
 public:
 
 	//----------------------------------------------------------------//
-					MOAIRenderMgrGL					();
-					~MOAIRenderMgrGL				();
+					MOAIGfxMgrGL_RenderTreeGL		();
+					~MOAIGfxMgrGL_RenderTreeGL		();
 	
 	//----------------------------------------------------------------//
 	// disambiguate
-	static MOAIRenderMgrGL& Get () {
-		return ZLContextClass < MOAIRenderMgrGL >::Get ();
+	static MOAIGfxMgrGL_RenderTreeGL& Get () {
+		return ZLContextClass < MOAIGfxMgrGL_RenderTreeGL >::Get ();
 	}
 };
 

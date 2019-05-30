@@ -2,25 +2,25 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx/MOAIAbstractDrawable.h>
+#include <moai-gfx/MOAIDrawable.h>
 
 //================================================================//
-// MOAIAbstractDrawable
+// MOAIDrawable
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAbstractDrawable::Draw ( MOAILuaMemberRef& ref, bool debug ) {
+void MOAIDrawable::Draw ( MOAILuaMemberRef& ref, bool debug ) {
 
 	if ( ref ) {
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		state.Push ( ref );
-		MOAIAbstractDrawable::Draw ( state, -1, debug );
+		MOAIDrawable::Draw ( state, -1, debug );
 		state.Pop ( 1 );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractDrawable::Draw ( MOAILuaState& state, int idx, bool debug ) {
+void MOAIDrawable::Draw ( MOAILuaState& state, int idx, bool debug ) {
 
 	idx = state.AbsIndex ( idx );
 	int valType = lua_type ( state, idx );
@@ -29,7 +29,7 @@ void MOAIAbstractDrawable::Draw ( MOAILuaState& state, int idx, bool debug ) {
 	
 		case LUA_TUSERDATA: {
 		
-			MOAIAbstractDrawable* drawable = state.GetLuaObject < MOAIAbstractDrawable >( idx, false );
+			MOAIDrawable* drawable = state.GetLuaObject < MOAIDrawable >( idx, false );
 			
 			if ( drawable ) {
 				if ( debug ) {
@@ -47,7 +47,7 @@ void MOAIAbstractDrawable::Draw ( MOAILuaState& state, int idx, bool debug ) {
 			size_t tableSize = state.GetTableSize ( idx );
 			for ( size_t i = 0; i < tableSize; ++i ) {
 				lua_rawgeti ( state, idx, i + 1 );
-				MOAIAbstractDrawable::Draw ( state, -1, debug );
+				MOAIDrawable::Draw ( state, -1, debug );
 				lua_pop ( state, 1 );
 			}
 			break;

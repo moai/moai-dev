@@ -5,18 +5,18 @@
 #include <moai-gfx-gl/MOAIFrameBufferGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_PipelineClerkGL.h>
-#include <moai-gfx-gl/MOAIRenderMgrGL.h>
+#include <moai-gfx-gl/MOAIGfxMgrGL_RenderTreeGL.h>
 
 //================================================================//
-// MOAIRenderMgrGL
+// MOAIGfxMgrGL_RenderTreeGL
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIRenderMgrGL::MOAIRenderMgrGL () {
+MOAIGfxMgrGL_RenderTreeGL::MOAIGfxMgrGL_RenderTreeGL () {
 }
 
 //----------------------------------------------------------------//
-MOAIRenderMgrGL::~MOAIRenderMgrGL () {
+MOAIGfxMgrGL_RenderTreeGL::~MOAIGfxMgrGL_RenderTreeGL () {
 }
 
 //================================================================//
@@ -24,7 +24,7 @@ MOAIRenderMgrGL::~MOAIRenderMgrGL () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIRenderMgrGL::MOAIAbstractRenderMgr_Render () {
+void MOAIGfxMgrGL_RenderTreeGL::MOAIRenderTree_Render () {
 
 	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 
@@ -48,7 +48,7 @@ void MOAIRenderMgrGL::MOAIAbstractRenderMgr_Render () {
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		state.Push ( this->mRenderRoot );
 		
-		MOAIAbstractDrawable::Draw ( state, -1 );
+		MOAIDrawable::Draw ( state, -1 );
 	}
 	
 	this->mRenderCounter++;

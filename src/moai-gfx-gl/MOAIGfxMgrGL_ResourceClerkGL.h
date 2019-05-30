@@ -36,7 +36,7 @@ protected:
 public:
 	
 	friend class MOAIGfxMgr;
-	friend class MOAIRenderMgrGL;
+	friend class MOAIGfxMgrGL_RenderTreeGL;
 	
 	friend class MOAIAbstractGfxResourceGL;
 	

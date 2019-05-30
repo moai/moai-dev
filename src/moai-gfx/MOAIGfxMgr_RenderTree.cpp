@@ -2,8 +2,9 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx/MOAIAbstractDrawable.h>
-#include <moai-gfx/MOAIAbstractRenderMgr.h>
+#include <moai-gfx/MOAIDrawable.h>
+#include <moai-gfx/MOAIGfxMgr.h>
+#include <moai-gfx/MOAIGfxMgr_RenderTree.h>
 
 //================================================================//
 // local
@@ -11,9 +12,9 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIAbstractRenderMgr::_getRenderCount ( lua_State* L ) {
+int MOAIGfxMgr_RenderTree::_getRenderCount ( lua_State* L ) {
 
-	MOAIAbstractRenderMgr& gfxMgr = MOAIAbstractRenderMgr::Get ();
+	MOAIGfxMgr_RenderTree& gfxMgr = MOAIGfxMgr::Get ();
 	lua_pushnumber ( L, gfxMgr.mRenderCounter );
 
 	return 1;
@@ -21,39 +22,37 @@ int MOAIAbstractRenderMgr::_getRenderCount ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIAbstractRenderMgr::_getRender ( lua_State* L ) {
+int MOAIGfxMgr_RenderTree::_getRender ( lua_State* L ) {
 	MOAILuaState state ( L );
-	state.Push ( MOAIAbstractRenderMgr::Get ().mRenderRoot );
+	state.Push ( MOAIGfxMgr::Get ().mRenderRoot );
 	return 1;
 }
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIAbstractRenderMgr::_setRender ( lua_State* L ) {
+int MOAIGfxMgr_RenderTree::_setRender ( lua_State* L ) {
 	MOAILuaState state ( L );
-	MOAIAbstractRenderMgr::Get ().mRenderRoot.SetRef ( state, 1 );
+	MOAIGfxMgr::Get ().mRenderRoot.SetRef ( state, 1 );
 	return 0;
 }
 
 //================================================================//
-// MOAIAbstractRenderMgr
+// MOAIGfxMgr_RenderTree
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIAbstractRenderMgr::MOAIAbstractRenderMgr () :
+MOAIGfxMgr_RenderTree::MOAIGfxMgr_RenderTree () :
 	mRenderCounter ( 0 ),
 	mRenderDuration ( 1.0 / 60.0 ),
 	mRenderTime ( 0.0 ) {
-	
-	RTTI_SINGLE ( MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractRenderMgr::~MOAIAbstractRenderMgr () {
+MOAIGfxMgr_RenderTree::~MOAIGfxMgr_RenderTree () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractRenderMgr::PushDrawable ( MOAILuaObject* drawable ) {
+void MOAIGfxMgr_RenderTree::PushDrawable ( MOAILuaObject* drawable ) {
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	
@@ -70,7 +69,7 @@ void MOAIAbstractRenderMgr::PushDrawable ( MOAILuaObject* drawable ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractRenderMgr::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIGfxMgr_RenderTree::RegisterLuaClass ( MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getRenderCount",				_getRenderCount },
@@ -83,12 +82,12 @@ void MOAIAbstractRenderMgr::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractRenderMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIGfxMgr_RenderTree::RegisterLuaFuncs ( MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractRenderMgr::Render () {
+void MOAIGfxMgr_RenderTree::Render () {
 
-	this->MOAIAbstractRenderMgr_Render ();
+	this->MOAIRenderTree_Render ();
 }

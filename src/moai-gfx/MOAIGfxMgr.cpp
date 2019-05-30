@@ -33,6 +33,16 @@ MOAIGfxMgr::MOAIGfxMgr () {
 MOAIGfxMgr::~MOAIGfxMgr () {
 }
 
+//----------------------------------------------------------------//
+void MOAIGfxMgr::RegisterLuaClass ( MOAILuaState& state ) {
+	MOAIGfxMgr_RenderTree::RegisterLuaClass ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
+	MOAIGfxMgr_RenderTree::RegisterLuaFuncs ( state );
+}
+
 //================================================================//
 // virtual
 //================================================================//
@@ -49,6 +59,11 @@ MOAIGfxMgr& MOAIGfxMgr::MOAIAbstractGfxMgrComponents_GetGfxMgr () {
 
 //----------------------------------------------------------------//
 MOAIGfxMgr_GPUCache& MOAIGfxMgr::MOAIAbstractGfxMgrComponents_GetGPUCache () {
+	return *this;
+}
+
+//----------------------------------------------------------------//
+MOAIGfxMgr_RenderTree& MOAIGfxMgr::MOAIAbstractGfxMgrComponents_GetRenderTree () {
 	return *this;
 }
 

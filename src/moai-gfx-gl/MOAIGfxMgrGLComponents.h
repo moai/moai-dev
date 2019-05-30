@@ -6,8 +6,9 @@
 
 class MOAIGfxMgrGL;
 class MOAIGfxMgrGL_PipelineClerkGL;
-class MOAIGfxMgrGL_ResourceClerkGL;
 class MOAIGfxMgrGL_GPUCacheGL;
+class MOAIGfxMgrGL_RenderTreeGL;
+class MOAIGfxMgrGL_ResourceClerkGL;
 class MOAIGfxMgrGL_VertexCacheGL;
 
 //================================================================//
@@ -18,11 +19,12 @@ class MOAIGfxMgrGLComponents :
 protected:
 
 	//----------------------------------------------------------------//
-	virtual MOAIGfxMgrGL&					MOAIGfxMgrGLComponents_GetGfxMgrGL				() = 0;
-	virtual MOAIGfxMgrGL_GPUCacheGL&			MOAIGfxMgrGLComponents_GetGPUCacheGL		() = 0;
-	virtual MOAIGfxMgrGL_PipelineClerkGL&		MOAIGfxMgrGLComponents_GetPipelineClerkGL	() = 0;
-	virtual MOAIGfxMgrGL_ResourceClerkGL&		MOAIGfxMgrGLComponents_GetResourceClerkGL	() = 0;
-	virtual MOAIGfxMgrGL_VertexCacheGL&		MOAIGfxMgrGLComponents_GetVertexCacheGL			() = 0;
+	virtual MOAIGfxMgrGL&						MOAIGfxMgrGLComponents_GetGfxMgrGL				() = 0;
+	virtual MOAIGfxMgrGL_GPUCacheGL&			MOAIGfxMgrGLComponents_GetGPUCacheGL			() = 0;
+	virtual MOAIGfxMgrGL_PipelineClerkGL&		MOAIGfxMgrGLComponents_GetPipelineClerkGL		() = 0;
+	virtual MOAIGfxMgrGL_RenderTreeGL&			MOAIGfxMgrGLComponents_GetRenderTreeGL			() = 0;
+	virtual MOAIGfxMgrGL_ResourceClerkGL&		MOAIGfxMgrGLComponents_GetResourceClerkGL		() = 0;
+	virtual MOAIGfxMgrGL_VertexCacheGL&			MOAIGfxMgrGLComponents_GetVertexCacheGL			() = 0;
 
 public:
 
@@ -39,6 +41,11 @@ public:
 	//----------------------------------------------------------------//
 	inline MOAIGfxMgrGL_PipelineClerkGL& GetPipelineClerkGL () {
 		return MOAIGfxMgrGLComponents_GetPipelineClerkGL ();
+	}
+	
+	//----------------------------------------------------------------//
+	inline MOAIGfxMgrGL_RenderTreeGL& GetRenderTreeGL () {
+		return MOAIGfxMgrGLComponents_GetRenderTreeGL ();
 	}
 	
 	//----------------------------------------------------------------//

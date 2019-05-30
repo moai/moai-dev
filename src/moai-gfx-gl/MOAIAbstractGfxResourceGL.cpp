@@ -6,7 +6,7 @@
 #include <moai-gfx-gl/MOAIAbstractGfxResourceGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_PipelineClerkGL.h>
-#include <moai-gfx-gl/MOAIRenderMgrGL.h>
+#include <moai-gfx-gl/MOAIGfxMgrGL_RenderTreeGL.h>
 
 //================================================================//
 // lua
@@ -15,7 +15,7 @@
 //----------------------------------------------------------------//
 /**	@lua	getAge
 	@text	Returns the 'age' of the graphics resource. The age
-			is the number of times MOAIRenderMgrGL has rendered a scene
+			is the number of times MOAIGfxMgrGL_RenderTreeGL has rendered a scene
 			since the resource was last bound. It is part of the
 			render count, not a timestamp. This may change to be
 			time-based in future releases.
@@ -26,7 +26,7 @@
 int MOAIAbstractGfxResourceGL::_getAge ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractGfxResourceGL, "U" )
 
-	u32 age = MOAIRenderMgrGL::Get ().GetRenderCounter () - self->GetLastRenderCount ();
+	u32 age = MOAIGfxMgrGL_RenderTreeGL::Get ().GetRenderCounter () - self->GetLastRenderCount ();
 	lua_pushnumber ( state, age );
 
 	return 1;

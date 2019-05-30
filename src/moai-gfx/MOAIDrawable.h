@@ -1,19 +1,19 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIABSTRACTDRAWABLE_H
-#define	MOAIABSTRACTDRAWABLE_H
+#ifndef	MOAIDRAWABLE_H
+#define	MOAIDRAWABLE_H
 
 //================================================================//
-// MOAIAbstractDrawable
+// MOAIDrawable
 //================================================================//
-class MOAIAbstractDrawable :
-	public virtual RTTIBase {
+class MOAIDrawable :
+	public virtual MOAILuaObject {
 private:
 
 	//----------------------------------------------------------------//
-	virtual void	MOAIAbstractDrawable_Draw					( int subPrimID ) = 0;
-	virtual void	MOAIAbstractDrawable_DrawDebug				( int subPrimID ) = 0;
+	virtual void	MOAIAbstractDrawable_Draw			( int subPrimID ) = 0;
+	virtual void	MOAIAbstractDrawable_DrawDebug		( int subPrimID ) = 0;
 
 public:
 
