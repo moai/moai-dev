@@ -34,7 +34,7 @@ public:
 	//----------------------------------------------------------------//
 	size_t			GetSize						() const;
 	bool			Init						( u32 type, u32 width = 1 );
-					MOAIShaderUniform				();
+					MOAIShaderUniform			();
 					~MOAIShaderUniform			();
 };
 

@@ -22,9 +22,9 @@ protected:
 	ZLStrongPtr < MOAIIndexBufferGL >		mIdxBuffer;
 
 	//----------------------------------------------------------------//
-	void			ZLAbstractVertexCache_AffirmBuffers		();
-	bool			ZLAbstractVertexCache_BeginPrim 		( u32 primType, u32 vtxCount, u32 idxCount );
-	void			ZLAbstractVertexCache_FlushToGPU		();
+	void			MOAIGfxMgr_VertexCache_AffirmBuffers	();
+	bool			MOAIGfxMgr_VertexCache_BeginPrim 		( u32 primType, u32 vtxCount, u32 idxCount );
+	void			MOAIGfxMgr_VertexCache_FlushToGPU		();
 
 public:
 	

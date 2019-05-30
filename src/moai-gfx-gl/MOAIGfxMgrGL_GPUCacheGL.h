@@ -40,13 +40,13 @@ protected:
 	bool									mScissorEnabled;
 	ZLRect									mScissorRect;
 	
-	ZLStrongPtr < MOAIShaderGL >				mShader;
+	ZLStrongPtr < MOAIShaderGL >			mShader;
 
-	ZLStrongPtr < MOAIFrameBufferGL >			mFrameBuffer;
-	ZLStrongPtr < MOAIIndexBufferGL >			mIdxBuffer;
-	ZLStrongPtr < MOAIVertexArrayGL >			mVtxArray;
-	ZLStrongPtr < MOAIVertexBufferGL >			mVtxBuffer;
-	ZLStrongPtr < MOAIVertexFormatGL >			mVtxFormat;
+	ZLStrongPtr < MOAIFrameBufferGL >		mFrameBuffer;
+	ZLStrongPtr < MOAIIndexBufferGL >		mIdxBuffer;
+	ZLStrongPtr < MOAIVertexArrayGL >		mVtxArray;
+	ZLStrongPtr < MOAIVertexBufferGL >		mVtxBuffer;
+	ZLStrongPtr < MOAIVertexFormatGL >		mVtxFormat;
 
 	ZLRect									mViewRect;
 	
@@ -140,51 +140,51 @@ protected:
 	void			SuspendChanges					();
 
 	//----------------------------------------------------------------//
-	void					ZLAbstractGPU_ClearSurface				(); // takes zgl clear flags
-	size_t					ZLAbstractGPU_CountTextureUnits			();
-	void					ZLAbstractGPU_DrawPrims					( u32 primType, u32 base, u32 count );
-	MOAIBlendMode			ZLAbstractGPU_GetBlendMode				() const;
-	u32						ZLAbstractGPU_GetBufferHeight			() const;
-	u32						ZLAbstractGPU_GetBufferWidth			() const;
-	MOAIFrameBuffer*		ZLAbstractGPU_GetCurrentFrameBuffer		();
-	MOAIShader*		ZLAbstractGPU_GetCurrentShader			();
-	MOAIVertexFormat*		ZLAbstractGPU_GetCurrentVtxFormat		();
-	MOAIFrameBuffer*		ZLAbstractGPU_GetDefaultFrameBuffer		();
-	MOAITexture*	ZLAbstractGPU_GetDefaultTexture			();
-	bool					ZLAbstractGPU_GetDepthMask				() const;
-	float					ZLAbstractGPU_GetViewHeight				() const;
-	ZLRect					ZLAbstractGPU_GetViewRect				() const;
-	float					ZLAbstractGPU_GetViewWidth				() const;
-	void					ZLAbstractGPU_ResetGPUState				();
-	void					ZLAbstractGPU_SetBlendMode				();
-	void					ZLAbstractGPU_SetBlendMode				( const MOAIBlendMode& blendMode );
-	void					ZLAbstractGPU_SetBlendMode				( int srcFactor, int dstFactor, int equation );
-	void					ZLAbstractGPU_SetCullFunc				();
-	void					ZLAbstractGPU_SetCullFunc				( int cullFunc );
-	void					ZLAbstractGPU_SetDefaultFrameBuffer		( MOAIFrameBuffer* frameBuffer );
-	void					ZLAbstractGPU_SetDefaultTexture			( MOAITexture* texture );
-	void					ZLAbstractGPU_SetDepthFunc				();
-	void					ZLAbstractGPU_SetDepthFunc				( int depthFunc );
-	void					ZLAbstractGPU_SetDepthMask				( bool depthMask );
-	bool					ZLAbstractGPU_SetFrameBuffer			( MOAIFrameBuffer* frameBuffer );
-	bool					ZLAbstractGPU_SetIndexBuffer			( MOAIIndexBuffer* buffer );
-	void					ZLAbstractGPU_SetPenWidth				( float penWidth );
-	void					ZLAbstractGPU_SetScissorRect			();
-	void					ZLAbstractGPU_SetScissorRect			( ZLRect rect );
-	bool					ZLAbstractGPU_SetShader					( MOAIShader* shader );
-	bool					ZLAbstractGPU_SetTexture				( MOAITexture* texture, ZLIndex textureUnit );
-	bool					ZLAbstractGPU_SetVertexArray			( MOAIVertexArray* vtxArray );
-	bool					ZLAbstractGPU_SetVertexBuffer			( MOAIVertexBuffer* buffer );
-	void					ZLAbstractGPU_SetVertexFormat			( MOAIVertexFormat* format );
-	void					ZLAbstractGPU_SetViewRect				();
-	void					ZLAbstractGPU_SetViewRect				( ZLRect rect );
-	void					ZLAbstractGPU_UnbindAll					();
+	void					MOAIGfxMgr_GPUCache_ClearSurface				(); // takes zgl clear flags
+	size_t					MOAIGfxMgr_GPUCache_CountTextureUnits			();
+	void					MOAIGfxMgr_GPUCache_DrawPrims					( u32 primType, u32 base, u32 count );
+	MOAIBlendMode			MOAIGfxMgr_GPUCache_GetBlendMode				() const;
+	u32						MOAIGfxMgr_GPUCache_GetBufferHeight				() const;
+	u32						MOAIGfxMgr_GPUCache_GetBufferWidth				() const;
+	MOAIFrameBuffer*		MOAIGfxMgr_GPUCache_GetCurrentFrameBuffer		();
+	MOAIShader*				MOAIGfxMgr_GPUCache_GetCurrentShader			();
+	MOAIVertexFormat*		MOAIGfxMgr_GPUCache_GetCurrentVtxFormat			();
+	MOAIFrameBuffer*		MOAIGfxMgr_GPUCache_GetDefaultFrameBuffer		();
+	MOAITexture*			MOAIGfxMgr_GPUCache_GetDefaultTexture			();
+	bool					MOAIGfxMgr_GPUCache_GetDepthMask				() const;
+	float					MOAIGfxMgr_GPUCache_GetViewHeight				() const;
+	ZLRect					MOAIGfxMgr_GPUCache_GetViewRect					() const;
+	float					MOAIGfxMgr_GPUCache_GetViewWidth				() const;
+	void					MOAIGfxMgr_GPUCache_ResetGPUState				();
+	void					MOAIGfxMgr_GPUCache_SetBlendMode				();
+	void					MOAIGfxMgr_GPUCache_SetBlendMode				( const MOAIBlendMode& blendMode );
+	void					MOAIGfxMgr_GPUCache_SetBlendMode				( int srcFactor, int dstFactor, int equation );
+	void					MOAIGfxMgr_GPUCache_SetCullFunc					();
+	void					MOAIGfxMgr_GPUCache_SetCullFunc					( int cullFunc );
+	void					MOAIGfxMgr_GPUCache_SetDefaultFrameBuffer		( MOAIFrameBuffer* frameBuffer );
+	void					MOAIGfxMgr_GPUCache_SetDefaultTexture			( MOAITexture* texture );
+	void					MOAIGfxMgr_GPUCache_SetDepthFunc				();
+	void					MOAIGfxMgr_GPUCache_SetDepthFunc				( int depthFunc );
+	void					MOAIGfxMgr_GPUCache_SetDepthMask				( bool depthMask );
+	bool					MOAIGfxMgr_GPUCache_SetFrameBuffer				( MOAIFrameBuffer* frameBuffer );
+	bool					MOAIGfxMgr_GPUCache_SetIndexBuffer				( MOAIIndexBuffer* buffer );
+	void					MOAIGfxMgr_GPUCache_SetPenWidth					( float penWidth );
+	void					MOAIGfxMgr_GPUCache_SetScissorRect				();
+	void					MOAIGfxMgr_GPUCache_SetScissorRect				( ZLRect rect );
+	bool					MOAIGfxMgr_GPUCache_SetShader					( MOAIShader* shader );
+	bool					MOAIGfxMgr_GPUCache_SetTexture					( MOAITexture* texture, ZLIndex textureUnit );
+	bool					MOAIGfxMgr_GPUCache_SetVertexArray				( MOAIVertexArray* vtxArray );
+	bool					MOAIGfxMgr_GPUCache_SetVertexBuffer				( MOAIVertexBuffer* buffer );
+	void					MOAIGfxMgr_GPUCache_SetVertexFormat				( MOAIVertexFormat* format );
+	void					MOAIGfxMgr_GPUCache_SetViewRect					();
+	void					MOAIGfxMgr_GPUCache_SetViewRect					( ZLRect rect );
+	void					MOAIGfxMgr_GPUCache_UnbindAll					();
 
 public:
 	
 	//----------------------------------------------------------------//
 						MOAIGfxMgrGL_GPUCacheGL					();
-	virtual				~MOAIGfxMgrGL_GPUCacheGL					();
+	virtual				~MOAIGfxMgrGL_GPUCacheGL				();
 };
 
 #endif

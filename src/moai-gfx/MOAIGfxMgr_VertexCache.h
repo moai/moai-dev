@@ -61,9 +61,9 @@ protected:
 	void			TransformAndWriteQuad			( ZLVec4D* vtx, ZLVec2D* uv );
 
 	//----------------------------------------------------------------//
-	virtual void	ZLAbstractVertexCache_AffirmBuffers		() = 0;
-	virtual bool	ZLAbstractVertexCache_BeginPrim 		( u32 primType, u32 vtxCount, u32 idxCount ) = 0;
-	virtual void	ZLAbstractVertexCache_FlushToGPU		() = 0;
+	virtual void	MOAIGfxMgr_VertexCache_AffirmBuffers	() = 0;
+	virtual bool	MOAIGfxMgr_VertexCache_BeginPrim 		( u32 primType, u32 vtxCount, u32 idxCount ) = 0;
+	virtual void	MOAIGfxMgr_VertexCache_FlushToGPU		() = 0;
 
 public:
 	

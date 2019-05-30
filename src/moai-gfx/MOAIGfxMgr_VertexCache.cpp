@@ -20,7 +20,7 @@
 //----------------------------------------------------------------//
 void MOAIGfxMgr_VertexCache::AffirmBuffers () {
 
-	this->ZLAbstractVertexCache_AffirmBuffers ();
+	this->MOAIGfxMgr_VertexCache_AffirmBuffers ();
 	assert ( this->mVtxStream );
 	assert ( this->mIdxStream);
 }
@@ -30,7 +30,7 @@ bool MOAIGfxMgr_VertexCache::BeginPrim ( u32 primType, u32 vtxCount, u32 idxCoun
 	
 	DEBUG_LOG ( "BEGIN INDEXED PRIM: %d %d %d\n", ( int )primType, vtxCount, idxCount );
 	
-	this->ZLAbstractVertexCache_BeginPrim ( primType, vtxCount, idxCount );
+	this->MOAIGfxMgr_VertexCache_BeginPrim ( primType, vtxCount, idxCount );
 }
 
 ////----------------------------------------------------------------//
@@ -86,7 +86,7 @@ void MOAIGfxMgr_VertexCache::EndPrim () {
 //----------------------------------------------------------------//
 void MOAIGfxMgr_VertexCache::FlushToGPU () {
 
-	this->ZLAbstractVertexCache_FlushToGPU ();
+	this->MOAIGfxMgr_VertexCache_FlushToGPU ();
 }
 
 //----------------------------------------------------------------//

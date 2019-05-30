@@ -37,13 +37,13 @@ public:
 	DECL_LUA_FACTORY ( MOAIFrameBufferTextureGL )
 	
 	//----------------------------------------------------------------//
-	void				Init						( u32 width, u32 height, u32 colorFormat, u32 depthFormat, u32 stencilFormat );
-						MOAIFrameBufferTextureGL	();
-						~MOAIFrameBufferTextureGL	();
-	void				RegisterLuaClass			( MOAILuaState& state );
-	void				RegisterLuaFuncs			( MOAILuaState& state );
-	void				SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
-	void				SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
+	void				Init							( u32 width, u32 height, u32 colorFormat, u32 depthFormat, u32 stencilFormat );
+						MOAIFrameBufferTextureGL		();
+						~MOAIFrameBufferTextureGL		();
+	void				RegisterLuaClass				( MOAILuaState& state );
+	void				RegisterLuaFuncs				( MOAILuaState& state );
+	void				SerializeIn						( MOAILuaState& state, MOAIDeserializer& serializer );
+	void				SerializeOut					( MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

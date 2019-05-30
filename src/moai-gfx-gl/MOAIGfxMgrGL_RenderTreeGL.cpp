@@ -24,7 +24,7 @@ MOAIGfxMgrGL_RenderTreeGL::~MOAIGfxMgrGL_RenderTreeGL () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrGL_RenderTreeGL::MOAIRenderTree_Render () {
+void MOAIGfxMgrGL_RenderTreeGL::MOAIGfxMgr_RenderTree_Render () {
 
 	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
 

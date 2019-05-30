@@ -26,7 +26,7 @@ protected:
 	void			RenderTable					( MOAILuaState& state, int idx );
 
 	//----------------------------------------------------------------//
-	virtual void	MOAIRenderTree_Render		() = 0;
+	virtual void	MOAIGfxMgr_RenderTree_Render		() = 0;
 
 public:
 	

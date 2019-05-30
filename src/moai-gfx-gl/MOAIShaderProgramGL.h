@@ -103,7 +103,7 @@ protected:
 	void						ApplyUniforms				( ZLLeanArray < u8 >& buffer );
 	void						BindUniforms				();
 	ZLGfxHandle					CompileShader				( u32 type, cc8* source );
-	MOAIShaderUniformGL*			GetUniform					( ZLIndex uniformID );
+	MOAIShaderUniformGL*		GetUniform					( ZLIndex uniformID );
 	void						InitUniformBuffer			( ZLLeanArray < u8 >& buffer );
 	int							ReserveGlobals 				( lua_State* L, int idx );
 	void						ScheduleTextures			();

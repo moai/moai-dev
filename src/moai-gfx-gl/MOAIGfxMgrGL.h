@@ -121,8 +121,8 @@ public:
 	void					SetBufferScale				( float scale );
 	void					SetBufferSize				( u32 width, u32 height );
 	
-							MOAIGfxMgrGL					();
-							~MOAIGfxMgrGL					();
+							MOAIGfxMgrGL				();
+							~MOAIGfxMgrGL				();
 	
 	//----------------------------------------------------------------//
 	// disambiguate

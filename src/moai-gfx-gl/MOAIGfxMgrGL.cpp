@@ -271,6 +271,42 @@ u32 MOAIGfxMgrGL::LogErrors () {
 }
 
 //----------------------------------------------------------------//
+MOAIGfxMgrGL::MOAIGfxMgrGL () :
+	mHasContext ( false ),
+	mIsFramebufferSupported ( 0 ),
+	#if defined ( MOAI_OS_NACL ) || defined ( MOAI_OS_IPHONE ) || defined ( MOAI_OS_ANDROID ) || defined ( EMSCRIPTEN )
+		mIsOpenGLES ( true ),
+	#else
+		mIsOpenGLES ( false ),
+	#endif
+	mMajorVersion ( 0 ),
+	mMinorVersion ( 0 ),
+	mTextureMemoryUsage ( 0 ),
+	mMaxTextureSize ( 0 ),
+	mRenderCounter ( 0 ),
+	mStateStackTop ( ZLIndexOp::ZERO ) {
+	
+	RTTI_BEGIN
+		RTTI_SINGLE ( MOAIGfxMgr )
+	RTTI_END
+	
+	this->SetDefaultFrameBuffer ( new MOAIFrameBufferGL ());
+}
+
+//----------------------------------------------------------------//
+MOAIGfxMgrGL::~MOAIGfxMgrGL () {
+
+	this->Clear ();
+
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mStateStack.Size (); ++i ) {
+		delete this->mStateStack [ i ];
+	}
+	
+	this->SetDefaultFrameBuffer ( 0 );
+	this->SetDefaultTexture ( 0 );
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxMgrGL::OnGlobalsFinalize () {
 }
 
@@ -374,42 +410,6 @@ void MOAIGfxMgrGL::SetBufferSize ( u32 width, u32 height ) {
 	MOAIFrameBufferGL* defaultFrameBuffer = MOAICast < MOAIFrameBufferGL >( this->GetDefaultFrameBuffer ());
 	assert ( defaultFrameBuffer );
 	defaultFrameBuffer->SetBufferSize ( width, height );
-}
-
-//----------------------------------------------------------------//
-MOAIGfxMgrGL::MOAIGfxMgrGL () :
-	mHasContext ( false ),
-	mIsFramebufferSupported ( 0 ),
-	#if defined ( MOAI_OS_NACL ) || defined ( MOAI_OS_IPHONE ) || defined ( MOAI_OS_ANDROID ) || defined ( EMSCRIPTEN )
-		mIsOpenGLES ( true ),
-	#else
-		mIsOpenGLES ( false ),
-	#endif
-	mMajorVersion ( 0 ),
-	mMinorVersion ( 0 ),
-	mTextureMemoryUsage ( 0 ),
-	mMaxTextureSize ( 0 ),
-	mRenderCounter ( 0 ),
-	mStateStackTop ( ZLIndexOp::ZERO ) {
-	
-	RTTI_BEGIN
-		RTTI_SINGLE ( MOAIGfxMgr )
-	RTTI_END
-	
-	this->SetDefaultFrameBuffer ( new MOAIFrameBufferGL ());
-}
-
-//----------------------------------------------------------------//
-MOAIGfxMgrGL::~MOAIGfxMgrGL () {
-
-	this->Clear ();
-
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mStateStack.Size (); ++i ) {
-		delete this->mStateStack [ i ];
-	}
-	
-	this->SetDefaultFrameBuffer ( 0 );
-	this->SetDefaultTexture ( 0 );
 }
 
 //================================================================//

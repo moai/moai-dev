@@ -106,7 +106,7 @@ public:
 
 	//----------------------------------------------------------------//
 	MOAILight*			GetLight					( u32 lightID );
-	MOAITexture*	GetTexture					( u32 textureID );
+	MOAITexture*		GetTexture					( u32 textureID );
 	void				LoadGfxState				();
 						MOAIMaterialMgr				();
 						~MOAIMaterialMgr			();

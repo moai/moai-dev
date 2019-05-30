@@ -89,5 +89,5 @@ void MOAIGfxMgr_RenderTree::RegisterLuaFuncs ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGfxMgr_RenderTree::Render () {
 
-	this->MOAIRenderTree_Render ();
+	this->MOAIGfxMgr_RenderTree_Render ();
 }

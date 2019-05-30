@@ -23,7 +23,7 @@ MOAIGfxMgrGL_VertexCacheGL::~MOAIGfxMgrGL_VertexCacheGL () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrGL_VertexCacheGL::ZLAbstractVertexCache_AffirmBuffers () {
+void MOAIGfxMgrGL_VertexCacheGL::MOAIGfxMgr_VertexCache_AffirmBuffers () {
 
 	if ( !this->mVtxBuffer ) {
 
@@ -41,7 +41,7 @@ void MOAIGfxMgrGL_VertexCacheGL::ZLAbstractVertexCache_AffirmBuffers () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxMgrGL_VertexCacheGL::ZLAbstractVertexCache_BeginPrim ( u32 primType, u32 vtxCount, u32 idxCount ) {
+bool MOAIGfxMgrGL_VertexCacheGL::MOAIGfxMgr_VertexCache_BeginPrim ( u32 primType, u32 vtxCount, u32 idxCount ) {
 	
 	MOAIGfxMgrGL_GPUCacheGL& gpuCache = this->GetGPUCacheGL ();
 	MOAIVertexFormat* format = gpuCache.GetCurrentVtxFormat ();
@@ -81,7 +81,7 @@ bool MOAIGfxMgrGL_VertexCacheGL::ZLAbstractVertexCache_BeginPrim ( u32 primType,
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrGL_VertexCacheGL::ZLAbstractVertexCache_FlushToGPU () {
+void MOAIGfxMgrGL_VertexCacheGL::MOAIGfxMgr_VertexCache_FlushToGPU () {
 
 	if ( this->mPrimCount == 0 ) return;
 	

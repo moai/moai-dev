@@ -47,6 +47,16 @@ void MOAIGfxMgrGL_ResourceClerkGL::InsertGfxResource ( MOAIAbstractGfxResourceGL
 }
 
 //----------------------------------------------------------------//
+MOAIGfxMgrGL_ResourceClerkGL::MOAIGfxMgrGL_ResourceClerkGL () {
+}
+
+//----------------------------------------------------------------//
+MOAIGfxMgrGL_ResourceClerkGL::~MOAIGfxMgrGL_ResourceClerkGL () {
+
+	this->DiscardResources ();
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxMgrGL_ResourceClerkGL::ProcessDeleters ( ZLGfx& gfx ) {
 
 	ZLSize top = this->mDeleterStack.GetTop ();
@@ -156,14 +166,4 @@ void MOAIGfxMgrGL_ResourceClerkGL::Update () {
 	// TODO: think about cases where we can get async results back on the
 	// same display list so we can remove the one-frame lag when creating resources
 	// in retained mode.
-}
-
-//----------------------------------------------------------------//
-MOAIGfxMgrGL_ResourceClerkGL::MOAIGfxMgrGL_ResourceClerkGL () {
-}
-
-//----------------------------------------------------------------//
-MOAIGfxMgrGL_ResourceClerkGL::~MOAIGfxMgrGL_ResourceClerkGL () {
-
-	this->DiscardResources ();
 }

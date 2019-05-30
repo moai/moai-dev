@@ -90,7 +90,7 @@ public:
 	//----------------------------------------------------------------//
 	static void			CheckFilterModes			( int min, int mag );
 						MOAITextureGL				();
-						~MOAITextureGL			();
+						~MOAITextureGL				();
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
 	void				SetFilter					( int filter );

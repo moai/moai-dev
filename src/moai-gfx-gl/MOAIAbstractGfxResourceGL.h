@@ -86,18 +86,18 @@ public:
 	IS ( Ready, mState, STATE_READY_TO_BIND )
 
 	//----------------------------------------------------------------//
-	void			Destroy						(); // delete CPU and GPU data; go back to STATE_NEW
-	bool			DoCPUCreate					(); // preload CPU portion
-	void			FinishInit					(); // ready to CPU/GPU affirm; recover from STATE_NEW or STATE_ERROR
-	bool			InvokeLoader				();
+	void			Destroy							(); // delete CPU and GPU data; go back to STATE_NEW
+	bool			DoCPUCreate						(); // preload CPU portion
+	void			FinishInit						(); // ready to CPU/GPU affirm; recover from STATE_NEW or STATE_ERROR
+	bool			InvokeLoader					();
 					MOAIAbstractGfxResourceGL		();
 	virtual			~MOAIAbstractGfxResourceGL		();
-	bool			Purge						( u32 age );
-	void			RegisterLuaClass			( MOAILuaState& state );
-	void			RegisterLuaFuncs			( MOAILuaState& state );
-	bool			ScheduleForGPUCreate		( u32 pipelineID );
-	bool			ScheduleForGPUUpdate		();
-	void			SetGfxMgr					( MOAIGfxMgrGL& gfxMgr );
+	bool			Purge							( u32 age );
+	void			RegisterLuaClass				( MOAILuaState& state );
+	void			RegisterLuaFuncs				( MOAILuaState& state );
+	bool			ScheduleForGPUCreate			( u32 pipelineID );
+	bool			ScheduleForGPUUpdate			();
+	void			SetGfxMgr						( MOAIGfxMgrGL& gfxMgr );
 };
 
 #endif

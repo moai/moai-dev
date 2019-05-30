@@ -237,7 +237,7 @@ public:
 	bool					IsInputMtx					( u32 mtxID );
 	
 							MOAIGfxMgr_CPUCache			();
-	virtual					~MOAIGfxMgr_CPUCache			();
+	virtual					~MOAIGfxMgr_CPUCache		();
 
 	void					SetAmbientColor				( u32 color );
 	void					SetAmbientColor				( const ZLColorVec& colorVec );

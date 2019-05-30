@@ -41,10 +41,10 @@ public:
 	friend class MOAIAbstractGfxResourceGL;
 	
 	//----------------------------------------------------------------//
-	void			DeleteOrDiscard				( const ZLGfxHandle& handle, bool shouldDelete );
-	void			DiscardResources			();
-	void			PurgeResources				( u32 age = 0 );
-	void			Update						();
+	void			DeleteOrDiscard						( const ZLGfxHandle& handle, bool shouldDelete );
+	void			DiscardResources					();
+	void			PurgeResources						( u32 age = 0 );
+	void			Update								();
 					MOAIGfxMgrGL_ResourceClerkGL		();
 					~MOAIGfxMgrGL_ResourceClerkGL		();
 };

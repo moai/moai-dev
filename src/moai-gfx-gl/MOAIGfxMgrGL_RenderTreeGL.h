@@ -16,7 +16,7 @@ class MOAIGfxMgrGL_RenderTreeGL :
 private:
 
 	//----------------------------------------------------------------//
-	void			MOAIRenderTree_Render			();
+	void			MOAIGfxMgr_RenderTree_Render	();
 
 public:
 

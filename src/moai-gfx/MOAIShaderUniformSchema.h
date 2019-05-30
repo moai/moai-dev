@@ -26,8 +26,8 @@ public:
 	MOAIShaderUniformHandle			GetUniformHandle					( void* buffer, ZLIndex uniformID ) const;
 	MOAIShaderUniformHandle			GetUniformHandle					( void* buffer, ZLIndex uniformID, ZLIndex index ) const;
 	MOAIShaderUniformHandle			GetUniformHandleForAttributeID		( void* buffer, ZLAttrID attrID ) const;
-									MOAIShaderUniformSchema		();
-	virtual							~MOAIShaderUniformSchema		();
+									MOAIShaderUniformSchema				();
+	virtual							~MOAIShaderUniformSchema			();
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >

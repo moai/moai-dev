@@ -91,17 +91,17 @@ public:
 	GET ( ZLGfx&, DrawingAPI, mDrawingAPI ? *mDrawingAPI : mGfxImmediate )
 	
 	//----------------------------------------------------------------//
-	void				BeginPhase					( u32 phase );
-	void				EnablePipeline				( u32 pipelineID );
-	void				EnablePipelineLogging		( bool enable );
-	void				EndPhase					( u32 phase );
-	bool				HasContent					( u32 pipelineID );
-	bool				IsPipelineEnabled			( u32 pipelineID );
-	void				ProcessPipeline				( u32 pipelineID );
-	void				PublishAndReset				( u32 pipelineID );
-	void				ResetDrawingAPIs			();
-	ZLGfx*				SelectDrawingAPI			();
-	ZLGfx*				SelectDrawingAPI			( u32 pipelineID );
+	void				BeginPhase							( u32 phase );
+	void				EnablePipeline						( u32 pipelineID );
+	void				EnablePipelineLogging				( bool enable );
+	void				EndPhase							( u32 phase );
+	bool				HasContent							( u32 pipelineID );
+	bool				IsPipelineEnabled					( u32 pipelineID );
+	void				ProcessPipeline						( u32 pipelineID );
+	void				PublishAndReset						( u32 pipelineID );
+	void				ResetDrawingAPIs					();
+	ZLGfx*				SelectDrawingAPI					();
+	ZLGfx*				SelectDrawingAPI					( u32 pipelineID );
 						MOAIGfxMgrGL_PipelineClerkGL		();
 	virtual				~MOAIGfxMgrGL_PipelineClerkGL		();
 };
