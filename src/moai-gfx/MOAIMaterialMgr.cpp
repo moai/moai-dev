@@ -3,7 +3,7 @@
 
 #include "pch.h"
 
-#include <moai-gfx/MOAIAbstractGfxMgr.h>
+#include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIAbstractShader.h>
 #include <moai-gfx/MOAIAbstractTexture.h>
 #include <moai-gfx/MOAILight.h>
@@ -117,7 +117,7 @@ MOAIAbstractTexture* MOAIMaterialMgr::GetTexture ( u32 textureID ) {
 //----------------------------------------------------------------//
 void MOAIMaterialMgr::LoadGfxState () {
 
-	MOAIAbstractGfxMgr& gfxMgr = MOAIAbstractGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	gfxMgr.SetBlendMode ( this->mBlendMode );
 	gfxMgr.SetCullFunc ( this->mCullMode );

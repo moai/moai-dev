@@ -17,7 +17,7 @@ class MOAIIndexBufferGL :
 	public virtual MOAIAbstractGfxBufferGL {
 private:
 
-	friend class MOAIGfxPipelineClerkGL;
+	friend class MOAIGfxMgrGL_PipelineClerkGL;
 
 	u32				mIndexSize;
 

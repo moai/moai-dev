@@ -1,20 +1,20 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MOAIGFXRESOURCECLERKGL_H
-#define	MOAIGFXRESOURCECLERKGL_H
+#ifndef MOAIGFXMGRGL_RESOURCECLERKGL_H
+#define	MOAIGFXMGRGL_RESOURCECLERKGL_H
 
-#include <moai-gfx-gl/MOAIAbstractGfxMgrComponentsGL.h>
+#include <moai-gfx-gl/MOAIGfxMgrGLComponents.h>
 
 class MOAIAbstractGfxResourceGL;
-class MOAIGfxPipelineClerkGL;
+class MOAIGfxMgrGL_PipelineClerkGL;
 class MOAIGfxMgrGL;
 
 //================================================================//
-// MOAIGfxResourceClerkGL
+// MOAIGfxMgrGL_ResourceClerkGL
 //================================================================//
-class MOAIGfxResourceClerkGL :
-	virtual public MOAIAbstractGfxMgrComponentsGL {
+class MOAIGfxMgrGL_ResourceClerkGL :
+	virtual public MOAIGfxMgrGLComponents {
 protected:
 	
 	typedef ZLLeanList < MOAIAbstractGfxResourceGL* >::Iterator ResourceIt;
@@ -45,8 +45,8 @@ public:
 	void			DiscardResources			();
 	void			PurgeResources				( u32 age = 0 );
 	void			Update						();
-					MOAIGfxResourceClerkGL		();
-					~MOAIGfxResourceClerkGL		();
+					MOAIGfxMgrGL_ResourceClerkGL		();
+					~MOAIGfxMgrGL_ResourceClerkGL		();
 };
 
 #endif

@@ -19,9 +19,9 @@ class MOAIAbstractGfxResourceGL :
 	public ZLGfxListener {
 protected:
 
-	friend class MOAIGfxPipelineClerkGL;
-	friend class MOAIGfxStateGPUCacheGL;
-	friend class MOAIGfxResourceClerkGL;
+	friend class MOAIGfxMgrGL_PipelineClerkGL;
+	friend class MOAIGfxMgrGL_GPUCacheGL;
+	friend class MOAIGfxMgrGL_ResourceClerkGL;
 	
 	MOAIGfxMgrGL*		mGfxMgr;
 	

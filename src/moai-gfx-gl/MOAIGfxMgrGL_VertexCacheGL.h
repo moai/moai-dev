@@ -1,21 +1,21 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIVERTEXCACHEGL_H
-#define	MOAIVERTEXCACHEGL_H
+#ifndef	MOAIGFXMGRGL_VERTEXCACHEGL_H
+#define	MOAIGFXMGRGL_VERTEXCACHEGL_H
 
-#include <moai-gfx-gl/MOAIAbstractGfxMgrComponentsGL.h>
+#include <moai-gfx-gl/MOAIGfxMgrGLComponents.h>
 #include <moai-gfx-gl/MOAIIndexBufferGL.h>
 #include <moai-gfx-gl/MOAIVertexBufferGL.h>
 
 class MOAIAbstractGfxResourceGL;
 
 //================================================================//
-// MOAIVertexCacheGL
+// MOAIGfxMgrGL_VertexCacheGL
 //================================================================//
-class MOAIVertexCacheGL :
-	virtual public MOAIAbstractGfxMgrComponentsGL,
-	virtual public MOAIAbstractVertexCache {
+class MOAIGfxMgrGL_VertexCacheGL :
+	virtual public MOAIGfxMgrGLComponents,
+	virtual public MOAIGfxMgr_VertexCache {
 protected:
 		
 	ZLStrongPtr < MOAIVertexBufferGL >		mVtxBuffer;
@@ -29,8 +29,8 @@ protected:
 public:
 	
 	//----------------------------------------------------------------//
-					MOAIVertexCacheGL				();
-					~MOAIVertexCacheGL				();
+					MOAIGfxMgrGL_VertexCacheGL				();
+					~MOAIGfxMgrGL_VertexCacheGL				();
 };
 
 #endif

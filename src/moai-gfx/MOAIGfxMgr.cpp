@@ -3,26 +3,26 @@
 
 #include "pch.h"
 
-#include <moai-gfx/MOAIAbstractGfxMgr.h>
+#include <moai-gfx/MOAIGfxMgr.h>
 
 //================================================================//
-// MOAIAbstractGfxMgr
+// MOAIGfxMgr
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIAbstractShader* MOAIAbstractGfxMgr::AffirmShader ( MOAILuaState& state, int idx ) const {
+MOAIAbstractShader* MOAIGfxMgr::AffirmShader ( MOAILuaState& state, int idx ) const {
 
 	return this->MOAIAbstractGfxMgr_AffirmShader ( state, idx );
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractTexture* MOAIAbstractGfxMgr::AffirmTexture ( MOAILuaState& state, int idx ) const {
+MOAIAbstractTexture* MOAIGfxMgr::AffirmTexture ( MOAILuaState& state, int idx ) const {
 
 	return this->MOAIAbstractGfxMgr_AffirmTexture ( state, idx );
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractGfxMgr::MOAIAbstractGfxMgr () {
+MOAIGfxMgr::MOAIGfxMgr () {
 	
 	RTTI_BEGIN
 		RTTI_SINGLE ( MOAIGlobalEventSource )
@@ -30,7 +30,7 @@ MOAIAbstractGfxMgr::MOAIAbstractGfxMgr () {
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractGfxMgr::~MOAIAbstractGfxMgr () {
+MOAIGfxMgr::~MOAIGfxMgr () {
 }
 
 //================================================================//
@@ -38,22 +38,21 @@ MOAIAbstractGfxMgr::~MOAIAbstractGfxMgr () {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIAbstractGfxMgr& MOAIAbstractGfxMgr::MOAIAbstractGfxMgrComponents_GetAbstractGfxMgr () {
+MOAIGfxMgr_CPUCache& MOAIGfxMgr::MOAIAbstractGfxMgrComponents_GetCPUCache () {
 	return *this;
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractGfxStateGPUCache& MOAIAbstractGfxMgr::MOAIAbstractGfxMgrComponents_GetAbstractGfxStateGPUCache () {
+MOAIGfxMgr& MOAIGfxMgr::MOAIAbstractGfxMgrComponents_GetGfxMgr () {
 	return *this;
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractVertexCache& MOAIAbstractGfxMgr::MOAIAbstractGfxMgrComponents_GetAbstractVertexCache () {
+MOAIGfxMgr_GPUCache& MOAIGfxMgr::MOAIAbstractGfxMgrComponents_GetGPUCache () {
 	return *this;
 }
 
 //----------------------------------------------------------------//
-MOAIGfxStateCPUCache& MOAIAbstractGfxMgr::MOAIAbstractGfxMgrComponents_GetGfxStateCPUCache () {
+MOAIGfxMgr_VertexCache& MOAIGfxMgr::MOAIAbstractGfxMgrComponents_GetVertexCache () {
 	return *this;
 }
-

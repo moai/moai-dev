@@ -19,7 +19,7 @@ class MOAIVertexBufferGL :
 	public virtual MOAIAbstractGfxBufferGL {
 private:
 	
-	friend class MOAIGfxPipelineClerkGL;
+	friend class MOAIGfxMgrGL_PipelineClerkGL;
 	friend class MOAIVertexBufferWithFormatGL;
 
 	//----------------------------------------------------------------//

@@ -21,7 +21,7 @@ void AKUGfxGLAppInitialize () {
 void AKUGfxGLContextInitialize () {
 
 	MOAIGfxMgrGL::Affirm ();
-	MOAIGfxMgrGL::RegisterAlias < MOAIAbstractGfxMgr >();
+	MOAIGfxMgrGL::RegisterAlias < MOAIGfxMgr >();
 
 	MOAIVertexFormatMgrGL::Affirm ();
 	MOAIShaderMgrGL::Affirm ();

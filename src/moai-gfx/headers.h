@@ -8,9 +8,7 @@
 
 #include <moai-gfx/MOAIAbstractDrawable.h>
 #include <moai-gfx/MOAIAbstractFrameBuffer.h>
-#include <moai-gfx/MOAIAbstractGfxMgr.h>
-#include <moai-gfx/MOAIAbstractGfxMgrComponents.h>
-#include <moai-gfx/MOAIAbstractGfxStateGPUCache.h>
+#include <moai-gfx/MOAIGfxMgrComponents.h>
 #include <moai-gfx/MOAIAbstractIndexBuffer.h>
 #include <moai-gfx/MOAIAbstractRenderMgr.h>
 #include <moai-gfx/MOAIAbstractShader.h>
@@ -18,9 +16,12 @@
 #include <moai-gfx/MOAIAbstractTexture.h>
 #include <moai-gfx/MOAIAbstractVertexArray.h>
 #include <moai-gfx/MOAIAbstractVertexBuffer.h>
-#include <moai-gfx/MOAIAbstractVertexCache.h>
 #include <moai-gfx/MOAIAbstractVertexFormat.h>
 #include <moai-gfx/MOAIBlendMode.h>
+#include <moai-gfx/MOAIGfxMgr.h>
+#include <moai-gfx/MOAIGfxMgr_CPUCache.h>
+#include <moai-gfx/MOAIGfxMgr_GPUCache.h>
+#include <moai-gfx/MOAIGfxMgr_VertexCache.h>
 #include <moai-gfx/MOAILight.h>
 #include <moai-gfx/MOAILightFormat.h>
 #include <moai-gfx/MOAIMaterial.h>

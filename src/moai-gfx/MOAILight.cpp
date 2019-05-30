@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx/MOAIAbstractGfxMgr.h>
+#include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAILight.h>
 #include <moai-gfx/MOAILightFormat.h>
 
@@ -65,7 +65,7 @@ void MOAILight::ApplyUniforms ( void* buffer, size_t bufferSize ) {
 //----------------------------------------------------------------//
 void MOAILight::BindTextures ( u32 textureOffset ) {
 
-	MOAIAbstractGfxMgr& gfx = MOAIAbstractGfxMgr::Get ();
+	MOAIGfxMgr& gfx = MOAIGfxMgr::Get ();
 
 	size_t nTextures = this->mTextures.Size ();
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < nTextures; ++i ) {

@@ -1,10 +1,10 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGFXPIPELINECLERKGL_H
-#define	MOAIGFXPIPELINECLERKGL_H
+#ifndef	MOAIGFXMGRGL_PIPELINECLERKGL_H
+#define	MOAIGFXMGRGL_PIPELINECLERKGL_H
 
-#include <moai-gfx-gl/MOAIAbstractGfxMgrComponentsGL.h>
+#include <moai-gfx-gl/MOAIGfxMgrGLComponents.h>
 
 #define GFX_PIPELINE_LOGGING_FOLDER "renderlogs"
 
@@ -14,7 +14,7 @@
 class MOAIGfxPipelineGL {
 private:
 
-	friend class MOAIGfxPipelineClerkGL;
+	friend class MOAIGfxMgrGL_PipelineClerkGL;
 
 	ZLLeanArray < ZLGfxRetained* > mDisplayLists;
 	ZLLeanStack < ZLGfxRetained* > mFreeDisplayLists;
@@ -49,10 +49,10 @@ private:
 };
 
 //================================================================//
-// MOAIGfxPipelineClerkGL
+// MOAIGfxMgrGL_PipelineClerkGL
 //================================================================//
-class MOAIGfxPipelineClerkGL :
-	virtual public MOAIAbstractGfxMgrComponentsGL {
+class MOAIGfxMgrGL_PipelineClerkGL :
+	virtual public MOAIGfxMgrGLComponents {
 public:
 
 	enum {
@@ -102,8 +102,8 @@ public:
 	void				ResetDrawingAPIs			();
 	ZLGfx*				SelectDrawingAPI			();
 	ZLGfx*				SelectDrawingAPI			( u32 pipelineID );
-						MOAIGfxPipelineClerkGL		();
-	virtual				~MOAIGfxPipelineClerkGL		();
+						MOAIGfxMgrGL_PipelineClerkGL		();
+	virtual				~MOAIGfxMgrGL_PipelineClerkGL		();
 };
 
 #endif

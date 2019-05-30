@@ -4,11 +4,11 @@
 #ifndef	MOAIGFXMGRGL_H
 #define	MOAIGFXMGRGL_H
 
-#include <moai-gfx-gl/MOAIAbstractGfxMgrComponentsGL.h>
-#include <moai-gfx-gl/MOAIGfxPipelineClerkGL.h>
-#include <moai-gfx-gl/MOAIGfxResourceClerkGL.h>
-#include <moai-gfx-gl/MOAIGfxStateGPUCacheGL.h>
-#include <moai-gfx-gl/MOAIVertexCacheGL.h>
+#include <moai-gfx-gl/MOAIGfxMgrGLComponents.h>
+#include <moai-gfx-gl/MOAIGfxMgrGL_PipelineClerkGL.h>
+#include <moai-gfx-gl/MOAIGfxMgrGL_ResourceClerkGL.h>
+#include <moai-gfx-gl/MOAIGfxMgrGL_GPUCacheGL.h>
+#include <moai-gfx-gl/MOAIGfxMgrGL_VertexCacheGL.h>
 
 //================================================================//
 // MOAIGfxStateFrameGL
@@ -24,12 +24,12 @@ protected:
 //================================================================//
 class MOAIGfxMgrGL :
 	public ZLContextClass < MOAIGfxMgrGL >,
-	virtual public MOAIAbstractGfxMgr,
-	virtual public MOAIAbstractGfxMgrComponentsGL,
-	virtual public MOAIGfxPipelineClerkGL,
-	virtual public MOAIGfxResourceClerkGL,
-	virtual public MOAIGfxStateGPUCacheGL,
-	virtual public MOAIVertexCacheGL {
+	virtual public MOAIGfxMgrGLComponents,
+	virtual public MOAIGfxMgr,
+	virtual public MOAIGfxMgrGL_GPUCacheGL,
+	virtual public MOAIGfxMgrGL_PipelineClerkGL,
+	virtual public MOAIGfxMgrGL_ResourceClerkGL,
+	virtual public MOAIGfxMgrGL_VertexCacheGL {
 protected:
 
 	bool									mHasContext;
@@ -62,13 +62,13 @@ protected:
 	void						OnGlobalsInitialize			();
 
 	//----------------------------------------------------------------//
-	MOAIAbstractShader*			MOAIAbstractGfxMgr_AffirmShader							( MOAILuaState& state, int idx ) const;
-	MOAIAbstractTexture*			MOAIAbstractGfxMgr_AffirmTexture						( MOAILuaState& state, int idx ) const;
-	MOAIGfxMgrGL&				MOAIAbstractGfxMgrComponentsGL_GetGfxMgrGL 				();
-	MOAIGfxPipelineClerkGL&		MOAIAbstractGfxMgrComponentsGL_GetGfxPipelineClerkGL	();
-	MOAIGfxResourceClerkGL&		MOAIAbstractGfxMgrComponentsGL_GetGfxResourceClerkGL	();
-	MOAIGfxStateGPUCacheGL&		MOAIAbstractGfxMgrComponentsGL_GetGfxStateGPUCacheGL	();
-	MOAIVertexCacheGL&			MOAIAbstractGfxMgrComponentsGL_GetVertexCacheGL			();
+	MOAIAbstractShader*				MOAIAbstractGfxMgr_AffirmShader				( MOAILuaState& state, int idx ) const;
+	MOAIAbstractTexture*			MOAIAbstractGfxMgr_AffirmTexture			( MOAILuaState& state, int idx ) const;
+	MOAIGfxMgrGL&					MOAIGfxMgrGLComponents_GetGfxMgrGL			();
+	MOAIGfxMgrGL_GPUCacheGL&		MOAIGfxMgrGLComponents_GetGPUCacheGL		();
+	MOAIGfxMgrGL_PipelineClerkGL&	MOAIGfxMgrGLComponents_GetPipelineClerkGL	();
+	MOAIGfxMgrGL_ResourceClerkGL&	MOAIGfxMgrGLComponents_GetResourceClerkGL	();
+	MOAIGfxMgrGL_VertexCacheGL&		MOAIGfxMgrGLComponents_GetVertexCacheGL		();
 
 public:
 

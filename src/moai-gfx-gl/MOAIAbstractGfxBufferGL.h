@@ -20,8 +20,8 @@ class MOAIAbstractGfxBufferGL :
 	public ZLCopyOnWrite {
 protected:
 	
-	friend class MOAIGfxPipelineClerkGL;
-	friend class MOAIGfxStateGPUCacheGL;
+	friend class MOAIGfxMgrGL_PipelineClerkGL;
+	friend class MOAIGfxMgrGL_GPUCacheGL;
 	friend class MOAIVertexArrayItem;
 	friend class MOAIVertexArrayGL;
 	

@@ -3,7 +3,7 @@
 
 #include "pch.h"
 
-#include <moai-gfx/MOAIAbstractGfxMgr.h>
+#include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIAbstractShader.h>
 #include <moai-gfx/MOAIAbstractTexture.h>
 #include <moai-gfx/MOAILight.h>
@@ -576,7 +576,7 @@ void MOAIMaterialBatch::SetShader ( ZLIndex idx, MOAIAbstractShader* shader ) {
 MOAIAbstractShader* MOAIMaterialBatch::SetShader ( MOAILuaState& state, int idx ) {
 
 	ZLIndex materialID = MOAIMaterialBatch::GetMaterialID ( state, idx );
-	MOAIAbstractShader* shader = MOAIAbstractGfxMgr::Get ().AffirmShader ( state, idx );
+	MOAIAbstractShader* shader = MOAIGfxMgr::Get ().AffirmShader ( state, idx );
 	this->SetShader ( materialID, shader );
 	return shader;
 }
@@ -615,7 +615,7 @@ MOAIAbstractTexture* MOAIMaterialBatch::SetTexture ( MOAILuaState& state, int id
 	u32 name;
 	ZLIndex materialID = MOAIMaterialBatch::GetNamedGlobalID ( state, idx, name );
 
-	MOAIAbstractTexture* texture = MOAIAbstractGfxMgr::Get ().AffirmTexture ( state, idx );
+	MOAIAbstractTexture* texture = MOAIGfxMgr::Get ().AffirmTexture ( state, idx );
 	if ( name != MOAI_UNKNOWN_MATERIAL_GLOBAL ) {
 		this->SetTexture ( materialID, name, texture );
 	}

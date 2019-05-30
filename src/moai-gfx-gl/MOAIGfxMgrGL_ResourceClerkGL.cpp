@@ -3,16 +3,16 @@
 
 #include "pch.h"
 #include <moai-gfx-gl/MOAIAbstractGfxResourceGL.h>
-#include <moai-gfx-gl/MOAIGfxPipelineClerkGL.h>
-#include <moai-gfx-gl/MOAIGfxResourceClerkGL.h>
-#include <moai-gfx-gl/MOAIGfxStateGPUCacheGL.h>
+#include <moai-gfx-gl/MOAIGfxMgrGL_PipelineClerkGL.h>
+#include <moai-gfx-gl/MOAIGfxMgrGL_ResourceClerkGL.h>
+#include <moai-gfx-gl/MOAIGfxMgrGL_GPUCacheGL.h>
 
 //================================================================//
-// MOAIGfxResourceClerkGL
+// MOAIGfxMgrGL_ResourceClerkGL
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceClerkGL::DeleteOrDiscard ( const ZLGfxHandle& handle, bool shouldDelete ) {
+void MOAIGfxMgrGL_ResourceClerkGL::DeleteOrDiscard ( const ZLGfxHandle& handle, bool shouldDelete ) {
 
 	if ( handle ) {
 		if ( shouldDelete ) {
@@ -25,7 +25,7 @@ void MOAIGfxResourceClerkGL::DeleteOrDiscard ( const ZLGfxHandle& handle, bool s
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceClerkGL::DiscardResources () {
+void MOAIGfxMgrGL_ResourceClerkGL::DiscardResources () {
 
 	ResourceIt resourceIt = this->mResources.Head ();
 	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
@@ -41,13 +41,13 @@ void MOAIGfxResourceClerkGL::DiscardResources () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceClerkGL::InsertGfxResource ( MOAIAbstractGfxResourceGL& resource ) {
+void MOAIGfxMgrGL_ResourceClerkGL::InsertGfxResource ( MOAIAbstractGfxResourceGL& resource ) {
 
 	this->mResources.PushBack ( resource.mMasterLink );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceClerkGL::ProcessDeleters ( ZLGfx& gfx ) {
+void MOAIGfxMgrGL_ResourceClerkGL::ProcessDeleters ( ZLGfx& gfx ) {
 
 	ZLSize top = this->mDeleterStack.GetTop ();
 
@@ -65,7 +65,7 @@ void MOAIGfxResourceClerkGL::ProcessDeleters ( ZLGfx& gfx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceClerkGL::ProcessPending ( ZLGfx& gfx, ZLLeanList < MOAIAbstractGfxResourceGL* > &list ) {
+void MOAIGfxMgrGL_ResourceClerkGL::ProcessPending ( ZLGfx& gfx, ZLLeanList < MOAIAbstractGfxResourceGL* > &list ) {
 	
 	this->ProcessDeleters ( gfx );
 	
@@ -80,7 +80,7 @@ void MOAIGfxResourceClerkGL::ProcessPending ( ZLGfx& gfx, ZLLeanList < MOAIAbstr
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceClerkGL::PurgeResources ( u32 age ) {
+void MOAIGfxMgrGL_ResourceClerkGL::PurgeResources ( u32 age ) {
 	
 	ResourceIt resourceIt = this->mResources.Head ();
 	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
@@ -89,7 +89,7 @@ void MOAIGfxResourceClerkGL::PurgeResources ( u32 age ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceClerkGL::RemoveGfxResource ( MOAIAbstractGfxResourceGL& resource ) {
+void MOAIGfxMgrGL_ResourceClerkGL::RemoveGfxResource ( MOAIAbstractGfxResourceGL& resource ) {
 
 	this->mResources.Remove ( resource.mMasterLink );
 	this->mPendingForLoadList.Remove ( resource.mPendingLink );
@@ -98,7 +98,7 @@ void MOAIGfxResourceClerkGL::RemoveGfxResource ( MOAIAbstractGfxResourceGL& reso
 
 //----------------------------------------------------------------//
 // this gets called when the graphics context is renewed
-void MOAIGfxResourceClerkGL::RenewResources () {
+void MOAIGfxMgrGL_ResourceClerkGL::RenewResources () {
 
 	this->mDeleterStack.Reset ();
 
@@ -109,47 +109,47 @@ void MOAIGfxResourceClerkGL::RenewResources () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceClerkGL::ScheduleGPUAffirm ( MOAIAbstractGfxResourceGL& resource, u32 listID ) {
+void MOAIGfxMgrGL_ResourceClerkGL::ScheduleGPUAffirm ( MOAIAbstractGfxResourceGL& resource, u32 listID ) {
 
 	switch ( listID ) {
 
-		case MOAIGfxPipelineClerkGL::LOADING_PIPELINE:
+		case MOAIGfxMgrGL_PipelineClerkGL::LOADING_PIPELINE:
 			this->mPendingForLoadList.PushBack ( resource.mPendingLink );
 			break;
 		
-		case MOAIGfxPipelineClerkGL::DRAWING_PIPELINE:
+		case MOAIGfxMgrGL_PipelineClerkGL::DRAWING_PIPELINE:
 			this->mPendingForDrawList.PushBack ( resource.mPendingLink );
 			break;
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceClerkGL::Update () {
+void MOAIGfxMgrGL_ResourceClerkGL::Update () {
 
-	MOAIGfxPipelineClerkGL& pipelineClerk = this->GetGfxPipelineClerkGL ();
+	MOAIGfxMgrGL_PipelineClerkGL& pipelineClerk = this->GetPipelineClerkGL ();
 
 	if ( this->mDeleterStack.GetTop () || this->mPendingForLoadList.Count ()) {
 	
-		ZLGfx* gfxLoading = pipelineClerk.SelectDrawingAPI ( MOAIGfxPipelineClerkGL::LOADING_PIPELINE );
+		ZLGfx* gfxLoading = pipelineClerk.SelectDrawingAPI ( MOAIGfxMgrGL_PipelineClerkGL::LOADING_PIPELINE );
 		
 		if ( gfxLoading ) {
 		
 			ZGL_COMMENT ( *gfxLoading, "RESOURCE MGR LOADING PIPELINE UPDATE" );
 			this->ProcessDeleters ( *gfxLoading );
 			this->ProcessPending ( *gfxLoading, this->mPendingForLoadList );
-			this->GetGfxStateGPUCacheGL ().UnbindAll ();
+			this->GetGPUCache ().UnbindAll ();
 		}
 	}
 	
 	if ( this->mPendingForDrawList.Count ()) {
 	
-		ZLGfx* gfxDrawing = pipelineClerk.SelectDrawingAPI ( MOAIGfxPipelineClerkGL::DRAWING_PIPELINE );
+		ZLGfx* gfxDrawing = pipelineClerk.SelectDrawingAPI ( MOAIGfxMgrGL_PipelineClerkGL::DRAWING_PIPELINE );
 		
 		if ( gfxDrawing ) {
 		
 			ZGL_COMMENT ( *gfxDrawing, "RESOURCE MGR DRAWING PIPELINE UPDATE" );
 			this->ProcessPending ( *gfxDrawing, this->mPendingForDrawList );
-			this->GetGfxStateGPUCacheGL ().UnbindAll ();
+			this->GetGPUCache ().UnbindAll ();
 		}
 	}
 
@@ -159,11 +159,11 @@ void MOAIGfxResourceClerkGL::Update () {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxResourceClerkGL::MOAIGfxResourceClerkGL () {
+MOAIGfxMgrGL_ResourceClerkGL::MOAIGfxMgrGL_ResourceClerkGL () {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxResourceClerkGL::~MOAIGfxResourceClerkGL () {
+MOAIGfxMgrGL_ResourceClerkGL::~MOAIGfxMgrGL_ResourceClerkGL () {
 
 	this->DiscardResources ();
 }

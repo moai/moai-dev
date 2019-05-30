@@ -26,7 +26,7 @@ class MOAIFrameBufferGL :
 	public virtual ZLGfxListener {
 protected:
 	
-	friend class MOAIGfxStateGPUCacheGL;
+	friend class MOAIGfxMgrGL_GPUCacheGL;
 	
 	u32					mBufferWidth;
 	u32					mBufferHeight;

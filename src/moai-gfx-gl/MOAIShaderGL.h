@@ -19,7 +19,7 @@ class MOAIShaderGL :
 	public virtual MOAINode {
 protected:
 
-	friend class MOAIGfxStateGPUCacheGL;
+	friend class MOAIGfxMgrGL_GPUCacheGL;
 	friend class MOAIShaderProgramGL;
 
 	ZLStrongPtr < MOAIShaderProgramGL >	mProgram;

@@ -15,7 +15,7 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "CD4A9308229DE00F00F9E400"
-               BuildableName = "libzl-osx-gfx-gl.a"
+               BuildableName = "libzl-osx-gfx.a"
                BlueprintName = "libzl-osx-zl-gfx"
                ReferencedContainer = "container:libmoai.xcodeproj">
             </BuildableReference>
@@ -46,7 +46,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CD4A9308229DE00F00F9E400"
-            BuildableName = "libzl-osx-gfx-gl.a"
+            BuildableName = "libzl-osx-gfx.a"
             BlueprintName = "libzl-osx-zl-gfx"
             ReferencedContainer = "container:libmoai.xcodeproj">
          </BuildableReference>
@@ -64,7 +64,7 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "CD4A9308229DE00F00F9E400"
-            BuildableName = "libzl-osx-gfx-gl.a"
+            BuildableName = "libzl-osx-gfx.a"
             BlueprintName = "libzl-osx-zl-gfx"
             ReferencedContainer = "container:libmoai.xcodeproj">
          </BuildableReference>

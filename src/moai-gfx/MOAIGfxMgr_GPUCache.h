@@ -1,10 +1,10 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIABSTRACTGFXSTATEGPUCACHE_H
-#define	MOAIABSTRACTGFXSTATEGPUCACHE_H
+#ifndef	MOAIGFXMGR_GPUCACHE_H
+#define	MOAIGFXMGR_GPUCACHE_H
 
-#include <moai-gfx/MOAIAbstractGfxMgrComponents.h>
+#include <moai-gfx/MOAIGfxMgrComponents.h>
 #include <moai-gfx/MOAIBlendMode.h>
 
 class MOAIAbstractShader;
@@ -16,10 +16,10 @@ class MOAIAbstractVertexBuffer;
 class MOAIAbstractVertexFormat;
 
 //================================================================//
-// MOAIAbstractGfxStateGPUCache
+// MOAIGfxMgr_GPUCache
 //================================================================//
-class MOAIAbstractGfxStateGPUCache :
-	public virtual MOAIAbstractGfxMgrComponents {
+class MOAIGfxMgr_GPUCache :
+	public virtual MOAIGfxMgrComponents {
 protected:
 
 	//----------------------------------------------------------------//
@@ -81,8 +81,8 @@ public:
 	float						GetViewHeight				() const;
 	ZLRect						GetViewRect					() const;
 	float						GetViewWidth				() const;
-								MOAIAbstractGfxStateGPUCache		();
-	virtual						~MOAIAbstractGfxStateGPUCache		();
+								MOAIGfxMgr_GPUCache		();
+	virtual						~MOAIGfxMgr_GPUCache		();
 	void						ResetGPUState				();
 	void						SetBlendMode				();
 	void						SetBlendMode				( const MOAIBlendMode& blendMode );

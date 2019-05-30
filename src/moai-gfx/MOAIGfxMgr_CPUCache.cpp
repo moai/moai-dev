@@ -3,14 +3,14 @@
 
 #include "pch.h"
 
-#include <moai-gfx/MOAIGfxStateCPUCache.h>
+#include <moai-gfx/MOAIGfxMgr_CPUCache.h>
 
 //================================================================//
-// MOAIGfxStateCPUCache
+// MOAIGfxMgr_CPUCache
 //================================================================//
 
 //----------------------------------------------------------------//
-const ZLMatrix4x4& MOAIGfxStateCPUCache::GetMtx ( u32 mtxID ) {
+const ZLMatrix4x4& MOAIGfxMgr_CPUCache::GetMtx ( u32 mtxID ) {
 	
 	u64 mtxFlag = ID_TO_FLAG ( mtxID );
 	
@@ -66,7 +66,7 @@ const ZLMatrix4x4& MOAIGfxStateCPUCache::GetMtx ( u32 mtxID ) {
 }
 
 //----------------------------------------------------------------//
-const ZLMatrix4x4& MOAIGfxStateCPUCache::GetPrimaryMtx ( u32 mtxID, u64 mtxFlag ) {
+const ZLMatrix4x4& MOAIGfxMgr_CPUCache::GetPrimaryMtx ( u32 mtxID, u64 mtxFlag ) {
 	UNUSED(mtxFlag);
 	switch ( mtxID ) {
 	
@@ -154,7 +154,7 @@ const ZLMatrix4x4& MOAIGfxStateCPUCache::GetPrimaryMtx ( u32 mtxID, u64 mtxFlag 
 }
 
 //----------------------------------------------------------------//
-const ZLFrustum& MOAIGfxStateCPUCache::GetViewVolume () {
+const ZLFrustum& MOAIGfxMgr_CPUCache::GetViewVolume () {
 
 	if ( this->mStateFrameCPU.mDirtyFlags & VIEW_VOLUME_MASK ) {
 		this->mStateFrameCPU.mViewVolume.Init ( this->GetMtx ( CLIP_TO_WORLD_MTX ));
@@ -164,7 +164,7 @@ const ZLFrustum& MOAIGfxStateCPUCache::GetViewVolume () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxStateCPUCache::IsInputMtx ( u32 mtxID ) {
+bool MOAIGfxMgr_CPUCache::IsInputMtx ( u32 mtxID ) {
 
 	return (
 		( mtxID == CLIP_TO_WINDOW_MTX )		||
@@ -177,7 +177,7 @@ bool MOAIGfxStateCPUCache::IsInputMtx ( u32 mtxID ) {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxStateCPUCache::MOAIGfxStateCPUCache () {
+MOAIGfxMgr_CPUCache::MOAIGfxMgr_CPUCache () {
 
 	assert ( TOTAL_GLOBALS < MAX_GLOBALS );
 
@@ -198,38 +198,38 @@ MOAIGfxStateCPUCache::MOAIGfxStateCPUCache () {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxStateCPUCache::~MOAIGfxStateCPUCache () {
+MOAIGfxMgr_CPUCache::~MOAIGfxMgr_CPUCache () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateCPUCache::RestoreCPUState ( const MOAIGfxStateCPUCacheFrame& frame ) {
+void MOAIGfxMgr_CPUCache::RestoreCPUState ( const MOAIGfxStateCPUCacheFrame& frame ) {
 
 	memcpy ( &this->mStateFrameCPU, &frame, sizeof ( MOAIGfxStateCPUCacheFrame ));
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateCPUCache::SetAmbientColor ( u32 color ) {
+void MOAIGfxMgr_CPUCache::SetAmbientColor ( u32 color ) {
 
 	this->mStateFrameCPU.mAmbientColor.SetRGBA ( color );
 	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateCPUCache::SetAmbientColor ( const ZLColorVec& colorVec ) {
+void MOAIGfxMgr_CPUCache::SetAmbientColor ( const ZLColorVec& colorVec ) {
 
 	this->mStateFrameCPU.mAmbientColor = colorVec;
 	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateCPUCache::SetAmbientColor ( float r, float g, float b, float a ) {
+void MOAIGfxMgr_CPUCache::SetAmbientColor ( float r, float g, float b, float a ) {
 
 	this->mStateFrameCPU.mAmbientColor.Set ( r, g, b, a );
 	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateCPUCache::SetMtx ( u32 mtxID ) {
+void MOAIGfxMgr_CPUCache::SetMtx ( u32 mtxID ) {
 
 	ZLMatrix4x4 mtx;
 	mtx.Ident ();
@@ -237,13 +237,13 @@ void MOAIGfxStateCPUCache::SetMtx ( u32 mtxID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateCPUCache::SetMtx ( u32 mtxID, const ZLAffine3D& transform ) {
+void MOAIGfxMgr_CPUCache::SetMtx ( u32 mtxID, const ZLAffine3D& transform ) {
 
 	this->SetMtx ( mtxID, ZLMatrix4x4 ( transform ));
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateCPUCache::SetMtx ( u32 mtxID, const ZLMatrix4x4& mtx ) {
+void MOAIGfxMgr_CPUCache::SetMtx ( u32 mtxID, const ZLMatrix4x4& mtx ) {
 
 	u64 dirtyMask = 0;
 
@@ -293,55 +293,55 @@ void MOAIGfxStateCPUCache::SetMtx ( u32 mtxID, const ZLMatrix4x4& mtx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateCPUCache::SetPenColor ( u32 color ) {
+void MOAIGfxMgr_CPUCache::SetPenColor ( u32 color ) {
 
 	this->mStateFrameCPU.mPenColor.SetRGBA ( color );
 	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateCPUCache::SetPenColor ( const ZLColorVec& colorVec ) {
+void MOAIGfxMgr_CPUCache::SetPenColor ( const ZLColorVec& colorVec ) {
 
 	this->mStateFrameCPU.mPenColor = colorVec;
 	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateCPUCache::SetPenColor ( float r, float g, float b, float a ) {
+void MOAIGfxMgr_CPUCache::SetPenColor ( float r, float g, float b, float a ) {
 
 	this->mStateFrameCPU.mPenColor.Set ( r, g, b, a );
 	this->UpdateFinalColor ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateCPUCache::SetViewProj ( ZLViewport* viewport, ZLCamera* camera, ZLCamera* debug, const ZLVec3D& parallax ) {
+void MOAIGfxMgr_CPUCache::SetViewProj ( ZLViewport* viewport, ZLCamera* camera, ZLCamera* debug, const ZLVec3D& parallax ) {
 
 	ZLMatrix4x4 view = ZLViewProj::GetViewMtx ( camera, parallax );
 	ZLMatrix4x4 proj = ZLViewProj::GetProjectionMtx ( viewport, camera );
 	
-	this->SetMtx ( MOAIGfxStateCPUCache::WORLD_TO_VIEW_MTX, view );
-	this->SetMtx ( MOAIGfxStateCPUCache::VIEW_TO_CLIP_MTX, proj );
-	this->SetMtx ( MOAIGfxStateCPUCache::CLIP_TO_WINDOW_MTX, viewport ? viewport->GetProjMtx () : ZLMatrix4x4::IDENT );
+	this->SetMtx ( MOAIGfxMgr_CPUCache::WORLD_TO_VIEW_MTX, view );
+	this->SetMtx ( MOAIGfxMgr_CPUCache::VIEW_TO_CLIP_MTX, proj );
+	this->SetMtx ( MOAIGfxMgr_CPUCache::CLIP_TO_WINDOW_MTX, viewport ? viewport->GetProjMtx () : ZLMatrix4x4::IDENT );
 	
 	if ( debug ) {
 		ZLMatrix4x4 display = ZLViewProj::GetViewMtx ( debug );
 		display.Append ( ZLViewProj::GetProjectionMtx ( viewport, debug ));
-		this->SetMtx ( MOAIGfxStateCPUCache::WORLD_TO_DISPLAY_MTX, display );
+		this->SetMtx ( MOAIGfxMgr_CPUCache::WORLD_TO_DISPLAY_MTX, display );
 	}
 	else {
 		view.Append ( proj );
-		this->SetMtx ( MOAIGfxStateCPUCache::WORLD_TO_DISPLAY_MTX, view );
+		this->SetMtx ( MOAIGfxMgr_CPUCache::WORLD_TO_DISPLAY_MTX, view );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateCPUCache::StoreCPUState ( MOAIGfxStateCPUCacheFrame& frame ) const {
+void MOAIGfxMgr_CPUCache::StoreCPUState ( MOAIGfxStateCPUCacheFrame& frame ) const {
 
 	memcpy ( &frame, &this->mStateFrameCPU, sizeof ( MOAIGfxStateCPUCacheFrame ));
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxStateCPUCache::UpdateFinalColor () {
+void MOAIGfxMgr_CPUCache::UpdateFinalColor () {
 
 	this->mStateFrameCPU.mFinalColor.mR = this->mStateFrameCPU.mAmbientColor.mR * this->mStateFrameCPU.mPenColor.mR;
 	this->mStateFrameCPU.mFinalColor.mG = this->mStateFrameCPU.mAmbientColor.mG * this->mStateFrameCPU.mPenColor.mG;

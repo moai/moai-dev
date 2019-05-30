@@ -124,8 +124,8 @@ int MOAIGfxMgrGL::_renewResources ( lua_State* L ) {
 ////----------------------------------------------------------------//
 //void MOAIGfxMgrGL::Clear () {
 //
-//	this->MOAIGfxStateGPUCacheGL::Clear ();
-//	this->MOAIAbstractVertexCache::Clear ();
+//	this->MOAIGfxMgrGL_GPUCacheGL::Clear ();
+//	this->MOAIGfxMgr_VertexCache::Clear ();
 //}
 
 //----------------------------------------------------------------//
@@ -314,8 +314,8 @@ void MOAIGfxMgrGL::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "EVENT_RESIZE",	( u32 )EVENT_RESIZE );
 	
-	state.SetField ( -1, "DRAWING_PIPELINE",	( u32 )MOAIGfxPipelineClerkGL::DRAWING_PIPELINE );
-	state.SetField ( -1, "LOADING_PIPELINE",	( u32 )MOAIGfxPipelineClerkGL::LOADING_PIPELINE );
+	state.SetField ( -1, "DRAWING_PIPELINE",	( u32 )MOAIGfxMgrGL_PipelineClerkGL::DRAWING_PIPELINE );
+	state.SetField ( -1, "LOADING_PIPELINE",	( u32 )MOAIGfxMgrGL_PipelineClerkGL::LOADING_PIPELINE );
 
 	luaL_Reg regTable [] = {
 		{ "enablePipelineLogging",		_enablePipelineLogging },
@@ -393,7 +393,7 @@ MOAIGfxMgrGL::MOAIGfxMgrGL () :
 	mStateStackTop ( ZLIndexOp::ZERO ) {
 	
 	RTTI_BEGIN
-		RTTI_SINGLE ( MOAIAbstractGfxMgr )
+		RTTI_SINGLE ( MOAIGfxMgr )
 	RTTI_END
 	
 	this->SetDefaultFrameBuffer ( new MOAIFrameBufferGL ());
@@ -448,26 +448,26 @@ MOAIAbstractTexture* MOAIGfxMgrGL::MOAIAbstractGfxMgr_AffirmTexture ( MOAILuaSta
 }
 
 //----------------------------------------------------------------//
-MOAIGfxMgrGL& MOAIGfxMgrGL::MOAIAbstractGfxMgrComponentsGL_GetGfxMgrGL () {
+MOAIGfxMgrGL& MOAIGfxMgrGL::MOAIGfxMgrGLComponents_GetGfxMgrGL () {
 	return *this;
 }
 
 //----------------------------------------------------------------//
-MOAIGfxPipelineClerkGL& MOAIGfxMgrGL::MOAIAbstractGfxMgrComponentsGL_GetGfxPipelineClerkGL () {
+MOAIGfxMgrGL_GPUCacheGL& MOAIGfxMgrGL::MOAIGfxMgrGLComponents_GetGPUCacheGL () {
 	return *this;
 }
 
 //----------------------------------------------------------------//
-MOAIGfxResourceClerkGL& MOAIGfxMgrGL::MOAIAbstractGfxMgrComponentsGL_GetGfxResourceClerkGL () {
+MOAIGfxMgrGL_PipelineClerkGL& MOAIGfxMgrGL::MOAIGfxMgrGLComponents_GetPipelineClerkGL () {
 	return *this;
 }
 
 //----------------------------------------------------------------//
-MOAIGfxStateGPUCacheGL& MOAIGfxMgrGL::MOAIAbstractGfxMgrComponentsGL_GetGfxStateGPUCacheGL () {
+MOAIGfxMgrGL_ResourceClerkGL& MOAIGfxMgrGL::MOAIGfxMgrGLComponents_GetResourceClerkGL () {
 	return *this;
 }
 
 //----------------------------------------------------------------//
-MOAIVertexCacheGL& MOAIGfxMgrGL::MOAIAbstractGfxMgrComponentsGL_GetVertexCacheGL () {
+MOAIGfxMgrGL_VertexCacheGL& MOAIGfxMgrGL::MOAIGfxMgrGLComponents_GetVertexCacheGL () {
 	return *this;
 }

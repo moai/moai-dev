@@ -5,7 +5,7 @@
 
 #include <moai-gfx-gl/MOAIAbstractGfxResourceGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL.h>
-#include <moai-gfx-gl/MOAIGfxPipelineClerkGL.h>
+#include <moai-gfx-gl/MOAIGfxMgrGL_PipelineClerkGL.h>
 #include <moai-gfx-gl/MOAIRenderMgrGL.h>
 
 //================================================================//
@@ -71,7 +71,7 @@ int MOAIAbstractGfxResourceGL::_purge ( lua_State* L ) {
 int MOAIAbstractGfxResourceGL::_scheduleForGPUCreate ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractGfxResourceGL, "U" )
 
-	u32 listID = state.GetValue < u32 >( 2, MOAIGfxPipelineClerkGL::DRAWING_PIPELINE );
+	u32 listID = state.GetValue < u32 >( 2, MOAIGfxMgrGL_PipelineClerkGL::DRAWING_PIPELINE );
 	self->ScheduleForGPUCreate ( listID );
 	return 0;
 }
@@ -199,7 +199,7 @@ void MOAIAbstractGfxResourceGL::FinishInit () {
 
 	if (( this->mState == STATE_UNINITIALIZED ) || ( this->mState == STATE_ERROR )) {
 		this->mState = STATE_READY_FOR_CPU_CREATE;
-		this->ScheduleForGPUCreate ( MOAIGfxPipelineClerkGL::DRAWING_PIPELINE );
+		this->ScheduleForGPUCreate ( MOAIGfxMgrGL_PipelineClerkGL::DRAWING_PIPELINE );
 	}
 	else {
 		this->ScheduleForGPUUpdate ();
@@ -235,7 +235,7 @@ MOAIAbstractGfxResourceGL::MOAIAbstractGfxResourceGL () :
 //----------------------------------------------------------------//
 MOAIAbstractGfxResourceGL::~MOAIAbstractGfxResourceGL () {
 
-	this->mGfxMgr->GetGfxResourceClerkGL ().RemoveGfxResource ( *this );
+	this->mGfxMgr->GetResourceClerkGL ().RemoveGfxResource ( *this );
 	this->mReloader.Clear ();
 }
 
@@ -251,7 +251,7 @@ bool MOAIAbstractGfxResourceGL::Purge ( u32 age ) {
 		this->ZLAbstractGfxResource_OnGPUDeleteOrDiscard ( true );
 		this->mState = STATE_READY_FOR_CPU_CREATE;
 		
-		this->ScheduleForGPUCreate ( MOAIGfxPipelineClerkGL::DRAWING_PIPELINE );
+		this->ScheduleForGPUCreate ( MOAIGfxMgrGL_PipelineClerkGL::DRAWING_PIPELINE );
 		
 		return true;
 	}
@@ -271,8 +271,8 @@ void MOAIAbstractGfxResourceGL::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	state.SetField ( -1, "GFX_EVENT_CREATED",					( u32 )MOAIAbstractGfxResourceGL::GFX_EVENT_CREATED );
 	
-	state.SetField ( -1, "DRAWING_PIPELINE",					( u32 )MOAIGfxPipelineClerkGL::DRAWING_PIPELINE );
-	state.SetField ( -1, "LOADING_PIPELINE",					( u32 )MOAIGfxPipelineClerkGL::LOADING_PIPELINE );
+	state.SetField ( -1, "DRAWING_PIPELINE",					( u32 )MOAIGfxMgrGL_PipelineClerkGL::DRAWING_PIPELINE );
+	state.SetField ( -1, "LOADING_PIPELINE",					( u32 )MOAIGfxMgrGL_PipelineClerkGL::LOADING_PIPELINE );
 }
 
 //----------------------------------------------------------------//
@@ -322,7 +322,7 @@ bool MOAIAbstractGfxResourceGL::ScheduleForGPUUpdate () {
 
 	this->mState = STATE_NEEDS_GPU_UPDATE;
 
-	this->mGfxMgr->ScheduleGPUAffirm ( *this, MOAIGfxPipelineClerkGL::DRAWING_PIPELINE ); // always update in the drawing pipeline
+	this->mGfxMgr->ScheduleGPUAffirm ( *this, MOAIGfxMgrGL_PipelineClerkGL::DRAWING_PIPELINE ); // always update in the drawing pipeline
 	return true;
 }
 

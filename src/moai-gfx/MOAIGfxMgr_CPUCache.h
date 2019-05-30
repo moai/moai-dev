@@ -1,10 +1,10 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGFXSTATECPUCACHE_H
-#define	MOAIGFXSTATECPUCACHE_H
+#ifndef	MOAIGFXMGR_CPUCACHE_H
+#define	MOAIGFXMGR_CPUCACHE_H
 
-#include <moai-gfx/MOAIAbstractGfxMgrComponents.h>
+#include <moai-gfx/MOAIGfxMgrComponents.h>
 
 class MOAIAbstractShaderUniformSchema;
 class ZLCamera;
@@ -181,8 +181,8 @@ public:
 class MOAIGfxStateCPUCacheFrame {
 protected:
 
-	friend class MOAIGfxStateCPUCache;
-	friend class MOAIAbstractVertexCache;
+	friend class MOAIGfxMgr_CPUCache;
+	friend class MOAIGfxMgr_VertexCache;
 	
 	u64						mDirtyFlags;
 	
@@ -201,10 +201,10 @@ protected:
 };
 
 //================================================================//
-// MOAIGfxStateCPUCache
+// MOAIGfxMgr_CPUCache
 //================================================================//
-class MOAIGfxStateCPUCache :
-	public virtual MOAIAbstractGfxMgrComponents,
+class MOAIGfxMgr_CPUCache :
+	public virtual MOAIGfxMgrComponents,
  	public MOAIGfxStateConstsCPU {
 protected:
 	
@@ -236,8 +236,8 @@ public:
 	
 	bool					IsInputMtx					( u32 mtxID );
 	
-							MOAIGfxStateCPUCache			();
-	virtual					~MOAIGfxStateCPUCache			();
+							MOAIGfxMgr_CPUCache			();
+	virtual					~MOAIGfxMgr_CPUCache			();
 
 	void					SetAmbientColor				( u32 color );
 	void					SetAmbientColor				( const ZLColorVec& colorVec );

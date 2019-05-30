@@ -1,17 +1,17 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIABSTRACTVERTEXCACHE_H
-#define	MOAIABSTRACTVERTEXCACHE_H
+#ifndef	MOAIGFXMGR_VERTEXCACHE_H
+#define	MOAIGFXMGR_VERTEXCACHE_H
 
-#include <moai-gfx/MOAIAbstractGfxMgrComponents.h>
-#include <moai-gfx/MOAIGfxStateCPUCache.h>
+#include <moai-gfx/MOAIGfxMgrComponents.h>
+#include <moai-gfx/MOAIGfxMgr_CPUCache.h>
 
 //================================================================//
-// MOAIAbstractVertexCache
+// MOAIGfxMgr_VertexCache
 //================================================================//
-class MOAIAbstractVertexCache :
-	public virtual MOAIAbstractGfxMgrComponents {
+class MOAIGfxMgr_VertexCache :
+	public virtual MOAIGfxMgrComponents {
 public:
 
 //	enum PrimType {
@@ -28,7 +28,7 @@ protected:
 
 	friend class MOAIGfxMgr; // for now
 	friend class ZLGfxMgrGL;
-	friend class MOAIGfxStateCPUCache;
+	friend class MOAIGfxMgr_CPUCache;
 	friend class ZLGfxStateGPUCacheGL;
 	
 	static const size_t	INDEX_SIZE					= 2;
@@ -83,8 +83,8 @@ public:
 	void			EndPrim							();
 	void			FlushToGPU						();
 	
-					MOAIAbstractVertexCache			();
-					~MOAIAbstractVertexCache			();
+					MOAIGfxMgr_VertexCache			();
+					~MOAIGfxMgr_VertexCache			();
 
 	void			Reset							();
 
@@ -106,7 +106,7 @@ public:
 		
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
 		assert ( this->mVtxStream );
-		this->mVtxStream->Write < u32 >( this->GetGfxStateCPUCache ().GetFinalColor32 ());
+		this->mVtxStream->Write < u32 >( this->GetCPUCache ().GetFinalColor32 ());
 	}
 	
 	//----------------------------------------------------------------//
@@ -114,7 +114,7 @@ public:
 		
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
 		assert ( this->mVtxStream );
-		this->mVtxStream->Write < ZLColorVec >( this->GetGfxStateCPUCache ().GetFinalColor ());
+		this->mVtxStream->Write < ZLColorVec >( this->GetCPUCache ().GetFinalColor ());
 	}
 	
 	//----------------------------------------------------------------//

@@ -5,7 +5,7 @@
 
 #include <moai-gfx/MOAIAbstractShader.h>
 #include <moai-gfx/MOAIAbstractTexture.h>
-#include <moai-gfx/MOAIAbstractGfxMgr.h>
+#include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIMaterialHolder.h>
 
 //================================================================//
@@ -156,7 +156,7 @@ int MOAIMaterialHolder::_setLight ( lua_State* L ) {
 int MOAIMaterialHolder::_setShader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMaterialHolder, "U" )
 	
-	MOAIAbstractShader* shader = MOAIAbstractGfxMgr::Get ().AffirmShader ( state, 2 );
+	MOAIAbstractShader* shader = MOAIGfxMgr::Get ().AffirmShader ( state, 2 );
 	self->mMaterial.SetShader ( shader );
 	state.Push ( shader );
 	
@@ -175,7 +175,7 @@ int MOAIMaterialHolder::_setTexture ( lua_State* L ) {
 		name = state.GetValue < u32 >( idx++, name );
 	}
 	
-	MOAIAbstractTexture* texture = MOAIAbstractGfxMgr::Get ().AffirmTexture ( state, idx );
+	MOAIAbstractTexture* texture = MOAIGfxMgr::Get ().AffirmTexture ( state, idx );
 	if ( name != MOAI_UNKNOWN_MATERIAL_GLOBAL ) {
 		self->mMaterial.SetTexture ( name, texture );
 	}

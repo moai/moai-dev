@@ -1,10 +1,10 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGFXSTATEGPUCACHEGL_H
-#define	MOAIGFXSTATEGPUCACHEGL_H
+#ifndef	MOAIGFXMGRGL_GPUCACHEGL_H
+#define	MOAIGFXMGRGL_GPUCACHEGL_H
 
-#include <moai-gfx-gl/MOAIAbstractGfxMgrComponentsGL.h>
+#include <moai-gfx-gl/MOAIGfxMgrGLComponents.h>
 
 class MOAIFrameBufferGL;
 class MOAIIndexBufferGL;
@@ -25,7 +25,7 @@ protected:
 
 	// TODO: multithread will impact caching of buffer behavior as gfx.Copy () may produce a different result each time it is called
 
-	friend class MOAIGfxStateGPUCacheGL;
+	friend class MOAIGfxMgrGL_GPUCacheGL;
 
 	int										mCullFunc;
 	
@@ -59,16 +59,16 @@ protected:
 };
 
 //================================================================//
-// MOAIGfxStateGPUCacheGL
+// MOAIGfxMgrGL_GPUCacheGL
 //================================================================//
-class MOAIGfxStateGPUCacheGL :
-	virtual public MOAIAbstractGfxMgrComponentsGL,
-	virtual public MOAIAbstractGfxStateGPUCache {
+class MOAIGfxMgrGL_GPUCacheGL :
+	virtual public MOAIGfxMgrGLComponents,
+	virtual public MOAIGfxMgr_GPUCache {
 protected:
 
 	static const u32 MAX_TEXTURE_UNITS = 32; // enough? will need more flags below if not.
 
-	friend class MOAIVertexCacheGL;
+	friend class MOAIGfxMgrGL_VertexCacheGL;
 	friend class MOAIVertexArrayGL;
 
 	friend class MOAIGfxMgr;
@@ -183,8 +183,8 @@ protected:
 public:
 	
 	//----------------------------------------------------------------//
-						MOAIGfxStateGPUCacheGL					();
-	virtual				~MOAIGfxStateGPUCacheGL					();
+						MOAIGfxMgrGL_GPUCacheGL					();
+	virtual				~MOAIGfxMgrGL_GPUCacheGL					();
 };
 
 #endif

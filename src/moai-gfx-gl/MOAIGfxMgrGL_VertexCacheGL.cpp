@@ -2,20 +2,20 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx-gl/MOAIGfxPipelineClerkGL.h>
-#include <moai-gfx-gl/MOAIGfxStateGPUCacheGL.h>
-#include <moai-gfx-gl/MOAIVertexCacheGL.h>
+#include <moai-gfx-gl/MOAIGfxMgrGL_PipelineClerkGL.h>
+#include <moai-gfx-gl/MOAIGfxMgrGL_GPUCacheGL.h>
+#include <moai-gfx-gl/MOAIGfxMgrGL_VertexCacheGL.h>
 
 //================================================================//
-// MOAIVertexCacheGL
+// MOAIGfxMgrGL_VertexCacheGL
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIVertexCacheGL::MOAIVertexCacheGL () {
+MOAIGfxMgrGL_VertexCacheGL::MOAIGfxMgrGL_VertexCacheGL () {
 }
 
 //----------------------------------------------------------------//
-MOAIVertexCacheGL::~MOAIVertexCacheGL () {
+MOAIGfxMgrGL_VertexCacheGL::~MOAIGfxMgrGL_VertexCacheGL () {
 }
 
 //================================================================//
@@ -23,7 +23,7 @@ MOAIVertexCacheGL::~MOAIVertexCacheGL () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIVertexCacheGL::ZLAbstractVertexCache_AffirmBuffers () {
+void MOAIGfxMgrGL_VertexCacheGL::ZLAbstractVertexCache_AffirmBuffers () {
 
 	if ( !this->mVtxBuffer ) {
 
@@ -41,9 +41,9 @@ void MOAIVertexCacheGL::ZLAbstractVertexCache_AffirmBuffers () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIVertexCacheGL::ZLAbstractVertexCache_BeginPrim ( u32 primType, u32 vtxCount, u32 idxCount ) {
+bool MOAIGfxMgrGL_VertexCacheGL::ZLAbstractVertexCache_BeginPrim ( u32 primType, u32 vtxCount, u32 idxCount ) {
 	
-	MOAIGfxStateGPUCacheGL& gpuCache = this->GetGfxStateGPUCacheGL ();
+	MOAIGfxMgrGL_GPUCacheGL& gpuCache = this->GetGPUCacheGL ();
 	MOAIAbstractVertexFormat* format = gpuCache.GetCurrentVtxFormat ();
 	
 	u32 vtxSize = format ? format->GetVertexSize () : 0;
@@ -81,11 +81,11 @@ bool MOAIVertexCacheGL::ZLAbstractVertexCache_BeginPrim ( u32 primType, u32 vtxC
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexCacheGL::ZLAbstractVertexCache_FlushToGPU () {
+void MOAIGfxMgrGL_VertexCacheGL::ZLAbstractVertexCache_FlushToGPU () {
 
 	if ( this->mPrimCount == 0 ) return;
 	
-	MOAIGfxStateGPUCacheGL& gpuCache = this->GetGfxStateGPUCacheGL ();
+	MOAIGfxMgrGL_GPUCacheGL& gpuCache = this->GetGPUCacheGL ();
 	gpuCache.SuspendChanges (); // don't apply any pending state changes;
 
 	if ( !this->mIsDrawing ) {
@@ -122,7 +122,7 @@ void MOAIVertexCacheGL::ZLAbstractVertexCache_FlushToGPU () {
 		this->mIsDrawing = false;
 		this->mPrimCount = 0;
 
-		if ( this->GetGfxPipelineClerkGL ().GetDrawingAPI ().IsImmediate ()) {
+		if ( this->GetPipelineClerkGL ().GetDrawingAPI ().IsImmediate ()) {
 			this->Reset ();
 		}
 	}

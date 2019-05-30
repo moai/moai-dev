@@ -26,7 +26,7 @@ class MOAITextureBaseGL :
 	public virtual MOAIAbstractGfxResourceGL {
 protected:
 
-	friend class MOAIGfxStateGPUCacheGL;
+	friend class MOAIGfxMgrGL_GPUCacheGL;
 	friend class ZLTextureFormat;
 
 	// debug name for memory use reporting
