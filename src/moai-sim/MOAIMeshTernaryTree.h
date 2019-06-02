@@ -10,8 +10,8 @@ class MOAIMesh;
 class MOAIMeshTernaryTreeBuilder;
 class MOAIMeshTernaryTree;
 class MOAIMeshTernaryTreeNode;
-class MOAIVertexBufferGL;
-class MOAIVertexFormatGL;
+class MOAIVertexBuffer;
+class MOAIVertexFormat;
 
 //================================================================//
 // MOAIMeshTernaryTreeBuilderPrim

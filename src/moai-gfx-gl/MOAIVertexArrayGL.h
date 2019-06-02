@@ -4,7 +4,7 @@
 #ifndef	MOAIVERTEXARRAYGL_H
 #define	MOAIVERTEXARRAYGL_H
 
-#include <moai-gfx-gl/MOAIAbstractGfxResourceGL.h>
+#include <moai-gfx-gl/MOAIGfxResourceGL.h>
 
 class MOAIVertexBufferGL;
 class MOAIVertexFormatGL;
@@ -31,34 +31,37 @@ public:
 // TODO: doxygen
 class MOAIVertexArrayGL :
 	public virtual MOAIVertexArray,
-	public virtual MOAIAbstractGfxResourceGL {
+	public virtual MOAIGfxResourceGL {
 protected:
 
 	ZLLeanArray < ZLGfxHandle >						mVAOs; // vertex array objects to bind all the vertex and buffer state
 	ZLIndex											mCurrentVAO;
 
-	ZLLeanArray < MOAIVertexBufferWithFormatGL >		mVertexBuffers;
+	ZLLeanArray < MOAIVertexBufferWithFormatGL >	mVertexBuffers;
 
-	bool				mUseVAOs;
-
-	//----------------------------------------------------------------//
-	static int			_reserveVAOs				( lua_State* L );
-	static int			_reserveVertexBuffers		( lua_State* L );
-	static int			_setVertexBuffer			( lua_State* L );
+	bool					mUseVAOs;
 
 	//----------------------------------------------------------------//
-	bool				AffirmVertexBuffers			( u32 idx );
-	void				BindVertexArrayItems		();
-	void				UnbindVertexArrayItems		();
+	static int				_reserveVAOs				( lua_State* L );
+	static int				_reserveVertexBuffers		( lua_State* L );
+	static int				_setVertexBuffer			( lua_State* L );
+
+	//----------------------------------------------------------------//
+	bool					AffirmVertexBuffers			( u32 idx );
+	void					BindVertexArrayItems		();
+	void					UnbindVertexArrayItems		();
 	
 	//----------------------------------------------------------------//
-	bool				ZLAbstractGfxResource_OnCPUCreate				(); // load or initialize any CPU-side resources required to create the GPU-side resource
-	void				ZLAbstractGfxResource_OnCPUDestroy				(); // clear any CPU-side memory used by class
-	void				ZLAbstractGfxResource_OnGPUBind					(); // select GPU-side resource on device for use
-	bool				ZLAbstractGfxResource_OnGPUCreate				(); // create GPU-side resource
-	void				ZLAbstractGfxResource_OnGPUDeleteOrDiscard		( bool shouldDelete ); // delete or discard GPU resource
-	void				ZLAbstractGfxResource_OnGPUUnbind				(); // unbind GPU-side resource
-	bool				ZLAbstractGfxResource_OnGPUUpdate				();
+	bool					MOAIGfxResource_OnCPUCreate					(); // load or initialize any CPU-side resources required to create the GPU-side resource
+	void					MOAIGfxResource_OnCPUPurgeRecoverable		(); // clear any recoverable CPU-side memory used by class
+	void					MOAIGfxResourceGL_OnGPUBind					(); // select GPU-side resource on device for use
+	bool					MOAIGfxResourceGL_OnGPUCreate				(); // create GPU-side resource
+	void					MOAIGfxResourceGL_OnGPUDeleteOrDiscard		( bool shouldDelete ); // delete or discard GPU resource
+	void					MOAIGfxResourceGL_OnGPUUnbind				(); // unbind GPU-side resource
+	bool					MOAIGfxResourceGL_OnGPUUpdate				();
+	MOAIVertexBuffer*		MOAIVertexArray_GetVertexBuffer				( ZLIndex idx );
+	MOAIVertexFormat*		MOAIVertexArray_GetVertexFormat				( ZLIndex idx );
+	void					MOAIVertexArray_SetVertexBuffer				( ZLIndex idx, MOAIVertexBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat );
 
 public:
 	
@@ -67,8 +70,6 @@ public:
 	DECL_LUA_FACTORY ( MOAIVertexArrayGL )
 	
 	//----------------------------------------------------------------//
-	MOAIVertexBufferGL*		GetVertexBuffer				( ZLIndex idx );
-	MOAIVertexFormatGL*		GetVertexFormat				( ZLIndex idx );
 							MOAIVertexArrayGL			();
 							~MOAIVertexArrayGL			();
 	void					RegisterLuaClass			( MOAILuaState& state );
@@ -77,7 +78,6 @@ public:
 	void					ReserveVertexBuffers		( u32 total );
 	void					SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	void					SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
-	void					SetVertexBuffer				( ZLIndex idx, MOAIVertexBufferGL* vtxBuffer, MOAIVertexFormatGL* vtxFormat );
 };
 
 #endif

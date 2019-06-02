@@ -56,7 +56,7 @@ void MOAITextStyleState::SetFont ( MOAIFont* font ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextStyleState::SetShader ( ZLAbstractShader* shader ) {
+void MOAITextStyleState::SetShader ( MOAIShader* shader ) {
 
 	this->mShader = shader;
 }
@@ -174,12 +174,12 @@ int MOAITextStyle::_setFont ( lua_State* L ) {
 	
 	@in		MOAITextStyle self
 	@opt	variant shader			Shader or shader preset.
-	@out	MOAIShaderGL shader		The shader that was set or created.
+	@out	MOAIShader shader		The shader that was set or created.
 */
 int MOAITextStyle::_setShader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextStyle, "U" )
 	
-	ZLAbstractShader* shader = MOAIAbstractGfxMgr::Get ().AffirmShader ( state, 2 );
+	MOAIShader* shader = MOAIGfxMgr::Get ().AffirmShader ( state, 2 );
 	self->SetShader ( shader );
 	state.Push ( shader->AsType < MOAILuaObject >());
 	return 1;
@@ -357,7 +357,7 @@ void MOAITextStyle::SetFont ( MOAIFont* font ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextStyle::SetShader ( ZLAbstractShader* shader ) {
+void MOAITextStyle::SetShader ( MOAIShader* shader ) {
 
 	this->mShader = shader;
 }

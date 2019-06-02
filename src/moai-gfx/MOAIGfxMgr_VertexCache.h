@@ -6,6 +6,8 @@
 
 #include <moai-gfx/MOAIGfxMgrComponents.h>
 #include <moai-gfx/MOAIGfxMgr_CPUCache.h>
+#include <moai-gfx/MOAIIndexBuffer.h>
+#include <moai-gfx/MOAIVertexBuffer.h>
 
 //================================================================//
 // MOAIGfxMgr_VertexCache
@@ -54,14 +56,13 @@ protected:
 	bool						mApplyUVTransform;
 	ZLMatrix4x4					mUVTransform;
 	
-	ZLStream*					mVtxStream;
-	ZLStream*					mIdxStream;
+	ZLStrongPtr < MOAIVertexBuffer >	mVtxBuffer;
+	ZLStrongPtr < MOAIIndexBuffer >		mIdxBuffer;
 	
 	//----------------------------------------------------------------//
 	void			TransformAndWriteQuad			( ZLVec4D* vtx, ZLVec2D* uv );
 
 	//----------------------------------------------------------------//
-	virtual void	MOAIGfxMgr_VertexCache_AffirmBuffers	() = 0;
 	virtual bool	MOAIGfxMgr_VertexCache_BeginPrim 		( u32 primType, u32 vtxCount, u32 idxCount ) = 0;
 	virtual void	MOAIGfxMgr_VertexCache_FlushToGPU		() = 0;
 
@@ -84,7 +85,7 @@ public:
 	void			FlushToGPU						();
 	
 					MOAIGfxMgr_VertexCache			();
-					~MOAIGfxMgr_VertexCache			();
+	virtual			~MOAIGfxMgr_VertexCache			();
 
 	void			Reset							();
 
@@ -105,24 +106,24 @@ public:
 	inline void WritePenColor4b () {
 		
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
-		assert ( this->mVtxStream );
-		this->mVtxStream->Write < u32 >( this->GetCPUCache ().GetFinalColor32 ());
+		assert ( this->mVtxBuffer );
+		this->mVtxBuffer->Write < u32 >( this->GetCPUCache ().GetFinalColor32 ());
 	}
 	
 	//----------------------------------------------------------------//
 	inline void WritePenColor4f () {
 		
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
-		assert ( this->mVtxStream );
-		this->mVtxStream->Write < ZLColorVec >( this->GetCPUCache ().GetFinalColor ());
+		assert ( this->mVtxBuffer );
+		this->mVtxBuffer->Write < ZLColorVec >( this->GetCPUCache ().GetFinalColor ());
 	}
 	
 	//----------------------------------------------------------------//
 	inline void WriteIndex ( u16 index ) {
 		
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
-		assert ( this->mIdxStream );
-		this->mIdxStream->Write < u16 >( (u16) this->mVtxBase + index );
+		assert ( this->mIdxBuffer );
+		this->mIdxBuffer->Write < u16 >( (u16) this->mVtxBase + index );
 	}
 	
 	//----------------------------------------------------------------//
@@ -137,8 +138,8 @@ public:
 		}
 		
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
-		assert ( this->mVtxStream );
-		this->mVtxStream->Write < ZLVec2D >( uv );
+		assert ( this->mVtxBuffer );
+		this->mVtxBuffer->Write < ZLVec2D >( uv );
 	}
 	
 	//----------------------------------------------------------------//
@@ -149,8 +150,8 @@ public:
 		}
 		
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
-		assert ( this->mVtxStream );
-		this->mVtxStream->Write < ZLVec2D >( uv );
+		assert ( this->mVtxBuffer );
+		this->mVtxBuffer->Write < ZLVec2D >( uv );
 	}
 	
 	//----------------------------------------------------------------//
@@ -179,8 +180,8 @@ public:
 		}
 		
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
-		assert ( this->mVtxStream );
-		this->mVtxStream->Write < ZLVec4D >( vtx );
+		assert ( this->mVtxBuffer );
+		this->mVtxBuffer->Write < ZLVec4D >( vtx );
 	}
 	
 	//----------------------------------------------------------------//
@@ -205,8 +206,8 @@ public:
 		vtx.mW = w;
 		
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
-		assert ( this->mVtxStream );
-		this->mVtxStream->Write < ZLVec4D >( vtx );
+		assert ( this->mVtxBuffer );
+		this->mVtxBuffer->Write < ZLVec4D >( vtx );
 	}
 };
 

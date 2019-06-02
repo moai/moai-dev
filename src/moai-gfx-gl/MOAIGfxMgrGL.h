@@ -64,8 +64,18 @@ protected:
 	void							OnGlobalsInitialize			();
 
 	//----------------------------------------------------------------//
-	MOAIShader*						MOAIAbstractGfxMgr_AffirmShader				( MOAILuaState& state, int idx ) const;
-	MOAITexture*					MOAIAbstractGfxMgr_AffirmTexture			( MOAILuaState& state, int idx ) const;
+	MOAIShader*						MOAIGfxMgr_AffirmShader						( MOAILuaState& state, int idx ) const;
+	MOAITexture*					MOAIGfxMgr_AffirmTexture					( MOAILuaState& state, int idx ) const;
+	MOAIImageTexture*				MOAIGfxMgr_CreateImageTexture				() const;
+	MOAIIndexBuffer*				MOAIGfxMgr_CreateIndexBuffer				() const;
+	MOAITexture2D*					MOAIGfxMgr_CreateTexture2D					() const;
+	MOAIVertexArray*				MOAIGfxMgr_CreateVertexArray				() const;
+	MOAIVertexBuffer*				MOAIGfxMgr_CreateVertexBuffer				() const;
+	MOAIShader*						MOAIGfxMgr_GetShaderPreset					( MOAIShaderPresetEnum preset ) const;
+	size_t							MOAIGfxMgr_GetTextureMemoryUsage			() const;
+	MOAIVertexFormat*				MOAIGfxMgr_GetVertexFormatPreset			( MOAIVertexFormatPresetEnum preset ) const;
+	void							MOAIGfxMgr_PopState							();
+	void							MOAIGfxMgr_PushState						();
 	MOAIGfxMgrGL&					MOAIGfxMgrGLComponents_GetGfxMgrGL			();
 	MOAIGfxMgrGL_GPUCacheGL&		MOAIGfxMgrGLComponents_GetGPUCacheGL		();
 	MOAIGfxMgrGL_PipelineClerkGL&	MOAIGfxMgrGLComponents_GetPipelineClerkGL	();
@@ -77,7 +87,6 @@ public:
 
 	DECL_LUA_SINGLETON ( MOAIGfxMgrGL )
 
-	GET ( size_t, TextureMemoryUsage, mTextureMemoryUsage )
 	GET ( u32, MaxTextureSize, mMaxTextureSize )
 	GET ( bool, HasContext, mHasContext )
 	
@@ -91,38 +100,14 @@ public:
 	void					ClearErrors					();
 	void					DetectContext				();
 	void					DetectFramebuffer			();
-	
 	void					FinishFrame					();
-	
 	u32						LogErrors					();
-	
-	ZLMatrix4x4				GetNormToWndMtx				();
-	ZLMatrix4x4				GetNormToWndMtx				( const ZLRect& wndRect );
-	
-	ZLMatrix4x4				GetWorldToWndMtx			();
-	ZLMatrix4x4				GetWorldToWndMtx			( const ZLRect& wndRect );
-	
-	ZLMatrix4x4				GetWndToNormMtx				();
-	ZLMatrix4x4				GetWndToNormMtx				( const ZLRect& wndRect );
-	
-	ZLMatrix4x4				GetWndToWorldMtx			();
-	ZLMatrix4x4				GetWndToWorldMtx			( const ZLRect& wndRect );
-	
-	void					PopState					();
-	void					PushState					();
-	
-	void					RegisterLuaClass			( MOAILuaState& state );
-	
-	void					ReportTextureAlloc 			( cc8* name, size_t size );
-	void					ReportTextureFree 			( cc8* name, size_t size );
-	
-	void					ResetDrawCount				();
-	
-	void					SetBufferScale				( float scale );
-	void					SetBufferSize				( u32 width, u32 height );
-	
 							MOAIGfxMgrGL				();
 							~MOAIGfxMgrGL				();
+	void					RegisterLuaClass			( MOAILuaState& state );
+	void					ReportTextureAlloc 			( cc8* name, size_t size );
+	void					ReportTextureFree 			( cc8* name, size_t size );
+	void					ResetDrawCount				();
 	
 	//----------------------------------------------------------------//
 	// disambiguate

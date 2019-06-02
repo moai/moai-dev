@@ -104,7 +104,7 @@
 //----------------------------------------------------------------//
 void MOAIGraphicsGridProp::DrawGrid ( const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
 
-	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	ZLVec3D offset	= ZLVec3D::ORIGIN;
 	ZLVec3D scale	= ZLVec3D::AXIS;
@@ -144,7 +144,7 @@ void MOAIGraphicsGridProp::DrawGrid ( const MOAICellCoord &c0, const MOAICellCoo
 				mtx.PrependSclTr2D ( xScale, yScale, loc.mX, loc.mY );
 			}
 
-			gfxMgr.SetMtx ( ZLGfxMgrGL::MODEL_TO_WORLD_MTX, mtx );
+			gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX, mtx );
 			
 			if ( fancyGrid ) {
 				gfxMgr.SetPenColor ( penColor * fancyGrid->GetTileColor ( addr ));
@@ -158,7 +158,7 @@ void MOAIGraphicsGridProp::DrawGrid ( const MOAICellCoord &c0, const MOAICellCoo
 //----------------------------------------------------------------//
 void MOAIGraphicsGridProp::GetGridFrameInView ( const ZLAffine3D& worldToLocalMtx, MOAICellCoord& c0, MOAICellCoord& c1 ) {
 
-	const ZLFrustum& frustum = MOAIGfxMgrGL::Get ().GetViewVolume ();
+	const ZLFrustum& frustum = MOAIGfxMgr::Get ().GetViewVolume ();
 	
 	ZLRect viewRect;
 	//if ( frustum.GetXYSectRect ( this->GetWorldToLocalMtx (), viewRect )) {
@@ -219,7 +219,7 @@ void MOAIGraphicsGridProp::SerializeOut ( MOAILuaState& state, MOAISerializer& s
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGraphicsGridProp::MOAIAbstractDrawable_Draw ( int subPrimID ) {
+void MOAIGraphicsGridProp::MOAIDrawable_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
 	if ( !this->IsVisible ()) return;

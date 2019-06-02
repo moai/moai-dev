@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIGfxMgr_VertexCache.h>
 
 //#define MOAIGFXVERTEXCACHE_DEBUG_LOG
@@ -20,9 +21,19 @@
 //----------------------------------------------------------------//
 void MOAIGfxMgr_VertexCache::AffirmBuffers () {
 
-	this->MOAIGfxMgr_VertexCache_AffirmBuffers ();
-	assert ( this->mVtxStream );
-	assert ( this->mIdxStream);
+	if ( !this->mVtxBuffer ) {
+
+		this->mVtxBuffer = this->GetGfxMgr ().CreateVertexBuffer ();
+		this->mIdxBuffer = this->GetGfxMgr ().CreateIndexBuffer ();
+		
+		this->mIdxBuffer->SetIndexSize ( INDEX_SIZE );
+
+		this->mVtxBuffer->Reserve ( DEFAULT_VERTEX_BUFFER_SIZE );
+		this->mIdxBuffer->Reserve ( DEFAULT_INDEX_BUFFER_SIZE );
+	}
+
+	assert ( this->mVtxBuffer );
+	assert ( this->mIdxBuffer);
 }
 
 //----------------------------------------------------------------//
@@ -36,18 +47,18 @@ bool MOAIGfxMgr_VertexCache::BeginPrim ( u32 primType, u32 vtxCount, u32 idxCoun
 ////----------------------------------------------------------------//
 //void MOAIGfxMgr_VertexCache::Clear () {
 //
-//	this->mVtxStream = NULL;
-//	this->mIdxStream = NULL;
+//	this->mVtxBuffer = NULL;
+//	this->mIdxBuffer = NULL;
 //}
 
 //----------------------------------------------------------------//
 u32 MOAIGfxMgr_VertexCache::ContinuePrim ( u32 vtxCount, u32 idxCount ) {
 
-	u32 idxCursor = ( u32 )this->mIdxStream->GetCursor ();
-	u32 vtxCursor = ( u32 )this->mVtxStream->GetCursor ();
+	u32 idxCursor = ( u32 )this->mIdxBuffer->GetCursor ();
+	u32 vtxCursor = ( u32 )this->mVtxBuffer->GetCursor ();
 
-	u32 idxBufferSize = ( u32 )this->mIdxStream->GetLength ();
-	u32 vtxBufferSize = ( u32 )this->mVtxStream->GetLength ();
+	u32 idxBufferSize = ( u32 )this->mIdxBuffer->GetLength ();
+	u32 vtxBufferSize = ( u32 )this->mVtxBuffer->GetLength ();
 	
 	u32 idxBytes = idxCount * INDEX_SIZE;
 	u32 vtxBytes = vtxCount * this->mVtxSize;
@@ -92,8 +103,6 @@ void MOAIGfxMgr_VertexCache::FlushToGPU () {
 //----------------------------------------------------------------//
 MOAIGfxMgr_VertexCache::MOAIGfxMgr_VertexCache () :
 	mIsDrawing ( false ),
-	mVtxStream ( NULL ),
-	mIdxStream ( NULL ),
 	mVtxBase ( 0 ),
 	mIdxBase ( 0 ),
 	mVtxSize ( 0 ),
@@ -115,8 +124,8 @@ MOAIGfxMgr_VertexCache::~MOAIGfxMgr_VertexCache () {
 //----------------------------------------------------------------//
 void MOAIGfxMgr_VertexCache::Reset () {
 
-	this->mVtxStream->Seek ( 0 );
-	this->mIdxStream->Seek ( 0 );
+	this->mVtxBuffer->Seek ( 0 );
+	this->mIdxBuffer->Seek ( 0 );
 	
 	this->mVtxBase = 0;
 	this->mIdxBase = 0;
@@ -181,24 +190,24 @@ void MOAIGfxMgr_VertexCache::TransformAndWriteQuad ( ZLVec4D* vtx, ZLVec2D* uv )
 		u32 finalColor32 = this->GetCPUCache ().GetFinalColor32 ();
 	
 		// left top
-		this->mVtxStream->Write ( vtx [ 0 ]);
-		this->mVtxStream->Write ( uv [ 0 ]);
-		this->mVtxStream->Write < u32 >( finalColor32 );
+		this->mVtxBuffer->Write ( vtx [ 0 ]);
+		this->mVtxBuffer->Write ( uv [ 0 ]);
+		this->mVtxBuffer->Write < u32 >( finalColor32 );
 	
 		// right top
-		this->mVtxStream->Write ( vtx [ 1 ]);
-		this->mVtxStream->Write ( uv [ 1 ]);
-		this->mVtxStream->Write < u32 >( finalColor32 );
+		this->mVtxBuffer->Write ( vtx [ 1 ]);
+		this->mVtxBuffer->Write ( uv [ 1 ]);
+		this->mVtxBuffer->Write < u32 >( finalColor32 );
 	
 		// right bottom
-		this->mVtxStream->Write ( vtx[ 2 ]);
-		this->mVtxStream->Write ( uv [ 2 ]);
-		this->mVtxStream->Write < u32 >( finalColor32 );
+		this->mVtxBuffer->Write ( vtx[ 2 ]);
+		this->mVtxBuffer->Write ( uv [ 2 ]);
+		this->mVtxBuffer->Write < u32 >( finalColor32 );
 	
 		// left bottom
-		this->mVtxStream->Write ( vtx [ 3 ]);
-		this->mVtxStream->Write ( uv [ 3 ]);
-		this->mVtxStream->Write < u32 >( finalColor32 );
+		this->mVtxBuffer->Write ( vtx [ 3 ]);
+		this->mVtxBuffer->Write ( uv [ 3 ]);
+		this->mVtxBuffer->Write < u32 >( finalColor32 );
 
 		// indices
 		this->WriteIndex ( 0 ); // left top

@@ -37,7 +37,7 @@ public:
 					~MOAIVectorRect			();
 	void			Read					( ZLStream& stream, MOAIVectorTesselatorWriter& writer );
 	int				Tesselate				( MOAIVectorTesselator& drawing, MOAIRegion& region, u32 flags );
-	int				Tesselate				( MOAIVectorTesselator& drawing, ZLStream& vertexStream, ZLStream& indexStream, MOAIVertexFormatGL& format, u32 flags );
+	int				Tesselate				( MOAIVectorTesselator& drawing, ZLStream& vertexStream, ZLStream& indexStream, MOAIVertexFormat& format, u32 flags );
 	void			Write					( ZLStream& stream, MOAIVectorTesselatorWriter& writer ) const;
 };
 

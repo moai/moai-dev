@@ -146,11 +146,6 @@ void MOAIFrameBufferGL::GrabImage ( MOAIImage* image ) {
 
 //----------------------------------------------------------------//
 MOAIFrameBufferGL::MOAIFrameBufferGL () :
-	mBufferWidth ( 0 ),
-	mBufferHeight ( 0 ),
-	mBufferScale ( 1.0f ),
-	mLandscape ( false ),
-	mNeedsClear ( true ),
 	mGrabNextFrame ( false ) {
 	
 	RTTI_BEGIN
@@ -162,19 +157,6 @@ MOAIFrameBufferGL::MOAIFrameBufferGL () :
 MOAIFrameBufferGL::~MOAIFrameBufferGL () {
 
 	this->mFrameImage.Set ( *this, 0 );
-}
-
-
-//----------------------------------------------------------------//
-bool MOAIFrameBufferGL::NeedsClear () const {
-
-	return this->mNeedsClear;
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBufferGL::NeedsClear ( bool needsClear ) {
-
-	this->mNeedsClear = needsClear;
 }
 
 //----------------------------------------------------------------//
@@ -230,13 +212,6 @@ void MOAIFrameBufferGL::RegisterLuaFuncs ( MOAILuaState& state ) {
 //	this->mRenderCounter++;
 //	//this->mLastDrawCount = gfxMgr.GetDrawCount () - this->mLastDrawCount;
 //}
-
-//----------------------------------------------------------------//
-void MOAIFrameBufferGL::SetBufferSize ( u32 width, u32 height ) {
-
-	this->mBufferWidth = width;
-	this->mBufferHeight = height;
-}
 
 //----------------------------------------------------------------//
 void MOAIFrameBufferGL::SetGLFrameBuffer ( MOAIGfxMgrGL& gfxMgr, const ZLGfxHandle& frameBuffer ){
@@ -300,7 +275,7 @@ void MOAIFrameBufferGL::ZLGfxListener_OnReadPixels ( const ZLCopyOnWrite& buffer
 	
 	if ( image ) {
 
-		image->Init ( buffer.GetBuffer (), this->mBufferWidth, this->mBufferHeight, ZLColor::RGBA_8888 );
+		image->Init ( buffer.GetConstBuffer (), this->mBufferWidth, this->mBufferHeight, ZLColor::RGBA_8888 );
 
 		if ( this->mOnFrameFinish ) {
 			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();

@@ -66,9 +66,9 @@ public:
 	DECL_LUA_SINGLETON ( MOAIVertexFormatMgrGL )
 	
 	//----------------------------------------------------------------//
-	MOAIVertexFormatGL*			GetFormat					( u32 formatID );
+	MOAIVertexFormatGL*			GetFormat					( MOAIVertexFormatPresetEnum formatID );
 	MOAIVertexFormatGL* 		GetFormat 					( lua_State* L, int idx );
-	u32							GetVertexSize				( u32 formatID );
+	u32							GetVertexSize				( MOAIVertexFormatPresetEnum formatID );
 								MOAIVertexFormatMgrGL		();
 								~MOAIVertexFormatMgrGL		();
 	void						RegisterLuaClass			( MOAILuaState& state );

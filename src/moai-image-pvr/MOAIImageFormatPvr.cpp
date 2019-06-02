@@ -3,6 +3,8 @@
 
 #include <moai-image-pvr/MOAIImageFormatPvr.h>
 
+#if 0
+
 #include <PVRTTexture.h>
 #include <PVRTDecompress.h>
 
@@ -525,3 +527,5 @@ bool MOAIImageFormatPvr::WriteImage ( const ZLImage& image, ZLStream& stream ) {
 	
 	return false;
 }
+
+#endif

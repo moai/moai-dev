@@ -4,16 +4,40 @@
 #ifndef	MOAIINDEXBUFFER_H
 #define	MOAIINDEXBUFFER_H
 
+#include <moai-gfx/MOAIGfxBuffer.h>
+
 //================================================================//
 // MOAIIndexBuffer
 //================================================================//
 class MOAIIndexBuffer :
-	public virtual MOAILuaObject {
-public:
+	public virtual MOAIGfxBuffer {
+protected:
+
+	u32				mIndexSize;
 
 	//----------------------------------------------------------------//
+	static int		_copyFromStream			( lua_State* L );
+	static int		_countElements			( lua_State* L );
+	static int		_printIndices			( lua_State* L );
+	static int		_setIndexSize			( lua_State* L );
+
+public:
+
+	GET ( u32, IndexSize, mIndexSize )
+
+	//----------------------------------------------------------------//
+	u32				CountIndices			();
+	void			CopyFromStream			( ZLStream& stream, size_t size, u32 srcInputSizeInBytes );
+	u32				GetIndex				( u32 element );
 					MOAIIndexBuffer			();
 					~MOAIIndexBuffer		();
+	void			PrintIndices			();
+	void			RegisterLuaClass		( MOAILuaState& state );
+	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
+	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
+	void			SetIndexSize			( u32 idxSize );
+	void			WriteIndex				( u32 index );
 };
 
 #endif

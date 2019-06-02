@@ -60,7 +60,7 @@ private:
 // TODO: doxygen
 class MOAICollisionProp :
 	public virtual MOAIAbstractProp,
-	public virtual MOAIAbstractDrawable,
+	public virtual MOAIDrawable,
 	public virtual MOAIDeckHolderWithIndex {
 private:
 	
@@ -97,8 +97,8 @@ private:
 	bool					IsActive				();
 	
 	//----------------------------------------------------------------//
-	void					MOAIAbstractDrawable_Draw						( int subPrimID );
-	void					MOAIAbstractDrawable_DrawDebug					( int subPrimID );
+	void					MOAIDrawable_Draw						( int subPrimID );
+	void					MOAIDrawable_DrawDebug					( int subPrimID );
 	ZLBounds				MOAIAbstractProp_GetModelBounds					();
 	bool					MOAINode_ApplyAttrOp							( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	void					MOAINode_Update									();

@@ -5,16 +5,16 @@
 #define	MOAIABSTRACTLAYER_H
 
 class MOAIColor;
-class MOAIFrameBufferGL;
+class MOAIFrameBuffer;
 class MOAIPartition;
-class MOAIFrameBufferGL;
+class MOAIFrameBuffer;
 
 //================================================================//
 // MOAIAbstractLayer
 //================================================================//
 class MOAIAbstractLayer :
 	public virtual MOAILuaObject,
-	public virtual MOAIAbstractDrawable {
+	public virtual MOAIDrawable {
 private:
 
 	u32				mClearFlags;
@@ -22,7 +22,7 @@ private:
 	u32				mClearMode;
 
 	MOAILuaSharedPtr < MOAIColor >			mClearColorNode;
-	MOAILuaSharedPtr < MOAIFrameBufferGL >	mFrameBuffer;
+	MOAILuaSharedPtr < MOAIFrameBuffer >	mFrameBuffer;
 
 	//----------------------------------------------------------------//
 	static int		_draw					( lua_State* L );
@@ -37,10 +37,10 @@ private:
 protected:
 
 	//----------------------------------------------------------------//
-	void			ClearSurface			();
+	void			ClearSurface				();
 
 	//----------------------------------------------------------------//
-	void			MOAIAbstractDrawable_DrawDebug		( int subPrimID );
+	void			MOAIDrawable_DrawDebug		( int subPrimID );
 
 public:
 
@@ -54,13 +54,13 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-	MOAIFrameBufferGL*		GetFrameBuffer			();
+	MOAIFrameBuffer*	GetFrameBuffer			();
 						MOAIAbstractLayer		();
 						~MOAIAbstractLayer		();
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
 	void				SetClearColor			( MOAIColor* color );
-	void				SetFrameBuffer			( MOAIFrameBufferGL* frameBuffer = 0 );
+	void				SetFrameBuffer			( MOAIFrameBuffer* frameBuffer = 0 );
 };
 
 #endif

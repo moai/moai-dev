@@ -197,22 +197,22 @@ bool MOAIGraphicsPropBase::IsVisible () {
 //----------------------------------------------------------------//
 void MOAIGraphicsPropBase::LoadUVTransform () {
 
-	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
 	if ( this->mUVTransform ) {
 		ZLAffine3D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
-		gfxMgr.SetMtx ( ZLGfxMgrGL::MODEL_TO_UV_MTX, uvMtx );
+		gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_UV_MTX, uvMtx );
 	}
 	else {
-		gfxMgr.SetMtx ( ZLGfxMgrGL::MODEL_TO_UV_MTX );
+		gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_UV_MTX );
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAIGraphicsPropBase::LoadVertexTransform () {
 
-	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
-	gfxMgr.SetMtx ( ZLGfxMgrGL::MODEL_TO_WORLD_MTX, this->GetWorldDrawingMtx ());
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX, this->GetWorldDrawingMtx ());
 }
 
 //----------------------------------------------------------------//
@@ -222,8 +222,8 @@ MOAIGraphicsPropBase::MOAIGraphicsPropBase () :
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIAbstractProp )
 		RTTI_EXTEND ( MOAIColor )
-		RTTI_EXTEND ( MOAIAbstractDrawable )
-		RTTI_EXTEND ( MOAIAbstractDrawable )
+		RTTI_EXTEND ( MOAIDrawable )
+		RTTI_EXTEND ( MOAIDrawable )
 		RTTI_EXTEND ( MOAIMaterialBatchHolder )
 	RTTI_END
 	
@@ -246,7 +246,7 @@ void MOAIGraphicsPropBase::PopGfxState () {
 //----------------------------------------------------------------//
 void MOAIGraphicsPropBase::PushGfxState () {
 
-	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	gfxMgr.SetPenColor ( this->mColor );
 
@@ -383,7 +383,7 @@ void MOAIGraphicsPropBase::SetVisible ( bool visible ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGraphicsPropBase::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
+void MOAIGraphicsPropBase::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
 	if ( this->GetWorldBounds ().mStatus == ZLBounds::ZL_BOUNDS_EMPTY ) return;
@@ -391,7 +391,7 @@ void MOAIGraphicsPropBase::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAIGraphicsPropBase >())) return;
 	
-	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
@@ -400,7 +400,7 @@ void MOAIGraphicsPropBase::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 	
 	this->LoadVertexTransform ();
 	
-	gfxMgr.SetVertexTransform ( ZLGfxMgrGL::MODEL_TO_DISPLAY_MTX );
+	gfxMgr.SetVertexTransform ( MOAIGfxMgr::MODEL_TO_DISPLAY_MTX );
 	
 	ZLBounds modelBounds = this->GetModelBounds ();
 	
@@ -419,7 +419,7 @@ void MOAIGraphicsPropBase::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 	}
 	
 	// clear out the world transform (draw in world space)
-	gfxMgr.SetVertexTransform ( ZLGfxMgrGL::WORLD_TO_DISPLAY_MTX );
+	gfxMgr.SetVertexTransform ( MOAIGfxMgr::WORLD_TO_DISPLAY_MTX );
 	
 	if ( debugLines.Bind ( DEBUG_DRAW_WORLD_BOUNDS )) {
 		draw.DrawBoxOutline ( this->GetWorldBounds ().mAABB );
@@ -450,7 +450,7 @@ void MOAIGraphicsPropBase::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () const {
 
-	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	ZLMatrix4x4 worldDrawingMtx;
 
@@ -458,7 +458,7 @@ ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () con
 	
 		case BILLBOARD_NORMAL: {
 			
-			ZLAffine3D billboardMtx ( gfxMgr.GetMtx ( ZLGfxMgrGL::VIEW_TO_WORLD_MTX )); // inv view mtx sans translation
+			ZLAffine3D billboardMtx ( gfxMgr.GetMtx ( MOAIGfxMgr::VIEW_TO_WORLD_MTX )); // inv view mtx sans translation
 			
 			billboardMtx.m [ ZLAffine3D::C3_R0 ] = 0.0f;
 			billboardMtx.m [ ZLAffine3D::C3_R1 ] = 0.0f;
@@ -470,12 +470,12 @@ ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () con
 		
 		case BILLBOARD_ORTHO: {
 			
-			const ZLMatrix4x4& proj				= gfxMgr.GetMtx ( ZLGfxMgrGL::VIEW_TO_CLIP_MTX );
-			const ZLMatrix4x4& invViewProj		= gfxMgr.GetMtx ( ZLGfxMgrGL::CLIP_TO_WORLD_MTX );
-			const ZLMatrix4x4& invWindowMtx		= gfxMgr.GetMtx ( ZLGfxMgrGL::WINDOW_TO_CLIP_MTX );
+			const ZLMatrix4x4& proj				= gfxMgr.GetMtx ( MOAIGfxMgr::VIEW_TO_CLIP_MTX );
+			const ZLMatrix4x4& invViewProj		= gfxMgr.GetMtx ( MOAIGfxMgr::CLIP_TO_WORLD_MTX );
+			const ZLMatrix4x4& invWindowMtx		= gfxMgr.GetMtx ( MOAIGfxMgr::WINDOW_TO_CLIP_MTX );
 			
-			ZLMatrix4x4 view					= gfxMgr.GetMtx ( ZLGfxMgrGL::WORLD_TO_VIEW_MTX );
-			ZLMatrix4x4 windowMtx				= gfxMgr.GetMtx ( ZLGfxMgrGL::CLIP_TO_WINDOW_MTX );
+			ZLMatrix4x4 view					= gfxMgr.GetMtx ( MOAIGfxMgr::WORLD_TO_VIEW_MTX );
+			ZLMatrix4x4 windowMtx				= gfxMgr.GetMtx ( MOAIGfxMgr::CLIP_TO_WINDOW_MTX );
 			
 			worldDrawingMtx = ZLMatrix4x4 ( this->GetLocalToWorldMtx ());
 			
@@ -519,7 +519,7 @@ ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () con
 		
 		case BILLBOARD_COMPASS: {
 		
-			ZLAffine3D cameraMtx ( gfxMgr.GetMtx ( ZLGfxMgrGL::VIEW_TO_WORLD_MTX ));
+			ZLAffine3D cameraMtx ( gfxMgr.GetMtx ( MOAIGfxMgr::VIEW_TO_WORLD_MTX ));
 			ZLVec3D	cameraY = cameraMtx.GetYAxis ();
 			
 			cameraY.mZ = 0.0f;
@@ -562,11 +562,11 @@ ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () con
 
 		case BILLBOARD_COMPASS_SCALE: {
 		
-			ZLMatrix4x4 viewToClip = gfxMgr.GetMtx ( ZLGfxMgrGL::VIEW_TO_CLIP_MTX );
-			ZLMatrix4x4 worldToClip = gfxMgr.GetMtx ( ZLGfxMgrGL::WORLD_TO_CLIP_MTX );
-			ZLMatrix4x4 clipToWindow = gfxMgr.GetMtx ( ZLGfxMgrGL::CLIP_TO_WINDOW_MTX );
+			ZLMatrix4x4 viewToClip = gfxMgr.GetMtx ( MOAIGfxMgr::VIEW_TO_CLIP_MTX );
+			ZLMatrix4x4 worldToClip = gfxMgr.GetMtx ( MOAIGfxMgr::WORLD_TO_CLIP_MTX );
+			ZLMatrix4x4 clipToWindow = gfxMgr.GetMtx ( MOAIGfxMgr::CLIP_TO_WINDOW_MTX );
 			// TODO: The cache for VIEW_TO_WORLD matrix is not working, so manually inverting here, which not efficient
-			ZLMatrix4x4 worldToView = gfxMgr.GetMtx ( ZLGfxMgrGL::WORLD_TO_VIEW_MTX );
+			ZLMatrix4x4 worldToView = gfxMgr.GetMtx ( MOAIGfxMgr::WORLD_TO_VIEW_MTX );
 			ZLMatrix4x4 worldToViewInv;
 			
 			worldDrawingMtx = ZLMatrix4x4 ( this->GetLocalToWorldMtx ());
@@ -622,11 +622,11 @@ ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () con
 		
 		case BILLBOARD_SCREEN: {
 			
-			//MOAIGfxMgrGL::Get ().GetWorldToWndMtx ();
+			//MOAIGfxMgr::Get ().GetWorldToWndMtx ();
 			
 			//ZLMatrix4x4 viewProjMtx = camera->GetWorldToWndMtx ( *viewport );
-			ZLMatrix4x4 viewProjMtx = gfxMgr.GetMtx ( ZLGfxMgrGL::WORLD_TO_CLIP_MTX );
-			viewProjMtx.Append ( gfxMgr.GetMtx ( ZLGfxMgrGL::CLIP_TO_WINDOW_MTX ));
+			ZLMatrix4x4 viewProjMtx = gfxMgr.GetMtx ( MOAIGfxMgr::WORLD_TO_CLIP_MTX );
+			viewProjMtx.Append ( gfxMgr.GetMtx ( MOAIGfxMgr::CLIP_TO_WINDOW_MTX ));
 			
 			ZLMatrix4x4 localToWorldMtx ( this->GetLocalToWorldMtx ());
 			

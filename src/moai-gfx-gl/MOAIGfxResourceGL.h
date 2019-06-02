@@ -1,20 +1,23 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIABSTRACTGFXRESOURCEGL_H
-#define	MOAIABSTRACTGFXRESOURCEGL_H
+#ifndef	MOAIGFXRESOURCEGL_H
+#define	MOAIGFXRESOURCEGL_H
+
+#include <moai-gfx-gl/MOAIGfxMgrGL_PipelineClerkGL.h>
 
 class MOAIGfxMgrGL;
 
 //================================================================//
-// MOAIAbstractGfxResourceGL
+// MOAIGfxResourceGL
 //================================================================//
-/**	@lua	MOAIAbstractGfxResourceGL
+/**	@lua	MOAIGfxResourceGL
 	@text	Base class for graphics resources owned by OpenGL. Implements
 			resource lifecycle including restoration from a lost graphics
 			context (if possible).
 */
-class MOAIAbstractGfxResourceGL :
+class MOAIGfxResourceGL :
+	public virtual MOAIGfxResource,
 	public virtual MOAIInstanceEventSource,
 	public ZLGfxListener {
 protected:
@@ -28,40 +31,35 @@ protected:
 	u32					mState;
 	u32					mLastRenderCount;
 
-	ZLLeanLink < MOAIAbstractGfxResourceGL* > mMasterLink;
-	ZLLeanLink < MOAIAbstractGfxResourceGL* > mPendingLink;
-
-	// for custom loading function
-	MOAILuaMemberRef	mReloader;
+	ZLLeanLink < MOAIGfxResourceGL* > mMasterLink;
+	ZLLeanLink < MOAIGfxResourceGL* > mPendingLink;
 
 	//----------------------------------------------------------------//
 	static int		_getAge						( lua_State* L );
 	static int		_getResourceState			( lua_State* L );
-	static int		_purge						( lua_State* L );
-	static int		_scheduleForGPUCreate		( lua_State* L );
-	static int		_setReloader				( lua_State* L );
+	static int		_purge						( lua_State* L );	
 
 	//----------------------------------------------------------------//	
 	bool			Affirm						();
 	u32				Bind						(); // bind OR create
 	bool			DoGPUCreate					(); // gets ready to bind
 	bool			DoGPUUpdate					();
-	bool			HasLoader					();
+	
 	void			Renew						(); // lose (but not *delete*) the GPU resource
 	void			Unbind						();
 	
 	//----------------------------------------------------------------//
-	virtual bool	ZLAbstractGfxResource_HasLoader					();
-	virtual bool	ZLAbstractGfxResource_InvokeLoader				();
-	virtual void	ZLAbstractGfxResource_OnClearDirty				();
-	virtual bool	ZLAbstractGfxResource_OnCPUCreate				() = 0; // load or initialize any CPU-side resources required to create the GPU-side resource
-	virtual void	ZLAbstractGfxResource_OnCPUDestroy				() = 0; // clear any CPU-side memory used by class
-	virtual void	ZLAbstractGfxResource_OnGPUBind					() = 0; // select GPU-side resource on device for use
-	virtual bool	ZLAbstractGfxResource_OnGPUCreate				() = 0; // create GPU-side resource
-	virtual void	ZLAbstractGfxResource_OnGPUDeleteOrDiscard		( bool shouldDelete ) = 0; // delete or discard GPU resource handles
-	virtual void	ZLAbstractGfxResource_OnGPUUnbind				() = 0; // unbind GPU-side resource
-	virtual bool	ZLAbstractGfxResource_OnGPUUpdate				() = 0;
-	void			ZLGfxListener_OnGfxEvent						( u32 event, void* userdata );
+	bool			MOAIGfxResource_DoCPUCreate					();
+	void			MOAIGfxResource_ScheduleForGPUDestroy		();
+	bool			MOAIGfxResource_ScheduleForGPUUpdate		( PipelineHint hint );
+	
+	//----------------------------------------------------------------//
+	virtual void	MOAIGfxResourceGL_OnGPUBind					() = 0; // select GPU-side resource on device for use
+	virtual bool	MOAIGfxResourceGL_OnGPUCreate				() = 0; // create GPU-side resource
+	virtual void	MOAIGfxResourceGL_OnGPUDeleteOrDiscard		( bool shouldDelete ) = 0; // delete or discard GPU resource handles
+	virtual void	MOAIGfxResourceGL_OnGPUUnbind				() = 0; // unbind GPU-side resource
+	virtual bool	MOAIGfxResourceGL_OnGPUUpdate				() = 0;
+	void			ZLGfxListener_OnGfxEvent					( u32 event, void* userdata );
 
 public:
 
@@ -86,18 +84,11 @@ public:
 	IS ( Ready, mState, STATE_READY_TO_BIND )
 
 	//----------------------------------------------------------------//
-	void			Destroy							(); // delete CPU and GPU data; go back to STATE_NEW
-	bool			DoCPUCreate						(); // preload CPU portion
-	void			FinishInit						(); // ready to CPU/GPU affirm; recover from STATE_NEW or STATE_ERROR
-	bool			InvokeLoader					();
-					MOAIAbstractGfxResourceGL		();
-	virtual			~MOAIAbstractGfxResourceGL		();
+					MOAIGfxResourceGL				();
+	virtual			~MOAIGfxResourceGL				();
 	bool			Purge							( u32 age );
 	void			RegisterLuaClass				( MOAILuaState& state );
 	void			RegisterLuaFuncs				( MOAILuaState& state );
-	bool			ScheduleForGPUCreate			( u32 pipelineID );
-	bool			ScheduleForGPUUpdate			();
-	void			SetGfxMgr						( MOAIGfxMgrGL& gfxMgr );
 };
 
 #endif

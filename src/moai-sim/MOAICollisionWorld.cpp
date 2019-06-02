@@ -270,7 +270,7 @@ MOAICollisionWorld::MOAICollisionWorld () :
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIAction )
-		RTTI_EXTEND ( MOAIAbstractDrawable )
+		RTTI_EXTEND ( MOAIDrawable )
 		RTTI_EXTEND ( MOAIPartition )
 	RTTI_END
 }
@@ -433,7 +433,7 @@ void MOAICollisionWorld::MOAIPartition_DrawDebugFront () {
 	
 	if ( this->GetShapeStreamSize ()) {
 	
-		MOAIGfxMgrGL::Get ().SetMtx ( ZLGfxMgrGL::MODEL_TO_WORLD_MTX );
+		MOAIGfxMgr::Get ().SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX );
 		this->DrawShapeStream ();
 	}
 }

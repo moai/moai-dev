@@ -98,15 +98,15 @@ void ZLCopyOnWrite::Free () {
 }
 
 //----------------------------------------------------------------//
-const void* ZLCopyOnWrite::GetBuffer () const {
-
-	return this->mInternal ? this->mInternal->mBuffer : 0;
-}
-
-//----------------------------------------------------------------//
 u32 ZLCopyOnWrite::GetCaps () {
 
 	return CAN_READ | CAN_WRITE | CAN_SEEK;
+}
+
+//----------------------------------------------------------------//
+const void* ZLCopyOnWrite::GetConstBuffer () const {
+
+	return this->mInternal ? this->mInternal->mBuffer : 0;
 }
 
 //----------------------------------------------------------------//

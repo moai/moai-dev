@@ -17,7 +17,7 @@ class MOAITableViewLayer :
 private:
 
 	//----------------------------------------------------------------//
-	void				MOAIAbstractDrawable_Draw			( int subPrimID );
+	void				MOAIDrawable_Draw			( int subPrimID );
 	void				MOAIAbstractViewLayer_Draw			();
 
 public:

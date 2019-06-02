@@ -298,7 +298,7 @@ ZLRect MOAILayoutFrame::GetScissorRect () {
 		
 	// TODO:
 	ZLMatrix4x4 mtx ( this->mLocalToWorldMtx );
-	//mtx.Append ( MOAIGfxMgrGL::Get ().GetWorldToWndMtx ( 1.0f, 1.0f ));
+	//mtx.Append ( MOAIGfxMgr::Get ().GetWorldToWndMtx ( 1.0f, 1.0f ));
 	mtx.Transform ( scissorRect );
 	
 	return scissorRect;

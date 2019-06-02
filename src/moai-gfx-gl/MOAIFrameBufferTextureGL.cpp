@@ -58,7 +58,7 @@ void MOAIFrameBufferTextureGL::Init ( u32 width, u32 height, u32 colorFormat, u3
 	this->mDepthFormat		= depthFormat;
 	this->mStencilFormat	= stencilFormat;
 	
-	this->FinishInit ();
+	this->ScheduleForGPUUpdate ();
 }
 
 //----------------------------------------------------------------//
@@ -78,7 +78,7 @@ MOAIFrameBufferTextureGL::MOAIFrameBufferTextureGL () :
 //----------------------------------------------------------------//
 MOAIFrameBufferTextureGL::~MOAIFrameBufferTextureGL () {
 
-	this->ZLAbstractGfxResource_OnGPUDeleteOrDiscard ( true );
+	this->MOAIGfxResourceGL_OnGPUDeleteOrDiscard ( true );
 }
 
 //----------------------------------------------------------------//
@@ -115,14 +115,14 @@ void MOAIFrameBufferTextureGL::SerializeOut ( MOAILuaState& state, MOAISerialize
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIFrameBufferTextureGL::ZLAbstractGfxResource_OnGPUBind () {
+void MOAIFrameBufferTextureGL::MOAIGfxResourceGL_OnGPUBind () {
 
 	this->NeedsClear ( true );
-	MOAITextureGL::ZLAbstractGfxResource_OnGPUBind ();
+	MOAITextureGL::MOAIGfxResourceGL_OnGPUBind ();
 }
 
 //----------------------------------------------------------------//
-bool MOAIFrameBufferTextureGL::ZLAbstractGfxResource_OnGPUCreate () {
+bool MOAIFrameBufferTextureGL::MOAIGfxResourceGL_OnGPUCreate () {
 	
 	if ( !( this->mWidth && this->mHeight && ( this->mColorFormat || this->mDepthFormat || this->mStencilFormat ))) {
 		return false;
@@ -181,7 +181,7 @@ bool MOAIFrameBufferTextureGL::ZLAbstractGfxResource_OnGPUCreate () {
         gfx.ClearColor ( 0, 0, 0, 0 );
         gfx.Clear ( ZGL_CLEAR_COLOR_BUFFER_BIT | ZGL_CLEAR_STENCIL_BUFFER_BIT | ZGL_CLEAR_DEPTH_BUFFER_BIT );
 		
-		this->ZLAbstractGfxResource_OnGPUUpdate ();
+		this->MOAIGfxResourceGL_OnGPUUpdate ();
 		
 		status = true;
 	}
@@ -200,14 +200,14 @@ bool MOAIFrameBufferTextureGL::ZLAbstractGfxResource_OnGPUCreate () {
 }
 
 //----------------------------------------------------------------//
-void MOAIFrameBufferTextureGL::ZLAbstractGfxResource_OnGPUDeleteOrDiscard ( bool shouldDelete ) {
+void MOAIFrameBufferTextureGL::MOAIGfxResourceGL_OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 
 	this->mGfxMgr->DeleteOrDiscard ( this->mGLFrameBuffer, shouldDelete );
 	this->mGfxMgr->DeleteOrDiscard ( this->mGLColorBuffer, shouldDelete );
 	this->mGfxMgr->DeleteOrDiscard ( this->mGLDepthBuffer, shouldDelete );
 	this->mGfxMgr->DeleteOrDiscard ( this->mGLStencilBuffer, shouldDelete );
 
-	this->MOAITextureGL::ZLAbstractGfxResource_OnGPUDeleteOrDiscard ( shouldDelete );
+	this->MOAITextureGL::MOAIGfxResourceGL_OnGPUDeleteOrDiscard ( shouldDelete );
 }
 
 //----------------------------------------------------------------//

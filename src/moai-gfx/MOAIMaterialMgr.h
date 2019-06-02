@@ -4,6 +4,7 @@
 #ifndef	MOAIMATERIALMGR_H
 #define	MOAIMATERIALMGR_H
 
+#include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIMaterial.h>
 
 class MOAILight;
@@ -117,7 +118,7 @@ public:
 	void				SetDepthMask				( bool depthMask );
 	void				SetDepthTest				( int depthTest );
 	void				SetLight					( u32 lightID, MOAILight* light );
-	void				SetShader					( u32 shaderID );
+	void				SetShader					( MOAIShaderPresetEnum shaderID );
 	void				SetShader					( MOAIShader* shader );
 	void				SetTexture					( MOAITexture* texture );
 	void				SetTexture					( u32 textureID, MOAITexture* texture );

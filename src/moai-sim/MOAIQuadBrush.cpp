@@ -11,31 +11,31 @@
 //----------------------------------------------------------------//
 void MOAIQuadBrush::BindVertexFormat () {
 	
-	MOAIGfxMgrGL::Get ().SetVertexFormat ( MOAIVertexFormatMgrGL::Get ().GetFormat ( MOAIVertexFormatMgrGL::XYZWUVC ));
+	MOAIGfxMgr::Get ().SetVertexFormat ( MOAIGfxMgr::Get ().GetVertexFormatPreset ( MOAIVertexFormatPresetEnum::XYZWUVC ));
 }
 
 //----------------------------------------------------------------//
 void MOAIQuadBrush::Draw () {
 
-	MOAIGfxMgrGL::Get ().WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV );
+	MOAIGfxMgr::Get ().WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV );
 }
 
 //----------------------------------------------------------------//
 void MOAIQuadBrush::Draw ( float xOff, float yOff, float zOff ) {
 	
-	MOAIGfxMgrGL::Get ().WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff );
+	MOAIGfxMgr::Get ().WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff );
 }
 
 //----------------------------------------------------------------//
 void MOAIQuadBrush::Draw ( float xOff, float yOff, float zOff, float xScale, float yScale ) {
 	
-	MOAIGfxMgrGL::Get ().WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff, xScale, yScale );
+	MOAIGfxMgr::Get ().WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff, xScale, yScale );
 }
 
 //----------------------------------------------------------------//
 void MOAIQuadBrush::Draw ( float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale ) {
 	
-	MOAIGfxMgrGL::Get ().WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff, xScale, yScale, uOff, vOff, uScale, vScale );
+	MOAIGfxMgr::Get ().WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff, xScale, yScale, uOff, vOff, uScale, vScale );
 }
 
 //----------------------------------------------------------------//

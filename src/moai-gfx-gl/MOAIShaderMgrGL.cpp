@@ -40,11 +40,11 @@
 int MOAIShaderMgrGL::_getProgram ( lua_State* L ) {
 	MOAILuaState state ( L );
 
-	u32 shaderID = state.GetValue < u32 >( 1, UNKNOWN_SHADER );
+	u32 shaderID = state.GetValue < u32 >( 1, ( u32 )MOAIShaderPresetEnum::UNKNOWN_SHADER );
 	
-	if ( shaderID < TOTAL_SHADERS ) {
+	if ( shaderID < MOAIShaderPresetEnum::TOTAL_SHADERS ) {
 	
-		MOAIShaderProgramGL* program = MOAIShaderMgrGL::Get ().GetProgram ( shaderID );
+		MOAIShaderProgramGL* program = MOAIShaderMgrGL::Get ().GetProgram (( MOAIShaderPresetEnum )shaderID );
 		state.Push ( program );
 		return 1;
 	}
@@ -56,11 +56,11 @@ int MOAIShaderMgrGL::_getProgram ( lua_State* L ) {
 int MOAIShaderMgrGL::_getShader ( lua_State* L ) {
 	MOAILuaState state ( L );
 
-	u32 shaderID = state.GetValue < u32 >( 1, UNKNOWN_SHADER );
+	u32 shaderID = state.GetValue < u32 >( 1, ( u32 )MOAIShaderPresetEnum::UNKNOWN_SHADER );
 	
-	if ( shaderID < TOTAL_SHADERS ) {
+	if ( shaderID < MOAIShaderPresetEnum::TOTAL_SHADERS ) {
 	
-		MOAIShaderGL* shader = MOAIShaderMgrGL::Get ().GetShader ( shaderID );
+		MOAIShaderGL* shader = MOAIShaderMgrGL::Get ().GetShader (( MOAIShaderPresetEnum )shaderID );
 		state.Push ( shader );
 		return 1;
 	}
@@ -74,17 +74,17 @@ int MOAIShaderMgrGL::_getShader ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIShaderMgrGL::AffirmAll () {
 
-	for ( u32 i = 0; i < TOTAL_SHADERS; ++i ) {
-		this->GetShader ( i );
+	for ( u32 i = 0; i < ( u32 )MOAIShaderPresetEnum::TOTAL_SHADERS; ++i ) {
+		this->GetShader (( MOAIShaderPresetEnum )i );
 	}
 }
 
 //----------------------------------------------------------------//
-MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( u32 shaderID ) {
+MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID ) {
 
 	MOAIShaderProgramGL* program = 0;
 
-	if ( shaderID < TOTAL_SHADERS ) {
+	if ( shaderID < MOAIShaderPresetEnum::TOTAL_SHADERS ) {
 	
 		program = this->mPrograms [ shaderID ];
 		
@@ -95,7 +95,7 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( u32 shaderID ) {
 			
 			switch ( shaderID ) {
 				
-				case DECK2D_SHADER:
+				case MOAIShaderPresetEnum::DECK2D_SHADER:
 					
 					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_POSITION, "position" );
 					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_TEXCOORD, "uv" );
@@ -104,7 +104,7 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( u32 shaderID ) {
 					program->Load ( _deck2DShaderVSH, _deck2DShaderFSH );
 					break;
 				
-				case DECK2D_SNAPPING_SHADER:
+				case MOAIShaderPresetEnum::DECK2D_SNAPPING_SHADER:
 					
 					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_POSITION, "position" );
 					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_TEXCOORD, "uv" );
@@ -121,7 +121,7 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( u32 shaderID ) {
 					program->Load ( _deck2DSnappingShaderVSH, _deck2DSnappingShaderFSH );
 					break;
 				
-				case DECK2D_TEX_ONLY_SHADER:
+				case MOAIShaderPresetEnum::DECK2D_TEX_ONLY_SHADER:
 					
 					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_POSITION, "position" );
 					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_TEXCOORD, "uv" );
@@ -130,7 +130,7 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( u32 shaderID ) {
 					program->Load ( _deck2DTexOnlyShaderVSH, _deck2DTexOnlyShaderFSH );
 					break;
 				
-				case FONT_SHADER:
+				case MOAIShaderPresetEnum::FONT_SHADER:
 					
 					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_POSITION, "position" );
 					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_TEXCOORD, "uv" );
@@ -139,7 +139,7 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( u32 shaderID ) {
 					program->Load ( _fontShaderVSH, _fontShaderFSH );
 					break;
 				
-				case FONT_SNAPPING_SHADER:
+				case MOAIShaderPresetEnum::FONT_SNAPPING_SHADER:
 					
 					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_POSITION, "position" );
 					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_TEXCOORD, "uv" );
@@ -156,14 +156,14 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( u32 shaderID ) {
 					program->Load ( _fontSnappingShaderVSH, _fontSnappingShaderFSH );
 					break;
 				
-				case LINE_SHADER:
+				case MOAIShaderPresetEnum::LINE_SHADER:
 					
 					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWC_POSITION, "position" );
 					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWC_COLOR, "color" );
 					program->Load ( _lineShaderVSH, _lineShaderFSH );
 					break;
 				
-				case LINE_SHADER_3D:
+				case MOAIShaderPresetEnum::LINE_SHADER_3D:
 					
 					program->SetVertexAttribute ( 0, "position" );
 					program->SetVertexAttribute ( 1, "color" );
@@ -180,7 +180,7 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( u32 shaderID ) {
 					
 					break;
 
-				case MESH_SHADER:
+				case MOAIShaderPresetEnum::MESH_SHADER:
 
 					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_POSITION, "position" );
 					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_TEXCOORD, "uv" );
@@ -206,11 +206,11 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( u32 shaderID ) {
 }
 
 //----------------------------------------------------------------//
-MOAIShaderGL* MOAIShaderMgrGL::GetShader ( u32 shaderID ) {
+MOAIShaderGL* MOAIShaderMgrGL::GetShader ( MOAIShaderPresetEnum shaderID ) {
 
 	MOAIShaderGL* shader = 0;
 
-	if ( shaderID < TOTAL_SHADERS ) {
+	if ( shaderID < MOAIShaderPresetEnum::TOTAL_SHADERS ) {
 	
 		shader = this->mShaders [ shaderID ];
 		
@@ -236,7 +236,7 @@ MOAIShaderGL* MOAIShaderMgrGL::GetShader ( lua_State* L, int idx ) {
 	MOAIShaderGL* shader = NULL;
 
 	if ( state.IsType ( idx, LUA_TNUMBER )) {
-		shader = this->GetShader ( state.GetValue < u32 >( idx, MOAIShaderMgrGL::UNKNOWN_SHADER ));
+		shader = this->GetShader (( MOAIShaderPresetEnum )state.GetValue < u32 >( idx, ( u32 )MOAIShaderPresetEnum::UNKNOWN_SHADER ));
 	}
 	else {
 		shader = state.GetLuaObject < MOAIShaderGL >( idx, true );
@@ -249,11 +249,11 @@ MOAIShaderMgrGL::MOAIShaderMgrGL () {
 
 	RTTI_SINGLE ( MOAILuaObject )
 
-	for ( u32 i = 0; i < TOTAL_SHADERS; ++i ) {
+	for ( u32 i = 0; i < MOAIShaderPresetEnum::TOTAL_SHADERS; ++i ) {
 		this->mPrograms [ i ] = 0;
 	}
 	
-	for ( u32 i = 0; i < TOTAL_SHADERS; ++i ) {
+	for ( u32 i = 0; i < MOAIShaderPresetEnum::TOTAL_SHADERS; ++i ) {
 		this->mShaders [ i ] = 0;
 	}
 }
@@ -261,13 +261,13 @@ MOAIShaderMgrGL::MOAIShaderMgrGL () {
 //----------------------------------------------------------------//
 MOAIShaderMgrGL::~MOAIShaderMgrGL () {
 
-	for ( u32 i = 0; i < TOTAL_SHADERS; ++i ) {
+	for ( u32 i = 0; i < MOAIShaderPresetEnum::TOTAL_SHADERS; ++i ) {
 		if ( this->mPrograms [ i ]) {
 			this->LuaRelease ( this->mPrograms [ i ]);
 		}
 	}
 	
-	for ( u32 i = 0; i < TOTAL_SHADERS; ++i ) {
+	for ( u32 i = 0; i < MOAIShaderPresetEnum::TOTAL_SHADERS; ++i ) {
 		if ( this->mShaders [ i ]) {
 			this->LuaRelease ( this->mShaders [ i ]);
 		}
@@ -277,15 +277,15 @@ MOAIShaderMgrGL::~MOAIShaderMgrGL () {
 //----------------------------------------------------------------//
 void MOAIShaderMgrGL::RegisterLuaClass ( MOAILuaState& state ) {
 
-	state.SetField ( -1, "DECK2D_SHADER",			( u32 )DECK2D_SHADER );
-	state.SetField ( -1, "DECK2D_SNAPPING_SHADER",	( u32 )DECK2D_SNAPPING_SHADER );
-	state.SetField ( -1, "DECK2D_TEX_ONLY_SHADER",	( u32 )DECK2D_TEX_ONLY_SHADER );
-	state.SetField ( -1, "FONT_SHADER",				( u32 )FONT_SHADER );
-	state.SetField ( -1, "FONT_SNAPPING_SHADER",	( u32 )FONT_SNAPPING_SHADER );
-	state.SetField ( -1, "FONT_EFFECTS_SHADER",	    ( u32 )FONT_EFFECTS_SHADER );
-	state.SetField ( -1, "LINE_SHADER",				( u32 )LINE_SHADER );
-	state.SetField ( -1, "LINE_SHADER_3D",			( u32 )LINE_SHADER_3D );
-	state.SetField ( -1, "MESH_SHADER",				( u32 )MESH_SHADER );
+	state.SetField ( -1, "DECK2D_SHADER",			( u32 )MOAIShaderPresetEnum::DECK2D_SHADER );
+	state.SetField ( -1, "DECK2D_SNAPPING_SHADER",	( u32 )MOAIShaderPresetEnum::DECK2D_SNAPPING_SHADER );
+	state.SetField ( -1, "DECK2D_TEX_ONLY_SHADER",	( u32 )MOAIShaderPresetEnum::DECK2D_TEX_ONLY_SHADER );
+	state.SetField ( -1, "FONT_SHADER",				( u32 )MOAIShaderPresetEnum::FONT_SHADER );
+	state.SetField ( -1, "FONT_SNAPPING_SHADER",	( u32 )MOAIShaderPresetEnum::FONT_SNAPPING_SHADER );
+	state.SetField ( -1, "FONT_EFFECTS_SHADER",	    ( u32 )MOAIShaderPresetEnum::FONT_EFFECTS_SHADER );
+	state.SetField ( -1, "LINE_SHADER",				( u32 )MOAIShaderPresetEnum::LINE_SHADER );
+	state.SetField ( -1, "LINE_SHADER_3D",			( u32 )MOAIShaderPresetEnum::LINE_SHADER_3D );
+	state.SetField ( -1, "MESH_SHADER",				( u32 )MOAIShaderPresetEnum::MESH_SHADER );
 	
 	luaL_Reg regTable [] = {
 		{ "getProgram",				_getProgram },

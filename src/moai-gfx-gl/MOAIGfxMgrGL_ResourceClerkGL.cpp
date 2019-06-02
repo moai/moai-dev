@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx-gl/MOAIAbstractGfxResourceGL.h>
+#include <moai-gfx-gl/MOAIGfxResourceGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_PipelineClerkGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_ResourceClerkGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_GPUCacheGL.h>
@@ -29,7 +29,7 @@ void MOAIGfxMgrGL_ResourceClerkGL::DiscardResources () {
 
 	ResourceIt resourceIt = this->mResources.Head ();
 	for ( ; resourceIt; resourceIt = resourceIt->Next ()) {
-		resourceIt->Data ()->ZLAbstractGfxResource_OnGPUDeleteOrDiscard ( false );
+		resourceIt->Data ()->MOAIGfxResourceGL_OnGPUDeleteOrDiscard ( false );
 	}
 	
 	ZLSize top = this->mDeleterStack.GetTop ();
@@ -41,7 +41,7 @@ void MOAIGfxMgrGL_ResourceClerkGL::DiscardResources () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrGL_ResourceClerkGL::InsertGfxResource ( MOAIAbstractGfxResourceGL& resource ) {
+void MOAIGfxMgrGL_ResourceClerkGL::InsertGfxResource ( MOAIGfxResourceGL& resource ) {
 
 	this->mResources.PushBack ( resource.mMasterLink );
 }
@@ -75,13 +75,13 @@ void MOAIGfxMgrGL_ResourceClerkGL::ProcessDeleters ( ZLGfx& gfx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrGL_ResourceClerkGL::ProcessPending ( ZLGfx& gfx, ZLLeanList < MOAIAbstractGfxResourceGL* > &list ) {
+void MOAIGfxMgrGL_ResourceClerkGL::ProcessPending ( ZLGfx& gfx, ZLLeanList < MOAIGfxResourceGL* > &list ) {
 	
 	this->ProcessDeleters ( gfx );
 	
 	ResourceIt resourceIt = list.Head ();
 	while ( resourceIt ) {
-		MOAIAbstractGfxResourceGL* resource = resourceIt->Data ();
+		MOAIGfxResourceGL* resource = resourceIt->Data ();
 		resourceIt = resourceIt->Next ();
 	
 		resource->Affirm ();
@@ -99,7 +99,7 @@ void MOAIGfxMgrGL_ResourceClerkGL::PurgeResources ( u32 age ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrGL_ResourceClerkGL::RemoveGfxResource ( MOAIAbstractGfxResourceGL& resource ) {
+void MOAIGfxMgrGL_ResourceClerkGL::RemoveGfxResource ( MOAIGfxResourceGL& resource ) {
 
 	this->mResources.Remove ( resource.mMasterLink );
 	this->mPendingForLoadList.Remove ( resource.mPendingLink );
@@ -119,7 +119,7 @@ void MOAIGfxMgrGL_ResourceClerkGL::RenewResources () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrGL_ResourceClerkGL::ScheduleGPUAffirm ( MOAIAbstractGfxResourceGL& resource, u32 listID ) {
+void MOAIGfxMgrGL_ResourceClerkGL::ScheduleGPUAffirm ( MOAIGfxResourceGL& resource, u32 listID ) {
 
 	switch ( listID ) {
 

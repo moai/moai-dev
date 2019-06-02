@@ -281,13 +281,13 @@ int MOAIRegion::_getTriangles ( lua_State* L ) {
 	u32 base = 0;
 	int totalElements = 0;
 	
-	MOAIVertexBufferGL* vtxBuffer		= state.GetLuaObject < MOAIVertexBufferGL >( 2, false );
-	MOAIIndexBufferGL* idxBuffer		= state.GetLuaObject < MOAIIndexBufferGL >( 3, false );
+	MOAIVertexBuffer* vtxBuffer		= state.GetLuaObject < MOAIVertexBuffer >( 2, false );
+	MOAIIndexBuffer* idxBuffer		= state.GetLuaObject < MOAIIndexBuffer >( 3, false );
 
 	if ( vtxBuffer && idxBuffer ) {
 	
 		u32 idxSizeInBytes = state.GetValue < u32 >( 4, 4 );
-		MOAIVertexFormatGL* format = state.GetLuaObject < MOAIVertexFormatGL >( 5, false );
+		MOAIVertexFormat* format = state.GetLuaObject < MOAIVertexFormat >( 5, false );
 		
 		base = ( u32 )( idxBuffer->GetCursor () / idxSizeInBytes );
 		totalElements = self->GetTriangles ( *format, *vtxBuffer, *idxBuffer, idxSizeInBytes );
@@ -296,7 +296,7 @@ int MOAIRegion::_getTriangles ( lua_State* L ) {
 		
 		MOAIStream* vtxStream		= state.GetLuaObject < MOAIStream >( 2, false );
 		MOAIStream* idxStream		= state.GetLuaObject < MOAIStream >( 3, false );
-		MOAIVertexFormatGL* format	= state.GetLuaObject < MOAIVertexFormatGL >( 4, false );
+		MOAIVertexFormat* format	= state.GetLuaObject < MOAIVertexFormat >( 4, false );
 		
 		if ( vtxStream && idxStream && format ) {
 			base = ( u32 )( idxStream->GetCursor () / 4 );
@@ -798,7 +798,7 @@ void MOAIRegion::DrawDebug () const {
 	
 	static u32 POLY_CORRUPT_COLOR					= ZLColor::PackRGBA ( 1.0f, 0.0f, 0.0f, 1.0f );
 
-	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	MOAIDraw& draw = MOAIDraw::Get ();
 	draw.Bind ();
@@ -1001,7 +1001,7 @@ u32 MOAIRegion::GetTriangles ( SafeTesselator& tess ) const {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIRegion::GetTriangles ( MOAIVertexFormatGL& format, ZLStream& vtxStream, ZLStream& idxStream ) const {
+u32 MOAIRegion::GetTriangles ( MOAIVertexFormat& format, ZLStream& vtxStream, ZLStream& idxStream ) const {
 
 	SafeTesselator tess;
 	int error = this->GetTriangles ( tess );
@@ -1013,7 +1013,7 @@ u32 MOAIRegion::GetTriangles ( MOAIVertexFormatGL& format, ZLStream& vtxStream, 
 }
 
 //----------------------------------------------------------------//
-u32 MOAIRegion::GetTriangles ( MOAIVertexFormatGL& format, MOAIVertexBufferGL& vtxBuffer, MOAIIndexBufferGL& idxBuffer, u32 idxSizeInBytes ) const {
+u32 MOAIRegion::GetTriangles ( MOAIVertexFormat& format, MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytes ) const {
 
 	SafeTesselator tess;
 	int error = this->GetTriangles ( tess );

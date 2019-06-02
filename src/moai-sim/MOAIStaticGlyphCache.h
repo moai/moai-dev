@@ -6,7 +6,7 @@
 
 #include <moai-sim/MOAIGlyphCache.h>
 
-class MOAITextureGL;
+class MOAITexture;
 
 //================================================================//
 // MOAIStaticGlyphCache
@@ -21,7 +21,7 @@ class MOAIStaticGlyphCache :
 	public MOAIGlyphCache {
 protected:
 
-	ZLLeanArray < MOAITextureGL* > mTextures;
+	ZLLeanArray < MOAITexture* > mTextures;
 
 	//----------------------------------------------------------------//
 	void				ClearTextures				();
@@ -32,9 +32,9 @@ public:
 	
 	//----------------------------------------------------------------//
 	MOAIImage*			GetGlyphImage				( MOAIGlyph& glyph );
-	MOAITextureBaseGL*	GetGlyphTexture				( MOAIGlyph& glyph );
+	MOAITexture*	GetGlyphTexture				( MOAIGlyph& glyph );
 	MOAIImage*			GetImage					();
-	MOAITextureGL*		GetTexture					( ZLIndex id );
+	MOAITexture*		GetTexture					( ZLIndex id );
 	bool				IsDynamic					();
 						MOAIStaticGlyphCache		();
 						~MOAIStaticGlyphCache		();
@@ -44,7 +44,7 @@ public:
 	void				SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
 	void				SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
 	int					SetImage					( MOAIFont& font, MOAIImage& image );
-	void				SetTexture					( ZLIndex id, MOAITextureGL* texture );
+	void				SetTexture					( ZLIndex id, MOAITexture* texture );
 };
 
 #endif

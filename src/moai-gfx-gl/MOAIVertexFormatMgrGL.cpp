@@ -15,9 +15,9 @@
 int MOAIVertexFormatMgrGL::_getFormat ( lua_State* L ) {
 	MOAILuaState state ( L );
 
-	u32 formatID = state.GetValue < u32 >( 1, 0xffffffff );
+	u32 formatID = ( u32 )state.GetValue < u32 >( 1, ( u32 )MOAIVertexFormatPresetEnum::UNKNOWN_FORMAT );
 	
-	state.Push ( MOAIVertexFormatMgrGL::Get ().GetFormat ( formatID ));
+	state.Push ( MOAIVertexFormatMgrGL::Get ().GetFormat (( MOAIVertexFormatPresetEnum )formatID ));
 	return 1;
 }
 
@@ -26,11 +26,11 @@ int MOAIVertexFormatMgrGL::_getFormat ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIVertexFormatGL* MOAIVertexFormatMgrGL::GetFormat ( u32 formatID ) {
+MOAIVertexFormatGL* MOAIVertexFormatMgrGL::GetFormat ( MOAIVertexFormatPresetEnum formatID ) {
 	
 	MOAIVertexFormatGL* format = 0;
 	
-	if ( formatID < TOTAL_FORMATS ) {
+	if ( formatID < MOAIVertexFormatPresetEnum::TOTAL_FORMATS ) {
 	
 		format = this->mFormats [ formatID ];
 		
@@ -41,29 +41,29 @@ MOAIVertexFormatGL* MOAIVertexFormatMgrGL::GetFormat ( u32 formatID ) {
 			
 			switch ( formatID ) {
 				
-				case XYZC:
+				case MOAIVertexFormatPresetEnum::XYZC:
 					format->DeclareAttribute ( ZLIndexCast ( XYZC_POSITION ), ZGL_TYPE_FLOAT, 3, MOAIVertexFormatGL::ATTRIBUTE_COORD, false );
 					format->DeclareAttribute ( ZLIndexCast ( XYZC_COLOR ), ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormatGL::ATTRIBUTE_COLOR, true );
 					break;
 				
-				case XYZWC:
+				case MOAIVertexFormatPresetEnum::XYZWC:
 					format->DeclareAttribute ( ZLIndexCast ( XYZWC_POSITION ), ZGL_TYPE_FLOAT, 4, MOAIVertexFormatGL::ATTRIBUTE_COORD, false );
 					format->DeclareAttribute ( ZLIndexCast ( XYZWC_COLOR ), ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormatGL::ATTRIBUTE_COLOR, true );
 					break;
 				
-				case XYZWUVC:
+				case MOAIVertexFormatPresetEnum::XYZWUVC:
 					format->DeclareAttribute ( ZLIndexCast ( XYZWUVC_POSITION ), ZGL_TYPE_FLOAT, 4, MOAIVertexFormatGL::ATTRIBUTE_COORD, false );
 					format->DeclareAttribute ( ZLIndexCast ( XYZWUVC_TEXCOORD ), ZGL_TYPE_FLOAT, 2, MOAIVertexFormatGL::ATTRIBUTE_TEX_COORD, false );
 					format->DeclareAttribute ( ZLIndexCast ( XYZWUVC_COLOR ), ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormatGL::ATTRIBUTE_COLOR, true );
 					break;
 				
-				case XYZWNNNC:
+				case MOAIVertexFormatPresetEnum::XYZWNNNC:
 					format->DeclareAttribute ( ZLIndexCast ( XYZWNNNC_POSITION ), ZGL_TYPE_FLOAT, 4, MOAIVertexFormatGL::ATTRIBUTE_COORD, false );
 					format->DeclareAttribute ( ZLIndexCast ( XYZWNNNC_NORMAL ), ZGL_TYPE_FLOAT, 3, MOAIVertexFormatGL::ATTRIBUTE_NORMAL, false );
 					format->DeclareAttribute ( ZLIndexCast ( XYZWNNNC_COLOR ), ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormatGL::ATTRIBUTE_COLOR, true );
 					break;
 				
-				case XYZWNNNUVC:
+				case MOAIVertexFormatPresetEnum::XYZWNNNUVC:
 					format->DeclareAttribute ( ZLIndexCast ( XYZWNNNUVC_POSITION ), ZGL_TYPE_FLOAT, 4, MOAIVertexFormatGL::ATTRIBUTE_COORD, false );
 					format->DeclareAttribute ( ZLIndexCast ( XYZWNNNUVC_NORMAL ), ZGL_TYPE_FLOAT, 3, MOAIVertexFormatGL::ATTRIBUTE_NORMAL, false );
 					format->DeclareAttribute ( ZLIndexCast ( XYZWNNNUVC_TEXCOORD ), ZGL_TYPE_FLOAT, 2, MOAIVertexFormatGL::ATTRIBUTE_TEX_COORD, false );
@@ -84,7 +84,7 @@ MOAIVertexFormatGL* MOAIVertexFormatMgrGL::GetFormat ( lua_State* L, int idx ) {
 	MOAIVertexFormatGL* format = NULL;
 
 	if ( state.IsType ( idx, LUA_TNUMBER )) {
-		format = this->GetFormat ( state.GetValue < u32 >( idx, MOAIVertexFormatMgrGL::UNKNOWN_FORMAT ));
+		format = this->GetFormat (( MOAIVertexFormatPresetEnum )state.GetValue < u32 >( idx, ( u32 )MOAIVertexFormatPresetEnum::UNKNOWN_FORMAT ));
 	}
 	else {
 		format = state.GetLuaObject < MOAIVertexFormatGL >( idx, true );
@@ -93,7 +93,7 @@ MOAIVertexFormatGL* MOAIVertexFormatMgrGL::GetFormat ( lua_State* L, int idx ) {
 }
 
 //----------------------------------------------------------------//
-u32 MOAIVertexFormatMgrGL::GetVertexSize ( u32 formatID ) {
+u32 MOAIVertexFormatMgrGL::GetVertexSize ( MOAIVertexFormatPresetEnum formatID ) {
 
 	const MOAIVertexFormatGL* format = this->GetFormat ( formatID );
 	return format ? format->GetVertexSize () : 0;
@@ -104,7 +104,7 @@ MOAIVertexFormatMgrGL::MOAIVertexFormatMgrGL () {
 	
 	RTTI_SINGLE ( MOAILuaObject )
 	
-	for ( u32 i = 0; i < TOTAL_FORMATS; ++i ) {
+	for ( u32 i = 0; i < MOAIVertexFormatPresetEnum::TOTAL_FORMATS; ++i ) {
 		this->mFormats [ i ] = 0;
 	}
 }
@@ -112,7 +112,7 @@ MOAIVertexFormatMgrGL::MOAIVertexFormatMgrGL () {
 //----------------------------------------------------------------//
 MOAIVertexFormatMgrGL::~MOAIVertexFormatMgrGL () {
 
-	for ( u32 i = 0; i < TOTAL_FORMATS; ++i ) {
+	for ( u32 i = 0; i < MOAIVertexFormatPresetEnum::TOTAL_FORMATS; ++i ) {
 		if ( this->mFormats [ i ]) {
 			this->LuaRelease ( this->mFormats [ i ]);
 		}
@@ -122,11 +122,11 @@ MOAIVertexFormatMgrGL::~MOAIVertexFormatMgrGL () {
 //----------------------------------------------------------------//
 void MOAIVertexFormatMgrGL::RegisterLuaClass ( MOAILuaState& state ) {
 
-	state.SetField ( -1, "XYZC",			( u32 )XYZC );
-	state.SetField ( -1, "XYZWC",			( u32 )XYZWC );
-	state.SetField ( -1, "XYZWUVC",			( u32 )XYZWUVC );
-	state.SetField ( -1, "XYZWNNNC",		( u32 )XYZWNNNC );
-	state.SetField ( -1, "XYZWNNNUVC",		( u32 )XYZWNNNUVC );
+	state.SetField ( -1, "XYZC",			( u32 )MOAIVertexFormatPresetEnum::XYZC );
+	state.SetField ( -1, "XYZWC",			( u32 )MOAIVertexFormatPresetEnum::XYZWC );
+	state.SetField ( -1, "XYZWUVC",			( u32 )MOAIVertexFormatPresetEnum::XYZWUVC );
+	state.SetField ( -1, "XYZWNNNC",		( u32 )MOAIVertexFormatPresetEnum::XYZWNNNC );
+	state.SetField ( -1, "XYZWNNNUVC",		( u32 )MOAIVertexFormatPresetEnum::XYZWNNNUVC );
 	
 	luaL_Reg regTable [] = {
 		{ "getFormat",				_getFormat },

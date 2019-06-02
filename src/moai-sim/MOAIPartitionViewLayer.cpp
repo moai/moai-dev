@@ -34,7 +34,7 @@ int	MOAIPartitionViewLayer::_getPropViewList ( lua_State* L ) {
 	
 	if ( partition && self->mViewport ) {
 		
-		ZLTypeID typeID = ZLType::GetID < MOAIAbstractDrawable >();
+		ZLTypeID typeID = ZLType::GetID < MOAIDrawable >();
 		
 		float sortScale [ 4 ];
 		
@@ -189,9 +189,9 @@ int	MOAIPartitionViewLayer::_setSortScale ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition ) {
 
-	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	ZLTypeID typeID = ZLType::GetID < MOAIAbstractDrawable >();
+	ZLTypeID typeID = ZLType::GetID < MOAIDrawable >();
 	
 	MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
 	MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
@@ -210,7 +210,7 @@ void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition ) {
 	if ( !totalResults ) return;
 	
 	if ( this->mSortInViewSpace ) {
-		buffer.Transform ( gfxMgr.GetMtx ( ZLGfxMgrGL::WORLD_TO_VIEW_MTX ), false );
+		buffer.Transform ( gfxMgr.GetMtx ( MOAIGfxMgr::WORLD_TO_VIEW_MTX ), false );
 	}
 	
 	buffer.GenerateKeys (
@@ -245,7 +245,7 @@ void MOAIPartitionViewLayer::DrawProps ( MOAIPartitionResultBuffer& buffer ) {
 
 	for ( u32 i = 0; i < totalResults; ++i ) {
 		MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
-		MOAIAbstractDrawable* drawable = result->AsType < MOAIAbstractDrawable >();
+		MOAIDrawable* drawable = result->AsType < MOAIDrawable >();
 		drawable->Draw ( result->mSubPrimID );
 	}
 }
@@ -257,7 +257,7 @@ void MOAIPartitionViewLayer::DrawPropsDebug ( MOAIPartitionResultBuffer& buffer 
 
 	for ( u32 i = 0; i < totalResults; ++i ) {
 		MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
-		MOAIAbstractDrawable* drawable = result->AsType < MOAIAbstractDrawable >();
+		MOAIDrawable* drawable = result->AsType < MOAIDrawable >();
 		drawable->DrawDebug ( result->mSubPrimID );
 	}
 }

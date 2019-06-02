@@ -228,7 +228,7 @@ int MOAISim::_getMemoryUsage ( lua_State* L ) {
 	lua_pushnumber ( L, luabytes / divisor  );
 	lua_setfield ( L, -2, "_luagc_count" );
 	
-	count = MOAIGfxMgrGL::Get ().GetTextureMemoryUsage ();
+	count = MOAIGfxMgr::Get ().GetTextureMemoryUsage ();
 	lua_pushnumber ( L, count / divisor );
 	lua_setfield ( L, -2, "texture" );
 	total += count;
@@ -285,7 +285,7 @@ int MOAISim::_getMemoryUsage ( lua_State* L ) {
 int MOAISim::_getMemoryUsagePlain ( lua_State *L ) {
 	
 	size_t lua = MOAILuaRuntime::Get().GetMemoryUsage ();
-	size_t tex = MOAIGfxMgrGL::Get ().GetTextureMemoryUsage ();
+	size_t tex = MOAIGfxMgr::Get ().GetTextureMemoryUsage ();
 	
 	lua_pushnumber ( L, ( lua_Number )lua );
 	lua_pushnumber ( L, ( lua_Number )tex );
@@ -306,14 +306,14 @@ int MOAISim::_getMemoryUsagePlain ( lua_State *L ) {
 */
 int MOAISim::_getPerformance ( lua_State* L ) {
 
-	MOAISim& device = MOAISim::Get ();
-	MOAIRenderMgr& renderMgr = MOAIRenderMgr::Get ();
+	MOAISim& sim = MOAISim::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	lua_pushnumber ( L, device.mFrameRate );
-	lua_pushnumber ( L, device.mLastActionTreeTime );
-	lua_pushnumber ( L, device.mLastNodeMgrTime );
-	lua_pushnumber ( L, device.mSimDuration );
-	lua_pushnumber ( L, renderMgr.GetRenderDuration ());
+	lua_pushnumber ( L, sim.mFrameRate );
+	lua_pushnumber ( L, sim.mLastActionTreeTime );
+	lua_pushnumber ( L, sim.mLastNodeMgrTime );
+	lua_pushnumber ( L, sim.mSimDuration );
+	lua_pushnumber ( L, gfxMgr.GetRenderDuration ());
 
 	return 5;
 }
@@ -371,7 +371,7 @@ int MOAISim::_hideCursor ( lua_State* L ) {
 */
 int MOAISim::_openWindow ( lua_State* L ) {
 	
-	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
 	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "SNN" )) return 0;
@@ -382,7 +382,9 @@ int MOAISim::_openWindow ( lua_State* L ) {
 
 	OpenWindowFunc openWindow = MOAISim::Get ().GetOpenWindowFunc ();
 	if ( openWindow ) {
-		MOAIGfxMgrGL::Get ().SetBufferSize ( width, height );
+		MOAIFrameBuffer* buffer = gfxMgr.GetDefaultFrameBuffer ();
+		assert ( buffer );
+		buffer->SetBufferSize ( width, height );
 		openWindow ( title, width, height );
 	}
 
@@ -690,7 +692,7 @@ int MOAISim::_timeToFrames ( lua_State* L ) {
 		@text	Alias for MOAIRenderMgr.pushRenderPass (). THIS METHOD
 				IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
 
-		@in		MOAIAbstractDrawable renderable
+		@in		MOAIDrawable renderable
 		@out	nil
 	*/
 	int MOAISim::_pushRenderPass ( lua_State* L ) {
@@ -701,7 +703,7 @@ int MOAISim::_timeToFrames ( lua_State* L ) {
 		@text	Alias for MOAIRenderMgr.removeRenderPass (). THIS METHOD
 				IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
 
-		@in		MOAIAbstractDrawable renderable
+		@in		MOAIDrawable renderable
 		@out	nil
 	*/
 	int MOAISim::_removeRenderPass ( lua_State* L ) {

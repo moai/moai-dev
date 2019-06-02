@@ -70,8 +70,8 @@ public:
 	GET_CONST ( u32, Width, mWidth )
 	GET_CONST ( u32, Height, mHeight )
 	
-	GET_CONST ( void*, Bitmap, mBitmap.GetBuffer ())
-	GET_CONST ( void*, Palette, mPalette.GetBuffer ())
+	GET_CONST ( void*, Bitmap, mBitmap.GetConstBuffer ())
+	GET_CONST ( void*, Palette, mPalette.GetConstBuffer ())
 	
 	GET ( ZLCopyOnWrite, BitmapCow, mBitmap )
 	GET ( ZLCopyOnWrite, PaletteCow, mPalette )

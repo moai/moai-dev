@@ -2,9 +2,12 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx/host-gl.h>
 #include <moai-sim/host.h>
 #include <moai-sim/headers.h>
+
+#define MOAI_WITH_OPENGL
+#include <moai-gfx-gl/headers.h>
+#include <moai-gfx-gl/host.h>
 
 //================================================================//
 // aku
@@ -69,8 +72,8 @@ void AKUDisplayListProcess ( int list ) {
 //----------------------------------------------------------------//
 void AKUDisplayListPublishAndReset () {
 
-	MOAIGfxMgrGL::Get ().PublishAndReset ( MOAIGfxPipelineClerkGL::LOADING_PIPELINE );
-	MOAIGfxMgrGL::Get ().PublishAndReset ( MOAIGfxPipelineClerkGL::DRAWING_PIPELINE );
+	MOAIGfxMgrGL::Get ().PublishAndReset ( MOAIGfxMgrGL::LOADING_PIPELINE );
+	MOAIGfxMgrGL::Get ().PublishAndReset ( MOAIGfxMgrGL::DRAWING_PIPELINE );
 }
 
 //----------------------------------------------------------------//
@@ -177,7 +180,7 @@ void AKUPause ( bool pause ) {
 //----------------------------------------------------------------//
 void AKURender () {
 
-	MOAIRenderMgr::Get ().Render ();
+	MOAIGfxMgr::Get ().Render ();
 }
 
 //----------------------------------------------------------------//
@@ -327,7 +330,7 @@ void AKUSetInputTimestamp ( double timestamp ) {
 //----------------------------------------------------------------//
 void AKUSetOrientation ( int orientation ) {
 
-	MOAIGfxMgrGL::Get ().GetDefaultFrameBuffer ()->SetLandscape ( orientation == AKU_ORIENTATION_LANDSCAPE );
+	MOAIGfxMgr::Get ().GetDefaultFrameBuffer ()->SetLandscape ( orientation == AKU_ORIENTATION_LANDSCAPE );
 }
 
 //----------------------------------------------------------------//	
@@ -346,17 +349,17 @@ void AKUSetScreenSize ( int width, int height) {
 //----------------------------------------------------------------//
 void AKUSetViewSize ( int width, int height ) {
 	
-	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
 	u32 currentWidth = gfxMgr.GetBufferWidth ();
 	u32 currentHeight = gfxMgr.GetBufferHeight ();
 	
 	if (( currentWidth != ( u32 )width ) || ( currentHeight != ( u32 )height )) {
 	
-		gfxMgr.SetBufferSize ( width, height );
+		gfxMgr.GetDefaultFrameBuffer ()->SetBufferSize ( width, height );
 		
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		if ( gfxMgr.PushListener ( MOAIGfxMgrGL::EVENT_RESIZE, state )) {
+		if ( gfxMgr.PushListener ( MOAIGfxMgr::EVENT_RESIZE, state )) {
 			lua_pushnumber ( state, width );
 			lua_pushnumber ( state, height );
 			state.DebugCall ( 2, 0 );
@@ -397,7 +400,6 @@ void AKUSimContextInitialize () {
 	MOAIPartitionResultMgr::Affirm ();
 	MOAIInputMgr::Affirm ();
 	MOAISim::Affirm ();
-	MOAIRenderMgr::Affirm ();
 	
 	MOAIEaseType::Affirm ();
 	MOAIGeometryWriter::Affirm ();
@@ -468,7 +470,6 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIPointerSensor )
 	REGISTER_LUA_CLASS ( MOAIProjectionProp )
 	REGISTER_LUA_CLASS ( MOAIRegion )
-	REGISTER_LUA_CLASS ( MOAIRenderMgr )
 	REGISTER_LUA_CLASS ( MOAIScissorRect )
 	REGISTER_LUA_CLASS ( MOAIScriptNode )
 	REGISTER_LUA_CLASS ( MOAISelectionMesh )

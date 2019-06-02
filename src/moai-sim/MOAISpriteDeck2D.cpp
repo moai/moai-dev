@@ -406,7 +406,7 @@ MOAIDeck* MOAISpriteDeck2D::AffirmDeck ( MOAILuaState& state, int idx ) {
 	MOAIDeck* deck = state.GetLuaObject < MOAIDeck >( idx, false );
 	if ( deck ) return deck;
 	
-	ZLAbstractTexture* texture = MOAIAbstractGfxMgr::Get ().AffirmTexture ( state, idx );
+	MOAITexture* texture = MOAIGfxMgr::Get ().AffirmTexture ( state, idx );
 		
 	if ( texture ) {
 		
@@ -657,11 +657,11 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 
 	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
 
-	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	MOAIQuadBrush::BindVertexFormat ();
 	
-	gfxMgr.SetVertexTransform ( ZLGfxMgrGL::MODEL_TO_DISPLAY_MTX );
-	gfxMgr.SetUVTransform ( ZLGfxMgrGL::UV_TO_MODEL_MTX );
+	gfxMgr.SetVertexTransform ( MOAIGfxMgr::MODEL_TO_DISPLAY_MTX );
+	gfxMgr.SetUVTransform ( MOAIGfxMgr::UV_TO_MODEL_MTX );
 
 	ZLSize totalSprites			= this->mSprites.Size ();
 	ZLSize totalSpriteLists		= this->mSpriteLists.Size ();
@@ -700,7 +700,7 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 					
 					materialStack.Pop ();
 					materialStack.Push ( spriteMaterial );
-					materialStack.SetShader ( MOAIShaderMgrGL::DECK2D_SHADER );
+					materialStack.SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
 					materialStack.LoadGfxState ();
 				}
 			}
@@ -741,7 +741,7 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 		}
 		
 		materialStack.Push ( material );
-		materialStack.SetShader ( MOAIShaderMgrGL::DECK2D_SHADER );
+		materialStack.SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
 		materialStack.LoadGfxState ();
 		
 		quadBrush.Draw ();

@@ -23,24 +23,6 @@ MOAIGfxMgrGL_VertexCacheGL::~MOAIGfxMgrGL_VertexCacheGL () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrGL_VertexCacheGL::MOAIGfxMgr_VertexCache_AffirmBuffers () {
-
-	if ( !this->mVtxBuffer ) {
-
-		this->mVtxBuffer = new MOAIVertexBufferGL ();
-		this->mVtxBuffer->SetGfxMgr ( this->GetGfxMgrGL ());
-		
-		this->mIdxBuffer = new MOAIIndexBufferGL ();
-		this->mIdxBuffer->SetGfxMgr ( this->GetGfxMgrGL ());
-		
-		this->mIdxBuffer->SetIndexSize ( INDEX_SIZE );
-
-		this->mVtxBuffer->Reserve ( DEFAULT_VERTEX_BUFFER_SIZE );
-		this->mIdxBuffer->Reserve ( DEFAULT_INDEX_BUFFER_SIZE );
-	}
-}
-
-//----------------------------------------------------------------//
 bool MOAIGfxMgrGL_VertexCacheGL::MOAIGfxMgr_VertexCache_BeginPrim ( u32 primType, u32 vtxCount, u32 idxCount ) {
 	
 	MOAIGfxMgrGL_GPUCacheGL& gpuCache = this->GetGPUCacheGL ();
@@ -112,9 +94,11 @@ void MOAIGfxMgrGL_VertexCacheGL::MOAIGfxMgr_VertexCache_FlushToGPU () {
 			// it's OK to leave these; will get set back to zero for the next cached prim.
 			// setting back to zero won't trigger a redraw, since the vertex prim cache will be empty.
 			if ( this->mUseIdxBuffer ) {
-				gpuCache.FlushIndexBuffer ( this->mIdxBuffer );
+				MOAIIndexBufferGL* idxBuffer = MOAICastAssert < MOAIIndexBufferGL >(( MOAIIndexBuffer* )this->mIdxBuffer );
+				gpuCache.FlushIndexBuffer ( idxBuffer );
 			}
-			gpuCache.FlushVertexBuffer ( this->mVtxBuffer );
+			MOAIVertexBufferGL* vtxBuffer = MOAICastAssert < MOAIVertexBufferGL >(( MOAIVertexBuffer* )this->mVtxBuffer );
+			gpuCache.FlushVertexBuffer ( vtxBuffer );
 			
 			gpuCache.DrawPrims ( this->mPrimType, offset, count );
 		}

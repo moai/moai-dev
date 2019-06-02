@@ -4,7 +4,7 @@
 #ifndef	MOAITEXTUREGL_H
 #define	MOAITEXTUREGL_H
 
-#include <moai-gfx-gl/MOAIAbstractGfxResourceGL.h>
+#include <moai-gfx-gl/MOAIGfxResourceGL.h>
 
 class ZLImage;
 
@@ -23,39 +23,17 @@ class ZLImage;
 */
 class MOAITextureGL :
 	public virtual MOAITexture,
-	public virtual MOAIAbstractGfxResourceGL {
+	public virtual MOAIGfxResourceGL {
 protected:
 
 	friend class MOAIGfxMgrGL_GPUCacheGL;
 	friend class ZLTextureFormat;
 
-	// debug name for memory use reporting
-	STLString			mDebugName;
-
 	// GL texture
 	ZLGfxHandle			mGLTexture;
 	
-	// size of the original texture
-	u32					mWidth;
-	u32					mHeight;
-
-	// GL_LINEAR
-	// GL_LINEAR_MIPMAP_LINEAR
-	// GL_LINEAR_MIPMAP_NEAREST
-	// GL_NEAREST
-	// GL_NEAREST_MIPMAP_LINEAR
-	// GL_NEAREST_MIPMAP_NEAREST
-	int					mMinFilter;
-	int					mMagFilter;
-	
-	// GL_CLAMP_TO_EDGE
-	// GL_REPEAT
-	int					mWrap;
-	
 	int					mGLInternalFormat;
 	int					mGLPixelType;
-	
-	size_t				mTextureSize;
 
 	//----------------------------------------------------------------//
 	static int			_getSize										( lua_State* L );
@@ -72,19 +50,16 @@ protected:
 	bool				UpdateTextureFromImage							( ZLImage& image, ZLIntRect rect );
 	
 	//----------------------------------------------------------------//
-	bool				ZLAbstractGfxResource_OnCPUCreate				();
-	void				ZLAbstractGfxResource_OnCPUDestroy				();
-	void				ZLAbstractGfxResource_OnGPUBind					();
-	void				ZLAbstractGfxResource_OnGPUDeleteOrDiscard		( bool shouldDelete );
-	void				ZLAbstractGfxResource_OnGPUUnbind				();
-	bool				ZLAbstractGfxResource_OnGPUUpdate				();
-	u32					MOAITexture_GetHeight							() const;
-	u32					MOAITexture_GetWidth							() const;
-	void				ZLGfxListener_OnGfxEvent						( u32 event, void* userdata );
+	bool				MOAIGfxResource_OnCPUCreate					();
+	void				MOAIGfxResource_OnCPUPurgeRecoverable		();
+	void				MOAIGfxResourceGL_OnGPUBind					();
+	void				MOAIGfxResourceGL_OnGPUDeleteOrDiscard		( bool shouldDelete );
+	void				MOAIGfxResourceGL_OnGPUUnbind				();
+	bool				MOAIGfxResourceGL_OnGPUUpdate				();
+	void				ZLGfxListener_OnGfxEvent					( u32 event, void* userdata );
 	
 public:
 	
-	GET_SET ( cc8*, DebugName, mDebugName );
 	GET_CONST ( ZLGfxHandle&, GLTexture, mGLTexture );
 
 	//----------------------------------------------------------------//
@@ -93,9 +68,6 @@ public:
 						~MOAITextureGL				();
 	void				RegisterLuaClass			( MOAILuaState& state );
 	void				RegisterLuaFuncs			( MOAILuaState& state );
-	void				SetFilter					( int filter );
-	void				SetFilter					( int min, int mag );
-	void				SetWrap						( int wrap );
 };
 
 #endif

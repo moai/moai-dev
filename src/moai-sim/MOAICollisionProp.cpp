@@ -213,7 +213,7 @@ MOAICollisionProp::MOAICollisionProp () :
 
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIAbstractProp )
-		RTTI_EXTEND ( MOAIAbstractDrawable )
+		RTTI_EXTEND ( MOAIDrawable )
 		RTTI_EXTEND ( MOAIDeckHolderWithIndex )
 	RTTI_END
 	
@@ -473,18 +473,18 @@ void MOAICollisionProp::SerializeOut ( MOAILuaState& state, MOAISerializer& seri
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAICollisionProp::MOAIAbstractDrawable_Draw ( int subPrimID ) {
+void MOAICollisionProp::MOAIDrawable_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionProp::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
+void MOAICollisionProp::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAICollisionProp >())) return;
 
-	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
@@ -492,7 +492,7 @@ void MOAICollisionProp::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 	draw.Bind ();
 
 	if ( debugLines.Bind ( MOAICollisionProp::DEBUG_DRAW_COLLISION_WORLD_BOUNDS )) {
-		gfxMgr.SetVertexTransform ( ZLGfxMgrGL::WORLD_TO_CLIP_MTX );
+		gfxMgr.SetVertexTransform ( MOAIGfxMgr::WORLD_TO_CLIP_MTX );
 		draw.DrawBoxOutline ( this->GetWorldBounds ().mAABB );
 	}
 	
@@ -500,7 +500,7 @@ void MOAICollisionProp::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 		
 	if ( shape ) {
 		const ZLAffine3D& localToWorldMtx = this->GetLocalToWorldMtx ();
-		gfxMgr.SetMtx ( ZLGfxMgrGL::MODEL_TO_WORLD_MTX, localToWorldMtx );
+		gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX, localToWorldMtx );
 		shape->Draw ( localToWorldMtx );
 	}
 
@@ -531,18 +531,18 @@ void MOAICollisionProp::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 		
 		if ( shape ) {
 			const ZLAffine3D& localToWorldMtx = this->GetLocalToWorldMtx ();
-			gfxMgr.SetMtx ( ZLGfxMgrGL::MODEL_TO_WORLD_MTX, localToWorldMtx );
+			gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX, localToWorldMtx );
 			shape->Draw ( localToWorldMtx );
 		}
 		else {
-			gfxMgr.SetVertexTransform ( ZLGfxMgrGL::WORLD_TO_CLIP_MTX );
+			gfxMgr.SetVertexTransform ( MOAIGfxMgr::WORLD_TO_CLIP_MTX );
 			draw.DrawBoxOutline ( this->GetWorldBounds ().mAABB );
 		}
 	}
 	
 	if ( debugLines.Bind ( MOAICollisionProp::DEBUG_DRAW_COLLISION_OVERLAPS )) {
 	
-		gfxMgr.SetVertexTransform ( ZLGfxMgrGL::WORLD_TO_CLIP_MTX );
+		gfxMgr.SetVertexTransform ( MOAIGfxMgr::WORLD_TO_CLIP_MTX );
 
 		MOAIPropOverlapLink* overlapLinkIt = this->mOverlapLinks;
 		for ( ; overlapLinkIt; overlapLinkIt = overlapLinkIt->mNext ) {

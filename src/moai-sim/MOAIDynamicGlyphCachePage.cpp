@@ -21,7 +21,7 @@ void MOAIDynamicGlyphCachePage::AffirmCanvas ( MOAIDynamicGlyphCache& owner, MOA
 		STLString debugName;
 		debugName.write ( "page %d - %s (%p)", ZLIndexOp::ToInt ( this->mPageID ), font.GetFilename (), &font );
 		
-		this->mImageTexture = new MOAIImageTextureGL ();
+		this->mImageTexture = MOAIGfxMgr::Get ().CreateImageTexture ();
 		this->mImageTexture->Init ( MAX_TEXTURE_SIZE, ( u32 )this->mRows.mSize, owner.mColorFormat, MOAIImage::TRUECOLOR );
 		this->mImageTexture->SetDebugName ( debugName );
 		this->mImageTexture->SetFilter ( font.GetMinFilter (), font.GetMagFilter ());
@@ -107,7 +107,7 @@ MOAIDynamicGlyphCachePage::RowSpan* MOAIDynamicGlyphCachePage::AllocRow ( u32 he
 		
 	// if alloc succeeded, initialize the new row
 	if ( rowIt ) {
-		//u32 maxTextureSize = MOAIGfxMgrGL::Get ().GetMaxTextureSize ();
+		//u32 maxTextureSize = MOAIGfxMgr::Get ().GetMaxTextureSize ();
 		u32 maxTextureSize = MAX_TEXTURE_SIZE;
 		rowIt->mData.Expand ( maxTextureSize );
 	}
@@ -127,7 +127,7 @@ void MOAIDynamicGlyphCachePage::Clear ( MOAIDynamicGlyphCache& owner ) {
 //----------------------------------------------------------------//
 bool MOAIDynamicGlyphCachePage::ExpandToNextPowerofTwo () {
 
-	//u32 maxTextureSize = MOAIGfxMgrGL::Get ().GetMaxTextureSize ();
+	//u32 maxTextureSize = MOAIGfxMgr::Get ().GetMaxTextureSize ();
 	u32 maxTextureSize = MAX_TEXTURE_SIZE;
 	if ( this->mRows.mSize >= maxTextureSize ) return false;
 	

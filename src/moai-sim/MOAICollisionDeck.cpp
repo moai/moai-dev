@@ -173,13 +173,13 @@ void MOAICollisionDeck::MOAIDeck_Draw ( ZLIndex idx ) {
 //		idx = idx - 1;
 //		u32 itemIdx = idx % size;
 //
-//		if ( !this->LoadGfxState ( materials, this->mMaterialIDs [ itemIdx ], idx, MOAIShaderMgrGL::DECK2D_SHADER )) return;
+//		if ( !this->LoadGfxState ( materials, this->mMaterialIDs [ itemIdx ], idx, MOAIShaderPresetEnum::DECK2D_SHADER )) return;
 //
-//		MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
+//		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 //		MOAIQuadBrush::BindVertexFormat ();
 //		
-//		gfxState.SetVertexTransform ( ZLGfxMgrGL::MODEL_TO_CLIP_MTX );
-//		gfxState.SetUVTransform ( ZLGfxMgrGL::UV_TO_MODEL_MTX );
+//		gfxState.SetVertexTransform ( MOAIGfxMgr::MODEL_TO_CLIP_MTX );
+//		gfxState.SetUVTransform ( MOAIGfxMgr::UV_TO_MODEL_MTX );
 //		
 //		this->mQuads [ itemIdx ].Draw ( offset.mX, offset.mY, offset.mZ, scale.mX, scale.mY  );
 //	}

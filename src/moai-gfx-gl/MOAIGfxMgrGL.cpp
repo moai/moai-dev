@@ -5,10 +5,14 @@
 
 #include <moai-gfx-gl/MOAIFrameBufferGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL.h>
+#include <moai-gfx-gl/MOAIImageTextureGL.h>
+#include <moai-gfx-gl/MOAIIndexBufferGL.h>
 #include <moai-gfx-gl/MOAIShaderGL.h>
 #include <moai-gfx-gl/MOAIShaderMgrGL.h>
 #include <moai-gfx-gl/MOAITexture2DGL.h>
-#include <moai-gfx-gl/MOAITextureGL.h>
+#include <moai-gfx-gl/MOAIVertexArrayGL.h>
+#include <moai-gfx-gl/MOAIVertexBufferGL.h>
+#include <moai-gfx-gl/MOAIVertexFormatMgrGL.h>
 
 //================================================================//
 // local
@@ -175,86 +179,6 @@ void MOAIGfxMgrGL::FinishFrame () {
 }
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxMgrGL::GetNormToWndMtx () {
-
-	return this->GetNormToWndMtx ( this->GetViewRect ());
-}
-
-//----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxMgrGL::GetNormToWndMtx ( const ZLRect& wndRect ) {
-
-	float hWidth = wndRect.Width () * 0.5f;
-	float hHeight = wndRect.Height () * 0.5f;
-
-	// Wnd
-	ZLMatrix4x4 normToWnd;
-	normToWnd.Scale ( hWidth, -hHeight, 1.0f );
-	
-	ZLMatrix4x4 mtx;
-	mtx.Translate ( hWidth + wndRect.mXMin, hHeight + wndRect.mYMin, 0.0f );
-	normToWnd.Append ( mtx );
-	
-	return normToWnd;
-}
-
-//----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxMgrGL::GetWorldToWndMtx () {
-
-	return this->GetWorldToWndMtx ( this->GetViewRect ());
-}
-
-//----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxMgrGL::GetWorldToWndMtx ( const ZLRect& wndRect ) {
-
-	ZLMatrix4x4 worldToWnd = this->GetMtx ( WORLD_TO_CLIP_MTX );
-	worldToWnd.Append ( this->GetNormToWndMtx ( wndRect ));
-	
-	return worldToWnd;
-}
-
-//----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxMgrGL::GetWndToNormMtx () {
-
-	return this->GetWndToNormMtx ( this->GetViewRect ());
-}
-
-//----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxMgrGL::GetWndToNormMtx ( const ZLRect& wndRect ) {
-
-	float hWidth = wndRect.Width () * 0.5f;
-	float hHeight = wndRect.Height () * 0.5f;
-
-	// Inv Wnd
-	ZLMatrix4x4 wndToNorm;
-	wndToNorm.Translate ( -hWidth - wndRect.mXMin, -hHeight - wndRect.mYMin, 0.0f );
-	
-	ZLMatrix4x4 mtx;
-	mtx.Scale (( 1.0f / hWidth ), -( 1.0f / hHeight ), 1.0f );
-	wndToNorm.Append ( mtx );
-	
-	return wndToNorm;
-}
-
-//----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxMgrGL::GetWndToWorldMtx () {
-
-	return this->GetWndToWorldMtx ( this->GetViewRect ());
-}
-
-//----------------------------------------------------------------//
-ZLMatrix4x4 MOAIGfxMgrGL::GetWndToWorldMtx ( const ZLRect& wndRect ) {
-
-	ZLMatrix4x4 wndToWorld = this->GetWndToNormMtx ( wndRect );
-	
-	// inv viewproj
-	ZLMatrix4x4 mtx = this->GetMtx ( WORLD_TO_CLIP_MTX );
-	mtx.Inverse ();
-	wndToWorld.Append ( mtx );
-	
-	return wndToWorld;
-}
-
-//----------------------------------------------------------------//
 u32 MOAIGfxMgrGL::LogErrors () {
 
 	// TODO: ZLGfx
@@ -317,35 +241,6 @@ void MOAIGfxMgrGL::OnGlobalsInitialize () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrGL::PopState () {
-
-	assert ( this->mStateStackTop > 0 );
-	
-	this->FlushToGPU ();
-	
-	MOAIGfxStateFrameGL* frame = this->mStateStack [ --this->mStateStackTop ];
-	
-	this->RestoreCPUState ( *frame );
-	this->RestoreGPUState ( *frame );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrGL::PushState () {
-
-	this->FlushToGPU ();
-
-	this->mStateStack.Grow (( ZLSize )this->mStateStackTop + 1, 0 );
-	if ( !this->mStateStack [ this->mStateStackTop ]) {
-		this->mStateStack [ this->mStateStackTop ] = new MOAIGfxStateFrameGL ();
-	}
-	
-	MOAIGfxStateFrameGL* frame = this->mStateStack [ this->mStateStackTop++ ];
-	
-	this->StoreCPUState ( *frame );
-	this->StoreGPUState ( *frame );
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxMgrGL::RegisterLuaClass ( MOAILuaState& state ) {
 
 	state.SetField ( -1, "EVENT_RESIZE",	( u32 )EVENT_RESIZE );
@@ -398,31 +293,17 @@ void MOAIGfxMgrGL::ResetDrawCount () {
 	//this->mDrawCount = 0;
 }
 
-//----------------------------------------------------------------//
-void MOAIGfxMgrGL::SetBufferScale ( float scale ) {
-
-	MOAICast < MOAIFrameBufferGL >( this->GetDefaultFrameBuffer ())->SetBufferScale ( scale );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrGL::SetBufferSize ( u32 width, u32 height ) {
-
-	MOAIFrameBufferGL* defaultFrameBuffer = MOAICast < MOAIFrameBufferGL >( this->GetDefaultFrameBuffer ());
-	assert ( defaultFrameBuffer );
-	defaultFrameBuffer->SetBufferSize ( width, height );
-}
-
 //================================================================//
 // overrides
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIShader* MOAIGfxMgrGL::MOAIAbstractGfxMgr_AffirmShader ( MOAILuaState& state, int idx ) const {
+MOAIShader* MOAIGfxMgrGL::MOAIGfxMgr_AffirmShader ( MOAILuaState& state, int idx ) const {
 
 	MOAIShaderGL* shader = 0;
 
 	if ( state.IsType ( idx, LUA_TNUMBER )) {
-		shader = MOAIShaderMgrGL::Get ().GetShader ( state.GetValue < u32 >( idx, MOAIShaderMgrGL::UNKNOWN_SHADER ));
+		shader = MOAIShaderMgrGL::Get ().GetShader (( MOAIShaderPresetEnum )state.GetValue < u32 >( idx, ( u32 )MOAIShaderPresetEnum::UNKNOWN_SHADER ));
 	}
 	else {
 		shader = state.GetLuaObject < MOAIShaderGL >( idx, true );
@@ -431,7 +312,7 @@ MOAIShader* MOAIGfxMgrGL::MOAIAbstractGfxMgr_AffirmShader ( MOAILuaState& state,
 }
 
 //----------------------------------------------------------------//
-MOAITexture* MOAIGfxMgrGL::MOAIAbstractGfxMgr_AffirmTexture ( MOAILuaState& state, int idx ) const {
+MOAITexture* MOAIGfxMgrGL::MOAIGfxMgr_AffirmTexture ( MOAILuaState& state, int idx ) const {
 
 	MOAITextureGL* textureBase = 0;
 	
@@ -445,6 +326,83 @@ MOAITexture* MOAIGfxMgrGL::MOAIAbstractGfxMgr_AffirmTexture ( MOAILuaState& stat
 		texture = 0;
 	}
 	return texture;
+}
+
+//----------------------------------------------------------------//
+MOAIImageTexture* MOAIGfxMgrGL::MOAIGfxMgr_CreateImageTexture () const {
+
+	return new MOAIImageTextureGL ();
+}
+
+//----------------------------------------------------------------//
+MOAIIndexBuffer* MOAIGfxMgrGL::MOAIGfxMgr_CreateIndexBuffer () const {
+
+	return new MOAIIndexBufferGL ();
+}
+
+//----------------------------------------------------------------//
+MOAITexture2D* MOAIGfxMgrGL::MOAIGfxMgr_CreateTexture2D () const {
+
+	return new MOAITexture2DGL ();
+}
+
+//----------------------------------------------------------------//
+MOAIVertexArray* MOAIGfxMgrGL::MOAIGfxMgr_CreateVertexArray () const {
+
+	return new MOAIVertexArrayGL ();
+}
+
+//----------------------------------------------------------------//
+MOAIVertexBuffer* MOAIGfxMgrGL::MOAIGfxMgr_CreateVertexBuffer () const {
+
+	return new MOAIVertexBufferGL ();
+}
+
+//----------------------------------------------------------------//
+MOAIShader* MOAIGfxMgrGL::MOAIGfxMgr_GetShaderPreset ( MOAIShaderPresetEnum preset ) const {
+
+	return MOAIShaderMgrGL::Get ().GetShader ( preset );
+}
+
+//----------------------------------------------------------------//
+size_t MOAIGfxMgrGL::MOAIGfxMgr_GetTextureMemoryUsage () const {
+
+	return this->mTextureMemoryUsage;
+}
+
+//----------------------------------------------------------------//
+MOAIVertexFormat* MOAIGfxMgrGL::MOAIGfxMgr_GetVertexFormatPreset ( MOAIVertexFormatPresetEnum preset ) const {
+
+	return MOAIVertexFormatMgrGL::Get ().GetFormat ( preset );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxMgrGL::MOAIGfxMgr_PopState () {
+
+	assert ( this->mStateStackTop > 0 );
+	
+	this->FlushToGPU ();
+	
+	MOAIGfxStateFrameGL* frame = this->mStateStack [ --this->mStateStackTop ];
+	
+	this->RestoreCPUState ( *frame );
+	this->RestoreGPUState ( *frame );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxMgrGL::MOAIGfxMgr_PushState () {
+
+	this->FlushToGPU ();
+
+	this->mStateStack.Grow (( ZLSize )this->mStateStackTop + 1, 0 );
+	if ( !this->mStateStack [ this->mStateStackTop ]) {
+		this->mStateStack [ this->mStateStackTop ] = new MOAIGfxStateFrameGL ();
+	}
+	
+	MOAIGfxStateFrameGL* frame = this->mStateStack [ this->mStateStackTop++ ];
+	
+	this->StoreCPUState ( *frame );
+	this->StoreGPUState ( *frame );
 }
 
 //----------------------------------------------------------------//

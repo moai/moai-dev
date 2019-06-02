@@ -15,33 +15,14 @@ class ZLTextureFormat;
 	@text	Texture class.
 */
 class MOAITexture2DGL :
+	public virtual MOAITexture2D,
 	public virtual MOAITextureGL {
 protected:
 
-	// for loading from file
-	STLString			mFilename;
-	u32					mTransform;
-	
-	// for loading from image
-	ZLImage* 			mImage;
-	
-	// for loading compressed data
-	void*				mTextureData;
-	size_t				mTextureDataSize;
-	ZLTextureFormat*	mTextureDataFormat;
-
 	//----------------------------------------------------------------//
-	static int			_load						( lua_State* L );
-
-	//----------------------------------------------------------------//
-	void				ClearImage					();
-	void				CopyImage					( const ZLImage& image );
-	bool				LoadFromStream				( ZLStream& stream, u32 transform );
-	
-	//----------------------------------------------------------------//
-	bool				ZLAbstractGfxResource_OnCPUCreate				();
-	void				ZLAbstractGfxResource_OnCPUDestroy				();
-	bool				ZLAbstractGfxResource_OnGPUCreate				();
+	bool				MOAIGfxResource_OnCPUCreate 			();
+	void				MOAIGfxResource_OnCPUPurgeRecoverable 	();
+	bool				MOAIGfxResourceGL_OnGPUCreate			();
 
 public:
 		
@@ -50,20 +31,10 @@ public:
 	DECL_LUA_FACTORY ( MOAITexture2DGL )
 	
 	//----------------------------------------------------------------//
-	void				Clear					();
-	void				Init					( const ZLImage& image, cc8* debugname );
-	void				Init					( const ZLImage& image, int srcX, int srcY, int width, int height, cc8* debugname );
-	void				Init					( cc8* filename, u32 transform, cc8* debugname = NULL );
-	void				Init					( ZLStream& stream, u32 transform, cc8* debugname );
-	void				Init					( const void* data, size_t size, u32 transform, cc8* debugname );
-	bool				Init					( MOAILuaState& state, int idx );
-	void				Init					( MOAIDataBuffer& data, u32 transform, cc8* debugname );
 						MOAITexture2DGL			();
 						~MOAITexture2DGL		();
 	void				RegisterLuaClass		( MOAILuaState& state );
 	void				RegisterLuaFuncs		( MOAILuaState& state );
-	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
-	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

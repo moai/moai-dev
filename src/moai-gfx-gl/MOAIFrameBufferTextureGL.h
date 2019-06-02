@@ -27,10 +27,10 @@ private:
 	static int			_init					( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void				ZLAbstractGfxResource_OnGPUBind					();
-	bool				ZLAbstractGfxResource_OnGPUCreate				();
-	void				ZLAbstractGfxResource_OnGPUDeleteOrDiscard		( bool shouldDelete );
-	void				ZLFrameBuffer_AffirmBuffers						();
+	void				MOAIGfxResourceGL_OnGPUBind					();
+	bool				MOAIGfxResourceGL_OnGPUCreate				();
+	void				MOAIGfxResourceGL_OnGPUDeleteOrDiscard		( bool shouldDelete );
+	void				ZLFrameBuffer_AffirmBuffers					();
 
 public:
 	

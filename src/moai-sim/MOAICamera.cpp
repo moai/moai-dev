@@ -319,7 +319,7 @@ void MOAICamera::DrawDebug () {
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAICamera >())) return;
 	
-	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
@@ -329,7 +329,7 @@ void MOAICamera::DrawDebug () {
 	ZLRect viewRect = gfxMgr.GetViewRect ();
 	//float aspect = viewRect.Width () / viewRect.Height ();
 	
-	ZLMatrix4x4 mtx = gfxMgr.GetMtx ( ZLGfxMgrGL::CLIP_TO_DISPLAY_MTX );
+	ZLMatrix4x4 mtx = gfxMgr.GetMtx ( MOAIGfxMgr::CLIP_TO_DISPLAY_MTX );
 	
 	gfxMgr.SetVertexTransform ( mtx ); // draw in device space
 	

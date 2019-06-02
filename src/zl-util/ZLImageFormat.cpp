@@ -25,7 +25,7 @@ bool ZLImageFormat::CheckHeader ( const void* buffer ) {
 //----------------------------------------------------------------//
 const void* ZLImageFormat::GetBitmap ( ZLImage& image ) const {
 
-	return image.mBitmap.GetBuffer ();
+	return image.mBitmap.GetConstBuffer ();
 }
 
 //----------------------------------------------------------------//

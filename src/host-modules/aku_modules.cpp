@@ -12,6 +12,11 @@
 #include <zl-util/ZLLog.h>
 #include <zl-util/ZLResult.h>
 
+// TODO: Gfx
+#if AKU_WITH_SIM
+	#include <moai-gfx-gl/host.h>
+#endif
+
 //================================================================//
 // objc modules
 //================================================================//

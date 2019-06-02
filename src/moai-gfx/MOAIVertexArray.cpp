@@ -9,6 +9,18 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+MOAIVertexBuffer* MOAIVertexArray::GetVertexBuffer ( ZLIndex idx ) {
+
+	return MOAIVertexArray_GetVertexBuffer ( idx );
+}
+
+//----------------------------------------------------------------//
+MOAIVertexFormat* MOAIVertexArray::GetVertexFormat ( ZLIndex idx ) {
+
+	return MOAIVertexArray_GetVertexFormat ( idx );
+}
+
+//----------------------------------------------------------------//
 MOAIVertexArray::MOAIVertexArray () {
 
 	RTTI_SINGLE ( MOAILuaObject )
@@ -16,4 +28,10 @@ MOAIVertexArray::MOAIVertexArray () {
 
 //----------------------------------------------------------------//
 MOAIVertexArray::~MOAIVertexArray () {
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexArray::SetVertexBuffer ( ZLIndex idx, MOAIVertexBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat ) {
+
+	this->MOAIVertexArray_SetVertexBuffer ( idx, vtxBuffer, vtxFormat );
 }

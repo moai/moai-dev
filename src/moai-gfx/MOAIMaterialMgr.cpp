@@ -255,10 +255,9 @@ void MOAIMaterialMgr::SetLight ( u32 lightID, MOAILight* light ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialMgr::SetShader ( u32 shaderID ) {
+void MOAIMaterialMgr::SetShader ( MOAIShaderPresetEnum shaderID ) {
 
-	// TODO: gfx
-//	this->SetShader ( MOAIShaderMgrGL::Get ().GetShader ( shaderID ));
+	this->SetShader ( MOAIGfxMgr::Get ().GetShaderPreset ( shaderID ));
 }
 
 //----------------------------------------------------------------//

@@ -13,7 +13,7 @@ class MOAIShaderProgramGL;
 class MOAIVertexArrayGL;
 class MOAIVertexBufferGL;
 class MOAIVertexFormatGL;
-class MOAIAbstractGfxResourceGL;
+class MOAIGfxResourceGL;
 class MOAIVertexBufferWithFormatGL;
 class MOAITextureGL;
 
@@ -100,12 +100,12 @@ protected:
 	u32										mTextureDirtyFlags;
 	u32										mApplyingStateChanges;
 
-	MOAIGfxStateGPUCacheFrameGL*				mCurrentState;
+	MOAIGfxStateGPUCacheFrameGL*			mCurrentState;
 	MOAIGfxStateGPUCacheFrameGL				mActiveState;
 	MOAIGfxStateGPUCacheFrameGL				mPendingState;
 
 	// don't think these need to be lua shared pointers...
-	ZLStrongPtr < MOAIFrameBufferGL >			mDefaultFrameBuffer;
+	ZLStrongPtr < MOAIFrameBufferGL >		mDefaultFrameBuffer;
 	ZLStrongPtr < MOAITextureGL >			mDefaultTexture;
 
 	ZLSharedConstBuffer*					mBoundIdxBuffer;

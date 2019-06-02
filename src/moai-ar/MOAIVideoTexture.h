@@ -39,8 +39,8 @@ private:
 	void			UpdateBuffer			( void* buffer );
 
 	//----------------------------------------------------------------//
-	bool			ZLAbstractGfxResource_OnGPUCreate				();
-	bool			ZLAbstractGfxResource_OnGPUUpdate				();
+	bool			MOAIGfxResourceGL_OnGPUCreate				();
+	bool			MOAIGfxResourceGL_OnGPUUpdate				();
 
 public:
 

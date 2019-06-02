@@ -216,6 +216,18 @@ TYPE* MOAICast ( RTTIBase* object ) {
 
 //----------------------------------------------------------------//
 template < typename TYPE >
+TYPE* MOAICastAssert ( RTTIBase* object ) {
+
+	if ( object ) {
+		TYPE* cast = object->AsType < TYPE >();
+		assert ( cast );
+		return cast;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+template < typename TYPE >
 TYPE* MOAICast ( RTTIBase& object ) {
 
 	return object.AsType < TYPE >();

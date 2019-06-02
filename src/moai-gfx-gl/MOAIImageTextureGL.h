@@ -16,20 +16,13 @@
 			into GPU memory the next time the texture is bound.
 */
 class MOAIImageTextureGL :
-	public MOAIImage,
+	public MOAIImageTexture,
 	public MOAITextureGL {
 private:
 
-	ZLIntRect	mRegion;
-
 	//----------------------------------------------------------------//
-	static int		_updateRegion			( lua_State* L );
-
-	//----------------------------------------------------------------//
-	void			MOAIImage_OnImageStatusChanged			( bool isOK );
-	void			ZLAbstractGfxResource_OnClearDirty		();
-	bool			ZLAbstractGfxResource_OnGPUCreate		();
-	bool			ZLAbstractGfxResource_OnGPUUpdate		();
+	bool			MOAIGfxResourceGL_OnGPUCreate		();
+	bool			MOAIGfxResourceGL_OnGPUUpdate		();
 
 public:
 	
@@ -42,10 +35,6 @@ public:
 					~MOAIImageTextureGL		();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
-	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
-	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
-	void			UpdateRegion			();
-	void			UpdateRegion			( ZLIntRect rect );
 };
 
 #endif

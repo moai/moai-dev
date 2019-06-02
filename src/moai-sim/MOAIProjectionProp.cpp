@@ -40,7 +40,7 @@ MOAIProjectionProp::MOAIProjectionProp () :
 	mFront ( 1.0 ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIAbstractDrawable )
+		RTTI_EXTEND ( MOAIDrawable )
 		RTTI_EXTEND ( MOAIPartitionHull )
 	RTTI_END
 }
@@ -89,12 +89,12 @@ void MOAIProjectionProp::SerializeOut ( MOAILuaState& state, MOAISerializer& ser
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIProjectionProp::MOAIAbstractDrawable_Draw ( int subPrimID ) {
+void MOAIProjectionProp::MOAIDrawable_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
 }
 
 //----------------------------------------------------------------//
-void MOAIProjectionProp::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
+void MOAIProjectionProp::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	UNUSED ( subPrimID );
 	
 	if ( this->GetWorldBounds ().mStatus == ZLBounds::ZL_BOUNDS_EMPTY ) return;
@@ -103,7 +103,7 @@ void MOAIProjectionProp::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAIProjectionProp >())) return;
 	if ( !debugLines.Bind ( DEBUG_DRAW_WORLD_BOUNDS )) return;
 	
-	MOAIGfxMgrGL::Get ().SetVertexTransform ( ZLGfxMgrGL::WORLD_TO_DISPLAY_MTX );
+	MOAIGfxMgr::Get ().SetVertexTransform ( MOAIGfxMgr::WORLD_TO_DISPLAY_MTX );
 	
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008

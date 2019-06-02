@@ -4,7 +4,7 @@
 #ifndef	MOAIVERTEXBUFFERGL_H
 #define	MOAIVERTEXBUFFERGL_H
 
-#include <moai-gfx-gl/MOAIAbstractGfxBufferGL.h>
+#include <moai-gfx-gl/MOAIGfxBufferGL.h>
 
 class MOAIVertexFormatGL;
 
@@ -16,19 +16,11 @@ class MOAIVertexFormatGL;
 */
 class MOAIVertexBufferGL :
 	public virtual MOAIVertexBuffer,
-	public virtual MOAIAbstractGfxBufferGL {
+	public virtual MOAIGfxBufferGL {
 private:
 	
 	friend class MOAIGfxMgrGL_PipelineClerkGL;
 	friend class MOAIVertexBufferWithFormatGL;
-
-	//----------------------------------------------------------------//
-	static int		_computeBounds			( lua_State* L );
-	static int		_countElements			( lua_State* L );
-	static int		_printVertices			( lua_State* L );
-	
-	//----------------------------------------------------------------//
-	MOAIAbstractGfxBufferGL&		MOAIGfxBuffer_ZLGfxBuffer		();
 	
 public:
 	
@@ -37,7 +29,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIVertexBufferGL		();
 					~MOAIVertexBufferGL		();
-	void			PrintVertices			( MOAIVertexFormatGL& vertexFormat );
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );

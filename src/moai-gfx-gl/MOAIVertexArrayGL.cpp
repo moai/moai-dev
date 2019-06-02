@@ -106,25 +106,13 @@ void MOAIVertexArrayGL::BindVertexArrayItems () {
 }
 
 //----------------------------------------------------------------//
-MOAIVertexBufferGL* MOAIVertexArrayGL::GetVertexBuffer ( ZLIndex idx ) {
-
-	return idx < this->mVertexBuffers.Size () ? ( MOAIVertexBufferGL* )this->mVertexBuffers [ idx ].mBuffer : ( MOAIVertexBufferGL* )0;
-}
-
-//----------------------------------------------------------------//
-MOAIVertexFormatGL* MOAIVertexArrayGL::GetVertexFormat ( ZLIndex idx ) {
-
-	return idx < this->mVertexBuffers.Size () ? ( MOAIVertexFormatGL* )this->mVertexBuffers [ idx ].mFormat : ( MOAIVertexFormatGL* )0;
-}
-
-//----------------------------------------------------------------//
 MOAIVertexArrayGL::MOAIVertexArrayGL () :
 	mCurrentVAO ( ZLIndexOp::INVALID ),
 	mUseVAOs ( false ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIVertexArray )
-		RTTI_EXTEND ( MOAIAbstractGfxResourceGL )
+		RTTI_EXTEND ( MOAIGfxResourceGL )
 	RTTI_END
 }
 
@@ -138,13 +126,13 @@ MOAIVertexArrayGL::~MOAIVertexArrayGL () {
 //----------------------------------------------------------------//
 void MOAIVertexArrayGL::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAIVertexArray::RegisterLuaClass ( state );
-	MOAIAbstractGfxResourceGL::RegisterLuaClass ( state );
+	MOAIGfxResourceGL::RegisterLuaClass ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIVertexArrayGL::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAIVertexArray::RegisterLuaFuncs ( state );
-	MOAIAbstractGfxResourceGL::RegisterLuaFuncs ( state );
+	MOAIGfxResourceGL::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "reserveVAOs",				_reserveVAOs },
@@ -163,7 +151,7 @@ void MOAIVertexArrayGL::ReserveVAOs ( u32 total ) {
 		this->mGfxMgr->DeleteOrDiscard ( this->mVAOs [ i ], false );
 	}
 	this->mVAOs.Init ( total );
-	this->FinishInit ();
+	this->ScheduleForGPUUpdate ();
 }
 
 //----------------------------------------------------------------//
@@ -174,7 +162,7 @@ void MOAIVertexArrayGL::ReserveVertexBuffers ( u32 total ) {
 	}
 	this->mVertexBuffers.Init ( total );
 	
-	this->FinishInit ();
+	this->ScheduleForGPUUpdate ();
 }
 
 //----------------------------------------------------------------//
@@ -197,7 +185,7 @@ void MOAIVertexArrayGL::SerializeIn ( MOAILuaState& state, MOAIDeserializer& ser
 		}
 		state.Pop ();
 	}
-	this->FinishInit ();
+	this->ScheduleForGPUUpdate ();
 }
 
 //----------------------------------------------------------------//
@@ -224,15 +212,6 @@ void MOAIVertexArrayGL::SerializeOut ( MOAILuaState& state, MOAISerializer& seri
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexArrayGL::SetVertexBuffer ( ZLIndex idx, MOAIVertexBufferGL* vtxBuffer, MOAIVertexFormatGL* vtxFormat ) {
-
-	if ( this->AffirmVertexBuffers ( idx )) {
-		this->mVertexBuffers [ idx ].SetBufferAndFormat ( vtxBuffer, vtxFormat );
-		this->ScheduleForGPUUpdate ();
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIVertexArrayGL::UnbindVertexArrayItems () {
 
 	size_t totalVBOs = this->mVertexBuffers.Size ();
@@ -249,17 +228,17 @@ void MOAIVertexArrayGL::UnbindVertexArrayItems () {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIVertexArrayGL::ZLAbstractGfxResource_OnCPUCreate () {
+bool MOAIVertexArrayGL::MOAIGfxResource_OnCPUCreate () {
 
 	return true;
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexArrayGL::ZLAbstractGfxResource_OnCPUDestroy () {
+void MOAIVertexArrayGL::MOAIGfxResource_OnCPUPurgeRecoverable () {
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexArrayGL::ZLAbstractGfxResource_OnGPUBind () {
+void MOAIVertexArrayGL::MOAIGfxResourceGL_OnGPUBind () {
 
 	if ( this->mUseVAOs && this->mVAOs.Size ()) {
 		this->mGfxMgr->GetDrawingAPI ().BindVertexArray ( this->mVAOs [ this->mCurrentVAO ]);
@@ -270,7 +249,7 @@ void MOAIVertexArrayGL::ZLAbstractGfxResource_OnGPUBind () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIVertexArrayGL::ZLAbstractGfxResource_OnGPUCreate () {
+bool MOAIVertexArrayGL::MOAIGfxResourceGL_OnGPUCreate () {
 
 	this->mUseVAOs = false;
 	
@@ -288,13 +267,13 @@ bool MOAIVertexArrayGL::ZLAbstractGfxResource_OnGPUCreate () {
 	}
 	
 	this->mCurrentVAO = ZLIndexCast ( 0 );
-	this->ZLAbstractGfxResource_OnGPUUpdate ();
+	this->MOAIGfxResourceGL_OnGPUUpdate ();
 	
 	return true;
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexArrayGL::ZLAbstractGfxResource_OnGPUDeleteOrDiscard ( bool shouldDelete ) {
+void MOAIVertexArrayGL::MOAIGfxResourceGL_OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVAOs.Size (); ++i ) {
 		this->mGfxMgr->DeleteOrDiscard ( this->mVAOs [ i ], shouldDelete );
@@ -302,7 +281,7 @@ void MOAIVertexArrayGL::ZLAbstractGfxResource_OnGPUDeleteOrDiscard ( bool should
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexArrayGL::ZLAbstractGfxResource_OnGPUUnbind () {
+void MOAIVertexArrayGL::MOAIGfxResourceGL_OnGPUUnbind () {
 
 	if ( this->mUseVAOs ) {
 		this->mGfxMgr->GetDrawingAPI ().BindVertexArray ( ZLGfxResource::UNBIND );
@@ -313,7 +292,7 @@ void MOAIVertexArrayGL::ZLAbstractGfxResource_OnGPUUnbind () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIVertexArrayGL::ZLAbstractGfxResource_OnGPUUpdate () {
+bool MOAIVertexArrayGL::MOAIGfxResourceGL_OnGPUUpdate () {
 
 	if ( !this->mUseVAOs ) return true;
 	if ( !this->mVAOs.Size ()) return false;
@@ -329,4 +308,28 @@ bool MOAIVertexArrayGL::ZLAbstractGfxResource_OnGPUUpdate () {
 		return true;
 	}
 	return false;
+}
+
+//----------------------------------------------------------------//
+MOAIVertexBuffer* MOAIVertexArrayGL::MOAIVertexArray_GetVertexBuffer ( ZLIndex idx ) {
+
+	return idx < this->mVertexBuffers.Size () ? ( MOAIVertexBufferGL* )this->mVertexBuffers [ idx ].mBuffer : ( MOAIVertexBufferGL* )0;
+}
+
+//----------------------------------------------------------------//
+MOAIVertexFormat* MOAIVertexArrayGL::MOAIVertexArray_GetVertexFormat ( ZLIndex idx ) {
+
+	return idx < this->mVertexBuffers.Size () ? ( MOAIVertexFormatGL* )this->mVertexBuffers [ idx ].mFormat : ( MOAIVertexFormatGL* )0;
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexArrayGL::MOAIVertexArray_SetVertexBuffer ( ZLIndex idx, MOAIVertexBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat ) {
+
+	MOAIVertexBufferGL* vertexBufferGL = MOAICastAssert < MOAIVertexBufferGL >( vtxBuffer );
+	MOAIVertexFormatGL* vertexFormatGL = MOAICastAssert < MOAIVertexFormatGL >( vtxFormat );
+
+	if ( this->AffirmVertexBuffers ( idx )) {
+		this->mVertexBuffers [ idx ].SetBufferAndFormat ( vertexBufferGL, vertexFormatGL );
+		this->ScheduleForGPUUpdate ();
+	}
 }

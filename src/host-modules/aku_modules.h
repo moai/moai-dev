@@ -91,7 +91,7 @@
 #endif
 
 #if AKU_WITH_SIM
-	#include <moai-gfx/host-gl.h>
+	#include <moai-gfx/host.h>
 	#include <moai-sim/host.h>
 #endif
 

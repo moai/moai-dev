@@ -4,10 +4,10 @@
 #ifndef MOAIREGION_H
 #define MOAIREGION_H
 
-class MOAIIndexBufferGL;
+class MOAIIndexBuffer;
 class MOAITransform;
-class MOAIVertexBufferGL;
-class MOAIVertexFormatGL;
+class MOAIVertexBuffer;
+class MOAIVertexFormat;
 
 class SafeTesselator;
 
@@ -101,8 +101,8 @@ public:
 	ZLPolygon2D&			GetPolygon				( ZLIndex idx );
 	const ZLPolygon2D&		GetPolygon				( ZLIndex idx ) const;
 	u32						GetTriangles			( SafeTesselator& tess ) const;
-	u32						GetTriangles			( MOAIVertexFormatGL& format, ZLStream& vtxStream, ZLStream& idxStream ) const;
-	u32						GetTriangles			( MOAIVertexFormatGL& format, MOAIVertexBufferGL& vtxBuffer, MOAIIndexBufferGL& idxBuffer, u32 idxSizeInBytex ) const;
+	u32						GetTriangles			( MOAIVertexFormat& format, ZLStream& vtxStream, ZLStream& idxStream ) const;
+	u32						GetTriangles			( MOAIVertexFormat& format, MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytex ) const;
 	ZLSizeResult			GetVertices				( ZLStream& vtxStream ) const;
 							MOAIRegion				();
 							~MOAIRegion				();

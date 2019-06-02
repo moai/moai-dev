@@ -6,7 +6,7 @@
 
 #include <moai-sim/MOAIVectorTesselator.h>
 
-class MOAIVertexFormatGL;
+class MOAIVertexFormat;
 class SafeTesselator;
 
 #define MOAI_VECTOR_SHAPE_DECL_TYPE(type)	\
@@ -62,7 +62,7 @@ public:
 	
 	virtual int					Tesselate					( MOAIVectorTesselator& drawing, MOAIRegion& region, u32 flags );
 	virtual int					Tesselate					( MOAIVectorTesselator& drawing, SafeTesselator& tess, u32 flags );
-	virtual int					Tesselate					( MOAIVectorTesselator& drawing, ZLStream& vertexStream, ZLStream& indexStream, MOAIVertexFormatGL& format, u32 flags );
+	virtual int					Tesselate					( MOAIVectorTesselator& drawing, ZLStream& vertexStream, ZLStream& indexStream, MOAIVertexFormat& format, u32 flags );
 	
 	virtual void				Write						( ZLStream& stream, MOAIVectorTesselatorWriter& writer ) const = 0;
 };

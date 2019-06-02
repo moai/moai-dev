@@ -37,12 +37,12 @@ protected:
 	MOAIMesh*			mMesh;
 
 	//----------------------------------------------------------------//
-	static int			_addSelection				( lua_State* L );
-	static int			_clearSelection				( lua_State* L );
-	static int			_mergeSelection				( lua_State* L );
-	static int			_printSelection				( lua_State* L );
-	static int			_reserveSelections			( lua_State* L );
-	static int			_setMesh					( lua_State* L );
+	static int				_addSelection				( lua_State* L );
+	static int				_clearSelection				( lua_State* L );
+	static int				_mergeSelection				( lua_State* L );
+	static int				_printSelection				( lua_State* L );
+	static int				_reserveSelections			( lua_State* L );
+	static int				_setMesh					( lua_State* L );
 
 	//----------------------------------------------------------------//
 	ZLResult < ZLIndex >	AffirmSpanSet				();
@@ -53,7 +53,6 @@ protected:
 //	void					BooleanXor					( u32 set, u32 a, u32 b );
 	void					ChangeSpanSet				( MOAISelectionSpan* span, ZLIndex set );
 	void					Clear						();
-	void					DrawIndex					( ZLIndex idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale );
 	void					FixOverlaps					( MOAISelectionSpan* span );
 	void					FreeSpan					( MOAISelectionSpan* span );
 	MOAISelectionSpan*		InsertSpan					( MOAISelectionSpan* span, MOAISelectionSpan* prevInMaster, MOAISelectionSpan* prevInSet );

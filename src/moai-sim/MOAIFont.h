@@ -10,9 +10,9 @@
 class MOAIFontReader;
 class MOAIGlyph;
 class MOAIGlyphCache;
-class MOAIShaderGL;
-class MOAITextureBaseGL;
-class MOAITextureGL;
+class MOAIShader;
+class MOAITexture;
+class MOAITexture;
 
 #define DPI 72
 #define POINTS_TO_PIXELS(points,dpi) (( points * dpi ) / DPI )
@@ -70,9 +70,9 @@ protected:
 	STLString mFilename;
 	u32 mFlags;
 	
-	MOAILuaSharedPtr < MOAIFontReader > mReader;
-	MOAILuaSharedPtr < MOAIGlyphCache > mCache;
-	ZLStrongPtr < ZLAbstractShader > mShader;
+	MOAILuaSharedPtr < MOAIFontReader >		mReader;
+	MOAILuaSharedPtr < MOAIGlyphCache >		mCache;
+	ZLStrongPtr < MOAIShader >				mShader;
 	
 	// for now
 	typedef STLMap < float, MOAIGlyphSet >::iterator GlyphSetsIt;
@@ -122,7 +122,7 @@ public:
 	GET ( int, MinFilter, mMinFilter );
 	GET ( int, MagFilter, mMagFilter );
 
-	GET ( ZLAbstractShader*, Shader, mShader );
+	GET ( MOAIShader*, Shader, mShader );
 
 	GET_SET ( float, DefaultSize, mDefaultSize );
 	
@@ -140,9 +140,9 @@ public:
 	void				AffirmGlyph				( float size, u32 c );
     MOAIGlyphSet&		AffirmGlyphSet			( float size );
 	MOAIGlyphSet*		GetGlyphSet				( float size );
-	MOAITextureBaseGL*	GetGlyphTexture			( MOAIGlyph& glyph );
+	MOAITexture*		GetGlyphTexture			( MOAIGlyph& glyph );
 	void				Init					( cc8* filename );
-	void				InitWithBMFont			( cc8* filename, const u32 numPreloadedTextures, MOAITextureGL** preloadedTextures );
+	void				InitWithBMFont			( cc8* filename, const u32 numPreloadedTextures, MOAITexture** preloadedTextures );
 	static bool			IsControl				( u32 c );
 	static bool			IsWhitespace			( u32 c );
 						MOAIFont				();

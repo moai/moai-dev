@@ -7,7 +7,7 @@
 #include <moai-sim/MOAIAbstractLayer.h>
 
 class MOAIColor;
-class MOAIFrameBufferGL;
+class MOAIFrameBuffer;
 class MOAIPartition;
 
 //================================================================//
@@ -24,7 +24,7 @@ protected:
 	static int			_setRenderTable			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				MOAIAbstractDrawable_Draw		( int subPrimID );
+	void				MOAIDrawable_Draw		( int subPrimID );
 
 public:
 

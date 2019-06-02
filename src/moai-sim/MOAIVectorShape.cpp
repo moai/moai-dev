@@ -180,7 +180,7 @@ int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, SafeTesselator& 
 }
 
 //----------------------------------------------------------------//
-int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormatGL& format, u32 flags ) {
+int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format, u32 flags ) {
 	
 	ZLIndex fillExtraID		= ZLIndexCast ( this->mStyle.GetFillExtraID ());
 	ZLIndex strokeExtraID	= ZLIndexCast ( this->mStyle.GetStrokeExtraID ());

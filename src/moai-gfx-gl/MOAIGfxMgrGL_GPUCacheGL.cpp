@@ -1101,8 +1101,7 @@ bool MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_SetShader ( MOAIShader* shader
 
 	assert ( !this->mApplyingStateChanges );
 	
-	MOAIShaderGL* shaderGL = MOAICast < MOAIShaderGL >( shader );
-	assert ( shaderGL || ( shader == NULL ));
+	MOAIShaderGL* shaderGL = MOAICastAssert < MOAIShaderGL >( shader );
 	
 	MOAIShaderProgramGL* program = shaderGL ? shaderGL->GetProgram () : 0;
 	shaderGL = program ? shaderGL : 0;
@@ -1120,8 +1119,7 @@ bool MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_SetTexture ( MOAITexture* text
 
 	assert ( !this->mApplyingStateChanges );
 
-	MOAITextureGL* textureGL = MOAICast < MOAITextureGL >( texture );
-	assert ( textureGL || ( texture == NULL ));
+	MOAITextureGL* textureGL = MOAICastAssert < MOAITextureGL >( texture );
 
 	u32 mask = 1 << textureUnit;
 	this->mPendingState.mTextureUnits [ textureUnit ] = textureGL;
@@ -1138,10 +1136,9 @@ bool MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_SetTexture ( MOAITexture* text
 //----------------------------------------------------------------//
 bool MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_SetVertexArray ( MOAIVertexArray* vtxArray ) {
 
-	MOAIVertexArrayGL* vertexArrayGL = MOAICast < MOAIVertexArrayGL >( vtxArray );
-	assert ( vertexArrayGL || ( vertexArrayGL == NULL ));
-
 	assert ( !this->mApplyingStateChanges );
+
+	MOAIVertexArrayGL* vertexArrayGL = MOAICastAssert < MOAIVertexArrayGL >( vtxArray );
 
 	if ( vtxArray ) {
 		this->mPendingState.mVtxBuffer = 0;

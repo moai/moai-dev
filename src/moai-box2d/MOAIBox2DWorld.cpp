@@ -1121,7 +1121,7 @@ MOAIBox2DWorld::MOAIBox2DWorld () :
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIAction )
-		RTTI_EXTEND ( MOAIAbstractDrawable )
+		RTTI_EXTEND ( MOAIDrawable )
 	RTTI_END
 	
 	this->mArbiter.Set ( *this, new MOAIBox2DArbiter ( *this ));
@@ -1266,14 +1266,14 @@ void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DJoint& joint ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIBox2DWorld::MOAIAbstractDrawable_Draw ( int subPrimID ) {
+void MOAIBox2DWorld::MOAIDrawable_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
 	if ( this->mDebugDraw && MOAIDraw::Get ().Bind ()) {
 		
-		ZLGfxMgrGL& gfxState = MOAIGfxMgrGL::Get ();
+		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 		
-		gfxState.SetMtx ( ZLGfxMgrGL::MODEL_TO_WORLD_MTX );
+		gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX );
 		
 		this->mDebugDraw->mScale = 1.0f / this->mUnitsToMeters;
 		this->mWorld->DrawDebugData ();
@@ -1281,7 +1281,7 @@ void MOAIBox2DWorld::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DWorld::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
+void MOAIBox2DWorld::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	UNUSED ( subPrimID );
 }
 

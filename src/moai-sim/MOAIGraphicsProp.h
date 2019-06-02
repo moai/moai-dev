@@ -17,7 +17,7 @@ class MOAIGraphicsProp :
 protected:
 
 	//----------------------------------------------------------------//
-	void					MOAIAbstractDrawable_Draw				( int subPrimID );
+	void					MOAIDrawable_Draw				( int subPrimID );
 	ZLBounds				MOAIAbstractProp_GetModelBounds			(); // get the prop bounds in model space
 	bool					MOAINode_ApplyAttrOp					( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	void					MOAINode_Update							();

@@ -279,7 +279,7 @@ void MOAITileDeck2D::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serial
 
 	MOAIGridSpace::SerializeIn ( state, serializer );
 	
-	//this->mTexture.Set ( *this, serializer.MemberIDToObject < MOAITextureBaseGL >( state.GetFieldValue < MOAISerializerBase::ObjID >( -1, "mTexture", 0 )));
+	//this->mTexture.Set ( *this, serializer.MemberIDToObject < MOAITexture >( state.GetFieldValue < MOAISerializerBase::ObjID >( -1, "mTexture", 0 )));
 }
 
 //----------------------------------------------------------------//
@@ -316,11 +316,11 @@ ZLBounds MOAITileDeck2D::MOAIDeck_ComputeMaxAABB () {
 void MOAITileDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	UNUSED ( idx );
 	
-	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	MOAIQuadBrush::BindVertexFormat ();
 	
-	gfxMgr.SetVertexTransform ( ZLGfxMgrGL::MODEL_TO_CLIP_MTX );
-	gfxMgr.SetUVTransform ( ZLGfxMgrGL::UV_TO_MODEL_MTX );
+	gfxMgr.SetVertexTransform ( MOAIGfxMgr::MODEL_TO_CLIP_MTX );
+	gfxMgr.SetUVTransform ( MOAIGfxMgr::UV_TO_MODEL_MTX );
 	
 	MOAICellCoord coord = this->GetCellCoord ( idx );
 	ZLRect uvRect = this->GetTileRect ( coord );
@@ -333,7 +333,7 @@ void MOAITileDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	
 	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
 	materialStack.Push ( this->GetMaterial ( idx ));
-	materialStack.SetShader ( MOAIShaderMgrGL::DECK2D_SHADER );
+	materialStack.SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
 	materialStack.LoadGfxState ();
 	
 	this->mQuad.Draw ( 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, uOff, vOff, uScale, vScale );

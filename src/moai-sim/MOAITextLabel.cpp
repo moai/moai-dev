@@ -1092,13 +1092,13 @@ void MOAITextLabel::MOAIAbstractBaseTransform_BuildLocalToWorldMtx ( ZLAffine3D&
 }
 
 //----------------------------------------------------------------//
-void MOAITextLabel::MOAIAbstractDrawable_Draw ( int subPrimID ) {
+void MOAITextLabel::MOAIDrawable_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
 	
 	if ( !this->IsVisible ()) return;
 	if ( this->IsClear ()) return;
 	
-	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
 	if ( this->mDeck ) {
 	
@@ -1124,7 +1124,7 @@ void MOAITextLabel::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 				ZLMatrix4x4 worldDrawingMtx = this->MOAIGraphicsProp::MOAIGraphicsPropBase_GetWorldDrawingMtx ();
 				worldDrawingMtx.Prepend ( fit );
 			
-				gfxMgr.SetMtx ( ZLGfxMgrGL::MODEL_TO_WORLD_MTX, worldDrawingMtx );
+				gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX, worldDrawingMtx );
 			
 				this->LoadUVTransform ();
 				this->mDeck->Draw ( this->mIndex );
@@ -1142,8 +1142,8 @@ void MOAITextLabel::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 		MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
 		materialStack.LoadGfxState ();
 	
-		gfxMgr.SetVertexTransform ( ZLGfxMgrGL::MODEL_TO_CLIP_MTX );
-		gfxMgr.SetUVTransform ( ZLGfxMgrGL::UV_TO_MODEL_MTX );
+		gfxMgr.SetVertexTransform ( MOAIGfxMgr::MODEL_TO_CLIP_MTX );
+		gfxMgr.SetUVTransform ( MOAIGfxMgr::UV_TO_MODEL_MTX );
 
 		this->mLayout.Draw ( this->mReveal );
 
@@ -1152,22 +1152,22 @@ void MOAITextLabel::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLabel::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
+void MOAITextLabel::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
 	if ( !this->IsVisible ()) return;
 
-	MOAIGraphicsProp::MOAIAbstractDrawable_DrawDebug ( subPrimID );
+	MOAIGraphicsProp::MOAIDrawable_DrawDebug ( subPrimID );
 
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAITextLabel >())) return;
 
-	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
 	ZLMatrix4x4 worldDrawingMtx = this->GetWorldDrawingMtx ();
 	
-	gfxMgr.SetMtx ( ZLGfxMgrGL::MODEL_TO_WORLD_MTX, worldDrawingMtx );
-	gfxMgr.SetVertexTransform ( ZLGfxMgrGL::MODEL_TO_CLIP_MTX );
+	gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX, worldDrawingMtx );
+	gfxMgr.SetVertexTransform ( MOAIGfxMgr::MODEL_TO_CLIP_MTX );
 	
 	this->mLayout.DrawDebug ();
 	
@@ -1285,7 +1285,7 @@ ZLMatrix4x4 MOAITextLabel::MOAIGraphicsPropBase_GetWorldDrawingMtx () const {
 	
 	if ( this->mAutoFlip ) {
 		
-		ZLMatrix4x4 viewProj = MOAIGfxMgrGL::Get ().GetMtx ( ZLGfxMgrGL::WORLD_TO_CLIP_MTX );
+		ZLMatrix4x4 viewProj = MOAIGfxMgr::Get ().GetMtx ( MOAIGfxMgr::WORLD_TO_CLIP_MTX );
 
 		ZLVec3D upVec = worldDrawingMtx.GetYAxis ();
 

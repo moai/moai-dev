@@ -6,7 +6,7 @@
 
 #include <moai-gfx-gl/MOAIGfxMgrGLComponents.h>
 
-class MOAIAbstractGfxResourceGL;
+class MOAIGfxResourceGL;
 class MOAIGfxMgrGL_PipelineClerkGL;
 class MOAIGfxMgrGL;
 
@@ -17,28 +17,28 @@ class MOAIGfxMgrGL_ResourceClerkGL :
 	virtual public MOAIGfxMgrGLComponents {
 protected:
 	
-	typedef ZLLeanList < MOAIAbstractGfxResourceGL* >::Iterator ResourceIt;
-	ZLLeanList < MOAIAbstractGfxResourceGL* >		mResources;
+	typedef ZLLeanList < MOAIGfxResourceGL* >::Iterator ResourceIt;
+	ZLLeanList < MOAIGfxResourceGL* >		mResources;
 	
-	ZLLeanList < MOAIAbstractGfxResourceGL* >		mPendingForLoadList;
-	ZLLeanList < MOAIAbstractGfxResourceGL* >		mPendingForDrawList;
+	ZLLeanList < MOAIGfxResourceGL* >		mPendingForLoadList;
+	ZLLeanList < MOAIGfxResourceGL* >		mPendingForDrawList;
 	
 	ZLLeanStack < ZLGfxHandle, 32 >	mDeleterStack;
 
 	//----------------------------------------------------------------//
-	void			InsertGfxResource			( MOAIAbstractGfxResourceGL& resource );
+	void			InsertGfxResource			( MOAIGfxResourceGL& resource );
 	void			ProcessDeleters				( ZLGfx& gfx );
-	void			ProcessPending				( ZLGfx& gfx, ZLLeanList < MOAIAbstractGfxResourceGL* > &list );
-	void			RemoveGfxResource			( MOAIAbstractGfxResourceGL& resource );
+	void			ProcessPending				( ZLGfx& gfx, ZLLeanList < MOAIGfxResourceGL* > &list );
+	void			RemoveGfxResource			( MOAIGfxResourceGL& resource );
 	void			RenewResources				();
-	void			ScheduleGPUAffirm			( MOAIAbstractGfxResourceGL& resource, u32 listID );
+	void			ScheduleGPUAffirm			( MOAIGfxResourceGL& resource, u32 listID );
 	
 public:
 	
 	friend class MOAIGfxMgr;
 	friend class MOAIGfxMgrGL_RenderTreeGL;
 	
-	friend class MOAIAbstractGfxResourceGL;
+	friend class MOAIGfxResourceGL;
 	
 	//----------------------------------------------------------------//
 	void			DeleteOrDiscard						( const ZLGfxHandle& handle, bool shouldDelete );

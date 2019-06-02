@@ -418,7 +418,7 @@ bool ZLImage::Convert ( const ZLImage& image, ZLColor::ColorFormat colorFmt, Pix
 	
 		// pixel format is indexed color, so just convert the palette
 		u32 total = image.GetPaletteCount ();
-		ZLColor::Convert ( newImage.mPalette.Invalidate (), newImage.mColorFormat, image.mPalette.GetBuffer (), image.mColorFormat, total );
+		ZLColor::Convert ( newImage.mPalette.Invalidate (), newImage.mColorFormat, image.mPalette.GetConstBuffer (), image.mColorFormat, total );
 	}
 	
 	this->Take ( newImage );
@@ -1524,7 +1524,7 @@ u32 ZLImage::GetPaletteColor ( u32 i ) const {
 
 	u32 total = this->GetPaletteCount ();
 	if ( i < total ) {
-		u32 pixel = ZLBitBuffer::GetValue ( this->mPalette.GetBuffer (), i, ZLColor::GetDepthInBits ( this->mColorFormat ));
+		u32 pixel = ZLBitBuffer::GetValue ( this->mPalette.GetConstBuffer (), i, ZLColor::GetDepthInBits ( this->mColorFormat ));
 		return ZLColor::ConvertToRGBA ( pixel, this->mColorFormat );
 	}
 	return 0;
@@ -1577,7 +1577,7 @@ ZLIntRect ZLImage::GetRect () {
 //----------------------------------------------------------------//
 const void* ZLImage::GetRowAddr ( u32 y ) const {
 
-	return ( const void* )(( size_t )this->mBitmap.GetBuffer () + ( this->GetRowSize () * y ));
+	return ( const void* )(( size_t )this->mBitmap.GetConstBuffer () + ( this->GetRowSize () * y ));
 }
 
 //----------------------------------------------------------------//

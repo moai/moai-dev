@@ -645,7 +645,7 @@ int MOAIImage::_getContentRect(lua_State *L) {
 int MOAIImage::_getData(lua_State *L) {
 	MOAI_LUA_SETUP ( MOAIImage, "U" )
 
-	lua_pushlstring ( state, ( const char* )self->mBitmap.GetBuffer (), self->mBitmap.GetSize ());
+	lua_pushlstring ( state, ( const char* )self->mBitmap.GetConstBuffer (), self->mBitmap.GetSize ());
 	return 1;
 }
 

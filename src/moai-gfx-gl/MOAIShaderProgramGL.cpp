@@ -310,7 +310,7 @@ void MOAIShaderProgramGL::Load ( cc8* vshSource, cc8* fshSource ) {
 		this->mVertexShaderSource = vshSource;
 		this->mFragmentShaderSource = fshSource;
 		
-		this->FinishInit ();
+		this->ScheduleForGPUUpdate ();
 	}
 }
 
@@ -320,7 +320,7 @@ MOAIShaderProgramGL::MOAIShaderProgramGL () :
 	mUniformBufferSize ( 0 ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIAbstractGfxResourceGL )
+		RTTI_EXTEND ( MOAIGfxResourceGL )
 	RTTI_END
 }
 
@@ -333,7 +333,7 @@ MOAIShaderProgramGL::~MOAIShaderProgramGL () {
 //----------------------------------------------------------------//
 void MOAIShaderProgramGL::RegisterLuaClass ( MOAILuaState& state ) {
 
-	MOAIAbstractGfxResourceGL::RegisterLuaClass ( state );
+	MOAIGfxResourceGL::RegisterLuaClass ( state );
 
 	state.SetField ( -1, "UNIFORM_TYPE_FLOAT",						( u32 )MOAIShaderUniformGL::UNIFORM_TYPE_FLOAT );
 	state.SetField ( -1, "UNIFORM_TYPE_INT",						( u32 )MOAIShaderUniformGL::UNIFORM_TYPE_INT );
@@ -418,7 +418,7 @@ void MOAIShaderProgramGL::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIShaderProgramGL::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	MOAIAbstractGfxResourceGL::RegisterLuaFuncs ( state );
+	MOAIGfxResourceGL::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "declareUniform",				_declareUniform },
@@ -607,24 +607,24 @@ void MOAIShaderProgramGL::UpdateUniforms ( ZLLeanArray < u8 >& buffer ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIShaderProgramGL::ZLAbstractGfxResource_OnCPUCreate () {
+bool MOAIShaderProgramGL::MOAIGfxResource_OnCPUCreate () {
 
 	return true;
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderProgramGL::ZLAbstractGfxResource_OnCPUDestroy () {
+void MOAIShaderProgramGL::MOAIGfxResource_OnCPUPurgeRecoverable () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderProgramGL::ZLAbstractGfxResource_OnGPUBind () {
+void MOAIShaderProgramGL::MOAIGfxResourceGL_OnGPUBind () {
 
 	// use shader program.
 	this->mGfxMgr->GetDrawingAPI ().UseProgram ( this->mProgram );
 }
 
 //----------------------------------------------------------------//
-bool MOAIShaderProgramGL::ZLAbstractGfxResource_OnGPUCreate () {
+bool MOAIShaderProgramGL::MOAIGfxResourceGL_OnGPUCreate () {
 
 	ZLGfx& gfx = this->mGfxMgr->GetDrawingAPI ();
 
@@ -666,7 +666,7 @@ bool MOAIShaderProgramGL::ZLAbstractGfxResource_OnGPUCreate () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderProgramGL::ZLAbstractGfxResource_OnGPUDeleteOrDiscard ( bool shouldDelete ) {
+void MOAIShaderProgramGL::MOAIGfxResourceGL_OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 
 	this->mGfxMgr->DeleteOrDiscard ( this->mVertexShader, shouldDelete );
 	this->mGfxMgr->DeleteOrDiscard ( this->mFragmentShader, shouldDelete );
@@ -674,13 +674,13 @@ void MOAIShaderProgramGL::ZLAbstractGfxResource_OnGPUDeleteOrDiscard ( bool shou
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderProgramGL::ZLAbstractGfxResource_OnGPUUnbind () {
+void MOAIShaderProgramGL::MOAIGfxResourceGL_OnGPUUnbind () {
 
 	this->mGfxMgr->GetDrawingAPI ().UseProgram ( ZLGfxResource::UNBIND );
 }
 
 //----------------------------------------------------------------//
-bool MOAIShaderProgramGL::ZLAbstractGfxResource_OnGPUUpdate () {
+bool MOAIShaderProgramGL::MOAIGfxResourceGL_OnGPUUpdate () {
 
 	return true;
 }

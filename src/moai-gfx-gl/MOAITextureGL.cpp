@@ -287,30 +287,24 @@ bool MOAITextureGL::CreateTextureFromImage ( ZLImage& srcImage ) {
 }
 
 //----------------------------------------------------------------//
-MOAITextureGL::MOAITextureGL () :
-	mWidth ( 0 ),
-	mHeight ( 0 ),
-	mMinFilter ( ZGL_SAMPLE_LINEAR ),
-	mMagFilter ( ZGL_SAMPLE_NEAREST ),
-	mWrap ( ZGL_WRAP_MODE_CLAMP ),
-	mTextureSize ( 0 ) {
+MOAITextureGL::MOAITextureGL () {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAITexture )
-		RTTI_EXTEND ( MOAIAbstractGfxResourceGL )
+		RTTI_EXTEND ( MOAIGfxResourceGL )
 	RTTI_END
 }
 
 //----------------------------------------------------------------//
 MOAITextureGL::~MOAITextureGL () {
 
-	this->ZLAbstractGfxResource_OnGPUDeleteOrDiscard ( true );
+	this->MOAIGfxResourceGL_OnGPUDeleteOrDiscard ( true );
 }
 
 //----------------------------------------------------------------//
 void MOAITextureGL::RegisterLuaClass ( MOAILuaState& state ) {
 	MOAITexture::RegisterLuaClass ( state );
-	MOAIAbstractGfxResourceGL::RegisterLuaClass ( state );
+	MOAIGfxResourceGL::RegisterLuaClass ( state );
 	
 	state.SetField ( -1, "GL_LINEAR",					( u32 )ZGL_SAMPLE_LINEAR );
 	state.SetField ( -1, "GL_LINEAR_MIPMAP_LINEAR",		( u32 )ZGL_SAMPLE_LINEAR_MIPMAP_LINEAR );
@@ -340,7 +334,7 @@ void MOAITextureGL::RegisterLuaClass ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAITextureGL::RegisterLuaFuncs ( MOAILuaState& state ) {
 	MOAITexture::RegisterLuaFuncs ( state );
-	MOAIAbstractGfxResourceGL::RegisterLuaFuncs ( state );
+	MOAIGfxResourceGL::RegisterLuaFuncs ( state );
 
 	luaL_Reg regTable [] = {
 		{ "getSize",				_getSize },
@@ -355,21 +349,6 @@ void MOAITextureGL::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextureGL::SetFilter ( int filter ) {
-
-	this->SetFilter ( filter, filter );
-}
-
-//----------------------------------------------------------------//
-void MOAITextureGL::SetFilter ( int min, int mag ) {
-
-	this->mMinFilter = min;
-	this->mMagFilter = mag;
-	
-	this->ScheduleForGPUUpdate ();
-}
-
-//----------------------------------------------------------------//
 void MOAITextureGL::SetGLTexture ( const ZLGfxHandle& glTexture, int internalFormat, int pixelType, size_t textureSize ) {
 
 	this->mGLTexture = glTexture;
@@ -377,14 +356,6 @@ void MOAITextureGL::SetGLTexture ( const ZLGfxHandle& glTexture, int internalFor
 	this->mGLPixelType = pixelType;
 	this->mTextureSize = textureSize;
 
-	this->ScheduleForGPUUpdate ();
-}
-
-//----------------------------------------------------------------//
-void MOAITextureGL::SetWrap ( int wrap ) {
-
-	this->mWrap = wrap;
-	
 	this->ScheduleForGPUUpdate ();
 }
 
@@ -461,23 +432,23 @@ bool MOAITextureGL::UpdateTextureFromImage ( ZLImage& image, ZLIntRect rect ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAITextureGL::ZLAbstractGfxResource_OnCPUCreate () {
+bool MOAITextureGL::MOAIGfxResource_OnCPUCreate () {
 
 	return true;
 }
 
 //----------------------------------------------------------------//
-void MOAITextureGL::ZLAbstractGfxResource_OnCPUDestroy () {
+void MOAITextureGL::MOAIGfxResource_OnCPUPurgeRecoverable () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextureGL::ZLAbstractGfxResource_OnGPUBind () {
+void MOAITextureGL::MOAIGfxResourceGL_OnGPUBind () {
 
 	this->mGfxMgr->GetDrawingAPI ().BindTexture ( this->mGLTexture );
 }
 
 //----------------------------------------------------------------//
-void MOAITextureGL::ZLAbstractGfxResource_OnGPUDeleteOrDiscard ( bool shouldDelete ) {
+void MOAITextureGL::MOAIGfxResourceGL_OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 
 	if ( this->mGLTexture.CanBind ()) {
 		this->mGfxMgr->ReportTextureFree ( this->mDebugName, this->mTextureSize );
@@ -487,13 +458,13 @@ void MOAITextureGL::ZLAbstractGfxResource_OnGPUDeleteOrDiscard ( bool shouldDele
 }
 
 //----------------------------------------------------------------//
-void MOAITextureGL::ZLAbstractGfxResource_OnGPUUnbind () {
+void MOAITextureGL::MOAIGfxResourceGL_OnGPUUnbind () {
 
 	this->mGfxMgr->GetDrawingAPI ().BindTexture ( ZLGfxResource::UNBIND );
 }
 
 //----------------------------------------------------------------//
-bool MOAITextureGL::ZLAbstractGfxResource_OnGPUUpdate () {
+bool MOAITextureGL::MOAIGfxResourceGL_OnGPUUpdate () {
 
 	ZLGfx& gfx = this->mGfxMgr->GetDrawingAPI ();
 
@@ -507,20 +478,8 @@ bool MOAITextureGL::ZLAbstractGfxResource_OnGPUUpdate () {
 }
 
 //----------------------------------------------------------------//
-u32 MOAITextureGL::MOAITexture_GetHeight () const {
-
-	return this->mHeight;
-}
-
-//----------------------------------------------------------------//
-u32 MOAITextureGL::MOAITexture_GetWidth () const {
-
-	return this->mWidth;
-}
-
-//----------------------------------------------------------------//
 void MOAITextureGL::ZLGfxListener_OnGfxEvent ( u32 event, void* userdata ) {
 
 	this->mGfxMgr->ReportTextureAlloc ( this->mDebugName, this->mTextureSize );
-	MOAIAbstractGfxResourceGL::ZLGfxListener_OnGfxEvent ( event, userdata );
+	MOAIGfxResourceGL::ZLGfxListener_OnGfxEvent ( event, userdata );
 }

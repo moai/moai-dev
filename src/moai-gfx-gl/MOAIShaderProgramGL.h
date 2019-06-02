@@ -4,7 +4,7 @@
 #ifndef	MOAISHADERPROGRAMGL_H
 #define	MOAISHADERPROGRAMGL_H
 
-#include <moai-gfx-gl/MOAIAbstractGfxResourceGL.h>
+#include <moai-gfx-gl/MOAIGfxResourceGL.h>
 #include <moai-gfx-gl/MOAIShaderUniformGL.h>
 
 #define		OPENGL_PREPROC		"#define LOWP\n #define MEDP\n #define HIGHP\n"
@@ -63,7 +63,7 @@ public:
 			uniform values.
 */
 class MOAIShaderProgramGL :
-	public virtual MOAIAbstractGfxResourceGL,
+	public virtual MOAIGfxResourceGL,
 	public virtual MOAIShaderUniformSchemaBase {
 protected:
 
@@ -110,13 +110,13 @@ protected:
 	void						UpdateUniforms				( ZLLeanArray < u8 >& buffer );
 	
 	//----------------------------------------------------------------//
-	bool						ZLAbstractGfxResource_OnCPUCreate					();
-	void						ZLAbstractGfxResource_OnCPUDestroy					();
-	void						ZLAbstractGfxResource_OnGPUBind						();
-	bool						ZLAbstractGfxResource_OnGPUCreate					();
-	void						ZLAbstractGfxResource_OnGPUDeleteOrDiscard			( bool shouldDelete );
-	void						ZLAbstractGfxResource_OnGPUUnbind					();
-	bool						ZLAbstractGfxResource_OnGPUUpdate					();
+	bool						MOAIGfxResource_OnCPUCreate							();
+	void						MOAIGfxResource_OnCPUPurgeRecoverable						();
+	void						MOAIGfxResourceGL_OnGPUBind							();
+	bool						MOAIGfxResourceGL_OnGPUCreate						();
+	void						MOAIGfxResourceGL_OnGPUDeleteOrDiscard				( bool shouldDelete );
+	void						MOAIGfxResourceGL_OnGPUUnbind						();
+	bool						MOAIGfxResourceGL_OnGPUUpdate						();
 	MOAIShaderUniformHandle		ZLAbstractShaderUniformSchema_GetUniformHandle		( void* buffer, ZLIndex uniformID ) const;
 	void						ZLGfxListener_OnUniformLocation						( u32 addr, void* userdata );
 	

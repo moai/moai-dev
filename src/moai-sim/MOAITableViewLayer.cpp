@@ -66,17 +66,17 @@ void MOAITableViewLayer::SerializeOut ( MOAILuaState& state, MOAISerializer& ser
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITableViewLayer::MOAIAbstractDrawable_Draw ( int subPrimID ) {
+void MOAITableViewLayer::MOAIDrawable_Draw ( int subPrimID ) {
 
-	this->MOAIAbstractViewLayer::MOAIAbstractDrawable_Draw ( subPrimID );
+	this->MOAIAbstractViewLayer::MOAIDrawable_Draw ( subPrimID );
 }
 
 //----------------------------------------------------------------//
 void MOAITableViewLayer::MOAIAbstractViewLayer_Draw () {
 	
-	MOAIAbstractDrawable::Draw ( this->mRenderTable );
+	MOAIDrawable::Draw ( this->mRenderTable );
 	
 	if ( MOAIDebugLinesMgr::Get ().IsVisible () && this->mShowDebugLines ) {
-		MOAIAbstractDrawable::Draw ( this->mRenderTable, true );
+		MOAIDrawable::Draw ( this->mRenderTable, true );
 	}
 }

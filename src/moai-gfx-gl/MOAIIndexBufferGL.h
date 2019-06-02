@@ -4,7 +4,7 @@
 #ifndef	MOAIINDEXBUFFERGL_H
 #define	MOAIINDEXBUFFERGL_H
 
-#include <moai-gfx-gl/MOAIAbstractGfxBufferGL.h>
+#include <moai-gfx-gl/MOAIGfxBufferGL.h>
 
 //================================================================//
 // MOAIIndexBufferGL
@@ -14,38 +14,20 @@
 */
 class MOAIIndexBufferGL :
 	public virtual MOAIIndexBuffer,
-	public virtual MOAIAbstractGfxBufferGL {
-private:
-
-	friend class MOAIGfxMgrGL_PipelineClerkGL;
-
-	u32				mIndexSize;
-
-	//----------------------------------------------------------------//
-	static int		_copyFromStream			( lua_State* L );
-	static int		_countElements			( lua_State* L );
-	static int		_printIndices			( lua_State* L );
-	static int		_setIndexSize			( lua_State* L );
-	
+	public virtual MOAIGfxBufferGL {
 public:
 	
-	GET ( u32, IndexSize, mIndexSize )
+	friend class MOAIGfxMgrGL_PipelineClerkGL;
 	
 	DECL_LUA_FACTORY ( MOAIIndexBufferGL )
 	
 	//----------------------------------------------------------------//
-	u32				CountIndices			();
-	void			CopyFromStream			( ZLStream& stream, size_t size, u32 srcInputSizeInBytes );
-	u32				GetIndex				( u32 element );
 					MOAIIndexBufferGL		();
 					~MOAIIndexBufferGL		();
-	void			PrintIndices			();
 	void			RegisterLuaClass		( MOAILuaState& state );
 	void			RegisterLuaFuncs		( MOAILuaState& state );
 	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
 	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
-	void			SetIndexSize			( u32 idxSize );
-	void			WriteIndex				( u32 index );
 };
 
 #endif

@@ -26,23 +26,6 @@ class MOAIShaderProgramGL;
 class MOAIShaderMgrGL :
 	public ZLContextClass < MOAIShaderMgrGL >,
 	public virtual MOAILuaObject {
-public:
-
-	enum Preset {
-		DECK2D_SHADER,
-		DECK2D_SNAPPING_SHADER,
-		DECK2D_TEX_ONLY_SHADER,
-		FONT_SHADER,
-		FONT_SNAPPING_SHADER,
-		FONT_EFFECTS_SHADER,
-		LINE_SHADER,
-		LINE_SHADER_3D,
-		MESH_SHADER,
-		TOTAL_SHADERS,
-	};
-
-	static const u32 UNKNOWN_SHADER = 0xffffffff;
-
 private:
 	
 	MOAIShaderProgramGL*	mPrograms [ TOTAL_SHADERS ];
@@ -58,8 +41,8 @@ public:
 	
 	//----------------------------------------------------------------//
 	void					AffirmAll				();
-	MOAIShaderProgramGL*	GetProgram				( u32 shaderID );
-	MOAIShaderGL*			GetShader				( u32 shaderID );
+	MOAIShaderProgramGL*	GetProgram				( MOAIShaderPresetEnum shaderID );
+	MOAIShaderGL*			GetShader				( MOAIShaderPresetEnum shaderID );
 	MOAIShaderGL*			GetShader				( lua_State* L, int idx );
 							MOAIShaderMgrGL			();
 							~MOAIShaderMgrGL		();

@@ -496,14 +496,14 @@ void MOAIAbstractViewLayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAbstractViewLayer::MOAIAbstractDrawable_Draw ( int subPrimID ) {
+void MOAIAbstractViewLayer::MOAIDrawable_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
     
    	if ( !this->IsVisible ()) return;
 	if ( !this->mViewport ) return;
 	if ( this->IsClear ()) return;
 	
-	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
 	gfxMgr.SetFrameBuffer ( this->GetFrameBuffer ());
 	
@@ -519,7 +519,7 @@ void MOAIAbstractViewLayer::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 	this->ClearSurface ();
 	
 	gfxMgr.SetViewProj ( this->mViewport, this->mCamera, this->mDebugCamera, this->mParallax );
-	gfxMgr.SetMtx ( ZLGfxMgrGL::MODEL_TO_WORLD_MTX );
+	gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX );
 	
 	// set up the ambient color
 	gfxMgr.SetAmbientColor ( this->mColor );
@@ -535,7 +535,7 @@ void MOAIAbstractViewLayer::MOAIAbstractDrawable_Draw ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractViewLayer::MOAIAbstractDrawable_DrawDebug ( int subPrimID ) {
+void MOAIAbstractViewLayer::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	UNUSED ( subPrimID );
 }
 

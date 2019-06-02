@@ -7,9 +7,9 @@
 #include <moai-sim/MOAIRegion.h>
 #include <moai-sim/MOAIVectorUtil.h>
 
-class MOAIAbstractGfxBufferGL;
+class MOAIGfxBufferGL;
 class MOAIVectorShape;
-class MOAIVertexFormatGL;
+class MOAIVertexFormat;
 
 class SafeTesselator;
 
@@ -176,7 +176,7 @@ public:
 	void				Clear						();
 	void				ClearShapes					();
 	void				ClearTransforms				();
-	u32					CountVertices				( const MOAIVertexFormatGL& format, ZLStream& vtxStream );
+	u32					CountVertices				( const MOAIVertexFormat& format, ZLStream& vtxStream );
 	int					Finish						();
 						MOAIVectorTesselator		();
 						~MOAIVectorTesselator		();
@@ -201,12 +201,12 @@ public:
 	void				SetVertexExtra				( ZLIndex idx, void* extra, size_t size );
 	int					Tesselate					( SafeTesselator& tess, u32 flags = TESSELATE_ALL );
 	int					Tesselate					( MOAIRegion& region, u32 flags = TESSELATE_ALL );
-	int					Tesselate					( ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormatGL& format, u32 flags = TESSELATE_ALL );
-	int					Tesselate					( MOAIVertexBufferGL& vtxBuffer, MOAIIndexBufferGL& idxBuffer, MOAIVertexFormatGL& format, u32 idxSizeInBytes, u32 flags = TESSELATE_ALL );
+	int					Tesselate					( ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format, u32 flags = TESSELATE_ALL );
+	int					Tesselate					( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, MOAIVertexFormat& format, u32 idxSizeInBytes, u32 flags = TESSELATE_ALL );
 	void				WriteShapes					( ZLStream& stream, MOAIVectorTesselatorWriter* writer = 0 );
-	void				WriteSkirt					( SafeTesselator& tess, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormatGL& format, const MOAIVectorStyle& style, const ZLColorVec& fillColor, ZLIndex vertexExtraID );
-	void				WriteTriangles				( SafeTesselator& tess, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormatGL& format, const MOAIVectorStyle& style, float z, u32 color, ZLIndex vertexExtraID );
-	void				WriteVertex					( ZLStream& stream, MOAIVertexFormatGL& format, float x, float y, float z, float xn, float yn, float zn, u32 color, ZLIndex vertexExtraID );
+	void				WriteSkirt					( SafeTesselator& tess, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format, const MOAIVectorStyle& style, const ZLColorVec& fillColor, ZLIndex vertexExtraID );
+	void				WriteTriangles				( SafeTesselator& tess, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format, const MOAIVectorStyle& style, float z, u32 color, ZLIndex vertexExtraID );
+	void				WriteVertex					( ZLStream& stream, MOAIVertexFormat& format, float x, float y, float z, float xn, float yn, float zn, u32 color, ZLIndex vertexExtraID );
 };
 
 #endif

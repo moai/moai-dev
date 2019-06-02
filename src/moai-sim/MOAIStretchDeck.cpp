@@ -28,25 +28,25 @@ ZLVec3D MOAIStretchDeck::BindStretchVertexTransform () const {
 
 	ZLVec3D stretch ( 1.0f, 1.0f, 1.0f );
 
-	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	if ( this->mStretchFactor > 0.0f ) {
 	
 		// TODO: propery implement stretch factor
 	
-		ZLMatrix4x4 worldTransform = gfxMgr.GetMtx ( ZLGfxMgrGL::MODEL_TO_WORLD_MTX );
+		ZLMatrix4x4 worldTransform = gfxMgr.GetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX );
 		stretch = worldTransform.GetStretch ();
 		
 		ZLMatrix4x4 noStretchMtx;
 		noStretchMtx.Scale ( 1.0f / stretch.mX, 1.0f / stretch.mY, 1.0f / stretch.mZ );
 		noStretchMtx.Append ( worldTransform );
-		noStretchMtx.Append ( gfxMgr.GetMtx ( ZLGfxMgrGL::WORLD_TO_CLIP_MTX ));
+		noStretchMtx.Append ( gfxMgr.GetMtx ( MOAIGfxMgr::WORLD_TO_CLIP_MTX ));
 		
 		gfxMgr.SetVertexTransform ( noStretchMtx );
 	}
 	else {
 	
-		gfxMgr.SetVertexTransform ( ZLGfxMgrGL::MODEL_TO_CLIP_MTX );
+		gfxMgr.SetVertexTransform ( MOAIGfxMgr::MODEL_TO_CLIP_MTX );
 	}
 	
 	return stretch;

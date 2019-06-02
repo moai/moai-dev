@@ -54,7 +54,7 @@ class MOAIScissorRect;
 class MOAIGraphicsPropBase :
 	public virtual MOAIAbstractProp,
 	public virtual MOAIColor,
-	public virtual MOAIAbstractDrawable,
+	public virtual MOAIDrawable,
 	public virtual MOAIMaterialBatchHolder {
 protected:
 	
@@ -70,7 +70,7 @@ protected:
 	static int		_setVisible				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			MOAIAbstractDrawable_DrawDebug				( int subPrimID );
+	void			MOAIDrawable_DrawDebug				( int subPrimID );
 
 protected:
 

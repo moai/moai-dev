@@ -36,7 +36,7 @@ public:
 	
 	//----------------------------------------------------------------//
 					MOAIGfxMgr_RenderTree		();
-					~MOAIGfxMgr_RenderTree		();
+	virtual			~MOAIGfxMgr_RenderTree		();
 	void			PushDrawable				( MOAILuaObject* drawable );
 	void			RegisterLuaClass			( MOAILuaState& state );
 	void			RegisterLuaFuncs			( MOAILuaState& state );

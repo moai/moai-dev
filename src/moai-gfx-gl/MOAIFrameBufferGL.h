@@ -28,13 +28,6 @@ protected:
 	
 	friend class MOAIGfxMgrGL_GPUCacheGL;
 	
-	u32					mBufferWidth;
-	u32					mBufferHeight;
-	float				mBufferScale;
-	bool				mLandscape;
-	
-	bool				mNeedsClear;
-	
 	ZLGfxHandle			mGLFrameBuffer;
 
 	bool								mGrabNextFrame;
@@ -53,16 +46,11 @@ protected:
 	virtual void		ZLFrameBuffer_AffirmBuffers		();
 
 	//----------------------------------------------------------------//
-	void				ZLGfxListener_OnReadPixels		( const ZLCopyOnWrite& buffer, void* userdata );
+	void				ZLGfxListener_OnReadPixels			( const ZLCopyOnWrite& buffer, void* userdata );
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAIFrameBufferGL )
-	
-	GET_CONST	( u32, BufferWidth, mBufferWidth )
-	GET_CONST	( u32, BufferHeight, mBufferHeight )
-	GET_SET		( float, BufferScale, mBufferScale )
-	GET_SET		( bool, Landscape, mLandscape )
 	
 	//----------------------------------------------------------------//
 	void				DetectGLFrameBufferID		( MOAIGfxMgrGL& gfxMgr );
@@ -70,9 +58,6 @@ public:
 	void				GrabImage					( MOAIImage* image );
 						MOAIFrameBufferGL			();
 						~MOAIFrameBufferGL			();
-	bool				NeedsClear					() const;
-	void				NeedsClear					( bool needsClear );
-	void				SetBufferSize				( u32 width, u32 height );
 	void				SetGLFrameBuffer			( MOAIGfxMgrGL& gfxMgr, const ZLGfxHandle& frameBuffer );
 	ZLRect				WndRectToDevice				( ZLRect rect ) const;
 	void				RegisterLuaClass			( MOAILuaState& state );

@@ -49,6 +49,14 @@ public:
 	inline MOAIGfxMgr_VertexCache& GetVertexCache () {
 		return MOAIAbstractGfxMgrComponents_GetVertexCache ();
 	}
+	
+	//----------------------------------------------------------------//
+	MOAIGfxMgrComponents () {
+	}
+	
+	//----------------------------------------------------------------//
+	virtual ~MOAIGfxMgrComponents () {
+	}
 };
 
 #endif

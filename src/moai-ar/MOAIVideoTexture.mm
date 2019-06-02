@@ -151,7 +151,7 @@ void MOAIVideoTexture::UpdateBuffer ( void* buffer ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIVideoTexture::ZLAbstractGfxResource_OnGPUCreate () {
+bool MOAIVideoTexture::MOAIGfxResourceGL_OnGPUCreate () {
 
 	if ( !MOAIGfxMgr::Get ().GetHasContext ()) return false;
 	if ( !this->mUsePlane ) return false;
@@ -179,7 +179,7 @@ bool MOAIVideoTexture::ZLAbstractGfxResource_OnGPUCreate () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIVideoTexture::ZLAbstractGfxResource_OnGPUUpdate () {
+bool MOAIVideoTexture::MOAIGfxResourceGL_OnGPUUpdate () {
 
 	if ( !MOAIGfxMgr::Get ().GetHasContext ()) return false;
 	if ( !this->mUsePlane ) return false;
@@ -206,7 +206,7 @@ bool MOAIVideoTexture::ZLAbstractGfxResource_OnGPUUpdate () {
 
 	MOAIGfxMgr::Get ().LogErrors ();
 
-	return MOAITextureBaseGL::ZLAbstractGfxResource_OnGPUUpdate ();
+	return MOAITextureBaseGL::MOAIGfxResourceGL_OnGPUUpdate ();
 }
 
 #endif
