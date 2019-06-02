@@ -49,12 +49,12 @@ public:
 	u32				GetTile				( int xTile, int yTile ) const;
 					MOAIGrid			();
 					~MOAIGrid			();
-	void			RegisterLuaClass	( MOAILuaState& state );
-	void			RegisterLuaFuncs	( MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs	( MOAIComposer& composer, MOAILuaState& state );
 	void			RowFromString		( u32 rowID, cc8* str );
 	STLString		RowToString			( u32 rowID );
-	void			SerializeIn			( MOAILuaState& state, MOAIDeserializer& serializer );
-	void			SerializeOut		( MOAILuaState& state, MOAISerializer& serializer );
+	void			MOAILuaObject_SerializeIn			( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void			MOAILuaObject_SerializeOut		( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 	void			SetTile				( ZLIndex addr, u32 tile );
 	void			SetTile				( int xTile, int yTile, u32 tile );
 	size_t			StreamTilesIn		( ZLStream* stream );

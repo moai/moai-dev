@@ -10,7 +10,7 @@
 #include <moai-box2d/MOAIBox2DWorld.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -305,12 +305,12 @@ MOAIBox2DFixture::~MOAIBox2DFixture () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DFixture::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIBox2DFixture::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DFixture::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIBox2DFixture::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "destroy",				_destroy },

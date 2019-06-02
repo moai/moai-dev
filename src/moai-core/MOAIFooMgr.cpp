@@ -44,10 +44,11 @@ MOAIFooMgr::~MOAIFooMgr () {
 }
 
 //----------------------------------------------------------------//
-void MOAIFooMgr::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIFooMgr::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 
 	// call any initializers for base classes here:
-	// MOAIFooBase::RegisterLuaClass ( state );
+	// MOAI_CALL_SUPER_ONCE ( composer, MOAIFooBase, MOAILuaObject_RegisterLuaClass ( composer, state ));
 
 	// also register constants:
 	// state.SetField ( -1, "FOO_CONST", ( u32 )FOO_CONST );

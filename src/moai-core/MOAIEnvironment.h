@@ -148,7 +148,7 @@ public:
 	void				DetectEnvironment			();
 						MOAIEnvironment				();
 						~MOAIEnvironment			();
-	void				RegisterLuaClass			( MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
 	void				SetValue					( cc8* key );
 	
 	//----------------------------------------------------------------//

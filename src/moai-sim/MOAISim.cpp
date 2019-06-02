@@ -23,7 +23,7 @@
 #define LUA_GC_FUNC_NAME "collectgarbage"
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -818,8 +818,8 @@ void MOAISim::Pause () {
 }
 
 //----------------------------------------------------------------//
-void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAIGlobalEventSource::RegisterLuaClass ( state );
+void MOAISim::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGlobalEventSource, MOAILuaObject_RegisterLuaClass ( composer, state ));
 
 	state.SetField ( -1, "EVENT_FINALIZE",	( u32 )EVENT_FINALIZE );
 	state.SetField ( -1, "EVENT_PAUSE",		( u32 )EVENT_PAUSE );
@@ -889,8 +889,8 @@ void MOAISim::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAISim::RegisterLuaFuncs ( MOAILuaState& state ) {
-	UNUSED ( state );
+void MOAISim::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGlobalEventSource, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 }
 
 //----------------------------------------------------------------//

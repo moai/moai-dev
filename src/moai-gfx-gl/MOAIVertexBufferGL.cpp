@@ -28,23 +28,23 @@ MOAIVertexBufferGL::~MOAIVertexBufferGL () {
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexBufferGL::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAIVertexBuffer::RegisterLuaClass ( state );
-	MOAIGfxBufferGL::RegisterLuaClass ( state );
+void MOAIVertexBufferGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIVertexBuffer, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxBufferGL, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexBufferGL::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAIVertexBuffer::RegisterLuaFuncs ( state );
-	MOAIGfxBufferGL::RegisterLuaFuncs ( state );
+void MOAIVertexBufferGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIVertexBuffer, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxBufferGL, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexBufferGL::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	MOAIGfxBufferGL::SerializeIn ( state, serializer );
+void MOAIVertexBufferGL::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxBufferGL, MOAILuaObject_SerializeIn ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexBufferGL::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	MOAIGfxBufferGL::SerializeOut ( state, serializer );
+void MOAIVertexBufferGL::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxBufferGL, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }

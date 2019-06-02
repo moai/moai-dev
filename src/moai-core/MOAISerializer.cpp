@@ -372,7 +372,8 @@ void MOAISerializer::PrintObjectID ( ZLStream& stream, cc8* format, ObjID objID 
 }
 
 //----------------------------------------------------------------//
-void MOAISerializer::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAISerializer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 
 	luaL_Reg regTable [] = {
 		{ "floatToHex",			_floatToHex },
@@ -386,7 +387,8 @@ void MOAISerializer::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAISerializer::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAISerializer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 
 	luaL_Reg regTable [] = {
 		{ "getObjectTables",		_getObjectTables },

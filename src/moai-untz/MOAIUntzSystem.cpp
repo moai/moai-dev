@@ -4,7 +4,7 @@
 #include <moai-untz/MOAIUntzSystem.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -189,7 +189,7 @@ MOAIUntzSystem::~MOAIUntzSystem () {
 }
 
 //----------------------------------------------------------------//
-void MOAIUntzSystem::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIUntzSystem::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		//{ "getDeviceCount",			_getDeviceCount },
@@ -213,7 +213,7 @@ void MOAIUntzSystem::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIUntzSystem::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIUntzSystem::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
 

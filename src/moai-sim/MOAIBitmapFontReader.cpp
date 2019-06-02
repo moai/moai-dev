@@ -257,13 +257,13 @@ MOAIBitmapFontReader::~MOAIBitmapFontReader () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBitmapFontReader::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAIFontReader::RegisterLuaClass ( state );
+void MOAIBitmapFontReader::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIFontReader, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIBitmapFontReader::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAIFontReader::RegisterLuaFuncs ( state );
+void MOAIBitmapFontReader::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIFontReader, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "loadPage",				_loadPage },
@@ -327,11 +327,11 @@ int MOAIBitmapFontReader::SelectGlyph ( u32 c ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIBitmapFontReader::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	MOAIFontReader::SerializeIn ( state, serializer );
+void MOAIBitmapFontReader::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIFontReader, MOAILuaObject_SerializeIn ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//
-void MOAIBitmapFontReader::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	MOAIFontReader::SerializeOut ( state, serializer );
+void MOAIBitmapFontReader::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIFontReader, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }

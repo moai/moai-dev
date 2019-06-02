@@ -8,7 +8,7 @@
 //}
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -183,12 +183,12 @@ MOAIUntzSampleBuffer::~MOAIUntzSampleBuffer () {
 		delete [] mBuffer;
 }
 //----------------------------------------------------------------//
-void MOAIUntzSampleBuffer::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIUntzSampleBuffer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIUntzSampleBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIUntzSampleBuffer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getData",			_getData },

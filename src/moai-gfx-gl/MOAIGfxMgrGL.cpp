@@ -15,7 +15,7 @@
 #include <moai-gfx-gl/MOAIVertexFormatMgrGL.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -241,7 +241,7 @@ void MOAIGfxMgrGL::OnGlobalsInitialize () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrGL::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIGfxMgrGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	state.SetField ( -1, "EVENT_RESIZE",	( u32 )EVENT_RESIZE );
 	

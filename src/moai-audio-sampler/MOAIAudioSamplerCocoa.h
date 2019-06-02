@@ -64,8 +64,8 @@ public:
 	void			Init						( u32 sampleRate, u32 channels, u32 sampleSize, u32 totalBuffers );
 					MOAIAudioSamplerCocoa		();
 					~MOAIAudioSamplerCocoa		();
-	void			RegisterLuaClass			( MOAILuaState& state );
-	void			RegisterLuaFuncs			( MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	void			Start						();
 	void			Stop						();
 };

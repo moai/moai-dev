@@ -61,7 +61,6 @@ MOAIGlyphSet::~MOAIGlyphSet (){
 
 //----------------------------------------------------------------//
 void MOAIGlyphSet::SerializeIn ( MOAILuaState& state ) {
-	UNUSED ( state );
 	
 	this->mSize		= state.GetFieldValue ( -1, "mSize", this->mSize );
 	this->mHeight	= state.GetFieldValue ( -1, "mHeight", this->mHeight );
@@ -96,7 +95,6 @@ void MOAIGlyphSet::SerializeIn ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAIGlyphSet::SerializeOut ( MOAILuaState& state ) {
-	UNUSED ( state );
 	
 	state.SetField ( -1, "mSize", this->mSize );
 	state.SetField ( -1, "mHeight", this->mHeight );

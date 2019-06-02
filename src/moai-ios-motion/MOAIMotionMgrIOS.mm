@@ -312,7 +312,7 @@ MOAIMotionMgrIOS::~MOAIMotionMgrIOS () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMotionMgrIOS::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIMotionMgrIOS::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
 	
 	NSUInteger availableFrames = [ CMMotionManager availableAttitudeReferenceFrames ];
@@ -352,7 +352,7 @@ void MOAIMotionMgrIOS::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

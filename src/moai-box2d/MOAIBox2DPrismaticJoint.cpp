@@ -10,7 +10,7 @@
 #include <moai-box2d/MOAIBox2DWorld.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -368,13 +368,13 @@ MOAIBox2DPrismaticJoint::~MOAIBox2DPrismaticJoint () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DPrismaticJoint::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAIBox2DJoint::RegisterLuaClass ( state );
+void MOAIBox2DPrismaticJoint::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIBox2DJoint, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DPrismaticJoint::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAIBox2DJoint::RegisterLuaFuncs ( state );
+void MOAIBox2DPrismaticJoint::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIBox2DJoint, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "getJointSpeed",				_getJointSpeed },

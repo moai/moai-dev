@@ -40,7 +40,8 @@ void MOAITask::Publish () {
 }
 
 //----------------------------------------------------------------//
-void MOAITask::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAITask::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 	
 	luaL_Reg regTable [] = {
 		{ "new",							MOAILuaObject::_alertNewIsUnsupported },
@@ -51,7 +52,8 @@ void MOAITask::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITask::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAITask::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 	UNUSED ( state );
 }
 

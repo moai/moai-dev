@@ -36,8 +36,8 @@ public:
 	virtual void	ParseEvent			( ZLStream& eventStream ) = 0;
 					MOAISensor			();
 					~MOAISensor			();
-	void			RegisterLuaClass	( MOAILuaState& state );
-	void			RegisterLuaFuncs	( MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs	( MOAIComposer& composer, MOAILuaState& state );
 	virtual void	ResetState			() {}
 };
 

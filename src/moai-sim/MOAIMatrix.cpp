@@ -6,7 +6,7 @@
 #include <moai-sim/MOAISim.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -75,17 +75,17 @@ MOAIMatrix::~MOAIMatrix () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMatrix::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIMatrix::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAIAbstractChildTransform::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractChildTransform, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	
 	state.SetField ( -1, "ATTR_MATRIX",	AttrID::Pack ( ATTR_MATRIX ).ToRaw ());
 }
 
 //----------------------------------------------------------------//
-void MOAIMatrix::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIMatrix::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAIAbstractChildTransform::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractChildTransform, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "getMatrix",			_getMatrix },
@@ -98,19 +98,19 @@ void MOAIMatrix::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMatrix::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIMatrix::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
 }
 
 //----------------------------------------------------------------//
-void MOAIMatrix::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIMatrix::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

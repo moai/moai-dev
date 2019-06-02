@@ -76,8 +76,8 @@ public:
 	ObjID			AffirmMemberID				( MOAILuaObject* object, bool processMetatable = true );
 	ObjID			AffirmMemberID				( MOAILuaState& state, int idx, bool processMetatable = true );
 	void			Clear						();
-	void			RegisterLuaClass			( MOAILuaState& state );
-	void			RegisterLuaFuncs			( MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	STLString		SerializeToString			();
 	void			SerializeToFile				( cc8* filename );
 	void			SerializeToStream			( ZLStream& stream );

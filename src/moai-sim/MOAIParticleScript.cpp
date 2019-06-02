@@ -213,7 +213,7 @@ u8* MOAIParticleScript::Instruction::Write ( u8* cursor ) {
 }
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -749,7 +749,7 @@ void MOAIParticleScript::PushSprite ( MOAIParticleSystem& system, float* registe
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleScript::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIParticleScript::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	state.SetField ( -1, "PARTICLE_X",			Pack64 ( MOAIParticle::PARTICLE_X,		PARAM_TYPE_PARTICLE_REG ));
 	state.SetField ( -1, "PARTICLE_Y",			Pack64 ( MOAIParticle::PARTICLE_Y,		PARAM_TYPE_PARTICLE_REG ));
@@ -783,7 +783,7 @@ void MOAIParticleScript::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleScript::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIParticleScript::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "abs",				_abs },

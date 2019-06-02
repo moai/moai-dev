@@ -122,7 +122,8 @@ MOAILuaObject* MOAIDeserializer::MemberIDToObject ( ObjID objectID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeserializer::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIDeserializer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 
 	luaL_Reg regTable [] = {
 		{ "base64Decode",			_base64Decode },
@@ -133,7 +134,8 @@ void MOAIDeserializer::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeserializer::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIDeserializer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 
 	luaL_Reg regTable [] = {
 		{ "createObject",			_createObject },

@@ -46,7 +46,7 @@ public:
 
 			MOAIMoviePlayerIOS	();
 			~MOAIMoviePlayerIOS	();
-	void	RegisterLuaClass	( MOAILuaState& state );
+	void	MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
 	void	Reset				();
 };
 

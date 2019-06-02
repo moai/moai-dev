@@ -13,7 +13,7 @@
 #include <moai-sim/MOAISurfaceSampler2D.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -212,20 +212,20 @@ MOAIAbstractProp::~MOAIAbstractProp () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractProp::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIAbstractProp::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAIPartitionHull::RegisterLuaClass ( state );
-	MOAITransform::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIPartitionHull, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	
 	state.SetField ( -1, "FLAGS_EXPAND_FOR_SORT",		( u32 )FLAGS_EXPAND_FOR_SORT );
 	state.SetField ( -1, "FLAGS_PARTITION_GLOBAL",		( u32 )FLAGS_PARTITION_GLOBAL );
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractProp::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIAbstractProp::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAIPartitionHull::RegisterLuaFuncs ( state );
-	MOAITransform::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIPartitionHull, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "getModelBounds",			_getModelBounds },
@@ -241,21 +241,21 @@ void MOAIAbstractProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractProp::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIAbstractProp::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
-	MOAIPartitionHull::SerializeIn ( state, serializer );
-	MOAITransform::SerializeIn ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIPartitionHull, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_SerializeIn ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractProp::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIAbstractProp::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	
-	MOAIPartitionHull::SerializeOut ( state, serializer );
-	MOAITransform::SerializeOut ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIPartitionHull, MOAILuaObject_SerializeOut ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

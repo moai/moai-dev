@@ -7,7 +7,7 @@
 #include <moai-sim/MOAISelectionMesh.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -536,15 +536,15 @@ void MOAISelectionMesh::PrintSelections () {
 }
 
 //----------------------------------------------------------------//
-void MOAISelectionMesh::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAISelectionMesh::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIDeckProxy::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckProxy, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAISelectionMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAISelectionMesh::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIDeckProxy::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckProxy, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "addSelection",			_addSelection },
@@ -569,19 +569,19 @@ void MOAISelectionMesh::ReserveSelections ( ZLSize total ) {
 }
 
 //----------------------------------------------------------------//
-void MOAISelectionMesh::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAISelectionMesh::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 
-	MOAIDeckProxy::SerializeIn ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckProxy, MOAILuaObject_SerializeIn ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//
-void MOAISelectionMesh::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAISelectionMesh::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 
-	MOAIDeckProxy::SerializeOut ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckProxy, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

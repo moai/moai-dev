@@ -12,7 +12,7 @@
 class MOAIDataBuffer;
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -278,12 +278,12 @@ void MOAIParticleState::PushForce ( MOAIParticleForce& force ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleState::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIParticleState::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleState::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIParticleState::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "clearForces",			_clearForces },

@@ -111,8 +111,8 @@ public:
 	void				GetValue				( ZLAttribute& attr, ZLReal time );
 						MOAIAnimCurve			();
 						~MOAIAnimCurve			();
-	void				RegisterLuaClass		( MOAILuaState& state );
-	void				RegisterLuaFuncs		( MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void				ReserveKeys				( u32 total );
 	void				SetKey					( ZLIndex idx, ZLReal time, u32 mode, ZLReal weight = 1.0f );
 	u32					Size					() const;

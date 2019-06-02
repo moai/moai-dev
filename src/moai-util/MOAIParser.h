@@ -17,7 +17,7 @@
 			http://www.devincook.com/goldparser
 */
 class MOAIParser :
-	virtual public MOAILuaObject {
+	public virtual MOAILuaObject {
 private:
 
 	ZLCgt			mCGT;
@@ -48,8 +48,8 @@ public:
 	//----------------------------------------------------------------//
 					MOAIParser				();
 					~MOAIParser				();
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

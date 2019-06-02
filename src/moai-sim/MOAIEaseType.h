@@ -52,7 +52,7 @@ public:
 	DECL_LUA_SINGLETON ( MOAIEaseType )
 	
 	//----------------------------------------------------------------//
-	void				RegisterLuaClass		( MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

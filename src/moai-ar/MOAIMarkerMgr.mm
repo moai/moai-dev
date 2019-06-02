@@ -702,7 +702,7 @@ void MOAIMarkerMgr::RefreshKPMData () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMarkerMgr::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIMarkerMgr::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 
 	state.SetField ( -1, "EVENT_KPM_BEGIN",		( u32 )EVENT_KPM_BEGIN );
@@ -735,7 +735,7 @@ void MOAIMarkerMgr::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMarkerMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIMarkerMgr::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
 

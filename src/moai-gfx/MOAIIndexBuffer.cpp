@@ -188,11 +188,11 @@ void MOAIIndexBuffer::PrintIndices () {
 }
 
 //----------------------------------------------------------------//
-void MOAIIndexBuffer::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIIndexBuffer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIIndexBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIIndexBuffer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "copyFromStream",			_copyFromStream },
@@ -206,13 +206,13 @@ void MOAIIndexBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIIndexBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIIndexBuffer::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
 	this->mIndexSize = state.GetFieldValue < cc8*, u32 >( -1, "mIndexSize", 0 );
 }
 
 //----------------------------------------------------------------//
-void MOAIIndexBuffer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIIndexBuffer::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	
 	state.SetField < cc8*, u32 >( -1, "mIndexSize", this->mIndexSize );
 }

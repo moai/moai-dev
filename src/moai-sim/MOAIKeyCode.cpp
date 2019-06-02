@@ -1,4 +1,4 @@
-﻿#include "pch.h"
+#include "pch.h"
 #include <moai-sim/MOAIKeyCode.h>
 #include <moai-sim/MOAIKeyCodeEnum.h>
 
@@ -7,7 +7,8 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIKeyCode::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIKeyCode::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 	
 	state.SetField ( -1, "BACKSPACE",		( u32 )MOAI_KEY_BACKSPACE );
 	state.SetField ( -1, "TAB",				( u32 )MOAI_KEY_TAB );

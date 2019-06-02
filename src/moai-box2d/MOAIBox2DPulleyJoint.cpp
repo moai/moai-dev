@@ -10,7 +10,7 @@
 #include <moai-box2d/MOAIBox2DWorld.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -150,13 +150,13 @@ MOAIBox2DPulleyJoint::~MOAIBox2DPulleyJoint () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DPulleyJoint::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAIBox2DJoint::RegisterLuaClass ( state );
+void MOAIBox2DPulleyJoint::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIBox2DJoint, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DPulleyJoint::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAIBox2DJoint::RegisterLuaFuncs ( state );
+void MOAIBox2DPulleyJoint::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIBox2DJoint, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "getGroundAnchorA",		_getGroundAnchorA },

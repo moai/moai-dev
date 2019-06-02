@@ -321,9 +321,9 @@ MOAIAbstractBaseTransform::~MOAIAbstractBaseTransform () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractBaseTransform::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIAbstractBaseTransform::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAINode::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	
 	state.SetField ( -1, "ATTR_WORLD_X_LOC",	AttrID::Pack ( ATTR_WORLD_X_LOC ).ToRaw ());
 	state.SetField ( -1, "ATTR_WORLD_Y_LOC",	AttrID::Pack ( ATTR_WORLD_Y_LOC ).ToRaw ());
@@ -336,9 +336,9 @@ void MOAIAbstractBaseTransform::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractBaseTransform::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIAbstractBaseTransform::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAINode::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "getWorldDir",		_getWorldDir },
@@ -363,7 +363,7 @@ void MOAIAbstractBaseTransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

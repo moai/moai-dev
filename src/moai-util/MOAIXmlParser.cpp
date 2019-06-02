@@ -10,7 +10,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 #include <tinyxml.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -251,7 +251,8 @@ void MOAIXmlParser::Parse ( MOAILuaState& state, TiXmlNode* node ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIXmlParser::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIXmlParser::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 
 	state.SetField ( -1, "DONE",				( u32 )ZLXmlReader::DONE );
 	state.SetField ( -1, "ELEMENT",				( u32 )ZLXmlReader::ELEMENT );
@@ -269,7 +270,8 @@ void MOAIXmlParser::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIXmlParser::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIXmlParser::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 
 	luaL_Reg regTable[] = {
 		{ "getElementAttribute",	_getElementAttribute },

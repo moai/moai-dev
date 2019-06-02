@@ -62,8 +62,8 @@ protected:
 // MOAIGfxMgrGL_GPUCacheGL
 //================================================================//
 class MOAIGfxMgrGL_GPUCacheGL :
-	virtual public MOAIGfxMgrGLComponents,
-	virtual public MOAIGfxMgr_GPUCache {
+	public virtual MOAIGfxMgrGLComponents,
+	public virtual MOAIGfxMgr_GPUCache {
 protected:
 
 	static const u32 MAX_TEXTURE_UNITS = 32; // enough? will need more flags below if not.

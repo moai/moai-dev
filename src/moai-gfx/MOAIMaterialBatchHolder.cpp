@@ -304,12 +304,12 @@ MOAIMaterialBatchHolder::~MOAIMaterialBatchHolder () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatchHolder::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIMaterialBatchHolder::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatchHolder::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIMaterialBatchHolder::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getBlendMode",			_getBlendMode },
@@ -337,13 +337,13 @@ void MOAIMaterialBatchHolder::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatchHolder::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIMaterialBatchHolder::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatchHolder::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIMaterialBatchHolder::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
 }

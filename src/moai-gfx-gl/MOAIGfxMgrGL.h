@@ -25,13 +25,13 @@ protected:
 //================================================================//
 class MOAIGfxMgrGL :
 	public ZLContextClass < MOAIGfxMgrGL >,
-	virtual public MOAIGfxMgrGLComponents,
-	virtual public MOAIGfxMgr,
-	virtual public MOAIGfxMgrGL_GPUCacheGL,
-	virtual public MOAIGfxMgrGL_PipelineClerkGL,
-	virtual public MOAIGfxMgrGL_RenderTreeGL,
-	virtual public MOAIGfxMgrGL_ResourceClerkGL,
-	virtual public MOAIGfxMgrGL_VertexCacheGL {
+	public virtual MOAIGfxMgrGLComponents,
+	public virtual MOAIGfxMgr,
+	public virtual MOAIGfxMgrGL_GPUCacheGL,
+	public virtual MOAIGfxMgrGL_PipelineClerkGL,
+	public virtual MOAIGfxMgrGL_RenderTreeGL,
+	public virtual MOAIGfxMgrGL_ResourceClerkGL,
+	public virtual MOAIGfxMgrGL_VertexCacheGL {
 protected:
 
 	bool									mHasContext;
@@ -104,7 +104,7 @@ public:
 	u32						LogErrors					();
 							MOAIGfxMgrGL				();
 							~MOAIGfxMgrGL				();
-	void					RegisterLuaClass			( MOAILuaState& state );
+	void					MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
 	void					ReportTextureAlloc 			( cc8* name, size_t size );
 	void					ReportTextureFree 			( cc8* name, size_t size );
 	void					ResetDrawCount				();

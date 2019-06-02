@@ -73,7 +73,7 @@ MOAIInputDevice::~MOAIInputDevice () {
 }
 
 //----------------------------------------------------------------//
-void MOAIInputDevice::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIInputDevice::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getHardwareInfo",		_getHardwareInfo },
@@ -85,7 +85,7 @@ void MOAIInputDevice::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIInputDevice::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIInputDevice::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
 

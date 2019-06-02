@@ -110,12 +110,14 @@ void MOAITaskQueue::PushTask ( MOAITask& task ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITaskQueue::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAITaskQueue::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAITaskQueue::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAITaskQueue::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 	UNUSED ( state );
 }
 

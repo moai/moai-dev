@@ -27,7 +27,7 @@ private:
 	@text	Deck of surface edge lists. Unused in this version of Moai.
 */
 class MOAISurfaceDeck2D :
-	virtual public MOAIStandardDeck {
+	public virtual MOAIStandardDeck {
 private:
 
 	ZLLeanArray < MOAISurfaceBrush2D > mBrushes;
@@ -61,8 +61,8 @@ public:
 	//void			GatherSurfaces			( MOAIGrid& grid, MOAIDeckRemapper* remapper, ZLVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1, MOAISurfaceSampler2D& sampler );
 					MOAISurfaceDeck2D		();
 					~MOAISurfaceDeck2D		();
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

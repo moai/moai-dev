@@ -73,9 +73,13 @@ template < typename TYPE >
 void MOAILuaFactoryClass < TYPE >::Register () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 template < typename TYPE >
-void MOAILuaFactoryClass < TYPE >::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAILuaFactoryClass < TYPE >::MOAILuaClass_RegisterLuaClass ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "getClassName",			_getClassName },
@@ -142,9 +146,13 @@ void MOAILuaSingletonClass < TYPE >::Register () {
 	this->InitLuaSingletonClass ( *type, state );
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 template < typename TYPE >
-void MOAILuaSingletonClass < TYPE >::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAILuaSingletonClass < TYPE >::MOAILuaClass_RegisterLuaClass ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "getClassName",		_getClassName },

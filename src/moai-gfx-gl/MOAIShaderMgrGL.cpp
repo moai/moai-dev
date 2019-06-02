@@ -26,7 +26,7 @@
 #include <moai-gfx-gl/shaders/MOAIMeshShaderGL-vsh.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -275,7 +275,7 @@ MOAIShaderMgrGL::~MOAIShaderMgrGL () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderMgrGL::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIShaderMgrGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	state.SetField ( -1, "DECK2D_SHADER",			( u32 )MOAIShaderPresetEnum::DECK2D_SHADER );
 	state.SetField ( -1, "DECK2D_SNAPPING_SHADER",	( u32 )MOAIShaderPresetEnum::DECK2D_SNAPPING_SHADER );
@@ -297,6 +297,6 @@ void MOAIShaderMgrGL::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderMgrGL::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIShaderMgrGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }

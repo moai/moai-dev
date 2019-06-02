@@ -160,7 +160,8 @@ bool MOAIInstanceEventSource::PushListenerTable ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIInstanceEventSource::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIInstanceEventSource::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 
 	luaL_Reg regTable [] = {
 		{ "getListener",		_getListener },

@@ -77,15 +77,15 @@ void MOAICompassSensor::ParseEvent ( ZLStream& eventStream ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICompassSensor::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAICompassSensor::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAISensor::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAISensor, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAICompassSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAICompassSensor::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAISensor::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAISensor, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "getHeading",			_getHeading },

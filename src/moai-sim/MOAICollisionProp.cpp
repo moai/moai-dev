@@ -31,7 +31,7 @@
 #endif
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -397,10 +397,10 @@ void MOAICollisionProp::Move ( ZLVec3D move, u32 detach, u32 maxSteps ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionProp::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAICollisionProp::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAIAbstractProp::RegisterLuaClass ( state );
-	MOAIDeckHolderWithIndex::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractProp, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckHolderWithIndex, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	
 	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAICollisionProp >( TOTAL_DEBUG_LINE_STYLES );
 	
@@ -437,10 +437,10 @@ void MOAICollisionProp::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionProp::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAICollisionProp::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAIAbstractProp::RegisterLuaFuncs ( state );
-	MOAIDeckHolderWithIndex::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractProp, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckHolderWithIndex, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "collisionMove",		_collisionMove },
@@ -455,21 +455,21 @@ void MOAICollisionProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionProp::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAICollisionProp::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
-	MOAIAbstractProp::SerializeIn ( state, serializer );
-	MOAIDeckHolderWithIndex::SerializeIn ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractProp, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckHolderWithIndex, MOAILuaObject_SerializeIn ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionProp::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAICollisionProp::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	
-	MOAIAbstractProp::SerializeOut ( state, serializer );
-	MOAIDeckHolderWithIndex::SerializeOut ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractProp, MOAILuaObject_SerializeOut ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckHolderWithIndex, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

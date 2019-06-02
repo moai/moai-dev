@@ -23,7 +23,7 @@ public:
 };
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -242,7 +242,8 @@ void MOAIGridPathGraph::PushNeighbors ( MOAIPathFinder& pathFinder, ZLIndex node
 }
 
 //----------------------------------------------------------------//
-void MOAIGridPathGraph::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIGridPathGraph::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIPathGraph, MOAILuaObject_RegisterLuaClass ( composer, state ));
 
 	state.SetField ( -1, "MANHATTAN_DISTANCE", ( u32 )MANHATTAN_DISTANCE );
 	state.SetField ( -1, "DIAGONAL_DISTANCE", ( u32 )DIAGONAL_DISTANCE );
@@ -252,8 +253,8 @@ void MOAIGridPathGraph::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGridPathGraph::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAIPathGraph::RegisterLuaFuncs ( state );
+void MOAIGridPathGraph::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIPathGraph, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "setGrid",			_setGrid },

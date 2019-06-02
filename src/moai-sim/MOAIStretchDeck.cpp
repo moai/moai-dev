@@ -7,7 +7,7 @@
 #include <moai-sim/MOAIStretchDeck.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -66,15 +66,15 @@ MOAIStretchDeck::~MOAIStretchDeck () {
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchDeck::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIStretchDeck::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIStretchDeck::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "setStretchFactor",		_setStretchFactor },
@@ -85,7 +85,7 @@ void MOAIStretchDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

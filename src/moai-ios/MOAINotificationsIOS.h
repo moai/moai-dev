@@ -69,7 +69,7 @@ public:
 	void	NotifyLocalNotificationReceived     ( UILocalNotification* notification );
 	void	NotifyRemoteNotificationReceived	( NSDictionary* notification );
 	void	NotifyRemoteRegistrationComplete	( NSData* token, NSError *error );
-	void	RegisterLuaClass					( MOAILuaState& state );
+	void	MOAILuaObject_RegisterLuaClass					( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif  //DISABLE_NOTIFICATIONS

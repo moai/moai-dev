@@ -738,7 +738,8 @@ int MOAIStream::ReadFormat ( MOAILuaState& state, int idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIStream::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIStream::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 
 	state.SetField ( -1, "SEEK_CUR", ( u32 )SEEK_CUR );
 	state.SetField ( -1, "SEEK_END", ( u32 )SEEK_END );
@@ -754,7 +755,8 @@ void MOAIStream::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIStream::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIStream::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 
 	luaL_Reg regTable [] = {
 		{ "collapse",			_collapse },

@@ -5,7 +5,7 @@
 #include <moai-sim/MOAIPathGraph.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -25,11 +25,11 @@ MOAIPathGraph::~MOAIPathGraph () {
 }
 
 //----------------------------------------------------------------//
-void MOAIPathGraph::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIPathGraph::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIPathGraph::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIPathGraph::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }

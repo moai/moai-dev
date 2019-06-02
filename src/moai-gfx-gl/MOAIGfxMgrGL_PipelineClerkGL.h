@@ -52,7 +52,7 @@ private:
 // MOAIGfxMgrGL_PipelineClerkGL
 //================================================================//
 class MOAIGfxMgrGL_PipelineClerkGL :
-	virtual public MOAIGfxMgrGLComponents {
+	public virtual MOAIGfxMgrGLComponents {
 public:
 
 	enum {

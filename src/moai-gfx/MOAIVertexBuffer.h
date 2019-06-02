@@ -26,8 +26,8 @@ public:
 					MOAIVertexBuffer		();
 					~MOAIVertexBuffer		();
 	void			PrintVertices			( MOAIVertexFormat& vertexFormat );
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

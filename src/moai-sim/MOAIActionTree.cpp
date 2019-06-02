@@ -99,12 +99,12 @@ MOAIActionTree::~MOAIActionTree () {
 }
 
 //----------------------------------------------------------------//
-void MOAIActionTree::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIActionTree::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIActionTree::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIActionTree::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getRoot",				_getRoot },
@@ -138,7 +138,7 @@ void MOAIActionTree::Update ( double step ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

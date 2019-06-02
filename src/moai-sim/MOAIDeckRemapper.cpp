@@ -6,7 +6,7 @@
 #include <moai-sim/MOAITileFlags.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -90,17 +90,17 @@ MOAIDeckRemapper::~MOAIDeckRemapper () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckRemapper::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIDeckRemapper::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAINode::RegisterLuaClass ( state );
-	MOAIDeckProxy::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckProxy, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckRemapper::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIDeckRemapper::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAINode::RegisterLuaFuncs ( state );
-	MOAIDeckProxy::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckProxy, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "reserve",			_reserve },
@@ -113,7 +113,7 @@ void MOAIDeckRemapper::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

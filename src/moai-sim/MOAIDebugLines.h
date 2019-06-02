@@ -95,7 +95,7 @@ public:
 	bool			IsVisible				( u32 styleID );
 					MOAIDebugLinesMgr		();
 					~MOAIDebugLinesMgr		();
-	void			RegisterLuaClass		( MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >

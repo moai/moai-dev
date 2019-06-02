@@ -6,7 +6,7 @@
 #include <moai-gfx-gl/MOAIGfxMgrGL.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -160,15 +160,15 @@ MOAIFrameBufferGL::~MOAIFrameBufferGL () {
 }
 
 //----------------------------------------------------------------//
-void MOAIFrameBufferGL::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIFrameBufferGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIFrameBuffer::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIFrameBuffer, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIFrameBufferGL::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIFrameBufferGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIFrameBuffer::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIFrameBuffer, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "getGrabbedImage",			_getGrabbedImage },

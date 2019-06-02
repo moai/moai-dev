@@ -5,7 +5,7 @@
 #include <moai-sim/MOAIAnimCurveIndex.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -91,15 +91,15 @@ MOAIAnimCurveIndex::~MOAIAnimCurveIndex () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveIndex::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIAnimCurveIndex::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIAnimCurve::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAnimCurve, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveIndex::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIAnimCurveIndex::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIAnimCurve::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAnimCurve, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "getValueAtTime",		_getValueAtTime },
@@ -119,7 +119,7 @@ void MOAIAnimCurveIndex::SetSample ( ZLIndex idx, ZLIndex value ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

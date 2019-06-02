@@ -135,8 +135,8 @@ public:
 	void			Finish					();
 					MOAIKeyboardIOS			();
 					~MOAIKeyboardIOS		();
-	void			PushText				( MOAILuaState& state );
-	void			RegisterLuaClass		( MOAILuaState& state );
+	void			PushText				( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
 	
 };
 

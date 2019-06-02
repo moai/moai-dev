@@ -82,8 +82,8 @@ public:
 	bool			IsGlobal				( MOAIPartitionHull& hull );
 					MOAIPartition			();
 					~MOAIPartition			();
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void			RemoveHull				( MOAIPartitionHull& hull );
 	void			ReserveLevels			( ZLSize totalLevels );
 	void			SetLevel				( ZLIndex levelID, float cellSize, int width, int height );

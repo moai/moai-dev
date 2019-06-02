@@ -88,14 +88,14 @@ public:
 	bool				Inside						( ZLIndex idx, MOAIMaterialBatch* materials, u32 granularity, ZLVec3D vec, float pad );
 						MOAISpriteDeck2D			();
 						~MOAISpriteDeck2D			();
-	void				RegisterLuaClass			( MOAILuaState& state );
-	void				RegisterLuaFuncs			( MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	void				ReserveLists				( ZLSize total );
 	void				ReservePairs				( ZLSize total );
 	void				ReserveQuads				( ZLSize total );
 	void				ReserveUVQuads				( ZLSize total );
-	void				SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
-	void				SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
+	void				MOAILuaObject_SerializeIn					( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void				MOAILuaObject_SerializeOut				( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 	void				SetList						( ZLIndex idx, ZLIndex basePairID, ZLSize totalPairs );
 	void				SetPair						( ZLIndex idx, ZLIndex uvRectID, ZLIndex screenRectID, ZLIndex materialID );
 	void				SetQuad						( ZLIndex idx, ZLQuad& quad );

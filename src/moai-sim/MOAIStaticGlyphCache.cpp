@@ -66,13 +66,13 @@ MOAIStaticGlyphCache::~MOAIStaticGlyphCache () {
 }
 
 //----------------------------------------------------------------//
-void MOAIStaticGlyphCache::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAIGlyphCache::RegisterLuaClass ( state );
+void MOAIStaticGlyphCache::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGlyphCache, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIStaticGlyphCache::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAIGlyphCache::RegisterLuaFuncs ( state );
+void MOAIStaticGlyphCache::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGlyphCache, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 }
 
 //----------------------------------------------------------------//
@@ -84,13 +84,13 @@ void MOAIStaticGlyphCache::ReserveTextures ( u32 total ) {
 
 
 //----------------------------------------------------------------//
-void MOAIStaticGlyphCache::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIStaticGlyphCache::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
 }
 
 //----------------------------------------------------------------//
-void MOAIStaticGlyphCache::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIStaticGlyphCache::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
 }

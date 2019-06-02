@@ -39,12 +39,12 @@ MOAIParticlePlugin::~MOAIParticlePlugin () {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticlePlugin::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIParticlePlugin::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIParticlePlugin::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIParticlePlugin::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable[] = {
 		{ "getSize",			_getSize },

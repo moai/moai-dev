@@ -7,7 +7,7 @@
 #include <moai-sim/MOAISim.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -260,9 +260,9 @@ MOAIColor::~MOAIColor () {
 }
 
 //----------------------------------------------------------------//
-void MOAIColor::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIColor::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAINode::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	
 	state.SetField ( -1, "ATTR_R_COL",		AttrID_ATTR_R_COL ().ToRaw ());
 	state.SetField ( -1, "ATTR_G_COL",		AttrID_ATTR_G_COL ().ToRaw ());
@@ -283,9 +283,9 @@ void MOAIColor::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIColor::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIColor::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAINode::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "getColor",				_getColor },
@@ -300,7 +300,7 @@ void MOAIColor::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

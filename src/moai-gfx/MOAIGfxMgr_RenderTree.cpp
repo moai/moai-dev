@@ -7,7 +7,7 @@
 #include <moai-gfx/MOAIGfxMgr_RenderTree.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -69,7 +69,7 @@ void MOAIGfxMgr_RenderTree::PushDrawable ( MOAILuaObject* drawable ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgr_RenderTree::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIGfxMgr_RenderTree::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getRenderCount",				_getRenderCount },
@@ -82,7 +82,7 @@ void MOAIGfxMgr_RenderTree::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgr_RenderTree::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIGfxMgr_RenderTree::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
 

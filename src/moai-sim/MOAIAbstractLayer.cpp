@@ -6,7 +6,7 @@
 #include <moai-sim/MOAIColor.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -194,7 +194,7 @@ MOAIAbstractLayer::~MOAIAbstractLayer () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractLayer::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIAbstractLayer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	state.SetField ( -1, "CLEAR_ALWAYS",			( u32 )CLEAR_ALWAYS );
 	state.SetField ( -1, "CLEAR_NEVER",				( u32 )CLEAR_NEVER );
@@ -202,7 +202,7 @@ void MOAIAbstractLayer::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractLayer::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIAbstractLayer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "draw",						_draw },
@@ -235,7 +235,7 @@ void MOAIAbstractLayer::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

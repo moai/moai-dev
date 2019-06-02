@@ -91,13 +91,14 @@ MOAIBox2DRopeJoint::~MOAIBox2DRopeJoint () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DRopeJoint::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAIBox2DJoint::RegisterLuaClass ( state );
+void MOAIBox2DRopeJoint::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIBox2DJoint, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DRopeJoint::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAIBox2DJoint::RegisterLuaFuncs ( state );
+void MOAIBox2DRopeJoint::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIBox2DJoint, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	
 	luaL_Reg regTable [] = {
 		{ "getLimitState",			_getLimitState },
 		{ "getMaxLength",			_getMaxLength },

@@ -72,13 +72,13 @@ MOAIGfxBuffer::~MOAIGfxBuffer () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBuffer::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAIStream::RegisterLuaClass ( state );
+void MOAIGfxBuffer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIStream, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAIStream::RegisterLuaFuncs ( state );
+void MOAIGfxBuffer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIStream, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "copyFromStream",			_copyFromStream },
@@ -101,7 +101,7 @@ void MOAIGfxBuffer::Reserve ( ZLSize size ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIGfxBuffer::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 
 	u32 size = state.GetFieldValue < cc8*, u32 >( -1, "mSize", 0 );
@@ -123,7 +123,7 @@ void MOAIGfxBuffer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seriali
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBuffer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIGfxBuffer::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
 
 	ZLSize size = this->GetLength ();

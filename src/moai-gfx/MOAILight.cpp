@@ -7,7 +7,7 @@
 #include <moai-gfx/MOAILightFormat.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -88,15 +88,15 @@ MOAILight::~MOAILight () {
 }
 
 //----------------------------------------------------------------//
-void MOAILight::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAILight::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAINode::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAILight::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAILight::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAINode::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "getFormat",				_getFormat },
@@ -121,7 +121,7 @@ void MOAILight::SetFormat ( MOAILightFormat* format ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

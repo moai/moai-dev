@@ -5,7 +5,7 @@
 #include <moai-sim/MOAIGrid.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -293,15 +293,15 @@ void MOAIGrid::OnResize () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGrid::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIGrid::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIGridSpace::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGridSpace, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIGrid::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIGrid::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIGridSpace::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGridSpace, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "clearTileFlags",		_clearTileFlags },
@@ -321,10 +321,10 @@ void MOAIGrid::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGrid::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIGrid::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 
-	this->MOAIGridSpace::SerializeIn ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGridSpace, MOAILuaObject_SerializeIn ( composer, state, serializer ));
 	this->mTiles.Init ( this->MOAIGridSpace::GetTotalCells ());
 
 	state.PushField ( -1, "mData" );
@@ -353,10 +353,10 @@ void MOAIGrid::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer )
 }
 
 //----------------------------------------------------------------//
-void MOAIGrid::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIGrid::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
 
-	this->MOAIGridSpace::SerializeOut ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGridSpace, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 
 	ZLLeanArray < u8 > zip;
 	ZLZip::Deflate ( this->mTiles.GetBuffer (), this->mTiles.Size () * sizeof ( u32 ), zip );

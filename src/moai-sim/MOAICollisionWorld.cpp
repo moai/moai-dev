@@ -40,7 +40,7 @@ private:
 
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -375,10 +375,10 @@ void MOAICollisionWorld::PruneOverlaps ( MOAICollisionProp& prop ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionWorld::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAICollisionWorld::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIAction::RegisterLuaClass ( state );
-	MOAIPartition::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIPartition, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	
 	state.SetField ( -1, "OVERLAP_BEGIN",				( u32 )OVERLAP_BEGIN );
 	state.SetField ( -1, "OVERLAP_END",					( u32 )OVERLAP_END );
@@ -386,10 +386,10 @@ void MOAICollisionWorld::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionWorld::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAICollisionWorld::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAIAction::RegisterLuaFuncs ( state );
-	MOAIPartition::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIPartition, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "processOverlaps",	_processOverlaps },
@@ -401,17 +401,17 @@ void MOAICollisionWorld::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionWorld::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	MOAIAction::SerializeIn ( state, serializer );
+void MOAICollisionWorld::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_SerializeIn ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionWorld::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	MOAIAction::SerializeOut ( state, serializer );
+void MOAICollisionWorld::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

@@ -76,8 +76,8 @@ public:
 						~MOAIGeometryWriter		();
 	static void			OffsetIndices			( ZLStream& idxStream, size_t length, s32 offset );
 	static void			PruneVertices			( const MOAIVertexFormat& format, MOAIStream& vtxStream, MOAIStream& idxStream );
-	void				RegisterLuaClass		( MOAILuaState& state );
-	void				RegisterLuaFuncs		( MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	static void			SnapCoords				( const MOAIVertexFormat& format, ZLStream& vtxStream, size_t length, float xSnap, float ySnap, float zSnap );
 	static void			TranslateCoords			( const MOAIVertexFormat& format, ZLStream& vtxStream, size_t length, float xOff, float yOff, float zOff );
 	static void			WriteBox				( const MOAIVertexFormat& format, ZLStream& vtxStream, const ZLBox& box );

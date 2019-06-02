@@ -11,7 +11,7 @@
 #include <moai-sim/MOAITransform.h>
 
 //================================================================//
-// local
+// lua
 //==========================================================s======//
 
 //----------------------------------------------------------------//
@@ -34,35 +34,35 @@ MOAITableViewLayer::~MOAITableViewLayer () {
 }
 
 //----------------------------------------------------------------//
-void MOAITableViewLayer::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAITableViewLayer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAITableLayer::RegisterLuaClass ( state );
-	MOAIAbstractViewLayer::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITableLayer, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractViewLayer, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAITableViewLayer::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAITableViewLayer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAITableLayer::RegisterLuaFuncs ( state );
-	MOAIAbstractViewLayer::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITableLayer, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractViewLayer, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAITableViewLayer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAITableViewLayer::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 
-	MOAITableLayer::SerializeIn ( state, serializer );
-	MOAIAbstractViewLayer::SerializeIn ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITableLayer, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractViewLayer, MOAILuaObject_SerializeIn ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//
-void MOAITableViewLayer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAITableViewLayer::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 
-	MOAITableLayer::SerializeOut ( state, serializer );
-	MOAIAbstractViewLayer::SerializeOut ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITableLayer, MOAILuaObject_SerializeOut ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractViewLayer, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

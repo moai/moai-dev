@@ -6,7 +6,7 @@
 #include <moai-sim/MOAIVecPathGraph.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -202,14 +202,13 @@ void MOAIVecPathGraph::PushNeighbors ( MOAIPathFinder& pathFinder, ZLIndex nodeI
 }
 
 //----------------------------------------------------------------//
-void MOAIVecPathGraph::RegisterLuaClass ( MOAILuaState& state ) {
-
-	UNUSED ( state );
+void MOAIVecPathGraph::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIPathGraph, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIVecPathGraph::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAIPathGraph::RegisterLuaFuncs ( state );
+void MOAIVecPathGraph::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIPathGraph, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "areNeighbors",			_areNeighbors },

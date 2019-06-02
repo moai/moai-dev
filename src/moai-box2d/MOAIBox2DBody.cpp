@@ -9,7 +9,7 @@
 #include <moai-box2d/MOAIBox2DWorld.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -1056,9 +1056,9 @@ MOAIBox2DBody::~MOAIBox2DBody () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DBody::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIBox2DBody::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIAbstractBaseTransform::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractBaseTransform, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	
 	state.SetField ( -1, "DYNAMIC",		( u32 )b2_dynamicBody );
 	state.SetField ( -1, "KINEMATIC",	( u32 )b2_kinematicBody );
@@ -1066,9 +1066,9 @@ void MOAIBox2DBody::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DBody::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIBox2DBody::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAIAbstractBaseTransform::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractBaseTransform, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "addChain",				_addChain },
@@ -1122,7 +1122,7 @@ void MOAIBox2DBody::SetBody ( b2Body* body ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

@@ -7,7 +7,7 @@
 #include <moai-sim/MOAIProjectionProp.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -50,8 +50,8 @@ MOAIProjectionProp::~MOAIProjectionProp () {
 }
 
 //----------------------------------------------------------------//
-void MOAIProjectionProp::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAIPartitionHull::RegisterLuaClass ( state );
+void MOAIProjectionProp::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIPartitionHull, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	
 	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAIProjectionProp >( TOTAL_DEBUG_LINE_STYLES );
 	
@@ -61,8 +61,8 @@ void MOAIProjectionProp::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIProjectionProp::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAIPartitionHull::RegisterLuaFuncs ( state );
+void MOAIProjectionProp::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIPartitionHull, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "init",					_init },
@@ -73,19 +73,19 @@ void MOAIProjectionProp::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIProjectionProp::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIProjectionProp::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
-	MOAIPartitionHull::SerializeIn ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIPartitionHull, MOAILuaObject_SerializeIn ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//
-void MOAIProjectionProp::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIProjectionProp::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	
-	MOAIPartitionHull::SerializeOut ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIPartitionHull, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

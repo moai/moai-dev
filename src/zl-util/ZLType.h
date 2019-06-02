@@ -22,6 +22,11 @@ private:
 public:
 
 	//----------------------------------------------------------------//
+	bool operator < ( const ZLTypeID& v ) const {
+		return ( this->mTypeID < v.mTypeID );
+	}
+
+	//----------------------------------------------------------------//
 	bool operator == ( const ZLTypeID& v ) const {
 		return ( this->mTypeID == v.mTypeID );
 	}

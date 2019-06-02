@@ -5,7 +5,7 @@
 #include <moai-sim/MOAIPathTerrainDeck.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -153,12 +153,12 @@ MOAIPathTerrainDeck::~MOAIPathTerrainDeck () {
 }
 
 //----------------------------------------------------------------//
-void MOAIPathTerrainDeck::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIPathTerrainDeck::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIPathTerrainDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIPathTerrainDeck::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getMask",				_getMask },

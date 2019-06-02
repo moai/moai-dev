@@ -9,7 +9,7 @@
 #include <moai-box2d/MOAIBox2DWorld.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -257,7 +257,7 @@ void MOAIBox2DArbiter::PreSolve ( b2Contact* contact, const b2Manifold* oldManif
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DArbiter::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIBox2DArbiter::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	state.SetField ( -1, "ALL", ( u32 )ALL );
 	state.SetField ( -1, "BEGIN", ( u32 )BEGIN );
@@ -274,7 +274,7 @@ void MOAIBox2DArbiter::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DArbiter::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIBox2DArbiter::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getContactNormal",			_getContactNormal },

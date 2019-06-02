@@ -990,7 +990,8 @@ void MOAILuaRuntime::PrintTracking ( MOAILuaObject& object ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILuaRuntime::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAILuaRuntime::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 
 	state.SetField ( -1, "TRACK_OBJECTS",					( u32 )TRACK_OBJECTS );
 	state.SetField ( -1, "TRACK_OBJECTS_STACK_TRACE",		( u32 )TRACK_OBJECTS_STACK_TRACE );
@@ -1016,7 +1017,8 @@ void MOAILuaRuntime::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILuaRuntime::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAILuaRuntime::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 	UNUSED ( state );
 }
 

@@ -36,12 +36,12 @@ void MOAIGlyphCache::PostRender ( MOAIGlyph& glyph ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGlyphCache::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIGlyphCache::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIGlyphCache::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIGlyphCache::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
 

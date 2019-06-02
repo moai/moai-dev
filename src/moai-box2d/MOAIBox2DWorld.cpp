@@ -74,7 +74,7 @@ MOAIBox2DPrim::MOAIBox2DPrim () :
 }
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -1155,9 +1155,9 @@ MOAIBox2DWorld::~MOAIBox2DWorld () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DWorld::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIBox2DWorld::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIAction::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	
 	state.SetField ( -1, "DEBUG_DRAW_SHAPES", ( u32 )DEBUG_DRAW_SHAPES );
 	state.SetField ( -1, "DEBUG_DRAW_JOINTS", ( u32 )DEBUG_DRAW_JOINTS );
@@ -1169,9 +1169,9 @@ void MOAIBox2DWorld::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DWorld::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIBox2DWorld::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAIAction::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "addBody",					_addBody },
@@ -1262,7 +1262,7 @@ void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DJoint& joint ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

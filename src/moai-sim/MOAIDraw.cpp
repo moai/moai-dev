@@ -1514,7 +1514,7 @@ MOAIDraw::~MOAIDraw () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDraw::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIDraw::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 
 	state.SetField ( -1, "PROJ_MATRIX",					( u32 )MOAIGfxMgr::VIEW_TO_CLIP_MTX );

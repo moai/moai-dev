@@ -169,7 +169,7 @@ public:
 };
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -1081,7 +1081,7 @@ void MOAIVectorTesselator::ReadShapes ( ZLStream& stream ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIVectorTesselator::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
 	state.SetField ( -1, "FILL_NONE",					( u32 )MOAIVectorStyle::FILL_NONE );
 	state.SetField ( -1, "FILL_SOLID",					( u32 )MOAIVectorStyle::FILL_SOLID );
@@ -1115,7 +1115,7 @@ void MOAIVectorTesselator::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIVectorTesselator::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "clearShapes",			_clearShapes },

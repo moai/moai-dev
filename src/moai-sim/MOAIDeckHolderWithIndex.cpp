@@ -8,7 +8,7 @@
 #include <moai-sim/MOAIDeckHolderWithIndex.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -61,17 +61,17 @@ MOAIDeckHolderWithIndex::~MOAIDeckHolderWithIndex () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckHolderWithIndex::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIDeckHolderWithIndex::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAIDeckHolder::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckHolder, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	
 	state.SetField ( -1, "ATTR_INDEX", AttrID::Pack ( ATTR_INDEX ).ToRaw ());
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckHolderWithIndex::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIDeckHolderWithIndex::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAIDeckHolder::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckHolder, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "getIndex",				_getIndex },
@@ -83,19 +83,19 @@ void MOAIDeckHolderWithIndex::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckHolderWithIndex::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIDeckHolderWithIndex::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
-	MOAIDeckHolder::SerializeIn ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckHolder, MOAILuaObject_SerializeIn ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckHolderWithIndex::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIDeckHolderWithIndex::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 
-	MOAIDeckHolder::SerializeOut ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckHolder, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

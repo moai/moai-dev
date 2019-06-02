@@ -14,7 +14,7 @@
 #include <moai-sim/MOAISurfaceSampler2D.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -312,7 +312,7 @@ bool MOAIPartitionHull::PrepareForInsertion ( const MOAIPartition& partition ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionHull::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIPartitionHull::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 		
 	state.SetField ( -1, "ATTR_PARTITION",				AttrID::Pack ( ATTR_PARTITION ).ToRaw ());
 	state.SetField ( -1, "ATTR_WORLD_BOUNDS_TRAIT",		AttrID::Pack ( ATTR_WORLD_BOUNDS_TRAIT ).ToRaw ());
@@ -323,7 +323,7 @@ void MOAIPartitionHull::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionHull::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIPartitionHull::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "getPartition",			_getPartition },
@@ -383,7 +383,7 @@ void MOAIPartitionHull::WasRemovedFromPartition () {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

@@ -30,7 +30,7 @@ public:
 	//----------------------------------------------------------------//
 					MOAIMath			();
 					~MOAIMath			();
-	void			RegisterLuaClass	( MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

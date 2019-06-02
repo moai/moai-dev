@@ -121,15 +121,15 @@ MOAIHashWriterCrypto::~MOAIHashWriterCrypto () {
 }
 
 //----------------------------------------------------------------//
-void MOAIHashWriterCrypto::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIHashWriterCrypto::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIHashWriter::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHashWriter, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIHashWriterCrypto::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIHashWriterCrypto::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIHashWriter::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHashWriter, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "openMD5",			_openMD5 },

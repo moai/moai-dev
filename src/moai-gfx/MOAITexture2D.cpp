@@ -280,13 +280,13 @@ MOAITexture2D::~MOAITexture2D () {
 }
 
 //----------------------------------------------------------------//
-void MOAITexture2D::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAITexture::RegisterLuaClass ( state );
+void MOAITexture2D::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITexture, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAITexture2D::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAITexture::RegisterLuaFuncs ( state );
+void MOAITexture2D::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITexture, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "load",					_load },
@@ -297,7 +297,7 @@ void MOAITexture2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITexture2D::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAITexture2D::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
 	STLString path = state.GetFieldValue ( -1, "mPath", "" );
 	
@@ -307,7 +307,7 @@ void MOAITexture2D::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seriali
 }
 
 //----------------------------------------------------------------//
-void MOAITexture2D::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAITexture2D::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	
 	STLString path = ZLFileSys::GetRelativePath ( this->mFilename );
 	state.SetField ( -1, "mPath", path.str ());

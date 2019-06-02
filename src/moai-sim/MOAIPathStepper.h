@@ -55,8 +55,8 @@ public:
 					~MOAIPathStepper		();
 	bool			More					();
 	ZLVec2D			Next					();
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void			Start					( MOAIPath& path, float stepSize );
 };
 

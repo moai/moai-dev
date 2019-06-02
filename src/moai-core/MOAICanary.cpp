@@ -44,12 +44,14 @@ MOAICanary::~MOAICanary () {
 }
 
 //----------------------------------------------------------------//
-void MOAICanary::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAICanary::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAICanary::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAICanary::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 
 	luaL_Reg regTable [] = {
 		{ "setMessage",		_setMessage },

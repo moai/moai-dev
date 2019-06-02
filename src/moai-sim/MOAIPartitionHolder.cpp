@@ -6,7 +6,7 @@
 #include <moai-sim/MOAIPartitionHolder.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -86,12 +86,12 @@ MOAIPartitionHolder::~MOAIPartitionHolder () {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionHolder::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIPartitionHolder::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED(state);
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionHolder::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIPartitionHolder::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "clear",						_clear },
@@ -104,5 +104,5 @@ void MOAIPartitionHolder::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//

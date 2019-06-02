@@ -11,7 +11,7 @@
 #include <moai-sim/MOAITransform.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -284,10 +284,10 @@ MOAIPartitionViewLayer::~MOAIPartitionViewLayer () {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionViewLayer::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIPartitionViewLayer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIPartitionHolder::RegisterLuaClass ( state );
-	MOAIAbstractViewLayer::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIPartitionHolder, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractViewLayer, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	
 	state.SetField ( -1, "SORT_NONE",						( u32 )MOAIPartitionResultBuffer::SORT_NONE );
 	state.SetField ( -1, "SORT_ISO",						( u32 )MOAIPartitionResultBuffer::SORT_ISO );
@@ -306,10 +306,10 @@ void MOAIPartitionViewLayer::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionViewLayer::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIPartitionViewLayer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAIPartitionHolder::RegisterLuaFuncs ( state );
-	MOAIAbstractViewLayer::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIPartitionHolder, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractViewLayer, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "getLayerPartition",		MOAIPartitionHolder::_getPartition },
@@ -329,17 +329,17 @@ void MOAIPartitionViewLayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionViewLayer::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	MOAIGraphicsProp::SerializeIn ( state, serializer );
+void MOAIPartitionViewLayer::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGraphicsProp, MOAILuaObject_SerializeIn ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionViewLayer::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	MOAIGraphicsProp::SerializeOut ( state, serializer );
+void MOAIPartitionViewLayer::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGraphicsProp, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

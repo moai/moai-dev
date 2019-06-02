@@ -46,6 +46,10 @@ private:
 	bool			Encode				( ZLStreamAdapter& writer );
 	static bool		IsZipFilename		( cc8* filename );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIDataBuffer )
@@ -73,8 +77,6 @@ public:
 					~MOAIDataBuffer			();
 	void			PushString				( MOAILuaState& state );
 	size_t			Read					( void* buffer, size_t size );
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
 	size_t			Size					();
 	bool			Save					( cc8* filename );
 	void			Unlock					();

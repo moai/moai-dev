@@ -6,7 +6,7 @@
 #include <moai-sim/MOAIPathStepper.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -143,12 +143,12 @@ ZLVec2D MOAIPathStepper::NextVertex () {
 }
 
 //----------------------------------------------------------------//
-void MOAIPathStepper::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIPathStepper::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIPathStepper::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIPathStepper::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getLength",			_getLength },

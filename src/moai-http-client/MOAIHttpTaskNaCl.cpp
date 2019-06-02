@@ -170,15 +170,15 @@ void MOAIHttpTaskNaCl::PerformSync () {
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTaskNaCl::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIHttpTaskNaCl::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIHttpTaskBase::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHttpTaskBase, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTaskNaCl::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIHttpTaskNaCl::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIHttpTaskBase::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHttpTaskBase, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 }
 
 //----------------------------------------------------------------//

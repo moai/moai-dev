@@ -5,7 +5,7 @@
 #include <moai-sim/MOAIEaseDriver.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -185,15 +185,15 @@ u32 MOAIEaseDriver::ParseForSeek ( MOAILuaState& state, int idx, MOAINode* dest,
 }
 
 //----------------------------------------------------------------//
-void MOAIEaseDriver::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIEaseDriver::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAITimer::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITimer, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIEaseDriver::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIEaseDriver::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAITimer::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITimer, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "reserveLinks",			_reserveLinks },
@@ -249,7 +249,7 @@ void MOAIEaseDriver::SetLink ( ZLIndex idx, MOAINode* dest, ZLAttrID destAttrID,
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

@@ -9,7 +9,7 @@
 #include <moai-sim/MOAIPathTerrainDeck.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -456,12 +456,12 @@ void MOAIPathFinder::PushState ( ZLIndex nodeID, float cost, float estimate ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIPathFinder::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIPathFinder::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIPathFinder::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIPathFinder::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "findPath",					_findPath },

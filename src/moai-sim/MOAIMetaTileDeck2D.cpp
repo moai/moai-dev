@@ -18,7 +18,7 @@ MOAIMetaTile::MOAIMetaTile () :
 }
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -128,15 +128,15 @@ MOAIMetaTileDeck2D::~MOAIMetaTileDeck2D () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMetaTileDeck2D::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIMetaTileDeck2D::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIMetaTileDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIMetaTileDeck2D::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "reserveMetaTiles",	_reserveMetaTiles },
@@ -150,19 +150,19 @@ void MOAIMetaTileDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMetaTileDeck2D::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIMetaTileDeck2D::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 
-	MOAIDeck::SerializeIn ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_SerializeIn ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//
-void MOAIMetaTileDeck2D::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIMetaTileDeck2D::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 
-	MOAIDeck::SerializeOut ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

@@ -6,7 +6,7 @@
 #include <moai-sim/MOAIParticleSystem.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -55,15 +55,15 @@ MOAIParticleTimedEmitter::~MOAIParticleTimedEmitter () {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleTimedEmitter::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIParticleTimedEmitter::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	this->MOAIParticleEmitter::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIParticleEmitter, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleTimedEmitter::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIParticleTimedEmitter::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	this->MOAIParticleEmitter::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIParticleEmitter, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "setFrequency",		_setFrequency },
@@ -81,7 +81,7 @@ void MOAIParticleTimedEmitter::SetFrequencyRange ( float min, float max ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

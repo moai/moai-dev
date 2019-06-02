@@ -566,10 +566,10 @@ void MOAICameraFitter2D::SnapToTargetScale ( MOAITransform& camera ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICameraFitter2D::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAICameraFitter2D::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIAction::RegisterLuaClass ( state );
-	MOAINode::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaClass ( composer, state ));
 
 	state.SetField ( -1, "FITTING_MODE_SEEK_LOC", ( u32 )FITTING_MODE_SEEK_LOC );
 	state.SetField ( -1, "FITTING_MODE_SEEK_SCALE", ( u32 )FITTING_MODE_SEEK_SCALE );
@@ -581,10 +581,10 @@ void MOAICameraFitter2D::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICameraFitter2D::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAICameraFitter2D::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIAction::RegisterLuaFuncs ( state );
-	MOAINode::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "clearAnchors",		_clearAnchors },
@@ -695,7 +695,7 @@ void MOAICameraFitter2D::UpdateTracking () {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

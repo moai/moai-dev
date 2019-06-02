@@ -299,9 +299,9 @@ void MOAIAudioSamplerCocoa::Resume () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAudioSamplerCocoa::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIAudioSamplerCocoa::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIInstanceEventSource::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaClass ( composer, state ));
 
 	state.SetField ( -1, "EVENT_BUFFER",	( u32 )EVENT_BUFFER );
 	
@@ -315,9 +315,9 @@ void MOAIAudioSamplerCocoa::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAudioSamplerCocoa::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIAudioSamplerCocoa::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIInstanceEventSource::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "getLevels",				_getLevels },

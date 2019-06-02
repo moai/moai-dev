@@ -7,7 +7,7 @@
 #include <moai-sim/MOAISpriteDeck2D.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -94,12 +94,12 @@ MOAIDeckHolder::~MOAIDeckHolder () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckHolder::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIDeckHolder::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckHolder::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIDeckHolder::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "getDeck",				_getDeck },
@@ -111,13 +111,13 @@ void MOAIDeckHolder::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckHolder::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIDeckHolder::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
 	this->mDeck.Set ( *this, serializer.MemberIDToObject < MOAIDeck >( state.GetFieldValue < cc8*, MOAISerializerBase::ObjID >( -1, "mDeck", 0 )));
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckHolder::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIDeckHolder::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	
 	state.SetField ( -1, "mDeck", serializer.AffirmMemberID ( this->mDeck ));
 }

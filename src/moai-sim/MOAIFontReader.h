@@ -102,13 +102,13 @@ public:
 						MOAIFontReader			();
 						~MOAIFontReader			();
 	virtual int			OpenFontFile			( cc8* filename );
-	void				RegisterLuaClass		( MOAILuaState& state );
-	void				RegisterLuaFuncs		( MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	virtual int			RenderGlyph				( MOAIImage& image, float x, float y ) = 0;
 	virtual int			SelectFace				( float size ) = 0;
 	virtual int			SelectGlyph				( u32 c ) = 0;
-	void				SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
-	void				SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
+	void				MOAILuaObject_SerializeIn				( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void				MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

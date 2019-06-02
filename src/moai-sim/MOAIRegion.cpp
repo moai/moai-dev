@@ -1171,7 +1171,7 @@ void MOAIRegion::Read ( ZLStream& verts, ZLStream& polySizes ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIRegion::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIRegion::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	state.SetField ( -1, "BOOLEAN_AND",					( u32 )BOOLEAN_AND );
 	state.SetField ( -1, "BOOLEAN_NOT",					( u32 )BOOLEAN_NOT );
@@ -1204,7 +1204,7 @@ void MOAIRegion::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIRegion::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIRegion::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "append",				_append },
@@ -1272,7 +1272,7 @@ void MOAIRegion::ReverseWinding ( const MOAIRegion& region ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIRegion::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIRegion::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 
 	ZLSize nPolys = ( int )lua_objlen ( state, -1 );
@@ -1296,7 +1296,7 @@ void MOAIRegion::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer
 }
 
 //----------------------------------------------------------------//
-void MOAIRegion::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIRegion::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
 	
 	ZLSize nPolys = this->mPolygons.Size ();

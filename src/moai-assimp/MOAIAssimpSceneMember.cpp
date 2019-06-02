@@ -70,12 +70,12 @@ MOAIAssimpSceneMember::~MOAIAssimpSceneMember () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAssimpSceneMember::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIAssimpSceneMember::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIAssimpSceneMember::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIAssimpSceneMember::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getIndex",				_getIndex },

@@ -6,7 +6,7 @@
 #include <moai-sim/MOAIParticleSystem.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -72,15 +72,15 @@ MOAIParticleDistanceEmitter::~MOAIParticleDistanceEmitter () {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleDistanceEmitter::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIParticleDistanceEmitter::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	this->MOAIParticleEmitter::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIParticleEmitter, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleDistanceEmitter::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIParticleDistanceEmitter::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	this->MOAIParticleEmitter::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIParticleEmitter, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "reset",					_reset },
@@ -99,7 +99,7 @@ void MOAIParticleDistanceEmitter::SetDistanceRange ( float min, float max ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

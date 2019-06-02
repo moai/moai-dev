@@ -45,12 +45,12 @@ void MOAIParticleCallbackPlugin::OnRender ( float* particle, float* registers, A
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleCallbackPlugin::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAIParticlePlugin::RegisterLuaClass ( state );
+void MOAIParticleCallbackPlugin::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIParticlePlugin, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleCallbackPlugin::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAIParticlePlugin::RegisterLuaFuncs ( state );
+void MOAIParticleCallbackPlugin::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIParticlePlugin, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 }
 

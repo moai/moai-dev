@@ -136,6 +136,10 @@ private:
 	void					RegisterObject			( MOAILuaObject& object );
 	void					RegisterObject			( MOAILuaState& state, MOAILuaObject& object );
 
+	//----------------------------------------------------------------//
+	void					MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 
 	enum {
@@ -179,8 +183,6 @@ public:
 	bool					PushRef						( MOAILuaState& state, int refID );
 	void					PushTraceback				( MOAILuaState& state );
 	void					PrintTracking				( MOAILuaObject& object );
-	void					RegisterLuaClass			( MOAILuaState& state );
-	void					RegisterLuaFuncs			( MOAILuaState& state );
 	void					RegisterModule				( cc8* name, lua_CFunction loader, bool autoLoad );
 	void					ReportHistogram				( cc8* filename, cc8* trackingGroup );
 	void					ReportLeaksFormatted		( cc8* filename, cc8* trackingGroup );

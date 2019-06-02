@@ -6,7 +6,7 @@
 #include <moai-sim/MOAICameraAnchor2D.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -79,17 +79,17 @@ MOAICameraAnchor2D::~MOAICameraAnchor2D () {
 }
 
 //----------------------------------------------------------------//
-void MOAICameraAnchor2D::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAICameraAnchor2D::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAINode::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaClass ( composer, state ));
 
 	state.SetField ( -1, "INHERIT_LOC", AttrID::Pack ( INHERIT_LOC ).ToRaw ());
 }
 
 //----------------------------------------------------------------//
-void MOAICameraAnchor2D::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAICameraAnchor2D::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAINode::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "setParent",			_setParent },
@@ -101,7 +101,7 @@ void MOAICameraAnchor2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

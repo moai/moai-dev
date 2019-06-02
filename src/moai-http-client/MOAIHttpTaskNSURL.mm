@@ -211,15 +211,15 @@ void MOAIHttpTaskNSURL::PerformSync () {
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTaskNSURL::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIHttpTaskNSURL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIHttpTaskBase::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHttpTaskBase, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTaskNSURL::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIHttpTaskNSURL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAIHttpTaskBase::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHttpTaskBase, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 }
 

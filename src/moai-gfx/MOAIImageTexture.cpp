@@ -49,15 +49,15 @@ MOAIImageTexture::~MOAIImageTexture () {
 }
 
 //----------------------------------------------------------------//
-void MOAIImageTexture::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAIImage::RegisterLuaClass ( state );
-	MOAITexture::RegisterLuaClass ( state );
+void MOAIImageTexture::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIImage, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITexture, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIImageTexture::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAIImage::RegisterLuaFuncs ( state );
-	MOAITexture::RegisterLuaFuncs ( state );
+void MOAIImageTexture::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIImage, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITexture, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "invalidate",					_updateRegion }, // TODO: deprecate
@@ -69,13 +69,13 @@ void MOAIImageTexture::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIImageTexture::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	MOAIImage::SerializeIn ( state, serializer );
+void MOAIImageTexture::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIImage, MOAILuaObject_SerializeIn ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//
-void MOAIImageTexture::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	MOAIImage::SerializeOut ( state, serializer );
+void MOAIImageTexture::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIImage, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//

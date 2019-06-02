@@ -107,7 +107,7 @@ ZLResultCode MOAILuaHeader::Write ( void* buffer, size_t size ) {
 }
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -340,7 +340,8 @@ MOAILuaUtil::~MOAILuaUtil () {
 }
 
 //----------------------------------------------------------------//
-void MOAILuaUtil::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAILuaUtil::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 
 	luaL_Reg regTable[] = {
 		{ "convert",					_convert },
@@ -352,7 +353,8 @@ void MOAILuaUtil::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILuaUtil::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAILuaUtil::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 	UNUSED ( state );
 }
 

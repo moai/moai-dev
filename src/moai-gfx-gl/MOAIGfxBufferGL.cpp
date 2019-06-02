@@ -6,7 +6,7 @@
 #include <moai-gfx-gl/MOAIGfxMgrGL.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -65,18 +65,18 @@ MOAIGfxBufferGL::~MOAIGfxBufferGL () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBufferGL::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAIGfxResourceGL::RegisterLuaClass ( state );
-	MOAIGfxBuffer::RegisterLuaClass ( state );
+void MOAIGfxBufferGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxResourceGL, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxBuffer, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	
 	state.SetField ( -1, "INDEX_BUFFER",			( u32 )ZGL_BUFFER_TARGET_ELEMENT_ARRAY );
 	state.SetField ( -1, "VERTEX_BUFFER",			( u32 )ZGL_BUFFER_TARGET_ARRAY );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBufferGL::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAIGfxResourceGL::RegisterLuaFuncs ( state );
-	MOAIGfxBuffer::RegisterLuaFuncs ( state );
+void MOAIGfxBufferGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxResourceGL, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxBuffer, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "reserveVBOs",			_reserveVBOs },
@@ -102,20 +102,20 @@ void MOAIGfxBufferGL::ReserveVBOs ( ZLSize gpuBuffers ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBufferGL::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIGfxBufferGL::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 
 	u32 totalVBOs = state.GetFieldValue < cc8*, u32 >( -1, "mTotalVBOs", 0 );
 	this->ReserveVBOs ( totalVBOs );
 
-	MOAIGfxBuffer::SerializeIn ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxBuffer, MOAILuaObject_SerializeIn ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBufferGL::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIGfxBufferGL::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	
 	state.SetField < cc8*, MOAILuaSize >( -1, "mTotalVBOs", this->CountVBOs ());
 	
-	MOAIGfxBuffer::SerializeOut ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxBuffer, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }
 
 //================================================================//

@@ -6,7 +6,7 @@
 #include <moai-sim/MOAIParticleSystem.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -274,17 +274,17 @@ MOAIParticleEmitter::~MOAIParticleEmitter () {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleEmitter::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIParticleEmitter::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	this->MOAITransform::RegisterLuaClass ( state );
-	this->MOAIAction::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleEmitter::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIParticleEmitter::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	this->MOAITransform::RegisterLuaFuncs ( state );
-	this->MOAIAction::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "setAngle",			_setAngle },
@@ -303,17 +303,17 @@ void MOAIParticleEmitter::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleEmitter::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIParticleEmitter::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 
-	MOAITransform::SerializeIn ( state, serializer );
-	MOAIAction::SerializeIn ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_SerializeIn ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleEmitter::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIParticleEmitter::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 
-	MOAITransform::SerializeOut ( state, serializer );
-	MOAIAction::SerializeOut ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_SerializeOut ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//
@@ -345,7 +345,7 @@ void MOAIParticleEmitter::Surge ( u32 total ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

@@ -62,7 +62,7 @@ public:
 					MOAIInstanceEventSource		();
 	virtual			~MOAIInstanceEventSource	();
 	bool			PushListenerAndSelf			( u32 eventID, MOAILuaState& state );
-	void			RegisterLuaFuncs			( MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 };
 
 //================================================================//

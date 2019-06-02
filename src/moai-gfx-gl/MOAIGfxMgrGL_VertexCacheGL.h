@@ -14,8 +14,8 @@ class MOAIGfxResourceGL;
 // MOAIGfxMgrGL_VertexCacheGL
 //================================================================//
 class MOAIGfxMgrGL_VertexCacheGL :
-	virtual public MOAIGfxMgrGLComponents,
-	virtual public MOAIGfxMgr_VertexCache {
+	public virtual MOAIGfxMgrGLComponents,
+	public virtual MOAIGfxMgr_VertexCache {
 protected:
 
 	//----------------------------------------------------------------//

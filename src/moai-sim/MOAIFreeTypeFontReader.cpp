@@ -269,8 +269,8 @@ int MOAIFreeTypeFontReader::OpenFontFile ( cc8* filename ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFreeTypeFontReader::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAIFontReader::RegisterLuaClass ( state );
+void MOAIFreeTypeFontReader::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIFontReader, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	
 	state.SetField ( -1, "STROKER_CAP_STYLE_BUTT",				( u32 )FT_STROKER_LINECAP_BUTT );
 	state.SetField ( -1, "STROKER_CAP_STYLE_ROUND",				( u32 )FT_STROKER_LINECAP_ROUND );
@@ -291,8 +291,8 @@ void MOAIFreeTypeFontReader::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFreeTypeFontReader::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAIFontReader::RegisterLuaFuncs ( state );
+void MOAIFreeTypeFontReader::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIFontReader, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "enableAntiAliasing",		_enableAntiAliasing },
@@ -382,13 +382,13 @@ int MOAIFreeTypeFontReader::SelectGlyph ( u32 c ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFreeTypeFontReader::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	MOAIFontReader::SerializeIn ( state, serializer );
+void MOAIFreeTypeFontReader::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIFontReader, MOAILuaObject_SerializeIn ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//
-void MOAIFreeTypeFontReader::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	MOAIFontReader::SerializeOut ( state, serializer );
+void MOAIFreeTypeFontReader::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIFontReader, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//

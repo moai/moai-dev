@@ -6,7 +6,7 @@
 #include <moai-sim/MOAIAnimCurve.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -188,15 +188,15 @@ MOAIAnim::~MOAIAnim () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnim::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIAnim::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAITimer::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITimer, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIAnim::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIAnim::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAITimer::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITimer, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "apply",				_apply },
@@ -238,7 +238,7 @@ void MOAIAnim::SetLink ( ZLIndex linkID, MOAIAnimCurve* curve, MOAINode* target,
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

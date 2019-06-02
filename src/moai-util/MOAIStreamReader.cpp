@@ -25,15 +25,15 @@ MOAIStreamReader::~MOAIStreamReader () {
 }
 
 //----------------------------------------------------------------//
-void MOAIStreamReader::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIStreamReader::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIStreamAdapter::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIStreamAdapter, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIStreamReader::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIStreamReader::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIStreamAdapter::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIStreamAdapter, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "openBase64",			MOAIStreamAdapter::_openBase64Reader },

@@ -36,7 +36,7 @@ MOAICellCoord::~MOAICellCoord () {
 }
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -1117,7 +1117,7 @@ void MOAIGridSpace::OnResize () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGridSpace::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIGridSpace::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 	
 	this->mXOff			= state.GetFieldValue ( -1, "mXOff", this->mXOff );
@@ -1137,7 +1137,7 @@ void MOAIGridSpace::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seriali
 }
 
 //----------------------------------------------------------------//
-void MOAIGridSpace::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIGridSpace::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
 	
 	state.SetField ( -1, "mXOff", this->mXOff );
@@ -1157,7 +1157,7 @@ void MOAIGridSpace::SerializeOut ( MOAILuaState& state, MOAISerializer& serializ
 }
 
 //----------------------------------------------------------------//
-void MOAIGridSpace::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIGridSpace::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	state.SetField ( -1, "TILE_X_FLIP", ( u32 )MOAITileFlags::XFLIP );
 	state.SetField ( -1, "TILE_Y_FLIP", ( u32 )MOAITileFlags::YFLIP );
@@ -1184,7 +1184,7 @@ void MOAIGridSpace::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGridSpace::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIGridSpace::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "cellAddrToCoord",	_cellAddrToCoord },

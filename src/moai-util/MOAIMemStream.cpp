@@ -132,17 +132,17 @@ MOAIMemStream::~MOAIMemStream () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMemStream::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIMemStream::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIStream::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIStream, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	
 	state.SetField ( -1, "DEFAULT_CHUNK_SIZE", ( u32 )ZLMemStream::DEFAULT_CHUNK_SIZE );
 }
 
 //----------------------------------------------------------------//
-void MOAIMemStream::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIMemStream::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIStream::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIStream, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "close",				_close },

@@ -7,7 +7,7 @@
 #include <moai-sim/MOAISpriteDeck2D.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -482,17 +482,17 @@ MOAISpriteDeck2D::~MOAISpriteDeck2D () {
 }
 
 //----------------------------------------------------------------//
-void MOAISpriteDeck2D::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAISpriteDeck2D::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAIDeck::RegisterLuaClass ( state );
-	MOAIMaterialBatchHolder::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIMaterialBatchHolder, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAISpriteDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAISpriteDeck2D::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIDeck::RegisterLuaFuncs ( state );
-	MOAIMaterialBatchHolder::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIMaterialBatchHolder, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "getQuad",				_getQuad },
@@ -548,17 +548,17 @@ void MOAISpriteDeck2D::ReserveUVQuads ( ZLSize total ) {
 }
 
 //----------------------------------------------------------------//
-void MOAISpriteDeck2D::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAISpriteDeck2D::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 
-	MOAIDeck::SerializeIn ( state, serializer );
-	MOAIMaterialBatchHolder::SerializeIn ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIMaterialBatchHolder, MOAILuaObject_SerializeIn ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//
-void MOAISpriteDeck2D::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAISpriteDeck2D::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 
-	MOAIDeck::SerializeOut ( state, serializer );
-	MOAIMaterialBatchHolder::SerializeOut ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_SerializeOut ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIMaterialBatchHolder, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//
@@ -629,7 +629,7 @@ void MOAISpriteDeck2D::TransformUV ( const ZLAffine3D& mtx ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

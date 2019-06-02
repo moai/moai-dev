@@ -6,7 +6,7 @@
 #include <moai-sim/MOAIParticleForce.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -204,9 +204,9 @@ MOAIParticleForce::~MOAIParticleForce () {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleForce::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIParticleForce::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	this->MOAITransform::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	
 	state.SetField ( -1, "FORCE", ( u32 )FORCE );
 	state.SetField ( -1, "GRAVITY", ( u32 )GRAVITY );
@@ -214,9 +214,9 @@ void MOAIParticleForce::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleForce::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIParticleForce::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	this->MOAITransform::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "initAttractor",		_initAttractor },
@@ -231,7 +231,7 @@ void MOAIParticleForce::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

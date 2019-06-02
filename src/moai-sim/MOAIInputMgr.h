@@ -86,8 +86,8 @@ public:
 	//bool				IsDone						();
 						MOAIInputMgr				();
 						~MOAIInputMgr				();
-	void				RegisterLuaClass			( MOAILuaState& state );
-	void				RegisterLuaFuncs			( MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	void				ReserveDevices				( ZLSize total );
 	void				ReserveSensors				( ZLIndex deviceID, ZLSize total );
 	void				ResetSensorState			();

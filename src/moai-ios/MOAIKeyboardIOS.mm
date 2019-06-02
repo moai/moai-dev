@@ -215,7 +215,7 @@ void MOAIKeyboardIOS::PushText ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIKeyboardIOS::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIKeyboardIOS::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	state.SetField ( -1, "EVENT_INPUT",					( u32 )EVENT_INPUT );
 	state.SetField ( -1, "EVENT_RETURN",				( u32 )EVENT_RETURN );

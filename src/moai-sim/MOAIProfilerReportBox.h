@@ -121,7 +121,7 @@ public:
 						MOAIProfilerReportBox	();
 						~MOAIProfilerReportBox	();
 	//----------------------------------------------------------------//
-	void				RegisterLuaFuncs		( MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void				Draw					( int subPrimID );
 	u32					OnGetModelBounds		( ZLBox& aabb );
 	//----------------------------------------------------------------//

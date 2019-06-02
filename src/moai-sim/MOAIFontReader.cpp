@@ -238,12 +238,12 @@ int MOAIFontReader::OpenFontFile ( cc8* filename ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFontReader::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIFontReader::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIFontReader::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIFontReader::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "close",				_close },
@@ -263,13 +263,13 @@ void MOAIFontReader::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFontReader::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIFontReader::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
 }
 
 //----------------------------------------------------------------//
-void MOAIFontReader::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIFontReader::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
 }

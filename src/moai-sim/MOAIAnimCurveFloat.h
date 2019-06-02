@@ -47,8 +47,8 @@ public:
 	void			GetValueRange			( float t0, float t1, float &min, float &max );
 					MOAIAnimCurveFloat		();
 					~MOAIAnimCurveFloat		();
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void			SetSample				( ZLIndex idx, float value );
 };
 

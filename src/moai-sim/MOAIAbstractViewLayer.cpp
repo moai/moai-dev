@@ -12,7 +12,7 @@
 #include <moai-sim/MOAITransform.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -460,17 +460,17 @@ MOAIAbstractViewLayer::~MOAIAbstractViewLayer () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractViewLayer::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIAbstractViewLayer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIGraphicsProp::RegisterLuaClass ( state );
-	MOAIAbstractLayer::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGraphicsProp, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractLayer, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractViewLayer::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIAbstractViewLayer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAIGraphicsProp::RegisterLuaFuncs ( state );
-	MOAIAbstractLayer::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGraphicsProp, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractLayer, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "getCamera",				_getCamera },
@@ -492,7 +492,7 @@ void MOAIAbstractViewLayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

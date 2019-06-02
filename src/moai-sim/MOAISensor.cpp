@@ -35,7 +35,7 @@ MOAISensor::~MOAISensor () {
 }
 
 //----------------------------------------------------------------//
-void MOAISensor::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAISensor::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "new",					MOAILuaObject::_alertNewIsUnsupported },
@@ -46,7 +46,7 @@ void MOAISensor::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAISensor::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAISensor::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getTimestamp",			_getTimestamp },

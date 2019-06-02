@@ -37,7 +37,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 //}
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -308,15 +308,15 @@ MOAISurfaceDeck2D::~MOAISurfaceDeck2D () {
 }
 
 //----------------------------------------------------------------//
-void MOAISurfaceDeck2D::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAISurfaceDeck2D::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	this->MOAIStandardDeck::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIStandardDeck, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAISurfaceDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAISurfaceDeck2D::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	this->MOAIStandardDeck::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIStandardDeck, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "reserveSurfaceLists",	_reserveSurfaceLists },
@@ -329,7 +329,7 @@ void MOAISurfaceDeck2D::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

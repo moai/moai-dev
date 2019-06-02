@@ -43,8 +43,8 @@ public:
 	ZLQuaternion	GetValue				( float time ) const;
 					MOAIAnimCurveQuat		();
 					~MOAIAnimCurveQuat		();
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void			ReserveSamples			( u32 total );
 	void			SetSample				( ZLIndex idx, float x, float y, float z );
 };

@@ -33,20 +33,20 @@ MOAIVertexFormatGL::~MOAIVertexFormatGL () {
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexFormatGL::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIVertexFormatGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexFormatGL::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIVertexFormatGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexFormatGL::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIVertexFormatGL::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexFormatGL::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIVertexFormatGL::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
 }
 

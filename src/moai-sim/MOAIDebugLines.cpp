@@ -178,7 +178,7 @@ MOAIDebugLinesMgr::~MOAIDebugLinesMgr () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDebugLinesMgr::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIDebugLinesMgr::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable[] = {
 		{ "setStyle",			_setStyle },

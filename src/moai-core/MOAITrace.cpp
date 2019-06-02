@@ -213,7 +213,8 @@ MOAITrace::~MOAITrace () {
 }
 
 //----------------------------------------------------------------//
-void MOAITrace::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAITrace::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 
 	luaL_Reg regTable [] = {
 		{ "reportTrace",		_reportTrace },
@@ -227,7 +228,8 @@ void MOAITrace::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITrace::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAITrace::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 	UNUSED ( state );
 }
 

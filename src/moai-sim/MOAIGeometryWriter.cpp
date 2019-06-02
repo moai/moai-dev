@@ -757,7 +757,7 @@ void MOAIGeometryWriter::PruneVertices ( const MOAIVertexFormat& format, MOAIStr
 }
 
 //----------------------------------------------------------------//
-void MOAIGeometryWriter::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIGeometryWriter::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	state.SetField ( -1, "COLOR_ADD",				( u32 )COLOR_ADD );
 	state.SetField ( -1, "COLOR_MULTIPLY",			( u32 )COLOR_MULTIPLY );
@@ -786,7 +786,7 @@ void MOAIGeometryWriter::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGeometryWriter::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIGeometryWriter::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
 

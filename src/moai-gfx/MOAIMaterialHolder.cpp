@@ -203,7 +203,7 @@ MOAIMaterialHolder::~MOAIMaterialHolder () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialHolder::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIMaterialHolder::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getBlendMode",			_getBlendMode },

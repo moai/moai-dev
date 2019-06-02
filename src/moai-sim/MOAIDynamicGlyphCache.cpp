@@ -15,7 +15,7 @@
 #endif
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -212,13 +212,13 @@ int MOAIDynamicGlyphCache::PlaceGlyph ( MOAIFont& font, MOAIGlyph& glyph ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDynamicGlyphCache::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAIGlyphCache::RegisterLuaClass ( state );
+void MOAIDynamicGlyphCache::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGlyphCache, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIDynamicGlyphCache::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAIGlyphCache::RegisterLuaFuncs ( state );
+void MOAIDynamicGlyphCache::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGlyphCache, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "setColorFormat",			_setColorFormat },
@@ -230,13 +230,13 @@ void MOAIDynamicGlyphCache::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDynamicGlyphCache::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIDynamicGlyphCache::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
 }
 
 //----------------------------------------------------------------//
-void MOAIDynamicGlyphCache::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIDynamicGlyphCache::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
 }

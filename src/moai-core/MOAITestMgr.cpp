@@ -299,7 +299,8 @@ void MOAITestMgr::PushTest ( cc8* name ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITestMgr::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAITestMgr::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 	
 	luaL_Reg regTable [] = {
 #ifndef _assert
@@ -321,7 +322,8 @@ void MOAITestMgr::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITestMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAITestMgr::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 	UNUSED ( state );
 }
 

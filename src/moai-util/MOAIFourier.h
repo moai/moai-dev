@@ -104,8 +104,8 @@ public:
 	void			Init								( size_t size, bool inverse );
 					MOAIFourier							();
 					~MOAIFourier						();
-	void			RegisterLuaClass					( MOAILuaState& state );
-	void			RegisterLuaFuncs					( MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass					( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs					( MOAIComposer& composer, MOAILuaState& state );
 	void			SetOutputType						( u32 outputType, size_t bands, u32 sampleRate, float minOctaveBandWidth );
 	void			SetWindowFunction					( u32 func, float a );
 	void			Transform							( ZLStream& inStream, u32 inStreamType, bool complexIn, ZLStream& outStream, u32 outStreamType, size_t stride, u32 average );

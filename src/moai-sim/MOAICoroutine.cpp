@@ -228,7 +228,9 @@ MOAICoroutine::~MOAICoroutine () {
 }
 
 //----------------------------------------------------------------//
-void MOAICoroutine::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAICoroutine::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaClass ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "blockOnAction",		_blockOnAction },
@@ -240,9 +242,9 @@ void MOAICoroutine::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICoroutine::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAICoroutine::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIAction::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "getHistogram",			_getHistogram },
@@ -344,7 +346,7 @@ int MOAICoroutine::Resume ( float step ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

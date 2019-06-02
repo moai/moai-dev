@@ -14,7 +14,7 @@ class MOAIGfxMgrGL;
 // MOAIGfxMgrGL_ResourceClerkGL
 //================================================================//
 class MOAIGfxMgrGL_ResourceClerkGL :
-	virtual public MOAIGfxMgrGLComponents {
+	public virtual MOAIGfxMgrGLComponents {
 protected:
 	
 	typedef ZLLeanList < MOAIGfxResourceGL* >::Iterator ResourceIt;

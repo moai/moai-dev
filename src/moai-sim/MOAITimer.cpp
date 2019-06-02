@@ -7,7 +7,7 @@
 #include <moai-sim/MOAITimer.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -471,10 +471,10 @@ void MOAITimer::OnLoop () {
 }
 
 //----------------------------------------------------------------//
-void MOAITimer::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAITimer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAINode::RegisterLuaClass ( state );
-	MOAIAction::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaClass ( composer, state ));
 
 	state.SetField ( -1, "ATTR_TIME", AttrID::Pack ( ATTR_TIME ).ToRaw ());
 	
@@ -493,10 +493,10 @@ void MOAITimer::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITimer::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAITimer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAINode::RegisterLuaFuncs ( state );
-	MOAIAction::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "getSpeed",			_getSpeed },
@@ -619,7 +619,7 @@ void MOAITimer::ToggleDirection () {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

@@ -55,11 +55,13 @@ protected:
 	static int			_new						( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				InitLuaFactoryClass			( MOAILuaObject& data, MOAILuaState& state );
-	void				InitLuaSingletonClass		( MOAILuaObject& data, MOAILuaState& state );
-	void				PushInterfaceTable			( MOAILuaState& state );
-	void				PushRefTable				( MOAILuaState& state );
-	virtual void		RegisterLuaClass			( MOAILuaState& state ) = 0;
+	void				InitLuaFactoryClass					( MOAILuaObject& data, MOAILuaState& state );
+	void				InitLuaSingletonClass				( MOAILuaObject& data, MOAILuaState& state );
+	void				PushInterfaceTable					( MOAILuaState& state );
+	void				PushRefTable						( MOAILuaState& state );
+	
+	//----------------------------------------------------------------//
+	virtual void		MOAILuaClass_RegisterLuaClass		( MOAILuaState& state ) = 0;
 
 public:
 
@@ -87,7 +89,7 @@ private:
 	static int						_new					( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void							RegisterLuaClass		( MOAILuaState& state );
+	void							MOAILuaClass_RegisterLuaClass		( MOAILuaState& state );
 	
 public:
 	
@@ -110,7 +112,7 @@ private:
 	static int						_getTypeID				( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void							RegisterLuaClass		( MOAILuaState& state );
+	void							MOAILuaClass_RegisterLuaClass		( MOAILuaState& state );
 
 	
 public:

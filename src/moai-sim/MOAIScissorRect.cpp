@@ -125,15 +125,15 @@ MOAIScissorRect::~MOAIScissorRect () {
 }
 
 //----------------------------------------------------------------//
-void MOAIScissorRect::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIScissorRect::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAITransform::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIScissorRect::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIScissorRect::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAITransform::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "getRect",			_getRect },

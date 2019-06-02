@@ -3,6 +3,7 @@
 
 #include "pch.h"
 //#include <moai-sim/MOAIEaseDriver.h>
+#include <moai-core/MOAIComposer.h>
 #include <moai-core/MOAINode.h>
 #include <moai-core/MOAINodeMgr.h>
 #include <moai-core/strings.h>
@@ -56,7 +57,7 @@ private:
 };
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -604,9 +605,9 @@ bool MOAINode::PullLinkedAttr ( ZLAttrID attrID, ZLAttribute& attr ) {
 }
 
 //----------------------------------------------------------------//
-void MOAINode::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAINode::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIInstanceEventSource::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaClass ( composer, state ));
 
 	state.SetField ( -1, "EVENT_UPDATE",			( u32 )EVENT_NODE_PRE_UPDATE ); // TODO: deprecate
 	
@@ -620,9 +621,9 @@ void MOAINode::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAINode::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAINode::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAIInstanceEventSource::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "clearAttrLink",			_clearAttrLink },
@@ -786,7 +787,7 @@ void MOAINode::SetNodeLink ( MOAINode& srcNode ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

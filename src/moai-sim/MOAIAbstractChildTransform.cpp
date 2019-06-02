@@ -41,18 +41,18 @@ MOAIAbstractChildTransform::~MOAIAbstractChildTransform () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractChildTransform::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIAbstractChildTransform::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAIAbstractBaseTransform::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractBaseTransform, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	
 	state.SetField ( -1, "INHERIT_LOC",			AttrID::Pack ( INHERIT_LOC ).ToRaw ());
 	state.SetField ( -1, "INHERIT_TRANSFORM",	AttrID::Pack ( INHERIT_TRANSFORM ).ToRaw ());
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractChildTransform::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIAbstractChildTransform::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAIAbstractBaseTransform::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractBaseTransform, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "setParent",			_setParent },
@@ -63,7 +63,7 @@ void MOAIAbstractChildTransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

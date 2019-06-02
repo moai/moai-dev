@@ -7,7 +7,7 @@
 #include <moai-gfx-gl/MOAIVertexFormatMgrGL.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -120,7 +120,7 @@ MOAIVertexFormatMgrGL::~MOAIVertexFormatMgrGL () {
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexFormatMgrGL::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIVertexFormatMgrGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	state.SetField ( -1, "XYZC",			( u32 )MOAIVertexFormatPresetEnum::XYZC );
 	state.SetField ( -1, "XYZWC",			( u32 )MOAIVertexFormatPresetEnum::XYZWC );
@@ -137,6 +137,6 @@ void MOAIVertexFormatMgrGL::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexFormatMgrGL::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIVertexFormatMgrGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }

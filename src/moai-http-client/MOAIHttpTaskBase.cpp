@@ -10,7 +10,7 @@
 #include <moai-http-client/MOAIHttpTaskBase.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -611,7 +611,7 @@ MOAIHttpTaskBase::~MOAIHttpTaskBase () {
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTaskBase::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIHttpTaskBase::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	state.SetField ( -1, "HTTP_GET",( u32 )   HTTP_GET );
 	state.SetField ( -1, "HTTP_HEAD",( u32 )  HTTP_HEAD );
@@ -621,7 +621,7 @@ void MOAIHttpTaskBase::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTaskBase::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIHttpTaskBase::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "cancel",				_cancel },

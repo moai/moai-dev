@@ -190,9 +190,9 @@ bool MOAIGfxResourceGL::Purge ( u32 age ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceGL::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIGfxResourceGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAIInstanceEventSource::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	
 	state.SetField ( -1, "STATE_UNINITIALIZED",					( u32 )MOAIGfxResourceGL::STATE_UNINITIALIZED );
 	state.SetField ( -1, "STATE_READY_FOR_CPU_CREATE",			( u32 )MOAIGfxResourceGL::STATE_READY_FOR_CPU_CREATE );
@@ -207,9 +207,9 @@ void MOAIGfxResourceGL::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceGL::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIGfxResourceGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIInstanceEventSource::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "getAge",					_getAge },

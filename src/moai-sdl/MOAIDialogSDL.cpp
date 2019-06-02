@@ -99,7 +99,7 @@ MOAIDialogSDL::~MOAIDialogSDL () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDialogSDL::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIDialogSDL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 //	state.SetField ( -1, "DIALOG_RESULT_POSITIVE",	( u32 )DIALOG_RESULT_POSITIVE );
 //	state.SetField ( -1, "DIALOG_RESULT_NEUTRAL", 	( u32 )DIALOG_RESULT_NEUTRAL );

@@ -11,7 +11,7 @@
 //================================================================//
 // TODO: doxygen
 class MOAIGfxMgrGL_RenderTreeGL :
-	virtual public MOAIGfxMgrGLComponents,
+	public virtual MOAIGfxMgrGLComponents,
 	public virtual MOAIGfxMgr_RenderTree {
 private:
 

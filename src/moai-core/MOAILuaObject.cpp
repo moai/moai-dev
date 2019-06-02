@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-core/MOAIComposer.h>
 #include <moai-core/MOAIDeserializer.h>
 #include <moai-core/MOAILua.h>
 #include <moai-core/MOAISerializer.h>
@@ -12,7 +13,7 @@
 #define MOAI_TAG "moai"
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -537,41 +538,32 @@ bool MOAILuaObject::PushRefTable ( MOAILuaState& state ) {
 
 //----------------------------------------------------------------//
 void MOAILuaObject::RegisterLuaClass ( MOAILuaState& state ) {
-	UNUSED ( state );
+	
+	MOAIComposer composer;
+	MOAI_CALL_SUPER_ONCE ( composer, MOAILuaObject, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	this->MOAILuaObject_RegisterLuaClass ( composer, state );
 }
 
 //----------------------------------------------------------------//
 void MOAILuaObject::RegisterLuaFuncs ( MOAILuaState& state ) {
 
-	luaL_Reg regTable [] = {
-		{ "getClass",				_getClass },
-		{ "getClassName",			_getClassName },
-		{ "getMemberTable",			_getMemberTable },
-		{ "getRefTable",			_getRefTable },
-		{ "pin",					_pin },
-		{ "serializeIn",			_serializeIn },
-		{ "serializeOut",			_serializeOut },
-		{ "setFinalizer",			_setFinalizer },
-		{ "setInterface",			_setInterface },
-		{ "setMembers",				_setMembers },
-		{ "unpin",					_unpin },
-		
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
+	MOAIComposer composer;
+	MOAI_CALL_SUPER_ONCE ( composer, MOAILuaObject, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	this->MOAILuaObject_RegisterLuaFuncs ( composer, state );
 }
 
 //----------------------------------------------------------------//
 void MOAILuaObject::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
+
+	MOAIComposer composer;
+	this->MOAILuaObject_SerializeIn ( composer, state, serializer );
 }
 
 //----------------------------------------------------------------//
 void MOAILuaObject::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
+
+	MOAIComposer composer;
+	this->MOAILuaObject_SerializeOut ( composer, state, serializer );
 }
 
 //----------------------------------------------------------------//
@@ -609,8 +601,51 @@ void MOAILuaObject::SetMemberTable ( MOAILuaState& state, int idx ) {
 }
 
 //================================================================//
-// ZLRefCountedObjectBase
+// virtual
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAILuaObject::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
+	UNUSED ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAILuaObject::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
+
+	luaL_Reg regTable [] = {
+		{ "getClass",				_getClass },
+		{ "getClassName",			_getClassName },
+		{ "getMemberTable",			_getMemberTable },
+		{ "getRefTable",			_getRefTable },
+		{ "pin",					_pin },
+		{ "serializeIn",			_serializeIn },
+		{ "serializeOut",			_serializeOut },
+		{ "setFinalizer",			_setFinalizer },
+		{ "setInterface",			_setInterface },
+		{ "setMembers",				_setMembers },
+		{ "unpin",					_unpin },
+		
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAILuaObject::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	UNUSED ( composer );
+	UNUSED ( state );
+	UNUSED ( serializer );
+}
+
+//----------------------------------------------------------------//
+void MOAILuaObject::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+	UNUSED ( composer );
+	UNUSED ( state );
+	UNUSED ( serializer );
+}
 
 //----------------------------------------------------------------//
 void MOAILuaObject::ZLRefCountedObjectBase_OnRelease ( u32 refCount ) {

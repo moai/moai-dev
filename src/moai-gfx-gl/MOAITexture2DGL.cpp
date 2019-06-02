@@ -23,15 +23,15 @@ MOAITexture2DGL::~MOAITexture2DGL () {
 }
 
 //----------------------------------------------------------------//
-void MOAITexture2DGL::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAITexture2D::RegisterLuaClass ( state );
-	MOAITextureGL::RegisterLuaClass ( state );
+void MOAITexture2DGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITexture2D, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITextureGL, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAITexture2DGL::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAITexture2D::RegisterLuaFuncs ( state );
-	MOAITextureGL::RegisterLuaFuncs ( state );
+void MOAITexture2DGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITexture2D, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITextureGL, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 }
 
 //================================================================//

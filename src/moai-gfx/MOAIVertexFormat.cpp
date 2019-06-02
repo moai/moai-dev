@@ -5,7 +5,7 @@
 #include <moai-gfx/MOAIVertexFormat.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -660,7 +660,7 @@ ZLVec3D MOAIVertexFormat::ReadUV ( ZLStream& stream, ZLIndex idx ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexFormat::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIVertexFormat::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
 	state.SetField ( -1, "GL_BYTE",					( u32 )ZGL_TYPE_BYTE );
 	state.SetField ( -1, "GL_FLOAT",				( u32 )ZGL_TYPE_FLOAT );
@@ -678,7 +678,7 @@ void MOAIVertexFormat::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexFormat::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIVertexFormat::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "clear",					_clear },
@@ -705,7 +705,7 @@ size_t MOAIVertexFormat::SeekVertex ( ZLStream& stream, size_t base, size_t vert
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexFormat::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIVertexFormat::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 
 	this->mTotalAttributes		= state.GetFieldValue < cc8*, u32 >( -1, "mTotalAttributes", 0 );
@@ -750,7 +750,7 @@ void MOAIVertexFormat::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seri
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexFormat::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIVertexFormat::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
 
 	state.SetField ( -1, "mTotalAttributes", MOAILuaSize ( this->mTotalAttributes ));

@@ -5,7 +5,7 @@
 #include <moai-sim/MOAIViewport.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -165,12 +165,12 @@ MOAIViewport::~MOAIViewport () {
 }
 
 //----------------------------------------------------------------//
-void MOAIViewport::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIViewport::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIViewport::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIViewport::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getFrame",		_getFrame },

@@ -9,6 +9,7 @@
 class MOAIDeserializer;
 class MOAILuaClass;
 class MOAILuaObject;
+class MOAIComposer;
 class MOAILuaState;
 class MOAIScopedLuaState;
 class MOAISerializer;
@@ -49,7 +50,11 @@ protected:
 	void					SetMemberTable			( MOAILuaState& state, int idx );
 
 	//----------------------------------------------------------------//
-	void					ZLRefCountedObjectBase_OnRelease				( u32 refCount );
+	virtual void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	virtual void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
+	virtual	void			MOAILuaObject_SerializeIn				( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	virtual	void			MOAILuaObject_SerializeOut				( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
+	void					ZLRefCountedObjectBase_OnRelease		( u32 refCount );
 
 public:
 
@@ -81,10 +86,10 @@ public:
 	void					PushLuaClassTable			( MOAILuaState& state );
 	bool					PushLuaUserdata				( MOAILuaState& state );
 	bool					PushMemberTable				( MOAILuaState& state );
-	virtual void			RegisterLuaClass			( MOAILuaState& state );
-	virtual void			RegisterLuaFuncs			( MOAILuaState& state );
-	virtual	void			SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
-	virtual	void			SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
+	void					RegisterLuaClass			( MOAILuaState& state );
+	void					RegisterLuaFuncs			( MOAILuaState& state );
+	void					SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
+	void					SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE, lua_CFunction FUNC >

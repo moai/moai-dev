@@ -33,7 +33,7 @@ public:
 	//----------------------------------------------------------------//
 					MOAIFooMgr			();
 					~MOAIFooMgr			();
-	void			RegisterLuaClass	( MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

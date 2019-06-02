@@ -6,7 +6,7 @@
 #include <moai-sim/MOAILayoutFrame.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -451,9 +451,9 @@ MOAILayoutFrame::~MOAILayoutFrame () {
 }
 
 //----------------------------------------------------------------//
-void MOAILayoutFrame::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAILayoutFrame::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAITransform::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	
 	state.SetField ( -1, "LAYOUT_ALIGN_MIN", ( u32 )LAYOUT_ALIGN_MIN );
 	state.SetField ( -1, "LAYOUT_ALIGN_MAX", ( u32 )LAYOUT_ALIGN_MAX );
@@ -469,9 +469,9 @@ void MOAILayoutFrame::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILayoutFrame::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAILayoutFrame::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAITransform::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "layout",				_layout },

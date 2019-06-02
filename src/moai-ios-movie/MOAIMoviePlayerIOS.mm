@@ -156,7 +156,7 @@ MOAIMoviePlayerIOS::~MOAIMoviePlayerIOS () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMoviePlayerIOS::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIMoviePlayerIOS::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
     
 	luaL_Reg regTable[] = {
 		{ "init",			_init },

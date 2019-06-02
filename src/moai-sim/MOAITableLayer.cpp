@@ -6,7 +6,7 @@
 #include <moai-sim/MOAITableLayer.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -56,15 +56,15 @@ MOAITableLayer::~MOAITableLayer () {
 }
 
 //----------------------------------------------------------------//
-void MOAITableLayer::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAITableLayer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIAbstractLayer::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractLayer, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAITableLayer::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAITableLayer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIAbstractLayer::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractLayer, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "getRenderTable",				_getRenderTable },
@@ -76,7 +76,7 @@ void MOAITableLayer::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

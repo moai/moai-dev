@@ -302,9 +302,9 @@ MOAITextureGL::~MOAITextureGL () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextureGL::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAITexture::RegisterLuaClass ( state );
-	MOAIGfxResourceGL::RegisterLuaClass ( state );
+void MOAITextureGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITexture, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxResourceGL, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	
 	state.SetField ( -1, "GL_LINEAR",					( u32 )ZGL_SAMPLE_LINEAR );
 	state.SetField ( -1, "GL_LINEAR_MIPMAP_LINEAR",		( u32 )ZGL_SAMPLE_LINEAR_MIPMAP_LINEAR );
@@ -332,9 +332,9 @@ void MOAITextureGL::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextureGL::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAITexture::RegisterLuaFuncs ( state );
-	MOAIGfxResourceGL::RegisterLuaFuncs ( state );
+void MOAITextureGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITexture, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxResourceGL, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "getSize",				_getSize },

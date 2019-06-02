@@ -573,7 +573,7 @@ MOAIAssimpScene::~MOAIAssimpScene () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAssimpScene::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIAssimpScene::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	state.SetField ( -1, "CONVERT_TO_LEFT_HANDED",			( u32 )aiProcess_ConvertToLeftHanded );
 	state.SetField ( -1, "TARGET_REALTIME_FAST",			( u32 )aiProcessPreset_TargetRealtime_Fast );
@@ -608,7 +608,7 @@ void MOAIAssimpScene::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAssimpScene::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIAssimpScene::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "clear",					_clear },

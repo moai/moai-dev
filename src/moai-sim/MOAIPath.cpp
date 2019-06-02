@@ -8,7 +8,7 @@
 #define DEFAULT_ANGLE 15.0f
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -165,12 +165,12 @@ MOAIPath::~MOAIPath () {
 }
 
 //----------------------------------------------------------------//
-void MOAIPath::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIPath::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIPath::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIPath::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "bless",				_bless },

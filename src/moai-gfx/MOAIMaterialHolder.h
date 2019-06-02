@@ -39,7 +39,7 @@ public:
 	//----------------------------------------------------------------//
 					MOAIMaterialHolder			();
 					~MOAIMaterialHolder			();
-	void			RegisterLuaFuncs			( MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

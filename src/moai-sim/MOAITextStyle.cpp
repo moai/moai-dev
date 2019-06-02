@@ -62,7 +62,7 @@ void MOAITextStyleState::SetShader ( MOAIShader* shader ) {
 }
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -304,12 +304,12 @@ MOAITextStyle::~MOAITextStyle () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextStyle::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAITextStyle::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAITextStyle::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAITextStyle::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 	
 	luaL_Reg regTable [] = {
@@ -330,13 +330,13 @@ void MOAITextStyle::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextStyle::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAITextStyle::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
 }
 
 //----------------------------------------------------------------//
-void MOAITextStyle::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAITextStyle::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
 }

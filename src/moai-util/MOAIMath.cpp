@@ -78,7 +78,8 @@ MOAIMath::~MOAIMath () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMath::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIMath::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 
 	luaL_Reg regTable [] = {
 		#if MOAI_WITH_SFMT

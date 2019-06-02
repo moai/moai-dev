@@ -10,7 +10,7 @@
 #include <moai-sim/MOAIPartitionHull.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -602,7 +602,7 @@ void MOAIPartition::Rebuild () {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartition::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIPartition::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
 	state.SetField ( -1, "PLANE_XY",	( u32 )ZLBox::PLANE_XY );
 	state.SetField ( -1, "PLANE_XZ",	( u32 )ZLBox::PLANE_XZ );
@@ -610,7 +610,7 @@ void MOAIPartition::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartition::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIPartition::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "clear",						_clear },
@@ -728,7 +728,7 @@ void MOAIPartition::SetPlane ( u32 planeID ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

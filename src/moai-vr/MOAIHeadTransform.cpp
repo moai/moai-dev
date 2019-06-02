@@ -9,7 +9,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 #ifdef MOAI_WITH_LIBGVR
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -48,17 +48,17 @@ MOAIHeadTransform::~MOAIHeadTransform () {
 }
 
 //----------------------------------------------------------------//
-void MOAIHeadTransform::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIHeadTransform::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAIAction::RegisterLuaClass ( state );
-	MOAIAbstractBaseTransform::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractBaseTransform, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIHeadTransform::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIHeadTransform::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAIAction::RegisterLuaFuncs ( state );
-	MOAIAbstractBaseTransform::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractBaseTransform, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "pauseTracking",				_pauseTracking },
@@ -70,7 +70,7 @@ void MOAIHeadTransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

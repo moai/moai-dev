@@ -284,7 +284,8 @@ void MOAILogMgr::OpenFile ( cc8* filename ) {
 
 
 //----------------------------------------------------------------//
-void MOAILogMgr::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAILogMgr::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 
 	state.SetField ( -1, "LOG_DEBUG",			( u32 )ZLLog::LOG_DEBUG );
 	state.SetField ( -1, "LOG_STATUS",			( u32 )ZLLog::LOG_STATUS );

@@ -355,12 +355,12 @@ MOAIMaterial* MOAIMaterialBatch::RawGetMaterial ( ZLIndex idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIMaterialBatch::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIMaterialBatch::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "getBlendMode",			_getBlendMode },
@@ -395,13 +395,13 @@ void MOAIMaterialBatch::Reserve ( ZLSize n ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIMaterialBatch::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIMaterialBatch::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
 }

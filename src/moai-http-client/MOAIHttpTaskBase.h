@@ -100,8 +100,8 @@ public:
 						~MOAIHttpTaskBase		();
 	virtual void		PerformAsync			() = 0;
 	virtual void		PerformSync				() = 0;
-	void				RegisterLuaClass		( MOAILuaState& state );
-	void				RegisterLuaFuncs		( MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	virtual void		Reset					() = 0;
 	virtual void		SetBody					( const void* buffer, u32 size ) = 0;
 	virtual void		SetCookieDst			( const char *file ) = 0;

@@ -95,15 +95,15 @@ bool MOAIDataBufferStream::Open ( MOAIDataBuffer* buffer ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDataBufferStream::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIDataBufferStream::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIStream::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIStream, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIDataBufferStream::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIDataBufferStream::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIStream::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIStream, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "close",				_close },

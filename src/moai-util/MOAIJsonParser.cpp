@@ -185,7 +185,7 @@ json_t* _luaToJSONObject ( lua_State* L, int idx ) {
 }
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -263,7 +263,8 @@ MOAIJsonParser::~MOAIJsonParser () {
 }
 
 //----------------------------------------------------------------//
-void MOAIJsonParser::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIJsonParser::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 
 	lua_pushlightuserdata ( state, 0 );
 	lua_setfield ( state, -2, "JSON_NULL" );
@@ -285,7 +286,8 @@ void MOAIJsonParser::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIJsonParser::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIJsonParser::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 	UNUSED ( state );
 }
 

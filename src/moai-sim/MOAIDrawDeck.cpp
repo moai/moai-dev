@@ -9,7 +9,7 @@
 #include <moai-sim/MOAITransform.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -88,15 +88,15 @@ MOAIDrawDeck::~MOAIDrawDeck () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawDeck::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIDrawDeck::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIStretchDeck::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIStretchDeck, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIDrawDeck::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIStretchDeck::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIStretchDeck, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "setBounds",				_setBounds },
@@ -109,7 +109,7 @@ void MOAIDrawDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

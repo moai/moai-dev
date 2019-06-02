@@ -72,8 +72,8 @@ public:
 					MOAIBox2DArbiter		();
 					MOAIBox2DArbiter        ( const MOAIBox2DWorld &world );
 					~MOAIBox2DArbiter		();
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

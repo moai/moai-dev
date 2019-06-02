@@ -24,7 +24,7 @@
 // TODO: hit test for characters
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -947,10 +947,10 @@ void MOAITextLabel::RefreshStyleGlyphs () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLabel::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAITextLabel::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIGraphicsProp::RegisterLuaClass ( state );
-	MOAIAction::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGraphicsProp, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaClass ( composer, state ));
 
 	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAITextLabel >( TOTAL_DEBUG_LINE_STYLES );
 
@@ -982,10 +982,10 @@ void MOAITextLabel::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLabel::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAITextLabel::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAIGraphicsProp::RegisterLuaFuncs ( state );
-	MOAIAction::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGraphicsProp, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "clearHighlights",		_clearHighlights },
@@ -1045,17 +1045,17 @@ void MOAITextLabel::ScheduleLayout () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLabel::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAITextLabel::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 
-	MOAIGraphicsProp::SerializeIn ( state, serializer );
-	MOAIAction::SerializeIn ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGraphicsProp, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_SerializeIn ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//
-void MOAITextLabel::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAITextLabel::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 
-	MOAIGraphicsProp::SerializeOut ( state, serializer );
-	MOAIAction::SerializeOut ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGraphicsProp, MOAILuaObject_SerializeOut ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//
@@ -1075,7 +1075,7 @@ void MOAITextLabel::SetText ( cc8* text ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

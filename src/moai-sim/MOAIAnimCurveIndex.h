@@ -43,8 +43,8 @@ public:
 	ZLIndex		GetValue				( float time ) const;
 					MOAIAnimCurveIndex		();
 					~MOAIAnimCurveIndex		();
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void			SetSample				( ZLIndex idx, ZLIndex value );
 };
 

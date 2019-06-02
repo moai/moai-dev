@@ -163,17 +163,17 @@ MOAIHttpServer::~MOAIHttpServer () {
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpServer::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIHttpServer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIInstanceEventSource::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaClass ( composer, state ));
 
 	state.SetField ( -1, "EVENT_HANDLE_REQUEST", ( u32 )EVENT_HANDLE_REQUEST );
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpServer::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIHttpServer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIInstanceEventSource::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "start",			_start },

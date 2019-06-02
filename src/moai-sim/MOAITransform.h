@@ -141,10 +141,10 @@ public:
 	ZLAffine3D				GetBillboardMtx				( const ZLAffine3D& faceCameraMtx ) const;
 							MOAITransform				();
 							~MOAITransform				();
-	void					RegisterLuaClass			( MOAILuaState& state );
-	void					RegisterLuaFuncs			( MOAILuaState& state );
-	void					SerializeIn					( MOAILuaState& state, MOAIDeserializer& serializer );
-	void					SerializeOut				( MOAILuaState& state, MOAISerializer& serializer );
+	void					MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_SerializeIn					( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void					MOAILuaObject_SerializeOut				( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 	void					SetLoc						( float x, float y, float z );
 	void					SetPiv						( float x, float y, float z );
 	void					SetRot						( float x, float y, float z );

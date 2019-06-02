@@ -72,8 +72,8 @@ public:
 						~MOAIHttpTaskNSURL		();
 	void				PerformAsync			();
 	void				PerformSync				();
-	void				RegisterLuaClass		( MOAILuaState& state );
-	void				RegisterLuaFuncs		( MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void				Reset					();
 	void				SetBody					( const void* buffer, u32 size );
 	void				SetFailOnError			( bool enable );

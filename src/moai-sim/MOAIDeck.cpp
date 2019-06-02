@@ -8,7 +8,7 @@
 #include <moai-sim/MOAITransform.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -131,12 +131,12 @@ bool MOAIDeck::Overlap ( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBou
 
 
 //----------------------------------------------------------------//
-void MOAIDeck::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIDeck::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIDeck::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "draw",					_draw },
@@ -154,7 +154,7 @@ void MOAIDeck::SetBoundsDirty () {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

@@ -95,14 +95,14 @@ public:
 	bool			PushParticle			( float x, float y, float dx, float dy );
 	bool			PushParticle			( float x, float y, float dx, float dy, ZLIndex stateIdx );
 	bool			PushSprite				( const AKUParticleSprite& sprite );
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void			ReserveParticles		( ZLSize maxParticles, ZLSize particleSize );
 	void			ReserveRects			( ZLSize total );
 	void			ReserveSprites			( ZLSize maxSprites );
 	void			ReserveStates			( ZLSize total );
-	void			SerializeIn				( MOAILuaState& state, MOAIDeserializer& serializer );
-	void			SerializeOut			( MOAILuaState& state, MOAISerializer& serializer );
+	void			MOAILuaObject_SerializeIn				( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void			MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 	void			SetConstant				( ZLIndex idx, float value );
 	void			SetRect					( ZLIndex idx, ZLRect& rect );
 };

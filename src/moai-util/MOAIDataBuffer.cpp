@@ -633,7 +633,8 @@ size_t MOAIDataBuffer::Read ( void* buffer, size_t size ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDataBuffer::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIDataBuffer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 
 	state.SetField ( -1, "NO_INFLATE",		( u32 )NO_INFLATE );
 	state.SetField ( -1, "FORCE_INFLATE",	( u32 )FORCE_INFLATE );
@@ -654,7 +655,8 @@ void MOAIDataBuffer::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDataBuffer::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIDataBuffer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 
 	luaL_Reg regTable [] = {
 		{ "base64Decode",	_base64Decode },

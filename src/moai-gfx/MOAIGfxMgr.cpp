@@ -179,13 +179,13 @@ void MOAIGfxMgr::PushState () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgr::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAIGfxMgr_RenderTree::RegisterLuaClass ( state );
+void MOAIGfxMgr::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxMgr_RenderTree, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAIGfxMgr_RenderTree::RegisterLuaFuncs ( state );
+void MOAIGfxMgr::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxMgr_RenderTree, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 }
 
 //================================================================//

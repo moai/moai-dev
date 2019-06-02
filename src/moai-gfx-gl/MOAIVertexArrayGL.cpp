@@ -124,15 +124,15 @@ MOAIVertexArrayGL::~MOAIVertexArrayGL () {
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexArrayGL::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAIVertexArray::RegisterLuaClass ( state );
-	MOAIGfxResourceGL::RegisterLuaClass ( state );
+void MOAIVertexArrayGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIVertexArray, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxResourceGL, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexArrayGL::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAIVertexArray::RegisterLuaFuncs ( state );
-	MOAIGfxResourceGL::RegisterLuaFuncs ( state );
+void MOAIVertexArrayGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIVertexArray, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxResourceGL, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "reserveVAOs",				_reserveVAOs },
@@ -166,7 +166,7 @@ void MOAIVertexArrayGL::ReserveVertexBuffers ( u32 total ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexArrayGL::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIVertexArrayGL::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 
 	ZLSize totalVAOs = state.GetFieldValue < cc8*, MOAILuaSize >( -1, "mTotalVAOs", 0 );
 	this->ReserveVAOs ( totalVAOs );
@@ -189,7 +189,7 @@ void MOAIVertexArrayGL::SerializeIn ( MOAILuaState& state, MOAIDeserializer& ser
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexArrayGL::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIVertexArrayGL::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 
 	state.SetField < cc8*, MOAILuaSize >( -1, "mTotalVAOs", this->mVAOs.Size ());
 	state.SetField < cc8*, MOAILuaSize >( -1, "mTotalVertexBuffers", this->mVertexBuffers.Size ());

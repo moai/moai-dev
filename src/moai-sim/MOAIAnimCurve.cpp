@@ -5,7 +5,7 @@
 #include <moai-sim/MOAIAnimCurve.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -188,9 +188,9 @@ MOAIAnimCurve::~MOAIAnimCurve () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurve::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIAnimCurve::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAINode::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaClass ( composer, state ));
 
 	state.SetField ( -1, "ATTR_TIME",	AttrID::Pack ( ATTR_TIME ).ToRaw ());
 	state.SetField ( -1, "ATTR_VALUE", 	AttrID::Pack ( ATTR_VALUE ).ToRaw ());
@@ -202,9 +202,9 @@ void MOAIAnimCurve::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurve::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIAnimCurve::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAINode::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "getLength",			_getLength },
@@ -293,7 +293,7 @@ ZLReal MOAIAnimCurve::WrapTime ( ZLReal t, ZLReal &repeat ) const {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

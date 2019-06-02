@@ -188,15 +188,15 @@ MOAIAssimpCamera::~MOAIAssimpCamera () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAssimpCamera::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIAssimpCamera::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIAssimpSceneMember::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAssimpSceneMember, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIAssimpCamera::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIAssimpCamera::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIAssimpSceneMember::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAssimpSceneMember, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "getAspect",				_getAspect },

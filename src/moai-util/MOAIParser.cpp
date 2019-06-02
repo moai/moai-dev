@@ -8,7 +8,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 #if MOAI_WITH_GPB
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -181,12 +181,14 @@ void MOAIParser::OnTerminal ( ZLSyntaxNode* node ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIParser::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIParser::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIParser::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIParser::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 
 	luaL_Reg regTable[] = {
 		{ "loadFile",			_loadFile },

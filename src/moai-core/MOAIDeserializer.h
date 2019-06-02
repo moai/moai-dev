@@ -36,8 +36,8 @@ public:
 	u32					SerializeFromFile		( cc8* filename );
 						MOAIDeserializer		();
 	virtual				~MOAIDeserializer		();
-	void				RegisterLuaClass		( MOAILuaState& state );
-	void				RegisterLuaFuncs		( MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >

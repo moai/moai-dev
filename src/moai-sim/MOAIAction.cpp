@@ -452,9 +452,9 @@ MOAIAction::~MOAIAction () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAction::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIAction::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIInstanceEventSource::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaClass ( composer, state ));
 
 	state.SetField ( -1, "EVENT_ACTION_PRE_UPDATE",		( u32 )EVENT_ACTION_PRE_UPDATE );
 	state.SetField ( -1, "EVENT_ACTION_POST_UPDATE",	( u32 )EVENT_ACTION_POST_UPDATE );
@@ -464,9 +464,9 @@ void MOAIAction::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAction::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIAction::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIInstanceEventSource::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "addChild",				_addChild },
@@ -600,7 +600,7 @@ void MOAIAction::Stop () {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

@@ -5,7 +5,7 @@
 #include <moai-gfx/MOAILightFormat.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -89,12 +89,12 @@ MOAILightFormat::~MOAILightFormat () {
 }
 
 //----------------------------------------------------------------//
-void MOAILightFormat::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAILightFormat::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED(state);
 }
 
 //----------------------------------------------------------------//
-void MOAILightFormat::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAILightFormat::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "reserveTextures",			_reserveTextures },
@@ -107,7 +107,7 @@ void MOAILightFormat::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

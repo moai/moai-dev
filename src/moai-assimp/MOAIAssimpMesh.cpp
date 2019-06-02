@@ -536,15 +536,15 @@ u32 MOAIAssimpMesh::ReadVertices ( const MOAIVertexFormat& format, ZLStream& str
 }
 
 //----------------------------------------------------------------//
-void MOAIAssimpMesh::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIAssimpMesh::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIAssimpSceneMember::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAssimpSceneMember, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIAssimpMesh::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIAssimpMesh::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIAssimpSceneMember::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAssimpSceneMember, MOAILuaObject_RegisterLuaClass ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "countBones",					_countBones },

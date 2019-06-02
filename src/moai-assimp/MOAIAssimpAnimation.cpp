@@ -245,15 +245,15 @@ MOAIAssimpAnimation::~MOAIAssimpAnimation () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAssimpAnimation::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIAssimpAnimation::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIAssimpSceneMember::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAssimpSceneMember, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIAssimpAnimation::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIAssimpAnimation::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIAssimpSceneMember::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAssimpSceneMember, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "countChannels",			_countChannels },

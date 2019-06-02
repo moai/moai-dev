@@ -280,7 +280,7 @@ void MOAIInputMgr::Record ( size_t size ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIInputMgr::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIInputMgr::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	state.SetField ( -1, "INPUT_EVENT",			( u32 )INPUT_EVENT );
 	state.SetField ( -1, "FINISHED_UPDATE",		( u32 )FINISHED_UPDATE );
@@ -302,7 +302,7 @@ void MOAIInputMgr::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIInputMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIInputMgr::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
 

@@ -355,15 +355,15 @@ void MOAIKeyboardSensor::ParseEvent ( ZLStream& eventStream ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIKeyboardSensor::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIKeyboardSensor::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAISensor::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAISensor, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIKeyboardSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIKeyboardSensor::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAISensor::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAISensor, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "keyDown",				_keyDown },

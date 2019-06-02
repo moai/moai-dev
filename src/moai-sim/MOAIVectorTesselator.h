@@ -195,8 +195,8 @@ public:
 	void				PushTranslate				( float x, float y);
 	void				PushVertex					( float x, float y );
 	void				ReadShapes					( ZLStream& stream );
-	void				RegisterLuaClass			( MOAILuaState& state );
-	void				RegisterLuaFuncs			( MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	void				ReserveVertexExtras			( ZLSize total, size_t size );
 	void				SetVertexExtra				( ZLIndex idx, void* extra, size_t size );
 	int					Tesselate					( SafeTesselator& tess, u32 flags = TESSELATE_ALL );

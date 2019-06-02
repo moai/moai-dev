@@ -9,7 +9,7 @@
 #include <moai-sim/MOAIStaticGlyphCache.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -746,8 +746,8 @@ void MOAIFont::RebuildKerning ( MOAIGlyphSet& glyphSet ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFont::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAIInstanceEventSource::RegisterLuaClass ( state );
+void MOAIFont::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	
 	state.SetField ( -1, "EVENT_RENDER_GLYPH",		( u32 )EVENT_RENDER_GLYPH );
 	
@@ -756,8 +756,8 @@ void MOAIFont::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFont::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAIInstanceEventSource::RegisterLuaFuncs ( state );
+void MOAIFont::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "getCache",					_getCache },
@@ -825,7 +825,7 @@ void MOAIFont::RenderGlyph ( MOAIGlyph& glyph ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFont::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIFont::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 
 	this->mFilename = state.GetFieldValue ( -1, "mFilename", this->mFilename );
@@ -845,7 +845,7 @@ void MOAIFont::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer )
 }
 
 //----------------------------------------------------------------//
-void MOAIFont::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIFont::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
 
 	state.SetField ( -1, "mFilename", this->mFilename );

@@ -40,8 +40,8 @@ public:
 	void		Init				( cc8* filename, MOAIDataBuffer& target, u32 action );
 				MOAIDataIOTask		();
 				~MOAIDataIOTask		();
-	void		RegisterLuaClass	( MOAILuaState& state );
-	void		RegisterLuaFuncs	( MOAILuaState& state );
+	void		MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
+	void		MOAILuaObject_RegisterLuaFuncs	( MOAIComposer& composer, MOAILuaState& state );
 	void		SaveData			( cc8* filename, MOAIDataBuffer& target );
 	void		SetCallback			( lua_State* L, int idx );
 	void		SetInflateOnLoad	( bool inflateOnLoad, bool inflateOnTaskThread, int windowBits );

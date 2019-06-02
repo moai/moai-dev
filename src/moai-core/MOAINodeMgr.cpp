@@ -7,7 +7,7 @@
 #include <moai-core/MOAINodeMgr.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -144,7 +144,8 @@ void MOAINodeMgr::Remove ( MOAINode& node ) {
 }
 
 //----------------------------------------------------------------//
-void MOAINodeMgr::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAINodeMgr::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 
 	luaL_Reg regTable [] = {
 		{ "reset",					_reset },
@@ -157,7 +158,8 @@ void MOAINodeMgr::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAINodeMgr::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAINodeMgr::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 	UNUSED ( state );
 }
 

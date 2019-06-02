@@ -13,7 +13,7 @@
 #include <moai-sim/MOAISurfaceSampler2D.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -36,35 +36,35 @@ MOAIGraphicsProp::~MOAIGraphicsProp () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGraphicsProp::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIGraphicsProp::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAIDeckHolderWithIndex::RegisterLuaClass ( state );
-	MOAIGraphicsPropBase::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckHolderWithIndex, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGraphicsPropBase, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIGraphicsProp::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIGraphicsProp::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAIDeckHolderWithIndex::RegisterLuaFuncs ( state );
-	MOAIGraphicsPropBase::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckHolderWithIndex, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGraphicsPropBase, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIGraphicsProp::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIGraphicsProp::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
-	MOAIDeckHolderWithIndex::SerializeIn ( state, serializer );
-	MOAIGraphicsPropBase::SerializeIn ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckHolderWithIndex, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGraphicsPropBase, MOAILuaObject_SerializeIn ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//
-void MOAIGraphicsProp::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIGraphicsProp::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	
-	MOAIDeckHolderWithIndex::SerializeOut ( state, serializer );
-	MOAIGraphicsPropBase::SerializeOut ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckHolderWithIndex, MOAILuaObject_SerializeOut ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGraphicsPropBase, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

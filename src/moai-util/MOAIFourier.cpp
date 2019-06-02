@@ -528,7 +528,8 @@ void MOAIFourier::ReadSample ( ZLStream& inStream, u32 inStreamType, bool comple
 }
 
 //----------------------------------------------------------------//
-void MOAIFourier::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIFourier::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 	
 	state.SetField ( -1, "SAMPLE_S8",			( u32 )ZLSample::SAMPLE_S8 );
 	state.SetField ( -1, "SAMPLE_U8",			( u32 )ZLSample::SAMPLE_U8 );
@@ -565,7 +566,8 @@ void MOAIFourier::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFourier::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIFourier::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 
 	luaL_Reg regTable [] = {
 		{ "countBands",					_countBands },

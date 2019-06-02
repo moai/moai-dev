@@ -8,7 +8,7 @@
 #include <moai-sim/MOAIDeckHolderWithGrid.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -114,15 +114,15 @@ MOAIDeckHolderWithGrid::~MOAIDeckHolderWithGrid () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckHolderWithGrid::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIDeckHolderWithGrid::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAIDeckHolder::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckHolder, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckHolderWithGrid::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIDeckHolderWithGrid::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAIDeckHolder::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckHolder, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "getGrid",				_getGrid },
@@ -135,17 +135,17 @@ void MOAIDeckHolderWithGrid::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckHolderWithGrid::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIDeckHolderWithGrid::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
-	MOAIDeckHolder::SerializeIn ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckHolder, MOAILuaObject_SerializeIn ( composer, state, serializer ));
 	
 	this->mGrid.Set ( *this, serializer.MemberIDToObject < MOAIGrid >( state.GetFieldValue < cc8*, MOAISerializerBase::ObjID >( -1, "mGrid", 0 )));
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckHolderWithGrid::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIDeckHolderWithGrid::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	
-	MOAIDeckHolder::SerializeOut ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckHolder, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 	
 	state.SetField ( -1, "mGrid", serializer.AffirmMemberID ( this->mGrid ));
 }

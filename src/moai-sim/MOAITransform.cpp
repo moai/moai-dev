@@ -6,7 +6,7 @@
 #include <moai-sim/MOAISim.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -951,9 +951,9 @@ MOAITransform::~MOAITransform () {
 }
 
 //----------------------------------------------------------------//
-void MOAITransform::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAITransform::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAIAbstractChildTransform::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractChildTransform, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	
 	state.SetField ( -1, "ATTR_X_PIV",			AttrID::Pack ( ATTR_X_PIV ).ToRaw ());
 	state.SetField ( -1, "ATTR_Y_PIV",			AttrID::Pack ( ATTR_Y_PIV ).ToRaw ());
@@ -972,9 +972,9 @@ void MOAITransform::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITransform::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAITransform::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAIAbstractChildTransform::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractChildTransform, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "addLoc",				_addLoc },
@@ -1009,7 +1009,7 @@ void MOAITransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITransform::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAITransform::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 	
 	this->mPiv.mX		= state.GetFieldValue < cc8*, float >( -1, "mPiv.mX", 0.0f );
@@ -1025,7 +1025,7 @@ void MOAITransform::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seriali
 }
 
 //----------------------------------------------------------------//
-void MOAITransform::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAITransform::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
 
 	state.SetField ( -1, "mPiv.mX", this->mPiv.mX );
@@ -1073,7 +1073,7 @@ void MOAITransform::SetScl ( float x, float y, float z ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

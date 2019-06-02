@@ -41,8 +41,8 @@ public:
 	void			NamedAttrAdd			( ZLIndex attrID, ZLAttribute& attr );
 	void			NamedAttrGet			( ZLIndex attrID, ZLAttribute& attr );
 	void			NamedAttrSet			( ZLIndex attrID, ZLAttribute& attr );
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

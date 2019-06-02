@@ -14,7 +14,7 @@
 #define RETICLE_RADIUS			0.125f
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -389,9 +389,9 @@ MOAICamera::~MOAICamera () {
 }
 
 //----------------------------------------------------------------//
-void MOAICamera::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAICamera::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAITransform::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	
 	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAICamera >( TOTAL_DEBUG_LINE_STYLES );
 	
@@ -407,8 +407,8 @@ void MOAICamera::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICamera::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAITransform::RegisterLuaFuncs ( state );
+void MOAICamera::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "getFarPlane",		_getFarPlane },
@@ -432,7 +432,7 @@ void MOAICamera::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

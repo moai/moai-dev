@@ -129,8 +129,8 @@ public:
 	void				DeleteShaders				();
 	void				DeclareUniform				( ZLIndex idx, cc8* name, u32 type, u32 width = 1, u32 count = 1 );
 	void				Load						( cc8* vshSource, cc8* fshSource );
-	void				RegisterLuaClass			( MOAILuaState& state );
-	void				RegisterLuaFuncs			( MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	void				ReserveAttributes			( ZLSize nAttributes );
 	void				ReserveGlobals				( ZLSize nGlobals );
 	void				ReserveTextures				( ZLSize nTextures );

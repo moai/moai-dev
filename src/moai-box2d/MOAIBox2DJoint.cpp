@@ -10,7 +10,7 @@
 #include <moai-box2d/MOAIBox2DWorld.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -225,13 +225,13 @@ MOAIBox2DJoint::~MOAIBox2DJoint () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DJoint::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAIBox2DPrim::RegisterLuaClass ( state );
+void MOAIBox2DJoint::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIBox2DPrim, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DJoint::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAIBox2DPrim::RegisterLuaFuncs ( state );
+void MOAIBox2DJoint::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIBox2DPrim, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "destroy",				_destroy },

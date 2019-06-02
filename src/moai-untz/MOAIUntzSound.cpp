@@ -5,7 +5,7 @@
 #include <moai-untz/MOAIUntzSampleBuffer.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -395,17 +395,17 @@ MOAIUntzSound::~MOAIUntzSound () {
 	}
 }
 //----------------------------------------------------------------//
-void MOAIUntzSound::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIUntzSound::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAINode::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaClass ( composer, state ));
 
 	state.SetField ( -1, "ATTR_VOLUME", AttrID::Pack ( ATTR_VOLUME ).ToRaw ());
 }
 
 //----------------------------------------------------------------//
-void MOAIUntzSound::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIUntzSound::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAINode::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "getLength",			_getLength },
@@ -431,7 +431,7 @@ void MOAIUntzSound::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

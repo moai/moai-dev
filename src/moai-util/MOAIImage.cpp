@@ -12,7 +12,7 @@
 #include <contrib/moai_edtaa3func.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -1294,7 +1294,8 @@ MOAIImage::~MOAIImage () {
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIImage::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 	
 	state.SetField ( -1, "FILTER_LINEAR",						( u32 )MOAIImage::FILTER_LINEAR );
 	state.SetField ( -1, "FILTER_NEAREST",						( u32 )MOAIImage::FILTER_NEAREST );
@@ -1346,7 +1347,8 @@ void MOAIImage::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIImage::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
 	UNUSED ( state );
 
 	luaL_Reg regTable [] = {
@@ -1398,13 +1400,15 @@ void MOAIImage::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIImage::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	UNUSED ( composer );
 	UNUSED ( state );
 	UNUSED ( serializer );
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIImage::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+	UNUSED ( composer );
 	UNUSED ( state );
 	UNUSED ( serializer );
 }

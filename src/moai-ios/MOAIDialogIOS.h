@@ -42,7 +42,7 @@ public:
 	
 			MOAIDialogIOS		();
 			~MOAIDialogIOS		();
-	void	RegisterLuaClass	( MOAILuaState& state );
+	void	MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
 };
 
 @interface LuaAlertView : UIAlertView < UIAlertViewDelegate > {

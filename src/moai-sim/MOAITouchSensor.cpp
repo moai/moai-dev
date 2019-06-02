@@ -549,9 +549,9 @@ void MOAITouchSensor::PrintStacks () {
 }
 
 //----------------------------------------------------------------//
-void MOAITouchSensor::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAITouchSensor::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAISensor::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAISensor, MOAILuaObject_RegisterLuaClass ( composer, state ));
 
 	state.SetField ( -1, "TOUCH_DOWN", ( u32 )TOUCH_DOWN );
 	state.SetField ( -1, "TOUCH_MOVE", ( u32 )TOUCH_MOVE );
@@ -560,9 +560,9 @@ void MOAITouchSensor::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITouchSensor::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAITouchSensor::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAISensor::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAISensor, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "countTouches",		_countTouches },

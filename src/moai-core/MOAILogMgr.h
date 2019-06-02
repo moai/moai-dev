@@ -69,7 +69,7 @@ public:
 					MOAILogMgr				();
 					~MOAILogMgr				();
 	void			OpenFile				( cc8* filename );
-	void			RegisterLuaClass		( MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >

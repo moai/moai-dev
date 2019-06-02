@@ -5,7 +5,7 @@
 #include <moai-sim/MOAIFancyGrid.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -286,15 +286,15 @@ void MOAIFancyGrid::OnResize () {
 }
 
 //----------------------------------------------------------------//
-void MOAIFancyGrid::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIFancyGrid::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIGrid::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGrid, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIFancyGrid::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIFancyGrid::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIGrid::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGrid, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "fillColor",			_fillColor },
@@ -343,15 +343,15 @@ void MOAIFancyGrid::ReservePalette ( ZLSize size ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFancyGrid::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIFancyGrid::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 
-	MOAIGrid::SerializeIn ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGrid, MOAILuaObject_SerializeIn ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//
-void MOAIFancyGrid::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIFancyGrid::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 
-	MOAIGrid::SerializeOut ( state, serializer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGrid, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//

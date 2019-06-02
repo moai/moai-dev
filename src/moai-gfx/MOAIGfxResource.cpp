@@ -101,11 +101,11 @@ MOAIGfxResource::~MOAIGfxResource () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResource::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIGfxResource::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResource::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIGfxResource::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "clear",						_destroy }, // TODO: deprecate

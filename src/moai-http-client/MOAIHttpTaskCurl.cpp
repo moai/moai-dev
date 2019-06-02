@@ -318,15 +318,15 @@ void MOAIHttpTaskCurl::PrintError ( CURLcode error ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTaskCurl::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIHttpTaskCurl::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIHttpTaskBase::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHttpTaskBase, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTaskCurl::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIHttpTaskCurl::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIHttpTaskBase::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHttpTaskBase, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 }
 
 //----------------------------------------------------------------//

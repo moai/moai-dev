@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-core/MOAIComposer.h>
 #include <moai-core/MOAIScriptNode.h>
 
 //================================================================//
@@ -21,7 +22,7 @@ protected:
 };
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -183,15 +184,15 @@ void MOAIScriptNode::NamedAttrSet ( ZLIndex attrID, ZLAttribute &attr ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIScriptNode::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIScriptNode::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAINode::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIScriptNode::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIScriptNode::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAINode::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "reserveAttrs",			_reserveAttrs },
@@ -204,7 +205,7 @@ void MOAIScriptNode::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

@@ -101,12 +101,12 @@ MOAITextBundle::~MOAITextBundle () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextBundle::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAITextBundle::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED(state);
 }
 
 //----------------------------------------------------------------//
-void MOAITextBundle::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAITextBundle::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "load",			_load },

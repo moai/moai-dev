@@ -104,11 +104,11 @@ MOAIShaderGL::~MOAIShaderGL () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderGL::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIShaderGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderGL::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIShaderGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
 		{ "getAttributeID",				_getAttributeID },

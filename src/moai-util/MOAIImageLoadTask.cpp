@@ -88,13 +88,13 @@ void MOAIImageLoadTask::Publish () {
 }
 
 //----------------------------------------------------------------//
-void MOAIImageLoadTask::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAITask::RegisterLuaClass ( state );
+void MOAIImageLoadTask::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITask, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIImageLoadTask::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAITask::RegisterLuaFuncs ( state );
+void MOAIImageLoadTask::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITask, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 }
 
 //----------------------------------------------------------------//

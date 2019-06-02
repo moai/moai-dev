@@ -43,7 +43,7 @@ const cc8* kCloumn_Names[] = {
 };
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -642,9 +642,9 @@ MOAIProfilerReportBox::~MOAIProfilerReportBox () {
 }
 
 //----------------------------------------------------------------//
-void MOAIProfilerReportBox::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIProfilerReportBox::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAIGraphicsProp::RegisterLuaFuncs ( state );
+	MOAIGraphicsProp, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "getRect",				_getRect },

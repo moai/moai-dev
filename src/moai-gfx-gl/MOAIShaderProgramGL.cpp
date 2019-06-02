@@ -331,9 +331,9 @@ MOAIShaderProgramGL::~MOAIShaderProgramGL () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderProgramGL::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIShaderProgramGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIGfxResourceGL::RegisterLuaClass ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxResourceGL, MOAILuaObject_RegisterLuaClass ( composer, state ));
 
 	state.SetField ( -1, "UNIFORM_TYPE_FLOAT",						( u32 )MOAIShaderUniformGL::UNIFORM_TYPE_FLOAT );
 	state.SetField ( -1, "UNIFORM_TYPE_INT",						( u32 )MOAIShaderUniformGL::UNIFORM_TYPE_INT );
@@ -416,9 +416,9 @@ void MOAIShaderProgramGL::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderProgramGL::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIShaderProgramGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIGfxResourceGL::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxResourceGL, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "declareUniform",				_declareUniform },

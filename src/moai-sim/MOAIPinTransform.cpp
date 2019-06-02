@@ -6,7 +6,7 @@
 #include <moai-sim/MOAIPinTransform.h>
 
 //================================================================//
-// local
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -93,17 +93,17 @@ MOAIPinTransform::~MOAIPinTransform () {
 }
 
 //----------------------------------------------------------------//
-void MOAIPinTransform::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAITransform::RegisterLuaClass ( state );
+void MOAIPinTransform::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	
 	state.SetField ( -1, "ATTR_FRONT", 					AttrID::Pack ( ATTR_FRONT ).ToRaw ());
 	state.SetField ( -1, "ATTR_INHERIT_WORLD_BOUNDS", 	AttrID::Pack ( ATTR_INHERIT_WORLD_BOUNDS ).ToRaw ());
 }
 
 //----------------------------------------------------------------//
-void MOAIPinTransform::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIPinTransform::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAITransform::RegisterLuaFuncs ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	
 	luaL_Reg regTable [] = {
 		{ "getWorldBounds",				_getWorldBounds },
@@ -116,7 +116,7 @@ void MOAIPinTransform::RegisterLuaFuncs ( MOAILuaState& state ) {
 }
 
 //================================================================//
-// ::implementation::
+// virtual
 //================================================================//
 
 //----------------------------------------------------------------//

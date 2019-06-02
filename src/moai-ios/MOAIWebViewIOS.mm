@@ -438,7 +438,7 @@ void MOAIWebViewIOS::RaiseWebViewDidHideEvent () {
 }
 
 //----------------------------------------------------------------//
-void MOAIWebViewIOS::RegisterLuaClass ( MOAILuaState& state ) {
+void MOAIWebViewIOS::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	state.SetField ( -1, "DID_FAIL_LOAD_WITH_ERROR", 		( u32 )DID_FAIL_LOAD_WITH_ERROR );
 	state.SetField ( -1, "SHOULD_START_LOAD_WITH_REQUEST",	( u32 )SHOULD_START_LOAD_WITH_REQUEST );
@@ -462,9 +462,9 @@ void MOAIWebViewIOS::RegisterLuaClass ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIWebViewIOS::RegisterLuaFuncs ( MOAILuaState& state ) {
+void MOAIWebViewIOS::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 
-	MOAIInstanceEventSource::RegisterLuaFuncs ( state );
+	MOAIInstanceEventSource, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "canGoBack",						_canGoBack },

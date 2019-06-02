@@ -250,7 +250,6 @@ void MOAILuaClass::InitLuaFactoryClass ( MOAILuaObject& data, MOAILuaState& stat
 	lua_pushvalue ( state, -1 );
 	lua_setfield ( state, -2, "__index" );
 	
-	data.MOAILuaObject::RegisterLuaFuncs ( state );
 	data.RegisterLuaFuncs ( state );
 
 	this->mInterfaceTable.SetRef ( state, -1 );
@@ -260,8 +259,7 @@ void MOAILuaClass::InitLuaFactoryClass ( MOAILuaObject& data, MOAILuaState& stat
 
 	// push class table
 	lua_newtable ( state );
-	this->RegisterLuaClass ( state );
-	data.MOAILuaObject::RegisterLuaClass ( state );
+	this->MOAILuaClass_RegisterLuaClass ( state );
 	data.RegisterLuaClass ( state );
 
 	// init the extend method
@@ -288,8 +286,7 @@ void MOAILuaClass::InitLuaSingletonClass ( MOAILuaObject& data, MOAILuaState& st
 
 	// push class table
 	lua_newtable ( state );
-	this->RegisterLuaClass ( state );
-	data.MOAILuaObject::RegisterLuaClass ( state );
+	this->MOAILuaClass_RegisterLuaClass ( state );
 	data.RegisterLuaClass ( state );
 	
 	// attach the ref table (for leak reporting only; no metamethods)

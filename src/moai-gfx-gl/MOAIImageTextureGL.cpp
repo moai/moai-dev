@@ -25,15 +25,15 @@ MOAIImageTextureGL::~MOAIImageTextureGL () {
 }
 
 //----------------------------------------------------------------//
-void MOAIImageTextureGL::RegisterLuaClass ( MOAILuaState& state ) {
-	MOAIImage::RegisterLuaClass ( state );
-	MOAITextureGL::RegisterLuaClass ( state );
+void MOAIImageTextureGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIImage, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITextureGL, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIImageTextureGL::RegisterLuaFuncs ( MOAILuaState& state ) {
-	MOAIImage::RegisterLuaFuncs ( state );
-	MOAITextureGL::RegisterLuaFuncs ( state );
+void MOAIImageTextureGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIImage, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITextureGL, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 }
 
 //================================================================//

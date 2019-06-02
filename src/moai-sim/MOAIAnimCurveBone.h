@@ -47,8 +47,8 @@ public:
 	ZLAffine3D		GetValue				( float time ) const;
 					MOAIAnimCurveBone		();
 					~MOAIAnimCurveBone		();
-	void			RegisterLuaClass		( MOAILuaState& state );
-	void			RegisterLuaFuncs		( MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void			SetSamplePosition		( ZLIndex idx, float x, float y, float z );
 	void			SetSampleRotation		( ZLIndex idx, float x, float y, float z, float w );
 	void			SetSampleScale			( ZLIndex idx, float x, float y, float z );
