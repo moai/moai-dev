@@ -188,28 +188,6 @@ MOAIAnim::~MOAIAnim () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnim::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAITimer, MOAILuaObject_RegisterLuaClass ( composer, state ));
-}
-
-//----------------------------------------------------------------//
-void MOAIAnim::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAITimer, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-
-	luaL_Reg regTable [] = {
-		{ "apply",				_apply },
-		{ "getLength",			_getLength },
-		{ "reserveLinks",		_reserveLinks },
-		{ "setLink",			_setLink },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAIAnim::ReserveLinks ( u32 totalLinks ) {
 
 	this->ClearLinks ();
@@ -251,3 +229,24 @@ void MOAIAnim::MOAIAction_Update ( double step ) {
 	this->Apply ( t0, t1 );
 }
 
+//----------------------------------------------------------------//
+void MOAIAnim::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITimer, MOAILuaObject_RegisterLuaClass ( composer, state ));
+}
+
+//----------------------------------------------------------------//
+void MOAIAnim::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITimer, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+
+	luaL_Reg regTable [] = {
+		{ "apply",				_apply },
+		{ "getLength",			_getLength },
+		{ "reserveLinks",		_reserveLinks },
+		{ "setLink",			_setLink },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}

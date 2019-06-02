@@ -21,6 +21,10 @@ protected:
 	//----------------------------------------------------------------//
 	static int		_getSize			( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	//----------------------------------------------------------------//
@@ -28,8 +32,6 @@ public:
 					~MOAIParticlePlugin			();	
 	virtual void	OnInit						( float* particle, float* registers ) = 0;
 	virtual void	OnRender					( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1, float term ) = 0;
-	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

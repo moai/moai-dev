@@ -39,12 +39,12 @@ private:
 	static int		_setWorkingDirectory		( lua_State* L );
 	static int		_stripPKZipTimestamps		( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIFileSystem )
-	
-	//----------------------------------------------------------------//
-	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

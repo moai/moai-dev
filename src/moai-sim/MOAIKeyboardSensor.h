@@ -36,14 +36,18 @@ private:
 	MOAILuaStrongRef		mOnEdit;
 
 	//----------------------------------------------------------------//
-	static int		_keyDown				( lua_State* L );
-	static int		_keyIsDown				( lua_State* L );
-	static int		_keyIsUp				( lua_State* L );
-	static int		_keyUp					( lua_State* L );
-	static int		_setCallback			( lua_State* L );
-	static int		_setCharCallback		( lua_State* L );
-	static int		_setEditCallback		( lua_State* L );
-	static int		_setKeyCallback			( lua_State* L );
+	static int			_keyDown					( lua_State* L );
+	static int			_keyIsDown					( lua_State* L );
+	static int			_keyIsUp					( lua_State* L );
+	static int			_keyUp						( lua_State* L );
+	static int			_setCallback				( lua_State* L );
+	static int			_setCharCallback			( lua_State* L );
+	static int			_setEditCallback			( lua_State* L );
+	static int			_setKeyCallback				( lua_State* L );
+
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 
@@ -63,8 +67,6 @@ public:
 						MOAIKeyboardSensor			();
 						~MOAIKeyboardSensor			();
 	void				ParseEvent					( ZLStream& eventStream );
-	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	void				ResetState					();
 };
 

@@ -82,6 +82,12 @@ private:
 	//----------------------------------------------------------------//
 	void			LoadPage					( cc8* filename, float size, cc8* charCodes );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_SerializeIn			( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void			MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIBitmapFontReader )
@@ -91,13 +97,9 @@ public:
 	int				GetGlyphMetrics				( MOAIGlyphMetrics& glyphMetrics );
 					MOAIBitmapFontReader		();
 					~MOAIBitmapFontReader		();
-	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	int				RenderGlyph					( MOAIImage& image, float x, float y );
 	int				SelectFace					( float size );
 	int				SelectGlyph					( u32 c );
-	void			MOAILuaObject_SerializeIn					( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void			MOAILuaObject_SerializeOut				( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

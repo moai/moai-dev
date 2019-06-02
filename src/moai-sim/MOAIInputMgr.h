@@ -68,6 +68,10 @@ private:
 	void				Record						( size_t size );
 	bool				WriteEventHeader			( ZLIndex deviceID, ZLIndex sensorID, u32 type );
 
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 
 	DECL_LUA_SINGLETON ( MOAIInputMgr )
@@ -86,8 +90,6 @@ public:
 	//bool				IsDone						();
 						MOAIInputMgr				();
 						~MOAIInputMgr				();
-	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	void				ReserveDevices				( ZLSize total );
 	void				ReserveSensors				( ZLIndex deviceID, ZLSize total );
 	void				ResetSensorState			();

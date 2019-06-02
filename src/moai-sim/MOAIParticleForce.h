@@ -42,7 +42,9 @@ private:
 	static int		_setType				( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void			MOAINode_Update			();
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAINode_Update						();
 
 public:
 	
@@ -65,8 +67,6 @@ public:
 	void			Eval					( const ZLVec3D& loc, float mass, ZLVec3D& acceleration, ZLVec3D& offset );
 					MOAIParticleForce		();
 					~MOAIParticleForce		();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

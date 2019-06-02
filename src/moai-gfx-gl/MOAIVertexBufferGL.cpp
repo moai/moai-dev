@@ -27,6 +27,10 @@ MOAIVertexBufferGL::MOAIVertexBufferGL () {
 MOAIVertexBufferGL::~MOAIVertexBufferGL () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIVertexBufferGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIVertexBuffer, MOAILuaObject_RegisterLuaClass ( composer, state ));

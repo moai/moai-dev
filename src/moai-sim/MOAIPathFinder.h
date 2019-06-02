@@ -87,11 +87,15 @@ private:
 	static int			_setWeight					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				BuildPath			( MOAIPathState* state );
-	void				ClearVisitation		();
-	void				CloseState			( MOAIPathState* stateToClose );
-	MOAIPathState*		NextState			();
-	void				Reset				();
+	void				BuildPath				( MOAIPathState* state );
+	void				ClearVisitation			();
+	void				CloseState				( MOAIPathState* stateToClose );
+	MOAIPathState*		NextState				();
+	void				Reset					();
+
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 	
@@ -106,15 +110,13 @@ public:
 	GET ( float, HWeight, mHWeight )
 	
 	//----------------------------------------------------------------//
-	bool		CheckMask				( u32 terrain );
-	float		ComputeTerrainCost		( float moveCost, u32 terrain0, u32 terrain1 );
-	bool		FindPath				( int iterations );
-	bool		IsVisited				( ZLIndex nodeID );
-				MOAIPathFinder			();
-				~MOAIPathFinder			();
-	void		PushState				( ZLIndex nodeID, float cost, float estimate );
-	void		MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void		MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	bool				CheckMask				( u32 terrain );
+	float				ComputeTerrainCost		( float moveCost, u32 terrain0, u32 terrain1 );
+	bool				FindPath				( int iterations );
+	bool				IsVisited				( ZLIndex nodeID );
+						MOAIPathFinder			();
+						~MOAIPathFinder			();
+	void				PushState				( ZLIndex nodeID, float cost, float estimate );
 };
 
 #endif

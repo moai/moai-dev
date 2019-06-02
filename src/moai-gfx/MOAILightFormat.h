@@ -38,6 +38,10 @@ private:
 	//----------------------------------------------------------------//
 	void						Bless						();
 
+	//----------------------------------------------------------------//
+	void						MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void						MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 
 	DECL_LUA_FACTORY ( MOAILightFormat )
@@ -46,8 +50,6 @@ public:
 	MOAILightFormatUniform*		GetUniform					( ZLIndex uniformID );
 								MOAILightFormat				();
 								~MOAILightFormat			();
-	void						MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void						MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

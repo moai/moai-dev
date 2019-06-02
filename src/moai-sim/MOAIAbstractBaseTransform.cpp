@@ -320,6 +320,10 @@ MOAIAbstractBaseTransform::MOAIAbstractBaseTransform () {
 MOAIAbstractBaseTransform::~MOAIAbstractBaseTransform () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIAbstractBaseTransform::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
@@ -361,10 +365,6 @@ void MOAIAbstractBaseTransform::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& c
 	
 	luaL_register ( state, 0, regTable );
 }
-
-//================================================================//
-// virtual
-//================================================================//
 
 //----------------------------------------------------------------//
 bool MOAIAbstractBaseTransform::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {

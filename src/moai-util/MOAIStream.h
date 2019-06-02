@@ -17,7 +17,7 @@
 class MOAIStream :
 	public virtual ZLStream,
 	public virtual MOAILuaObject {
-private:
+protected:
 	
 	enum {
 		UNKNOWN,
@@ -72,6 +72,10 @@ private:
 	static cc8*		ParseTypeToken		( cc8* format, u32& type );
 	int				ReadFormat			( MOAILuaState& state, int idx );
 	int				WriteFormat			( MOAILuaState& state, int idx );
+
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
@@ -143,8 +147,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIStream			();
 					~MOAIStream			();
-	void			MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs	( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

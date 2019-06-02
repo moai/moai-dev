@@ -549,41 +549,6 @@ void MOAITouchSensor::PrintStacks () {
 }
 
 //----------------------------------------------------------------//
-void MOAITouchSensor::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAISensor, MOAILuaObject_RegisterLuaClass ( composer, state ));
-
-	state.SetField ( -1, "TOUCH_DOWN", ( u32 )TOUCH_DOWN );
-	state.SetField ( -1, "TOUCH_MOVE", ( u32 )TOUCH_MOVE );
-	state.SetField ( -1, "TOUCH_UP", ( u32 )TOUCH_UP );
-	state.SetField ( -1, "TOUCH_CANCEL", ( u32 )TOUCH_CANCEL );
-}
-
-//----------------------------------------------------------------//
-void MOAITouchSensor::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAISensor, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-
-	luaL_Reg regTable [] = {
-		{ "countTouches",		_countTouches },
-		{ "down",				_down },
-		{ "getActiveTouches",	_getActiveTouches },
-		{ "getCenterLoc",		_getCenterLoc },
-		{ "getTouch",			_getTouch },
-		{ "hasTouches",			_hasTouches },
-		{ "isDown",				_isDown },
-		{ "setAcceptCancel",	_setAcceptCancel },
-		{ "setCallback",		_setCallback },
-		{ "setTapMargin",		_setTapMargin },
-		{ "setTapTime",			_setTapTime },
-		{ "up",					_up },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAITouchSensor::ResetState () {
 
 	u32 top = this->mTop;
@@ -636,4 +601,43 @@ void MOAITouchSensor::ResetState () {
 	if ( this->mTop == 0 && this->mLingerTop == 0 ) {
 		this->ClearState ();
 	}
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAITouchSensor::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAISensor, MOAILuaObject_RegisterLuaClass ( composer, state ));
+
+	state.SetField ( -1, "TOUCH_DOWN", ( u32 )TOUCH_DOWN );
+	state.SetField ( -1, "TOUCH_MOVE", ( u32 )TOUCH_MOVE );
+	state.SetField ( -1, "TOUCH_UP", ( u32 )TOUCH_UP );
+	state.SetField ( -1, "TOUCH_CANCEL", ( u32 )TOUCH_CANCEL );
+}
+
+//----------------------------------------------------------------//
+void MOAITouchSensor::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAISensor, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+
+	luaL_Reg regTable [] = {
+		{ "countTouches",		_countTouches },
+		{ "down",				_down },
+		{ "getActiveTouches",	_getActiveTouches },
+		{ "getCenterLoc",		_getCenterLoc },
+		{ "getTouch",			_getTouch },
+		{ "hasTouches",			_hasTouches },
+		{ "isDown",				_isDown },
+		{ "setAcceptCancel",	_setAcceptCancel },
+		{ "setCallback",		_setCallback },
+		{ "setTapMargin",		_setTapMargin },
+		{ "setTapTime",			_setTapTime },
+		{ "up",					_up },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
 }

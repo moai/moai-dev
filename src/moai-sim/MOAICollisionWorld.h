@@ -20,7 +20,7 @@ class MOAICollisionWorld :
 	public virtual MOAIAction,
 	public virtual MOAIDrawShapeRetained,
 	public virtual MOAIPartition {
-private:
+protected:
 
 	friend class MOAICollisionProp;
 	friend class MOAIOverlapHandler;
@@ -61,6 +61,10 @@ private:
 	//----------------------------------------------------------------//
 	bool				MOAIAction_IsDone					();
 	void				MOAIAction_Update					( double step );
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_SerializeIn			( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void				MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 	void				MOAIPartition_DrawDebugFront		();
 	void				MOAIPartition_OnInsertHull			( MOAIPartitionHull& hull );
 	void				MOAIPartition_OnRemoveHull			( MOAIPartitionHull& hull );
@@ -84,10 +88,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAICollisionWorld		();
 					~MOAICollisionWorld		();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_SerializeIn				( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void			MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

@@ -32,6 +32,9 @@ private:
 	static int		_setSpringDampingRatio	( lua_State* L );
 	static int		_setSpringFrequencyHz	( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	
 public:
 	
@@ -40,8 +43,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIBox2DWheelJoint		();
 					~MOAIBox2DWheelJoint	();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

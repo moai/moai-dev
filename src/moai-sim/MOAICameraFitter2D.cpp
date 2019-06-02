@@ -566,55 +566,6 @@ void MOAICameraFitter2D::SnapToTargetScale ( MOAITransform& camera ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICameraFitter2D::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaClass ( composer, state ));
-
-	state.SetField ( -1, "FITTING_MODE_SEEK_LOC", ( u32 )FITTING_MODE_SEEK_LOC );
-	state.SetField ( -1, "FITTING_MODE_SEEK_SCALE", ( u32 )FITTING_MODE_SEEK_SCALE );
-	state.SetField ( -1, "FITTING_MODE_APPLY_ANCHORS", ( u32 )FITTING_MODE_APPLY_ANCHORS );
-	state.SetField ( -1, "FITTING_MODE_APPLY_BOUNDS", ( u32 )FITTING_MODE_APPLY_BOUNDS );
-	state.SetField ( -1, "FITTING_MODE_DEFAULT", ( u32 )FITTING_MODE_DEFAULT );
-	state.SetField ( -1, "FITTING_MODE_TRACK_NODE", ( u32 )FITTING_MODE_TRACK_NODE);
-	state.SetField ( -1, "FITTING_MODE_MASK", ( u32 )FITTING_MODE_MASK );
-}
-
-//----------------------------------------------------------------//
-void MOAICameraFitter2D::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-
-	luaL_Reg regTable [] = {
-		{ "clearAnchors",		_clearAnchors },
-		{ "clearFitMode",		_clearFitMode },
-		{ "getFitDistance",		_getFitDistance },
-		{ "getFitLoc",			_getFitLoc },
-		{ "getFitMode",			_getFitMode },
-		{ "getFitScale",		_getFitScale },
-		{ "getTargetLoc",		_getTargetLoc },
-		{ "getTargetScale",		_getTargetScale },
-		{ "insertAnchor",		_insertAnchor },
-		{ "removeAnchor",		_removeAnchor },
-		{ "setBounds",			_setBounds },
-		{ "setCamera",			_setCamera },
-		{ "setDamper",			_setDamper },
-		{ "setFitLoc",			_setFitLoc },
-		{ "setFitMode",			_setFitMode },
-		{ "setFitScale",		_setFitScale },
-		{ "setMin",				_setMin },
-		{ "setViewport",		_setViewport },
-		{ "snapToTarget",		_snapToTarget },
-		{ "startTrackingNode",_startTrackingNode },
-		{ "stopTrackingNode",	_stopTrackingNode },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAICameraFitter2D::UpdateFit () {
 
 	if ( !( this->mFittingMode & FITTING_MODE_APPLY_ANCHORS )) return;
@@ -716,6 +667,55 @@ void MOAICameraFitter2D::MOAIAction_Update ( double step ) {
 		MOAICameraAnchor2D* anchor = *anchorIt;
 		anchor->Activate ( *this );
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAICameraFitter2D::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaClass ( composer, state ));
+
+	state.SetField ( -1, "FITTING_MODE_SEEK_LOC", ( u32 )FITTING_MODE_SEEK_LOC );
+	state.SetField ( -1, "FITTING_MODE_SEEK_SCALE", ( u32 )FITTING_MODE_SEEK_SCALE );
+	state.SetField ( -1, "FITTING_MODE_APPLY_ANCHORS", ( u32 )FITTING_MODE_APPLY_ANCHORS );
+	state.SetField ( -1, "FITTING_MODE_APPLY_BOUNDS", ( u32 )FITTING_MODE_APPLY_BOUNDS );
+	state.SetField ( -1, "FITTING_MODE_DEFAULT", ( u32 )FITTING_MODE_DEFAULT );
+	state.SetField ( -1, "FITTING_MODE_TRACK_NODE", ( u32 )FITTING_MODE_TRACK_NODE);
+	state.SetField ( -1, "FITTING_MODE_MASK", ( u32 )FITTING_MODE_MASK );
+}
+
+//----------------------------------------------------------------//
+void MOAICameraFitter2D::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+
+	luaL_Reg regTable [] = {
+		{ "clearAnchors",		_clearAnchors },
+		{ "clearFitMode",		_clearFitMode },
+		{ "getFitDistance",		_getFitDistance },
+		{ "getFitLoc",			_getFitLoc },
+		{ "getFitMode",			_getFitMode },
+		{ "getFitScale",		_getFitScale },
+		{ "getTargetLoc",		_getTargetLoc },
+		{ "getTargetScale",		_getTargetScale },
+		{ "insertAnchor",		_insertAnchor },
+		{ "removeAnchor",		_removeAnchor },
+		{ "setBounds",			_setBounds },
+		{ "setCamera",			_setCamera },
+		{ "setDamper",			_setDamper },
+		{ "setFitLoc",			_setFitLoc },
+		{ "setFitMode",			_setFitMode },
+		{ "setFitScale",		_setFitScale },
+		{ "setMin",				_setMin },
+		{ "setViewport",		_setViewport },
+		{ "snapToTarget",		_snapToTarget },
+		{ "startTrackingNode",_startTrackingNode },
+		{ "stopTrackingNode",	_stopTrackingNode },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//

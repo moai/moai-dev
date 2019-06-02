@@ -50,11 +50,11 @@ protected:
 	void					SetMemberTable			( MOAILuaState& state, int idx );
 
 	//----------------------------------------------------------------//
-	virtual void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	virtual void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
-	virtual	void			MOAILuaObject_SerializeIn				( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	virtual	void			MOAILuaObject_SerializeOut				( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
-	void					ZLRefCountedObjectBase_OnRelease		( u32 refCount );
+	virtual void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	virtual void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	virtual	void			MOAILuaObject_SerializeIn			( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	virtual	void			MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
+	void					ZLRefCountedObjectBase_OnRelease	( u32 refCount );
 
 public:
 

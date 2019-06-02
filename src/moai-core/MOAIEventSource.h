@@ -40,7 +40,7 @@ public:
 */
 class MOAIInstanceEventSource :
 	public virtual MOAIEventSource {
-private:
+protected:
 
 	MOAILuaMemberRef	mListenerTable;
 
@@ -48,11 +48,13 @@ private:
 	static int		_getListener				( lua_State* L );
 	static int		_setListener				( lua_State* L );
 
-protected:
-
 	//----------------------------------------------------------------//
 	void			AffirmListenerTable			( MOAILuaState& state );
 	bool			PushListenerTable			( MOAILuaState& state );
+
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 
@@ -62,7 +64,6 @@ public:
 					MOAIInstanceEventSource		();
 	virtual			~MOAIInstanceEventSource	();
 	bool			PushListenerAndSelf			( u32 eventID, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 };
 
 //================================================================//
@@ -73,11 +74,9 @@ public:
 */
 class MOAIGlobalEventSource :
 	public virtual MOAIEventSource {
-private:
+protected:
 
 	MOAILuaStrongRef	mListenerTable;
-
-protected:
 
 	//----------------------------------------------------------------//
 	/**	@lua	getListener

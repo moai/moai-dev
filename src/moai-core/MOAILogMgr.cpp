@@ -282,6 +282,9 @@ void MOAILogMgr::OpenFile ( cc8* filename ) {
 	}
 }
 
+//================================================================//
+// virtual
+//================================================================//
 
 //----------------------------------------------------------------//
 void MOAILogMgr::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {

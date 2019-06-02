@@ -86,25 +86,29 @@ private:
 	float				mTapTime;
 
 	//----------------------------------------------------------------//
-	static int		_countTouches			( lua_State* L );
-	static int		_down					( lua_State* L );
-	static int		_getActiveTouches		( lua_State* L );
-	static int		_getCenterLoc			( lua_State* L );
-	static int		_getTouch				( lua_State* L );
-	static int		_hasTouches				( lua_State* L );
-	static int		_isDown					( lua_State* L );
-	static int		_setAcceptCancel		( lua_State* L );
-	static int		_setCallback			( lua_State* L );
-	static int		_setTapMargin			( lua_State* L ); 
-	static int		_setTapTime				( lua_State* L );
-	static int		_up						( lua_State* L );
+	static int			_countTouches			( lua_State* L );
+	static int			_down					( lua_State* L );
+	static int			_getActiveTouches		( lua_State* L );
+	static int			_getCenterLoc			( lua_State* L );
+	static int			_getTouch				( lua_State* L );
+	static int			_hasTouches				( lua_State* L );
+	static int			_isDown					( lua_State* L );
+	static int			_setAcceptCancel		( lua_State* L );
+	static int			_setCallback			( lua_State* L );
+	static int			_setTapMargin			( lua_State* L );
+	static int			_setTapTime				( lua_State* L );
+	static int			_up						( lua_State* L );
 
 	//----------------------------------------------------------------//
-	u32				AddTouch				();
-	void			AddLingerTouch			( MOAITouchLinger& touch );
-	s32				CheckLingerList			( float x, float y, float time );
-	u32				FindTouch				( u32 touchID );
-	void			PrintStacks				();
+	u32					AddTouch				();
+	void				AddLingerTouch			( MOAITouchLinger& touch );
+	s32					CheckLingerList			( float x, float y, float time );
+	u32					FindTouch				( u32 touchID );
+	void				PrintStacks				();
+
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 
@@ -124,8 +128,6 @@ public:
 						MOAITouchSensor				();
 						~MOAITouchSensor			();
 	void				ParseEvent					( ZLStream& eventStream );
-	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	void				ResetState					();
 };
 

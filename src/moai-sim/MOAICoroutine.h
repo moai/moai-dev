@@ -44,11 +44,13 @@ private:
 	int					Resume					( float step );
 	
 	//----------------------------------------------------------------//
-	STLString			MOAIAction_GetDebugInfo		() const;
-	bool				MOAIAction_IsDone			();
-	void				MOAIAction_Start			();
-	void				MOAIAction_Stop				();
-	void				MOAIAction_Update			( double step );
+	STLString			MOAIAction_GetDebugInfo				() const;
+	bool				MOAIAction_IsDone					();
+	void				MOAIAction_Start					();
+	void				MOAIAction_Stop						();
+	void				MOAIAction_Update					( double step );
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 	
@@ -58,8 +60,6 @@ public:
 	MOAIAction*			GetDefaultParent		();
 						MOAICoroutine			();
 						~MOAICoroutine			();
-	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

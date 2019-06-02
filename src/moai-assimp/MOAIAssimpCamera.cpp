@@ -188,6 +188,28 @@ MOAIAssimpCamera::~MOAIAssimpCamera () {
 }
 
 //----------------------------------------------------------------//
+void MOAIAssimpCamera::SetCamera ( aiCamera *assimpCamera ) {
+
+	this->mAssimpCamera = assimpCamera;
+
+	aiMatrix4x4 transform = this->mNode->mTransformation;
+
+	transform.Decompose ( this->mScaling, this->mRotation, this->mPosition );
+	this->mMoaiCamera = new MOAICamera ();
+	this->mMoaiCamera->SetLoc ((float) this->mPosition.x , (float) this->mPosition.y , (float) this->mPosition.z );
+	this->mMoaiCamera->SetScl ((float) this->mScaling.x , (float) this->mScaling.y , (float) this->mScaling.z );
+	this->mMoaiCamera->SetRot (
+		( float )( this->CalculatePitch ( this->mRotation) * R2D ),
+		( float )( this->CalculateYaw ( this->mRotation) * R2D ),
+		( float )( this->CalculateRoll ( this->mRotation) * R2D )
+	);
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
 void MOAIAssimpCamera::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIAssimpSceneMember, MOAILuaObject_RegisterLuaClass ( composer, state ));
@@ -217,22 +239,4 @@ void MOAIAssimpCamera::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, 
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIAssimpCamera::SetCamera ( aiCamera *assimpCamera ) {
-
-	this->mAssimpCamera = assimpCamera;
-
-	aiMatrix4x4 transform = this->mNode->mTransformation;
-
-	transform.Decompose ( this->mScaling, this->mRotation, this->mPosition );
-	this->mMoaiCamera = new MOAICamera ();
-	this->mMoaiCamera->SetLoc ((float) this->mPosition.x , (float) this->mPosition.y , (float) this->mPosition.z );
-	this->mMoaiCamera->SetScl ((float) this->mScaling.x , (float) this->mScaling.y , (float) this->mScaling.z );
-	this->mMoaiCamera->SetRot (
-		( float )( this->CalculatePitch ( this->mRotation) * R2D ),
-		( float )( this->CalculateYaw ( this->mRotation) * R2D ),
-		( float )( this->CalculateRoll ( this->mRotation) * R2D )
-	);
 }

@@ -70,6 +70,9 @@ private:
 	void			RegisterNotificationListeners	();
 	void			RemoveNotificationListeners		();
 	
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
+	
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIAppIOS )
@@ -105,7 +108,6 @@ public:
 						~MOAIAppIOS								();
 	void				OnGlobalsFinalize						();
 	void				OpenUrl									( NSURL* url, NSString* sourceApplication );
-	void				MOAILuaObject_RegisterLuaClass						( MOAIComposer& composer, MOAILuaState& state );
 
 	static void			callTakeCameraLuaCallback				( NSString* imagePath );
 };

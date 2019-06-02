@@ -22,6 +22,10 @@ private:
 	static int		_setDampingRatio		( lua_State* L );
 	static int		_setFrequency			( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIBox2DWeldJoint )
@@ -29,8 +33,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIBox2DWeldJoint		();
 					~MOAIBox2DWeldJoint		();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

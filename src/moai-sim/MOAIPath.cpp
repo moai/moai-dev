@@ -165,6 +165,22 @@ MOAIPath::~MOAIPath () {
 }
 
 //----------------------------------------------------------------//
+void MOAIPath::Reserve ( ZLSize size ) {
+
+	this->mControlPoints.Init ( size );
+}
+
+//----------------------------------------------------------------//
+void MOAIPath::SetPoint ( ZLIndex idx, float x, float y ) {
+
+	this->mControlPoints [ idx ].Init ( x, y );
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
 void MOAIPath::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
@@ -183,16 +199,4 @@ void MOAIPath::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaS
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIPath::Reserve ( ZLSize size ) {
-
-	this->mControlPoints.Init ( size );
-}
-
-//----------------------------------------------------------------//
-void MOAIPath::SetPoint ( ZLIndex idx, float x, float y ) {
-
-	this->mControlPoints [ idx ].Init ( x, y );
 }

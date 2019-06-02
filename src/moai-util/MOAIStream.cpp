@@ -738,67 +738,6 @@ int MOAIStream::ReadFormat ( MOAILuaState& state, int idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIStream::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
-
-	state.SetField ( -1, "SEEK_CUR", ( u32 )SEEK_CUR );
-	state.SetField ( -1, "SEEK_END", ( u32 )SEEK_END );
-	state.SetField ( -1, "SEEK_SET", ( u32 )SEEK_SET );
-	
-	state.SetField ( -1, "SAMPLE_S8",			( u32 )ZLSample::SAMPLE_S8 );
-	state.SetField ( -1, "SAMPLE_U8",			( u32 )ZLSample::SAMPLE_U8 );
-	state.SetField ( -1, "SAMPLE_S16",			( u32 )ZLSample::SAMPLE_S16 );
-	state.SetField ( -1, "SAMPLE_U16",			( u32 )ZLSample::SAMPLE_U16 );
-	state.SetField ( -1, "SAMPLE_S32",			( u32 )ZLSample::SAMPLE_S32 );
-	state.SetField ( -1, "SAMPLE_U32",			( u32 )ZLSample::SAMPLE_U32 );
-	state.SetField ( -1, "SAMPLE_FLOAT",		( u32 )ZLSample::SAMPLE_FLOAT );
-}
-
-//----------------------------------------------------------------//
-void MOAIStream::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
-
-	luaL_Reg regTable [] = {
-		{ "collapse",			_collapse },
-		{ "compact",			_compact },
-		{ "flush",				_flush },
-		{ "getCursor",			_getCursor },
-		{ "getLength",			_getLength },
-		{ "read",				_read },
-		{ "read8",				_read8 },
-		{ "read16",				_read16 },
-		{ "read32",				_read32 },
-		{ "readBoolean",		_readBoolean },
-		{ "readDouble",			_readDouble },
-		{ "readFloat",			_readFloat },
-		{ "readFormat",			_readFormat },
-		{ "readString",			_readString },
-		{ "readU8",				_readU8 },
-		{ "readU16",			_readU16 },
-		{ "readU32",			_readU32 },
-		{ "sample",				_sample },
-		{ "seek",				_seek },
-		{ "write",				_write },
-		{ "write8",				_write8 },
-		{ "write16",			_write16 },
-		{ "write32",			_write32 },
-		{ "writeBoolean",		_writeBoolean },
-		{ "writeColor32",		_writeColor32 },
-		{ "writeDouble",		_writeDouble },
-		{ "writeFloat",			_writeFloat },
-		{ "writeFormat",		_writeFormat },
-		{ "writeStream",		_writeStream },
-		{ "writeString",		_writeString },
-		{ "writeU8",			_writeU8 },
-		{ "writeU16",			_writeU16 },
-		{ "writeU32",			_writeU32 },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 int MOAIStream::WriteFormat ( MOAILuaState& state, int idx ) {
 
 	idx = state.AbsIndex ( idx );
@@ -861,4 +800,69 @@ int MOAIStream::WriteFormat ( MOAILuaState& state, int idx ) {
 	
 	state.Push (( u32 )bytes ); // TODO: overflow?
 	return 1;
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIStream::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
+
+	state.SetField ( -1, "SEEK_CUR", ( u32 )SEEK_CUR );
+	state.SetField ( -1, "SEEK_END", ( u32 )SEEK_END );
+	state.SetField ( -1, "SEEK_SET", ( u32 )SEEK_SET );
+	
+	state.SetField ( -1, "SAMPLE_S8",			( u32 )ZLSample::SAMPLE_S8 );
+	state.SetField ( -1, "SAMPLE_U8",			( u32 )ZLSample::SAMPLE_U8 );
+	state.SetField ( -1, "SAMPLE_S16",			( u32 )ZLSample::SAMPLE_S16 );
+	state.SetField ( -1, "SAMPLE_U16",			( u32 )ZLSample::SAMPLE_U16 );
+	state.SetField ( -1, "SAMPLE_S32",			( u32 )ZLSample::SAMPLE_S32 );
+	state.SetField ( -1, "SAMPLE_U32",			( u32 )ZLSample::SAMPLE_U32 );
+	state.SetField ( -1, "SAMPLE_FLOAT",		( u32 )ZLSample::SAMPLE_FLOAT );
+}
+
+//----------------------------------------------------------------//
+void MOAIStream::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
+
+	luaL_Reg regTable [] = {
+		{ "collapse",			_collapse },
+		{ "compact",			_compact },
+		{ "flush",				_flush },
+		{ "getCursor",			_getCursor },
+		{ "getLength",			_getLength },
+		{ "read",				_read },
+		{ "read8",				_read8 },
+		{ "read16",				_read16 },
+		{ "read32",				_read32 },
+		{ "readBoolean",		_readBoolean },
+		{ "readDouble",			_readDouble },
+		{ "readFloat",			_readFloat },
+		{ "readFormat",			_readFormat },
+		{ "readString",			_readString },
+		{ "readU8",				_readU8 },
+		{ "readU16",			_readU16 },
+		{ "readU32",			_readU32 },
+		{ "sample",				_sample },
+		{ "seek",				_seek },
+		{ "write",				_write },
+		{ "write8",				_write8 },
+		{ "write16",			_write16 },
+		{ "write32",			_write32 },
+		{ "writeBoolean",		_writeBoolean },
+		{ "writeColor32",		_writeColor32 },
+		{ "writeDouble",		_writeDouble },
+		{ "writeFloat",			_writeFloat },
+		{ "writeFormat",		_writeFormat },
+		{ "writeStream",		_writeStream },
+		{ "writeString",		_writeString },
+		{ "writeU8",			_writeU8 },
+		{ "writeU16",			_writeU16 },
+		{ "writeU32",			_writeU32 },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
 }

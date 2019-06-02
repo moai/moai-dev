@@ -493,6 +493,20 @@ void MOAIAppIOS::OpenUrl ( NSURL* url, NSString* sourceApplication ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIAppIOS::RemoveNotificationListeners () {
+
+	NotificationObserverIt observerIt = this->mNotificationObservers.begin ();
+	for ( ; observerIt != this->mNotificationObservers.end (); ++observerIt ) {
+		[[ NSNotificationCenter defaultCenter ] removeObserver:*observerIt ];
+	}
+	this->mNotificationObservers.clear ();
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
 void MOAIAppIOS::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	state.SetField ( -1, "DID_BECOME_ACTIVE",			( u32 )DID_BECOME_ACTIVE );
@@ -577,16 +591,6 @@ void MOAIAppIOS::RegisterNotificationListeners () {
 			this->mNotificationObservers.push_back ( observer );
 		}
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAIAppIOS::RemoveNotificationListeners () {
-
-	NotificationObserverIt observerIt = this->mNotificationObservers.begin ();
-	for ( ; observerIt != this->mNotificationObservers.end (); ++observerIt ) {
-		[[ NSNotificationCenter defaultCenter ] removeObserver:*observerIt ];
-	}
-	this->mNotificationObservers.clear ();
 }
 
 //================================================================//

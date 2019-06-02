@@ -159,6 +159,16 @@ bool MOAIInstanceEventSource::PushListenerTable ( MOAILuaState& state ) {
 	return false;
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIInstanceEventSource::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
+	UNUSED ( state );
+}
+
 //----------------------------------------------------------------//
 void MOAIInstanceEventSource::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( composer );

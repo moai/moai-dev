@@ -53,6 +53,12 @@ private:
 	static ZLIndex		GetNamedGlobalID			( MOAILuaState& state, int& idx, u32& globalID );
 
 	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_SerializeIn			( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void				MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
+
+	//----------------------------------------------------------------//
 	inline ZLIndex GetRawIndex ( ZLIndex idx ) {
 	
 		ZLSize totalMaterials = this->mMaterials.Size ();
@@ -81,11 +87,7 @@ public:
 						MOAIMaterialBatch			();
 	virtual				~MOAIMaterialBatch			();
 	MOAIMaterial*		RawGetMaterial				( ZLIndex idx );
-	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	void				Reserve						( ZLSize n );
-	void				MOAILuaObject_SerializeIn					( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void				MOAILuaObject_SerializeOut				( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 	
 	void				SetBlendMode				( ZLIndex idx );
 	void				SetBlendMode				( ZLIndex idx, const MOAIBlendMode& blendMode );

@@ -37,6 +37,10 @@ private:
 	u32				GetMask						( u32 idx );
 	float*			GetVector					( u32 idx );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIPathTerrainDeck )
@@ -46,8 +50,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIPathTerrainDeck			();
 					~MOAIPathTerrainDeck		();
-	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

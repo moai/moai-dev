@@ -211,19 +211,6 @@ void MOAIHttpTaskNSURL::PerformSync () {
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTaskNSURL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIHttpTaskBase, MOAILuaObject_RegisterLuaClass ( composer, state ));
-}
-
-//----------------------------------------------------------------//
-void MOAIHttpTaskNSURL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIHttpTaskBase, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	
-}
-
-//----------------------------------------------------------------//
 void MOAIHttpTaskNSURL::Reset () {
 
 	this->Clear ();
@@ -291,7 +278,21 @@ void MOAIHttpTaskNSURL::SetVerbose ( bool verbose ) {
 	UNUSED(verbose);
 }
 
+//================================================================//
+// virtual
+//================================================================//
 
+//----------------------------------------------------------------//
+void MOAIHttpTaskNSURL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHttpTaskBase, MOAILuaObject_RegisterLuaClass ( composer, state ));
+}
+
+//----------------------------------------------------------------//
+void MOAIHttpTaskNSURL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHttpTaskBase, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+}
 
 //================================================================//
 // MOAIHttpTaskNSURLDelegate

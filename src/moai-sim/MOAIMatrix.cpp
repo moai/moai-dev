@@ -74,6 +74,16 @@ MOAIMatrix::MOAIMatrix () {
 MOAIMatrix::~MOAIMatrix () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIMatrix::MOAIAbstractBaseTransform_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
+
+	localToWorldMtx = *this;
+}
+
 //----------------------------------------------------------------//
 void MOAIMatrix::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
@@ -107,16 +117,6 @@ void MOAIMatrix::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaStat
 void MOAIMatrix::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
-}
-
-//================================================================//
-// virtual
-//================================================================//
-
-//----------------------------------------------------------------//
-void MOAIMatrix::MOAIAbstractBaseTransform_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
-
-	localToWorldMtx = *this;
 }
 
 //----------------------------------------------------------------//

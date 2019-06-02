@@ -45,6 +45,8 @@ private:
 	MOAINode*			mPrev;
 	MOAINode*			mNext;
 
+protected:
+
 	//----------------------------------------------------------------//
 	static int		_clearAttrLink		( lua_State* L );
 	static int		_clearNodeLink		( lua_State* L );
@@ -66,16 +68,14 @@ private:
 	MOAIDepLink*	FindNodeLink		( MOAINode& srcNode );
 	bool			IsNodeUpstream		( MOAINode* node );
 	void			PullAttributes		();
+	bool			PullLinkedAttr		( ZLAttrID attrID, ZLAttribute& attr );
 	void			RemoveDepLink		( MOAIDepLink& link );
 
 	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	virtual bool	MOAINode_ApplyAttrOp				( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	virtual void	MOAINode_Update						();
-
-protected:
-
-	//----------------------------------------------------------------//
-	bool			PullLinkedAttr		( ZLAttrID attrID, ZLAttribute& attr );
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
@@ -130,8 +130,6 @@ public:
 	u32				GetAttrFlags			( ZLAttrID attrID );
 					MOAINode				();
 					~MOAINode				();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void			ScheduleUpdate			();
 	void			SetAttrLink				( ZLAttrID attrID, MOAINode* srcNode, ZLAttrID srcAttrID );
 	void			SetNodeLink				( MOAINode& srcNode );

@@ -182,6 +182,16 @@ u32 MOAIVecPathGraph::GetNodeCount () {
 }
 
 //----------------------------------------------------------------//
+MOAIVecPathGraph::MOAIVecPathGraph () {
+	
+	RTTI_SINGLE ( MOAIPathGraph )
+}
+
+//----------------------------------------------------------------//
+MOAIVecPathGraph::~MOAIVecPathGraph () {
+}
+
+//----------------------------------------------------------------//
 void MOAIVecPathGraph::PushNeighbors ( MOAIPathFinder& pathFinder, ZLIndex nodeID ) {
 
 	u32 total = ( u32 )this->mNodes.Size (); // TODO: cast
@@ -199,28 +209,6 @@ void MOAIVecPathGraph::PushNeighbors ( MOAIPathFinder& pathFinder, ZLIndex nodeI
 			pathFinder.PushState ( neighborID, g, h );
 		}
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAIVecPathGraph::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIPathGraph, MOAILuaObject_RegisterLuaClass ( composer, state ));
-}
-
-//----------------------------------------------------------------//
-void MOAIVecPathGraph::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIPathGraph, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	
-	luaL_Reg regTable [] = {
-		{ "areNeighbors",			_areNeighbors },
-		{ "getNode",				_getNode },
-		{ "getNodeCount",			_getNodeCount },
-		{ "reserveNodes",			_reserveNodes },
-		{ "setNeighbors",			_setNeighbors },
-		{ "setNode",				_setNode },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
@@ -250,13 +238,28 @@ void MOAIVecPathGraph::SetNode ( ZLIndex id, const ZLVec3D& node ) {
 	}
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
-MOAIVecPathGraph::MOAIVecPathGraph () {
-	
-	RTTI_SINGLE ( MOAIPathGraph )
+void MOAIVecPathGraph::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIPathGraph, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-MOAIVecPathGraph::~MOAIVecPathGraph () {
+void MOAIVecPathGraph::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIPathGraph, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	
+	luaL_Reg regTable [] = {
+		{ "areNeighbors",			_areNeighbors },
+		{ "getNode",				_getNode },
+		{ "getNodeCount",			_getNodeCount },
+		{ "reserveNodes",			_reserveNodes },
+		{ "setNeighbors",			_setNeighbors },
+		{ "setNode",				_setNode },
+		{ NULL, NULL }
+	};
 
+	luaL_register ( state, 0, regTable );
 }

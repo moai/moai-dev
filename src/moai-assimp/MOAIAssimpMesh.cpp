@@ -535,6 +535,10 @@ u32 MOAIAssimpMesh::ReadVertices ( const MOAIVertexFormat& format, ZLStream& str
 	return nVerts;
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIAssimpMesh::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 

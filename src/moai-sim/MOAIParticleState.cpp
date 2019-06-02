@@ -278,30 +278,6 @@ void MOAIParticleState::PushForce ( MOAIParticleForce& force ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleState::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( state );
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleState::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	luaL_Reg regTable [] = {
-		{ "clearForces",			_clearForces },
-		{ "pushForce",				_pushForce },
-		{ "setDamping",				_setDamping },
-		{ "setInitScript",			_setInitScript },
-		{ "setMass",				_setMass },
-		{ "setPlugin",				_setPlugin },
-		{ "setNext",				_setNext },
-		{ "setRenderScript",		_setRenderScript },
-		{ "setTerm",				_setTerm },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAIParticleState::ProcessParticle ( MOAIParticleSystem& system, MOAIParticle& particle, float step ) {
 
 	float t0 = particle.mAge / particle.mTerm;
@@ -354,4 +330,32 @@ void MOAIParticleState::ProcessParticle ( MOAIParticleSystem& system, MOAIPartic
 			particle.mState = 0;
 		}
 	}
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIParticleState::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleState::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	luaL_Reg regTable [] = {
+		{ "clearForces",			_clearForces },
+		{ "pushForce",				_pushForce },
+		{ "setDamping",				_setDamping },
+		{ "setInitScript",			_setInitScript },
+		{ "setMass",				_setMass },
+		{ "setPlugin",				_setPlugin },
+		{ "setNext",				_setNext },
+		{ "setRenderScript",		_setRenderScript },
+		{ "setTerm",				_setTerm },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
 }

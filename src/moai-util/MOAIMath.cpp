@@ -77,6 +77,10 @@ MOAIMath::~MOAIMath () {
 	#endif
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIMath::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( composer );

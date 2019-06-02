@@ -20,7 +20,7 @@
 */
 class MOAIPartition :
 	public virtual MOAILuaObject {
-private:
+protected:
 
 	static const u32 MASK_ANY = 0xffffffff;
 
@@ -57,11 +57,13 @@ private:
 	void			UpdateHull				( MOAIPartitionHull& hull );
 
 	//----------------------------------------------------------------//
-	virtual void	MOAIPartition_DrawDebugBack		();
-	virtual void	MOAIPartition_DrawDebugFront	();
-	virtual void	MOAIPartition_OnInsertHull		( MOAIPartitionHull& hull );
-	virtual void	MOAIPartition_OnRemoveHull		( MOAIPartitionHull& hull );
-	virtual void	MOAIPartition_OnUpdateHull		( MOAIPartitionHull& hull );
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	virtual void	MOAIPartition_DrawDebugBack			();
+	virtual void	MOAIPartition_DrawDebugFront		();
+	virtual void	MOAIPartition_OnInsertHull			( MOAIPartitionHull& hull );
+	virtual void	MOAIPartition_OnRemoveHull			( MOAIPartitionHull& hull );
+	virtual void	MOAIPartition_OnUpdateHull			( MOAIPartitionHull& hull );
 
 public:
 	
@@ -82,8 +84,6 @@ public:
 	bool			IsGlobal				( MOAIPartitionHull& hull );
 					MOAIPartition			();
 					~MOAIPartition			();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void			RemoveHull				( MOAIPartitionHull& hull );
 	void			ReserveLevels			( ZLSize totalLevels );
 	void			SetLevel				( ZLIndex levelID, float cellSize, int width, int height );

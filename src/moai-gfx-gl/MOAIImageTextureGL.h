@@ -23,6 +23,8 @@ private:
 	//----------------------------------------------------------------//
 	bool			MOAIGfxResourceGL_OnGPUCreate		();
 	bool			MOAIGfxResourceGL_OnGPUUpdate		();
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 	
@@ -33,8 +35,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIImageTextureGL		();
 					~MOAIImageTextureGL		();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

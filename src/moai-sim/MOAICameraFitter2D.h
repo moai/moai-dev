@@ -84,9 +84,11 @@ private:
 	void			UpdateTarget			();
 
 	//----------------------------------------------------------------//
-	bool			MOAIAction_IsDone		();
-	void			MOAIAction_Update		( double step );
-	void			MOAINode_Update			();
+	bool			MOAIAction_IsDone					();
+	void			MOAIAction_Update					( double step );
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAINode_Update						();
 
 public:
 
@@ -110,8 +112,6 @@ public:
 	float			GetFitDistance			();
 					MOAICameraFitter2D		();
 					~MOAICameraFitter2D		();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void			RemoveAnchor			( MOAICameraAnchor2D& anchor );
 	void			StartTrackingNode		( MOAITransform& node );
 	void			StopTrackingNode		();

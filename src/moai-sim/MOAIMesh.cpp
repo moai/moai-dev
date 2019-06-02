@@ -601,6 +601,59 @@ MOAIMesh::~MOAIMesh () {
 	this->SetIndexBuffer ( 0 );
 }
 
+////----------------------------------------------------------------//
+//void MOAIMesh::ReserveVAOs ( u32 total ) {
+//
+//	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVAOs.Size (); ++i ) {
+//		MOAIGfxMgr::Get ().DeleteOrDiscard ( this->mVAOs [ i ], false );
+//	}
+//	this->mVAOs.Init ( total );
+//}
+
+////----------------------------------------------------------------//
+//void MOAIMesh::ReserveVertexBuffers ( u32 total ) {
+//
+//	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVertexBuffers.Size (); ++i ) {
+//		this->mVertexBuffers [ i ].SetBufferAndFormat ( 0, 0 );
+//	}
+//	this->mVertexBuffers.Init ( total );
+//}
+
+//----------------------------------------------------------------//
+void MOAIMesh::SetBounds ( const ZLBox& aabb ) {
+
+	this->mBounds.Init ( aabb );
+}
+
+//----------------------------------------------------------------//
+void MOAIMesh::SetIndexBuffer ( MOAIIndexBuffer* indexBuffer ) {
+
+	this->mIndexBuffer = indexBuffer;
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+ZLBounds MOAIMesh::MOAIDeck_ComputeMaxAABB () {
+
+	return this->mBounds;
+}
+
+//----------------------------------------------------------------//
+void MOAIMesh::MOAIDeck_Draw ( ZLIndex idx ) {
+
+	this->DrawIndex ( idx, 0 );
+}
+
+//----------------------------------------------------------------//
+ZLBounds MOAIMesh::MOAIDeck_GetBounds ( ZLIndex idx ) {
+	UNUSED ( idx );
+
+	return this->mBounds;
+}
+
 //----------------------------------------------------------------//
 void MOAIMesh::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
@@ -647,24 +700,6 @@ void MOAIMesh::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaS
 	
 	luaL_register ( state, 0, regTable );
 }
-
-////----------------------------------------------------------------//
-//void MOAIMesh::ReserveVAOs ( u32 total ) {
-//
-//	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVAOs.Size (); ++i ) {
-//		MOAIGfxMgr::Get ().DeleteOrDiscard ( this->mVAOs [ i ], false );
-//	}
-//	this->mVAOs.Init ( total );
-//}
-
-////----------------------------------------------------------------//
-//void MOAIMesh::ReserveVertexBuffers ( u32 total ) {
-//
-//	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVertexBuffers.Size (); ++i ) {
-//		this->mVertexBuffers [ i ].SetBufferAndFormat ( 0, 0 );
-//	}
-//	this->mVertexBuffers.Init ( total );
-//}
 
 //----------------------------------------------------------------//
 void MOAIMesh::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
@@ -725,39 +760,4 @@ void MOAIMesh::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState
 	lua_setfield ( state, -2, "mBounds" );
 	
 	state.SetField < cc8*, u32 >( -1, "mPenWidth", ( u32 )this->mPenWidth );
-}
-
-//----------------------------------------------------------------//
-void MOAIMesh::SetBounds ( const ZLBox& aabb ) {
-
-	this->mBounds.Init ( aabb );
-}
-
-//----------------------------------------------------------------//
-void MOAIMesh::SetIndexBuffer ( MOAIIndexBuffer* indexBuffer ) {
-
-	this->mIndexBuffer = indexBuffer;
-}
-
-//================================================================//
-// virtual
-//================================================================//
-
-//----------------------------------------------------------------//
-ZLBounds MOAIMesh::MOAIDeck_ComputeMaxAABB () {
-
-	return this->mBounds;
-}
-
-//----------------------------------------------------------------//
-void MOAIMesh::MOAIDeck_Draw ( ZLIndex idx ) {
-
-	this->DrawIndex ( idx, 0 );
-}
-
-//----------------------------------------------------------------//
-ZLBounds MOAIMesh::MOAIDeck_GetBounds ( ZLIndex idx ) {
-	UNUSED ( idx );
-
-	return this->mBounds;
 }

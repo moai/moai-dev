@@ -129,24 +129,6 @@ bool MOAIDeck::Overlap ( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBou
 	return this->MOAIDeck_Overlap ( idx, vec, granularity, result );
 }
 
-
-//----------------------------------------------------------------//
-void MOAIDeck::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( state );
-}
-
-//----------------------------------------------------------------//
-void MOAIDeck::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	luaL_Reg regTable [] = {
-		{ "draw",					_draw },
-		{ "getBounds",				_getBounds },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
 //----------------------------------------------------------------//
 void MOAIDeck::SetBoundsDirty () {
 
@@ -198,4 +180,21 @@ bool MOAIDeck::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 granulari
 	
 	ZLBounds bounds = this->GetBounds ( idx );
 	return (( bounds.mStatus == ZLBounds::ZL_BOUNDS_OK ) && bounds.mAABB.Contains ( vec ));
+}
+
+//----------------------------------------------------------------//
+void MOAIDeck::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAIDeck::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	luaL_Reg regTable [] = {
+		{ "draw",					_draw },
+		{ "getBounds",				_getBounds },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
 }

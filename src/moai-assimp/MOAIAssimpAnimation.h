@@ -45,6 +45,10 @@ private:
 	aiQuatKey*		GetRotationKey				( u32 channel, u32 key );
 	aiVectorKey*	GetScaleKey					( u32 channel, u32 key );
 
+	//----------------------------------------------------------------//
+	void					MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 
 	DECL_LUA_FACTORY ( MOAIAssimpAnimation )
@@ -53,8 +57,6 @@ public:
 	MOAIAnimCurveBone*		GetAnimCurve				( u32 channel );
 							MOAIAssimpAnimation			();
 							~MOAIAssimpAnimation		();
-	void					MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	void					SetAnimation				( aiAnimation* assimpAnimation );
 };
 

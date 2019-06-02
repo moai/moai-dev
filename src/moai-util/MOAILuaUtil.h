@@ -57,6 +57,10 @@ private:
 	s64					ConvertInt						( const MOAILuaHeader& srcFormat, const MOAILuaHeader& dstFormat, ZLStream& srcStream, ZLStream& dstStream );
 	void				ConvertString					( const MOAILuaHeader& srcFormat, const MOAILuaHeader& dstFormat, ZLStream& srcStream, ZLStream& dstStream );
 
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_SINGLETON ( MOAILuaUtil )
@@ -65,8 +69,6 @@ public:
 	bool				Convert					( const MOAILuaHeader& dstFormat, ZLStream& srcStream, ZLStream& dstStream );
 						MOAILuaUtil				();
 						~MOAILuaUtil			();
-	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

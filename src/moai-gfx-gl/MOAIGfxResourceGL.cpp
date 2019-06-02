@@ -190,37 +190,6 @@ bool MOAIGfxResourceGL::Purge ( u32 age ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	
-	state.SetField ( -1, "STATE_UNINITIALIZED",					( u32 )MOAIGfxResourceGL::STATE_UNINITIALIZED );
-	state.SetField ( -1, "STATE_READY_FOR_CPU_CREATE",			( u32 )MOAIGfxResourceGL::STATE_READY_FOR_CPU_CREATE );
-	state.SetField ( -1, "STATE_READY_FOR_GPU_CREATE",			( u32 )MOAIGfxResourceGL::STATE_READY_FOR_GPU_CREATE );
-	state.SetField ( -1, "STATE_READY_TO_BIND",					( u32 )MOAIGfxResourceGL::STATE_READY_TO_BIND );
-	state.SetField ( -1, "STATE_ERROR",							( u32 )MOAIGfxResourceGL::STATE_ERROR );
-	
-	state.SetField ( -1, "GFX_EVENT_CREATED",					( u32 )MOAIGfxResourceGL::GFX_EVENT_CREATED );
-	
-	state.SetField ( -1, "DRAWING_PIPELINE",					( u32 )MOAIGfxMgrGL_PipelineClerkGL::DRAWING_PIPELINE );
-	state.SetField ( -1, "LOADING_PIPELINE",					( u32 )MOAIGfxMgrGL_PipelineClerkGL::LOADING_PIPELINE );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxResourceGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-
-	luaL_Reg regTable [] = {
-		{ "getAge",					_getAge },
-		{ "getResourceState",		_getResourceState },
-		{ "purge",					_purge },
-		{ NULL, NULL }
-	};
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxResourceGL::Renew () {
 
 	// any (valid) state other than error we go back to square zero
@@ -287,6 +256,37 @@ bool MOAIGfxResourceGL::MOAIGfxResource_ScheduleForGPUUpdate ( PipelineHint hint
 	
 	this->mGfxMgr->ScheduleGPUAffirm ( *this, pipelineID );
 	return true;
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxResourceGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	
+	state.SetField ( -1, "STATE_UNINITIALIZED",					( u32 )MOAIGfxResourceGL::STATE_UNINITIALIZED );
+	state.SetField ( -1, "STATE_READY_FOR_CPU_CREATE",			( u32 )MOAIGfxResourceGL::STATE_READY_FOR_CPU_CREATE );
+	state.SetField ( -1, "STATE_READY_FOR_GPU_CREATE",			( u32 )MOAIGfxResourceGL::STATE_READY_FOR_GPU_CREATE );
+	state.SetField ( -1, "STATE_READY_TO_BIND",					( u32 )MOAIGfxResourceGL::STATE_READY_TO_BIND );
+	state.SetField ( -1, "STATE_ERROR",							( u32 )MOAIGfxResourceGL::STATE_ERROR );
+	
+	state.SetField ( -1, "GFX_EVENT_CREATED",					( u32 )MOAIGfxResourceGL::GFX_EVENT_CREATED );
+	
+	state.SetField ( -1, "DRAWING_PIPELINE",					( u32 )MOAIGfxMgrGL_PipelineClerkGL::DRAWING_PIPELINE );
+	state.SetField ( -1, "LOADING_PIPELINE",					( u32 )MOAIGfxMgrGL_PipelineClerkGL::LOADING_PIPELINE );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxResourceGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+
+	luaL_Reg regTable [] = {
+		{ "getAge",					_getAge },
+		{ "getResourceState",		_getResourceState },
+		{ "purge",					_purge },
+		{ NULL, NULL }
+	};
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//

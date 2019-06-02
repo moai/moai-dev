@@ -144,26 +144,6 @@ void MOAINodeMgr::Remove ( MOAINode& node ) {
 }
 
 //----------------------------------------------------------------//
-void MOAINodeMgr::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
-
-	luaL_Reg regTable [] = {
-		{ "reset",					_reset },
-		{ "setMaxIterations",		_setMaxIterations },
-		{ "update",					_update },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAINodeMgr::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
-	UNUSED ( state );
-}
-
-//----------------------------------------------------------------//
 void MOAINodeMgr::Reset () {
 	
 	// TODO: fix this up later
@@ -191,4 +171,28 @@ void MOAINodeMgr::Update () {
 	if ( !this->mScheduled ) {
 		this->Reset ();
 	}
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAINodeMgr::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
+
+	luaL_Reg regTable [] = {
+		{ "reset",					_reset },
+		{ "setMaxIterations",		_setMaxIterations },
+		{ "update",					_update },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAINodeMgr::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
+	UNUSED ( state );
 }

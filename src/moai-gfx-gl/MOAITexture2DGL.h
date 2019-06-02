@@ -23,6 +23,8 @@ protected:
 	bool				MOAIGfxResource_OnCPUCreate 			();
 	void				MOAIGfxResource_OnCPUPurgeRecoverable 	();
 	bool				MOAIGfxResourceGL_OnGPUCreate			();
+	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 		
@@ -33,8 +35,6 @@ public:
 	//----------------------------------------------------------------//
 						MOAITexture2DGL			();
 						~MOAITexture2DGL		();
-	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

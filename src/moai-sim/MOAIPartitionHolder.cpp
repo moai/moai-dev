@@ -85,6 +85,10 @@ MOAIPartitionHolder::~MOAIPartitionHolder () {
 	this->mPartition.Set ( *this, 0 );
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIPartitionHolder::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED(state);
@@ -102,7 +106,3 @@ void MOAIPartitionHolder::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& compose
 	
 	luaL_register ( state, 0, regTable );
 }
-
-//================================================================//
-// virtual
-//================================================================//

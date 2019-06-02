@@ -26,6 +26,10 @@ private:
 	static int		_setMaxForce			( lua_State* L );
 	static int		_setTarget				( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIBox2DMouseJoint )
@@ -33,8 +37,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIBox2DMouseJoint		();
 					~MOAIBox2DMouseJoint	();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

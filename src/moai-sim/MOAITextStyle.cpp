@@ -304,6 +304,31 @@ MOAITextStyle::~MOAITextStyle () {
 }
 
 //----------------------------------------------------------------//
+void MOAITextStyle::SetFont ( MOAIFont* font ) {
+
+	if ( this->mFont != font ) {
+	
+		this->LuaRetain ( font );
+		this->LuaRelease ( this->mFont );
+		this->mFont = font;
+		
+		if ( font && ( this->mSize == 0.0f )) {
+			this->mSize = font->GetDefaultSize ();
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAITextStyle::SetShader ( MOAIShader* shader ) {
+
+	this->mShader = shader;
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
 void MOAITextStyle::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
@@ -339,25 +364,4 @@ void MOAITextStyle::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaS
 void MOAITextStyle::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
-}
-
-//----------------------------------------------------------------//
-void MOAITextStyle::SetFont ( MOAIFont* font ) {
-
-	if ( this->mFont != font ) {
-	
-		this->LuaRetain ( font );
-		this->LuaRelease ( this->mFont );
-		this->mFont = font;
-		
-		if ( font && ( this->mSize == 0.0f )) {
-			this->mSize = font->GetDefaultSize ();
-		}
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAITextStyle::SetShader ( MOAIShader* shader ) {
-
-	this->mShader = shader;
 }

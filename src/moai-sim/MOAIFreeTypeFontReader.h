@@ -43,6 +43,12 @@ private:
 	//----------------------------------------------------------------//
 	static void		ExtractSystemFont			( cc8* fontName, ZLStream& stream );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_SerializeIn			( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void			MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIFreeTypeFontReader )
@@ -56,13 +62,9 @@ public:
 					MOAIFreeTypeFontReader		();
 					~MOAIFreeTypeFontReader		();
 	int				OpenFontFile				( cc8* filename );
-	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	int				RenderGlyph					( MOAIImage& image, float x, float y );
 	int				SelectFace					( float size );
 	int				SelectGlyph					( u32 c );
-	void			MOAILuaObject_SerializeIn					( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void			MOAILuaObject_SerializeOut				( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 	int				StrokeGlyph					( MOAIImage& image, float x, float y, float strokeSize, u32 capStyle, u32 joinStyle, float miterLimit );
 };
 

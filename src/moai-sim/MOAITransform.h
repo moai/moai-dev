@@ -87,6 +87,10 @@ protected:
 
 	//----------------------------------------------------------------//
 	void			MOAIAbstractBaseTransform_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx );
+	void			MOAILuaObject_RegisterLuaClass						( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs						( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_SerializeIn							( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void			MOAILuaObject_SerializeOut							( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 	bool			MOAINode_ApplyAttrOp								( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 
 public:
@@ -141,10 +145,6 @@ public:
 	ZLAffine3D				GetBillboardMtx				( const ZLAffine3D& faceCameraMtx ) const;
 							MOAITransform				();
 							~MOAITransform				();
-	void					MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
-	void					MOAILuaObject_SerializeIn					( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void					MOAILuaObject_SerializeOut				( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 	void					SetLoc						( float x, float y, float z );
 	void					SetPiv						( float x, float y, float z );
 	void					SetRot						( float x, float y, float z );

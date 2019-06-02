@@ -1056,6 +1056,22 @@ MOAIBox2DBody::~MOAIBox2DBody () {
 }
 
 //----------------------------------------------------------------//
+void MOAIBox2DBody::SetBody ( b2Body* body ) {
+
+	this->mBody = body;
+	body->SetUserData ( this );
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIBox2DBody::MOAIAbstractBaseTransform_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
+	UNUSED ( localToWorldMtx );
+}
+
+//----------------------------------------------------------------//
 void MOAIBox2DBody::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractBaseTransform, MOAILuaObject_RegisterLuaClass ( composer, state ));
@@ -1112,22 +1128,6 @@ void MOAIBox2DBody::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOA
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIBox2DBody::SetBody ( b2Body* body ) {
-
-	this->mBody = body;
-	body->SetUserData ( this );
-}
-
-//================================================================//
-// virtual
-//================================================================//
-
-//----------------------------------------------------------------//
-void MOAIBox2DBody::MOAIAbstractBaseTransform_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
-	UNUSED ( localToWorldMtx );
 }
 
 //----------------------------------------------------------------//

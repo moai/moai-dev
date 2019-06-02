@@ -89,6 +89,18 @@ MOAIDeckRemapper::MOAIDeckRemapper () :
 MOAIDeckRemapper::~MOAIDeckRemapper () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+ZLIndex MOAIDeckRemapper::MOAIDeckProxy_Remap ( ZLIndex idx ) {
+
+	ZLIndex code = idx - this->mBase;
+	
+	return ZLIndexCast (( code < this->mRemap.Size ()) ? this->mRemap [ code ] : idx );
+}
+
 //----------------------------------------------------------------//
 void MOAIDeckRemapper::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
@@ -110,18 +122,6 @@ void MOAIDeckRemapper::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, 
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//================================================================//
-// virtual
-//================================================================//
-
-//----------------------------------------------------------------//
-ZLIndex MOAIDeckRemapper::MOAIDeckProxy_Remap ( ZLIndex idx ) {
-
-	ZLIndex code = idx - this->mBase;
-	
-	return ZLIndexCast (( code < this->mRemap.Size ()) ? this->mRemap [ code ] : idx );
 }
 
 //----------------------------------------------------------------//

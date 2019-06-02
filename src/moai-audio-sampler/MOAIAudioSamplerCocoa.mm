@@ -299,6 +299,44 @@ void MOAIAudioSamplerCocoa::Resume () {
 }
 
 //----------------------------------------------------------------//
+void MOAIAudioSamplerCocoa::Start () {
+
+	if ( !this->mIsRunning ) {
+	 
+        for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mBuffers.Size (); ++i ) {
+		
+            OSStatus result = AudioQueueEnqueueBuffer ( this->mQueue, this->mBuffers [ i ], 0, NULL );
+			
+            if ( result ) {
+                fprintf ( stderr, "AudioQueueEnqueueBuffer failed with %ld\n", result );
+                return;
+            }
+        }
+    
+		OSStatus result = AudioQueueStart ( this->mQueue, NULL );
+		if ( result ) {
+			fprintf ( stderr, "AudioQueueStart failed with %ld\n", result );
+			return;
+		}
+		
+		this->mIsRunning = true;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIAudioSamplerCocoa::Stop () {
+
+	if ( this->mIsRunning ) {
+		this->mIsRunning = false;
+		AudioQueueStop ( this->mQueue, YES );
+    }
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
 void MOAIAudioSamplerCocoa::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaClass ( composer, state ));
@@ -331,38 +369,4 @@ void MOAIAudioSamplerCocoa::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& compo
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIAudioSamplerCocoa::Start () {
-
-	if ( !this->mIsRunning ) {
-	 
-        for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mBuffers.Size (); ++i ) {
-		
-            OSStatus result = AudioQueueEnqueueBuffer ( this->mQueue, this->mBuffers [ i ], 0, NULL );
-			
-            if ( result ) {
-                fprintf ( stderr, "AudioQueueEnqueueBuffer failed with %ld\n", result );
-                return;
-            }
-        }
-    
-		OSStatus result = AudioQueueStart ( this->mQueue, NULL );
-		if ( result ) {
-			fprintf ( stderr, "AudioQueueStart failed with %ld\n", result );
-			return;
-		}
-		
-		this->mIsRunning = true;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIAudioSamplerCocoa::Stop () {
-
-	if ( this->mIsRunning ) {
-		this->mIsRunning = false;
-		AudioQueueStop ( this->mQueue, YES );
-    }
 }

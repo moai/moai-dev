@@ -572,6 +572,10 @@ MOAIAssimpScene::~MOAIAssimpScene () {
 	this->Clear ();
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIAssimpScene::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 

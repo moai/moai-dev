@@ -70,12 +70,16 @@ private:
 	static int	_transformUV			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	ZLBounds				MOAIDeck_ComputeMaxAABB			();
-	void					MOAIDeck_Draw					( ZLIndex idx );
-	ZLBounds				MOAIDeck_GetBounds				( ZLIndex idx );
-	MOAICollisionShape*		MOAIDeck_GetCollisionShape		( ZLIndex idx );
-	bool					MOAIDeck_Overlap				( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result );
-	bool					MOAIDeck_Overlap				( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result );
+	ZLBounds				MOAIDeck_ComputeMaxAABB				();
+	void					MOAIDeck_Draw						( ZLIndex idx );
+	ZLBounds				MOAIDeck_GetBounds					( ZLIndex idx );
+	MOAICollisionShape*		MOAIDeck_GetCollisionShape			( ZLIndex idx );
+	bool					MOAIDeck_Overlap					( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result );
+	bool					MOAIDeck_Overlap					( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result );
+	void					MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_SerializeIn			( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void					MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 
 public:
 	
@@ -88,14 +92,10 @@ public:
 	bool				Inside						( ZLIndex idx, MOAIMaterialBatch* materials, u32 granularity, ZLVec3D vec, float pad );
 						MOAISpriteDeck2D			();
 						~MOAISpriteDeck2D			();
-	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	void				ReserveLists				( ZLSize total );
 	void				ReservePairs				( ZLSize total );
 	void				ReserveQuads				( ZLSize total );
 	void				ReserveUVQuads				( ZLSize total );
-	void				MOAILuaObject_SerializeIn					( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void				MOAILuaObject_SerializeOut				( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 	void				SetList						( ZLIndex idx, ZLIndex basePairID, ZLSize totalPairs );
 	void				SetPair						( ZLIndex idx, ZLIndex uvRectID, ZLIndex screenRectID, ZLIndex materialID );
 	void				SetQuad						( ZLIndex idx, ZLQuad& quad );

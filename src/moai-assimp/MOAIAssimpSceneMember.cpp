@@ -69,6 +69,10 @@ MOAIAssimpSceneMember::MOAIAssimpSceneMember () :
 MOAIAssimpSceneMember::~MOAIAssimpSceneMember () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIAssimpSceneMember::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );

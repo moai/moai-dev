@@ -44,6 +44,10 @@ private:
 	bool			MoreVertices			();
 	ZLVec2D			NextVertex				();
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIPathStepper )
@@ -55,8 +59,6 @@ public:
 					~MOAIPathStepper		();
 	bool			More					();
 	ZLVec2D			Next					();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void			Start					( MOAIPath& path, float stepSize );
 };
 

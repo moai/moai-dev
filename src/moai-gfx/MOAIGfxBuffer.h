@@ -20,7 +20,11 @@ protected:
 	static int			_reserve					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				MOAIGfxResource_OnCPUDestroy	();
+	void				MOAIGfxResource_OnCPUDestroy		();
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_SerializeIn			( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void				MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 	
 public:
 
@@ -28,11 +32,7 @@ public:
 	void				CopyFromStream				( ZLStream& stream, size_t size );
 						MOAIGfxBuffer				();
 						~MOAIGfxBuffer				();
-	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	void				Reserve						( ZLSize size );
-	void				MOAILuaObject_SerializeIn					( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void				MOAILuaObject_SerializeOut				( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

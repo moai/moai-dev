@@ -259,6 +259,41 @@ MOAIColor::MOAIColor () {
 MOAIColor::~MOAIColor () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIColor::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
+
+	if ( AttrID::Check ( attrID )) {
+
+		switch ( attrID.Unpack ()) {
+		
+			case ATTR_R_COL:
+				this->mR = ZLFloat::Clamp ( attr.Apply ( this->mR, op, ZLAttribute::ATTR_READ_WRITE ), 0.0f, 1.0f );
+				return true;
+				
+			case ATTR_G_COL:
+				this->mG = ZLFloat::Clamp ( attr.Apply ( this->mG, op, ZLAttribute::ATTR_READ_WRITE ), 0.0f, 1.0f );
+				return true;
+				
+			case ATTR_B_COL:
+				this->mB = ZLFloat::Clamp ( attr.Apply ( this->mB, op, ZLAttribute::ATTR_READ_WRITE ), 0.0f, 1.0f );
+				return true;
+				
+			case ATTR_A_COL:
+				this->mA = ZLFloat::Clamp ( attr.Apply ( this->mA, op, ZLAttribute::ATTR_READ_WRITE ), 0.0f, 1.0f );
+				return true;
+				
+			case COLOR_TRAIT:
+				attr.ApplyNoAdd ( this->mColor, op, ZLAttribute::ATTR_READ );
+				return true;
+		}
+	}
+	return false;
+}
+
 //----------------------------------------------------------------//
 void MOAIColor::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
@@ -297,41 +332,6 @@ void MOAIColor::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILua
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//================================================================//
-// virtual
-//================================================================//
-
-//----------------------------------------------------------------//
-bool MOAIColor::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
-
-	if ( AttrID::Check ( attrID )) {
-
-		switch ( attrID.Unpack ()) {
-		
-			case ATTR_R_COL:
-				this->mR = ZLFloat::Clamp ( attr.Apply ( this->mR, op, ZLAttribute::ATTR_READ_WRITE ), 0.0f, 1.0f );
-				return true;
-				
-			case ATTR_G_COL:
-				this->mG = ZLFloat::Clamp ( attr.Apply ( this->mG, op, ZLAttribute::ATTR_READ_WRITE ), 0.0f, 1.0f );
-				return true;
-				
-			case ATTR_B_COL:
-				this->mB = ZLFloat::Clamp ( attr.Apply ( this->mB, op, ZLAttribute::ATTR_READ_WRITE ), 0.0f, 1.0f );
-				return true;
-				
-			case ATTR_A_COL:
-				this->mA = ZLFloat::Clamp ( attr.Apply ( this->mA, op, ZLAttribute::ATTR_READ_WRITE ), 0.0f, 1.0f );
-				return true;
-				
-			case COLOR_TRAIT:
-				attr.ApplyNoAdd ( this->mColor, op, ZLAttribute::ATTR_READ );
-				return true;
-		}
-	}
-	return false;
 }
 
 //----------------------------------------------------------------//

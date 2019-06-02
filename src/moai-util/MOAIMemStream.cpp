@@ -131,6 +131,10 @@ MOAIMemStream::MOAIMemStream () {
 MOAIMemStream::~MOAIMemStream () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIMemStream::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 

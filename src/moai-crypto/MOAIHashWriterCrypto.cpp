@@ -120,6 +120,10 @@ MOAIHashWriterCrypto::MOAIHashWriterCrypto () {
 MOAIHashWriterCrypto::~MOAIHashWriterCrypto () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIHashWriterCrypto::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 

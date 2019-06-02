@@ -24,7 +24,9 @@ protected:
 	static int			_setRenderTable			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				MOAIDrawable_Draw		( int subPrimID );
+	void				MOAIDrawable_Draw					( int subPrimID );
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 
@@ -33,8 +35,6 @@ public:
 	//----------------------------------------------------------------//
 						MOAITableLayer			();
 						~MOAITableLayer			();
-	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

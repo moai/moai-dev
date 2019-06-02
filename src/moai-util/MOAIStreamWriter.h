@@ -14,6 +14,12 @@
 */
 class MOAIStreamWriter :
 	public virtual MOAIStreamAdapter {
+protected:
+	
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	
 public:
 	
 	DECL_LUA_FACTORY ( MOAIStreamWriter )
@@ -21,8 +27,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIStreamWriter		();
 					~MOAIStreamWriter		();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

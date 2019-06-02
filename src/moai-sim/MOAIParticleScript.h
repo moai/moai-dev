@@ -161,6 +161,10 @@ private:
 	void			PushSprite				( MOAIParticleSystem& system, float* registers );
 	void			ResetRegisters			( float* spriteRegisters, float* particleRegisters, const MOAIParticleSystem& );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIParticleScript )
@@ -180,8 +184,6 @@ public:
 	u8*				Compile					();
 					MOAIParticleScript		();
 					~MOAIParticleScript		();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void			Run						( MOAIParticleSystem& system, MOAIParticle& particle, float t0, float t1 );
 };
 

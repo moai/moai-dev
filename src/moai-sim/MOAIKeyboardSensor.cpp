@@ -355,6 +355,21 @@ void MOAIKeyboardSensor::ParseEvent ( ZLStream& eventStream ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIKeyboardSensor::ResetState () {
+
+	// Clear the DOWN and UP flags
+	for ( u32 i = 0; i < this->mClearCount; ++i ) {
+		u32 keyCode = this->mClearQueue [ i ];
+		this->mState [ keyCode ] &= ~( DOWN | UP );
+	}
+	this->mClearCount = 0;
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
 void MOAIKeyboardSensor::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	MOAI_CALL_SUPER_ONCE ( composer, MOAISensor, MOAILuaObject_RegisterLuaClass ( composer, state ));
@@ -378,15 +393,4 @@ void MOAIKeyboardSensor::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIKeyboardSensor::ResetState () {
-
-	// Clear the DOWN and UP flags
-	for ( u32 i = 0; i < this->mClearCount; ++i ) {
-		u32 keyCode = this->mClearQueue [ i ];
-		this->mState [ keyCode ] &= ~( DOWN | UP );	
-	}
-	this->mClearCount = 0;
 }

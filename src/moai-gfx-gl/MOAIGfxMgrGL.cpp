@@ -241,30 +241,6 @@ void MOAIGfxMgrGL::OnGlobalsInitialize () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	state.SetField ( -1, "EVENT_RESIZE",	( u32 )EVENT_RESIZE );
-	
-	state.SetField ( -1, "DRAWING_PIPELINE",	( u32 )MOAIGfxMgrGL_PipelineClerkGL::DRAWING_PIPELINE );
-	state.SetField ( -1, "LOADING_PIPELINE",	( u32 )MOAIGfxMgrGL_PipelineClerkGL::LOADING_PIPELINE );
-
-	luaL_Reg regTable [] = {
-		{ "enablePipelineLogging",		_enablePipelineLogging },
-		{ "getFrameBuffer",				_getFrameBuffer },
-		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAIGfxMgrGL > },
-		{ "getMaxTextureSize",			_getMaxTextureSize },
-		{ "getMaxTextureUnits",			_getMaxTextureUnits },
-		{ "getViewSize",				_getViewSize },
-		{ "purgeResources",				_purgeResources },
-		{ "renewResources",				_renewResources },
-		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAIGfxMgrGL > },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxMgrGL::ReportTextureAlloc ( cc8* name, size_t size ) {
 	UNUSED ( name );
 	UNUSED ( size );
@@ -433,4 +409,28 @@ MOAIGfxMgrGL_ResourceClerkGL& MOAIGfxMgrGL::MOAIGfxMgrGLComponents_GetResourceCl
 //----------------------------------------------------------------//
 MOAIGfxMgrGL_VertexCacheGL& MOAIGfxMgrGL::MOAIGfxMgrGLComponents_GetVertexCacheGL () {
 	return *this;
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxMgrGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	state.SetField ( -1, "EVENT_RESIZE",	( u32 )EVENT_RESIZE );
+	
+	state.SetField ( -1, "DRAWING_PIPELINE",	( u32 )MOAIGfxMgrGL_PipelineClerkGL::DRAWING_PIPELINE );
+	state.SetField ( -1, "LOADING_PIPELINE",	( u32 )MOAIGfxMgrGL_PipelineClerkGL::LOADING_PIPELINE );
+
+	luaL_Reg regTable [] = {
+		{ "enablePipelineLogging",		_enablePipelineLogging },
+		{ "getFrameBuffer",				_getFrameBuffer },
+		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAIGfxMgrGL > },
+		{ "getMaxTextureSize",			_getMaxTextureSize },
+		{ "getMaxTextureUnits",			_getMaxTextureUnits },
+		{ "getViewSize",				_getViewSize },
+		{ "purgeResources",				_purgeResources },
+		{ "renewResources",				_renewResources },
+		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAIGfxMgrGL > },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
 }

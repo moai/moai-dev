@@ -35,7 +35,7 @@
 class MOAIImage :
 	public virtual MOAILuaObject,
 	public virtual ZLImage {
-private:
+protected:
 
 	//----------------------------------------------------------------//
 	static int		_average					( lua_State* L );
@@ -79,6 +79,12 @@ private:
 	static int		_subdivideRect				( lua_State* L );
 	static int		_write						( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_SerializeIn				( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void				MOAILuaObject_SerializeOut				( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIImage )
@@ -87,10 +93,6 @@ public:
 	static MOAIImage*	AffirmImage					( MOAILuaState& state, int idx );
 						MOAIImage					();
 						~MOAIImage					();
-	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_SerializeIn					( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void				MOAILuaObject_SerializeOut				( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

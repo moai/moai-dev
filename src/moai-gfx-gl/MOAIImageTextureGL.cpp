@@ -24,18 +24,6 @@ MOAIImageTextureGL::MOAIImageTextureGL () {
 MOAIImageTextureGL::~MOAIImageTextureGL () {
 }
 
-//----------------------------------------------------------------//
-void MOAIImageTextureGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIImage, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAITextureGL, MOAILuaObject_RegisterLuaClass ( composer, state ));
-}
-
-//----------------------------------------------------------------//
-void MOAIImageTextureGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIImage, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAITextureGL, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-}
-
 //================================================================//
 // virtual
 //================================================================//
@@ -62,4 +50,16 @@ bool MOAIImageTextureGL::MOAIGfxResourceGL_OnGPUUpdate () {
 		this->mRegion.Clear ();
 	}
 	return result && MOAITextureGL::MOAIGfxResourceGL_OnGPUUpdate ();
+}
+
+//----------------------------------------------------------------//
+void MOAIImageTextureGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIImage, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITextureGL, MOAILuaObject_RegisterLuaClass ( composer, state ));
+}
+
+//----------------------------------------------------------------//
+void MOAIImageTextureGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIImage, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITextureGL, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 }

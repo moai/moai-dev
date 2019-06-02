@@ -14,10 +14,14 @@ class MOAIDeserializer :
 private:
 	
 	//----------------------------------------------------------------//
-	static int		_base64Decode				( lua_State* L );
-	static int		_createObject				( lua_State* L );
-	static int		_initObject					( lua_State* L );
-	static int		_registerObjectID			( lua_State* L );
+	static int			_base64Decode				( lua_State* L );
+	static int			_createObject				( lua_State* L );
+	static int			_initObject					( lua_State* L );
+	static int			_registerObjectID			( lua_State* L );
+	
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	
 public:
 	
@@ -31,13 +35,11 @@ public:
 	DECL_LUA_FACTORY ( MOAIDeserializer )
 	
 	//----------------------------------------------------------------//
-	u32					IsLuaFile				( cc8* filename );
-	MOAILuaObject*		MemberIDToObject		( ObjID memberID );
-	u32					SerializeFromFile		( cc8* filename );
-						MOAIDeserializer		();
-	virtual				~MOAIDeserializer		();
-	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	u32					IsLuaFile					( cc8* filename );
+	MOAILuaObject*		MemberIDToObject			( ObjID memberID );
+	u32					SerializeFromFile			( cc8* filename );
+						MOAIDeserializer			();
+	virtual				~MOAIDeserializer			();
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >

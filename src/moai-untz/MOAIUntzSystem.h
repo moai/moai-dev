@@ -28,13 +28,18 @@ private:
 	static int		_getOptions				( lua_State* L );
 	static int		_getSampleRate			( lua_State* L );
 	static int		_getSupportedFormats	( lua_State* L );
+	static int		_getVolume				( lua_State* L );
 	static int		_initialize				( lua_State* L );
 	static int		_setInputDevice			( lua_State* L );
 	static int		_setOptions				( lua_State* L );
 	static int		_setOutputDevice		( lua_State* L );
 	static int		_setSampleRate			( lua_State* L );
 	static int		_setVolume				( lua_State* L );
-	static int		_getVolume				( lua_State* L );
+	
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs	( MOAIComposer& composer, MOAILuaState& state );
+	
 public:
 
 	DECL_LUA_SINGLETON ( MOAIUntzSystem )
@@ -42,8 +47,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIUntzSystem		();
 					~MOAIUntzSystem		();
-	void			MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs	( MOAIComposer& composer, MOAILuaState& state );
 	void			Resume				();
 	void			Suspend				();
 };

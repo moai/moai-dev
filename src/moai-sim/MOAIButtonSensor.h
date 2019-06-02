@@ -27,11 +27,15 @@ private:
 	MOAILuaStrongRef	mOnButton;
 
 	//----------------------------------------------------------------//
-	static int		_down				( lua_State* L );
-	static int		_isDown				( lua_State* L );
-	static int		_isUp				( lua_State* L );
-	static int		_up					( lua_State* L );
-	static int		_setCallback		( lua_State* L );
+	static int			_down					( lua_State* L );
+	static int			_isDown					( lua_State* L );
+	static int			_isUp					( lua_State* L );
+	static int			_up						( lua_State* L );
+	static int			_setCallback			( lua_State* L );
+
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 
@@ -47,8 +51,6 @@ public:
 						MOAIButtonSensor		();
 						~MOAIButtonSensor		();
 	void				ParseEvent				( ZLStream& eventStream );
-	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void				ResetState				();
 };
 

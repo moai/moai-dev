@@ -20,6 +20,10 @@ private:
 	static int			_decode					( lua_State* L );
 	static int			_encode					( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIJsonParser )
@@ -27,8 +31,6 @@ public:
 	//----------------------------------------------------------------//
 						MOAIJsonParser			();
 						~MOAIJsonParser			();
-	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

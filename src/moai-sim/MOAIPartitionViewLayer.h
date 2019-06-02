@@ -54,7 +54,11 @@ private:
 	void			DrawPropsDebug			( MOAIPartitionResultBuffer& buffer);
 
 	//----------------------------------------------------------------//
-	void			MOAIAbstractViewLayer_Draw		();
+	void			MOAIAbstractViewLayer_Draw			();
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_SerializeIn			( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void			MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 
 public:
 		
@@ -63,10 +67,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIPartitionViewLayer		();
 					~MOAIPartitionViewLayer		();
-	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_SerializeIn					( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void			MOAILuaObject_SerializeOut				( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

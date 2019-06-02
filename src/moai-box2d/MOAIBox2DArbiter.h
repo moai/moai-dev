@@ -47,14 +47,16 @@ private:
 	static int		_setContactEnabled		( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void	AffirmContactData ();
-	void	BeginContact	( b2Contact* contact );
-	void	EndContact		( b2Contact* contact );
-	void	PostSolve		( b2Contact* contact, const b2ContactImpulse* impulse );
-	void	PreSolve		( b2Contact* contact, const b2Manifold* oldManifold );
+	void			AffirmContactData 		();
+	void			BeginContact			( b2Contact* contact );
+	void			EndContact				( b2Contact* contact );
+	float			GetUnitsToMeters		() const;
+	void			PostSolve				( b2Contact* contact, const b2ContactImpulse* impulse );
+	void			PreSolve				( b2Contact* contact, const b2Manifold* oldManifold );
 
 	//----------------------------------------------------------------//
-	float   GetUnitsToMeters ( ) const;
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 	
@@ -72,8 +74,7 @@ public:
 					MOAIBox2DArbiter		();
 					MOAIBox2DArbiter        ( const MOAIBox2DWorld &world );
 					~MOAIBox2DArbiter		();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	
 };
 
 #endif

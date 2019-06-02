@@ -38,6 +38,10 @@ private:
 	void			PushNeighbor				( MOAIPathFinder& pathFinder, MOAIGridPathGraphParams& params, u32 tile0, int xTile, int yTile, float moveCost );
 	void			PushNeighbors				( MOAIPathFinder& pathFinder, ZLIndex nodeID );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	enum DISTANCE {
@@ -53,8 +57,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIGridPathGraph			();
 					~MOAIGridPathGraph			();
-	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	void			SetGrid						( MOAIGrid* grid );
 };
 

@@ -242,6 +242,16 @@ void MOAIGridPathGraph::PushNeighbors ( MOAIPathFinder& pathFinder, ZLIndex node
 }
 
 //----------------------------------------------------------------//
+void MOAIGridPathGraph::SetGrid ( MOAIGrid* grid ) {
+
+	this->mGrid.Set ( *this, grid );
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
 void MOAIGridPathGraph::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIPathGraph, MOAILuaObject_RegisterLuaClass ( composer, state ));
 
@@ -262,10 +272,4 @@ void MOAIGridPathGraph::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer,
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIGridPathGraph::SetGrid ( MOAIGrid* grid ) {
-
-	this->mGrid.Set ( *this, grid );
 }

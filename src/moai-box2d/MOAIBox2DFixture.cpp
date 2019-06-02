@@ -305,6 +305,19 @@ MOAIBox2DFixture::~MOAIBox2DFixture () {
 }
 
 //----------------------------------------------------------------//
+void MOAIBox2DFixture::SetFixture ( b2Fixture* fixture ) {
+
+	this->mFixture = fixture;
+	if ( fixture ) {
+		fixture->SetUserData ( this );
+	}
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
 void MOAIBox2DFixture::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
@@ -326,13 +339,4 @@ void MOAIBox2DFixture::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, 
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIBox2DFixture::SetFixture ( b2Fixture* fixture ) {
-
-	this->mFixture = fixture;
-	if ( fixture ) {
-		fixture->SetUserData ( this );
-	}
 }

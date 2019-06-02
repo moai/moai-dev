@@ -312,36 +312,6 @@ bool MOAIPartitionHull::PrepareForInsertion ( const MOAIPartition& partition ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionHull::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-		
-	state.SetField ( -1, "ATTR_PARTITION",				AttrID::Pack ( ATTR_PARTITION ).ToRaw ());
-	state.SetField ( -1, "ATTR_WORLD_BOUNDS_TRAIT",		AttrID::Pack ( ATTR_WORLD_BOUNDS_TRAIT ).ToRaw ());
-	
-	state.SetField ( -1, "HIT_TEST_COARSE",				( u32 )HIT_TEST_COARSE );
-	state.SetField ( -1, "HIT_TEST_MEDIUM",				( u32 )HIT_TEST_MEDIUM );
-	state.SetField ( -1, "HIT_TEST_FINE",				( u32 )HIT_TEST_FINE );
-}
-
-//----------------------------------------------------------------//
-void MOAIPartitionHull::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	luaL_Reg regTable [] = {
-		{ "getPartition",			_getPartition },
-		{ "getPriority",			_getPriority },
-		{ "getWorldBounds",			_getWorldBounds },
-		{ "getWorldBoundsCenter",	_getWorldBoundsCenter },
-		{ "inside",					_inside },
-		{ "setHitGranularity",		_setHitGranularity },
-		{ "setPartition",			_setPartition },
-		{ "setPriority",			_setPriority },
-		{ "setQueryMask",			_setQueryMask },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAIPartitionHull::SetPartition ( MOAIPartition* partition ) {
 
 	if ( partition != this->mPartition ) {
@@ -385,6 +355,36 @@ void MOAIPartitionHull::WasRemovedFromPartition () {
 //================================================================//
 // virtual
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAIPartitionHull::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	
+	state.SetField ( -1, "ATTR_PARTITION",				AttrID::Pack ( ATTR_PARTITION ).ToRaw ());
+	state.SetField ( -1, "ATTR_WORLD_BOUNDS_TRAIT",		AttrID::Pack ( ATTR_WORLD_BOUNDS_TRAIT ).ToRaw ());
+	
+	state.SetField ( -1, "HIT_TEST_COARSE",				( u32 )HIT_TEST_COARSE );
+	state.SetField ( -1, "HIT_TEST_MEDIUM",				( u32 )HIT_TEST_MEDIUM );
+	state.SetField ( -1, "HIT_TEST_FINE",				( u32 )HIT_TEST_FINE );
+}
+
+//----------------------------------------------------------------//
+void MOAIPartitionHull::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	
+	luaL_Reg regTable [] = {
+		{ "getPartition",			_getPartition },
+		{ "getPriority",			_getPriority },
+		{ "getWorldBounds",			_getWorldBounds },
+		{ "getWorldBoundsCenter",	_getWorldBoundsCenter },
+		{ "inside",					_inside },
+		{ "setHitGranularity",		_setHitGranularity },
+		{ "setPartition",			_setPartition },
+		{ "setPriority",			_setPriority },
+		{ "setQueryMask",			_setQueryMask },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
 
 //----------------------------------------------------------------//
 bool MOAIPartitionHull::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {

@@ -110,18 +110,6 @@ void MOAITaskQueue::PushTask ( MOAITask& task ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITaskQueue::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
-	UNUSED ( state );
-}
-
-//----------------------------------------------------------------//
-void MOAITaskQueue::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
-	UNUSED ( state );
-}
-
-//----------------------------------------------------------------//
 void MOAITaskQueue::Stop () {
 
 	bool stop = false;
@@ -137,4 +125,20 @@ void MOAITaskQueue::Stop () {
 	if ( stop ) {
 		this->mThread.Join ();
 	}
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAITaskQueue::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
+	UNUSED ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAITaskQueue::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
+	UNUSED ( state );
 }

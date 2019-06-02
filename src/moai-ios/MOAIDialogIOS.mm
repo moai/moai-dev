@@ -122,6 +122,10 @@ MOAIDialogIOS::MOAIDialogIOS () {
 MOAIDialogIOS::~MOAIDialogIOS () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIDialogIOS::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 

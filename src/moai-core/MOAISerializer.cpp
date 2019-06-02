@@ -372,36 +372,6 @@ void MOAISerializer::PrintObjectID ( ZLStream& stream, cc8* format, ObjID objID 
 }
 
 //----------------------------------------------------------------//
-void MOAISerializer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
-
-	luaL_Reg regTable [] = {
-		{ "floatToHex",			_floatToHex },
-		{ "hexToFloat",			_hexToFloat },
-		{ "serializeToFile",	_serializeToFile },
-		{ "serializeToString",	_serializeToString },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAISerializer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
-
-	luaL_Reg regTable [] = {
-		{ "getObjectTables",		_getObjectTables },
-		{ "serializeToFile",		_serializeToFile },
-		{ "serializeToString",		_serializeToString },
-		{ "setBase64Enabled",		_setBase64Enabled },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 STLString MOAISerializer::SerializeToString () {
 	
 	ZLMemStream memStream;
@@ -694,4 +664,38 @@ void MOAISerializer::WriteTableInits ( ZLStream& stream ) {
 		
 		stream.Print ( "\n" );
 	}
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAISerializer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
+
+	luaL_Reg regTable [] = {
+		{ "floatToHex",			_floatToHex },
+		{ "hexToFloat",			_hexToFloat },
+		{ "serializeToFile",	_serializeToFile },
+		{ "serializeToString",	_serializeToString },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAISerializer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
+
+	luaL_Reg regTable [] = {
+		{ "getObjectTables",		_getObjectTables },
+		{ "serializeToFile",		_serializeToFile },
+		{ "serializeToString",		_serializeToString },
+		{ "setBase64Enabled",		_setBase64Enabled },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
 }

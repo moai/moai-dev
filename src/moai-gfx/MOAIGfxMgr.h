@@ -72,11 +72,13 @@ protected:
 	virtual void				MOAIGfxMgr_PushState				() = 0;
 
 	//----------------------------------------------------------------//
-	MOAIGfxMgr_CPUCache&		MOAIAbstractGfxMgrComponents_GetCPUCache		();
-	MOAIGfxMgr&					MOAIAbstractGfxMgrComponents_GetGfxMgr			();
-	MOAIGfxMgr_GPUCache&		MOAIAbstractGfxMgrComponents_GetGPUCache		();
-	MOAIGfxMgr_RenderTree&		MOAIAbstractGfxMgrComponents_GetRenderTree		();
-	MOAIGfxMgr_VertexCache&		MOAIAbstractGfxMgrComponents_GetVertexCache		();
+	MOAIGfxMgr_CPUCache&		MOAIGfxMgrComponents_GetCPUCache		();
+	MOAIGfxMgr&					MOAIGfxMgrComponents_GetGfxMgr			();
+	MOAIGfxMgr_GPUCache&		MOAIGfxMgrComponents_GetGPUCache		();
+	MOAIGfxMgr_RenderTree&		MOAIGfxMgrComponents_GetRenderTree		();
+	MOAIGfxMgr_VertexCache&		MOAIGfxMgrComponents_GetVertexCache		();
+	void						MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void						MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 	
@@ -108,8 +110,6 @@ public:
 							~MOAIGfxMgr					();
 	void					PopState					();
 	void					PushState					();
-	void					MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

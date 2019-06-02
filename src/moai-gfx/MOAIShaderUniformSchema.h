@@ -17,7 +17,7 @@ protected:
 	static const ZLSize					MAX_UNIFORM_ARRAY_SIZE = 256;
 
 	//----------------------------------------------------------------//
-	virtual MOAIShaderUniformHandle	ZLAbstractShaderUniformSchema_GetUniformHandle		( void* buffer, ZLIndex uniformID ) const = 0;
+	virtual MOAIShaderUniformHandle		MOAIShaderUniformSchema_GetUniformHandle		( void* buffer, ZLIndex uniformID ) const = 0;
 
 public:
 	

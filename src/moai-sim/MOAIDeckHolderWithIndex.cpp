@@ -60,6 +60,24 @@ MOAIDeckHolderWithIndex::MOAIDeckHolderWithIndex () :
 MOAIDeckHolderWithIndex::~MOAIDeckHolderWithIndex () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIDeckHolderWithIndex::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
+
+	if ( AttrID::Check ( attrID )) {
+		
+		switch ( attrID.Unpack ()) {
+			case ATTR_INDEX:
+				this->mIndex = attr.Apply ( this->mIndex, op, ZLAttribute::ATTR_READ_WRITE );
+				return true;
+		}
+	}
+	return false;
+}
+
 //----------------------------------------------------------------//
 void MOAIDeckHolderWithIndex::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
@@ -92,22 +110,4 @@ void MOAIDeckHolderWithIndex::MOAILuaObject_SerializeIn ( MOAIComposer& composer
 void MOAIDeckHolderWithIndex::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckHolder, MOAILuaObject_SerializeOut ( composer, state, serializer ));
-}
-
-//================================================================//
-// virtual
-//================================================================//
-
-//----------------------------------------------------------------//
-bool MOAIDeckHolderWithIndex::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
-
-	if ( AttrID::Check ( attrID )) {
-		
-		switch ( attrID.Unpack ()) {
-			case ATTR_INDEX:
-				this->mIndex = attr.Apply ( this->mIndex, op, ZLAttribute::ATTR_READ_WRITE );
-				return true;
-		}
-	}
-	return false;
 }

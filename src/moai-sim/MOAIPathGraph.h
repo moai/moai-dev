@@ -23,13 +23,15 @@ protected:
 	//----------------------------------------------------------------//
 	virtual void	PushNeighbors			( MOAIPathFinder& pathFinder, ZLIndex nodeID ) = 0;
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 
 	//----------------------------------------------------------------//
 					MOAIPathGraph			();
 					~MOAIPathGraph			();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

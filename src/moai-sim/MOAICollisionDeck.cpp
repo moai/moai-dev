@@ -102,28 +102,6 @@ MOAICollisionDeck::~MOAICollisionDeck () {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionDeck::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_RegisterLuaClass ( composer, state ));
-}
-
-//----------------------------------------------------------------//
-void MOAICollisionDeck::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	
-	luaL_Reg regTable [] = {
-		{ "reserveShapes",		_reserveShapes },
-		{ "setBox",				_setBox },
-		{ "setRect",			_setRect },
-		{ "setQuad",			_setQuad },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAICollisionDeck::ReserveShapes ( u32 totalShapes ) {
 	
 	this->mShapes.Resize ( totalShapes );
@@ -229,4 +207,26 @@ bool MOAICollisionDeck::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 
 
 	//return this->TestHit ( materials, idx, granularity, this->mQuad.mModelQuad, this->mQuad.mUVQuad, vec.mX, vec.mY );
 	return false;
+}
+
+//----------------------------------------------------------------//
+void MOAICollisionDeck::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_RegisterLuaClass ( composer, state ));
+}
+
+//----------------------------------------------------------------//
+void MOAICollisionDeck::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	
+	luaL_Reg regTable [] = {
+		{ "reserveShapes",		_reserveShapes },
+		{ "setBox",				_setBox },
+		{ "setRect",			_setRect },
+		{ "setQuad",			_setQuad },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
 }

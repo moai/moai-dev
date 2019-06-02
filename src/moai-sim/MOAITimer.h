@@ -59,10 +59,12 @@ protected:
 	void			OnLoop						();
 
 	//----------------------------------------------------------------//
-	bool			MOAIAction_IsDone			();
-	void			MOAIAction_Start			();
-	void			MOAIAction_Update			( double step );
-	bool			MOAINode_ApplyAttrOp		( ZLAttrID attrID, ZLAttribute& attr, u32 op );
+	bool			MOAIAction_IsDone					();
+	void			MOAIAction_Start					();
+	void			MOAIAction_Update					( double step );
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	bool			MOAINode_ApplyAttrOp				( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 
 protected:
 
@@ -111,8 +113,6 @@ public:
 	float			GetTime				();
 					MOAITimer			();
 					~MOAITimer			();
-	void			MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs	( MOAIComposer& composer, MOAILuaState& state );
 	void			SetSpan				( float span );
 	void			SetSpan				( float startTime, float endTime );
 	void			SetTime				( float time );

@@ -31,6 +31,10 @@ protected:
 
 	friend class MOAIFont;
 
+	//----------------------------------------------------------------//
+	void						MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void						MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	enum {
@@ -41,15 +45,13 @@ public:
 	
 	//----------------------------------------------------------------//
 	virtual MOAIImage*			GetGlyphImage			( MOAIGlyph& glyph ) = 0;
-	virtual MOAITexture*	GetGlyphTexture			( MOAIGlyph& glyph ) = 0;
+	virtual MOAITexture*		GetGlyphTexture			( MOAIGlyph& glyph ) = 0;
 	virtual MOAIImage*			GetImage				() = 0;
 	virtual bool				IsDynamic				() = 0;
 								MOAIGlyphCache			();
 								~MOAIGlyphCache			();
 	virtual int					PlaceGlyph				( MOAIFont& font, MOAIGlyph& glyph );
 	virtual void				PostRender				( MOAIGlyph& glyph );
-	void						MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void						MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	virtual int					RemoveGlyph				( MOAIGlyph& glyph );
 	virtual int					SetImage				( MOAIFont& font, MOAIImage& image );
 };

@@ -29,6 +29,8 @@ private:
 	static int		_setThresholds		( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 	
@@ -47,8 +49,6 @@ public:
 	ZLCubicBezier2D		GetSegmentForTime		( float t, float* st = 0 );
 						MOAIPath				();
 						~MOAIPath				();
-	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void				Reserve					( ZLSize size );
 	void				SetPoint				( ZLIndex idx, float x, float y );
 };

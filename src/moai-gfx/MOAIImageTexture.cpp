@@ -49,6 +49,36 @@ MOAIImageTexture::~MOAIImageTexture () {
 }
 
 //----------------------------------------------------------------//
+void MOAIImageTexture::UpdateRegion () {
+	
+	this->mRegion = this->GetRect ();
+	this->ScheduleForGPUUpdate ();
+}
+
+//----------------------------------------------------------------//
+void MOAIImageTexture::UpdateRegion ( ZLIntRect rect ) {
+	
+	rect.Bless ();
+	this->GetRect ().Clip ( rect );
+	
+	this->mRegion.Grow ( rect, this->mRegion.Area () > 0 );
+
+	this->ScheduleForGPUUpdate ();
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIImageTexture::MOAIImage_OnImageStatusChanged	( bool isOK ) {
+
+	if ( isOK ) {
+		this->ScheduleForGPUUpdate ();
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIImageTexture::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIImage, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	MOAI_CALL_SUPER_ONCE ( composer, MOAITexture, MOAILuaObject_RegisterLuaClass ( composer, state ));
@@ -76,34 +106,4 @@ void MOAIImageTexture::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAIL
 //----------------------------------------------------------------//
 void MOAIImageTexture::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIImage, MOAILuaObject_SerializeOut ( composer, state, serializer ));
-}
-
-//----------------------------------------------------------------//
-void MOAIImageTexture::UpdateRegion () {
-	
-	this->mRegion = this->GetRect ();
-	this->ScheduleForGPUUpdate ();
-}
-
-//----------------------------------------------------------------//
-void MOAIImageTexture::UpdateRegion ( ZLIntRect rect ) {
-	
-	rect.Bless ();
-	this->GetRect ().Clip ( rect );
-	
-	this->mRegion.Grow ( rect, this->mRegion.Area () > 0 );
-
-	this->ScheduleForGPUUpdate ();
-}
-
-//================================================================//
-// MOAIImageTexture
-//================================================================//
-
-//----------------------------------------------------------------//
-void MOAIImageTexture::MOAIImage_OnImageStatusChanged	( bool isOK ) {
-
-	if ( isOK ) {
-		this->ScheduleForGPUUpdate ();
-	}
 }

@@ -286,31 +286,6 @@ void MOAIFancyGrid::OnResize () {
 }
 
 //----------------------------------------------------------------//
-void MOAIFancyGrid::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGrid, MOAILuaObject_RegisterLuaClass ( composer, state ));
-}
-
-//----------------------------------------------------------------//
-void MOAIFancyGrid::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGrid, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-
-	luaL_Reg regTable [] = {
-		{ "fillColor",			_fillColor },
-		{ "getColor",			_getColor },
-		{ "getPaletteColor",	_getPaletteColor },
-		{ "reservePalette",		_reservePalette },
-		{ "setColor",			_setColor },
-		{ "setColorRow",		_setColorRow },
-		{ "setPaletteColor",	_setPaletteColor },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAIFancyGrid::ReservePalette ( ZLSize size ) {
 
 	this->DiscardPalette ();
@@ -340,18 +315,6 @@ void MOAIFancyGrid::ReservePalette ( ZLSize size ) {
 		this->DiscardColorSet ();
 		this->AffirmColorSet ();
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAIFancyGrid::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGrid, MOAILuaObject_SerializeIn ( composer, state, serializer ));
-}
-
-//----------------------------------------------------------------//
-void MOAIFancyGrid::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGrid, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//
@@ -401,3 +364,43 @@ void MOAIFancyGrid::SetPaletteColor ( ZLIndex idx, MOAIColor* color ) {
 	}
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIFancyGrid::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGrid, MOAILuaObject_RegisterLuaClass ( composer, state ));
+}
+
+//----------------------------------------------------------------//
+void MOAIFancyGrid::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGrid, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+
+	luaL_Reg regTable [] = {
+		{ "fillColor",			_fillColor },
+		{ "getColor",			_getColor },
+		{ "getPaletteColor",	_getPaletteColor },
+		{ "reservePalette",		_reservePalette },
+		{ "setColor",			_setColor },
+		{ "setColorRow",		_setColorRow },
+		{ "setPaletteColor",	_setPaletteColor },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIFancyGrid::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGrid, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+}
+
+//----------------------------------------------------------------//
+void MOAIFancyGrid::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGrid, MOAILuaObject_SerializeOut ( composer, state, serializer ));
+}

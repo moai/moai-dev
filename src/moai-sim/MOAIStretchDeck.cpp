@@ -65,6 +65,10 @@ MOAIStretchDeck::MOAIStretchDeck () :
 MOAIStretchDeck::~MOAIStretchDeck () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIStretchDeck::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
@@ -83,9 +87,3 @@ void MOAIStretchDeck::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, M
 
 	luaL_register ( state, 0, regTable );
 }
-
-//================================================================//
-// virtual
-//================================================================//
-
-//----------------------------------------------------------------//

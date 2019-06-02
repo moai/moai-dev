@@ -75,6 +75,10 @@ protected:
 	void			Finish				();
 					MOAIHttpTaskBase	( const MOAIHttpTaskBase& task );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	GET ( u32, ResponseCode, mResponseCode )
@@ -100,8 +104,6 @@ public:
 						~MOAIHttpTaskBase		();
 	virtual void		PerformAsync			() = 0;
 	virtual void		PerformSync				() = 0;
-	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	virtual void		Reset					() = 0;
 	virtual void		SetBody					( const void* buffer, u32 size ) = 0;
 	virtual void		SetCookieDst			( const char *file ) = 0;

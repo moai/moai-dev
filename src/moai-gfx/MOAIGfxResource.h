@@ -33,6 +33,8 @@ protected:
 	virtual void		MOAIGfxResource_OnCPUPurgeRecoverable		(); // clear any recoverable CPU-side memory used by class
 	virtual void		MOAIGfxResource_ScheduleForGPUDestroy		() = 0;
 	virtual bool		MOAIGfxResource_ScheduleForGPUUpdate		( PipelineHint hint ) = 0;
+	void				MOAILuaObject_RegisterLuaClass				( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs				( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 
@@ -43,8 +45,6 @@ public:
 	bool				InvokeLoader				();
 						MOAIGfxResource				();
 						~MOAIGfxResource			();
-	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	bool				ScheduleForGPUUpdate		( PipelineHint hint = RENDER_PIPELINE );
 };
 

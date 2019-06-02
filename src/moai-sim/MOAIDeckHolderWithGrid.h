@@ -28,27 +28,27 @@ class MOAISurfaceSampler2D;
 // TODO: doxygen
 class MOAIDeckHolderWithGrid :
 	public virtual MOAIDeckHolder {
-private:
+protected:
+	
+	MOAILuaSharedPtr < MOAIGrid >			mGrid;
+	ZLVec2D									mGridScale;
 	
 	//----------------------------------------------------------------//
 	static int			_getGrid					( lua_State* L );
 	static int			_setGrid					( lua_State* L );
 	static int			_setGridScale				( lua_State* L );
 
-protected:
-	
-	MOAILuaSharedPtr < MOAIGrid >			mGrid;
-	ZLVec2D									mGridScale;
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_SerializeIn			( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void				MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 
 public:
 
 	//----------------------------------------------------------------//
 						MOAIDeckHolderWithGrid		();
 	virtual				~MOAIDeckHolderWithGrid		();
-	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_SerializeIn				( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void				MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

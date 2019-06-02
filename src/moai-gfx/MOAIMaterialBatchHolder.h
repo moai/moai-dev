@@ -41,6 +41,12 @@ protected:
 	static int				_setShader				( lua_State* L );
 	static int				_setTexture				( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void					MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_SerializeIn			( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void					MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
+
 public:
 
 	DECL_LUA_FACTORY ( MOAIMaterialBatchHolder )
@@ -50,10 +56,6 @@ public:
 	MOAIMaterial*			GetMaterial					( ZLIndex idx = ZLIndexOp::ZERO );
 							MOAIMaterialBatchHolder		();
 							~MOAIMaterialBatchHolder	();
-	void					MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
-	void					MOAILuaObject_SerializeIn					( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void					MOAILuaObject_SerializeOut				( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

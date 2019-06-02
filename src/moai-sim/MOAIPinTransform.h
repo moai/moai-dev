@@ -31,8 +31,10 @@ private:
 	static int		_init						( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool			MOAINode_ApplyAttrOp		( ZLAttrID attrID, ZLAttribute& attr, u32 op );
-	void			MOAINode_Update				();
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	bool			MOAINode_ApplyAttrOp				( ZLAttrID attrID, ZLAttribute& attr, u32 op );
+	void			MOAINode_Update						();
 
 public:
 	
@@ -48,8 +50,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIPinTransform			();
 					~MOAIPinTransform			();
-	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

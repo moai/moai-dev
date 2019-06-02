@@ -69,6 +69,16 @@ void MOAIGfxMgr_RenderTree::PushDrawable ( MOAILuaObject* drawable ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxMgr_RenderTree::Render () {
+
+	this->MOAIGfxMgr_RenderTree_Render ();
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
 void MOAIGfxMgr_RenderTree::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	luaL_Reg regTable [] = {
@@ -84,10 +94,4 @@ void MOAIGfxMgr_RenderTree::MOAILuaObject_RegisterLuaClass ( MOAIComposer& compo
 //----------------------------------------------------------------//
 void MOAIGfxMgr_RenderTree::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgr_RenderTree::Render () {
-
-	this->MOAIGfxMgr_RenderTree_Render ();
 }

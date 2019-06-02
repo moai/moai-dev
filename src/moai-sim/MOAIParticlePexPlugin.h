@@ -124,8 +124,12 @@ private:
 	static int		_getTextureName		( lua_State* L );
 	static int		_load				( lua_State* L );
 
-	
+	//----------------------------------------------------------------//
 	static void		Parse				( cc8* filename, MOAIParticlePexPlugin& plugin, TiXmlNode* node );
+	
+		//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	
 public:
 	
@@ -138,8 +142,7 @@ public:
 					~MOAIParticlePexPlugin		();
 	void			OnInit						( float* particle, float* registers );
 	void			OnRender					( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1, float term );
-	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
+	
 };
 
 #endif

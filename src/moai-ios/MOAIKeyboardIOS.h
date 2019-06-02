@@ -120,6 +120,9 @@ private:
 	//----------------------------------------------------------------//
 	void			ShowKeyboard			( cc8* text, int type, int returnKey, bool secure, int autocap, int appearance );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIKeyboardIOS )
@@ -136,8 +139,6 @@ public:
 					MOAIKeyboardIOS			();
 					~MOAIKeyboardIOS		();
 	void			PushText				( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	
 };
 
 #endif

@@ -42,6 +42,9 @@ private:
 	static u32		LoadVerts			( MOAILuaState& state, int idx, b2Vec2* verts, u32 max, float unitsToMeters  );
 	void			SetFixture			( b2Fixture* fixture );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 	
@@ -55,8 +58,6 @@ public:
 	void			Destroy					();
 					MOAIBox2DFixture		();
 					~MOAIBox2DFixture		();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

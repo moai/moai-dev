@@ -39,6 +39,10 @@ private:
 	static int			_getVertexData				( lua_State* L );
 	static int			_getVertices				( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 
 	GET_SET_CONST ( aiMesh*, Mesh, mMesh )
@@ -50,8 +54,6 @@ public:
 					~MOAIAssimpMesh				();
 	u32				ReadIndices					( ZLStream& stream, u32 indexSize );
 	u32				ReadVertices				( const MOAIVertexFormat& format, ZLStream& stream, bool renormalizeBones );
-	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

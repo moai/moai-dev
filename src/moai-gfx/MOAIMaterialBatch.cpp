@@ -355,55 +355,12 @@ MOAIMaterial* MOAIMaterialBatch::RawGetMaterial ( ZLIndex idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( state );
-}
-
-//----------------------------------------------------------------//
-void MOAIMaterialBatch::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	luaL_Reg regTable [] = {
-		{ "getBlendMode",			_getBlendMode },
-		{ "getCullMode",			_getCullMode },
-		{ "getDepthMask",			_getDepthMask },
-		{ "getDepthTest",			_getDepthTest },
-		{ "getLight",				_getLight },
-		{ "getShader",				_getShader },
-		{ "getTexture",				_getTexture },
-		{ "reserveMaterials",		_reserveMaterials },
-		{ "setBlendMode",			_setBlendMode },
-		{ "setCullMode",			_setCullMode },
-		{ "setDepthMask",			_setDepthMask },
-		{ "setDepthTest",			_setDepthTest },
-		{ "setIndexBatchSize",		_setIndexBatchSize },
-		{ "setLight",				_setLight },
-		{ "setShader",				_setShader },
-		{ "setTexture",				_setTexture },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAIMaterialBatch::Reserve ( ZLSize n ) {
 
 	assert ( n < ZGL_FIRST_FLAG ); // probably don't need more than 0x70000000 materials...
 
 	this->Clear ();
 	this->mMaterials.Init ( n );
-}
-
-//----------------------------------------------------------------//
-void MOAIMaterialBatch::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-}
-
-//----------------------------------------------------------------//
-void MOAIMaterialBatch::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
 }
 
 //----------------------------------------------------------------//
@@ -629,4 +586,51 @@ MOAITexture* MOAIMaterialBatch::SetTexture ( MOAILuaState& state, int idx ) {
 size_t MOAIMaterialBatch::Size () {
 
 	return this->mMaterials.Size ();
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIMaterialBatch::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAIMaterialBatch::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	
+	luaL_Reg regTable [] = {
+		{ "getBlendMode",			_getBlendMode },
+		{ "getCullMode",			_getCullMode },
+		{ "getDepthMask",			_getDepthMask },
+		{ "getDepthTest",			_getDepthTest },
+		{ "getLight",				_getLight },
+		{ "getShader",				_getShader },
+		{ "getTexture",				_getTexture },
+		{ "reserveMaterials",		_reserveMaterials },
+		{ "setBlendMode",			_setBlendMode },
+		{ "setCullMode",			_setCullMode },
+		{ "setDepthMask",			_setDepthMask },
+		{ "setDepthTest",			_setDepthTest },
+		{ "setIndexBatchSize",		_setIndexBatchSize },
+		{ "setLight",				_setLight },
+		{ "setShader",				_setShader },
+		{ "setTexture",				_setTexture },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIMaterialBatch::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	UNUSED ( state );
+	UNUSED ( serializer );
+}
+
+//----------------------------------------------------------------//
+void MOAIMaterialBatch::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+	UNUSED ( state );
+	UNUSED ( serializer );
 }

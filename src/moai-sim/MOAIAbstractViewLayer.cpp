@@ -459,38 +459,6 @@ MOAIAbstractViewLayer::~MOAIAbstractViewLayer () {
 	this->mViewport.Set ( *this, 0 );
 }
 
-//----------------------------------------------------------------//
-void MOAIAbstractViewLayer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGraphicsProp, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractLayer, MOAILuaObject_RegisterLuaClass ( composer, state ));
-}
-
-//----------------------------------------------------------------//
-void MOAIAbstractViewLayer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGraphicsProp, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractLayer, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	
-	luaL_Reg regTable [] = {
-		{ "getCamera",				_getCamera },
-		{ "getFitting",				_getFitting },
-		{ "getFitting3D",			_getFitting3D },
-		{ "getViewport",			_getViewport },
-		{ "setDebugCamera",			_setDebugCamera },
-		{ "setCamera",				_setCamera },
-		{ "setParallax",			_setParallax },
-		{ "setViewport",			_setViewport },
-		{ "showDebugLines",			_showDebugLines },
-		{ "wndToWorld",				_wndToWorld },
-		{ "wndToWorldRay",			_wndToWorldRay },
-		{ "worldToWnd",				_worldToWnd },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
 //================================================================//
 // virtual
 //================================================================//
@@ -547,4 +515,36 @@ ZLBounds MOAIAbstractViewLayer::MOAIAbstractProp_GetModelBounds () {
 		return bounds;
 	}
 	return ZLBounds::EMPTY;
+}
+
+//----------------------------------------------------------------//
+void MOAIAbstractViewLayer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGraphicsProp, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractLayer, MOAILuaObject_RegisterLuaClass ( composer, state ));
+}
+
+//----------------------------------------------------------------//
+void MOAIAbstractViewLayer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGraphicsProp, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractLayer, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	
+	luaL_Reg regTable [] = {
+		{ "getCamera",				_getCamera },
+		{ "getFitting",				_getFitting },
+		{ "getFitting3D",			_getFitting3D },
+		{ "getViewport",			_getViewport },
+		{ "setDebugCamera",			_setDebugCamera },
+		{ "setCamera",				_setCamera },
+		{ "setParallax",			_setParallax },
+		{ "setViewport",			_setViewport },
+		{ "showDebugLines",			_showDebugLines },
+		{ "wndToWorld",				_wndToWorld },
+		{ "wndToWorldRay",			_wndToWorldRay },
+		{ "worldToWnd",				_worldToWnd },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
 }

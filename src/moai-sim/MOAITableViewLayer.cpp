@@ -33,6 +33,26 @@ MOAITableViewLayer::MOAITableViewLayer () {
 MOAITableViewLayer::~MOAITableViewLayer () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAITableViewLayer::MOAIAbstractViewLayer_Draw () {
+	
+	MOAIDrawable::Draw ( this->mRenderTable );
+	
+	if ( MOAIDebugLinesMgr::Get ().IsVisible () && this->mShowDebugLines ) {
+		MOAIDrawable::Draw ( this->mRenderTable, true );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAITableViewLayer::MOAIDrawable_Draw ( int subPrimID ) {
+
+	this->MOAIAbstractViewLayer::MOAIDrawable_Draw ( subPrimID );
+}
+
 //----------------------------------------------------------------//
 void MOAITableViewLayer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
@@ -59,24 +79,4 @@ void MOAITableViewLayer::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MO
 
 	MOAI_CALL_SUPER_ONCE ( composer, MOAITableLayer, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractViewLayer, MOAILuaObject_SerializeOut ( composer, state, serializer ));
-}
-
-//================================================================//
-// virtual
-//================================================================//
-
-//----------------------------------------------------------------//
-void MOAITableViewLayer::MOAIDrawable_Draw ( int subPrimID ) {
-
-	this->MOAIAbstractViewLayer::MOAIDrawable_Draw ( subPrimID );
-}
-
-//----------------------------------------------------------------//
-void MOAITableViewLayer::MOAIAbstractViewLayer_Draw () {
-	
-	MOAIDrawable::Draw ( this->mRenderTable );
-	
-	if ( MOAIDebugLinesMgr::Get ().IsVisible () && this->mShowDebugLines ) {
-		MOAIDrawable::Draw ( this->mRenderTable, true );
-	}
 }

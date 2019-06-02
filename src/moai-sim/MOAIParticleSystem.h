@@ -70,10 +70,14 @@ private:
 	MOAIParticleState*		GetState				( ZLIndex id );
 	
 	//----------------------------------------------------------------//
-	void					MOAIDrawable_Draw				( int subPrimID );
-	ZLBounds				MOAIAbstractProp_GetModelBounds			();
-	bool					MOAIAction_IsDone						();
-	void					MOAIAction_Update						( double step );
+	ZLBounds				MOAIAbstractProp_GetModelBounds		();
+	bool					MOAIAction_IsDone					();
+	void					MOAIAction_Update					( double step );
+	void					MOAIDrawable_Draw					( int subPrimID );
+	void					MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_SerializeIn			( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void					MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 
 public:
 
@@ -95,14 +99,10 @@ public:
 	bool			PushParticle			( float x, float y, float dx, float dy );
 	bool			PushParticle			( float x, float y, float dx, float dy, ZLIndex stateIdx );
 	bool			PushSprite				( const AKUParticleSprite& sprite );
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void			ReserveParticles		( ZLSize maxParticles, ZLSize particleSize );
 	void			ReserveRects			( ZLSize total );
 	void			ReserveSprites			( ZLSize maxSprites );
 	void			ReserveStates			( ZLSize total );
-	void			MOAILuaObject_SerializeIn				( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void			MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 	void			SetConstant				( ZLIndex idx, float value );
 	void			SetRect					( ZLIndex idx, ZLRect& rect );
 };

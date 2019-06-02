@@ -456,6 +456,19 @@ void MOAIPathFinder::PushState ( ZLIndex nodeID, float cost, float estimate ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIPathFinder::Reset () {
+
+	this->mState = 0;
+	this->mPath.Clear ();
+
+	this->ClearVisitation ();
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
 void MOAIPathFinder::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
@@ -481,13 +494,4 @@ void MOAIPathFinder::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MO
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIPathFinder::Reset () {
-
-	this->mState = 0;
-	this->mPath.Clear ();
-
-	this->ClearVisitation ();
 }

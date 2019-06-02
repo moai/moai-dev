@@ -55,25 +55,6 @@ MOAIParticleTimedEmitter::~MOAIParticleTimedEmitter () {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleTimedEmitter::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIParticleEmitter, MOAILuaObject_RegisterLuaClass ( composer, state ));
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleTimedEmitter::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIParticleEmitter, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	
-	luaL_Reg regTable [] = {
-		{ "setFrequency",		_setFrequency },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAIParticleTimedEmitter::SetFrequencyRange ( float min, float max ) {
 
 	this->mMinFrequency = min;
@@ -95,4 +76,23 @@ void MOAIParticleTimedEmitter::MOAIAction_Update ( double step ) {
 	this->Surge ( emission );
 	
 	this->mEmitTime = this->mTime + this->GetRandomFrequency ();
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleTimedEmitter::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIParticleEmitter, MOAILuaObject_RegisterLuaClass ( composer, state ));
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleTimedEmitter::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIParticleEmitter, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	
+	luaL_Reg regTable [] = {
+		{ "setFrequency",		_setFrequency },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
 }

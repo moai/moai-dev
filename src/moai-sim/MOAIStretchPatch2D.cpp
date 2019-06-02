@@ -302,46 +302,6 @@ MOAIStretchPatch2D::~MOAIStretchPatch2D () {
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch2D::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIStretchDeck, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIMaterialBatchHolder, MOAILuaObject_RegisterLuaClass ( composer, state ));
-}
-
-//----------------------------------------------------------------//
-void MOAIStretchPatch2D::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIStretchDeck, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIMaterialBatchHolder, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-
-	luaL_Reg regTable [] = {
-		{ "ninePatch",			_ninePatch },
-		{ "reserveColumns",		_reserveColumns },
-		{ "reserveRows",		_reserveRows },
-		{ "reserveUVRects",		_reserveUVRects },
-		{ "setColumn",			_setColumn },
-		{ "setRect",			_setRect },
-		{ "setRow",				_setRow },
-		{ "setUVRect",			_setUVRect },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIStretchPatch2D::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-}
-
-//----------------------------------------------------------------//
-void MOAIStretchPatch2D::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-}
-
-//----------------------------------------------------------------//
 void MOAIStretchPatch2D::UpdateParams () {
 	
 	if ( !this->mNeedsUpdate ) return;
@@ -461,4 +421,44 @@ bool MOAIStretchPatch2D::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32
 	UNUSED ( result );
 
 	return false;
+}
+
+//----------------------------------------------------------------//
+void MOAIStretchPatch2D::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIStretchDeck, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIMaterialBatchHolder, MOAILuaObject_RegisterLuaClass ( composer, state ));
+}
+
+//----------------------------------------------------------------//
+void MOAIStretchPatch2D::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIStretchDeck, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIMaterialBatchHolder, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+
+	luaL_Reg regTable [] = {
+		{ "ninePatch",			_ninePatch },
+		{ "reserveColumns",		_reserveColumns },
+		{ "reserveRows",		_reserveRows },
+		{ "reserveUVRects",		_reserveUVRects },
+		{ "setColumn",			_setColumn },
+		{ "setRect",			_setRect },
+		{ "setRow",				_setRow },
+		{ "setUVRect",			_setUVRect },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIStretchPatch2D::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	UNUSED ( state );
+	UNUSED ( serializer );
+}
+
+//----------------------------------------------------------------//
+void MOAIStretchPatch2D::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+	UNUSED ( state );
+	UNUSED ( serializer );
 }

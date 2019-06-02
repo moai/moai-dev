@@ -60,8 +60,12 @@ protected:
 	bool			MaskParticle			( const ZLVec3D& loc );
 
 	//----------------------------------------------------------------//
-	bool			MOAIAction_IsDone		();
-	void			MOAINode_Update			();
+	bool			MOAIAction_IsDone					();
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_SerializeIn			( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void			MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
+	void			MOAINode_Update						();
 
 public:
 	
@@ -79,10 +83,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIParticleEmitter		();
 					~MOAIParticleEmitter	();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_SerializeIn				( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void			MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 	void			SetAngleRange			( float min, float max );
 	void			SetEmissionRange		( u32 min, u32 max );
 	void			SetMagnitudeRange		( float min, float max );

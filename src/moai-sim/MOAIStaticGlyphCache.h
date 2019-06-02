@@ -26,23 +26,25 @@ protected:
 	//----------------------------------------------------------------//
 	void				ClearTextures				();
 	
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_SerializeIn				( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void				MOAILuaObject_SerializeOut				( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
+	
 public:
 	
 	DECL_LUA_FACTORY ( MOAIStaticGlyphCache )
 	
 	//----------------------------------------------------------------//
 	MOAIImage*			GetGlyphImage				( MOAIGlyph& glyph );
-	MOAITexture*	GetGlyphTexture				( MOAIGlyph& glyph );
+	MOAITexture*		GetGlyphTexture				( MOAIGlyph& glyph );
 	MOAIImage*			GetImage					();
 	MOAITexture*		GetTexture					( ZLIndex id );
 	bool				IsDynamic					();
 						MOAIStaticGlyphCache		();
 						~MOAIStaticGlyphCache		();
-	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	void				ReserveTextures				( u32 total );
-	void				MOAILuaObject_SerializeIn					( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void				MOAILuaObject_SerializeOut				( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 	int					SetImage					( MOAIFont& font, MOAIImage& image );
 	void				SetTexture					( ZLIndex id, MOAITexture* texture );
 };

@@ -21,6 +21,12 @@ protected:
 	static int		_printIndices			( lua_State* L );
 	static int		_setIndexSize			( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_SerializeIn			( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void			MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
+
 public:
 
 	GET ( u32, IndexSize, mIndexSize )
@@ -32,10 +38,6 @@ public:
 					MOAIIndexBuffer			();
 					~MOAIIndexBuffer		();
 	void			PrintIndices			();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_SerializeIn				( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void			MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 	void			SetIndexSize			( u32 idxSize );
 	void			WriteIndex				( u32 index );
 };

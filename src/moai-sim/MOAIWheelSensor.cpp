@@ -95,6 +95,16 @@ void MOAIWheelSensor::ParseEvent ( ZLStream& eventStream ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIWheelSensor::ResetState () {
+
+	this->mDelta = 0;
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
 void MOAIWheelSensor::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	MOAI_CALL_SUPER_ONCE ( composer, MOAISensor, MOAILuaObject_RegisterLuaClass ( composer, state ));
@@ -113,10 +123,4 @@ void MOAIWheelSensor::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, M
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIWheelSensor::ResetState () {
-
-	this->mDelta = 0;
 }

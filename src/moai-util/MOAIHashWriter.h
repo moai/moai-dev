@@ -34,6 +34,10 @@ protected:
 	//----------------------------------------------------------------//
 	ZLHashWriter*	GetHashWriter			();
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIHashWriter )
@@ -41,8 +45,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIHashWriter			();
 					~MOAIHashWriter			();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

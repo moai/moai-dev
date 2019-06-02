@@ -57,6 +57,10 @@ private:
 	void				Clear					();
 	NSURLRequest*		Prepare					();
 	
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	
 public:
 	
 	DECL_LUA_FACTORY ( MOAIHttpTaskNSURL )
@@ -72,8 +76,6 @@ public:
 						~MOAIHttpTaskNSURL		();
 	void				PerformAsync			();
 	void				PerformSync				();
-	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void				Reset					();
 	void				SetBody					( const void* buffer, u32 size );
 	void				SetFailOnError			( bool enable );

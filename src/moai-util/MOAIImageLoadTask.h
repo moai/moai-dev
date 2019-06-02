@@ -25,19 +25,21 @@ private:
 	u32						mTransform;
 
 	//----------------------------------------------------------------//
-	void		Execute				();
-	void		Publish				();
+	void		Execute					();
+	void		Publish					();
+
+	//----------------------------------------------------------------//
+	void		MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void		MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 
 	//----------------------------------------------------------------//
-	void		Init				( cc8* filename, MOAIImage& target, u32 transform );
-	void		Init				( MOAIDataBuffer& data, MOAIImage& target, u32 transform );
-				MOAIImageLoadTask	();
-				~MOAIImageLoadTask	();
-	void		MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
-	void		MOAILuaObject_RegisterLuaFuncs	( MOAIComposer& composer, MOAILuaState& state );
-	void		SetCallback			( lua_State* L, int idx );
+	void		Init					( cc8* filename, MOAIImage& target, u32 transform );
+	void		Init					( MOAIDataBuffer& data, MOAIImage& target, u32 transform );
+				MOAIImageLoadTask		();
+				~MOAIImageLoadTask		();
+	void		SetCallback				( lua_State* L, int idx );
 };
 
 #endif

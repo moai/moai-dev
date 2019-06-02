@@ -451,42 +451,6 @@ MOAILayoutFrame::~MOAILayoutFrame () {
 }
 
 //----------------------------------------------------------------//
-void MOAILayoutFrame::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	
-	state.SetField ( -1, "LAYOUT_ALIGN_MIN", ( u32 )LAYOUT_ALIGN_MIN );
-	state.SetField ( -1, "LAYOUT_ALIGN_MAX", ( u32 )LAYOUT_ALIGN_MAX );
-	state.SetField ( -1, "LAYOUT_ALIGN_CENTER", ( u32 )LAYOUT_ALIGN_CENTER );
-	
-	state.SetField ( -1, "LAYOUT_JUSTIFY_MIN", ( u32 )LAYOUT_JUSTIFY_MIN );
-	state.SetField ( -1, "LAYOUT_JUSTIFY_MAX", ( u32 )LAYOUT_JUSTIFY_MAX );
-	state.SetField ( -1, "LAYOUT_JUSTIFY_CENTER", ( u32 )LAYOUT_JUSTIFY_CENTER );
-	
-	state.SetField ( -1, "FIT_EXPAND", ( u32 )FIT_EXPAND );
-	state.SetField ( -1, "FIT_ABSOLUTE", ( u32 )FIT_ABSOLUTE );
-	state.SetField ( -1, "FIT_CONTENT", ( u32 )FIT_CONTENT );
-}
-
-//----------------------------------------------------------------//
-void MOAILayoutFrame::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	
-	luaL_Reg regTable [] = {
-		{ "layout",				_layout },
-		{ "setFit",				_setFit },
-		{ "setIdealSize",		_setIdealSize },
-		{ "setLayout",			_setLayout },
-		{ "setMargin",			_setMargin },
-		{ "setWeight",			_setWeight },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAILayoutFrame::RemoveChildren () {
 
 	ChildLink* childIt = this->mChildren.Head ();
@@ -523,4 +487,44 @@ void MOAILayoutFrame::SetParent ( MOAIAbstractChildTransform* parent ) {
 	//		parentWidget->mChildren.PushBack ( this->mLinkInChildren );
 	//	}
 	//}
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAILayoutFrame::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	
+	state.SetField ( -1, "LAYOUT_ALIGN_MIN", ( u32 )LAYOUT_ALIGN_MIN );
+	state.SetField ( -1, "LAYOUT_ALIGN_MAX", ( u32 )LAYOUT_ALIGN_MAX );
+	state.SetField ( -1, "LAYOUT_ALIGN_CENTER", ( u32 )LAYOUT_ALIGN_CENTER );
+	
+	state.SetField ( -1, "LAYOUT_JUSTIFY_MIN", ( u32 )LAYOUT_JUSTIFY_MIN );
+	state.SetField ( -1, "LAYOUT_JUSTIFY_MAX", ( u32 )LAYOUT_JUSTIFY_MAX );
+	state.SetField ( -1, "LAYOUT_JUSTIFY_CENTER", ( u32 )LAYOUT_JUSTIFY_CENTER );
+	
+	state.SetField ( -1, "FIT_EXPAND", ( u32 )FIT_EXPAND );
+	state.SetField ( -1, "FIT_ABSOLUTE", ( u32 )FIT_ABSOLUTE );
+	state.SetField ( -1, "FIT_CONTENT", ( u32 )FIT_CONTENT );
+}
+
+//----------------------------------------------------------------//
+void MOAILayoutFrame::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	
+	luaL_Reg regTable [] = {
+		{ "layout",				_layout },
+		{ "setFit",				_setFit },
+		{ "setIdealSize",		_setIdealSize },
+		{ "setLayout",			_setLayout },
+		{ "setMargin",			_setMargin },
+		{ "setWeight",			_setWeight },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
 }

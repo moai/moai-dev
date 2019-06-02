@@ -88,6 +88,10 @@ MOAILightFormat::MOAILightFormat () :
 MOAILightFormat::~MOAILightFormat () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAILightFormat::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED(state);
@@ -105,9 +109,3 @@ void MOAILightFormat::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, M
 
 	luaL_register ( state, 0, regTable );
 }
-
-//================================================================//
-// virtual
-//================================================================//
-
-//----------------------------------------------------------------//

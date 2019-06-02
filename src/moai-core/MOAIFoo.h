@@ -26,6 +26,10 @@ private:
 	static int		_classHello			( lua_State* L );
 	static int		_instanceHello		( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs	( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIFoo )
@@ -33,8 +37,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIFoo				();
 					~MOAIFoo			();
-	void			MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs	( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

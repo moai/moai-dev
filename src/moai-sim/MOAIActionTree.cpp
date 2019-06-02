@@ -99,25 +99,6 @@ MOAIActionTree::~MOAIActionTree () {
 }
 
 //----------------------------------------------------------------//
-void MOAIActionTree::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( state );
-}
-
-//----------------------------------------------------------------//
-void MOAIActionTree::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	luaL_Reg regTable [] = {
-		{ "getRoot",				_getRoot },
-		{ "setProfilingEnabled",	_setProfilingEnabled },
-		{ "setRoot",				_setRoot },
-		{ "setThreadInfoEnabled",	_setThreadInfoEnabled },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAIActionTree::SetRoot ( MOAIAction* root ) {
 
 	if ( this->mRoot ) {
@@ -162,4 +143,23 @@ bool MOAIActionTree::MOAIAction_IsDone () {
 //----------------------------------------------------------------//
 void MOAIActionTree::MOAIAction_Update ( double step ) {
 	UNUSED ( step );
+}
+
+//----------------------------------------------------------------//
+void MOAIActionTree::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAIActionTree::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	luaL_Reg regTable [] = {
+		{ "getRoot",				_getRoot },
+		{ "setProfilingEnabled",	_setProfilingEnabled },
+		{ "setRoot",				_setRoot },
+		{ "setThreadInfoEnabled",	_setThreadInfoEnabled },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
 }

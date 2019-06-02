@@ -536,43 +536,6 @@ MOAITexture* MOAIMaterialBatch::RawGetTexture ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( state );
-}
-
-//----------------------------------------------------------------//
-void MOAIMaterialBatch::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	luaL_Reg regTable [] = {
-		{ "getIndexBatchSize",		_getIndexBatchSize },
-		{ "getShader",				_getShader },
-		{ "getTexture",				_getTexture },
-		{ "reserveMaterials",		_reserveMaterials },
-		{ "setHitMask",				_setHitMask },
-		{ "setHitMaskScalar",		_setHitMaskScalar },
-		{ "setHitMaskThreshold",	_setHitMaskThreshold },
-		{ "setIndexBatchSize",		_setIndexBatchSize },
-		{ "setShader",				_setShader },
-		{ "setTexture",				_setTexture },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIMaterialBatch::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-}
-
-//----------------------------------------------------------------//
-void MOAIMaterialBatch::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-}
-
-//----------------------------------------------------------------//
 void MOAIMaterialBatch::SetHitMask ( u32 idx, MOAIImage* mask ) {
 
 	MOAIMaterial& material = this->AffirmMaterial ( idx );
@@ -766,6 +729,47 @@ bool MOAIMaterialBatch::TestHit ( MOAIMaterialBatch* override, u32 materialID, u
 	}
 
 	return false;
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIMaterialBatch::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAIMaterialBatch::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	luaL_Reg regTable [] = {
+		{ "getIndexBatchSize",		_getIndexBatchSize },
+		{ "getShader",				_getShader },
+		{ "getTexture",				_getTexture },
+		{ "reserveMaterials",		_reserveMaterials },
+		{ "setHitMask",				_setHitMask },
+		{ "setHitMaskScalar",		_setHitMaskScalar },
+		{ "setHitMaskThreshold",	_setHitMaskThreshold },
+		{ "setIndexBatchSize",		_setIndexBatchSize },
+		{ "setShader",				_setShader },
+		{ "setTexture",				_setTexture },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIMaterialBatch::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	UNUSED ( state );
+	UNUSED ( serializer );
+}
+
+//----------------------------------------------------------------//
+void MOAIMaterialBatch::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+	UNUSED ( state );
+	UNUSED ( serializer );
 }
 
 #endif

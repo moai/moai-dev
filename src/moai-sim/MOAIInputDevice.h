@@ -29,6 +29,10 @@ private:
 	MOAISensor*		GetSensor				( ZLIndex sensorID );
 	void			SetSensor				( ZLIndex sensorID, cc8* name, MOAISensor* sensor );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 
 	friend class MOAIInputContext;
@@ -43,8 +47,6 @@ public:
 	void			ClearSensorState		();
 					MOAIInputDevice			();
 					~MOAIInputDevice		();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void			ReserveSensors			( ZLSize total );
 	void			ResetSensorState		();
 	void			SetHardwareInfo			( cc8* hardwareInfo );

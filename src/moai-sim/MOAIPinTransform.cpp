@@ -92,6 +92,10 @@ MOAIPinTransform::~MOAIPinTransform () {
 	this->mDestLayer.Set ( *this, 0 );
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIPinTransform::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_RegisterLuaClass ( composer, state ));
@@ -114,10 +118,6 @@ void MOAIPinTransform::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, 
 	
 	luaL_register ( state, 0, regTable );
 }
-
-//================================================================//
-// virtual
-//================================================================//
 
 //----------------------------------------------------------------//
 bool MOAIPinTransform::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {

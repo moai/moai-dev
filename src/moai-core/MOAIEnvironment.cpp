@@ -194,37 +194,6 @@ MOAIEnvironment::~MOAIEnvironment () {
 }
 
 //----------------------------------------------------------------//
-void MOAIEnvironment::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGlobalEventSource, MOAILuaObject_RegisterLuaClass ( composer, state ));
-
-	state.SetField ( -1, "EVENT_VALUE_CHANGED", ( u32 )EVENT_VALUE_CHANGED );
-
-	state.SetField ( -1, "CONNECTION_TYPE_NONE", ( u32 )CONNECTION_TYPE_NONE );
-	state.SetField ( -1, "CONNECTION_TYPE_WIFI", ( u32 )CONNECTION_TYPE_WIFI );
-	state.SetField ( -1, "CONNECTION_TYPE_WWAN", ( u32 )CONNECTION_TYPE_WWAN );
-	
-	state.SetField ( -1, "OS_BRAND_AMAZON", OS_BRAND_AMAZON );
-	state.SetField ( -1, "OS_BRAND_ANDROID", OS_BRAND_ANDROID );
-	state.SetField ( -1, "OS_BRAND_IOS", OS_BRAND_IOS );
-	state.SetField ( -1, "OS_BRAND_LINUX", OS_BRAND_LINUX );
-	state.SetField ( -1, "OS_BRAND_NOOK", OS_BRAND_NOOK );
-	state.SetField ( -1, "OS_BRAND_OSX", OS_BRAND_OSX );
-	state.SetField ( -1, "OS_BRAND_WINDOWS", OS_BRAND_WINDOWS );
-	state.SetField ( -1, "OS_BRAND_UNAVAILABLE", OS_BRAND_UNAVAILABLE );
-
-	luaL_Reg regTable [] = {
-		{ "generateGUID",		_generateGUID },
-		{ "getListener",		&MOAIGlobalEventSource::_getListener < MOAIEnvironment > },
-		{ "getMACAddress",		_getMACAddress },
-		{ "setListener",		&MOAIGlobalEventSource::_setListener < MOAIEnvironment > },
-		{ "setValue",			_setValue },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAIEnvironment::SetValue ( cc8* key ) {
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
@@ -253,4 +222,39 @@ void MOAIEnvironment::SetValue ( lua_State* L ) {
 		
 		state.DebugCall ( 2, 0 );
 	}
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIEnvironment::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGlobalEventSource, MOAILuaObject_RegisterLuaClass ( composer, state ));
+
+	state.SetField ( -1, "EVENT_VALUE_CHANGED", ( u32 )EVENT_VALUE_CHANGED );
+
+	state.SetField ( -1, "CONNECTION_TYPE_NONE", ( u32 )CONNECTION_TYPE_NONE );
+	state.SetField ( -1, "CONNECTION_TYPE_WIFI", ( u32 )CONNECTION_TYPE_WIFI );
+	state.SetField ( -1, "CONNECTION_TYPE_WWAN", ( u32 )CONNECTION_TYPE_WWAN );
+	
+	state.SetField ( -1, "OS_BRAND_AMAZON", OS_BRAND_AMAZON );
+	state.SetField ( -1, "OS_BRAND_ANDROID", OS_BRAND_ANDROID );
+	state.SetField ( -1, "OS_BRAND_IOS", OS_BRAND_IOS );
+	state.SetField ( -1, "OS_BRAND_LINUX", OS_BRAND_LINUX );
+	state.SetField ( -1, "OS_BRAND_NOOK", OS_BRAND_NOOK );
+	state.SetField ( -1, "OS_BRAND_OSX", OS_BRAND_OSX );
+	state.SetField ( -1, "OS_BRAND_WINDOWS", OS_BRAND_WINDOWS );
+	state.SetField ( -1, "OS_BRAND_UNAVAILABLE", OS_BRAND_UNAVAILABLE );
+
+	luaL_Reg regTable [] = {
+		{ "generateGUID",		_generateGUID },
+		{ "getListener",		&MOAIGlobalEventSource::_getListener < MOAIEnvironment > },
+		{ "getMACAddress",		_getMACAddress },
+		{ "setListener",		&MOAIGlobalEventSource::_setListener < MOAIEnvironment > },
+		{ "setValue",			_setValue },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
 }

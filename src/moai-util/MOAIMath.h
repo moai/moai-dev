@@ -23,6 +23,9 @@ private:
 
 	#endif
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIMath )
@@ -30,7 +33,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIMath			();
 					~MOAIMath			();
-	void			MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

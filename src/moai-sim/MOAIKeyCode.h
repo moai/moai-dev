@@ -112,11 +112,13 @@
 class MOAIKeyCode :
 	public ZLContextClass < MOAIKeyCode >,
 	public virtual MOAILuaObject {
+protected:
+
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIKeyCode )
-	
-	//----------------------------------------------------------------//
-	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
 };
 #endif

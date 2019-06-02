@@ -89,6 +89,10 @@ protected:
 
 	//----------------------------------------------------------------//
 	virtual ZLMatrix4x4		MOAIGraphicsPropBase_GetWorldDrawingMtx		() const; // factors in billboard flags
+	void					MOAILuaObject_RegisterLuaClass				( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_RegisterLuaFuncs				( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_SerializeIn					( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void					MOAILuaObject_SerializeOut					( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 	bool					MOAINode_ApplyAttrOp						( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	void					MOAINode_Update								();
 
@@ -141,11 +145,7 @@ public:
 	bool					IsVisible					();
 							MOAIGraphicsPropBase		();
 	virtual					~MOAIGraphicsPropBase		();
-	void					MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	void					Render						();
-	void					MOAILuaObject_SerializeIn					( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void					MOAILuaObject_SerializeOut				( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 	void					SetVisible					( bool visible );
 };
 

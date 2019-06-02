@@ -990,39 +990,6 @@ void MOAILuaRuntime::PrintTracking ( MOAILuaObject& object ) {
 }
 
 //----------------------------------------------------------------//
-void MOAILuaRuntime::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
-
-	state.SetField ( -1, "TRACK_OBJECTS",					( u32 )TRACK_OBJECTS );
-	state.SetField ( -1, "TRACK_OBJECTS_STACK_TRACE",		( u32 )TRACK_OBJECTS_STACK_TRACE );
-
-	luaL_Reg regTable [] = {
-		{ "clearRef",				_clearRef },
-		{ "debugCall",				_debugCall },
-		{ "deref",					_deref },
-		{ "dump",					_dump },
-		{ "dumpStack",				_dumpStack },
-		{ "forceGC",				_forceGC },
-		{ "getHistogram",			_getHistogram },
-		{ "getRef",					_getRef },
-		{ "reportGC",				_reportGC },
-		{ "reportHistogram",		_reportHistogram },
-		{ "reportLeaks",			_reportLeaks },
-		{ "setTrackingFlags",		_setTrackingFlags },
-		{ "traceback",				_traceback },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAILuaRuntime::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
-	UNUSED ( state );
-}
-
-//----------------------------------------------------------------//
 void MOAILuaRuntime::RegisterModule ( cc8* name, lua_CFunction loader, bool autoLoad ) {
 
 	this->mState.RegisterModule ( loader, name, autoLoad );
@@ -1227,3 +1194,39 @@ MOAIScopedLuaState MOAILuaRuntime::State () {
 	return MOAIScopedLuaState ( this->mState );
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAILuaRuntime::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
+
+	state.SetField ( -1, "TRACK_OBJECTS",					( u32 )TRACK_OBJECTS );
+	state.SetField ( -1, "TRACK_OBJECTS_STACK_TRACE",		( u32 )TRACK_OBJECTS_STACK_TRACE );
+
+	luaL_Reg regTable [] = {
+		{ "clearRef",				_clearRef },
+		{ "debugCall",				_debugCall },
+		{ "deref",					_deref },
+		{ "dump",					_dump },
+		{ "dumpStack",				_dumpStack },
+		{ "forceGC",				_forceGC },
+		{ "getHistogram",			_getHistogram },
+		{ "getRef",					_getRef },
+		{ "reportGC",				_reportGC },
+		{ "reportHistogram",		_reportHistogram },
+		{ "reportLeaks",			_reportLeaks },
+		{ "setTrackingFlags",		_setTrackingFlags },
+		{ "traceback",				_traceback },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAILuaRuntime::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
+	UNUSED ( state );
+}

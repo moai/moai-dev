@@ -142,35 +142,6 @@ MOAINotificationsIOS::~MOAINotificationsIOS () {
 }
 
 //----------------------------------------------------------------//
-void MOAINotificationsIOS::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	state.SetField ( -1, "REMOTE_NOTIFICATION_NONE",					( u32 )UIRemoteNotificationTypeNone );
-	state.SetField ( -1, "REMOTE_NOTIFICATION_BADGE",					( u32 )UIRemoteNotificationTypeBadge );
-	state.SetField ( -1, "REMOTE_NOTIFICATION_SOUND",					( u32 )UIRemoteNotificationTypeSound );
-	state.SetField ( -1, "REMOTE_NOTIFICATION_ALERT",					( u32 )UIRemoteNotificationTypeAlert );
-
-	state.SetField ( -1, "LOCAL_NOTIFICATION_MESSAGE_RECEIVED", 		( u32 )LOCAL_NOTIFICATION_MESSAGE_RECEIVED );
-	state.SetField ( -1, "REMOTE_NOTIFICATION_REGISTRATION_COMPLETE", 	( u32 )REMOTE_NOTIFICATION_REGISTRATION_COMPLETE );
-	state.SetField ( -1, "REMOTE_NOTIFICATION_MESSAGE_RECEIVED", 		( u32 )REMOTE_NOTIFICATION_MESSAGE_RECEIVED );
-        
-	state.SetField ( -1, "REMOTE_NOTIFICATION_RESULT_REGISTERED", 		( u32 )REMOTE_NOTIFICATION_RESULT_REGISTERED );
-	state.SetField ( -1, "REMOTE_NOTIFICATION_RESULT_UNREGISTERED", 	( u32 )REMOTE_NOTIFICATION_RESULT_UNREGISTERED );
-	state.SetField ( -1, "REMOTE_NOTIFICATION_RESULT_ERROR", 			( u32 )REMOTE_NOTIFICATION_RESULT_ERROR );
-	
-	luaL_Reg regTable [] = {
-		{ "getAppIconBadgeNumber",				_getAppIconBadgeNumber },
-		{ "localNotificationInSeconds",			_localNotificationInSeconds },
-		{ "registerForRemoteNotifications",		_registerForRemoteNotifications },
-		{ "setAppIconBadgeNumber",				_setAppIconBadgeNumber },
-		{ "setListener",						_setListener },
-		{ "unregisterForRemoteNotifications",	_unregisterForRemoteNotifications },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAINotificationsIOS::NotifyLocalNotificationReceived ( UILocalNotification* notification ) {
  
  	MOAILuaRef& callback = this->mListeners [ LOCAL_NOTIFICATION_MESSAGE_RECEIVED ];
@@ -248,6 +219,39 @@ void MOAINotificationsIOS::NotifyRemoteRegistrationComplete ( NSData* deviceToke
 		
 		state.DebugCall ( 2, 0 );
 	}
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAINotificationsIOS::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	state.SetField ( -1, "REMOTE_NOTIFICATION_NONE",					( u32 )UIRemoteNotificationTypeNone );
+	state.SetField ( -1, "REMOTE_NOTIFICATION_BADGE",					( u32 )UIRemoteNotificationTypeBadge );
+	state.SetField ( -1, "REMOTE_NOTIFICATION_SOUND",					( u32 )UIRemoteNotificationTypeSound );
+	state.SetField ( -1, "REMOTE_NOTIFICATION_ALERT",					( u32 )UIRemoteNotificationTypeAlert );
+
+	state.SetField ( -1, "LOCAL_NOTIFICATION_MESSAGE_RECEIVED", 		( u32 )LOCAL_NOTIFICATION_MESSAGE_RECEIVED );
+	state.SetField ( -1, "REMOTE_NOTIFICATION_REGISTRATION_COMPLETE", 	( u32 )REMOTE_NOTIFICATION_REGISTRATION_COMPLETE );
+	state.SetField ( -1, "REMOTE_NOTIFICATION_MESSAGE_RECEIVED", 		( u32 )REMOTE_NOTIFICATION_MESSAGE_RECEIVED );
+	
+	state.SetField ( -1, "REMOTE_NOTIFICATION_RESULT_REGISTERED", 		( u32 )REMOTE_NOTIFICATION_RESULT_REGISTERED );
+	state.SetField ( -1, "REMOTE_NOTIFICATION_RESULT_UNREGISTERED", 	( u32 )REMOTE_NOTIFICATION_RESULT_UNREGISTERED );
+	state.SetField ( -1, "REMOTE_NOTIFICATION_RESULT_ERROR", 			( u32 )REMOTE_NOTIFICATION_RESULT_ERROR );
+	
+	luaL_Reg regTable [] = {
+		{ "getAppIconBadgeNumber",				_getAppIconBadgeNumber },
+		{ "localNotificationInSeconds",			_localNotificationInSeconds },
+		{ "registerForRemoteNotifications",		_registerForRemoteNotifications },
+		{ "setAppIconBadgeNumber",				_setAppIconBadgeNumber },
+		{ "setListener",						_setListener },
+		{ "unregisterForRemoteNotifications",	_unregisterForRemoteNotifications },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
 }
 
 // int MOAINotificationsIOS::_presentLocalNotification ( lua_State* L ) {

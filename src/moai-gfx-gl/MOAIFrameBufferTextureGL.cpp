@@ -81,38 +81,15 @@ MOAIFrameBufferTextureGL::~MOAIFrameBufferTextureGL () {
 	this->MOAIGfxResourceGL_OnGPUDeleteOrDiscard ( true );
 }
 
-//----------------------------------------------------------------//
-void MOAIFrameBufferTextureGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIFrameBufferGL, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAITextureGL, MOAILuaObject_RegisterLuaClass ( composer, state ));
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBufferTextureGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIFrameBufferGL, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAITextureGL, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-
-	luaL_Reg regTable [] = {
-		{ "init",						_init },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBufferTextureGL::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAITextureGL, MOAILuaObject_SerializeIn ( composer, state, serializer ));
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBufferTextureGL::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAITextureGL, MOAILuaObject_SerializeOut ( composer, state, serializer ));
-}
-
 //================================================================//
 // virtual
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAIFrameBufferTextureGL::MOAIFrameBufferGL_AffirmBuffers () {
+
+	this->Affirm ();
+}
 
 //----------------------------------------------------------------//
 void MOAIFrameBufferTextureGL::MOAIGfxResourceGL_OnGPUBind () {
@@ -211,7 +188,30 @@ void MOAIFrameBufferTextureGL::MOAIGfxResourceGL_OnGPUDeleteOrDiscard ( bool sho
 }
 
 //----------------------------------------------------------------//
-void MOAIFrameBufferTextureGL::ZLFrameBuffer_AffirmBuffers () {
+void MOAIFrameBufferTextureGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIFrameBufferGL, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITextureGL, MOAILuaObject_RegisterLuaClass ( composer, state ));
+}
 
-	this->Affirm ();
+//----------------------------------------------------------------//
+void MOAIFrameBufferTextureGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIFrameBufferGL, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITextureGL, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+
+	luaL_Reg regTable [] = {
+		{ "init",						_init },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIFrameBufferTextureGL::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITextureGL, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+}
+
+//----------------------------------------------------------------//
+void MOAIFrameBufferTextureGL::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITextureGL, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }

@@ -40,37 +40,6 @@ MOAIDeckProxy::~MOAIDeckProxy () {
 	this->mDeck.Set ( *this, 0 );
 }
 
-//----------------------------------------------------------------//
-void MOAIDeckProxy::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_RegisterLuaClass ( composer, state ));
-}
-
-//----------------------------------------------------------------//
-void MOAIDeckProxy::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-
-	luaL_Reg regTable [] = {
-		{ "setDeck",				_setDeck },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIDeckProxy::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_SerializeIn ( composer, state, serializer ));
-}
-
-//----------------------------------------------------------------//
-void MOAIDeckProxy::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_SerializeOut ( composer, state, serializer ));
-}
-
 //================================================================//
 // virtual
 //================================================================//
@@ -117,4 +86,35 @@ bool MOAIDeckProxy::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 gran
 ZLIndex MOAIDeckProxy::MOAIDeckProxy_Remap ( ZLIndex idx ) {
 
 	return idx;
+}
+
+//----------------------------------------------------------------//
+void MOAIDeckProxy::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_RegisterLuaClass ( composer, state ));
+}
+
+//----------------------------------------------------------------//
+void MOAIDeckProxy::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+
+	luaL_Reg regTable [] = {
+		{ "setDeck",				_setDeck },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIDeckProxy::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+}
+
+//----------------------------------------------------------------//
+void MOAIDeckProxy::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }

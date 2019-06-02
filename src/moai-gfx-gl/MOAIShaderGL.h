@@ -35,7 +35,9 @@ protected:
 	bool					IsDirty						();
 
 	//----------------------------------------------------------------//
-	bool					MOAINode_ApplyAttrOp		( ZLAttrID attrID, ZLAttribute& attr, u32 op );
+	void					MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	bool					MOAINode_ApplyAttrOp				( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 
 public:
 
@@ -50,8 +52,6 @@ public:
 	bool					HasDirtyUniforms			();
 							MOAIShaderGL				();
 							~MOAIShaderGL				();
-	void					MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	void					ResizeUniformArray			( u32 uniformID, u32 count );
 	void					ScheduleTextures			();
 	void					SetProgram					( MOAIShaderProgramGL* program );

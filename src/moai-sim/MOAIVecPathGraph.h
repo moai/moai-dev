@@ -34,6 +34,10 @@ private:
 	void			SetNeighbors				( ZLIndex id1, ZLIndex id2, bool value );
 	void			SetNode						( ZLIndex id, const ZLVec3D& node );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIVecPathGraph )
@@ -41,8 +45,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIVecPathGraph			();
 					~MOAIVecPathGraph			();
-	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

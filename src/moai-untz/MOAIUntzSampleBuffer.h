@@ -22,12 +22,16 @@ private:
 	UNTZ::SoundInfo		mInfo;
 
 	//----------------------------------------------------------------//
-	static int		_getData					( lua_State* L );
-	static int		_getInfo					( lua_State* L );
-	static int		_load						( lua_State* L );
-	static int		_prepareBuffer				( lua_State* L );
-	static int		_setData					( lua_State* L );
-	static int		_setRawData					( lua_State* L );
+	static int			_getData					( lua_State* L );
+	static int			_getInfo					( lua_State* L );
+	static int			_load						( lua_State* L );
+	static int			_prepareBuffer				( lua_State* L );
+	static int			_setData					( lua_State* L );
+	static int			_setRawData					( lua_State* L );
+
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 
@@ -39,8 +43,6 @@ public:
 	//----------------------------------------------------------------//
 						MOAIUntzSampleBuffer		();
 						~MOAIUntzSampleBuffer		();
-	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

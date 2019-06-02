@@ -166,26 +166,6 @@ MOAIAnimCurveBone::~MOAIAnimCurveBone () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveBone::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAnimCurve, MOAILuaObject_RegisterLuaClass ( composer, state ));
-}
-
-//----------------------------------------------------------------//
-void MOAIAnimCurveBone::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAnimCurve, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-
-	luaL_Reg regTable [] = {
-		{ "getValueAtTime",		_getValueAtTime },
-		{ "setKey",				_setKey },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAIAnimCurveBone::SetSamplePosition ( ZLIndex idx, float x, float y, float z ) {
 
 	if ( this->mKeys.CheckIndex ( idx )) {
@@ -259,6 +239,26 @@ void MOAIAnimCurveBone::MOAIAnimCurve_ReserveSamples ( u32 total ) {
 	this->mPositionSamples.Init ( total );
 	this->mRotationSamples.Init ( total );
 	this->mScaleSamples.Init ( total );
+}
+
+//----------------------------------------------------------------//
+void MOAIAnimCurveBone::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAnimCurve, MOAILuaObject_RegisterLuaClass ( composer, state ));
+}
+
+//----------------------------------------------------------------//
+void MOAIAnimCurveBone::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAnimCurve, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+
+	luaL_Reg regTable [] = {
+		{ "getValueAtTime",		_getValueAtTime },
+		{ "setKey",				_setKey },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//

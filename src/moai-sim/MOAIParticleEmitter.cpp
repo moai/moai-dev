@@ -274,6 +274,44 @@ MOAIParticleEmitter::~MOAIParticleEmitter () {
 }
 
 //----------------------------------------------------------------//
+void MOAIParticleEmitter::SetAngleRange ( float min, float max ) {
+
+	this->mMinAngle = min;
+	this->mMaxAngle = max;
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleEmitter::SetEmissionRange ( u32 min, u32 max ) {
+
+	this->mMinEmission = min;
+	this->mMaxEmission = max;
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleEmitter::SetMagnitudeRange ( float min, float max ) {
+
+	this->mMinMagnitude = min;
+	this->mMaxMagnitude = max;
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleEmitter::Surge ( u32 total ) {
+	
+	this->mEmission += total;
+	this->ScheduleUpdate ();
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIParticleEmitter::MOAIAction_IsDone () {
+
+	return false;
+}
+
+//----------------------------------------------------------------//
 void MOAIParticleEmitter::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_RegisterLuaClass ( composer, state ));
@@ -314,44 +352,6 @@ void MOAIParticleEmitter::MOAILuaObject_SerializeOut ( MOAIComposer& composer, M
 
 	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_SerializeOut ( composer, state, serializer ));
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleEmitter::SetAngleRange ( float min, float max ) {
-
-	this->mMinAngle = min;
-	this->mMaxAngle = max;
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleEmitter::SetEmissionRange ( u32 min, u32 max ) {
-
-	this->mMinEmission = min;
-	this->mMaxEmission = max;
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleEmitter::SetMagnitudeRange ( float min, float max ) {
-
-	this->mMinMagnitude = min;
-	this->mMaxMagnitude = max;
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleEmitter::Surge ( u32 total ) {
-	
-	this->mEmission += total;
-	this->ScheduleUpdate ();
-}
-
-//================================================================//
-// virtual
-//================================================================//
-
-//----------------------------------------------------------------//
-bool MOAIParticleEmitter::MOAIAction_IsDone () {
-
-	return false;
 }
 
 //----------------------------------------------------------------//

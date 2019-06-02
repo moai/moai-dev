@@ -82,6 +82,7 @@ protected:
 	MOAIGfxMgrGL_RenderTreeGL&		MOAIGfxMgrGLComponents_GetRenderTreeGL		();
 	MOAIGfxMgrGL_ResourceClerkGL&	MOAIGfxMgrGLComponents_GetResourceClerkGL	();
 	MOAIGfxMgrGL_VertexCacheGL&		MOAIGfxMgrGLComponents_GetVertexCacheGL		();
+	void							MOAILuaObject_RegisterLuaClass				( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 
@@ -104,7 +105,6 @@ public:
 	u32						LogErrors					();
 							MOAIGfxMgrGL				();
 							~MOAIGfxMgrGL				();
-	void					MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
 	void					ReportTextureAlloc 			( cc8* name, size_t size );
 	void					ReportTextureFree 			( cc8* name, size_t size );
 	void					ResetDrawCount				();

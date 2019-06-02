@@ -38,6 +38,10 @@ MOAIParticlePlugin::MOAIParticlePlugin () :
 MOAIParticlePlugin::~MOAIParticlePlugin () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIParticlePlugin::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );

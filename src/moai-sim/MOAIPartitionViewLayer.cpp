@@ -283,6 +283,18 @@ MOAIPartitionViewLayer::MOAIPartitionViewLayer () :
 MOAIPartitionViewLayer::~MOAIPartitionViewLayer () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIPartitionViewLayer::MOAIAbstractViewLayer_Draw () {
+	
+	if ( this->MOAIPartitionHolder::mPartition ) {
+		this->DrawPartition ( *this->MOAIPartitionHolder::mPartition );
+	}
+}
+
 //----------------------------------------------------------------//
 void MOAIPartitionViewLayer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
@@ -336,16 +348,4 @@ void MOAIPartitionViewLayer::MOAILuaObject_SerializeIn ( MOAIComposer& composer,
 //----------------------------------------------------------------//
 void MOAIPartitionViewLayer::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIGraphicsProp, MOAILuaObject_SerializeOut ( composer, state, serializer ));
-}
-
-//================================================================//
-// virtual
-//================================================================//
-
-//----------------------------------------------------------------//
-void MOAIPartitionViewLayer::MOAIAbstractViewLayer_Draw () {
-	
-	if ( this->MOAIPartitionHolder::mPartition ) {
-		this->DrawPartition ( *this->MOAIPartitionHolder::mPartition );
-	}
 }

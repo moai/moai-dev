@@ -34,6 +34,8 @@ private:
 	MOAICollisionShape*		MOAIDeck_GetCollisionShape		( ZLIndex idx );
 	bool					MOAIDeck_Overlap				( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result );
 	bool					MOAIDeck_Overlap				( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result );
+	void					MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_RegisterLuaFuncs	( MOAIComposer& composer, MOAILuaState& state );
 	
 public:
 	
@@ -42,8 +44,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAICollisionDeck		();
 					~MOAICollisionDeck		();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void			ReserveShapes			( u32 totalShapes );
 	void			SetBox					( ZLIndex idx, const ZLBox& box );
 	void			SetRect					( ZLIndex idx, const ZLRect& rect );

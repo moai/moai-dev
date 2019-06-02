@@ -28,8 +28,10 @@ protected:
 	static int			_setRemap				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	ZLIndex				MOAIDeckProxy_Remap				( ZLIndex idx );
-	bool				MOAINode_ApplyAttrOp			( ZLAttrID attrID, ZLAttribute& attr, u32 op );
+	ZLIndex				MOAIDeckProxy_Remap					( ZLIndex idx );
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	bool				MOAINode_ApplyAttrOp				( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 
 public:
 	
@@ -38,8 +40,6 @@ public:
 	//----------------------------------------------------------------//
 						MOAIDeckRemapper				();
 						~MOAIDeckRemapper				();
-	void				MOAILuaObject_RegisterLuaClass				( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs				( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

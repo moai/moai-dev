@@ -24,6 +24,10 @@ private:
 	static int		_openSHA384				( lua_State* L );
 	static int		_openSHA512				( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIHashWriterCrypto )
@@ -31,8 +35,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIHashWriterCrypto	();
 					~MOAIHashWriterCrypto	();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

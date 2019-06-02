@@ -123,6 +123,10 @@ protected:
 	void				Callback				( lua_State* L, lua_Debug* ar );
 	void				HandleTrace				( lua_State* L, lua_Debug* ar );
 
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 
 	DECL_LUA_SINGLETON ( MOAITrace )
@@ -133,8 +137,6 @@ public:
 	//----------------------------------------------------------------//
 						MOAITrace				();
 	virtual				~MOAITrace				();
-	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void				ReportTrace				();
 	void				Start					();
 	void				Start					( MOAILuaHookListener* listener );

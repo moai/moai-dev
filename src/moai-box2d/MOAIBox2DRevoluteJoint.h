@@ -32,6 +32,10 @@ private:
 	static int		_setMotorSpeed			( lua_State* L );
 	static int		_setMotorEnabled		( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIBox2DRevoluteJoint )
@@ -39,8 +43,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIBox2DRevoluteJoint		();
 					~MOAIBox2DRevoluteJoint		();
-	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

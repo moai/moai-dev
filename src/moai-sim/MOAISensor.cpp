@@ -34,6 +34,10 @@ MOAISensor::MOAISensor () :
 MOAISensor::~MOAISensor () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAISensor::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 

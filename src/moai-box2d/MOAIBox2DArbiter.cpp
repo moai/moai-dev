@@ -256,6 +256,10 @@ void MOAIBox2DArbiter::PreSolve ( b2Contact* contact, const b2Manifold* oldManif
 	moaiFixtureB->HandleCollision ( PRE_SOLVE, moaiFixtureA, this );
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIBox2DArbiter::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 

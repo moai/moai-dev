@@ -41,6 +41,10 @@ private:
 	void			SetAST					( ZLSyntaxNode* ast );
 	void			Traverse				( ZLSyntaxNode* node );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIParser )
@@ -48,8 +52,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIParser				();
 					~MOAIParser				();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

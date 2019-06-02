@@ -44,6 +44,10 @@ void MOAIParticleCallbackPlugin::OnRender ( float* particle, float* registers, A
 	}
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIParticleCallbackPlugin::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIParticlePlugin, MOAILuaObject_RegisterLuaClass ( composer, state ));

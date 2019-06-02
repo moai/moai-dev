@@ -339,6 +339,10 @@ MOAILuaUtil::MOAILuaUtil () {
 MOAILuaUtil::~MOAILuaUtil () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAILuaUtil::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( composer );

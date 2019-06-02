@@ -1293,6 +1293,10 @@ MOAIImage::MOAIImage () {
 MOAIImage::~MOAIImage () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIImage::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( composer );

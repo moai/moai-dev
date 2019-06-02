@@ -143,25 +143,6 @@ ZLVec2D MOAIPathStepper::NextVertex () {
 }
 
 //----------------------------------------------------------------//
-void MOAIPathStepper::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( state );
-}
-
-//----------------------------------------------------------------//
-void MOAIPathStepper::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	luaL_Reg regTable [] = {
-		{ "getLength",			_getLength },
-		{ "more",				_more },
-		{ "next",				_next },
-		{ "start",				_start },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAIPathStepper::Start ( MOAIPath& path, float stepSize ) {
 
 	this->mPath.Set ( *this, &path );
@@ -187,4 +168,27 @@ void MOAIPathStepper::Start ( MOAIPath& path, float stepSize ) {
 		
 		this->mEdgeLength = this->mEdge [ 0 ].Dist ( this->mEdge [ 1 ]);
 	}
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIPathStepper::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAIPathStepper::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	luaL_Reg regTable [] = {
+		{ "getLength",			_getLength },
+		{ "more",				_more },
+		{ "next",				_next },
+		{ "start",				_start },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
 }

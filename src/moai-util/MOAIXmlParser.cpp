@@ -250,6 +250,10 @@ void MOAIXmlParser::Parse ( MOAILuaState& state, TiXmlNode* node ) {
 	}
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIXmlParser::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( composer );

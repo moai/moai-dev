@@ -299,35 +299,6 @@ void MOAITestMgr::PushTest ( cc8* name ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITestMgr::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
-	
-	luaL_Reg regTable [] = {
-#ifndef _assert
-		{ "assert",					_assert },
-#endif
-		{ "comment",				_comment },
-		{ "error",					_error },
-		{ "popTest",				_popTest },
-		{ "pushTest",				_pushTest },
-		{ "results",				_results },
-		{ "setStepFunc",			_setStepFunc },
-		{ "setTimeout",				_setTimeout },
-		{ "standalone",				_standalone },
-		{ "suite",					_suite },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAITestMgr::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
-	UNUSED ( state );
-}
-
-//----------------------------------------------------------------//
 void MOAITestMgr::SetTimeout () {
 //TODO some kind of thread based timeout for windows
 #ifndef MOAI_COMPILER_MSVC
@@ -387,4 +358,37 @@ void MOAITestMgr::WriteLog () {
 		stream.Print ( "%s", out.c_str ());
 		stream.Close ();
 	}
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAITestMgr::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
+	
+	luaL_Reg regTable [] = {
+#ifndef _assert
+		{ "assert",					_assert },
+#endif
+		{ "comment",				_comment },
+		{ "error",					_error },
+		{ "popTest",				_popTest },
+		{ "pushTest",				_pushTest },
+		{ "results",				_results },
+		{ "setStepFunc",			_setStepFunc },
+		{ "setTimeout",				_setTimeout },
+		{ "standalone",				_standalone },
+		{ "suite",					_suite },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAITestMgr::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
+	UNUSED ( state );
 }

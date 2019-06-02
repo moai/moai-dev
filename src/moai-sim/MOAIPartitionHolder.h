@@ -21,14 +21,16 @@ protected:
 	static int			_getPartition				( lua_State* L );
 	static int			_setPartition				( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	//----------------------------------------------------------------//
 	MOAIPartition*		GetPartition				();
 						MOAIPartitionHolder			();
 						~MOAIPartitionHolder		();
-	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

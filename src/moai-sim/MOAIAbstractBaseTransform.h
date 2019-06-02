@@ -44,8 +44,10 @@ protected:
 	virtual void		MOAIAbstractBaseTransform_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx ) = 0;
 
 	//----------------------------------------------------------------//
-	bool				MOAINode_ApplyAttrOp								( ZLAttrID attrID, ZLAttribute& attr, u32 op );
-	void				MOAINode_Update										();
+	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
+	bool				MOAINode_ApplyAttrOp					( ZLAttrID attrID, ZLAttribute& attr, u32 op );
+	void				MOAINode_Update							();
 
 public:
 	
@@ -76,8 +78,6 @@ public:
 	const ZLAffine3D&		GetWorldToLocalMtx			() const;
 							MOAIAbstractBaseTransform		();
 							~MOAIAbstractBaseTransform		();
-	void					MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

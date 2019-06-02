@@ -89,6 +89,10 @@ void MOAIMotionSensor::ParseEvent ( ZLStream& eventStream ) {
 	}
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIMotionSensor::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 

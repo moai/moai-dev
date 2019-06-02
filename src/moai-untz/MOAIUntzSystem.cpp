@@ -189,6 +189,26 @@ MOAIUntzSystem::~MOAIUntzSystem () {
 }
 
 //----------------------------------------------------------------//
+void MOAIUntzSystem::Resume () {
+	
+	if ( UNTZ::System::get () ) {
+		UNTZ::System::get ()->resume ();
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIUntzSystem::Suspend () {
+
+	if ( UNTZ::System::get () ) {
+		UNTZ::System::get ()->suspend ();
+	}
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
 void MOAIUntzSystem::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
@@ -216,20 +236,3 @@ void MOAIUntzSystem::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MO
 void MOAIUntzSystem::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
-
-//----------------------------------------------------------------//
-void MOAIUntzSystem::Resume () {
-	
-	if ( UNTZ::System::get () ) {
-		UNTZ::System::get ()->resume ();
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIUntzSystem::Suspend () {
-
-	if ( UNTZ::System::get () ) {
-		UNTZ::System::get ()->suspend ();
-	}
-}
-

@@ -156,21 +156,6 @@ MOAIMoviePlayerIOS::~MOAIMoviePlayerIOS () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMoviePlayerIOS::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-    
-	luaL_Reg regTable[] = {
-		{ "init",			_init },
-		{ "pause",			_pause },
-		{ "play",			_play },
-		{ "setListener",	_setListener },
-		{ "stop",			_stop },
-		{ NULL, NULL }	
-	};
-    
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAIMoviePlayerIOS::Reset () {
 	
 	[ MOAIMoviePlayerIOS::Get ().mMoviePlayer.view removeFromSuperview ];
@@ -188,6 +173,25 @@ void MOAIMoviePlayerIOS::Reset () {
 	
 	[ MOAIMoviePlayerIOS::Get ().mMoviePlayer release ];
 	MOAIMoviePlayerIOS::Get ().mMoviePlayer = nil;
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIMoviePlayerIOS::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	
+	luaL_Reg regTable[] = {
+		{ "init",			_init },
+		{ "pause",			_pause },
+		{ "play",			_play },
+		{ "setListener",	_setListener },
+		{ "stop",			_stop },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
 }
 
 @implementation MOAIMoviePlayerPlaybackDelegate

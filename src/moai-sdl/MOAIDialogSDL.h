@@ -20,6 +20,9 @@ private:
 	//----------------------------------------------------------------//
 	static int		_show					( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIDialogSDL )
@@ -29,7 +32,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIDialogSDL			();
 					~MOAIDialogSDL			();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

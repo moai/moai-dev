@@ -164,6 +164,10 @@ MOAIViewport::MOAIViewport () {
 MOAIViewport::~MOAIViewport () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIViewport::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );

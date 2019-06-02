@@ -528,67 +528,6 @@ void MOAIFourier::ReadSample ( ZLStream& inStream, u32 inStreamType, bool comple
 }
 
 //----------------------------------------------------------------//
-void MOAIFourier::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
-	
-	state.SetField ( -1, "SAMPLE_S8",			( u32 )ZLSample::SAMPLE_S8 );
-	state.SetField ( -1, "SAMPLE_U8",			( u32 )ZLSample::SAMPLE_U8 );
-	state.SetField ( -1, "SAMPLE_S16",			( u32 )ZLSample::SAMPLE_S16 );
-	state.SetField ( -1, "SAMPLE_U16",			( u32 )ZLSample::SAMPLE_U16 );
-	state.SetField ( -1, "SAMPLE_S32",			( u32 )ZLSample::SAMPLE_S32 );
-	state.SetField ( -1, "SAMPLE_U32",			( u32 )ZLSample::SAMPLE_U32 );
-	state.SetField ( -1, "SAMPLE_FLOAT",		( u32 )ZLSample::SAMPLE_FLOAT );
-	
-	state.SetField ( -1, "OUTPUT_COMPLEX",		( u32 )OUTPUT_COMPLEX );
-	state.SetField ( -1, "OUTPUT_REAL",			( u32 )OUTPUT_REAL );
-	state.SetField ( -1, "OUTPUT_IMAGINARY",	( u32 )OUTPUT_IMAGINARY );
-	state.SetField ( -1, "OUTPUT_AMPLITUDE",	( u32 )OUTPUT_AMPLITUDE );
-	state.SetField ( -1, "OUTPUT_AVERAGE",		( u32 )OUTPUT_AVERAGE );
-	state.SetField ( -1, "OUTPUT_OCTAVES",		( u32 )OUTPUT_OCTAVES );
-	
-	state.SetField ( -1, "BARTLETT",			( u32 )BARTLETT );
-	state.SetField ( -1, "BARTLETT_HANN",		( u32 )BARTLETT_HANN );
-	state.SetField ( -1, "BLACKMAN",			( u32 )BLACKMAN );
-	state.SetField ( -1, "COSINE",				( u32 )COSINE );
-	state.SetField ( -1, "GAUSS",				( u32 )GAUSS );
-	state.SetField ( -1, "HAMMING",				( u32 )HAMMING );
-	state.SetField ( -1, "HANN",				( u32 )HANN );
-	state.SetField ( -1, "LANCZOS",				( u32 )LANCZOS );
-	state.SetField ( -1, "RECTANGULAR",			( u32 )RECTANGULAR );
-	state.SetField ( -1, "WELCH",				( u32 )WELCH );
-	
-	luaL_Reg regTable [] = {
-		{ "window",						_window },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIFourier::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
-
-	luaL_Reg regTable [] = {
-		{ "countBands",					_countBands },
-		{ "countOctaves",				_countOctaves },
-		{ "getBinForFrequency",			_getBinForFrequency },
-		{ "getFastSize",				_getFastSize },
-		{ "getFrequencyForIndex",		_getFrequencyForBin },
-		{ "getWidth",					_getWidth },
-		{ "getWidthOfBand",				_getWidthOfBand },
-		{ "getWidthOfOctave",			_getWidthOfOctave },
-		{ "init",						_init },
-		{ "setOutputType",				_setOutputType },
-		{ "setWindowFunction",			_setWindowFunction },
-		{ "transform",					_transform },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAIFourier::SetOutputType ( u32 outputType, size_t bands, u32 sampleRate, float minOctaveBandWidth ) {
 
 	this->mOutputType = outputType;
@@ -944,4 +883,69 @@ void MOAIFourier::WriteOctaves ( float* amplitudes, ZLStream& outStream, u32 out
 			freq += step;
 		}
 	}
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIFourier::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
+	
+	state.SetField ( -1, "SAMPLE_S8",			( u32 )ZLSample::SAMPLE_S8 );
+	state.SetField ( -1, "SAMPLE_U8",			( u32 )ZLSample::SAMPLE_U8 );
+	state.SetField ( -1, "SAMPLE_S16",			( u32 )ZLSample::SAMPLE_S16 );
+	state.SetField ( -1, "SAMPLE_U16",			( u32 )ZLSample::SAMPLE_U16 );
+	state.SetField ( -1, "SAMPLE_S32",			( u32 )ZLSample::SAMPLE_S32 );
+	state.SetField ( -1, "SAMPLE_U32",			( u32 )ZLSample::SAMPLE_U32 );
+	state.SetField ( -1, "SAMPLE_FLOAT",		( u32 )ZLSample::SAMPLE_FLOAT );
+	
+	state.SetField ( -1, "OUTPUT_COMPLEX",		( u32 )OUTPUT_COMPLEX );
+	state.SetField ( -1, "OUTPUT_REAL",			( u32 )OUTPUT_REAL );
+	state.SetField ( -1, "OUTPUT_IMAGINARY",	( u32 )OUTPUT_IMAGINARY );
+	state.SetField ( -1, "OUTPUT_AMPLITUDE",	( u32 )OUTPUT_AMPLITUDE );
+	state.SetField ( -1, "OUTPUT_AVERAGE",		( u32 )OUTPUT_AVERAGE );
+	state.SetField ( -1, "OUTPUT_OCTAVES",		( u32 )OUTPUT_OCTAVES );
+	
+	state.SetField ( -1, "BARTLETT",			( u32 )BARTLETT );
+	state.SetField ( -1, "BARTLETT_HANN",		( u32 )BARTLETT_HANN );
+	state.SetField ( -1, "BLACKMAN",			( u32 )BLACKMAN );
+	state.SetField ( -1, "COSINE",				( u32 )COSINE );
+	state.SetField ( -1, "GAUSS",				( u32 )GAUSS );
+	state.SetField ( -1, "HAMMING",				( u32 )HAMMING );
+	state.SetField ( -1, "HANN",				( u32 )HANN );
+	state.SetField ( -1, "LANCZOS",				( u32 )LANCZOS );
+	state.SetField ( -1, "RECTANGULAR",			( u32 )RECTANGULAR );
+	state.SetField ( -1, "WELCH",				( u32 )WELCH );
+	
+	luaL_Reg regTable [] = {
+		{ "window",						_window },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIFourier::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
+
+	luaL_Reg regTable [] = {
+		{ "countBands",					_countBands },
+		{ "countOctaves",				_countOctaves },
+		{ "getBinForFrequency",			_getBinForFrequency },
+		{ "getFastSize",				_getFastSize },
+		{ "getFrequencyForIndex",		_getFrequencyForBin },
+		{ "getWidth",					_getWidth },
+		{ "getWidthOfBand",				_getWidthOfBand },
+		{ "getWidthOfOctave",			_getWidthOfOctave },
+		{ "init",						_init },
+		{ "setOutputType",				_setOutputType },
+		{ "setWindowFunction",			_setWindowFunction },
+		{ "transform",					_transform },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
 }

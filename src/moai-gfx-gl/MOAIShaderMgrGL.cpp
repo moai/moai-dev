@@ -274,6 +274,10 @@ MOAIShaderMgrGL::~MOAIShaderMgrGL () {
 	}
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIShaderMgrGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 

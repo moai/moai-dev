@@ -90,6 +90,10 @@ MOAIBox2DRopeJoint::~MOAIBox2DRopeJoint () {
 	
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIBox2DRopeJoint::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIBox2DJoint, MOAILuaObject_RegisterLuaClass ( composer, state ));

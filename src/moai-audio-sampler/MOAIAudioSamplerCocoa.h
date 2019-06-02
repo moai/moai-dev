@@ -49,7 +49,11 @@ private:
 	static void		InputCallback			( void *inUserData, AudioQueueRef inAQ, AudioQueueBufferRef inBuffer, const AudioTimeStamp *inStartTime, UInt32 inNumPackets, const AudioStreamPacketDescription *inPacketDesc );
 	void			Pause					();
     void			Resume					();
-		
+	
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	
 public:
 
 	DECL_LUA_FACTORY ( MOAIAudioSamplerCocoa )
@@ -64,8 +68,6 @@ public:
 	void			Init						( u32 sampleRate, u32 channels, u32 sampleSize, u32 totalBuffers );
 					MOAIAudioSamplerCocoa		();
 					~MOAIAudioSamplerCocoa		();
-	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	void			Start						();
 	void			Stop						();
 };

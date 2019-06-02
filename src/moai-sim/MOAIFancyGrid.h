@@ -54,6 +54,12 @@ protected:
 
 	void			OnResize			();
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs	( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_SerializeIn		( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void			MOAILuaObject_SerializeOut		( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIFancyGrid )
@@ -71,13 +77,7 @@ public:
 					MOAIFancyGrid		();
 					~MOAIFancyGrid		();
 	
-	void			MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs	( MOAIComposer& composer, MOAILuaState& state );
-	
 	void			ReservePalette		( ZLSize size );
-	
-	void			MOAILuaObject_SerializeIn			( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void			MOAILuaObject_SerializeOut		( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 	
 	void			SetColor			( int addr, u32 value );
 	void			SetColor			( int xTile, int yTile, u32 value );

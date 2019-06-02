@@ -89,7 +89,7 @@ int MOAIFrameBufferGL::_isPendingGrab ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIFrameBufferGL::AffirmBuffers () {
 
-	this->ZLFrameBuffer_AffirmBuffers ();
+	this->MOAIFrameBufferGL_AffirmBuffers ();
 }
 
 //----------------------------------------------------------------//
@@ -157,27 +157,6 @@ MOAIFrameBufferGL::MOAIFrameBufferGL () :
 MOAIFrameBufferGL::~MOAIFrameBufferGL () {
 
 	this->mFrameImage.Set ( *this, 0 );
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBufferGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIFrameBuffer, MOAILuaObject_RegisterLuaClass ( composer, state ));
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBufferGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIFrameBuffer, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-
-	luaL_Reg regTable [] = {
-		{ "getGrabbedImage",			_getGrabbedImage },
-		{ "grabNextFrame",				_grabNextFrame },
-		{ "isPendingGrab",				_isPendingGrab },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
@@ -258,13 +237,34 @@ ZLRect MOAIFrameBufferGL::WndRectToDevice ( ZLRect rect ) const {
 	return rect;
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
-void MOAIFrameBufferGL::ZLFrameBuffer_AffirmBuffers () {
+void MOAIFrameBufferGL::MOAIFrameBufferGL_AffirmBuffers () {
 }
 
-//================================================================//
-// overrides
-//================================================================//
+//----------------------------------------------------------------//
+void MOAIFrameBufferGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIFrameBuffer, MOAILuaObject_RegisterLuaClass ( composer, state ));
+}
+
+//----------------------------------------------------------------//
+void MOAIFrameBufferGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIFrameBuffer, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+
+	luaL_Reg regTable [] = {
+		{ "getGrabbedImage",			_getGrabbedImage },
+		{ "grabNextFrame",				_grabNextFrame },
+		{ "isPendingGrab",				_isPendingGrab },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
 
 //----------------------------------------------------------------//
 void MOAIFrameBufferGL::ZLGfxListener_OnReadPixels ( const ZLCopyOnWrite& buffer, void * userdata ) {

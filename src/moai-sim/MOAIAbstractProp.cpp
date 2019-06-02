@@ -211,6 +211,10 @@ MOAIAbstractProp::MOAIAbstractProp () :
 MOAIAbstractProp::~MOAIAbstractProp () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIAbstractProp::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
@@ -253,10 +257,6 @@ void MOAIAbstractProp::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAI
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIPartitionHull, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }
-
-//================================================================//
-// virtual
-//================================================================//
 
 //----------------------------------------------------------------//
 bool MOAIAbstractProp::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {

@@ -152,6 +152,10 @@ MOAIPathTerrainDeck::MOAIPathTerrainDeck () :
 MOAIPathTerrainDeck::~MOAIPathTerrainDeck () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIPathTerrainDeck::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );

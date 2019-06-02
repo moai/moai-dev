@@ -24,6 +24,10 @@ MOAIPathGraph::MOAIPathGraph () {
 MOAIPathGraph::~MOAIPathGraph () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIPathGraph::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );

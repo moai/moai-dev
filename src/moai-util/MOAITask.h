@@ -14,7 +14,7 @@ class MOAITaskSubscriber;
 //================================================================//
 class MOAITask :
 	public virtual ZLRefCountedObject {
-private:
+protected:
 
 	friend class MOAITaskSubscriber;
 	friend class MOAITaskQueue;
@@ -33,6 +33,10 @@ private:
 	//----------------------------------------------------------------//
 	virtual void	Execute				() = 0;
 	virtual void	Publish				();
+
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 
@@ -58,8 +62,6 @@ public:
 	//void			LatchRetain				();
 					MOAITask				();
 	virtual			~MOAITask				();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void			Start					( MOAITaskQueue& queue, MOAITaskSubscriber& subscriber );
 };
 

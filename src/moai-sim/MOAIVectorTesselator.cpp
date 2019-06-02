@@ -1081,105 +1081,6 @@ void MOAIVectorTesselator::ReadShapes ( ZLStream& stream ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	state.SetField ( -1, "FILL_NONE",					( u32 )MOAIVectorStyle::FILL_NONE );
-	state.SetField ( -1, "FILL_SOLID",					( u32 )MOAIVectorStyle::FILL_SOLID );
-	
-	state.SetField ( -1, "LINE_NONE",					( u32 )MOAIVectorStyle::LINE_NONE );
-	state.SetField ( -1, "LINE_VECTOR",					( u32 )MOAIVectorStyle::LINE_VECTOR );
-	
-	state.SetField ( -1, "STROKE_NONE",					( u32 )MOAIVectorStyle::STROKE_NONE );
-	state.SetField ( -1, "STROKE_CENTER",				( u32 )MOAIVectorStyle::STROKE_CENTER );
-	state.SetField ( -1, "STROKE_INTERIOR",				( u32 )MOAIVectorStyle::STROKE_INTERIOR );
-	state.SetField ( -1, "STROKE_EXTERIOR",				( u32 )MOAIVectorStyle::STROKE_EXTERIOR );
-	
-	state.SetField ( -1, "JOIN_BEVEL",					( u32 )MOAIVectorStyle::JOIN_BEVEL );
-	state.SetField ( -1, "JOIN_MITER",					( u32 )MOAIVectorStyle::JOIN_MITER );
-	state.SetField ( -1, "JOIN_ROUND",					( u32 )MOAIVectorStyle::JOIN_ROUND );
-	
-	state.SetField ( -1, "CAP_BUTT",					( u32 )MOAIVectorStyle::CAP_BUTT );
-	state.SetField ( -1, "CAP_ROUND",					( u32 )MOAIVectorStyle::CAP_ROUND );
-	state.SetField ( -1, "CAP_POINTY",					( u32 )MOAIVectorStyle::CAP_POINTY );
-	state.SetField ( -1, "CAP_SQUARE",					( u32 )MOAIVectorStyle::CAP_SQUARE );
-	
-	state.SetField ( -1, "TESS_WINDING_ODD",			( u32 )TESS_WINDING_ODD );
-	state.SetField ( -1, "TESS_WINDING_NONZERO",		( u32 )TESS_WINDING_NONZERO );
-	state.SetField ( -1, "TESS_WINDING_POSITIVE",		( u32 )TESS_WINDING_POSITIVE );
-	state.SetField ( -1, "TESS_WINDING_NEGATIVE",		( u32 )TESS_WINDING_NEGATIVE );
-	state.SetField ( -1, "TESS_WINDING_ABS_GEQ_TWO",	( u32 )TESS_WINDING_ABS_GEQ_TWO );
-	
-	state.SetField ( -1, "TESSELATE_FILLS",				( u32 )TESSELATE_FILLS );
-	state.SetField ( -1, "TESSELATE_STROKES",			( u32 )TESSELATE_STROKES );
-	state.SetField ( -1, "TESSELATE_ALL",				( u32 )TESSELATE_ALL );
-}
-
-//----------------------------------------------------------------//
-void MOAIVectorTesselator::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	luaL_Reg regTable [] = {
-		{ "clearShapes",			_clearShapes },
-		{ "clearStyles",			_clearStyles },
-		{ "clearTransforms",		_clearTransforms },
-		{ "drawingToWorld",			_drawingToWorld },
-		{ "drawingToWorldVec",		_drawingToWorldVec },
-		{ "finish",					_finish },
-		{ "getExtrude",				_getExtrude },
-		{ "getTransform",			_getTransform },
-		{ "openWriter",				_openWriter },
-		{ "pushBezierVertices",		_pushBezierVertices },
-		{ "pushCombo",				_pushCombo },
-		{ "pushEllipse",			_pushEllipse },
-		{ "pushPoly",				_pushPoly },
-		{ "pushRect",				_pushRect },
-		{ "pushRegion",				_pushRegion },
-		{ "pushRotate",				_pushRotate },
-		{ "pushScale",				_pushScale },
-		{ "pushSkew",				_pushSkew },
-		{ "pushTransform",			_pushTransform },
-		{ "pushTranslate",			_pushTranslate },
-		{ "pushVertex",				_pushVertex },
-		{ "readShapes",				_readShapes },
-		{ "reserveVertexExtras",	_reserveVertexExtras },
-		{ "setCapStyle",			_setCapStyle },
-		{ "setCircleResolution",	_setCircleResolution },
-		{ "setDepthBias",			_setDepthBias },
-		{ "setExtrude",				_setExtrude },
-		{ "setFillColor",			_setFillColor },
-		{ "setFillStyle",			_setFillStyle },
-		{ "setFillExtra",			_setFillExtra },
-		{ "setJoinStyle",			_setJoinStyle },
-		{ "setLightColor",			_setLightColor },
-		{ "setLightCurve",			_setLightCurve },
-		{ "setLightVec",			_setLightVec },
-		{ "setLineColor",			_setLineColor },
-		{ "setLineStyle",			_setLineStyle },
-		{ "setLineWidth",			_setLineWidth },
-		{ "setMergeNormals",		_setMergeNormals },
-		{ "setMiterLimit",			_setMiterLimit },
-		{ "setPolyClosed",			_setPolyClosed },
-		{ "setPrecision",			_setPrecision },
-		{ "setShadowColor",			_setShadowColor },
-		{ "setShadowCurve",			_setShadowCurve },
-		{ "setStrokeColor",			_setStrokeColor },
-		{ "setStrokeDepthBias",		_setStrokeDepthBias },
-		{ "setStrokeExtra",			_setStrokeExtra },
-		{ "setStrokeStyle",			_setStrokeStyle },
-		{ "setStrokeWidth",			_setStrokeWidth },
-		{ "setVerbose",				_setVerbose },
-		{ "setVertexExtra",			_setVertexExtra },
-		{ "setWindingRule",			_setWindingRule },
-		{ "tesselate",				_tesselate },
-		{ "worldToDrawing",			_worldToDrawing },
-		{ "worldToDrawingVec",		_worldToDrawingVec },
-		{ "writeShapes",			_writeShapes },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAIVectorTesselator::ReserveVertexExtras ( ZLSize total, size_t size ) {
 
 	this->mVtxExtraSize = size;
@@ -1510,4 +1411,107 @@ void MOAIVectorTesselator::WriteVertex ( ZLStream& stream, MOAIVertexFormat& for
 	
 	// next vertex
 	format.SeekVertex ( stream, base, 1 );
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIVectorTesselator::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	
+	state.SetField ( -1, "FILL_NONE",					( u32 )MOAIVectorStyle::FILL_NONE );
+	state.SetField ( -1, "FILL_SOLID",					( u32 )MOAIVectorStyle::FILL_SOLID );
+	
+	state.SetField ( -1, "LINE_NONE",					( u32 )MOAIVectorStyle::LINE_NONE );
+	state.SetField ( -1, "LINE_VECTOR",					( u32 )MOAIVectorStyle::LINE_VECTOR );
+	
+	state.SetField ( -1, "STROKE_NONE",					( u32 )MOAIVectorStyle::STROKE_NONE );
+	state.SetField ( -1, "STROKE_CENTER",				( u32 )MOAIVectorStyle::STROKE_CENTER );
+	state.SetField ( -1, "STROKE_INTERIOR",				( u32 )MOAIVectorStyle::STROKE_INTERIOR );
+	state.SetField ( -1, "STROKE_EXTERIOR",				( u32 )MOAIVectorStyle::STROKE_EXTERIOR );
+	
+	state.SetField ( -1, "JOIN_BEVEL",					( u32 )MOAIVectorStyle::JOIN_BEVEL );
+	state.SetField ( -1, "JOIN_MITER",					( u32 )MOAIVectorStyle::JOIN_MITER );
+	state.SetField ( -1, "JOIN_ROUND",					( u32 )MOAIVectorStyle::JOIN_ROUND );
+	
+	state.SetField ( -1, "CAP_BUTT",					( u32 )MOAIVectorStyle::CAP_BUTT );
+	state.SetField ( -1, "CAP_ROUND",					( u32 )MOAIVectorStyle::CAP_ROUND );
+	state.SetField ( -1, "CAP_POINTY",					( u32 )MOAIVectorStyle::CAP_POINTY );
+	state.SetField ( -1, "CAP_SQUARE",					( u32 )MOAIVectorStyle::CAP_SQUARE );
+	
+	state.SetField ( -1, "TESS_WINDING_ODD",			( u32 )TESS_WINDING_ODD );
+	state.SetField ( -1, "TESS_WINDING_NONZERO",		( u32 )TESS_WINDING_NONZERO );
+	state.SetField ( -1, "TESS_WINDING_POSITIVE",		( u32 )TESS_WINDING_POSITIVE );
+	state.SetField ( -1, "TESS_WINDING_NEGATIVE",		( u32 )TESS_WINDING_NEGATIVE );
+	state.SetField ( -1, "TESS_WINDING_ABS_GEQ_TWO",	( u32 )TESS_WINDING_ABS_GEQ_TWO );
+	
+	state.SetField ( -1, "TESSELATE_FILLS",				( u32 )TESSELATE_FILLS );
+	state.SetField ( -1, "TESSELATE_STROKES",			( u32 )TESSELATE_STROKES );
+	state.SetField ( -1, "TESSELATE_ALL",				( u32 )TESSELATE_ALL );
+}
+
+//----------------------------------------------------------------//
+void MOAIVectorTesselator::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	luaL_Reg regTable [] = {
+		{ "clearShapes",			_clearShapes },
+		{ "clearStyles",			_clearStyles },
+		{ "clearTransforms",		_clearTransforms },
+		{ "drawingToWorld",			_drawingToWorld },
+		{ "drawingToWorldVec",		_drawingToWorldVec },
+		{ "finish",					_finish },
+		{ "getExtrude",				_getExtrude },
+		{ "getTransform",			_getTransform },
+		{ "openWriter",				_openWriter },
+		{ "pushBezierVertices",		_pushBezierVertices },
+		{ "pushCombo",				_pushCombo },
+		{ "pushEllipse",			_pushEllipse },
+		{ "pushPoly",				_pushPoly },
+		{ "pushRect",				_pushRect },
+		{ "pushRegion",				_pushRegion },
+		{ "pushRotate",				_pushRotate },
+		{ "pushScale",				_pushScale },
+		{ "pushSkew",				_pushSkew },
+		{ "pushTransform",			_pushTransform },
+		{ "pushTranslate",			_pushTranslate },
+		{ "pushVertex",				_pushVertex },
+		{ "readShapes",				_readShapes },
+		{ "reserveVertexExtras",	_reserveVertexExtras },
+		{ "setCapStyle",			_setCapStyle },
+		{ "setCircleResolution",	_setCircleResolution },
+		{ "setDepthBias",			_setDepthBias },
+		{ "setExtrude",				_setExtrude },
+		{ "setFillColor",			_setFillColor },
+		{ "setFillStyle",			_setFillStyle },
+		{ "setFillExtra",			_setFillExtra },
+		{ "setJoinStyle",			_setJoinStyle },
+		{ "setLightColor",			_setLightColor },
+		{ "setLightCurve",			_setLightCurve },
+		{ "setLightVec",			_setLightVec },
+		{ "setLineColor",			_setLineColor },
+		{ "setLineStyle",			_setLineStyle },
+		{ "setLineWidth",			_setLineWidth },
+		{ "setMergeNormals",		_setMergeNormals },
+		{ "setMiterLimit",			_setMiterLimit },
+		{ "setPolyClosed",			_setPolyClosed },
+		{ "setPrecision",			_setPrecision },
+		{ "setShadowColor",			_setShadowColor },
+		{ "setShadowCurve",			_setShadowCurve },
+		{ "setStrokeColor",			_setStrokeColor },
+		{ "setStrokeDepthBias",		_setStrokeDepthBias },
+		{ "setStrokeExtra",			_setStrokeExtra },
+		{ "setStrokeStyle",			_setStrokeStyle },
+		{ "setStrokeWidth",			_setStrokeWidth },
+		{ "setVerbose",				_setVerbose },
+		{ "setVertexExtra",			_setVertexExtra },
+		{ "setWindingRule",			_setWindingRule },
+		{ "tesselate",				_tesselate },
+		{ "worldToDrawing",			_worldToDrawing },
+		{ "worldToDrawingVec",		_worldToDrawingVec },
+		{ "writeShapes",			_writeShapes },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
 }

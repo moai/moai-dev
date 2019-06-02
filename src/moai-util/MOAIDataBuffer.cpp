@@ -633,6 +633,35 @@ size_t MOAIDataBuffer::Read ( void* buffer, size_t size ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAIDataBuffer::Save ( cc8* filename ) {
+
+	ZLFileStream out;
+
+	if ( !out.OpenWrite ( filename )) return false;
+
+	this->mMutex.Lock ();
+	out.WriteBytes ( this->mBytes.GetBuffer (), this->mBytes.Size ());
+	this->mMutex.Unlock ();
+
+	return true;
+}
+
+//----------------------------------------------------------------//
+size_t MOAIDataBuffer::Size () {
+	return this->mBytes.Size ();
+}
+
+//----------------------------------------------------------------//
+void MOAIDataBuffer::Unlock () {
+
+	this->mMutex.Unlock ();
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
 void MOAIDataBuffer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( composer );
 
@@ -677,29 +706,4 @@ void MOAIDataBuffer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MO
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-bool MOAIDataBuffer::Save ( cc8* filename ) {
-
-	ZLFileStream out;
-
-	if ( !out.OpenWrite ( filename )) return false;
-
-	this->mMutex.Lock ();
-	out.WriteBytes ( this->mBytes.GetBuffer (), this->mBytes.Size ());
-	this->mMutex.Unlock ();
-
-	return true;
-}
-
-//----------------------------------------------------------------//
-size_t MOAIDataBuffer::Size () {
-	return this->mBytes.Size ();
-}
-
-//----------------------------------------------------------------//
-void MOAIDataBuffer::Unlock () {
-
-	this->mMutex.Unlock ();
 }

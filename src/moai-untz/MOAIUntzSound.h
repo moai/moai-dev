@@ -46,7 +46,9 @@ private:
 	static int		_stop				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool			MOAINode_ApplyAttrOp	( ZLAttrID attrID, ZLAttribute& attr, u32 op );
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	bool			MOAINode_ApplyAttrOp				( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 
 public:
 
@@ -61,8 +63,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIUntzSound		();
 					~MOAIUntzSound		();
-	void			MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs	( MOAIComposer& composer, MOAILuaState& state );		
 };
 
 #endif

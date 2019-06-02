@@ -702,44 +702,6 @@ void MOAIMarkerMgr::RefreshKPMData () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMarkerMgr::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( state );
-
-	state.SetField ( -1, "EVENT_KPM_BEGIN",		( u32 )EVENT_KPM_BEGIN );
-	state.SetField ( -1, "EVENT_KPM_END",		( u32 )EVENT_KPM_END );
-	state.SetField ( -1, "EVENT_KPM_UPDATE",	( u32 )EVENT_KPM_UPDATE );
-	state.SetField ( -1, "EVENT_MARKER_BEGIN",	( u32 )EVENT_MARKER_BEGIN );
-	state.SetField ( -1, "EVENT_MARKER_END",	( u32 )EVENT_MARKER_END );
-	state.SetField ( -1, "EVENT_MARKER_UPDATE",	( u32 )EVENT_MARKER_UPDATE );
-	state.SetField ( -1, "EVENT_UPDATE_FRAME",	( u32 )EVENT_UPDATE_FRAME );
-	state.SetField ( -1, "EVENT_VIDEO_START",	( u32 )EVENT_VIDEO_START );
-
-	luaL_Reg regTable [] = {
-		{ "getKPMMatrix",			_getKPMMatrix },
-		{ "getKPMPosition2D",		_getKPMPosition2D },
-		{ "getMarkerMatrix",		_getMarkerMatrix },
-		{ "getMarkerPosition2D",	_getMarkerPosition2D },
-		{ "getListener",			&MOAIGlobalEventSource::_getListener < MOAIMarkerMgr > },
-		{ "getVideoCamera",			_getVideoCamera },
-		{ "getVideoDeck",			_getVideoDeck },
-		{ "getVideoSize",			_getVideoSize },
-		{ "loadKPMData",			_loadKPMData },
-		{ "loadPattern",			_loadPattern },
-		{ "setListener",			&MOAIGlobalEventSource::_setListener < MOAIMarkerMgr > },
-		{ "start",					_start },
-		{ "stop",					_stop },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIMarkerMgr::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( state );
-}
-
-//----------------------------------------------------------------//
 void MOAIMarkerMgr::Start () {
 
 	char* vconf = ""; // See http://www.artoolworks.com/support/library/Configuring_video_capture_in_ARToolKit_Professional#AR_VIDEO_DEVICE_IPHONE
@@ -1036,6 +998,48 @@ void MOAIMarkerMgr::VideoDidStart () {
 	this->InvokeListener ( EVENT_VIDEO_START );
 	
 	this->RefreshKPMData ();
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIMarkerMgr::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( state );
+
+	state.SetField ( -1, "EVENT_KPM_BEGIN",		( u32 )EVENT_KPM_BEGIN );
+	state.SetField ( -1, "EVENT_KPM_END",		( u32 )EVENT_KPM_END );
+	state.SetField ( -1, "EVENT_KPM_UPDATE",	( u32 )EVENT_KPM_UPDATE );
+	state.SetField ( -1, "EVENT_MARKER_BEGIN",	( u32 )EVENT_MARKER_BEGIN );
+	state.SetField ( -1, "EVENT_MARKER_END",	( u32 )EVENT_MARKER_END );
+	state.SetField ( -1, "EVENT_MARKER_UPDATE",	( u32 )EVENT_MARKER_UPDATE );
+	state.SetField ( -1, "EVENT_UPDATE_FRAME",	( u32 )EVENT_UPDATE_FRAME );
+	state.SetField ( -1, "EVENT_VIDEO_START",	( u32 )EVENT_VIDEO_START );
+
+	luaL_Reg regTable [] = {
+		{ "getKPMMatrix",			_getKPMMatrix },
+		{ "getKPMPosition2D",		_getKPMPosition2D },
+		{ "getMarkerMatrix",		_getMarkerMatrix },
+		{ "getMarkerPosition2D",	_getMarkerPosition2D },
+		{ "getListener",			&MOAIGlobalEventSource::_getListener < MOAIMarkerMgr > },
+		{ "getVideoCamera",			_getVideoCamera },
+		{ "getVideoDeck",			_getVideoDeck },
+		{ "getVideoSize",			_getVideoSize },
+		{ "loadKPMData",			_loadKPMData },
+		{ "loadPattern",			_loadPattern },
+		{ "setListener",			&MOAIGlobalEventSource::_setListener < MOAIMarkerMgr > },
+		{ "start",					_start },
+		{ "stop",					_stop },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIMarkerMgr::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( state );
 }
 
 //================================================================//

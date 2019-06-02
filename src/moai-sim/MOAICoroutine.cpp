@@ -228,52 +228,6 @@ MOAICoroutine::~MOAICoroutine () {
 }
 
 //----------------------------------------------------------------//
-void MOAICoroutine::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaClass ( composer, state ));
-
-	luaL_Reg regTable [] = {
-		{ "blockOnAction",		_blockOnAction },
-		{ "currentThread",		_currentThread },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAICoroutine::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-
-	luaL_Reg regTable [] = {
-		{ "getHistogram",			_getHistogram },
-		{ "getTrackingGroup",		_getTrackingGroup },
-		{ "reportHistogram",		_reportHistogram },
-		{ "reportLeaks",			_reportLeaks },
-		{ "run",					_run },
-		{ "setDefaultParent",		_setDefaultParent },
-		{ "setTrackingGroup",		_setTrackingGroup },
-		{ "step",					_step },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-	
-	// ?
-	
-	lua_getglobal ( state, "coroutine" );
-	
-	lua_getfield ( state, -1, "create" );
-	lua_setfield ( state, -3, "create" );
-	
-	lua_getfield ( state, -1, "resume" );
-	lua_setfield ( state, -3, "resume" );
-	
-	lua_pop ( state, 1 );
-}
-
-//----------------------------------------------------------------//
 int MOAICoroutine::Resume ( float step ) {
 	UNUSED ( step );
 	
@@ -381,4 +335,50 @@ void MOAICoroutine::MOAIAction_Stop () {
 //----------------------------------------------------------------//
 void MOAICoroutine::MOAIAction_Update ( double step ) {
 	this->Resume (( float )step );
+}
+
+//----------------------------------------------------------------//
+void MOAICoroutine::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaClass ( composer, state ));
+
+	luaL_Reg regTable [] = {
+		{ "blockOnAction",		_blockOnAction },
+		{ "currentThread",		_currentThread },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAICoroutine::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+
+	luaL_Reg regTable [] = {
+		{ "getHistogram",			_getHistogram },
+		{ "getTrackingGroup",		_getTrackingGroup },
+		{ "reportHistogram",		_reportHistogram },
+		{ "reportLeaks",			_reportLeaks },
+		{ "run",					_run },
+		{ "setDefaultParent",		_setDefaultParent },
+		{ "setTrackingGroup",		_setTrackingGroup },
+		{ "step",					_step },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+	
+	// ?
+	
+	lua_getglobal ( state, "coroutine" );
+	
+	lua_getfield ( state, -1, "create" );
+	lua_setfield ( state, -3, "create" );
+	
+	lua_getfield ( state, -1, "resume" );
+	lua_setfield ( state, -3, "resume" );
+	
+	lua_pop ( state, 1 );
 }

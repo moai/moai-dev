@@ -27,6 +27,10 @@ MOAIIndexBufferGL::MOAIIndexBufferGL () {
 MOAIIndexBufferGL::~MOAIIndexBufferGL () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIIndexBufferGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIIndexBuffer, MOAILuaObject_RegisterLuaClass ( composer, state ));

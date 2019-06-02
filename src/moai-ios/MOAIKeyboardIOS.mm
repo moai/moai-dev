@@ -215,6 +215,38 @@ void MOAIKeyboardIOS::PushText ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIKeyboardIOS::ShowKeyboard ( cc8* text, int type, int returnKey, bool secure, int autocap, int appearance ) {
+	
+	if ( !this->mTextField ) {
+		UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
+		
+		CGRect frame = CGRectMake ( 0, 0, 320, 24 );
+		this->mTextField = [[ UITextField alloc ] initWithFrame:frame ];
+		[ this->mTextField setDelegate:[[[ MOAITextFieldDelegate alloc ] init ] autorelease ]];
+		
+		[ window addSubview:this->mTextField ];
+	}
+	
+	[ this->mTextField setHidden:YES ];
+	[ this->mTextField setText:[ NSString stringWithUTF8String:text ]];
+	
+	[ this->mTextField setAutocapitalizationType:( UITextAutocapitalizationType )autocap ];
+	[ this->mTextField setAutocorrectionType:UITextAutocorrectionTypeNo ];
+	[ this->mTextField setSpellCheckingType:UITextSpellCheckingTypeNo ];
+	[ this->mTextField setEnablesReturnKeyAutomatically:NO ];
+	[ this->mTextField setKeyboardAppearance:( UIKeyboardAppearance )appearance ];
+	[ this->mTextField setKeyboardType:( UIKeyboardType )type ];
+	[ this->mTextField setReturnKeyType:( UIReturnKeyType )returnKey ];
+	[ this->mTextField setSecureTextEntry:secure ];
+
+	[ this->mTextField becomeFirstResponder ];
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
 void MOAIKeyboardIOS::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	state.SetField ( -1, "EVENT_INPUT",					( u32 )EVENT_INPUT );
@@ -258,32 +290,4 @@ void MOAIKeyboardIOS::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, M
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIKeyboardIOS::ShowKeyboard ( cc8* text, int type, int returnKey, bool secure, int autocap, int appearance ) {
-	
-	if ( !this->mTextField ) {
-		UIWindow* window = [[ UIApplication sharedApplication ] keyWindow ];
-		
-		CGRect frame = CGRectMake ( 0, 0, 320, 24 );
-		this->mTextField = [[ UITextField alloc ] initWithFrame:frame ];
-		[ this->mTextField setDelegate:[[[ MOAITextFieldDelegate alloc ] init ] autorelease ]];
-		
-		[ window addSubview:this->mTextField ];
-	}
-	
-	[ this->mTextField setHidden:YES ];
-	[ this->mTextField setText:[ NSString stringWithUTF8String:text ]];
-	
-	[ this->mTextField setAutocapitalizationType:( UITextAutocapitalizationType )autocap ];
-	[ this->mTextField setAutocorrectionType:UITextAutocorrectionTypeNo ];
-	[ this->mTextField setSpellCheckingType:UITextSpellCheckingTypeNo ];
-	[ this->mTextField setEnablesReturnKeyAutomatically:NO ];
-	[ this->mTextField setKeyboardAppearance:( UIKeyboardAppearance )appearance ];
-	[ this->mTextField setKeyboardType:( UIKeyboardType )type ];
-	[ this->mTextField setReturnKeyType:( UIReturnKeyType )returnKey ];
-	[ this->mTextField setSecureTextEntry:secure ];
-
-	[ this->mTextField becomeFirstResponder ];
 }

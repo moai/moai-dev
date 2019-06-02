@@ -214,6 +214,10 @@ MOAIHashWriter::MOAIHashWriter () :
 MOAIHashWriter::~MOAIHashWriter () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIHashWriter::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 

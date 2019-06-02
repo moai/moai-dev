@@ -49,6 +49,48 @@ MOAIProjectionProp::MOAIProjectionProp () :
 MOAIProjectionProp::~MOAIProjectionProp () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAIProjectionProp::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
+
+	if ( AttrID::Check ( attrID )) {
+		switch ( attrID.Unpack ()) {
+			case ATTR_FRONT:
+				attr.Apply ( this->mFront, op, ZLAttribute::ATTR_READ );
+				return true;
+		}
+	}
+	
+	return MOAIPartitionHull::MOAINode_ApplyAttrOp ( attrID, attr, op );
+}
+
+//----------------------------------------------------------------//
+void MOAIProjectionProp::MOAIDrawable_Draw ( int subPrimID ) {
+	UNUSED ( subPrimID );
+}
+
+//----------------------------------------------------------------//
+void MOAIProjectionProp::MOAIDrawable_DrawDebug ( int subPrimID ) {
+	UNUSED ( subPrimID );
+	
+	if ( this->GetWorldBounds ().mStatus == ZLBounds::ZL_BOUNDS_EMPTY ) return;
+
+	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
+	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAIProjectionProp >())) return;
+	if ( !debugLines.Bind ( DEBUG_DRAW_WORLD_BOUNDS )) return;
+	
+	MOAIGfxMgr::Get ().SetVertexTransform ( MOAIGfxMgr::WORLD_TO_DISPLAY_MTX );
+	
+	MOAIDraw& draw = MOAIDraw::Get ();
+	UNUSED ( draw ); // mystery warning in vs2008
+	
+	draw.Bind ();
+	draw.DrawBoxOutline ( this->GetWorldBounds ().mAABB );
+}
+
 //----------------------------------------------------------------//
 void MOAIProjectionProp::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIPartitionHull, MOAILuaObject_RegisterLuaClass ( composer, state ));
@@ -82,48 +124,6 @@ void MOAIProjectionProp::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOA
 void MOAIProjectionProp::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIPartitionHull, MOAILuaObject_SerializeOut ( composer, state, serializer ));
-}
-
-//================================================================//
-// virtual
-//================================================================//
-
-//----------------------------------------------------------------//
-void MOAIProjectionProp::MOAIDrawable_Draw ( int subPrimID ) {
-	UNUSED ( subPrimID );
-}
-
-//----------------------------------------------------------------//
-void MOAIProjectionProp::MOAIDrawable_DrawDebug ( int subPrimID ) {
-	UNUSED ( subPrimID );
-	
-	if ( this->GetWorldBounds ().mStatus == ZLBounds::ZL_BOUNDS_EMPTY ) return;
-
-	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
-	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAIProjectionProp >())) return;
-	if ( !debugLines.Bind ( DEBUG_DRAW_WORLD_BOUNDS )) return;
-	
-	MOAIGfxMgr::Get ().SetVertexTransform ( MOAIGfxMgr::WORLD_TO_DISPLAY_MTX );
-	
-	MOAIDraw& draw = MOAIDraw::Get ();
-	UNUSED ( draw ); // mystery warning in vs2008
-	
-	draw.Bind ();
-	draw.DrawBoxOutline ( this->GetWorldBounds ().mAABB );
-}
-
-//----------------------------------------------------------------//
-bool MOAIProjectionProp::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
-
-	if ( AttrID::Check ( attrID )) {
-		switch ( attrID.Unpack ()) {
-			case ATTR_FRONT:
-				attr.Apply ( this->mFront, op, ZLAttribute::ATTR_READ );
-				return true;
-		}
-	}
-	
-	return MOAIPartitionHull::MOAINode_ApplyAttrOp ( attrID, attr, op );
 }
 
 //----------------------------------------------------------------//

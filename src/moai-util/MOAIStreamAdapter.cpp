@@ -221,6 +221,10 @@ int MOAIStreamAdapter::Open ( MOAILuaState& state, int idx, ZLStreamAdapter* ada
 	return 1;
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIStreamAdapter::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 

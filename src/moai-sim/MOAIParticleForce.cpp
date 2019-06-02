@@ -203,6 +203,10 @@ MOAIParticleForce::MOAIParticleForce () :
 MOAIParticleForce::~MOAIParticleForce () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIParticleForce::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
@@ -229,10 +233,6 @@ void MOAIParticleForce::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer,
 	
 	luaL_register ( state, 0, regTable );
 }
-
-//================================================================//
-// virtual
-//================================================================//
 
 //----------------------------------------------------------------//
 void MOAIParticleForce::MOAINode_Update () {

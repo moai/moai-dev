@@ -26,6 +26,9 @@ private:
 	//----------------------------------------------------------------//
 	static int		_singletonHello		( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIFooMgr )
@@ -33,7 +36,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIFooMgr			();
 					~MOAIFooMgr			();
-	void			MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

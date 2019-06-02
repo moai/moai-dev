@@ -482,42 +482,6 @@ MOAISpriteDeck2D::~MOAISpriteDeck2D () {
 }
 
 //----------------------------------------------------------------//
-void MOAISpriteDeck2D::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIMaterialBatchHolder, MOAILuaObject_RegisterLuaClass ( composer, state ));
-}
-
-//----------------------------------------------------------------//
-void MOAISpriteDeck2D::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIMaterialBatchHolder, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-
-	luaL_Reg regTable [] = {
-		{ "getQuad",				_getQuad },
-		{ "getRect",				_getRect },
-		{ "getUVQuad",				_getUVQuad },
-		{ "getUVRect",				_getUVRect },
-		{ "reserveQuads",			_reserveQuads },
-		{ "reserveSprites",			_reserveSprites },
-		{ "reserveSpriteLists",		_reserveSpriteLists },
-		{ "reserveUVQuads",			_reserveUVQuads },
-		{ "setQuad",				_setQuad },
-		{ "setRect",				_setRect },
-		{ "setSprite",				_setSprite },
-		{ "setSpriteList",			_setSpriteList },
-		{ "setUVQuad",				_setUVQuad },
-		{ "setUVRect",				_setUVRect },
-		{ "transform",				_transform },
-		{ "transformUV",			_transformUV },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAISpriteDeck2D::ReserveLists ( ZLSize total ) {
 
 	this->mSpriteLists.Init ( total );
@@ -545,20 +509,6 @@ void MOAISpriteDeck2D::ReserveQuads ( ZLSize total ) {
 void MOAISpriteDeck2D::ReserveUVQuads ( ZLSize total ) {
 
 	this->mUVQuads.Init ( total );
-}
-
-//----------------------------------------------------------------//
-void MOAISpriteDeck2D::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_SerializeIn ( composer, state, serializer ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIMaterialBatchHolder, MOAILuaObject_SerializeIn ( composer, state, serializer ));
-}
-
-//----------------------------------------------------------------//
-void MOAISpriteDeck2D::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_SerializeOut ( composer, state, serializer ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIMaterialBatchHolder, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//
@@ -826,4 +776,54 @@ bool MOAISpriteDeck2D::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 g
 	// TODO: handle granularity
 
 	return (( vec.mZ == 0.0f ) && this->MOAIDeck_Overlap ( idx, vec, granularity, result ));
+}
+
+//----------------------------------------------------------------//
+void MOAISpriteDeck2D::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIMaterialBatchHolder, MOAILuaObject_RegisterLuaClass ( composer, state ));
+}
+
+//----------------------------------------------------------------//
+void MOAISpriteDeck2D::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIMaterialBatchHolder, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+
+	luaL_Reg regTable [] = {
+		{ "getQuad",				_getQuad },
+		{ "getRect",				_getRect },
+		{ "getUVQuad",				_getUVQuad },
+		{ "getUVRect",				_getUVRect },
+		{ "reserveQuads",			_reserveQuads },
+		{ "reserveSprites",			_reserveSprites },
+		{ "reserveSpriteLists",		_reserveSpriteLists },
+		{ "reserveUVQuads",			_reserveUVQuads },
+		{ "setQuad",				_setQuad },
+		{ "setRect",				_setRect },
+		{ "setSprite",				_setSprite },
+		{ "setSpriteList",			_setSpriteList },
+		{ "setUVQuad",				_setUVQuad },
+		{ "setUVRect",				_setUVRect },
+		{ "transform",				_transform },
+		{ "transformUV",			_transformUV },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAISpriteDeck2D::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIMaterialBatchHolder, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+}
+
+//----------------------------------------------------------------//
+void MOAISpriteDeck2D::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_SerializeOut ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIMaterialBatchHolder, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }

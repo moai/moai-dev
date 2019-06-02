@@ -24,6 +24,10 @@ private:
 	static int		_setRect				( lua_State* L );
 	static int		_setScissorRect			( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIScissorRect )
@@ -32,8 +36,6 @@ public:
 	ZLRect			GetScissorRect			( const ZLMatrix4x4& worldToWndMtx ) const;
 					MOAIScissorRect			();
 					~MOAIScissorRect		();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

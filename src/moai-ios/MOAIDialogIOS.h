@@ -29,6 +29,9 @@ private:
 	//----------------------------------------------------------------//
 	static int	_showDialog	( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void	MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIDialogIOS )
@@ -42,7 +45,6 @@ public:
 	
 			MOAIDialogIOS		();
 			~MOAIDialogIOS		();
-	void	MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
 };
 
 @interface LuaAlertView : UIAlertView < UIAlertViewDelegate > {

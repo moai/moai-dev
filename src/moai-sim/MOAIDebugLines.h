@@ -84,6 +84,9 @@ private:
 	void					SetStyle				( u32 styleID );
 	void					SetStyle				( u32 styleID, float size, u32 color );
 
+	//----------------------------------------------------------------//
+	void					MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIDebugLinesMgr )
@@ -95,7 +98,6 @@ public:
 	bool			IsVisible				( u32 styleID );
 					MOAIDebugLinesMgr		();
 					~MOAIDebugLinesMgr		();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >

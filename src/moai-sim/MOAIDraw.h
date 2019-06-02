@@ -79,6 +79,9 @@ private:
 	void			DrawLuaParams			( lua_State* L, u32 primType );
 	void			DrawLuaArray			( lua_State* L, u32 primType );
 	
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	
 public:
 
 	DECL_LUA_SINGLETON ( MOAIDraw )
@@ -100,7 +103,6 @@ public:
 	void			EndDrawString			();
 					MOAIDraw				();
 					~MOAIDraw				();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

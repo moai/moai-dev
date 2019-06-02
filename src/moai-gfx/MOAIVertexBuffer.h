@@ -20,14 +20,16 @@ protected:
 	static int		_countElements			( lua_State* L );
 	static int		_printVertices			( lua_State* L );
 	
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	
 public:
 
 	//----------------------------------------------------------------//
 					MOAIVertexBuffer		();
 					~MOAIVertexBuffer		();
 	void			PrintVertices			( MOAIVertexFormat& vertexFormat );
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

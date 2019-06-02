@@ -122,9 +122,13 @@ protected:
 	static int			_setTotalElements			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	ZLBounds			MOAIDeck_ComputeMaxAABB			();
-	void				MOAIDeck_Draw					( ZLIndex idx );
-	ZLBounds			MOAIDeck_GetBounds				( ZLIndex idx );
+	ZLBounds			MOAIDeck_ComputeMaxAABB				();
+	void				MOAIDeck_Draw						( ZLIndex idx );
+	ZLBounds			MOAIDeck_GetBounds					( ZLIndex idx );
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_SerializeIn			( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void				MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 
 public:
 
@@ -140,12 +144,8 @@ public:
 	MOAIVertexArray&	GetVertexArray				();
 						MOAIMesh					();
 						~MOAIMesh					();
-	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	void				ReserveVAOs					( u32 total );
 	void				ReserveVertexBuffers		( u32 total );
-	void				MOAILuaObject_SerializeIn					( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void				MOAILuaObject_SerializeOut				( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 	void				SetBounds					( const ZLBox& aabb );
 	void				SetIndexBuffer				( MOAIIndexBuffer* indexBuffer );
 };

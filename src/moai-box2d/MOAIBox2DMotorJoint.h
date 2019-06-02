@@ -17,30 +17,29 @@ class MOAIBox2DMotorJoint :
 private:
 
 	//----------------------------------------------------------------//
-	static int		_setLinearOffset			( lua_State* L );
-	static int		_getLinearOffset			( lua_State* L );
-
-	static int		_setAngularOffset			( lua_State* L );
 	static int		_getAngularOffset			( lua_State* L );
-
-	static int		_setMaxForce				( lua_State* L );
-	static int		_getMaxForce				( lua_State* L );
-
-	static int		_setMaxTorque				( lua_State* L );
-	static int		_getMaxTorque				( lua_State* L );
-
-	static int		_setCorrectionFactor		( lua_State* L );
 	static int		_getCorrectionFactor		( lua_State* L );
-	 
+	static int		_getLinearOffset			( lua_State* L );
+	static int		_getMaxForce				( lua_State* L );
+	static int		_getMaxTorque				( lua_State* L );
+	static int		_setAngularOffset			( lua_State* L );
+	static int		_setCorrectionFactor		( lua_State* L );
+	static int		_setLinearOffset			( lua_State* L );
+	static int		_setMaxForce				( lua_State* L );
+	static int		_setMaxTorque				( lua_State* L );
+	
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIBox2DMotorJoint )
 	
 	//----------------------------------------------------------------//
-					MOAIBox2DMotorJoint		();
+					MOAIBox2DMotorJoint			();
 					~MOAIBox2DMotorJoint		();
-	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
+	
 };
 
 #endif

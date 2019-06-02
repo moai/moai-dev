@@ -303,6 +303,10 @@ MOAIMaterialBatchHolder::~MOAIMaterialBatchHolder () {
 	this->mMaterialBatch.Set ( *this, 0 );
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIMaterialBatchHolder::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );

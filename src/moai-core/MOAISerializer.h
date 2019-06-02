@@ -66,23 +66,25 @@ private:
 protected:
 
 	//----------------------------------------------------------------//
-	virtual cc8*	GetDeserializerTypeName		();
+	virtual cc8*		GetDeserializerTypeName		();
+	
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	
 public:
 
 	DECL_LUA_FACTORY ( MOAISerializer )
 
 	//----------------------------------------------------------------//
-	ObjID			AffirmMemberID				( MOAILuaObject* object, bool processMetatable = true );
-	ObjID			AffirmMemberID				( MOAILuaState& state, int idx, bool processMetatable = true );
-	void			Clear						();
-	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
-	STLString		SerializeToString			();
-	void			SerializeToFile				( cc8* filename );
-	void			SerializeToStream			( ZLStream& stream );
-					MOAISerializer				();
-	virtual			~MOAISerializer				();
+	ObjID				AffirmMemberID				( MOAILuaObject* object, bool processMetatable = true );
+	ObjID				AffirmMemberID				( MOAILuaState& state, int idx, bool processMetatable = true );
+	void				Clear						();
+						MOAISerializer				();
+	virtual				~MOAISerializer				();
+	STLString			SerializeToString			();
+	void				SerializeToFile				( cc8* filename );
+	void				SerializeToStream			( ZLStream& stream );
 };
 
 #endif

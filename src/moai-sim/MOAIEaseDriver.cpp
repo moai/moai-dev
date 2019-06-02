@@ -185,26 +185,6 @@ u32 MOAIEaseDriver::ParseForSeek ( MOAILuaState& state, int idx, MOAINode* dest,
 }
 
 //----------------------------------------------------------------//
-void MOAIEaseDriver::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAITimer, MOAILuaObject_RegisterLuaClass ( composer, state ));
-}
-
-//----------------------------------------------------------------//
-void MOAIEaseDriver::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAITimer, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	
-	luaL_Reg regTable [] = {
-		{ "reserveLinks",			_reserveLinks },
-		{ "setLink",				_setLink },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAIEaseDriver::ReserveLinks ( u32 total ) {
 
 	this->mLinks.Init ( total );
@@ -307,4 +287,24 @@ void MOAIEaseDriver::MOAIAction_Update ( double step ) {
 			}
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIEaseDriver::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITimer, MOAILuaObject_RegisterLuaClass ( composer, state ));
+}
+
+//----------------------------------------------------------------//
+void MOAIEaseDriver::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITimer, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	
+	luaL_Reg regTable [] = {
+		{ "reserveLinks",			_reserveLinks },
+		{ "setLink",				_setLink },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
 }

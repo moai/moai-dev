@@ -94,6 +94,10 @@ bool MOAIDataBufferStream::Open ( MOAIDataBuffer* buffer ) {
 	return true;
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIDataBufferStream::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 

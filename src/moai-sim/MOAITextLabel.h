@@ -205,12 +205,16 @@ private:
 
 	//----------------------------------------------------------------//
 	void				MOAIAbstractBaseTransform_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx );
-	void				MOAIDrawable_Draw							( int subPrimID );
-	void				MOAIDrawable_DrawDebug						( int subPrimID );
+	void				MOAIDrawable_Draw									( int subPrimID );
+	void				MOAIDrawable_DrawDebug								( int subPrimID );
 	ZLBounds			MOAIAbstractProp_GetModelBounds						();
 	bool				MOAIAction_IsDone									();
 	void				MOAIAction_Update									( double step );
 	ZLMatrix4x4			MOAIGraphicsPropBase_GetWorldDrawingMtx				() const;
+	void				MOAILuaObject_RegisterLuaClass						( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs						( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_SerializeIn							( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void				MOAILuaObject_SerializeOut							( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 	void				MOAINode_Update										();
 
 public:
@@ -235,10 +239,6 @@ public:
 						~MOAITextLabel			();
 	bool				More					();
 	void				NextPage				( bool reveal );
-	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_SerializeIn				( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void				MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 	void				SetText					( cc8* text );
 };
 

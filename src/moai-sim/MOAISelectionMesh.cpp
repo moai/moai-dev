@@ -536,6 +536,34 @@ void MOAISelectionMesh::PrintSelections () {
 }
 
 //----------------------------------------------------------------//
+void MOAISelectionMesh::ReserveSelections ( ZLSize total ) {
+
+	this->Clear ();
+	
+	this->mSets.Resize ( total, 0 );
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAISelectionMesh::MOAIDeck_Draw ( ZLIndex idx ) {
+	
+	if ( !this->mMesh ) return;
+	
+	size_t size = this->mSets.Size ();
+	if ( !size ) return;
+
+	ZLIndex itemIdx =  ZLIndexOp::Wrap ( idx, size );
+	
+	MOAIMeshSpan* span = this->mSets [ itemIdx ];
+	if ( !span ) return;
+
+	this->mMesh->DrawIndex ( idx, span );
+}
+
+//----------------------------------------------------------------//
 void MOAISelectionMesh::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckProxy, MOAILuaObject_RegisterLuaClass ( composer, state ));
@@ -561,14 +589,6 @@ void MOAISelectionMesh::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer,
 }
 
 //----------------------------------------------------------------//
-void MOAISelectionMesh::ReserveSelections ( ZLSize total ) {
-
-	this->Clear ();
-	
-	this->mSets.Resize ( total, 0 );
-}
-
-//----------------------------------------------------------------//
 void MOAISelectionMesh::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckProxy, MOAILuaObject_SerializeIn ( composer, state, serializer ));
@@ -578,24 +598,4 @@ void MOAISelectionMesh::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAI
 void MOAISelectionMesh::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckProxy, MOAILuaObject_SerializeOut ( composer, state, serializer ));
-}
-
-//================================================================//
-// virtual
-//================================================================//
-
-//----------------------------------------------------------------//
-void MOAISelectionMesh::MOAIDeck_Draw ( ZLIndex idx ) {
-	
-	if ( !this->mMesh ) return;
-	
-	size_t size = this->mSets.Size ();
-	if ( !size ) return;
-
-	ZLIndex itemIdx =  ZLIndexOp::Wrap ( idx, size );
-	
-	MOAIMeshSpan* span = this->mSets [ itemIdx ];
-	if ( !span ) return;
-
-	this->mMesh->DrawIndex ( idx, span );
 }

@@ -24,6 +24,10 @@ MOAIStreamWriter::MOAIStreamWriter () {
 MOAIStreamWriter::~MOAIStreamWriter () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIStreamWriter::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 

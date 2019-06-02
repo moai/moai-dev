@@ -72,6 +72,24 @@ MOAIParticleDistanceEmitter::~MOAIParticleDistanceEmitter () {
 }
 
 //----------------------------------------------------------------//
+void MOAIParticleDistanceEmitter::SetDistanceRange ( float min, float max ) {
+
+	this->mMinDistance = min;
+	this->mMaxDistance = max;
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIParticleDistanceEmitter::MOAIAction_Update ( double step ) {
+	UNUSED ( step );
+	
+	this->ScheduleUpdate ();
+}
+
+//----------------------------------------------------------------//
 void MOAIParticleDistanceEmitter::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIParticleEmitter, MOAILuaObject_RegisterLuaClass ( composer, state ));
@@ -89,24 +107,6 @@ void MOAIParticleDistanceEmitter::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer&
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleDistanceEmitter::SetDistanceRange ( float min, float max ) {
-
-	this->mMinDistance = min;
-	this->mMaxDistance = max;
-}
-
-//================================================================//
-// virtual
-//================================================================//
-
-//----------------------------------------------------------------//
-void MOAIParticleDistanceEmitter::MOAIAction_Update ( double step ) {
-	UNUSED ( step );
-	
-	this->ScheduleUpdate ();
 }
 
 //----------------------------------------------------------------//

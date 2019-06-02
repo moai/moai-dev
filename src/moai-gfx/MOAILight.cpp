@@ -88,6 +88,20 @@ MOAILight::~MOAILight () {
 }
 
 //----------------------------------------------------------------//
+void MOAILight::SetFormat ( MOAILightFormat* format ) {
+
+	this->mFormat.Set ( *this, format );
+	if ( format ) {
+		format->Bless ();
+		this->mBuffer.Init ( format->mBufferSize );
+	}
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
 void MOAILight::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaClass ( composer, state ));
@@ -111,27 +125,13 @@ void MOAILight::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILua
 }
 
 //----------------------------------------------------------------//
-void MOAILight::SetFormat ( MOAILightFormat* format ) {
-
-	this->mFormat.Set ( *this, format );
-	if ( format ) {
-		format->Bless ();
-		this->mBuffer.Init ( format->mBufferSize );
-	}
-}
-
-//================================================================//
-// virtual
-//================================================================//
-
-//----------------------------------------------------------------//
 bool MOAILight::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 
 	return this->mFormat ? this->MOAIShaderUniformSchemaBase::ApplyAttrOp ( this->mBuffer.GetBuffer (), attrID, attr, op ) : false;
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformHandle MOAILight::ZLAbstractShaderUniformSchema_GetUniformHandle ( void* buffer, ZLIndex uniformID ) const {
+MOAIShaderUniformHandle MOAILight::MOAIShaderUniformSchema_GetUniformHandle ( void* buffer, ZLIndex uniformID ) const {
 
 	MOAIShaderUniformHandle uniform;
 	uniform.mBuffer = 0;

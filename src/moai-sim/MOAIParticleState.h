@@ -52,6 +52,10 @@ private:
 	void			InitParticle			( MOAIParticleSystem& system, MOAIParticle& particle );
 	void			ProcessParticle			( MOAIParticleSystem& system, MOAIParticle& particle, float step );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 
 	DECL_LUA_FACTORY ( MOAIParticleState )
@@ -61,8 +65,6 @@ public:
 					MOAIParticleState		();
 					~MOAIParticleState		();
 	void			PushForce				( MOAIParticleForce& force );
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

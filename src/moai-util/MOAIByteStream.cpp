@@ -105,6 +105,10 @@ void MOAIByteStream::Open ( void* data, size_t size ) {
 	this->SetLength ( size );
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIByteStream::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 

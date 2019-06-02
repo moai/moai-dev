@@ -127,40 +127,6 @@ MOAIMetaTileDeck2D::~MOAIMetaTileDeck2D () {
 	this->mDeck.Set ( *this, 0 );
 }
 
-//----------------------------------------------------------------//
-void MOAIMetaTileDeck2D::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_RegisterLuaClass ( composer, state ));
-}
-
-//----------------------------------------------------------------//
-void MOAIMetaTileDeck2D::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-
-	luaL_Reg regTable [] = {
-		{ "reserveMetaTiles",	_reserveMetaTiles },
-		{ "setDeck",			_setDeck },
-		{ "setGrid",			_setGrid },
-		{ "setMetaTile",		_setMetaTile },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIMetaTileDeck2D::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_SerializeIn ( composer, state, serializer ));
-}
-
-//----------------------------------------------------------------//
-void MOAIMetaTileDeck2D::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_SerializeOut ( composer, state, serializer ));
-}
-
 //================================================================//
 // virtual
 //================================================================//
@@ -273,4 +239,38 @@ bool MOAIMetaTileDeck2D::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32
 	UNUSED ( result );
 
 	return false;
+}
+
+//----------------------------------------------------------------//
+void MOAIMetaTileDeck2D::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_RegisterLuaClass ( composer, state ));
+}
+
+//----------------------------------------------------------------//
+void MOAIMetaTileDeck2D::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+
+	luaL_Reg regTable [] = {
+		{ "reserveMetaTiles",	_reserveMetaTiles },
+		{ "setDeck",			_setDeck },
+		{ "setGrid",			_setGrid },
+		{ "setMetaTile",		_setMetaTile },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIMetaTileDeck2D::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+}
+
+//----------------------------------------------------------------//
+void MOAIMetaTileDeck2D::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }

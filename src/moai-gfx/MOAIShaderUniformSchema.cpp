@@ -17,7 +17,7 @@ u32 MOAIShaderUniformSchema::GetAttributeID ( u32 uniformID, u32 index ) const {
 //----------------------------------------------------------------//
 MOAIShaderUniformHandle MOAIShaderUniformSchema::GetUniformHandle ( void* buffer, ZLIndex uniformID ) const {
 
-	return this->ZLAbstractShaderUniformSchema_GetUniformHandle ( buffer, uniformID );
+	return this->MOAIShaderUniformSchema_GetUniformHandle ( buffer, uniformID );
 }
 
 //----------------------------------------------------------------//

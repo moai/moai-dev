@@ -55,26 +55,6 @@ MOAITableLayer::MOAITableLayer () {
 MOAITableLayer::~MOAITableLayer () {
 }
 
-//----------------------------------------------------------------//
-void MOAITableLayer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractLayer, MOAILuaObject_RegisterLuaClass ( composer, state ));
-}
-
-//----------------------------------------------------------------//
-void MOAITableLayer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractLayer, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-
-	luaL_Reg regTable [] = {
-		{ "getRenderTable",				_getRenderTable },
-		{ "setRenderTable",				_setRenderTable },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
 //================================================================//
 // virtual
 //================================================================//
@@ -97,3 +77,22 @@ void MOAITableLayer::MOAIDrawable_Draw ( int subPrimID ) {
 	gfxMgr.SetFrameBuffer ( this->GetFrameBuffer ());
 }
 
+//----------------------------------------------------------------//
+void MOAITableLayer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractLayer, MOAILuaObject_RegisterLuaClass ( composer, state ));
+}
+
+//----------------------------------------------------------------//
+void MOAITableLayer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractLayer, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+
+	luaL_Reg regTable [] = {
+		{ "getRenderTable",				_getRenderTable },
+		{ "setRenderTable",				_setRenderTable },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}

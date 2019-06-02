@@ -70,14 +70,16 @@ private:
 protected:
 
 	//----------------------------------------------------------------//
-	virtual void			MOAIAction_DidLoseChild			( MOAIAction* child );
-	virtual STLString		MOAIAction_GetDebugInfo			() const;
-	virtual MOAIAction*		MOAIAction_GetDefaultParent		();
-	virtual bool			MOAIAction_IsDone				();
-	virtual void			MOAIAction_Start				();
-	virtual void			MOAIAction_Stop					();
-	virtual void			MOAIAction_Update				( double step );
-	void					MOAIBlocker_Unblock				();
+	virtual void			MOAIAction_DidLoseChild				( MOAIAction* child );
+	virtual STLString		MOAIAction_GetDebugInfo				() const;
+	virtual MOAIAction*		MOAIAction_GetDefaultParent			();
+	virtual bool			MOAIAction_IsDone					();
+	virtual void			MOAIAction_Start					();
+	virtual void			MOAIAction_Stop						();
+	virtual void			MOAIAction_Update					( double step );
+	void					MOAIBlocker_Unblock					();
+	void					MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	
 public:
 	
@@ -106,8 +108,6 @@ public:
 	bool					IsPaused				();
 							MOAIAction				();
 							~MOAIAction				();
-	void					MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void					Start					( MOAIAction* parent, bool defer );
 	void					Stop					();
 };

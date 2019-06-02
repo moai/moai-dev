@@ -45,6 +45,10 @@ private:
 	float			CalculateRoll				( aiQuaternion quaternion );
 	float			CalculateYaw				( aiQuaternion quaternion );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 
 	DECL_LUA_FACTORY ( MOAIAssimpCamera )
@@ -52,8 +56,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIAssimpCamera			();
 					~MOAIAssimpCamera			();
-	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	void			SetCamera					( aiCamera* assimpCamera );
 };
 

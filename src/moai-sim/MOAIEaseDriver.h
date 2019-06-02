@@ -42,7 +42,9 @@ private:
 	static int		_setLink				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			MOAIAction_Update		( double step );
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAIAction_Update					( double step );
 
 public:
 
@@ -53,8 +55,6 @@ public:
 					~MOAIEaseDriver			();
 	u32				ParseForMove			( MOAILuaState& state, int idx, MOAINode* dest, u32 total, int mode, ... );
 	u32				ParseForSeek			( MOAILuaState& state, int idx, MOAINode* dest, u32 total, int mode, ... );
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void			ReserveLinks			( u32 total );
 	void			SetLink					( ZLIndex idx, MOAINode* dest, ZLAttrID destAttrID, float v1, u32 mode );
 	void			SetLink					( ZLIndex idx, MOAINode* dest, ZLAttrID destAttrID, MOAINode* source, ZLAttrID sourceAttrID, u32 mode );

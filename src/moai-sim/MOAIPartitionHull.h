@@ -82,7 +82,9 @@ protected:
 	void				WasRemovedFromPartition		();
 	
 	//----------------------------------------------------------------//
-	bool				MOAINode_ApplyAttrOp		( ZLAttrID attrID, ZLAttribute& attr, u32 op );
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	bool				MOAINode_ApplyAttrOp				( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	
 	//----------------------------------------------------------------//
 	inline bool AcceptQuery ( const MOAIPartitionHull* ignore, ZLTypeID typeID, u32 queryMask ) {
@@ -119,8 +121,6 @@ public:
 	bool				Inside					( ZLVec3D vec, float pad );
 						MOAIPartitionHull		();
 						~MOAIPartitionHull		();
-	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void				SetPartition			( MOAIPartition* partition );
 	void				UpdateWorldBounds		( const ZLBounds& bounds );
 	void				UpdateWorldBounds		( const ZLPrism& prism );

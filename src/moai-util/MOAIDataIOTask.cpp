@@ -67,16 +67,6 @@ void MOAIDataIOTask::Publish () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDataIOTask::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAITask, MOAILuaObject_RegisterLuaClass ( composer, state ));
-}
-
-//----------------------------------------------------------------//
-void MOAIDataIOTask::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAITask, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-}
-
-//----------------------------------------------------------------//
 void MOAIDataIOTask::SetCallback ( lua_State* L, int idx ) {
 
 	MOAILuaState state ( L );
@@ -89,4 +79,18 @@ void MOAIDataIOTask::SetInflateOnLoad ( bool inflateOnLoad, bool inflateOnTaskTh
 	this->mInflateOnLoad = inflateOnLoad;
 	this->mInflateOnTaskThread = inflateOnTaskThread;
 	this->mWindowBits = windowBits;
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIDataIOTask::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITask, MOAILuaObject_RegisterLuaClass ( composer, state ));
+}
+
+//----------------------------------------------------------------//
+void MOAIDataIOTask::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAITask, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 }

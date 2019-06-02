@@ -104,23 +104,6 @@ MOAIShaderGL::~MOAIShaderGL () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	luaL_Reg regTable [] = {
-		{ "getAttributeID",				_getAttributeID },
-		{ "setProgram",					_setProgram },
-		{ "setUniform",					_setUniform },
-		{ "setUniformArrayItem",		_setUniformArrayItem },
-		{ NULL, NULL }
-	};
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAIShaderGL::ScheduleTextures () {
 
 	if ( this->mProgram ) {
@@ -147,8 +130,28 @@ void MOAIShaderGL::UpdateUniforms () {
 }
 
 //================================================================//
-// overrides
+// virtual
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAIShaderGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
+	UNUSED ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
+
+	luaL_Reg regTable [] = {
+		{ "getAttributeID",				_getAttributeID },
+		{ "setProgram",					_setProgram },
+		{ "setUniform",					_setUniform },
+		{ "setUniformArrayItem",		_setUniformArrayItem },
+		{ NULL, NULL }
+	};
+	luaL_register ( state, 0, regTable );
+}
 
 //----------------------------------------------------------------//
 bool MOAIShaderGL::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {

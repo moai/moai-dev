@@ -26,7 +26,9 @@ private:
 	ZLRect			GetRect					();
 	
 	//----------------------------------------------------------------//
-	void			MOAINode_Update			();
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAINode_Update						();
 
 public:
 
@@ -43,8 +45,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAICameraAnchor2D		();
 	virtual			~MOAICameraAnchor2D		();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

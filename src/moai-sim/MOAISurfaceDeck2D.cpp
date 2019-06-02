@@ -307,27 +307,6 @@ MOAISurfaceDeck2D::MOAISurfaceDeck2D () {
 MOAISurfaceDeck2D::~MOAISurfaceDeck2D () {
 }
 
-//----------------------------------------------------------------//
-void MOAISurfaceDeck2D::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIStandardDeck, MOAILuaObject_RegisterLuaClass ( composer, state ));
-}
-
-//----------------------------------------------------------------//
-void MOAISurfaceDeck2D::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIStandardDeck, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	
-	luaL_Reg regTable [] = {
-		{ "reserveSurfaceLists",	_reserveSurfaceLists },
-		{ "reserveSurfaces",		_reserveSurfaces },
-		{ "setSurface",				_setSurface },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
 //================================================================//
 // virtual
 //================================================================//
@@ -383,6 +362,27 @@ bool MOAISurfaceDeck2D::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 
 	UNUSED ( result );
 
 	return false;
+}
+
+//----------------------------------------------------------------//
+void MOAISurfaceDeck2D::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIStandardDeck, MOAILuaObject_RegisterLuaClass ( composer, state ));
+}
+
+//----------------------------------------------------------------//
+void MOAISurfaceDeck2D::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIStandardDeck, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	
+	luaL_Reg regTable [] = {
+		{ "reserveSurfaceLists",	_reserveSurfaceLists },
+		{ "reserveSurfaces",		_reserveSurfaces },
+		{ "setSurface",				_setSurface },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
 }
 
 #endif

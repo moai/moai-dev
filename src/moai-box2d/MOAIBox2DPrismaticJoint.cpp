@@ -367,6 +367,10 @@ MOAIBox2DPrismaticJoint::MOAIBox2DPrismaticJoint () {
 MOAIBox2DPrismaticJoint::~MOAIBox2DPrismaticJoint () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIBox2DPrismaticJoint::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIBox2DJoint, MOAILuaObject_RegisterLuaClass ( composer, state ));

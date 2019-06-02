@@ -57,6 +57,10 @@ private:
 	void			Prepare					();
 	static void		PrintError				( CURLcode error );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 
 	DECL_LUA_FACTORY ( MOAIHttpTaskCurl )
@@ -67,8 +71,6 @@ public:
 					~MOAIHttpTaskCurl		();
 	void			PerformAsync			();
 	void			PerformSync				();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void			Reset					();
 	void			SetBody					( const void* buffer, u32 size );
 	void			SetCookieSrc			( const char *file );

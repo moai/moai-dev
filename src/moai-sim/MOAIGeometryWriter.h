@@ -54,6 +54,10 @@ private:
 	static void			WriteQuad				( const MOAIVertexFormat& format, ZLStream& stream, const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2, const ZLVec3D& v3, const ZLVec3D& n0, const ZLVec3D& n1, const ZLVec3D& n2, const ZLVec3D& n3 );
 	static void			WriteVertex				( const MOAIVertexFormat& format, ZLStream& stream, const ZLVec3D& coord, const ZLVec3D& normal );
 	
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIGeometryWriter )
@@ -76,8 +80,6 @@ public:
 						~MOAIGeometryWriter		();
 	static void			OffsetIndices			( ZLStream& idxStream, size_t length, s32 offset );
 	static void			PruneVertices			( const MOAIVertexFormat& format, MOAIStream& vtxStream, MOAIStream& idxStream );
-	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	static void			SnapCoords				( const MOAIVertexFormat& format, ZLStream& vtxStream, size_t length, float xSnap, float ySnap, float zSnap );
 	static void			TranslateCoords			( const MOAIVertexFormat& format, ZLStream& vtxStream, size_t length, float xOff, float yOff, float zOff );
 	static void			WriteBox				( const MOAIVertexFormat& format, ZLStream& vtxStream, const ZLBox& box );

@@ -133,6 +133,10 @@ void MOAIVertexBuffer::PrintVertices ( MOAIVertexFormat& vertexFormat ) {
 	}
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIVertexBuffer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 }

@@ -660,133 +660,10 @@ ZLVec3D MOAIVertexFormat::ReadUV ( ZLStream& stream, ZLIndex idx ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexFormat::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	state.SetField ( -1, "GL_BYTE",					( u32 )ZGL_TYPE_BYTE );
-	state.SetField ( -1, "GL_FLOAT",				( u32 )ZGL_TYPE_FLOAT );
-	state.SetField ( -1, "GL_SHORT",				( u32 )ZGL_TYPE_SHORT );
-	state.SetField ( -1, "GL_UNSIGNED_BYTE",		( u32 )ZGL_TYPE_UNSIGNED_BYTE );
-	state.SetField ( -1, "GL_UNSIGNED_SHORT",		( u32 )ZGL_TYPE_UNSIGNED_SHORT );
-	
-	state.SetField ( -1, "ATTRIBUTE_BONE_INDICES",	( u32 )ATTRIBUTE_BONE_INDICES );
-	state.SetField ( -1, "ATTRIBUTE_BONE_WEIGHTS",	( u32 )ATTRIBUTE_BONE_WEIGHTS );
-	state.SetField ( -1, "ATTRIBUTE_COLOR",			( u32 )ATTRIBUTE_COLOR );
-	state.SetField ( -1, "ATTRIBUTE_COORD",			( u32 )ATTRIBUTE_COORD );
-	state.SetField ( -1, "ATTRIBUTE_NORMAL",		( u32 )ATTRIBUTE_NORMAL );
-	state.SetField ( -1, "ATTRIBUTE_TEX_COORD",		( u32 )ATTRIBUTE_TEX_COORD );
-	state.SetField ( -1, "ATTRIBUTE_USER",			( u32 )ATTRIBUTE_USER );
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexFormat::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	luaL_Reg regTable [] = {
-		{ "clear",					_clear },
-		{ "declareAttribute",		_declareAttribute },
-		{ "declareBoneCount",		_declareBoneCount },
-		{ "declareBoneIndices",		_declareBoneIndices },
-		{ "declareBoneWeights",		_declareBoneWeights },
-		{ "declareColor",			_declareColor },
-		{ "declareCoord",			_declareCoord },
-		{ "declareNormal",			_declareNormal },
-		{ "declareUV",				_declareUV },
-		{ "getVertexSize",			_getVertexSize },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 size_t MOAIVertexFormat::SeekVertex ( ZLStream& stream, size_t base, size_t vertex ) const {
 
 	stream.SetCursor ( base + ( vertex * this->mVertexSize ));
 	return stream.GetCursor ();
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexFormat::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( serializer );
-
-	this->mTotalAttributes		= state.GetFieldValue < cc8*, u32 >( -1, "mTotalAttributes", 0 );
-	this->mVertexSize			= state.GetFieldValue < cc8*, u32 >( -1, "mVertexSize", 0 );
-
-	this->mAttributes.Init ( this->mTotalAttributes );
-
-	state.PushField ( -1, "mAttributes" );
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mTotalAttributes; ++i ) {
-		
-		MOAIVertexAttribute& attribute = this->mAttributes [ i ];
-		
-		state.PushField ( -1, ZLIndexOp::ToInt ( i ) + 1 );
-		
-		attribute.mIndex			= state.GetFieldValue < cc8*, u32 >( -1, "mIndex", 0 );
-		attribute.mSize				= state.GetFieldValue < cc8*, u32 >( -1, "mSize", 0 );
-		attribute.mType				= state.GetFieldValue < cc8*, u32 >( -1, "mType", 0 );
-		attribute.mNormalized		= state.GetFieldValue < cc8*, bool >( -1, "mNormalized", false );
-		attribute.mOffset			= state.GetFieldValue < cc8*, u32 >( -1, "mOffset", 0 );
-		
-		state.Pop ();
-	}
-	state.Pop ();
-	
-	state.PushField ( -1, "mAttributeUseTable" );
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < TOTAL_ATTRIBUTE_TYPES; ++i ) {
-		
-		u32 luaUseIdx = MOAIVertexFormat::GetLuaIndexForUseID ( i );
-		state.PushField ( -1, luaUseIdx );
-		
-		u32 nAttributesByUse = ( u32 )state.GetTableSize ( -1 );
-		this->mTotalAttributesByUse [ i ] = nAttributesByUse;
-		this->mAttributeIDsByUse [ i ].Init ( nAttributesByUse );
-		
-		for ( ZLIndex j = ZLIndexOp::ZERO; j < nAttributesByUse; ++j ) {
-			
-			this->mAttributeIDsByUse [ i ][ j ] = state.GetFieldValue < MOAILuaIndex, MOAILuaIndex >( -1, j, ZLIndexOp::ZERO );
-		}
-		state.Pop ();
-	}
-	state.Pop ();
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexFormat::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( serializer );
-
-	state.SetField ( -1, "mTotalAttributes", MOAILuaSize ( this->mTotalAttributes ));
-	state.SetField ( -1, "mVertexSize", MOAILuaSize ( this->mVertexSize ));
-
-	lua_newtable ( state );
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mTotalAttributes; ++i ) {
-	
-		MOAIVertexAttribute& attribute = this->mAttributes [ i ];
-	
-		state.Push ( MOAILuaIndex ( i ));
-		lua_newtable ( state );
-		
-		state.SetField ( -1, "mIndex",			attribute.mIndex );
-		state.SetField ( -1, "mSize",			attribute.mSize );
-		state.SetField ( -1, "mType",			attribute.mType );
-		state.SetField ( -1, "mNormalized",		attribute.mNormalized );
-		state.SetField ( -1, "mOffset",			attribute.mOffset );
-		
-		lua_settable ( state, -3 );
-	}
-	lua_setfield ( state, -2, "mAttributes" );
-
-	lua_newtable ( state );
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < TOTAL_ATTRIBUTE_TYPES; ++i ) {
-		
-		state.Push ( MOAIVertexFormat::GetLuaIndexForUseID ( i ));
-		lua_newtable ( state );
-		
-		ZLSize nAttributesByUse = this->mTotalAttributesByUse [ i ];
-		for ( ZLIndex j = ZLIndexOp::ZERO; j < nAttributesByUse; ++j ) {
-			state.SetField ( -1, MOAILuaIndex ( j + i ), MOAILuaIndex ( this->mAttributeIDsByUse [ i ][ j ]));
-		}
-		lua_settable ( state, -3 );
-	}
-	lua_setfield ( state, -2, "mAttributeUseTable" );
 }
 
 //----------------------------------------------------------------//
@@ -930,4 +807,131 @@ void MOAIVertexFormat::WriteNormal ( ZLStream& stream, ZLIndex idx, float x, flo
 void MOAIVertexFormat::WriteUV ( ZLStream& stream, ZLIndex idx, float x, float y, float z ) const {
 
 	this->WriteAttribute ( stream, ATTRIBUTE_TEX_COORD, idx, x, y, z, 0.0f );
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIVertexFormat::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	
+	state.SetField ( -1, "GL_BYTE",					( u32 )ZGL_TYPE_BYTE );
+	state.SetField ( -1, "GL_FLOAT",				( u32 )ZGL_TYPE_FLOAT );
+	state.SetField ( -1, "GL_SHORT",				( u32 )ZGL_TYPE_SHORT );
+	state.SetField ( -1, "GL_UNSIGNED_BYTE",		( u32 )ZGL_TYPE_UNSIGNED_BYTE );
+	state.SetField ( -1, "GL_UNSIGNED_SHORT",		( u32 )ZGL_TYPE_UNSIGNED_SHORT );
+	
+	state.SetField ( -1, "ATTRIBUTE_BONE_INDICES",	( u32 )ATTRIBUTE_BONE_INDICES );
+	state.SetField ( -1, "ATTRIBUTE_BONE_WEIGHTS",	( u32 )ATTRIBUTE_BONE_WEIGHTS );
+	state.SetField ( -1, "ATTRIBUTE_COLOR",			( u32 )ATTRIBUTE_COLOR );
+	state.SetField ( -1, "ATTRIBUTE_COORD",			( u32 )ATTRIBUTE_COORD );
+	state.SetField ( -1, "ATTRIBUTE_NORMAL",		( u32 )ATTRIBUTE_NORMAL );
+	state.SetField ( -1, "ATTRIBUTE_TEX_COORD",		( u32 )ATTRIBUTE_TEX_COORD );
+	state.SetField ( -1, "ATTRIBUTE_USER",			( u32 )ATTRIBUTE_USER );
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexFormat::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	luaL_Reg regTable [] = {
+		{ "clear",					_clear },
+		{ "declareAttribute",		_declareAttribute },
+		{ "declareBoneCount",		_declareBoneCount },
+		{ "declareBoneIndices",		_declareBoneIndices },
+		{ "declareBoneWeights",		_declareBoneWeights },
+		{ "declareColor",			_declareColor },
+		{ "declareCoord",			_declareCoord },
+		{ "declareNormal",			_declareNormal },
+		{ "declareUV",				_declareUV },
+		{ "getVertexSize",			_getVertexSize },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexFormat::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	UNUSED ( serializer );
+
+	this->mTotalAttributes		= state.GetFieldValue < cc8*, u32 >( -1, "mTotalAttributes", 0 );
+	this->mVertexSize			= state.GetFieldValue < cc8*, u32 >( -1, "mVertexSize", 0 );
+
+	this->mAttributes.Init ( this->mTotalAttributes );
+
+	state.PushField ( -1, "mAttributes" );
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mTotalAttributes; ++i ) {
+		
+		MOAIVertexAttribute& attribute = this->mAttributes [ i ];
+		
+		state.PushField ( -1, ZLIndexOp::ToInt ( i ) + 1 );
+		
+		attribute.mIndex			= state.GetFieldValue < cc8*, u32 >( -1, "mIndex", 0 );
+		attribute.mSize				= state.GetFieldValue < cc8*, u32 >( -1, "mSize", 0 );
+		attribute.mType				= state.GetFieldValue < cc8*, u32 >( -1, "mType", 0 );
+		attribute.mNormalized		= state.GetFieldValue < cc8*, bool >( -1, "mNormalized", false );
+		attribute.mOffset			= state.GetFieldValue < cc8*, u32 >( -1, "mOffset", 0 );
+		
+		state.Pop ();
+	}
+	state.Pop ();
+	
+	state.PushField ( -1, "mAttributeUseTable" );
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < TOTAL_ATTRIBUTE_TYPES; ++i ) {
+		
+		u32 luaUseIdx = MOAIVertexFormat::GetLuaIndexForUseID ( i );
+		state.PushField ( -1, luaUseIdx );
+		
+		u32 nAttributesByUse = ( u32 )state.GetTableSize ( -1 );
+		this->mTotalAttributesByUse [ i ] = nAttributesByUse;
+		this->mAttributeIDsByUse [ i ].Init ( nAttributesByUse );
+		
+		for ( ZLIndex j = ZLIndexOp::ZERO; j < nAttributesByUse; ++j ) {
+			
+			this->mAttributeIDsByUse [ i ][ j ] = state.GetFieldValue < MOAILuaIndex, MOAILuaIndex >( -1, j, ZLIndexOp::ZERO );
+		}
+		state.Pop ();
+	}
+	state.Pop ();
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexFormat::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+	UNUSED ( serializer );
+
+	state.SetField ( -1, "mTotalAttributes", MOAILuaSize ( this->mTotalAttributes ));
+	state.SetField ( -1, "mVertexSize", MOAILuaSize ( this->mVertexSize ));
+
+	lua_newtable ( state );
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mTotalAttributes; ++i ) {
+	
+		MOAIVertexAttribute& attribute = this->mAttributes [ i ];
+	
+		state.Push ( MOAILuaIndex ( i ));
+		lua_newtable ( state );
+		
+		state.SetField ( -1, "mIndex",			attribute.mIndex );
+		state.SetField ( -1, "mSize",			attribute.mSize );
+		state.SetField ( -1, "mType",			attribute.mType );
+		state.SetField ( -1, "mNormalized",		attribute.mNormalized );
+		state.SetField ( -1, "mOffset",			attribute.mOffset );
+		
+		lua_settable ( state, -3 );
+	}
+	lua_setfield ( state, -2, "mAttributes" );
+
+	lua_newtable ( state );
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < TOTAL_ATTRIBUTE_TYPES; ++i ) {
+		
+		state.Push ( MOAIVertexFormat::GetLuaIndexForUseID ( i ));
+		lua_newtable ( state );
+		
+		ZLSize nAttributesByUse = this->mTotalAttributesByUse [ i ];
+		for ( ZLIndex j = ZLIndexOp::ZERO; j < nAttributesByUse; ++j ) {
+			state.SetField ( -1, MOAILuaIndex ( j + i ), MOAILuaIndex ( this->mAttributeIDsByUse [ i ][ j ]));
+		}
+		lua_settable ( state, -3 );
+	}
+	lua_setfield ( state, -2, "mAttributeUseTable" );
 }

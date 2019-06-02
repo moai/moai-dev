@@ -17,37 +17,37 @@ class MOAIGfxMgrComponents {
 protected:
 	
 	//----------------------------------------------------------------//
-	virtual MOAIGfxMgr_CPUCache&		MOAIAbstractGfxMgrComponents_GetCPUCache		() = 0;
-	virtual MOAIGfxMgr&					MOAIAbstractGfxMgrComponents_GetGfxMgr			() = 0;
-	virtual MOAIGfxMgr_GPUCache&		MOAIAbstractGfxMgrComponents_GetGPUCache		() = 0;
-	virtual MOAIGfxMgr_RenderTree&		MOAIAbstractGfxMgrComponents_GetRenderTree		() = 0;
-	virtual MOAIGfxMgr_VertexCache&		MOAIAbstractGfxMgrComponents_GetVertexCache		() = 0;
+	virtual MOAIGfxMgr_CPUCache&		MOAIGfxMgrComponents_GetCPUCache		() = 0;
+	virtual MOAIGfxMgr&					MOAIGfxMgrComponents_GetGfxMgr			() = 0;
+	virtual MOAIGfxMgr_GPUCache&		MOAIGfxMgrComponents_GetGPUCache		() = 0;
+	virtual MOAIGfxMgr_RenderTree&		MOAIGfxMgrComponents_GetRenderTree		() = 0;
+	virtual MOAIGfxMgr_VertexCache&		MOAIGfxMgrComponents_GetVertexCache		() = 0;
 
 public:
 
 	//----------------------------------------------------------------//
 	inline MOAIGfxMgr_CPUCache& GetCPUCache () {
-		return MOAIAbstractGfxMgrComponents_GetCPUCache ();
+		return MOAIGfxMgrComponents_GetCPUCache ();
 	}
 
 	//----------------------------------------------------------------//
 	inline MOAIGfxMgr& GetGfxMgr () {
-		return MOAIAbstractGfxMgrComponents_GetGfxMgr ();
+		return MOAIGfxMgrComponents_GetGfxMgr ();
 	}
 
 	//----------------------------------------------------------------//
 	inline MOAIGfxMgr_GPUCache& GetGPUCache () {
-		return MOAIAbstractGfxMgrComponents_GetGPUCache ();
+		return MOAIGfxMgrComponents_GetGPUCache ();
 	}
 	
 	//----------------------------------------------------------------//
 	inline MOAIGfxMgr_RenderTree& GetRenderTree () {
-		return MOAIAbstractGfxMgrComponents_GetRenderTree ();
+		return MOAIGfxMgrComponents_GetRenderTree ();
 	}
 	
 	//----------------------------------------------------------------//
 	inline MOAIGfxMgr_VertexCache& GetVertexCache () {
-		return MOAIAbstractGfxMgrComponents_GetVertexCache ();
+		return MOAIGfxMgrComponents_GetVertexCache ();
 	}
 	
 	//----------------------------------------------------------------//

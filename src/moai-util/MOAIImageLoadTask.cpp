@@ -88,6 +88,17 @@ void MOAIImageLoadTask::Publish () {
 }
 
 //----------------------------------------------------------------//
+void MOAIImageLoadTask::SetCallback ( lua_State* L, int idx ) {
+
+	MOAILuaState state ( L );
+	this->mOnFinish.SetRef ( state, idx );
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
 void MOAIImageLoadTask::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAITask, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
@@ -96,11 +107,3 @@ void MOAIImageLoadTask::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer,
 void MOAIImageLoadTask::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAITask, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 }
-
-//----------------------------------------------------------------//
-void MOAIImageLoadTask::SetCallback ( lua_State* L, int idx ) {
-
-	MOAILuaState state ( L );
-	this->mOnFinish.SetRef ( state, idx );
-}
-

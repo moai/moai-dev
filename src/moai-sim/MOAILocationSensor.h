@@ -28,8 +28,12 @@ private:
 	MOAILuaStrongRef mCallback;
 
 	//----------------------------------------------------------------//
-	static int	_getLocation	( lua_State* L );
-	static int	_setCallback	( lua_State* L );
+	static int			_getLocation			( lua_State* L );
+	static int			_setCallback			( lua_State* L );
+
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 
@@ -40,8 +44,7 @@ public:
 						MOAILocationSensor		();
 						~MOAILocationSensor		();
 	void				ParseEvent				( ZLStream& eventStream );
-	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	
 };
 
 #endif

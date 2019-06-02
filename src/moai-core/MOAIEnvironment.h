@@ -130,6 +130,9 @@ private:
 	//----------------------------------------------------------------//
 	void				SetValue					( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+
 public:	
 
 	enum {
@@ -148,7 +151,6 @@ public:
 	void				DetectEnvironment			();
 						MOAIEnvironment				();
 						~MOAIEnvironment			();
-	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
 	void				SetValue					( cc8* key );
 	
 	//----------------------------------------------------------------//

@@ -27,6 +27,10 @@ private:
 	//----------------------------------------------------------------//
 	int				HandleRequest			( mg_connection* connection, mg_request_info* info );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIHttpServer )
@@ -39,8 +43,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIHttpServer			();
 					~MOAIHttpServer			();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void			Start					( cc8** options );
 	void			Stop					();
 };

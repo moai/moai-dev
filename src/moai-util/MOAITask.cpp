@@ -40,6 +40,19 @@ void MOAITask::Publish () {
 }
 
 //----------------------------------------------------------------//
+void MOAITask::Start ( MOAITaskQueue& queue, MOAITaskSubscriber& subscriber ) {
+
+	this->mQueue = &queue;
+	this->mSubscriber = &subscriber;
+
+	queue.PushTask ( *this );
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
 void MOAITask::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( composer );
 	
@@ -55,13 +68,4 @@ void MOAITask::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaS
 void MOAITask::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( composer );
 	UNUSED ( state );
-}
-
-//----------------------------------------------------------------//
-void MOAITask::Start ( MOAITaskQueue& queue, MOAITaskSubscriber& subscriber ) {
-
-	this->mQueue = &queue;
-	this->mSubscriber = &subscriber;
-
-	queue.PushTask ( *this );
 }

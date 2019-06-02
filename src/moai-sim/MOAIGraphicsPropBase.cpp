@@ -262,120 +262,9 @@ void MOAIGraphicsPropBase::PushGfxState () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGraphicsPropBase::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractProp, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIColor, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIMaterialBatchHolder, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	
-	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAIGraphicsPropBase >( TOTAL_DEBUG_LINE_STYLES );
-	
-	state.SetField ( -1, "DEBUG_DRAW_GFX_PROP_MASTER",			MOAIDebugLinesMgr::Pack < MOAIGraphicsPropBase >( (u32) -1 ));
-	state.SetField ( -1, "DEBUG_DRAW_PARTITION_CELLS",			MOAIDebugLinesMgr::Pack < MOAIGraphicsPropBase >( DEBUG_DRAW_PARTITION_CELLS ));
-	state.SetField ( -1, "DEBUG_DRAW_PARTITION_PADDED_CELLS",	MOAIDebugLinesMgr::Pack < MOAIGraphicsPropBase >( DEBUG_DRAW_PARTITION_PADDED_CELLS ));
-	state.SetField ( -1, "DEBUG_DRAW_AXIS",						MOAIDebugLinesMgr::Pack < MOAIGraphicsPropBase >( DEBUG_DRAW_AXIS ));
-	state.SetField ( -1, "DEBUG_DRAW_DIAGONALS",				MOAIDebugLinesMgr::Pack < MOAIGraphicsPropBase >( DEBUG_DRAW_DIAGONALS ));
-	state.SetField ( -1, "DEBUG_DRAW_MODEL_BOUNDS",				MOAIDebugLinesMgr::Pack < MOAIGraphicsPropBase >( DEBUG_DRAW_MODEL_BOUNDS ));
-	state.SetField ( -1, "DEBUG_DRAW_WORLD_BOUNDS",				MOAIDebugLinesMgr::Pack < MOAIGraphicsPropBase >( DEBUG_DRAW_WORLD_BOUNDS ));
-	
-	state.SetField ( -1, "ATTR_SCISSOR_RECT",			AttrID::Pack ( ATTR_SCISSOR_RECT ).ToRaw ());
-
-	state.SetField ( -1, "ATTR_LOCAL_VISIBLE",			AttrID::Pack ( ATTR_LOCAL_VISIBLE ).ToRaw ());
-	state.SetField ( -1, "ATTR_VISIBLE",				AttrID::Pack ( ATTR_VISIBLE ).ToRaw ());
-	state.SetField ( -1, "INHERIT_VISIBLE",				AttrID::Pack ( INHERIT_VISIBLE ).ToRaw ());
-
-	state.SetField ( -1, "INHERIT_FRAME",				AttrID::Pack ( INHERIT_FRAME ).ToRaw ());
-	state.SetField ( -1, "FRAME_TRAIT",					AttrID::Pack ( FRAME_TRAIT ).ToRaw ());
-	
-	state.SetField ( -1, "GL_FUNC_ADD",					( u32 )ZGL_BLEND_MODE_ADD );
-	state.SetField ( -1, "GL_FUNC_SUBTRACT",			( u32 )ZGL_BLEND_MODE_SUBTRACT );
-	state.SetField ( -1, "GL_FUNC_REVERSE_SUBTRACT",	( u32 )ZGL_BLEND_MODE_REVERSE_SUBTRACT );
-	
-	state.SetField ( -1, "GL_ONE",						( u32 )ZGL_BLEND_FACTOR_ONE );
-	state.SetField ( -1, "GL_ZERO",						( u32 )ZGL_BLEND_FACTOR_ZERO );
-	state.SetField ( -1, "GL_DST_ALPHA",				( u32 )ZGL_BLEND_FACTOR_DST_ALPHA );
-	state.SetField ( -1, "GL_DST_COLOR",				( u32 )ZGL_BLEND_FACTOR_DST_COLOR );
-	state.SetField ( -1, "GL_SRC_COLOR",				( u32 )ZGL_BLEND_FACTOR_SRC_COLOR );
-	state.SetField ( -1, "GL_ONE_MINUS_DST_ALPHA",		( u32 )ZGL_BLEND_FACTOR_ONE_MINUS_DST_ALPHA );
-	state.SetField ( -1, "GL_ONE_MINUS_DST_COLOR",		( u32 )ZGL_BLEND_FACTOR_ONE_MINUS_DST_COLOR );
-	state.SetField ( -1, "GL_ONE_MINUS_SRC_ALPHA",		( u32 )ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
-	state.SetField ( -1, "GL_ONE_MINUS_SRC_COLOR",		( u32 )ZGL_BLEND_FACTOR_ONE_MINUS_SRC_COLOR );
-	state.SetField ( -1, "GL_SRC_ALPHA",				( u32 )ZGL_BLEND_FACTOR_SRC_ALPHA );
-	state.SetField ( -1, "GL_SRC_ALPHA_SATURATE",		( u32 )ZGL_BLEND_FACTOR_SRC_ALPHA_SATURATE );
-	
-	state.SetField ( -1, "DEPTH_TEST_DISABLE",			( u32 )0 );
-	state.SetField ( -1, "DEPTH_TEST_NEVER",			( u32 )ZGL_DEPTH_NEVER );
-	state.SetField ( -1, "DEPTH_TEST_LESS",				( u32 )ZGL_DEPTH_LESS );
-	state.SetField ( -1, "DEPTH_TEST_EQUAL",			( u32 )ZGL_DEPTH_EQUAL );
-	state.SetField ( -1, "DEPTH_TEST_LESS_EQUAL",		( u32 )ZGL_DEPTH_LEQUAL );
-	state.SetField ( -1, "DEPTH_TEST_GREATER",			( u32 )ZGL_DEPTH_GREATER );
-	state.SetField ( -1, "DEPTH_TEST_NOTEQUAL",			( u32 )ZGL_DEPTH_NOTEQUAL );
-	state.SetField ( -1, "DEPTH_TEST_GREATER_EQUAL",	( u32 )ZGL_DEPTH_GEQUAL );
-	state.SetField ( -1, "DEPTH_TEST_ALWAYS",			( u32 )ZGL_DEPTH_ALWAYS );
-	
-	state.SetField ( -1, "CULL_NONE",					( u32 )0 );
-	state.SetField ( -1, "CULL_ALL",					( u32 )ZGL_CULL_ALL );
-	state.SetField ( -1, "CULL_BACK",					( u32 )ZGL_CULL_BACK );
-	state.SetField ( -1, "CULL_FRONT",					( u32 )ZGL_CULL_FRONT );
-	
-	state.SetField ( -1, "BILLBOARD_NONE",				( u32 )BILLBOARD_NONE );
-	state.SetField ( -1, "BILLBOARD_NORMAL",			( u32 )BILLBOARD_NORMAL );
-	state.SetField ( -1, "BILLBOARD_ORTHO",				( u32 )BILLBOARD_ORTHO );
-	state.SetField ( -1, "BILLBOARD_COMPASS",			( u32 )BILLBOARD_COMPASS );
-	state.SetField ( -1, "BILLBOARD_COMPASS_SCALE",		( u32 )BILLBOARD_COMPASS_SCALE );
-	state.SetField ( -1, "BILLBOARD_SCREEN",			( u32 )BILLBOARD_SCREEN );
-}
-
-//----------------------------------------------------------------//
-void MOAIGraphicsPropBase::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractProp, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIColor, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIMaterialBatchHolder, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-
-	luaL_Reg regTable [] = {
-		{ "draw",					_draw },
-		{ "getBillboard",			_getBillboard },
-		{ "getScissorRect",			_getScissorRect },
-		{ "isVisible",				_isVisible },
-		{ "setBillboard",			_setBillboard },
-		{ "setParent",				_setParent },
-		{ "setScissorRect",			_setScissorRect },
-		{ "setUVTransform",			_setUVTransform },
-		{ "setVisible",				_setVisible },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAIGraphicsPropBase::Render () {
 
 	this->Draw ( MOAIPartitionHull::NO_SUBPRIM_ID );
-}
-
-//----------------------------------------------------------------//
-void MOAIGraphicsPropBase::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIColor, MOAILuaObject_SerializeIn ( composer, state, serializer ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractProp, MOAILuaObject_SerializeIn ( composer, state, serializer ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIMaterialBatchHolder, MOAILuaObject_SerializeIn ( composer, state, serializer ));
-}
-
-//----------------------------------------------------------------//
-void MOAIGraphicsPropBase::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIColor, MOAILuaObject_SerializeOut ( composer, state, serializer ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractProp, MOAILuaObject_SerializeOut ( composer, state, serializer ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIMaterialBatchHolder, MOAILuaObject_SerializeOut ( composer, state, serializer ));
-}
-
-//----------------------------------------------------------------//
-void MOAIGraphicsPropBase::SetVisible ( bool visible ) {
-
-	this->mDisplayFlags = visible ? this->mDisplayFlags | FLAGS_LOCAL_VISIBLE : this->mDisplayFlags & ~FLAGS_LOCAL_VISIBLE;
-	this->ScheduleUpdate ();
 }
 
 //================================================================//
@@ -652,6 +541,117 @@ ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () con
 	}
 	
 	return worldDrawingMtx;
+}
+
+//----------------------------------------------------------------//
+void MOAIGraphicsPropBase::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractProp, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIColor, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIMaterialBatchHolder, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	
+	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAIGraphicsPropBase >( TOTAL_DEBUG_LINE_STYLES );
+	
+	state.SetField ( -1, "DEBUG_DRAW_GFX_PROP_MASTER",			MOAIDebugLinesMgr::Pack < MOAIGraphicsPropBase >( (u32) -1 ));
+	state.SetField ( -1, "DEBUG_DRAW_PARTITION_CELLS",			MOAIDebugLinesMgr::Pack < MOAIGraphicsPropBase >( DEBUG_DRAW_PARTITION_CELLS ));
+	state.SetField ( -1, "DEBUG_DRAW_PARTITION_PADDED_CELLS",	MOAIDebugLinesMgr::Pack < MOAIGraphicsPropBase >( DEBUG_DRAW_PARTITION_PADDED_CELLS ));
+	state.SetField ( -1, "DEBUG_DRAW_AXIS",						MOAIDebugLinesMgr::Pack < MOAIGraphicsPropBase >( DEBUG_DRAW_AXIS ));
+	state.SetField ( -1, "DEBUG_DRAW_DIAGONALS",				MOAIDebugLinesMgr::Pack < MOAIGraphicsPropBase >( DEBUG_DRAW_DIAGONALS ));
+	state.SetField ( -1, "DEBUG_DRAW_MODEL_BOUNDS",				MOAIDebugLinesMgr::Pack < MOAIGraphicsPropBase >( DEBUG_DRAW_MODEL_BOUNDS ));
+	state.SetField ( -1, "DEBUG_DRAW_WORLD_BOUNDS",				MOAIDebugLinesMgr::Pack < MOAIGraphicsPropBase >( DEBUG_DRAW_WORLD_BOUNDS ));
+	
+	state.SetField ( -1, "ATTR_SCISSOR_RECT",			AttrID::Pack ( ATTR_SCISSOR_RECT ).ToRaw ());
+
+	state.SetField ( -1, "ATTR_LOCAL_VISIBLE",			AttrID::Pack ( ATTR_LOCAL_VISIBLE ).ToRaw ());
+	state.SetField ( -1, "ATTR_VISIBLE",				AttrID::Pack ( ATTR_VISIBLE ).ToRaw ());
+	state.SetField ( -1, "INHERIT_VISIBLE",				AttrID::Pack ( INHERIT_VISIBLE ).ToRaw ());
+
+	state.SetField ( -1, "INHERIT_FRAME",				AttrID::Pack ( INHERIT_FRAME ).ToRaw ());
+	state.SetField ( -1, "FRAME_TRAIT",					AttrID::Pack ( FRAME_TRAIT ).ToRaw ());
+	
+	state.SetField ( -1, "GL_FUNC_ADD",					( u32 )ZGL_BLEND_MODE_ADD );
+	state.SetField ( -1, "GL_FUNC_SUBTRACT",			( u32 )ZGL_BLEND_MODE_SUBTRACT );
+	state.SetField ( -1, "GL_FUNC_REVERSE_SUBTRACT",	( u32 )ZGL_BLEND_MODE_REVERSE_SUBTRACT );
+	
+	state.SetField ( -1, "GL_ONE",						( u32 )ZGL_BLEND_FACTOR_ONE );
+	state.SetField ( -1, "GL_ZERO",						( u32 )ZGL_BLEND_FACTOR_ZERO );
+	state.SetField ( -1, "GL_DST_ALPHA",				( u32 )ZGL_BLEND_FACTOR_DST_ALPHA );
+	state.SetField ( -1, "GL_DST_COLOR",				( u32 )ZGL_BLEND_FACTOR_DST_COLOR );
+	state.SetField ( -1, "GL_SRC_COLOR",				( u32 )ZGL_BLEND_FACTOR_SRC_COLOR );
+	state.SetField ( -1, "GL_ONE_MINUS_DST_ALPHA",		( u32 )ZGL_BLEND_FACTOR_ONE_MINUS_DST_ALPHA );
+	state.SetField ( -1, "GL_ONE_MINUS_DST_COLOR",		( u32 )ZGL_BLEND_FACTOR_ONE_MINUS_DST_COLOR );
+	state.SetField ( -1, "GL_ONE_MINUS_SRC_ALPHA",		( u32 )ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
+	state.SetField ( -1, "GL_ONE_MINUS_SRC_COLOR",		( u32 )ZGL_BLEND_FACTOR_ONE_MINUS_SRC_COLOR );
+	state.SetField ( -1, "GL_SRC_ALPHA",				( u32 )ZGL_BLEND_FACTOR_SRC_ALPHA );
+	state.SetField ( -1, "GL_SRC_ALPHA_SATURATE",		( u32 )ZGL_BLEND_FACTOR_SRC_ALPHA_SATURATE );
+	
+	state.SetField ( -1, "DEPTH_TEST_DISABLE",			( u32 )0 );
+	state.SetField ( -1, "DEPTH_TEST_NEVER",			( u32 )ZGL_DEPTH_NEVER );
+	state.SetField ( -1, "DEPTH_TEST_LESS",				( u32 )ZGL_DEPTH_LESS );
+	state.SetField ( -1, "DEPTH_TEST_EQUAL",			( u32 )ZGL_DEPTH_EQUAL );
+	state.SetField ( -1, "DEPTH_TEST_LESS_EQUAL",		( u32 )ZGL_DEPTH_LEQUAL );
+	state.SetField ( -1, "DEPTH_TEST_GREATER",			( u32 )ZGL_DEPTH_GREATER );
+	state.SetField ( -1, "DEPTH_TEST_NOTEQUAL",			( u32 )ZGL_DEPTH_NOTEQUAL );
+	state.SetField ( -1, "DEPTH_TEST_GREATER_EQUAL",	( u32 )ZGL_DEPTH_GEQUAL );
+	state.SetField ( -1, "DEPTH_TEST_ALWAYS",			( u32 )ZGL_DEPTH_ALWAYS );
+	
+	state.SetField ( -1, "CULL_NONE",					( u32 )0 );
+	state.SetField ( -1, "CULL_ALL",					( u32 )ZGL_CULL_ALL );
+	state.SetField ( -1, "CULL_BACK",					( u32 )ZGL_CULL_BACK );
+	state.SetField ( -1, "CULL_FRONT",					( u32 )ZGL_CULL_FRONT );
+	
+	state.SetField ( -1, "BILLBOARD_NONE",				( u32 )BILLBOARD_NONE );
+	state.SetField ( -1, "BILLBOARD_NORMAL",			( u32 )BILLBOARD_NORMAL );
+	state.SetField ( -1, "BILLBOARD_ORTHO",				( u32 )BILLBOARD_ORTHO );
+	state.SetField ( -1, "BILLBOARD_COMPASS",			( u32 )BILLBOARD_COMPASS );
+	state.SetField ( -1, "BILLBOARD_COMPASS_SCALE",		( u32 )BILLBOARD_COMPASS_SCALE );
+	state.SetField ( -1, "BILLBOARD_SCREEN",			( u32 )BILLBOARD_SCREEN );
+}
+
+//----------------------------------------------------------------//
+void MOAIGraphicsPropBase::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractProp, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIColor, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIMaterialBatchHolder, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+
+	luaL_Reg regTable [] = {
+		{ "draw",					_draw },
+		{ "getBillboard",			_getBillboard },
+		{ "getScissorRect",			_getScissorRect },
+		{ "isVisible",				_isVisible },
+		{ "setBillboard",			_setBillboard },
+		{ "setParent",				_setParent },
+		{ "setScissorRect",			_setScissorRect },
+		{ "setUVTransform",			_setUVTransform },
+		{ "setVisible",				_setVisible },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIGraphicsPropBase::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIColor, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractProp, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIMaterialBatchHolder, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+}
+
+//----------------------------------------------------------------//
+void MOAIGraphicsPropBase::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+	
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIColor, MOAILuaObject_SerializeOut ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractProp, MOAILuaObject_SerializeOut ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIMaterialBatchHolder, MOAILuaObject_SerializeOut ( composer, state, serializer ));
+}
+
+//----------------------------------------------------------------//
+void MOAIGraphicsPropBase::SetVisible ( bool visible ) {
+
+	this->mDisplayFlags = visible ? this->mDisplayFlags | FLAGS_LOCAL_VISIBLE : this->mDisplayFlags & ~FLAGS_LOCAL_VISIBLE;
+	this->ScheduleUpdate ();
 }
 
 //----------------------------------------------------------------//

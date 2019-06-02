@@ -183,6 +183,10 @@ void MOAIScriptNode::NamedAttrSet ( ZLIndex attrID, ZLAttribute &attr ) {
 	}
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIScriptNode::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
@@ -203,10 +207,6 @@ void MOAIScriptNode::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MO
 	
 	luaL_register ( state, 0, regTable );
 }
-
-//================================================================//
-// virtual
-//================================================================//
 
 //----------------------------------------------------------------//
 bool MOAIScriptNode::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {

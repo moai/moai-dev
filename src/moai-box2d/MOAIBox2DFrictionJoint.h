@@ -24,6 +24,10 @@ private:
 	static int		_setMaxForce			( lua_State* L );
 	static int		_setMaxTorque			( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIBox2DFrictionJoint )
@@ -31,8 +35,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIBox2DFrictionJoint		();
 					~MOAIBox2DFrictionJoint		();
-	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

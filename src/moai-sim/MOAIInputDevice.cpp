@@ -73,23 +73,6 @@ MOAIInputDevice::~MOAIInputDevice () {
 }
 
 //----------------------------------------------------------------//
-void MOAIInputDevice::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	luaL_Reg regTable [] = {
-		{ "getHardwareInfo",		_getHardwareInfo },
-		{ "new",					MOAILuaObject::_alertNewIsUnsupported },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIInputDevice::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( state );
-}
-
-//----------------------------------------------------------------//
 void MOAIInputDevice::ReserveSensors ( ZLSize total ) {
 
 	this->mSensors.Init ( total );
@@ -130,4 +113,25 @@ void MOAIInputDevice::SetSensor ( ZLIndex sensorID, cc8* name, MOAISensor* senso
 	
 	sensor->PushLuaUserdata ( state );
 	lua_setfield ( state, -2, name );
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIInputDevice::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	luaL_Reg regTable [] = {
+		{ "getHardwareInfo",		_getHardwareInfo },
+		{ "new",					MOAILuaObject::_alertNewIsUnsupported },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIInputDevice::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( state );
 }

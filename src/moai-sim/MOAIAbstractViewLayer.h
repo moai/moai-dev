@@ -42,23 +42,23 @@ protected:
 	static int		_worldToWnd				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void					MOAIDrawable_Draw			( int subPrimID );
-	void					MOAIDrawable_DrawDebug		( int subPrimID );
 	ZLBounds				MOAIAbstractProp_GetModelBounds		();
 	virtual void			MOAIAbstractViewLayer_Draw			() = 0;
+	void					MOAIDrawable_Draw					( int subPrimID );
+	void					MOAIDrawable_DrawDebug				( int subPrimID );
+	void					MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 
 	DECL_LUA_ABSTRACT ( MOAIAbstractLayer )
 
 	//----------------------------------------------------------------//
-	float					GetFitting				( ZLRect& worldRect, float hPad, float vPad );
-	ZLMatrix4x4				GetWndToWorldMtx		() const;
-	ZLMatrix4x4				GetWorldToWndMtx		() const;
-							MOAIAbstractViewLayer			();
-							~MOAIAbstractViewLayer			();
-	void					MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	float					GetFitting					( ZLRect& worldRect, float hPad, float vPad );
+	ZLMatrix4x4				GetWndToWorldMtx			() const;
+	ZLMatrix4x4				GetWorldToWndMtx			() const;
+							MOAIAbstractViewLayer		();
+							~MOAIAbstractViewLayer		();
 };
 
 #endif

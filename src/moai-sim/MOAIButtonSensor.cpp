@@ -164,6 +164,17 @@ void MOAIButtonSensor::ParseEvent ( ZLStream& eventStream ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIButtonSensor::ResetState () {
+
+	// clear out the old events
+	this->mState &= ~( DOWN | UP );
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
 void MOAIButtonSensor::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	MOAI_CALL_SUPER_ONCE ( composer, MOAISensor, MOAILuaObject_RegisterLuaClass ( composer, state ));
@@ -184,11 +195,4 @@ void MOAIButtonSensor::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, 
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIButtonSensor::ResetState () {
-
-	// clear out the old events
-	this->mState &= ~( DOWN | UP );	
 }

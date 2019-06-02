@@ -22,8 +22,12 @@ private:
 	MOAILuaStrongRef	mOnStick;
 
 	//----------------------------------------------------------------//
-	static int		_getVector				( lua_State* L );
-	static int		_setCallback			( lua_State* L );
+	static int			_getVector				( lua_State* L );
+	static int			_setCallback			( lua_State* L );
+
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 
@@ -34,8 +38,6 @@ public:
 						MOAIJoystickSensor		();
 						~MOAIJoystickSensor		();
 	void				ParseEvent				( ZLStream& eventStream );
-	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

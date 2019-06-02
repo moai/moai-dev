@@ -1513,6 +1513,10 @@ MOAIDraw::MOAIDraw () {
 MOAIDraw::~MOAIDraw () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIDraw::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );

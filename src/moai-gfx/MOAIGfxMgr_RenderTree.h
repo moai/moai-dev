@@ -27,6 +27,8 @@ protected:
 
 	//----------------------------------------------------------------//
 	virtual void	MOAIGfxMgr_RenderTree_Render		() = 0;
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 	
@@ -38,8 +40,6 @@ public:
 					MOAIGfxMgr_RenderTree		();
 	virtual			~MOAIGfxMgr_RenderTree		();
 	void			PushDrawable				( MOAILuaObject* drawable );
-	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	void			Render						();
 };
 

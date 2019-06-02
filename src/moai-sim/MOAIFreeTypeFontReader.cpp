@@ -269,42 +269,6 @@ int MOAIFreeTypeFontReader::OpenFontFile ( cc8* filename ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFreeTypeFontReader::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIFontReader, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	
-	state.SetField ( -1, "STROKER_CAP_STYLE_BUTT",				( u32 )FT_STROKER_LINECAP_BUTT );
-	state.SetField ( -1, "STROKER_CAP_STYLE_ROUND",				( u32 )FT_STROKER_LINECAP_ROUND );
-	state.SetField ( -1, "STROKER_CAP_STYLE_SQUARE",			( u32 )FT_STROKER_LINECAP_SQUARE );
-	
-	state.SetField ( -1, "STROKER_JOIN_STYLE_ROUND",			( u32 )FT_STROKER_LINEJOIN_ROUND );
-	state.SetField ( -1, "STROKER_JOIN_STYLE_BEVEL",			( u32 )FT_STROKER_LINEJOIN_BEVEL );
-	state.SetField ( -1, "STROKER_JOIN_STYLE_MITER_VARIABLE",	( u32 )FT_STROKER_LINEJOIN_MITER_VARIABLE );
-	state.SetField ( -1, "STROKER_JOIN_STYLE_MITER",			( u32 )FT_STROKER_LINEJOIN_MITER );
-	state.SetField ( -1, "STROKER_JOIN_STYLE_MITER_FIXED",		( u32 )FT_STROKER_LINEJOIN_MITER_FIXED );
-	
-	luaL_Reg regTable [] = {
-		{ "extractSystemFont",		_extractSystemFont },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIFreeTypeFontReader::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIFontReader, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-
-	luaL_Reg regTable [] = {
-		{ "enableAntiAliasing",		_enableAntiAliasing },
-		{ "setPenColor",			_setPenColor },
-		{ "strokeGlyph",			_strokeGlyph },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 int MOAIFreeTypeFontReader::RenderGlyph ( MOAIImage& image, float x, float y ) {
 
 	if ( image.GetPixelFormat () != MOAIImage::TRUECOLOR ) return FONT_ERROR;
@@ -382,16 +346,6 @@ int MOAIFreeTypeFontReader::SelectGlyph ( u32 c ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFreeTypeFontReader::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIFontReader, MOAILuaObject_SerializeIn ( composer, state, serializer ));
-}
-
-//----------------------------------------------------------------//
-void MOAIFreeTypeFontReader::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIFontReader, MOAILuaObject_SerializeOut ( composer, state, serializer ));
-}
-
-//----------------------------------------------------------------//
 int MOAIFreeTypeFontReader::StrokeGlyph ( MOAIImage& image, float x, float y, float strokeSize, u32 capStyle, u32 joinStyle, float miterLimit ) {
 
 	if ( image.GetPixelFormat () != MOAIImage::TRUECOLOR ) return FONT_ERROR;
@@ -445,6 +399,56 @@ int MOAIFreeTypeFontReader::StrokeGlyph ( MOAIImage& image, float x, float y, fl
 		FT_Done_Glyph ( glyph );
 	}
 	return OK;
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIFreeTypeFontReader::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIFontReader, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	
+	state.SetField ( -1, "STROKER_CAP_STYLE_BUTT",				( u32 )FT_STROKER_LINECAP_BUTT );
+	state.SetField ( -1, "STROKER_CAP_STYLE_ROUND",				( u32 )FT_STROKER_LINECAP_ROUND );
+	state.SetField ( -1, "STROKER_CAP_STYLE_SQUARE",			( u32 )FT_STROKER_LINECAP_SQUARE );
+	
+	state.SetField ( -1, "STROKER_JOIN_STYLE_ROUND",			( u32 )FT_STROKER_LINEJOIN_ROUND );
+	state.SetField ( -1, "STROKER_JOIN_STYLE_BEVEL",			( u32 )FT_STROKER_LINEJOIN_BEVEL );
+	state.SetField ( -1, "STROKER_JOIN_STYLE_MITER_VARIABLE",	( u32 )FT_STROKER_LINEJOIN_MITER_VARIABLE );
+	state.SetField ( -1, "STROKER_JOIN_STYLE_MITER",			( u32 )FT_STROKER_LINEJOIN_MITER );
+	state.SetField ( -1, "STROKER_JOIN_STYLE_MITER_FIXED",		( u32 )FT_STROKER_LINEJOIN_MITER_FIXED );
+	
+	luaL_Reg regTable [] = {
+		{ "extractSystemFont",		_extractSystemFont },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIFreeTypeFontReader::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIFontReader, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+
+	luaL_Reg regTable [] = {
+		{ "enableAntiAliasing",		_enableAntiAliasing },
+		{ "setPenColor",			_setPenColor },
+		{ "strokeGlyph",			_strokeGlyph },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIFreeTypeFontReader::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIFontReader, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+}
+
+//----------------------------------------------------------------//
+void MOAIFreeTypeFontReader::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIFontReader, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }
 
 #endif

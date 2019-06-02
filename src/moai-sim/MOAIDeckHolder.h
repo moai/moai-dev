@@ -17,15 +17,20 @@ class MOAIDeck;
 // TODO: doxygen
 class MOAIDeckHolder :
 	public virtual MOAINode {
-private:
+protected:
+	
+	MOAILuaSharedPtr < MOAIDeck > mDeck;
 	
 	//----------------------------------------------------------------//
 	static int			_getDeck				( lua_State* L );
 	static int			_setDeck				( lua_State* L );
 
-protected:
 
-	MOAILuaSharedPtr < MOAIDeck > mDeck;
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_SerializeIn			( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void				MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 
 public:
 	
@@ -34,10 +39,6 @@ public:
 	//----------------------------------------------------------------//
 						MOAIDeckHolder			();
 						~MOAIDeckHolder			();
-	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_SerializeIn				( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void				MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

@@ -93,6 +93,10 @@ MOAIDeckHolder::~MOAIDeckHolder () {
 	this->mDeck.Set ( *this, 0 );
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIDeckHolder::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );

@@ -757,40 +757,6 @@ void MOAIGeometryWriter::PruneVertices ( const MOAIVertexFormat& format, MOAIStr
 }
 
 //----------------------------------------------------------------//
-void MOAIGeometryWriter::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	state.SetField ( -1, "COLOR_ADD",				( u32 )COLOR_ADD );
-	state.SetField ( -1, "COLOR_MULTIPLY",			( u32 )COLOR_MULTIPLY );
-	state.SetField ( -1, "COLOR_OVERWRITE",			( u32 )COLOR_OVERWRITE );
-	state.SetField ( -1, "COLOR_SUBTRACT",			( u32 )COLOR_SUBTRACT );
-
-	luaL_Reg regTable [] = {
-		{ "applyColor",				_applyColor },
-		{ "applyLightFromImage",	_applyLightFromImage },
-		{ "applyLinearGradient",	_applyLinearGradient },
-		{ "getMesh",				_getMesh },
-		{ "offsetIndices",			_offsetIndices },
-		{ "pruneVertices",			_pruneVertices },
-		{ "snapCoords",				_snapCoords },
-		{ "translateCoords",		_translateCoords },
-		{ "writeBox",				_writeBox },
-		{ "writeCone",				_writeCone },
-		{ "writeCube",				_writeCube },
-		{ "writeCylinder",			_writeCylinder },
-		{ "writeIcoSphere",			_writeIcoSphere },
-		{ "writeUVSphere",			_writeUVSphere },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIGeometryWriter::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( state );
-}
-
-//----------------------------------------------------------------//
 void MOAIGeometryWriter::SnapCoords ( const MOAIVertexFormat& format, ZLStream& vtxStream, size_t length, float xSnap, float ySnap, float zSnap ) {
 	
 	size_t base = vtxStream.GetCursor ();
@@ -952,4 +918,42 @@ void MOAIGeometryWriter::WriteVertex ( const MOAIVertexFormat& format, ZLStream&
 	format.WriteCoord ( vtxStream, ZLIndexOp::ZERO, coord.mX, coord.mY, coord.mZ, 1.0f );
 	format.WriteNormal ( vtxStream, ZLIndexOp::ZERO, normal.mX, normal.mY, normal.mZ );
 	format.SeekVertex ( vtxStream, base, 1 );
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIGeometryWriter::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	state.SetField ( -1, "COLOR_ADD",				( u32 )COLOR_ADD );
+	state.SetField ( -1, "COLOR_MULTIPLY",			( u32 )COLOR_MULTIPLY );
+	state.SetField ( -1, "COLOR_OVERWRITE",			( u32 )COLOR_OVERWRITE );
+	state.SetField ( -1, "COLOR_SUBTRACT",			( u32 )COLOR_SUBTRACT );
+
+	luaL_Reg regTable [] = {
+		{ "applyColor",				_applyColor },
+		{ "applyLightFromImage",	_applyLightFromImage },
+		{ "applyLinearGradient",	_applyLinearGradient },
+		{ "getMesh",				_getMesh },
+		{ "offsetIndices",			_offsetIndices },
+		{ "pruneVertices",			_pruneVertices },
+		{ "snapCoords",				_snapCoords },
+		{ "translateCoords",		_translateCoords },
+		{ "writeBox",				_writeBox },
+		{ "writeCone",				_writeCone },
+		{ "writeCube",				_writeCube },
+		{ "writeCylinder",			_writeCylinder },
+		{ "writeIcoSphere",			_writeIcoSphere },
+		{ "writeUVSphere",			_writeUVSphere },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIGeometryWriter::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( state );
 }

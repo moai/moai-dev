@@ -124,6 +124,10 @@ MOAIScissorRect::~MOAIScissorRect () {
 	this->mScissorRect.Set ( *this, 0 );
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIScissorRect::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 

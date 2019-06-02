@@ -437,6 +437,10 @@ void MOAIWebViewIOS::RaiseWebViewDidHideEvent () {
 	}
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIWebViewIOS::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 

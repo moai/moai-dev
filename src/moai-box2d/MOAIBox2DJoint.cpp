@@ -225,6 +225,17 @@ MOAIBox2DJoint::~MOAIBox2DJoint () {
 }
 
 //----------------------------------------------------------------//
+void MOAIBox2DJoint::SetJoint ( b2Joint* joint ) {
+
+	this->mJoint = joint;
+	joint->SetUserData ( this );
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
 void MOAIBox2DJoint::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIBox2DPrim, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
@@ -245,11 +256,4 @@ void MOAIBox2DJoint::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MO
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIBox2DJoint::SetJoint ( b2Joint* joint ) {
-
-	this->mJoint = joint;
-	joint->SetUserData ( this );
 }

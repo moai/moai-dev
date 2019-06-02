@@ -749,76 +749,6 @@ void MOAIParticleScript::PushSprite ( MOAIParticleSystem& system, float* registe
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleScript::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	state.SetField ( -1, "PARTICLE_X",			Pack64 ( MOAIParticle::PARTICLE_X,		PARAM_TYPE_PARTICLE_REG ));
-	state.SetField ( -1, "PARTICLE_Y",			Pack64 ( MOAIParticle::PARTICLE_Y,		PARAM_TYPE_PARTICLE_REG ));
-	state.SetField ( -1, "PARTICLE_DX",			Pack64 ( MOAIParticle::PARTICLE_DX,		PARAM_TYPE_PARTICLE_REG ));
-	state.SetField ( -1, "PARTICLE_DY",			Pack64 ( MOAIParticle::PARTICLE_DY,		PARAM_TYPE_PARTICLE_REG ));
-
-	state.SetField ( -1, "SPRITE_X_LOC",		Pack64 ( SPRITE_X_LOC,		PARAM_TYPE_SPRITE_REG ));
-	state.SetField ( -1, "SPRITE_Y_LOC",		Pack64 ( SPRITE_Y_LOC,		PARAM_TYPE_SPRITE_REG ));
-	state.SetField ( -1, "SPRITE_ROT",			Pack64 ( SPRITE_ROT,		PARAM_TYPE_SPRITE_REG ));
-	state.SetField ( -1, "SPRITE_X_SCL",		Pack64 ( SPRITE_X_SCL,		PARAM_TYPE_SPRITE_REG ));
-	state.SetField ( -1, "SPRITE_Y_SCL",		Pack64 ( SPRITE_Y_SCL,		PARAM_TYPE_SPRITE_REG ));
-	state.SetField ( -1, "SPRITE_RED",			Pack64 ( SPRITE_RED,		PARAM_TYPE_SPRITE_REG ));
-	state.SetField ( -1, "SPRITE_GREEN",		Pack64 ( SPRITE_GREEN,		PARAM_TYPE_SPRITE_REG ));
-	state.SetField ( -1, "SPRITE_BLUE",			Pack64 ( SPRITE_BLUE,		PARAM_TYPE_SPRITE_REG ));
-	state.SetField ( -1, "SPRITE_OPACITY",		Pack64 ( SPRITE_OPACITY,	PARAM_TYPE_SPRITE_REG ));
-	state.SetField ( -1, "SPRITE_GLOW",			Pack64 ( SPRITE_GLOW,		PARAM_TYPE_SPRITE_REG ));
-	state.SetField ( -1, "SPRITE_IDX",			Pack64 ( SPRITE_IDX,		PARAM_TYPE_SPRITE_REG ));
-	
-	
-	state.SetField ( -1, "PARTICLE_AGE",		Pack64 ( PARTICLE_AGE,		PARAM_TYPE_SPRITE_REG ));
-	state.SetField ( -1, "PARTICLE_TIME",		Pack64 ( PARTICLE_TIME,		PARAM_TYPE_SPRITE_REG ));
-	
-	luaL_Reg regTable [] = {
-		{ "packConst",			_packConst },
-		{ "packLiveReg",		_packLiveReg },
-		{ "packReg",			_packReg },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleScript::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	luaL_Reg regTable [] = {
-		{ "abs",				_abs },
-		{ "add",				_add },
-		{ "angleVec",			_angleVec },
-		{ "color",				_color },
-		{ "cos",				_cos },
-		{ "cycle",				_cycle },
-		{ "div",				_div },
-		{ "ease",				_ease },
-		{ "easeDelta",			_easeDelta },
-		{ "mul",				_mul },
-		{ "norm",				_norm },
-		{ "oscillate",			_oscillate },
-		{ "rand",				_rand },
-		{ "randInt",			_randInt },
-		{ "randVec",			_randVec },
-		{ "set",				_set },
-		{ "setLiveReg",			_setLiveReg },
-		{ "setReg",				_setLiveReg }, // TODO: mark as deprecated
-		{ "sin",				_sin },
-		{ "sprite",				_sprite },
-		{ "step",				_step },
-		{ "sub",				_sub },
-		{ "tan",				_tan },
-		{ "time",				_time },
-		{ "vecAngle",			_vecAngle },
-		{ "wrap",				_wrap },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAIParticleScript::ResetRegisters ( float* spriteRegisters, float* particleRegisters, const MOAIParticleSystem &system ) {
 
 	spriteRegisters [ SPRITE_X_LOC ]		= particleRegisters [ MOAIParticle::PARTICLE_X ];
@@ -1182,4 +1112,78 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 	if ( push ) {
 		this->PushSprite ( system, spriteRegisters );
 	}
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIParticleScript::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	state.SetField ( -1, "PARTICLE_X",			Pack64 ( MOAIParticle::PARTICLE_X,		PARAM_TYPE_PARTICLE_REG ));
+	state.SetField ( -1, "PARTICLE_Y",			Pack64 ( MOAIParticle::PARTICLE_Y,		PARAM_TYPE_PARTICLE_REG ));
+	state.SetField ( -1, "PARTICLE_DX",			Pack64 ( MOAIParticle::PARTICLE_DX,		PARAM_TYPE_PARTICLE_REG ));
+	state.SetField ( -1, "PARTICLE_DY",			Pack64 ( MOAIParticle::PARTICLE_DY,		PARAM_TYPE_PARTICLE_REG ));
+
+	state.SetField ( -1, "SPRITE_X_LOC",		Pack64 ( SPRITE_X_LOC,		PARAM_TYPE_SPRITE_REG ));
+	state.SetField ( -1, "SPRITE_Y_LOC",		Pack64 ( SPRITE_Y_LOC,		PARAM_TYPE_SPRITE_REG ));
+	state.SetField ( -1, "SPRITE_ROT",			Pack64 ( SPRITE_ROT,		PARAM_TYPE_SPRITE_REG ));
+	state.SetField ( -1, "SPRITE_X_SCL",		Pack64 ( SPRITE_X_SCL,		PARAM_TYPE_SPRITE_REG ));
+	state.SetField ( -1, "SPRITE_Y_SCL",		Pack64 ( SPRITE_Y_SCL,		PARAM_TYPE_SPRITE_REG ));
+	state.SetField ( -1, "SPRITE_RED",			Pack64 ( SPRITE_RED,		PARAM_TYPE_SPRITE_REG ));
+	state.SetField ( -1, "SPRITE_GREEN",		Pack64 ( SPRITE_GREEN,		PARAM_TYPE_SPRITE_REG ));
+	state.SetField ( -1, "SPRITE_BLUE",			Pack64 ( SPRITE_BLUE,		PARAM_TYPE_SPRITE_REG ));
+	state.SetField ( -1, "SPRITE_OPACITY",		Pack64 ( SPRITE_OPACITY,	PARAM_TYPE_SPRITE_REG ));
+	state.SetField ( -1, "SPRITE_GLOW",			Pack64 ( SPRITE_GLOW,		PARAM_TYPE_SPRITE_REG ));
+	state.SetField ( -1, "SPRITE_IDX",			Pack64 ( SPRITE_IDX,		PARAM_TYPE_SPRITE_REG ));
+	
+	
+	state.SetField ( -1, "PARTICLE_AGE",		Pack64 ( PARTICLE_AGE,		PARAM_TYPE_SPRITE_REG ));
+	state.SetField ( -1, "PARTICLE_TIME",		Pack64 ( PARTICLE_TIME,		PARAM_TYPE_SPRITE_REG ));
+	
+	luaL_Reg regTable [] = {
+		{ "packConst",			_packConst },
+		{ "packLiveReg",		_packLiveReg },
+		{ "packReg",			_packReg },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleScript::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	
+	luaL_Reg regTable [] = {
+		{ "abs",				_abs },
+		{ "add",				_add },
+		{ "angleVec",			_angleVec },
+		{ "color",				_color },
+		{ "cos",				_cos },
+		{ "cycle",				_cycle },
+		{ "div",				_div },
+		{ "ease",				_ease },
+		{ "easeDelta",			_easeDelta },
+		{ "mul",				_mul },
+		{ "norm",				_norm },
+		{ "oscillate",			_oscillate },
+		{ "rand",				_rand },
+		{ "randInt",			_randInt },
+		{ "randVec",			_randVec },
+		{ "set",				_set },
+		{ "setLiveReg",			_setLiveReg },
+		{ "setReg",				_setLiveReg }, // TODO: mark as deprecated
+		{ "sin",				_sin },
+		{ "sprite",				_sprite },
+		{ "step",				_step },
+		{ "sub",				_sub },
+		{ "tan",				_tan },
+		{ "time",				_time },
+		{ "vecAngle",			_vecAngle },
+		{ "wrap",				_wrap },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
 }

@@ -188,6 +188,28 @@ void MOAIIndexBuffer::PrintIndices () {
 }
 
 //----------------------------------------------------------------//
+void MOAIIndexBuffer::SetIndexSize ( u32 idxSize ) {
+
+	assert (( idxSize == 2 ) || ( idxSize == 4 ));
+	this->mIndexSize = idxSize;
+}
+
+//----------------------------------------------------------------//
+void MOAIIndexBuffer::WriteIndex ( u32 index ) {
+
+	if ( this->mIndexSize == 4 ) {
+		this->Write < u32 >( index );
+	}
+	else {
+		this->Write < u16 >(( u16 )index );
+	}
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
 void MOAIIndexBuffer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 }
 
@@ -215,22 +237,4 @@ void MOAIIndexBuffer::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILu
 void MOAIIndexBuffer::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	
 	state.SetField < cc8*, u32 >( -1, "mIndexSize", this->mIndexSize );
-}
-
-//----------------------------------------------------------------//
-void MOAIIndexBuffer::SetIndexSize ( u32 idxSize ) {
-
-	assert (( idxSize == 2 ) || ( idxSize == 4 ));
-	this->mIndexSize = idxSize;
-}
-
-//----------------------------------------------------------------//
-void MOAIIndexBuffer::WriteIndex ( u32 index ) {
-
-	if ( this->mIndexSize == 4 ) {
-		this->Write < u32 >( index );
-	}
-	else {
-		this->Write < u16 >(( u16 )index );
-	}
 }

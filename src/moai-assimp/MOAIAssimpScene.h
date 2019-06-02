@@ -46,6 +46,10 @@ private:
 	static int			_getRootNode				( lua_State* L );
 	static int			_load						( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIAssimpScene )
@@ -60,8 +64,6 @@ public:
 	ZLResultCode			Load					( const MOAIAssimpScene& scene, u32 postProcessingFlags = 0 );
 							MOAIAssimpScene			();
 							~MOAIAssimpScene		();
-	void					MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

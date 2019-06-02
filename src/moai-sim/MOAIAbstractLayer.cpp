@@ -194,6 +194,30 @@ MOAIAbstractLayer::~MOAIAbstractLayer () {
 }
 
 //----------------------------------------------------------------//
+void MOAIAbstractLayer::SetClearColor ( MOAIColor* color ) {
+
+	if ( this->mClearColorNode != color ) {
+		this->mClearColorNode.Set ( *this, color );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIAbstractLayer::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
+
+	//this->mFrameBuffer.Set ( *this, frameBuffer ? frameBuffer : MOAIGfxMgr::Get ().mGfxState.GetDefaultFrameBuffer ());
+	this->mFrameBuffer.Set ( *this, frameBuffer );
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIAbstractLayer::MOAIDrawable_DrawDebug ( int subPrimID ) {
+	UNUSED ( subPrimID );
+}
+
+//----------------------------------------------------------------//
 void MOAIAbstractLayer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	state.SetField ( -1, "CLEAR_ALWAYS",			( u32 )CLEAR_ALWAYS );
@@ -217,28 +241,4 @@ void MOAIAbstractLayer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer,
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIAbstractLayer::SetClearColor ( MOAIColor* color ) {
-
-	if ( this->mClearColorNode != color ) {
-		this->mClearColorNode.Set ( *this, color );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIAbstractLayer::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
-
-	//this->mFrameBuffer.Set ( *this, frameBuffer ? frameBuffer : MOAIGfxMgr::Get ().mGfxState.GetDefaultFrameBuffer ());
-	this->mFrameBuffer.Set ( *this, frameBuffer );
-}
-
-//================================================================//
-// virtual
-//================================================================//
-
-//----------------------------------------------------------------//
-void MOAIAbstractLayer::MOAIDrawable_DrawDebug ( int subPrimID ) {
-	UNUSED ( subPrimID );
 }

@@ -17,7 +17,7 @@
 */
 class MOAIActionTree :
 	public virtual MOAIAction {
-private:
+protected:
 
 	static const u32 RESET_PASS	= 0xffffffff;
 
@@ -25,6 +25,12 @@ private:
 	bool mThreadInfoEnabled;
 
 	MOAIAction* mRoot;
+
+	//----------------------------------------------------------------//
+	static int			_getRoot				( lua_State* L );
+	static int			_setProfilingEnabled	( lua_State* L );
+	static int			_setRoot				( lua_State* L );
+	static int			_setThreadInfoEnabled	( lua_State* L );
 
 	//----------------------------------------------------------------//
 	MOAIAction*			AffirmRoot					();
@@ -35,14 +41,8 @@ private:
 	MOAIAction*			MOAIAction_GetDefaultParent		();
 	bool				MOAIAction_IsDone				();
 	void				MOAIAction_Update				( double step );
-
-protected:
-
-	//----------------------------------------------------------------//
-	static int			_getRoot				( lua_State* L );
-	static int			_setProfilingEnabled	( lua_State* L );
-	static int			_setRoot				( lua_State* L );
-	static int			_setThreadInfoEnabled	( lua_State* L );
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 
@@ -56,8 +56,6 @@ public:
 	//----------------------------------------------------------------//
 						MOAIActionTree			();
 						~MOAIActionTree			();
-	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void				SetDefaultParent		();
 	void				SetDefaultParent		( MOAIAction* defaultParent );
 	void				Update					( double step );

@@ -1117,44 +1117,32 @@ void MOAIGridSpace::OnResize () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGridSpace::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( serializer );
+MOAICellCoord MOAIGridSpace::WrapCellCoord ( int xCell, int yCell ) const {
+
+	MOAICellCoord wrap;
 	
-	this->mXOff			= state.GetFieldValue ( -1, "mXOff", this->mXOff );
-	this->mYOff			= state.GetFieldValue ( -1, "mYOff", this->mYOff );
+	wrap.mX = xCell % this->mWidth;
+	if ( wrap.mX < 0 ) wrap.mX += this->mWidth;
 	
-	this->mCellWidth	= state.GetFieldValue ( -1, "mCellWidth", this->mCellWidth );
-	this->mCellHeight	= state.GetFieldValue ( -1, "mCellHeight", this->mCellHeight );
+	wrap.mY = yCell % this->mHeight;
+	if ( wrap.mY < 0 ) wrap.mY += this->mHeight;
 	
-	this->mTileWidth	= state.GetFieldValue ( -1, "mTileWidth", this->mTileWidth );
-	this->mTileHeight	= state.GetFieldValue ( -1, "mTileHeight", this->mTileHeight );
-	
-	this->mWidth		= state.GetFieldValue ( -1, "mWidth", this->mWidth );
-	this->mHeight		= state.GetFieldValue ( -1, "mHeight", this->mHeight );
-	
-	this->mShape		= state.GetFieldValue ( -1, "mShape", this->mShape );
-	this->mRepeat		= state.GetFieldValue ( -1, "mRepeat", this->mRepeat );
+	return wrap;
 }
 
 //----------------------------------------------------------------//
-void MOAIGridSpace::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( serializer );
+ZLVec2D MOAIGridSpace::WorldToCell ( MOAICellCoord cellCoord, ZLVec2D loc ) const {
 	
-	state.SetField ( -1, "mXOff", this->mXOff );
-	state.SetField ( -1, "mYOff", this->mYOff );
+	ZLVec2D result = loc;
+	result.mX = ( loc.mX / this->mCellWidth ) - ( float )cellCoord.mX;
+	result.mY = ( loc.mY / this->mCellHeight ) - ( float )cellCoord.mY;
 	
-	state.SetField ( -1, "mCellWidth", this->mCellWidth );
-	state.SetField ( -1, "mCellHeight", this->mCellHeight );
-	
-	state.SetField ( -1, "mTileWidth", this->mTileWidth );
-	state.SetField ( -1, "mTileHeight", this->mTileHeight );
-	
-	state.SetField ( -1, "mWidth", this->mWidth );
-	state.SetField ( -1, "mHeight", this->mHeight );
-	
-	state.SetField ( -1, "mShape", this->mShape );
-	state.SetField ( -1, "mRepeat", this->mRepeat );
+	return result;
 }
+
+//================================================================//
+// virtual
+//================================================================//
 
 //----------------------------------------------------------------//
 void MOAIGridSpace::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
@@ -1212,26 +1200,41 @@ void MOAIGridSpace::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOA
 }
 
 //----------------------------------------------------------------//
-MOAICellCoord MOAIGridSpace::WrapCellCoord ( int xCell, int yCell ) const {
-
-	MOAICellCoord wrap;
+void MOAIGridSpace::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	UNUSED ( serializer );
 	
-	wrap.mX = xCell % this->mWidth;
-	if ( wrap.mX < 0 ) wrap.mX += this->mWidth;
+	this->mXOff			= state.GetFieldValue ( -1, "mXOff", this->mXOff );
+	this->mYOff			= state.GetFieldValue ( -1, "mYOff", this->mYOff );
 	
-	wrap.mY = yCell % this->mHeight;
-	if ( wrap.mY < 0 ) wrap.mY += this->mHeight;
+	this->mCellWidth	= state.GetFieldValue ( -1, "mCellWidth", this->mCellWidth );
+	this->mCellHeight	= state.GetFieldValue ( -1, "mCellHeight", this->mCellHeight );
 	
-	return wrap;
+	this->mTileWidth	= state.GetFieldValue ( -1, "mTileWidth", this->mTileWidth );
+	this->mTileHeight	= state.GetFieldValue ( -1, "mTileHeight", this->mTileHeight );
+	
+	this->mWidth		= state.GetFieldValue ( -1, "mWidth", this->mWidth );
+	this->mHeight		= state.GetFieldValue ( -1, "mHeight", this->mHeight );
+	
+	this->mShape		= state.GetFieldValue ( -1, "mShape", this->mShape );
+	this->mRepeat		= state.GetFieldValue ( -1, "mRepeat", this->mRepeat );
 }
 
 //----------------------------------------------------------------//
-ZLVec2D MOAIGridSpace::WorldToCell ( MOAICellCoord cellCoord, ZLVec2D loc ) const {
+void MOAIGridSpace::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+	UNUSED ( serializer );
 	
-	ZLVec2D result = loc;
-	result.mX = ( loc.mX / this->mCellWidth ) - ( float )cellCoord.mX;
-	result.mY = ( loc.mY / this->mCellHeight ) - ( float )cellCoord.mY;
+	state.SetField ( -1, "mXOff", this->mXOff );
+	state.SetField ( -1, "mYOff", this->mYOff );
 	
-	return result;
+	state.SetField ( -1, "mCellWidth", this->mCellWidth );
+	state.SetField ( -1, "mCellHeight", this->mCellHeight );
+	
+	state.SetField ( -1, "mTileWidth", this->mTileWidth );
+	state.SetField ( -1, "mTileHeight", this->mTileHeight );
+	
+	state.SetField ( -1, "mWidth", this->mWidth );
+	state.SetField ( -1, "mHeight", this->mHeight );
+	
+	state.SetField ( -1, "mShape", this->mShape );
+	state.SetField ( -1, "mRepeat", this->mRepeat );
 }
-

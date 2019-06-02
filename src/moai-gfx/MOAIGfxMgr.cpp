@@ -178,6 +178,39 @@ void MOAIGfxMgr::PushState () {
 	this->MOAIGfxMgr_PushState ();
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+MOAIGfxMgr_CPUCache& MOAIGfxMgr::MOAIGfxMgrComponents_GetCPUCache () {
+	return *this;
+}
+
+//----------------------------------------------------------------//
+MOAIGfxMgr& MOAIGfxMgr::MOAIGfxMgrComponents_GetGfxMgr () {
+	return *this;
+}
+
+//----------------------------------------------------------------//
+MOAIGfxMgr_GPUCache& MOAIGfxMgr::MOAIGfxMgrComponents_GetGPUCache () {
+	return *this;
+}
+
+//----------------------------------------------------------------//
+MOAIGfxMgr_RenderTree& MOAIGfxMgr::MOAIGfxMgrComponents_GetRenderTree () {
+	return *this;
+}
+
+//----------------------------------------------------------------//
+MOAIGfxMgr_VertexCache& MOAIGfxMgr::MOAIGfxMgrComponents_GetVertexCache () {
+	return *this;
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIGfxMgr::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxMgr_RenderTree, MOAILuaObject_RegisterLuaClass ( composer, state ));
@@ -186,33 +219,4 @@ void MOAIGfxMgr::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILu
 //----------------------------------------------------------------//
 void MOAIGfxMgr::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxMgr_RenderTree, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-}
-
-//================================================================//
-// virtual
-//================================================================//
-
-//----------------------------------------------------------------//
-MOAIGfxMgr_CPUCache& MOAIGfxMgr::MOAIAbstractGfxMgrComponents_GetCPUCache () {
-	return *this;
-}
-
-//----------------------------------------------------------------//
-MOAIGfxMgr& MOAIGfxMgr::MOAIAbstractGfxMgrComponents_GetGfxMgr () {
-	return *this;
-}
-
-//----------------------------------------------------------------//
-MOAIGfxMgr_GPUCache& MOAIGfxMgr::MOAIAbstractGfxMgrComponents_GetGPUCache () {
-	return *this;
-}
-
-//----------------------------------------------------------------//
-MOAIGfxMgr_RenderTree& MOAIGfxMgr::MOAIAbstractGfxMgrComponents_GetRenderTree () {
-	return *this;
-}
-
-//----------------------------------------------------------------//
-MOAIGfxMgr_VertexCache& MOAIGfxMgr::MOAIAbstractGfxMgrComponents_GetVertexCache () {
-	return *this;
 }

@@ -86,6 +86,12 @@ protected:
 	size_t				WriteComponents					( ZLStream& stream, u32 useID, const float* components, size_t size ) const;
 	
 	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_SerializeIn			( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void				MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
+	
+	//----------------------------------------------------------------//
 	template < typename TYPE >
 	static size_t PackAttribute ( void* buffer, const ZLVec4D& coord, u32 components, float normalize ) {
 	
@@ -152,13 +158,7 @@ public:
 	ZLVec3D							ReadNormal						( ZLStream& stream, ZLIndex idx ) const;
 	ZLVec3D							ReadUV							( ZLStream& stream, ZLIndex idx ) const;
 	
-	void							MOAILuaObject_RegisterLuaClass				( MOAIComposer& composer, MOAILuaState& state );
-	void							MOAILuaObject_RegisterLuaFuncs				( MOAIComposer& composer, MOAILuaState& state );
-	
 	size_t							SeekVertex						( ZLStream& stream, size_t base, size_t vertex ) const;
-	
-	void							MOAILuaObject_SerializeIn						( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void							MOAILuaObject_SerializeOut					( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 	
 	static ZLVec4D					UnpackAttribute					( const void* buffer, const MOAIVertexAttribute& attribute, float yFallback, float zFallback, float wFallback );
 	static ZLVec4D					UnpackCoord						( const void* buffer, const MOAIVertexAttribute& attribute );

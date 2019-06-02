@@ -81,7 +81,9 @@ protected:
 	virtual void		MOAIAnimCurve_ReserveSamples		( u32 total ) = 0;
 
 	//----------------------------------------------------------------//
-	bool				MOAINode_ApplyAttrOp	( ZLAttrID attrID, ZLAttribute& attr, u32 op );
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	bool				MOAINode_ApplyAttrOp				( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 
 public:
 	
@@ -111,8 +113,6 @@ public:
 	void				GetValue				( ZLAttribute& attr, ZLReal time );
 						MOAIAnimCurve			();
 						~MOAIAnimCurve			();
-	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void				ReserveKeys				( u32 total );
 	void				SetKey					( ZLIndex idx, ZLReal time, u32 mode, ZLReal weight = 1.0f );
 	u32					Size					() const;

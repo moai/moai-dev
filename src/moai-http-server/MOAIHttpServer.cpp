@@ -163,28 +163,6 @@ MOAIHttpServer::~MOAIHttpServer () {
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpServer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaClass ( composer, state ));
-
-	state.SetField ( -1, "EVENT_HANDLE_REQUEST", ( u32 )EVENT_HANDLE_REQUEST );
-}
-
-//----------------------------------------------------------------//
-void MOAIHttpServer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-
-	luaL_Reg regTable [] = {
-		{ "start",			_start },
-		{ "stop",			_stop },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAIHttpServer::Start ( cc8** options ) {
 
 	this->Stop ();
@@ -212,4 +190,30 @@ void MOAIHttpServer::Stop () {
 		mg_stop ( this->mContext );
 		this->mContext = 0;
 	}
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIHttpServer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaClass ( composer, state ));
+
+	state.SetField ( -1, "EVENT_HANDLE_REQUEST", ( u32 )EVENT_HANDLE_REQUEST );
+}
+
+//----------------------------------------------------------------//
+void MOAIHttpServer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+
+	luaL_Reg regTable [] = {
+		{ "start",			_start },
+		{ "stop",			_stop },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
 }

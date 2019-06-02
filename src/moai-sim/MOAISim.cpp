@@ -818,82 +818,6 @@ void MOAISim::Pause () {
 }
 
 //----------------------------------------------------------------//
-void MOAISim::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGlobalEventSource, MOAILuaObject_RegisterLuaClass ( composer, state ));
-
-	state.SetField ( -1, "EVENT_FINALIZE",	( u32 )EVENT_FINALIZE );
-	state.SetField ( -1, "EVENT_PAUSE",		( u32 )EVENT_PAUSE );
-	state.SetField ( -1, "EVENT_RESUME",	( u32 )EVENT_RESUME );
-	state.SetField ( -1, "EVENT_STEP",		( u32 )EVENT_STEP );
-
-	state.SetField ( -1, "SIM_LOOP_FORCE_STEP",		( u32 )SIM_LOOP_FORCE_STEP );
-	state.SetField ( -1, "SIM_LOOP_ALLOW_BOOST",	( u32 )SIM_LOOP_ALLOW_BOOST );
-	state.SetField ( -1, "SIM_LOOP_ALLOW_SPIN",		( u32 )SIM_LOOP_ALLOW_SPIN );
-	state.SetField ( -1, "SIM_LOOP_NO_DEFICIT",		( u32 )SIM_LOOP_NO_DEFICIT );
-	state.SetField ( -1, "SIM_LOOP_NO_SURPLUS",		( u32 )SIM_LOOP_NO_SURPLUS );
-	state.SetField ( -1, "SIM_LOOP_RESET_CLOCK",	( u32 )SIM_LOOP_RESET_CLOCK );
-	state.SetField ( -1, "SIM_LOOP_ALLOW_SOAK",		( u32 )SIM_LOOP_ALLOW_SOAK );
-
-	state.SetField ( -1, "LOOP_FLAGS_DEFAULT",			( u32 )LOOP_FLAGS_DEFAULT );
-	state.SetField ( -1, "LOOP_FLAGS_FIXED",			( u32 )LOOP_FLAGS_FIXED );
-	state.SetField ( -1, "LOOP_FLAGS_MULTISTEP",		( u32 )LOOP_FLAGS_MULTISTEP );
-	state.SetField ( -1, "LOOP_FLAGS_SOAK",				( u32 )LOOP_FLAGS_SOAK );
-
-	state.SetField ( -1, "DEFAULT_STEPS_PER_SECOND",		( u32 )DEFAULT_STEPS_PER_SECOND );
-	state.SetField ( -1, "DEFAULT_BOOST_THRESHOLD",			( u32 )DEFAULT_BOOST_THRESHOLD );
-	state.SetField ( -1, "DEFAULT_LONG_DELAY_THRESHOLD",	( u32 )DEFAULT_LONG_DELAY_THRESHOLD );
-	state.SetField ( -1, "DEFAULT_CPU_BUDGET",				( u32 )DEFAULT_CPU_BUDGET );
-	state.SetField ( -1, "DEFAULT_STEP_MULTIPLIER",			( u32 )DEFAULT_STEP_MULTIPLIER );
-
-	luaL_Reg regTable [] = {
-		{ "clearLoopFlags",				_clearLoopFlags },
-		{ "crash",						_crash },
-		{ "enterFullscreenMode",		_enterFullscreenMode },
-		{ "exitFullscreenMode",			_exitFullscreenMode },
-		{ "forceGC",					_forceGC },
-		{ "framesToTime",				_framesToTime },
-		{ "getActionMgr",				_getActionMgr },
-		{ "getDeviceTime",				_getDeviceTime },
-		{ "getElapsedTime",				_getElapsedTime },
-		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAISim > },
-		{ "getLoopFlags",				_getLoopFlags },
-		{ "getLuaObjectCount",			_getLuaObjectCount },
-		{ "getMemoryUsage",				_getMemoryUsage },
-		{ "getMemoryUsagePlain",		_getMemoryUsagePlain },
-		{ "getPerformance",				_getPerformance },
-		{ "getStep",					_getStep },
-		{ "getStepCount",				_getStepCount },
-		{ "hideCursor",					_hideCursor },
-		{ "openWindow",					_openWindow },
-		{ "pauseTimer",					_pauseTimer },
-		{ "setBoostThreshold",			_setBoostThreshold },
-		{ "setCpuBudget",				_setCpuBudget},
-		{ "setGCActive",				_setGCActive },
-		{ "setGCStep",					_setGCStep },
-		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAISim > },
-		{ "setLongDelayThreshold",		_setLongDelayThreshold },
-		{ "setLoopFlags",				_setLoopFlags },
-		{ "setLuaAllocLogEnabled",		_setLuaAllocLogEnabled },
-		{ "setStep",					_setStep },
-		{ "setStepMultiplier",			_setStepMultiplier },
-		{ "setStepSmoothing",			_setStepSmoothing },
-		{ "setTimerError",				_setTimerError },
-		{ "setTraceback",				_setTraceback },
-		{ "setTextInputRect",			_setTextInputRect },
-		{ "showCursor",					_showCursor },
-		{ "timeToFrames",				_timeToFrames },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAISim::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGlobalEventSource, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-}
-
-//----------------------------------------------------------------//
 void MOAISim::Resume () {
 
 	if ( this->mLoopState == PAUSED ) {
@@ -1133,4 +1057,84 @@ void MOAISim::Update () {
 	// Measure performance
 	double simEndTime = ZLDeviceTime::GetTimeInSeconds ();
 	this->mSimDuration = simEndTime - simStartTime;
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAISim::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGlobalEventSource, MOAILuaObject_RegisterLuaClass ( composer, state ));
+
+	state.SetField ( -1, "EVENT_FINALIZE",	( u32 )EVENT_FINALIZE );
+	state.SetField ( -1, "EVENT_PAUSE",		( u32 )EVENT_PAUSE );
+	state.SetField ( -1, "EVENT_RESUME",	( u32 )EVENT_RESUME );
+	state.SetField ( -1, "EVENT_STEP",		( u32 )EVENT_STEP );
+
+	state.SetField ( -1, "SIM_LOOP_FORCE_STEP",		( u32 )SIM_LOOP_FORCE_STEP );
+	state.SetField ( -1, "SIM_LOOP_ALLOW_BOOST",	( u32 )SIM_LOOP_ALLOW_BOOST );
+	state.SetField ( -1, "SIM_LOOP_ALLOW_SPIN",		( u32 )SIM_LOOP_ALLOW_SPIN );
+	state.SetField ( -1, "SIM_LOOP_NO_DEFICIT",		( u32 )SIM_LOOP_NO_DEFICIT );
+	state.SetField ( -1, "SIM_LOOP_NO_SURPLUS",		( u32 )SIM_LOOP_NO_SURPLUS );
+	state.SetField ( -1, "SIM_LOOP_RESET_CLOCK",	( u32 )SIM_LOOP_RESET_CLOCK );
+	state.SetField ( -1, "SIM_LOOP_ALLOW_SOAK",		( u32 )SIM_LOOP_ALLOW_SOAK );
+
+	state.SetField ( -1, "LOOP_FLAGS_DEFAULT",			( u32 )LOOP_FLAGS_DEFAULT );
+	state.SetField ( -1, "LOOP_FLAGS_FIXED",			( u32 )LOOP_FLAGS_FIXED );
+	state.SetField ( -1, "LOOP_FLAGS_MULTISTEP",		( u32 )LOOP_FLAGS_MULTISTEP );
+	state.SetField ( -1, "LOOP_FLAGS_SOAK",				( u32 )LOOP_FLAGS_SOAK );
+
+	state.SetField ( -1, "DEFAULT_STEPS_PER_SECOND",		( u32 )DEFAULT_STEPS_PER_SECOND );
+	state.SetField ( -1, "DEFAULT_BOOST_THRESHOLD",			( u32 )DEFAULT_BOOST_THRESHOLD );
+	state.SetField ( -1, "DEFAULT_LONG_DELAY_THRESHOLD",	( u32 )DEFAULT_LONG_DELAY_THRESHOLD );
+	state.SetField ( -1, "DEFAULT_CPU_BUDGET",				( u32 )DEFAULT_CPU_BUDGET );
+	state.SetField ( -1, "DEFAULT_STEP_MULTIPLIER",			( u32 )DEFAULT_STEP_MULTIPLIER );
+
+	luaL_Reg regTable [] = {
+		{ "clearLoopFlags",				_clearLoopFlags },
+		{ "crash",						_crash },
+		{ "enterFullscreenMode",		_enterFullscreenMode },
+		{ "exitFullscreenMode",			_exitFullscreenMode },
+		{ "forceGC",					_forceGC },
+		{ "framesToTime",				_framesToTime },
+		{ "getActionMgr",				_getActionMgr },
+		{ "getDeviceTime",				_getDeviceTime },
+		{ "getElapsedTime",				_getElapsedTime },
+		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAISim > },
+		{ "getLoopFlags",				_getLoopFlags },
+		{ "getLuaObjectCount",			_getLuaObjectCount },
+		{ "getMemoryUsage",				_getMemoryUsage },
+		{ "getMemoryUsagePlain",		_getMemoryUsagePlain },
+		{ "getPerformance",				_getPerformance },
+		{ "getStep",					_getStep },
+		{ "getStepCount",				_getStepCount },
+		{ "hideCursor",					_hideCursor },
+		{ "openWindow",					_openWindow },
+		{ "pauseTimer",					_pauseTimer },
+		{ "setBoostThreshold",			_setBoostThreshold },
+		{ "setCpuBudget",				_setCpuBudget},
+		{ "setGCActive",				_setGCActive },
+		{ "setGCStep",					_setGCStep },
+		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAISim > },
+		{ "setLongDelayThreshold",		_setLongDelayThreshold },
+		{ "setLoopFlags",				_setLoopFlags },
+		{ "setLuaAllocLogEnabled",		_setLuaAllocLogEnabled },
+		{ "setStep",					_setStep },
+		{ "setStepMultiplier",			_setStepMultiplier },
+		{ "setStepSmoothing",			_setStepSmoothing },
+		{ "setTimerError",				_setTimerError },
+		{ "setTraceback",				_setTraceback },
+		{ "setTextInputRect",			_setTextInputRect },
+		{ "showCursor",					_showCursor },
+		{ "timeToFrames",				_timeToFrames },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAISim::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGlobalEventSource, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 }

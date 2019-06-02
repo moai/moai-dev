@@ -54,8 +54,14 @@ private:
 	static int		_translate			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void					Read					( ZLStream& verts, ZLStream& polySizes );
-	bool					ShouldCull				( const ZLPolygon2D& poly, u32 flag, bool checkArea, float minArea );
+	void			Read				( ZLStream& verts, ZLStream& polySizes );
+	bool			ShouldCull			( const ZLPolygon2D& poly, u32 flag, bool checkArea, float minArea );
+
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_SerializeIn			( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void			MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 
 public:
 	
@@ -109,13 +115,9 @@ public:
 	void					Pad						( const MOAIRegion& region, float pad );
 	bool					PointInside				( const ZLVec2D& p, float pad ) const;
 	void					Print					() const;
-	void					MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	ZLResultCode			ReservePolygons			( ZLSize size );
 	ZLResultCode			ReserveVertices			( ZLIndex idx, ZLSize size );
 	void					ReverseWinding			( const MOAIRegion& region );
-	void					MOAILuaObject_SerializeIn				( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void					MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 	void					SetWinding				( u32 winding );
 	void					Snap					( const MOAIRegion& region, float xSnap, float ySnap );
 	void					Stroke					( const MOAIRegion& region, float exterior, bool strokeExterior, float interior, bool strokeInterior );

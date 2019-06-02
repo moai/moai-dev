@@ -24,6 +24,10 @@ MOAIStreamReader::MOAIStreamReader () {
 MOAIStreamReader::~MOAIStreamReader () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIStreamReader::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 

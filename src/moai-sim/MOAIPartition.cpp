@@ -602,34 +602,6 @@ void MOAIPartition::Rebuild () {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartition::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	state.SetField ( -1, "PLANE_XY",	( u32 )ZLBox::PLANE_XY );
-	state.SetField ( -1, "PLANE_XZ",	( u32 )ZLBox::PLANE_XZ );
-	state.SetField ( -1, "PLANE_YZ",	( u32 )ZLBox::PLANE_YZ );
-}
-
-//----------------------------------------------------------------//
-void MOAIPartition::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	luaL_Reg regTable [] = {
-		{ "clear",						_clear },
-		{ "hullForPoint",				_hullForPoint },
-		{ "hullForRay",					_hullForRay },
-		{ "hullList",					_hullList },
-		{ "hullListForPoint",			_hullListForPoint },
-		{ "hullListForRay",				_hullListForRay },
-		{ "hullListForRect",			_hullListForRect },
-		{ "reserveLevels",				_reserveLevels },
-		{ "setLevel",					_setLevel },
-		{ "setPlane",					_setPlane },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAIPartition::RemoveHull ( MOAIPartitionHull& hull ) {
 
 	if ( hull.mPartition != this ) return;
@@ -730,6 +702,34 @@ void MOAIPartition::SetPlane ( u32 planeID ) {
 //================================================================//
 // virtual
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAIPartition::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	
+	state.SetField ( -1, "PLANE_XY",	( u32 )ZLBox::PLANE_XY );
+	state.SetField ( -1, "PLANE_XZ",	( u32 )ZLBox::PLANE_XZ );
+	state.SetField ( -1, "PLANE_YZ",	( u32 )ZLBox::PLANE_YZ );
+}
+
+//----------------------------------------------------------------//
+void MOAIPartition::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	
+	luaL_Reg regTable [] = {
+		{ "clear",						_clear },
+		{ "hullForPoint",				_hullForPoint },
+		{ "hullForRay",					_hullForRay },
+		{ "hullList",					_hullList },
+		{ "hullListForPoint",			_hullListForPoint },
+		{ "hullListForRay",				_hullListForRay },
+		{ "hullListForRect",			_hullListForRect },
+		{ "reserveLevels",				_reserveLevels },
+		{ "setLevel",					_setLevel },
+		{ "setPlane",					_setPlane },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
 
 //----------------------------------------------------------------//
 void MOAIPartition::MOAIPartition_DrawDebugBack () {

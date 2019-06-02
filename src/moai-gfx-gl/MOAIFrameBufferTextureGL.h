@@ -24,13 +24,17 @@ private:
 	u32					mStencilFormat;
 	
 	//----------------------------------------------------------------//
-	static int			_init					( lua_State* L );
+	static int			_init							( lua_State* L );
 	
 	//----------------------------------------------------------------//
+	void				MOAIFrameBufferGL_AffirmBuffers				();
 	void				MOAIGfxResourceGL_OnGPUBind					();
 	bool				MOAIGfxResourceGL_OnGPUCreate				();
 	void				MOAIGfxResourceGL_OnGPUDeleteOrDiscard		( bool shouldDelete );
-	void				ZLFrameBuffer_AffirmBuffers					();
+	void				MOAILuaObject_RegisterLuaClass				( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs				( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_SerializeIn					( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void				MOAILuaObject_SerializeOut					( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 
 public:
 	
@@ -40,10 +44,6 @@ public:
 	void				Init							( u32 width, u32 height, u32 colorFormat, u32 depthFormat, u32 stencilFormat );
 						MOAIFrameBufferTextureGL		();
 						~MOAIFrameBufferTextureGL		();
-	void				MOAILuaObject_RegisterLuaClass				( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs				( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_SerializeIn						( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void				MOAILuaObject_SerializeOut					( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

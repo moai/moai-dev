@@ -746,44 +746,6 @@ void MOAIFont::RebuildKerning ( MOAIGlyphSet& glyphSet ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFont::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	
-	state.SetField ( -1, "EVENT_RENDER_GLYPH",		( u32 )EVENT_RENDER_GLYPH );
-	
-	state.SetField ( -1, "DEFAULT_FLAGS",			( u32 )DEFAULT_FLAGS );
-	state.SetField ( -1, "FONT_AUTOLOAD_KERNING",	( u32 )FONT_AUTOLOAD_KERNING );
-}
-
-//----------------------------------------------------------------//
-void MOAIFont::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	
-	luaL_Reg regTable [] = {
-		{ "getCache",					_getCache },
-		{ "getDefaultSize",				_getDefaultSize },
-		{ "getFlags",					_getFlags },
-		{ "getFilename",				_getFilename },
-		{ "getImage",					_getImage },
-		{ "getReader",					_getReader },
-		{ "load",						_load },
-		{ "loadFromBMFont",				_loadFromBMFont },
-		{ "preloadGlyphs",				_preloadGlyphs },	
-		{ "rebuildKerningTables",		_rebuildKerningTables },
-		{ "setCache",					_setCache },
-		{ "setDefaultSize",				_setDefaultSize },
-		{ "setFilter",					_setFilter },
-		{ "setFlags",					_setFlags },
-		{ "setImage",					_setImage },
-		{ "setReader",					_setReader },
-		{ "setShader",					_setShader },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAIFont::RenderGlyph ( MOAIGlyph& glyph ) {
 
 	MOAIFontReader* fontReader = this->mReader;
@@ -822,6 +784,48 @@ void MOAIFont::RenderGlyph ( MOAIGlyph& glyph ) {
 			fontReader->RenderGlyph ( *image, x, y );
 		}
 	}
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIFont::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	
+	state.SetField ( -1, "EVENT_RENDER_GLYPH",		( u32 )EVENT_RENDER_GLYPH );
+	
+	state.SetField ( -1, "DEFAULT_FLAGS",			( u32 )DEFAULT_FLAGS );
+	state.SetField ( -1, "FONT_AUTOLOAD_KERNING",	( u32 )FONT_AUTOLOAD_KERNING );
+}
+
+//----------------------------------------------------------------//
+void MOAIFont::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	
+	luaL_Reg regTable [] = {
+		{ "getCache",					_getCache },
+		{ "getDefaultSize",				_getDefaultSize },
+		{ "getFlags",					_getFlags },
+		{ "getFilename",				_getFilename },
+		{ "getImage",					_getImage },
+		{ "getReader",					_getReader },
+		{ "load",						_load },
+		{ "loadFromBMFont",				_loadFromBMFont },
+		{ "preloadGlyphs",				_preloadGlyphs },	
+		{ "rebuildKerningTables",		_rebuildKerningTables },
+		{ "setCache",					_setCache },
+		{ "setDefaultSize",				_setDefaultSize },
+		{ "setFilter",					_setFilter },
+		{ "setFlags",					_setFlags },
+		{ "setImage",					_setImage },
+		{ "setReader",					_setReader },
+		{ "setShader",					_setShader },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//

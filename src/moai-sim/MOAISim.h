@@ -171,6 +171,10 @@ private:
 	double			SmoothStep					( double step );
 	double			StepSim						( double step, u32 multiplier );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	enum {
@@ -218,8 +222,6 @@ public:
 					MOAISim						();
 					~MOAISim					();
 	void			Pause						();
-	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	void			Resume						();
 	void			SetStep						( double step );
 	void			Update						();

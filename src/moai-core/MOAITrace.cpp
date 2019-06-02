@@ -213,27 +213,6 @@ MOAITrace::~MOAITrace () {
 }
 
 //----------------------------------------------------------------//
-void MOAITrace::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
-
-	luaL_Reg regTable [] = {
-		{ "reportTrace",		_reportTrace },
-		{ "run",				_run },
-		{ "setVerbose",			_setVerbose },
-		{ "start",				_start },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAITrace::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
-	UNUSED ( state );
-}
-
-//----------------------------------------------------------------//
 void MOAITrace::ReportTrace () {
 
 	typedef STLSortPair < double, MOAIFuncTrace* > SortPair;
@@ -293,4 +272,29 @@ void MOAITrace::Start ( MOAILuaHookListener* listener ) {
 
 	this->Start ();
 	this->mListener = listener;
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAITrace::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
+
+	luaL_Reg regTable [] = {
+		{ "reportTrace",		_reportTrace },
+		{ "run",				_run },
+		{ "setVerbose",			_setVerbose },
+		{ "start",				_start },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAITrace::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
+	UNUSED ( state );
 }

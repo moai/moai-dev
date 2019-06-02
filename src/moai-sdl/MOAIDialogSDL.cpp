@@ -98,6 +98,10 @@ MOAIDialogSDL::MOAIDialogSDL () :
 MOAIDialogSDL::~MOAIDialogSDL () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIDialogSDL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 

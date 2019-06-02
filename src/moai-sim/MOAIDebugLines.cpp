@@ -178,18 +178,6 @@ MOAIDebugLinesMgr::~MOAIDebugLinesMgr () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDebugLinesMgr::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	luaL_Reg regTable[] = {
-		{ "setStyle",			_setStyle },
-		{ "showDebugLines",		_showDebugLines },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAIDebugLinesMgr::ReserveStyleSet ( u32 setID, u32 size ) {
 
 	MOAIDebugLineStyleSet* styleSet = this->mStyleSets.value_for_key ( setID, 0 );
@@ -227,4 +215,20 @@ void MOAIDebugLinesMgr::SetStyle ( u32 styleID, float size, u32 color ) {
 		style->mSize = size;
 		style->mColor = color;
 	}
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIDebugLinesMgr::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	luaL_Reg regTable[] = {
+		{ "setStyle",			_setStyle },
+		{ "showDebugLines",		_showDebugLines },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
 }

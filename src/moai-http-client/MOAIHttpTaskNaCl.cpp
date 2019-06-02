@@ -170,18 +170,6 @@ void MOAIHttpTaskNaCl::PerformSync () {
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTaskNaCl::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIHttpTaskBase, MOAILuaObject_RegisterLuaClass ( composer, state ));
-}
-
-//----------------------------------------------------------------//
-void MOAIHttpTaskNaCl::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIHttpTaskBase, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-}
-
-//----------------------------------------------------------------//
 void MOAIHttpTaskNaCl::Reset () {
 
 	this->Clear ();
@@ -256,6 +244,22 @@ void MOAIHttpTaskNaCl::SetVerb ( int verb ) {
 void MOAIHttpTaskNaCl::SetVerbose ( bool verbose ) {
 
 	//TODO make it toggle logging on http manager
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIHttpTaskNaCl::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHttpTaskBase, MOAILuaObject_RegisterLuaClass ( composer, state ));
+}
+
+//----------------------------------------------------------------//
+void MOAIHttpTaskNaCl::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHttpTaskBase, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 }
 
 #endif

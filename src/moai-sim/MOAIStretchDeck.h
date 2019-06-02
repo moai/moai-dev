@@ -17,7 +17,11 @@ protected:
 	float			mStretchFactor;
 
 	//----------------------------------------------------------------//
-	static int		_setStretchFactor			( lua_State* L );
+	static int		_setStretchFactor						( lua_State* L );
+	
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	
 public:
 		
@@ -25,8 +29,6 @@ public:
 	ZLVec3D			BindStretchVertexTransform				() const;
 					MOAIStretchDeck							();
 					~MOAIStretchDeck						();
-	void			MOAILuaObject_RegisterLuaClass						( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs						( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

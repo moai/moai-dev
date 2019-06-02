@@ -39,6 +39,10 @@ protected:
 	bool				MOAIGfxResource_OnCPUCreate					();
 	void				MOAIGfxResource_OnCPUDestroy				();
 	void				MOAIGfxResource_OnCPUPurgeRecoverable		();
+	void				MOAILuaObject_RegisterLuaClass				( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs				( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_SerializeIn					( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void				MOAILuaObject_SerializeOut					( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 
 public:
 
@@ -52,10 +56,6 @@ public:
 	void				Init						( MOAIDataBuffer& data, u32 transform, cc8* debugname );
 						MOAITexture2D				();
 						~MOAITexture2D				();
-	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_SerializeIn					( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void				MOAILuaObject_SerializeOut				( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

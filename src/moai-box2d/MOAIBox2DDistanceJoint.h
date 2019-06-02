@@ -26,6 +26,10 @@ private:
 	static int		_setFrequency				( lua_State* L );
 	static int		_setLength					( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIBox2DDistanceJoint )
@@ -33,8 +37,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIBox2DDistanceJoint		();
 					~MOAIBox2DDistanceJoint		();
-	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

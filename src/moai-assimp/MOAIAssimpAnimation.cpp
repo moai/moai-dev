@@ -245,6 +245,16 @@ MOAIAssimpAnimation::~MOAIAssimpAnimation () {
 }
 
 //----------------------------------------------------------------//
+void MOAIAssimpAnimation::SetAnimation ( aiAnimation* assimpAnimation ) {
+
+	this->mAssimpAnimation = assimpAnimation;
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
 void MOAIAssimpAnimation::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIAssimpSceneMember, MOAILuaObject_RegisterLuaClass ( composer, state ));
@@ -270,10 +280,4 @@ void MOAIAssimpAnimation::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& compose
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIAssimpAnimation::SetAnimation ( aiAnimation* assimpAnimation ) {
-
-	this->mAssimpAnimation = assimpAnimation;
 }

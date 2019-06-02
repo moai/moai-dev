@@ -41,6 +41,10 @@ protected:
 	//----------------------------------------------------------------//
 	int				Open					( MOAILuaState& state, int idx, ZLStreamAdapter* adapter );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIStreamAdapter )
@@ -51,8 +55,6 @@ public:
 					MOAIStreamAdapter		();
 					~MOAIStreamAdapter		();
 	ZLResultCode	Open					( ZLStreamAdapter* adapter, MOAIStream* stream );
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

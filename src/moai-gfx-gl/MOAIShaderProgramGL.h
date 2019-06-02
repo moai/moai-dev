@@ -117,7 +117,9 @@ protected:
 	void						MOAIGfxResourceGL_OnGPUDeleteOrDiscard				( bool shouldDelete );
 	void						MOAIGfxResourceGL_OnGPUUnbind						();
 	bool						MOAIGfxResourceGL_OnGPUUpdate						();
-	MOAIShaderUniformHandle		ZLAbstractShaderUniformSchema_GetUniformHandle		( void* buffer, ZLIndex uniformID ) const;
+	void						MOAILuaObject_RegisterLuaClass						( MOAIComposer& composer, MOAILuaState& state );
+	void						MOAILuaObject_RegisterLuaFuncs						( MOAIComposer& composer, MOAILuaState& state );
+	MOAIShaderUniformHandle		MOAIShaderUniformSchema_GetUniformHandle		( void* buffer, ZLIndex uniformID ) const;
 	void						ZLGfxListener_OnUniformLocation						( u32 addr, void* userdata );
 	
 public:
@@ -129,8 +131,6 @@ public:
 	void				DeleteShaders				();
 	void				DeclareUniform				( ZLIndex idx, cc8* name, u32 type, u32 width = 1, u32 count = 1 );
 	void				Load						( cc8* vshSource, cc8* fshSource );
-	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	void				ReserveAttributes			( ZLSize nAttributes );
 	void				ReserveGlobals				( ZLSize nGlobals );
 	void				ReserveTextures				( ZLSize nTextures );

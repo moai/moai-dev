@@ -38,11 +38,14 @@ private:
 
 	friend class MOAIUrlMgr;
 
-	static void HttpLoaded ( GetURLHandler *handler, const char *buffer, int32_t size );
-	static void HttpGetMainThread ( void* userData, int32_t result );
+	//----------------------------------------------------------------//
+	static void		HttpGetMainThread		( void* userData, int32_t result );
+	static void		HttpLoaded				( GetURLHandler *handler, const char *buffer, int32_t size );
+	void			Prepare					( GetURLHandler *handler );
 
-	void Prepare ( GetURLHandler *handler );
-
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 
@@ -57,8 +60,6 @@ public:
 	void			NaClFinish				();
 	void			PerformAsync			();
 	void			PerformSync				();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void			Reset					();
 	void			SetBody					( const void* buffer, u32 size );
 	void			SetCookieDst			( const char *file );

@@ -43,10 +43,10 @@ protected:
 	void				AffirmBuffers					();
 	
 	//----------------------------------------------------------------//
-	virtual void		ZLFrameBuffer_AffirmBuffers		();
-
-	//----------------------------------------------------------------//
-	void				ZLGfxListener_OnReadPixels			( const ZLCopyOnWrite& buffer, void* userdata );
+	virtual void		MOAIFrameBufferGL_AffirmBuffers			();
+	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
+	void				ZLGfxListener_OnReadPixels				( const ZLCopyOnWrite& buffer, void* userdata );
 
 public:
 	
@@ -60,8 +60,6 @@ public:
 						~MOAIFrameBufferGL			();
 	void				SetGLFrameBuffer			( MOAIGfxMgrGL& gfxMgr, const ZLGfxHandle& frameBuffer );
 	ZLRect				WndRectToDevice				( ZLRect rect ) const;
-	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

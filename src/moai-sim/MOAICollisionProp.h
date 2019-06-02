@@ -84,27 +84,31 @@ private:
 	MOAICollisionWorld*					mCollisionWorld;
 	
 	//----------------------------------------------------------------//
-	static int				_collisionMove			( lua_State* L );
-	static int				_getOverlaps			( lua_State* L );
-	static int				_hasOverlaps			( lua_State* L );
-	//static int				_setGroupMask			( lua_State* L );
-	static int				_setOverlapFlags		( lua_State* L );
+	static int			_collisionMove			( lua_State* L );
+	static int			_getOverlaps			( lua_State* L );
+	static int			_hasOverlaps			( lua_State* L );
+	//static int			_setGroupMask			( lua_State* L );
+	static int			_setOverlapFlags		( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void					ClearOverlapLink		( MOAIPropOverlap& overlap );
-	static void				DrawContactPoints		( MOAIAbstractDrawShape& draw, const MOAIMoveConstraint2D* contacts, u32 nContacts );
-	void					GatherAndProcess		( MOAICollisionPrimVisitor& visitor, const ZLBox& worldBounds );
-	bool					IsActive				();
+	void				ClearOverlapLink		( MOAIPropOverlap& overlap );
+	static void			DrawContactPoints		( MOAIAbstractDrawShape& draw, const MOAIMoveConstraint2D* contacts, u32 nContacts );
+	void				GatherAndProcess		( MOAICollisionPrimVisitor& visitor, const ZLBox& worldBounds );
+	bool				IsActive				();
 	
 	//----------------------------------------------------------------//
-	void					MOAIDrawable_Draw						( int subPrimID );
-	void					MOAIDrawable_DrawDebug					( int subPrimID );
-	ZLBounds				MOAIAbstractProp_GetModelBounds					();
-	bool					MOAINode_ApplyAttrOp							( ZLAttrID attrID, ZLAttribute& attr, u32 op );
-	void					MOAINode_Update									();
-	bool					MOAIPartitionHull_PrepareForInsertion			( const MOAIPartition& partition );
-	void					MOAIPartitionHull_WasRemovedFromPartition		();
-	
+	ZLBounds			MOAIAbstractProp_GetModelBounds				();
+	void				MOAIDrawable_Draw							( int subPrimID );
+	void				MOAIDrawable_DrawDebug						( int subPrimID );
+	void				MOAILuaObject_RegisterLuaClass				( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs				( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_SerializeIn					( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void				MOAILuaObject_SerializeOut					( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
+	bool				MOAINode_ApplyAttrOp						( ZLAttrID attrID, ZLAttribute& attr, u32 op );
+	void				MOAINode_Update								();
+	bool				MOAIPartitionHull_PrepareForInsertion		( const MOAIPartition& partition );
+	void				MOAIPartitionHull_WasRemovedFromPartition	();
+
 public:
 
 	enum {
@@ -152,10 +156,6 @@ public:
 	void						Move							( ZLVec3D move, u32 detach, u32 maxSteps );
 								MOAICollisionProp				();
 	virtual						~MOAICollisionProp				();
-	void						MOAILuaObject_RegisterLuaClass				( MOAIComposer& composer, MOAILuaState& state );
-	void						MOAILuaObject_RegisterLuaFuncs				( MOAIComposer& composer, MOAILuaState& state );
-	void						MOAILuaObject_SerializeIn						( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void						MOAILuaObject_SerializeOut					( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

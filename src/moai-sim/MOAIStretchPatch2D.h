@@ -66,6 +66,10 @@ private:
 	MOAICollisionShape*		MOAIDeck_GetCollisionShape			( ZLIndex idx );
 	bool					MOAIDeck_Overlap					( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result );
 	bool					MOAIDeck_Overlap					( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result );
+	void					MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_SerializeIn			( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void					MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 
 public:
 	
@@ -74,10 +78,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIStretchPatch2D		();
 					~MOAIStretchPatch2D		();
-	void			MOAILuaObject_SerializeIn				( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void			MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void			SetColumn				( ZLIndex idx, float percent, bool canStretch );
 	void			SetRow					( ZLIndex idx, float percent, bool canStretch );
 };

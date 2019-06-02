@@ -36,16 +36,6 @@ void MOAIGlyphCache::PostRender ( MOAIGlyph& glyph ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGlyphCache::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( state );
-}
-
-//----------------------------------------------------------------//
-void MOAIGlyphCache::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( state );
-}
-
-//----------------------------------------------------------------//
 int MOAIGlyphCache::RemoveGlyph ( MOAIGlyph& glyph ) {
 	UNUSED ( glyph );
 	
@@ -58,4 +48,18 @@ int MOAIGlyphCache::SetImage ( MOAIFont& font, MOAIImage& image ) {
 	UNUSED ( image );
 	
 	return STATUS_UNSUPPORTED;
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIGlyphCache::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAIGlyphCache::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( state );
 }

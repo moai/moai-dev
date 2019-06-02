@@ -21,18 +21,28 @@ class MOAITextBundle :
 	public virtual MOAILuaObject {
 private:
 	
+	void*	mData;
+	bool	mReversed;
+	int		mNumStrings;
+	int		mKTableOffset;
+	int		mVTableOffset;
+	int		mNumHashEntries;
+	int		mHashOffset;
+	
 	//----------------------------------------------------------------//
 	static int		_load			( lua_State* L );
 	static int		_lookup			( lua_State* L );
-		
-	void * mData;
-	bool mReversed;
-	int mNumStrings;
-	int mKTableOffset;
-	int mVTableOffset;
-	int mNumHashEntries;
-	int mHashOffset;
 	
+	//----------------------------------------------------------------//
+	const char*		GetKeyString(int idx);
+	const char*		GetValueString(int idx);
+	int				GetIndex(const char *key);
+	
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs	( MOAIComposer& composer, MOAILuaState& state );
+	
+	//----------------------------------------------------------------//
 	inline int readInt4(int offset) {
 		unsigned long *ptr = (unsigned long *)(((char *)this->mData) + offset);
 		
@@ -48,11 +58,7 @@ private:
 			return ( int )*ptr;
 		}
 	}
-		
-	const char *			GetKeyString(int idx);
-	const char *			GetValueString(int idx);
-	int						GetIndex(const char *key);
-		
+	
 public:
 	
 	DECL_LUA_FACTORY ( MOAITextBundle )
@@ -64,9 +70,6 @@ public:
 	bool					Load(const char *filename);
 	bool					Load(MOAIDataBuffer *buffer);
 	const char *			Lookup(const char *key);
-		
-	void			MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs	( MOAIComposer& composer, MOAILuaState& state );
 };
 
 

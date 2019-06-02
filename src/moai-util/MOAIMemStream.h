@@ -29,6 +29,10 @@ private:
 	static int		_getString			( lua_State* L );
 	static int		_open				( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIMemStream )
@@ -37,8 +41,6 @@ public:
 					MOAIMemStream		();
 					~MOAIMemStream		();
 	bool			Open				( u32 reserve, u32 chunkSize );
-	void			MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs	( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

@@ -40,7 +40,9 @@ protected:
 	void			ClearSurface				();
 
 	//----------------------------------------------------------------//
-	void			MOAIDrawable_DrawDebug		( int subPrimID );
+	void			MOAIDrawable_DrawDebug				( int subPrimID );
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 
@@ -57,8 +59,6 @@ public:
 	MOAIFrameBuffer*	GetFrameBuffer			();
 						MOAIAbstractLayer		();
 						~MOAIAbstractLayer		();
-	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void				SetClearColor			( MOAIColor* color );
 	void				SetFrameBuffer			( MOAIFrameBuffer* frameBuffer = 0 );
 };

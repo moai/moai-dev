@@ -43,6 +43,10 @@ MOAIFooMgr::MOAIFooMgr () {
 MOAIFooMgr::~MOAIFooMgr () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIFooMgr::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( composer );

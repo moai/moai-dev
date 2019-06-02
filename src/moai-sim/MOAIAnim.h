@@ -41,7 +41,9 @@ private:
 	static int		_setLink			( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void			MOAIAction_Update	( double step );
+	void			MOAIAction_Update					( double step );
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	
 public:
 	
@@ -56,8 +58,6 @@ public:
 	void			ClearLinks			();
 					MOAIAnim			();
 					~MOAIAnim			();
-	void			MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs	( MOAIComposer& composer, MOAILuaState& state );
 	void			ReserveLinks		( u32 totalLinks );
 	void			SetLink				( ZLIndex linkID, MOAIAnimCurve* curve, MOAINode* target, ZLAttrID attrID, bool relative );
 };

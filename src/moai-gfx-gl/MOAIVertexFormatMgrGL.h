@@ -32,6 +32,10 @@ private:
 	//----------------------------------------------------------------//
 	static int			_getFormat			( lua_State* L );
 	
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
+	
 public:
 	
 	enum {
@@ -71,8 +75,6 @@ public:
 	u32							GetVertexSize				( MOAIVertexFormatPresetEnum formatID );
 								MOAIVertexFormatMgrGL		();
 								~MOAIVertexFormatMgrGL		();
-	void						MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void						MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

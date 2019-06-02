@@ -141,6 +141,10 @@ private:
 	void				UpdateVideoProjMtx		();
 	void				VideoDidStart			();
 
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 
 	enum {
@@ -170,8 +174,6 @@ public:
 					~MOAIMarkerMgr			();
 	void			Pause					( bool pause );
 	void			ProcessFrame			();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void			Start					();
 	void			Stop					();
 };

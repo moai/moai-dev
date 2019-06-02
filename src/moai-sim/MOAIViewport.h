@@ -23,6 +23,10 @@ private:
 	static int		_setScale		( lua_State* L );
 	static int		_setSize		( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIViewport )
@@ -32,8 +36,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIViewport			();
 					~MOAIViewport			();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

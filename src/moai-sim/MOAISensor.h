@@ -20,10 +20,14 @@ protected:
 	STLString	mName;
 	double		mTimestamp;
 
-	//----------------------------------------------------------------//
-	static int	_getTimestamp			( lua_State* L );
-
 	SET ( u32, Type, mType );
+
+	//----------------------------------------------------------------//
+	static int		_getTimestamp		( lua_State* L );
+
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs	( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 
@@ -36,8 +40,6 @@ public:
 	virtual void	ParseEvent			( ZLStream& eventStream ) = 0;
 					MOAISensor			();
 					~MOAISensor			();
-	void			MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs	( MOAIComposer& composer, MOAILuaState& state );
 	virtual void	ResetState			() {}
 };
 

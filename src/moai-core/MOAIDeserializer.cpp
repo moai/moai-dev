@@ -122,29 +122,15 @@ MOAILuaObject* MOAIDeserializer::MemberIDToObject ( ObjID objectID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDeserializer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
-
-	luaL_Reg regTable [] = {
-		{ "base64Decode",			_base64Decode },
-		{ NULL, NULL }
-	};
+MOAIDeserializer::MOAIDeserializer () {
 	
-	luaL_register ( state, 0, regTable );
+	RTTI_BEGIN
+		RTTI_EXTEND ( MOAISerializerBase )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//
-void MOAIDeserializer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
-
-	luaL_Reg regTable [] = {
-		{ "createObject",			_createObject },
-		{ "initObject",				_initObject },
-		{ "registerObjectID",		_registerObjectID },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
+MOAIDeserializer::~MOAIDeserializer () {
 }
 
 //----------------------------------------------------------------//
@@ -169,14 +155,32 @@ u32 MOAIDeserializer::SerializeFromFile ( cc8* filename ) {
 	return SUCCESS;
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
-MOAIDeserializer::MOAIDeserializer () {
+void MOAIDeserializer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
+
+	luaL_Reg regTable [] = {
+		{ "base64Decode",			_base64Decode },
+		{ NULL, NULL }
+	};
 	
-	RTTI_BEGIN
-		RTTI_EXTEND ( MOAISerializerBase )
-	RTTI_END
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
-MOAIDeserializer::~MOAIDeserializer () {
+void MOAIDeserializer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
+
+	luaL_Reg regTable [] = {
+		{ "createObject",			_createObject },
+		{ "initObject",				_initObject },
+		{ "registerObjectID",		_registerObjectID },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
 }

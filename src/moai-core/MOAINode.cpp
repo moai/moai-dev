@@ -605,44 +605,6 @@ bool MOAINode::PullLinkedAttr ( ZLAttrID attrID, ZLAttribute& attr ) {
 }
 
 //----------------------------------------------------------------//
-void MOAINode::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaClass ( composer, state ));
-
-	state.SetField ( -1, "EVENT_UPDATE",			( u32 )EVENT_NODE_PRE_UPDATE ); // TODO: deprecate
-	
-	state.SetField ( -1, "EVENT_NODE_PRE_UPDATE",	( u32 )EVENT_NODE_PRE_UPDATE );
-	state.SetField ( -1, "EVENT_NODE_POST_UPDATE",	( u32 )EVENT_NODE_POST_UPDATE );
-	
-	state.SetField ( -1, "STATE_IDLE",				( u32 )STATE_IDLE );
-	state.SetField ( -1, "STATE_ACTIVE",			( u32 )STATE_ACTIVE );
-	state.SetField ( -1, "STATE_SCHEDULED",			( u32 )STATE_SCHEDULED );
-	state.SetField ( -1, "STATE_UPDATING",			( u32 )STATE_UPDATING );
-}
-
-//----------------------------------------------------------------//
-void MOAINode::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-
-	luaL_Reg regTable [] = {
-		{ "clearAttrLink",			_clearAttrLink },
-		{ "clearNodeLink",			_clearNodeLink },
-		{ "forceUpdate",			_forceUpdate },
-		{ "getAttr",				_getAttr },
-		{ "getAttrLink",			_getAttrLink },
-		{ "getNodeState",			_getNodeState },
-		{ "scheduleUpdate",			_scheduleUpdate },
-		{ "setAttr",				_setAttr },
-		{ "setAttrLink",			_setAttrLink },
-		{ "setNodeLink",			_setNodeLink },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAINode::RemoveDepLink ( MOAIDepLink& link ) {
 
 	if ( link.mSourceNode == this ) {
@@ -797,6 +759,44 @@ bool MOAINode::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op
 	UNUSED ( op );
 	
 	return false;
+}
+
+//----------------------------------------------------------------//
+void MOAINode::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaClass ( composer, state ));
+
+	state.SetField ( -1, "EVENT_UPDATE",			( u32 )EVENT_NODE_PRE_UPDATE ); // TODO: deprecate
+	
+	state.SetField ( -1, "EVENT_NODE_PRE_UPDATE",	( u32 )EVENT_NODE_PRE_UPDATE );
+	state.SetField ( -1, "EVENT_NODE_POST_UPDATE",	( u32 )EVENT_NODE_POST_UPDATE );
+	
+	state.SetField ( -1, "STATE_IDLE",				( u32 )STATE_IDLE );
+	state.SetField ( -1, "STATE_ACTIVE",			( u32 )STATE_ACTIVE );
+	state.SetField ( -1, "STATE_SCHEDULED",			( u32 )STATE_SCHEDULED );
+	state.SetField ( -1, "STATE_UPDATING",			( u32 )STATE_UPDATING );
+}
+
+//----------------------------------------------------------------//
+void MOAINode::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+
+	luaL_Reg regTable [] = {
+		{ "clearAttrLink",			_clearAttrLink },
+		{ "clearNodeLink",			_clearNodeLink },
+		{ "forceUpdate",			_forceUpdate },
+		{ "getAttr",				_getAttr },
+		{ "getAttrLink",			_getAttrLink },
+		{ "getNodeState",			_getNodeState },
+		{ "scheduleUpdate",			_scheduleUpdate },
+		{ "setAttr",				_setAttr },
+		{ "setAttrLink",			_setAttrLink },
+		{ "setNodeLink",			_setNodeLink },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//

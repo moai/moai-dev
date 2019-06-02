@@ -35,6 +35,10 @@ private:
 	static int				_getProgram				( lua_State* L );
 	static int				_getShader				( lua_State* L );
 	
+	//----------------------------------------------------------------//
+	void					MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIShaderMgrGL )
@@ -46,8 +50,6 @@ public:
 	MOAIShaderGL*			GetShader				( lua_State* L, int idx );
 							MOAIShaderMgrGL			();
 							~MOAIShaderMgrGL		();
-	void					MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

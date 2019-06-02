@@ -1171,77 +1171,6 @@ void MOAIRegion::Read ( ZLStream& verts, ZLStream& polySizes ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIRegion::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	state.SetField ( -1, "BOOLEAN_AND",					( u32 )BOOLEAN_AND );
-	state.SetField ( -1, "BOOLEAN_NOT",					( u32 )BOOLEAN_NOT );
-	state.SetField ( -1, "BOOLEAN_OR",					( u32 )BOOLEAN_OR );
-	state.SetField ( -1, "BOOLEAN_XOR",					( u32 )BOOLEAN_XOR );
-	
-	state.SetField ( -1, "TESS_WINDING_ODD",			( u32 )TESS_WINDING_ODD );
-	state.SetField ( -1, "TESS_WINDING_NONZERO",		( u32 )TESS_WINDING_NONZERO );
-	state.SetField ( -1, "TESS_WINDING_POSITIVE",		( u32 )TESS_WINDING_POSITIVE );
-	state.SetField ( -1, "TESS_WINDING_NEGATIVE",		( u32 )TESS_WINDING_NEGATIVE );
-	state.SetField ( -1, "TESS_WINDING_ABS_GEQ_TWO",	( u32 )TESS_WINDING_ABS_GEQ_TWO );
-	
-	state.SetField ( -1, "IS_COMPLEX",					( u32 )ZLPolygon2D::IS_COMPLEX );
-	state.SetField ( -1, "IS_CORRUPT",					( u32 )ZLPolygon2D::IS_CORRUPT );
-	state.SetField ( -1, "IS_UNKNOWN",					( u32 )ZLPolygon2D::IS_UNKNOWN );
-	state.SetField ( -1, "IS_CONVEX",					( u32 )ZLPolygon2D::IS_CONVEX );
-	state.SetField ( -1, "IS_CONCAVE",					( u32 )ZLPolygon2D::IS_CONCAVE );
-	state.SetField ( -1, "IS_CLOCKWISE",				( u32 )ZLPolygon2D::IS_CLOCKWISE );
-	state.SetField ( -1, "IS_ANTICLOCKWISE",			( u32 )ZLPolygon2D::IS_ANTICLOCKWISE );
-	state.SetField ( -1, "IS_CLOCKWISE_CONVEX",			( u32 )ZLPolygon2D::IS_CLOCKWISE_CONVEX );
-	state.SetField ( -1, "IS_CLOCKWISE_CONCAVE",		( u32 )ZLPolygon2D::IS_CLOCKWISE_CONCAVE );
-	state.SetField ( -1, "IS_ANTICLOCKWISE_CONVEX",		( u32 )ZLPolygon2D::IS_ANTICLOCKWISE_CONVEX );
-	state.SetField ( -1, "IS_ANTICLOCKWISE_CONCAVE",	( u32 )ZLPolygon2D::IS_ANTICLOCKWISE_CONCAVE );
-	
-	state.SetField ( -1, "MAKE_CONVEX",					( u32 )ZLPolygon2D::IS_CONVEX );
-	state.SetField ( -1, "MAKE_CONCAVE",				( u32 )ZLPolygon2D::IS_CONCAVE );
-	
-	state.SetField ( -1, "WINDING_CLOCKWISE",			( u32 )WINDING_CLOCKWISE );
-	state.SetField ( -1, "WINDING_ANTICLOCKWISE",		( u32 )WINDING_ANTICLOCKWISE );
-}
-
-//----------------------------------------------------------------//
-void MOAIRegion::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	luaL_Reg regTable [] = {
-		{ "append",				_append },
-		{ "bless",				_bless },
-		{ "boolean",			_boolean },
-		{ "clear",				_clear },
-		{ "clip",				_clip },
-		{ "convexHull",			_convexHull },
-		{ "copy",				_copy },
-		{ "countPolygons",		_countPolygons },
-		{ "cull",				_cull },
-		{ "drawDebug",			_drawDebug },
-		{ "edge",				_edge },
-		{ "findExtremity",		_findExtremity },
-		{ "getDistance",		_getDistance },
-		{ "getPolygon",			_getPolygon },
-		{ "getTriangles",		_getTriangles },
-		{ "getVertices",		_getVertices },
-		{ "pad",				_pad },
-		{ "pointInside",		_pointInside },
-		{ "print",				_print },
-		{ "reservePolygons",	_reservePolygons },
-		{ "reserveVertices",	_reserveVertices },
-		{ "reverseWinding",		_reverseWinding },
-		{ "setVertex",			_setVertex },
-		{ "setWinding",			_setWinding },
-		{ "snap",				_snap },
-		{ "stroke",				_stroke },
-		{ "tesselate",			_tesselate },
-		{ "translate",			_translate },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 ZLResultCode MOAIRegion::ReservePolygons ( ZLSize size ) {
 
 	return this->mPolygons.Init ( size );
@@ -1417,4 +1346,79 @@ void MOAIRegion::Transform ( const MOAIRegion& region, const ZLAffine2D& transfo
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < nPolys; ++i ) {
 		this->mPolygons [ i ].Transform ( transform );
 	}
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIRegion::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	state.SetField ( -1, "BOOLEAN_AND",					( u32 )BOOLEAN_AND );
+	state.SetField ( -1, "BOOLEAN_NOT",					( u32 )BOOLEAN_NOT );
+	state.SetField ( -1, "BOOLEAN_OR",					( u32 )BOOLEAN_OR );
+	state.SetField ( -1, "BOOLEAN_XOR",					( u32 )BOOLEAN_XOR );
+	
+	state.SetField ( -1, "TESS_WINDING_ODD",			( u32 )TESS_WINDING_ODD );
+	state.SetField ( -1, "TESS_WINDING_NONZERO",		( u32 )TESS_WINDING_NONZERO );
+	state.SetField ( -1, "TESS_WINDING_POSITIVE",		( u32 )TESS_WINDING_POSITIVE );
+	state.SetField ( -1, "TESS_WINDING_NEGATIVE",		( u32 )TESS_WINDING_NEGATIVE );
+	state.SetField ( -1, "TESS_WINDING_ABS_GEQ_TWO",	( u32 )TESS_WINDING_ABS_GEQ_TWO );
+	
+	state.SetField ( -1, "IS_COMPLEX",					( u32 )ZLPolygon2D::IS_COMPLEX );
+	state.SetField ( -1, "IS_CORRUPT",					( u32 )ZLPolygon2D::IS_CORRUPT );
+	state.SetField ( -1, "IS_UNKNOWN",					( u32 )ZLPolygon2D::IS_UNKNOWN );
+	state.SetField ( -1, "IS_CONVEX",					( u32 )ZLPolygon2D::IS_CONVEX );
+	state.SetField ( -1, "IS_CONCAVE",					( u32 )ZLPolygon2D::IS_CONCAVE );
+	state.SetField ( -1, "IS_CLOCKWISE",				( u32 )ZLPolygon2D::IS_CLOCKWISE );
+	state.SetField ( -1, "IS_ANTICLOCKWISE",			( u32 )ZLPolygon2D::IS_ANTICLOCKWISE );
+	state.SetField ( -1, "IS_CLOCKWISE_CONVEX",			( u32 )ZLPolygon2D::IS_CLOCKWISE_CONVEX );
+	state.SetField ( -1, "IS_CLOCKWISE_CONCAVE",		( u32 )ZLPolygon2D::IS_CLOCKWISE_CONCAVE );
+	state.SetField ( -1, "IS_ANTICLOCKWISE_CONVEX",		( u32 )ZLPolygon2D::IS_ANTICLOCKWISE_CONVEX );
+	state.SetField ( -1, "IS_ANTICLOCKWISE_CONCAVE",	( u32 )ZLPolygon2D::IS_ANTICLOCKWISE_CONCAVE );
+	
+	state.SetField ( -1, "MAKE_CONVEX",					( u32 )ZLPolygon2D::IS_CONVEX );
+	state.SetField ( -1, "MAKE_CONCAVE",				( u32 )ZLPolygon2D::IS_CONCAVE );
+	
+	state.SetField ( -1, "WINDING_CLOCKWISE",			( u32 )WINDING_CLOCKWISE );
+	state.SetField ( -1, "WINDING_ANTICLOCKWISE",		( u32 )WINDING_ANTICLOCKWISE );
+}
+
+//----------------------------------------------------------------//
+void MOAIRegion::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	luaL_Reg regTable [] = {
+		{ "append",				_append },
+		{ "bless",				_bless },
+		{ "boolean",			_boolean },
+		{ "clear",				_clear },
+		{ "clip",				_clip },
+		{ "convexHull",			_convexHull },
+		{ "copy",				_copy },
+		{ "countPolygons",		_countPolygons },
+		{ "cull",				_cull },
+		{ "drawDebug",			_drawDebug },
+		{ "edge",				_edge },
+		{ "findExtremity",		_findExtremity },
+		{ "getDistance",		_getDistance },
+		{ "getPolygon",			_getPolygon },
+		{ "getTriangles",		_getTriangles },
+		{ "getVertices",		_getVertices },
+		{ "pad",				_pad },
+		{ "pointInside",		_pointInside },
+		{ "print",				_print },
+		{ "reservePolygons",	_reservePolygons },
+		{ "reserveVertices",	_reserveVertices },
+		{ "reverseWinding",		_reverseWinding },
+		{ "setVertex",			_setVertex },
+		{ "setWinding",			_setWinding },
+		{ "snap",				_snap },
+		{ "stroke",				_stroke },
+		{ "tesselate",			_tesselate },
+		{ "translate",			_translate },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
 }

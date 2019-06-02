@@ -101,6 +101,23 @@ MOAIGfxResource::~MOAIGfxResource () {
 }
 
 //----------------------------------------------------------------//
+bool MOAIGfxResource::ScheduleForGPUUpdate ( PipelineHint hint ) {
+	return this->MOAIGfxResource_ScheduleForGPUUpdate ( hint );
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIGfxResource::MOAIGfxResource_OnCPUDestroy () {
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxResource::MOAIGfxResource_OnCPUPurgeRecoverable () {
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxResource::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 }
 
@@ -118,21 +135,4 @@ void MOAIGfxResource::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, M
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxResource::ScheduleForGPUUpdate ( PipelineHint hint ) {
-	return this->MOAIGfxResource_ScheduleForGPUUpdate ( hint );
-}
-
-//================================================================//
-// virtual
-//================================================================//
-
-//----------------------------------------------------------------//
-void MOAIGfxResource::MOAIGfxResource_OnCPUDestroy () {
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxResource::MOAIGfxResource_OnCPUPurgeRecoverable () {
 }

@@ -47,12 +47,14 @@
 class MOAIEaseType :
 	public ZLContextClass < MOAIEaseType >,
 	public virtual MOAILuaObject {
+protected:
+
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIEaseType )
-	
-	//----------------------------------------------------------------//
-	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

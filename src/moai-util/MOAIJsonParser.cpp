@@ -262,6 +262,10 @@ MOAIJsonParser::MOAIJsonParser () {
 MOAIJsonParser::~MOAIJsonParser () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIJsonParser::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( composer );

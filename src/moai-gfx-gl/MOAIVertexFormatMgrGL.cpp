@@ -119,6 +119,10 @@ MOAIVertexFormatMgrGL::~MOAIVertexFormatMgrGL () {
 	}
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIVertexFormatMgrGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 

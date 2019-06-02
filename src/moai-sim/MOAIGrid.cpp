@@ -293,6 +293,52 @@ void MOAIGrid::OnResize () {
 }
 
 //----------------------------------------------------------------//
+void MOAIGrid::SetTile ( ZLIndex addr, u32 tile ) {
+
+	u32 size = ( u32 )this->mTiles.Size (); // TODO: cast
+
+	if ( size ) {
+		addr =  ZLIndexOp::Wrap ( addr, size );
+		this->mTiles [ addr ] = tile;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGrid::SetTile ( int xTile, int yTile, u32 tile ) {
+
+	MOAICellCoord coord ( xTile, yTile );
+	if ( this->IsValidCoord ( coord )) {
+	
+		ZLIndex addr = this->GetCellAddr ( coord );
+		if ( addr < this->mTiles.Size ()) {
+			this->mTiles [ addr ] = tile;
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+size_t MOAIGrid::StreamTilesIn ( ZLStream* stream ) {
+
+	if ( !stream ) return 0;
+	
+	size_t size = this->mTiles.Size () * sizeof ( u32 );
+	return stream->ReadBytes ( this->mTiles.GetBuffer (), size );
+}
+
+//----------------------------------------------------------------//
+size_t MOAIGrid::StreamTilesOut ( ZLStream* stream ) {
+
+	if ( !stream ) return 0;
+
+	size_t size = this->mTiles.Size () * sizeof ( u32 );
+	return stream->WriteBytes ( this->mTiles.GetBuffer (), size );
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
 void MOAIGrid::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIGridSpace, MOAILuaObject_RegisterLuaClass ( composer, state ));
@@ -366,46 +412,4 @@ void MOAIGrid::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState
 	
 	lua_pushstring ( state, base64.str ());
 	lua_setfield ( state, -2, "mData" );
-}
-
-//----------------------------------------------------------------//
-void MOAIGrid::SetTile ( ZLIndex addr, u32 tile ) {
-
-	u32 size = ( u32 )this->mTiles.Size (); // TODO: cast
-
-	if ( size ) {
-		addr =  ZLIndexOp::Wrap ( addr, size );
-		this->mTiles [ addr ] = tile;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGrid::SetTile ( int xTile, int yTile, u32 tile ) {
-
-	MOAICellCoord coord ( xTile, yTile );
-	if ( this->IsValidCoord ( coord )) {
-	
-		ZLIndex addr = this->GetCellAddr ( coord );
-		if ( addr < this->mTiles.Size ()) {
-			this->mTiles [ addr ] = tile;
-		}
-	}
-}
-
-//----------------------------------------------------------------//
-size_t MOAIGrid::StreamTilesIn ( ZLStream* stream ) {
-
-	if ( !stream ) return 0;
-	
-	size_t size = this->mTiles.Size () * sizeof ( u32 );
-	return stream->ReadBytes ( this->mTiles.GetBuffer (), size );
-}
-
-//----------------------------------------------------------------//
-size_t MOAIGrid::StreamTilesOut ( ZLStream* stream ) {
-
-	if ( !stream ) return 0;
-
-	size_t size = this->mTiles.Size () * sizeof ( u32 );
-	return stream->WriteBytes ( this->mTiles.GetBuffer (), size );
 }

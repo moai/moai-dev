@@ -76,18 +76,20 @@ private:
 	void				RemoveChildren			();
 	void				SetLocByAxis			( u32 axis, float loc );
 
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAILayoutFrame )
 	
 	//----------------------------------------------------------------//
-	ZLRect			GetFrame				();
-	ZLRect			GetScissorRect			();
-					MOAILayoutFrame			();
-					~MOAILayoutFrame		();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
-	void			SetParent				( MOAIAbstractChildTransform* parent );
+	ZLRect				GetFrame				();
+	ZLRect				GetScissorRect			();
+						MOAILayoutFrame			();
+						~MOAILayoutFrame		();
+	void				SetParent				( MOAIAbstractChildTransform* parent );
 };
 
 #endif

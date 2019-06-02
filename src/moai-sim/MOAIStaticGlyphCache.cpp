@@ -66,33 +66,10 @@ MOAIStaticGlyphCache::~MOAIStaticGlyphCache () {
 }
 
 //----------------------------------------------------------------//
-void MOAIStaticGlyphCache::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGlyphCache, MOAILuaObject_RegisterLuaClass ( composer, state ));
-}
-
-//----------------------------------------------------------------//
-void MOAIStaticGlyphCache::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGlyphCache, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-}
-
-//----------------------------------------------------------------//
 void MOAIStaticGlyphCache::ReserveTextures ( u32 total ) {
 
 	this->mTextures.Init ( total );
 	this->mTextures.Fill ( 0 );
-}
-
-
-//----------------------------------------------------------------//
-void MOAIStaticGlyphCache::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-}
-
-//----------------------------------------------------------------//
-void MOAIStaticGlyphCache::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
 }
 
 //----------------------------------------------------------------//
@@ -132,4 +109,30 @@ int MOAIStaticGlyphCache::SetImage ( MOAIFont& font, MOAIImage& image ) {
 void MOAIStaticGlyphCache::SetTexture ( ZLIndex id, MOAITexture* texture ) {
 	this->LuaRetain ( texture ); // TODO: ref counting?
 	this->mTextures [ id ] = texture;
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIStaticGlyphCache::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGlyphCache, MOAILuaObject_RegisterLuaClass ( composer, state ));
+}
+
+//----------------------------------------------------------------//
+void MOAIStaticGlyphCache::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGlyphCache, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+}
+
+//----------------------------------------------------------------//
+void MOAIStaticGlyphCache::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	UNUSED ( state );
+	UNUSED ( serializer );
+}
+
+//----------------------------------------------------------------//
+void MOAIStaticGlyphCache::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+	UNUSED ( state );
+	UNUSED ( serializer );
 }

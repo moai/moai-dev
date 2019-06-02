@@ -23,6 +23,10 @@ private:
 	static int		_getLength2				( lua_State* L );
 	static int		_getRatio				( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_FACTORY ( MOAIBox2DPulleyJoint )
@@ -30,8 +34,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIBox2DPulleyJoint	();
 					~MOAIBox2DPulleyJoint	();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

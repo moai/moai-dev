@@ -36,6 +36,8 @@ private:
 	static int	_step						( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 	
@@ -45,8 +47,6 @@ public:
 					MOAIXmlParser			();
 					~MOAIXmlParser			();
 	static void		Parse					( MOAILuaState& state, TiXmlNode* node );
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

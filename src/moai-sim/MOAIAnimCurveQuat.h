@@ -28,12 +28,14 @@ private:
 	ZLQuaternion	GetValue			( const MOAIAnimKeySpan& span ) const;
 
 	//----------------------------------------------------------------//
-	void				MOAIAnimCurve_ApplyValueAttrOp		( ZLAttribute& attr, u32 op );
-	void				MOAIAnimCurve_GetDelta				( ZLAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const;
-	void				MOAIAnimCurve_GetValue				( ZLAttribute& attr, const MOAIAnimKeySpan& span ) const;
-	void				MOAIAnimCurve_GetZero				( ZLAttribute& attr ) const;
-	void				MOAIAnimCurve_ReserveSamples		( u32 total );
-	void				MOAINode_Update							();
+	void			MOAIAnimCurve_ApplyValueAttrOp		( ZLAttribute& attr, u32 op );
+	void			MOAIAnimCurve_GetDelta				( ZLAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const;
+	void			MOAIAnimCurve_GetValue				( ZLAttribute& attr, const MOAIAnimKeySpan& span ) const;
+	void			MOAIAnimCurve_GetZero				( ZLAttribute& attr ) const;
+	void			MOAIAnimCurve_ReserveSamples		( u32 total );
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAINode_Update						();
 
 public:
 	
@@ -43,8 +45,6 @@ public:
 	ZLQuaternion	GetValue				( float time ) const;
 					MOAIAnimCurveQuat		();
 					~MOAIAnimCurveQuat		();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void			ReserveSamples			( u32 total );
 	void			SetSample				( ZLIndex idx, float x, float y, float z );
 };

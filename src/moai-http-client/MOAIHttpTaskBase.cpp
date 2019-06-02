@@ -611,6 +611,22 @@ MOAIHttpTaskBase::~MOAIHttpTaskBase () {
 }
 
 //----------------------------------------------------------------//
+void MOAIHttpTaskBase::SetFollowRedirects ( u32 value) {
+
+	this->mFollowRedirects = value;
+}
+
+//----------------------------------------------------------------//
+void MOAIHttpTaskBase::SetHeader ( cc8* key, cc8* value ) {
+	
+	this->mHeaderMap [ key ] = value;
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
 void MOAIHttpTaskBase::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	state.SetField ( -1, "HTTP_GET",( u32 )   HTTP_GET );
@@ -654,16 +670,4 @@ void MOAIHttpTaskBase::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, 
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIHttpTaskBase::SetFollowRedirects ( u32 value) {
-
-	this->mFollowRedirects = value;
-}
-
-//----------------------------------------------------------------//
-void MOAIHttpTaskBase::SetHeader ( cc8* key, cc8* value ) {
-	
-	this->mHeaderMap [ key ] = value;
 }

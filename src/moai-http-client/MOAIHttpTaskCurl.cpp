@@ -318,18 +318,6 @@ void MOAIHttpTaskCurl::PrintError ( CURLcode error ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpTaskCurl::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIHttpTaskBase, MOAILuaObject_RegisterLuaClass ( composer, state ));
-}
-
-//----------------------------------------------------------------//
-void MOAIHttpTaskCurl::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIHttpTaskBase, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-}
-
-//----------------------------------------------------------------//
 void MOAIHttpTaskCurl::Reset () {
 
 	this->Clear ();
@@ -442,6 +430,22 @@ void MOAIHttpTaskCurl::SetVerbose ( bool verbose ) {
 
 	CURLcode result = curl_easy_setopt ( this->mEasyHandle, CURLOPT_VERBOSE, verbose ? 1 : 0 );
 	PrintError ( result );
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIHttpTaskCurl::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHttpTaskBase, MOAILuaObject_RegisterLuaClass ( composer, state ));
+}
+
+//----------------------------------------------------------------//
+void MOAIHttpTaskCurl::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHttpTaskBase, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 }
 
 #endif

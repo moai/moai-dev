@@ -394,6 +394,11 @@ MOAIUntzSound::~MOAIUntzSound () {
 		UNTZ::Sound::dispose ( this->mSound );
 	}
 }
+
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIUntzSound::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
@@ -429,10 +434,6 @@ void MOAIUntzSound::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOA
 
 	luaL_register ( state, 0, regTable );
 }
-
-//================================================================//
-// virtual
-//================================================================//
 
 //----------------------------------------------------------------//
 bool MOAIUntzSound::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {

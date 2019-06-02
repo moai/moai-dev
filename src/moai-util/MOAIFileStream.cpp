@@ -61,6 +61,10 @@ MOAIFileStream::~MOAIFileStream () {
 	this->Close ();
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIFileStream::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 

@@ -37,12 +37,15 @@ class MOAINotificationsIOS :
 private:
 
 	//----------------------------------------------------------------//
-	static int	_getAppIconBadgeNumber				( lua_State* L );
-	static int	_localNotificationInSeconds			( lua_State* L );
-	static int	_registerForRemoteNotifications		( lua_State* L );
-	static int	_setAppIconBadgeNumber				( lua_State* L );
-	static int	_setListener						( lua_State* L );
-	static int	_unregisterForRemoteNotifications	( lua_State* L );
+	static int	_getAppIconBadgeNumber					( lua_State* L );
+	static int	_localNotificationInSeconds				( lua_State* L );
+	static int	_registerForRemoteNotifications			( lua_State* L );
+	static int	_setAppIconBadgeNumber					( lua_State* L );
+	static int	_setListener							( lua_State* L );
+	static int	_unregisterForRemoteNotifications		( lua_State* L );
+
+	//----------------------------------------------------------------//
+	void		MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 
@@ -63,13 +66,13 @@ public:
 	
 	MOAILuaStrongRef		mListeners [ TOTAL ];
 
-			MOAINotificationsIOS				();
-			~MOAINotificationsIOS				();
-	void	NotifyRemoteDeregistrationComplete	();
-	void	NotifyLocalNotificationReceived     ( UILocalNotification* notification );
-	void	NotifyRemoteNotificationReceived	( NSDictionary* notification );
-	void	NotifyRemoteRegistrationComplete	( NSData* token, NSError *error );
-	void	MOAILuaObject_RegisterLuaClass					( MOAIComposer& composer, MOAILuaState& state );
+	//----------------------------------------------------------------//
+				MOAINotificationsIOS					();
+				~MOAINotificationsIOS					();
+	void		NotifyRemoteDeregistrationComplete		();
+	void		NotifyLocalNotificationReceived     	( UILocalNotification* notification );
+	void		NotifyRemoteNotificationReceived		( NSDictionary* notification );
+	void		NotifyRemoteRegistrationComplete		( NSData* token, NSError *error );
 };
 
 #endif  //DISABLE_NOTIFICATIONS

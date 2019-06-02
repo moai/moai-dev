@@ -36,6 +36,10 @@ private:
 	void			PushFront			( MOAINode& node );
 	void			Remove				( MOAINode& node );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 
 	friend class MOAINode;
@@ -48,8 +52,6 @@ public:
 	void			Reset				();
 					MOAINodeMgr			();
 					~MOAINodeMgr		();
-	void			MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs	( MOAIComposer& composer, MOAILuaState& state );
 	void			Update				();
 };
 

@@ -738,6 +738,10 @@ void MOAIParticlePexPlugin::Parse ( cc8* filename, MOAIParticlePexPlugin& plugin
 	}
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIParticlePexPlugin::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIParticlePlugin, MOAILuaObject_RegisterLuaClass ( composer, state ));

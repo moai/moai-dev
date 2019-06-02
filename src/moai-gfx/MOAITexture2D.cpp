@@ -279,6 +279,10 @@ MOAITexture2D::MOAITexture2D () :
 MOAITexture2D::~MOAITexture2D () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAITexture2D::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAITexture, MOAILuaObject_RegisterLuaClass ( composer, state ));
@@ -312,10 +316,6 @@ void MOAITexture2D::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILua
 	STLString path = ZLFileSys::GetRelativePath ( this->mFilename );
 	state.SetField ( -1, "mPath", path.str ());
 }
-
-//================================================================//
-// virtual
-//================================================================//
 
 //----------------------------------------------------------------//
 bool MOAITexture2D::MOAIGfxResource_OnCPUCreate () {

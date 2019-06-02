@@ -157,7 +157,11 @@ private:
 	static int		_writeShapes			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			PushShape				( MOAIVectorShape* shape );
+	void				PushShape					( MOAIVectorShape* shape );
+	
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 		
 public:
 
@@ -195,8 +199,6 @@ public:
 	void				PushTranslate				( float x, float y);
 	void				PushVertex					( float x, float y );
 	void				ReadShapes					( ZLStream& stream );
-	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	void				ReserveVertexExtras			( ZLSize total, size_t size );
 	void				SetVertexExtra				( ZLIndex idx, void* extra, size_t size );
 	int					Tesselate					( SafeTesselator& tess, u32 flags = TESSELATE_ALL );

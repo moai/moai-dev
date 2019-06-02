@@ -51,6 +51,9 @@ private:
 	static int		_setLogLevel				( lua_State* L );
 	static int		_setTypeCheckLuaParams		( lua_State* L );
 
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+
 public:
 	
 	DECL_LUA_SINGLETON ( MOAILogMgr )
@@ -69,7 +72,6 @@ public:
 					MOAILogMgr				();
 					~MOAILogMgr				();
 	void			OpenFile				( cc8* filename );
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >

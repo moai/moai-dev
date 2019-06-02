@@ -33,6 +33,20 @@ MOAIVertexFormatGL::~MOAIVertexFormatGL () {
 }
 
 //----------------------------------------------------------------//
+void MOAIVertexFormatGL::Unbind ( ZLGfx& gfx ) const {
+
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mTotalAttributes; ++i ) {
+		
+		MOAIVertexAttribute& attr = this->mAttributes [ i ];
+		gfx.DisableVertexAttribArray ( attr.mIndex );
+	}
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
 void MOAIVertexFormatGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 }
 
@@ -48,14 +62,4 @@ void MOAIVertexFormatGL::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOA
 //----------------------------------------------------------------//
 void MOAIVertexFormatGL::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexFormatGL::Unbind ( ZLGfx& gfx ) const {
-
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mTotalAttributes; ++i ) {
-		
-		MOAIVertexAttribute& attr = this->mAttributes [ i ];
-		gfx.DisableVertexAttribArray ( attr.mIndex );
-	}
 }

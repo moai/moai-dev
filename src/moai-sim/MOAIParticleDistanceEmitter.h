@@ -33,8 +33,10 @@ private:
 	float			GetRandomDistance		();
 	
 	//----------------------------------------------------------------//
-	void			MOAIAction_Update		( double step );
-	void			MOAINode_Update			();
+	void			MOAIAction_Update					( double step );
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAINode_Update						();
 
 public:
 	
@@ -43,8 +45,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIParticleDistanceEmitter		();
 					~MOAIParticleDistanceEmitter	();
-	void			MOAILuaObject_RegisterLuaClass				( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs				( MOAIComposer& composer, MOAILuaState& state );
 	void			SetDistanceRange				( float min, float max );
 };
 

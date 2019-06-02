@@ -39,8 +39,10 @@ private:
 	void			LookAt					( float x, float y, float z );
 	
 	//----------------------------------------------------------------//
-	bool			MOAINode_ApplyAttrOp	( ZLAttrID attrID, ZLAttribute& attr, u32 op );
-	void			MOAINode_Update			();
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	bool			MOAINode_ApplyAttrOp				( ZLAttrID attrID, ZLAttribute& attr, u32 op );
+	void			MOAINode_Update						();
 	
 public:
 	
@@ -62,8 +64,6 @@ public:
 	void			DrawDebug 				();
 					MOAICamera				();
 					~MOAICamera				();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

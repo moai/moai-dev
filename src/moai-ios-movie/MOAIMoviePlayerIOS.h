@@ -22,14 +22,17 @@ class MOAIMoviePlayerIOS :
 	public virtual MOAILuaObject {
 private:
 
+	MOAIMoviePlayerPlaybackDelegate * 	mPlaybackDelegate;
+	
 	//----------------------------------------------------------------//
 	static int	_init			( lua_State* L );
 	static int	_play			( lua_State* L );
 	static int	_pause			( lua_State* L );
 	static int	_setListener	( lua_State* L );
 	static int	_stop			( lua_State* L );
-
-	MOAIMoviePlayerPlaybackDelegate * 	mPlaybackDelegate;
+	
+	//----------------------------------------------------------------//
+	void	MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
 		
 public:
 	
@@ -46,7 +49,7 @@ public:
 
 			MOAIMoviePlayerIOS	();
 			~MOAIMoviePlayerIOS	();
-	void	MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
+	
 	void	Reset				();
 };
 

@@ -132,26 +132,6 @@ MOAIAnimCurveQuat::~MOAIAnimCurveQuat () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurveQuat::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAnimCurve, MOAILuaObject_RegisterLuaClass ( composer, state ));
-}
-
-//----------------------------------------------------------------//
-void MOAIAnimCurveQuat::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAnimCurve, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-
-	luaL_Reg regTable [] = {
-		{ "getValueAtTime",		_getValueAtTime },
-		{ "setKey",				_setKey },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAIAnimCurveQuat::SetSample ( ZLIndex idx, float x, float y, float z ) {
 
 	if ( this->mKeys.CheckIndex ( idx )) {
@@ -196,6 +176,26 @@ void MOAIAnimCurveQuat::MOAIAnimCurve_GetZero ( ZLAttribute& attr ) const {
 void MOAIAnimCurveQuat::MOAIAnimCurve_ReserveSamples ( u32 total ) {
 
 	this->mSamples.Init ( total );
+}
+
+//----------------------------------------------------------------//
+void MOAIAnimCurveQuat::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAnimCurve, MOAILuaObject_RegisterLuaClass ( composer, state ));
+}
+
+//----------------------------------------------------------------//
+void MOAIAnimCurveQuat::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAnimCurve, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+
+	luaL_Reg regTable [] = {
+		{ "getValueAtTime",		_getValueAtTime },
+		{ "setKey",				_setKey },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//

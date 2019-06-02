@@ -52,13 +52,13 @@ protected:
 	bool			MOAIGfxResource_DoCPUCreate					();
 	void			MOAIGfxResource_ScheduleForGPUDestroy		();
 	bool			MOAIGfxResource_ScheduleForGPUUpdate		( PipelineHint hint );
-	
-	//----------------------------------------------------------------//
 	virtual void	MOAIGfxResourceGL_OnGPUBind					() = 0; // select GPU-side resource on device for use
 	virtual bool	MOAIGfxResourceGL_OnGPUCreate				() = 0; // create GPU-side resource
 	virtual void	MOAIGfxResourceGL_OnGPUDeleteOrDiscard		( bool shouldDelete ) = 0; // delete or discard GPU resource handles
 	virtual void	MOAIGfxResourceGL_OnGPUUnbind				() = 0; // unbind GPU-side resource
 	virtual bool	MOAIGfxResourceGL_OnGPUUpdate				() = 0;
+	void			MOAILuaObject_RegisterLuaClass				( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs				( MOAIComposer& composer, MOAILuaState& state );
 	void			ZLGfxListener_OnGfxEvent					( u32 event, void* userdata );
 
 public:
@@ -87,8 +87,6 @@ public:
 					MOAIGfxResourceGL				();
 	virtual			~MOAIGfxResourceGL				();
 	bool			Purge							( u32 age );
-	void			MOAILuaObject_RegisterLuaClass				( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs				( MOAIComposer& composer, MOAILuaState& state );
 };
 
 #endif

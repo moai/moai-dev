@@ -58,7 +58,11 @@ protected:
 	MOAISelectionSpan*		InsertSpan					( MOAISelectionSpan* span, MOAISelectionSpan* prevInMaster, MOAISelectionSpan* prevInSet );
 
 	//----------------------------------------------------------------//
-	void					MOAIDeck_Draw				( ZLIndex idx );
+	void					MOAIDeck_Draw						( ZLIndex idx );
+	void					MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_SerializeIn			( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void					MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 
 public:
 
@@ -72,19 +76,15 @@ public:
 	DECL_LUA_FACTORY ( MOAISelectionMesh )
 
 	//----------------------------------------------------------------//
-	void				AddSelection				( ZLIndex set, ZLIndex base, ZLIndex top );
-	void				ClearSelection				( ZLIndex set );
-	void				ClearSelection				( ZLIndex set, ZLIndex base, ZLIndex top );
-	void				MergeSelection				( ZLIndex set, ZLIndex merge );
-						MOAISelectionMesh			();
-						~MOAISelectionMesh			();
-	void				PrintSelection				( ZLIndex set );
-	void				PrintSelections				();
-	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
-	void				ReserveSelections			( ZLSize total );
-	void				MOAILuaObject_SerializeIn					( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void				MOAILuaObject_SerializeOut				( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
+	void					AddSelection				( ZLIndex set, ZLIndex base, ZLIndex top );
+	void					ClearSelection				( ZLIndex set );
+	void					ClearSelection				( ZLIndex set, ZLIndex base, ZLIndex top );
+	void					MergeSelection				( ZLIndex set, ZLIndex merge );
+							MOAISelectionMesh			();
+							~MOAISelectionMesh			();
+	void					PrintSelection				( ZLIndex set );
+	void					PrintSelections				();
+	void					ReserveSelections			( ZLSize total );
 };
 
 #endif

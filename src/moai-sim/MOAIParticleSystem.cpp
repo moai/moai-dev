@@ -518,45 +518,6 @@ bool MOAIParticleSystem::PushSprite ( const AKUParticleSprite& sprite ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleSystem::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGraphicsProp, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaClass ( composer, state ));
-
-	state.SetField ( -1, "ORDER_NORMAL",	( u32 )ORDER_NORMAL );
-	state.SetField ( -1, "ORDER_REVERSE",	( u32 )ORDER_REVERSE );
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleSystem::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGraphicsProp, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	
-	luaL_Reg regTable [] = {
-		{ "capParticles",		_capParticles },
-		{ "capSprites",			_capSprites },
-		{ "clearSprites",		_clearSprites },
-		{ "isIdle",				_isIdle },
-		{ "getState",			_getState },
-		{ "pushParticle",		_pushParticle },
-		{ "pushSprite",			_pushSprite },
-		{ "reserveParticles",	_reserveParticles },
-		{ "reserveSprites",		_reserveSprites },
-		{ "reserveStates",		_reserveStates },
-		{ "setDrawOrder",		_setDrawOrder },
-		{ "setComputeBounds",	_setComputeBounds },
-		{ "setSpriteColor",		_setSpriteColor },
-		{ "setSpriteDeckIdx",	_setSpriteDeckIdx },
-		{ "setState",			_setState },
-		{ "surge",				_surge },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAIParticleSystem::ReserveParticles ( ZLSize maxParticles, ZLSize particleSize ) {
 	
 	particleSize += MOAIParticle::TOTAL_PARTICLE_REG;
@@ -596,20 +557,6 @@ void MOAIParticleSystem::ReserveStates ( ZLSize total ) {
 
 	this->mStates.Init ( total );
 	this->mStates.Fill ( 0 );
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleSystem::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGraphicsProp, MOAILuaObject_SerializeIn ( composer, state, serializer ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_SerializeIn ( composer, state, serializer ));
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleSystem::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGraphicsProp, MOAILuaObject_SerializeOut ( composer, state, serializer ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }
 
 //================================================================//
@@ -725,4 +672,57 @@ void MOAIParticleSystem::MOAIDrawable_Draw ( int subPrimID ) {
 	}
 	
 	this->PopGfxState ();
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleSystem::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGraphicsProp, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaClass ( composer, state ));
+
+	state.SetField ( -1, "ORDER_NORMAL",	( u32 )ORDER_NORMAL );
+	state.SetField ( -1, "ORDER_REVERSE",	( u32 )ORDER_REVERSE );
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleSystem::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGraphicsProp, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	
+	luaL_Reg regTable [] = {
+		{ "capParticles",		_capParticles },
+		{ "capSprites",			_capSprites },
+		{ "clearSprites",		_clearSprites },
+		{ "isIdle",				_isIdle },
+		{ "getState",			_getState },
+		{ "pushParticle",		_pushParticle },
+		{ "pushSprite",			_pushSprite },
+		{ "reserveParticles",	_reserveParticles },
+		{ "reserveSprites",		_reserveSprites },
+		{ "reserveStates",		_reserveStates },
+		{ "setDrawOrder",		_setDrawOrder },
+		{ "setComputeBounds",	_setComputeBounds },
+		{ "setSpriteColor",		_setSpriteColor },
+		{ "setSpriteDeckIdx",	_setSpriteDeckIdx },
+		{ "setState",			_setState },
+		{ "surge",				_surge },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleSystem::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGraphicsProp, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleSystem::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIGraphicsProp, MOAILuaObject_SerializeOut ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }

@@ -87,37 +87,6 @@ int MOAITextBundle::_lookup( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAITextBundle::MOAITextBundle ()
-: mData(0)
-{
-	RTTI_SINGLE ( MOAILuaObject )
-
-	Clear();
-}
-
-//----------------------------------------------------------------//
-MOAITextBundle::~MOAITextBundle () {
-	Clear();
-}
-
-//----------------------------------------------------------------//
-void MOAITextBundle::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED(state);
-}
-
-//----------------------------------------------------------------//
-void MOAITextBundle::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	luaL_Reg regTable [] = {
-		{ "load",			_load },
-		{ "lookup",			_lookup },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAITextBundle::Clear ( ) {
 	if( this->mData )
 	{
@@ -269,3 +238,37 @@ const char *MOAITextBundle::Lookup(const char *key) {
 	return this->GetValueString(idx);
 }
 
+//----------------------------------------------------------------//
+MOAITextBundle::MOAITextBundle ()
+: mData(0)
+{
+	RTTI_SINGLE ( MOAILuaObject )
+
+	Clear();
+}
+
+//----------------------------------------------------------------//
+MOAITextBundle::~MOAITextBundle () {
+	Clear();
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAITextBundle::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED(state);
+}
+
+//----------------------------------------------------------------//
+void MOAITextBundle::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	
+	luaL_Reg regTable [] = {
+		{ "load",			_load },
+		{ "lookup",			_lookup },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}

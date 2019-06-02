@@ -181,28 +181,6 @@ void MOAIParser::OnTerminal ( ZLSyntaxNode* node ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIParser::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
-	UNUSED ( state );
-}
-
-//----------------------------------------------------------------//
-void MOAIParser::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
-
-	luaL_Reg regTable[] = {
-		{ "loadFile",			_loadFile },
-		{ "loadRules",			_loadRules },
-		{ "loadString",			_loadString },
-		{ "setCallbacks",		_setCallbacks },
-		{ "traverse",			_traverse },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAIParser::SetAST ( ZLSyntaxNode* ast ) {
 
 	if ( this->mAST ) {
@@ -230,6 +208,32 @@ void MOAIParser::Traverse ( ZLSyntaxNode* node ) {
 	else {
 		this->OnTerminal ( node );
 	}
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIParser::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
+	UNUSED ( state );
+}
+
+//----------------------------------------------------------------//
+void MOAIParser::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	UNUSED ( composer );
+
+	luaL_Reg regTable[] = {
+		{ "loadFile",			_loadFile },
+		{ "loadRules",			_loadRules },
+		{ "loadString",			_loadString },
+		{ "setCallbacks",		_setCallbacks },
+		{ "traverse",			_traverse },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
 }
 
 #endif

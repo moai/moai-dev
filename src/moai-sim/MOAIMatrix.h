@@ -22,6 +22,10 @@ protected:
 
 	//----------------------------------------------------------------//
 	void			MOAIAbstractBaseTransform_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx );
+	void			MOAILuaObject_RegisterLuaClass						( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs						( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_SerializeIn							( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void			MOAILuaObject_SerializeOut							( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 	bool			MOAINode_ApplyAttrOp								( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 
 public:
@@ -36,10 +40,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIMatrix				();
 					~MOAIMatrix				();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_SerializeIn				( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void			MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

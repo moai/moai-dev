@@ -359,6 +359,10 @@ MOAIBox2DRevoluteJoint::MOAIBox2DRevoluteJoint () {
 MOAIBox2DRevoluteJoint::~MOAIBox2DRevoluteJoint () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIBox2DRevoluteJoint::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIBox2DJoint, MOAILuaObject_RegisterLuaClass ( composer, state ));

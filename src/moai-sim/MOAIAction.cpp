@@ -452,47 +452,6 @@ MOAIAction::~MOAIAction () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAction::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaClass ( composer, state ));
-
-	state.SetField ( -1, "EVENT_ACTION_PRE_UPDATE",		( u32 )EVENT_ACTION_PRE_UPDATE );
-	state.SetField ( -1, "EVENT_ACTION_POST_UPDATE",	( u32 )EVENT_ACTION_POST_UPDATE );
-	state.SetField ( -1, "EVENT_START",					( u32 )EVENT_START );
-	state.SetField ( -1, "EVENT_STOP",					( u32 )EVENT_STOP );
-
-}
-
-//----------------------------------------------------------------//
-void MOAIAction::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-
-	luaL_Reg regTable [] = {
-		{ "addChild",				_addChild },
-		{ "attach",					_attach },
-		{ "clear",					_clear },
-		{ "defer",					_defer },
-		{ "detach",					_detach },
-		{ "getChildren",			_getChildren },
-		{ "hasChildren",			_hasChildren },
-		{ "isActive",				_isActive },
-		{ "isBusy",					_isBusy },
-		{ "isDone",					_isDone },
-		{ "isPaused",				_isPaused },
-		{ "pause",					_pause },
-		{ "setAutoStop",			_setAutoStop },
-		{ "start",					_start },
-		{ "stop",					_stop },
-		{ "throttle",				_throttle },
-		{ "update",					_update },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAIAction::ResetPass ( u32 pass ) {
 
 	if ( this->mPass > pass ) {
@@ -647,4 +606,45 @@ void MOAIAction::MOAIBlocker_Unblock () {
 
 	// TODO: does this make sense?
 	this->mPass = 0;
+}
+
+//----------------------------------------------------------------//
+void MOAIAction::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaClass ( composer, state ));
+
+	state.SetField ( -1, "EVENT_ACTION_PRE_UPDATE",		( u32 )EVENT_ACTION_PRE_UPDATE );
+	state.SetField ( -1, "EVENT_ACTION_POST_UPDATE",	( u32 )EVENT_ACTION_POST_UPDATE );
+	state.SetField ( -1, "EVENT_START",					( u32 )EVENT_START );
+	state.SetField ( -1, "EVENT_STOP",					( u32 )EVENT_STOP );
+
+}
+
+//----------------------------------------------------------------//
+void MOAIAction::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+
+	luaL_Reg regTable [] = {
+		{ "addChild",				_addChild },
+		{ "attach",					_attach },
+		{ "clear",					_clear },
+		{ "defer",					_defer },
+		{ "detach",					_detach },
+		{ "getChildren",			_getChildren },
+		{ "hasChildren",			_hasChildren },
+		{ "isActive",				_isActive },
+		{ "isBusy",					_isBusy },
+		{ "isDone",					_isDone },
+		{ "isPaused",				_isPaused },
+		{ "pause",					_pause },
+		{ "setAutoStop",			_setAutoStop },
+		{ "start",					_start },
+		{ "stop",					_stop },
+		{ "throttle",				_throttle },
+		{ "update",					_update },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
 }

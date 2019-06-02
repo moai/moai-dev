@@ -72,6 +72,27 @@ MOAIGfxBuffer::~MOAIGfxBuffer () {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxBuffer::Reserve ( ZLSize size ) {
+	
+	this->ZLCopyOnWrite::Free ();
+	
+	if ( size ) {
+		this->ZLCopyOnWrite::Reserve ( size );
+		this->ScheduleForGPUUpdate ();
+	}
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIGfxBuffer::MOAIGfxResource_OnCPUDestroy () {
+
+	this->ZLCopyOnWrite::Free ();
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxBuffer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIStream, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
@@ -87,17 +108,6 @@ void MOAIGfxBuffer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOA
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxBuffer::Reserve ( ZLSize size ) {
-	
-	this->ZLCopyOnWrite::Free ();
-	
-	if ( size ) {
-		this->ZLCopyOnWrite::Reserve ( size );
-		this->ScheduleForGPUUpdate ();
-	}
 }
 
 //----------------------------------------------------------------//
@@ -136,14 +146,3 @@ void MOAIGfxBuffer::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILua
 	lua_pushstring ( state, zipString.str ());
 	lua_setfield ( state, -2, "mData" );
 }
-
-//================================================================//
-// virtual
-//================================================================//
-
-//----------------------------------------------------------------//
-void MOAIGfxBuffer::MOAIGfxResource_OnCPUDestroy () {
-
-	this->ZLCopyOnWrite::Free ();
-}
-

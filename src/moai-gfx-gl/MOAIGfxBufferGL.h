@@ -52,6 +52,10 @@ protected:
 	void					MOAIGfxResourceGL_OnGPUDeleteOrDiscard		( bool shouldDelete );
 	void					MOAIGfxResourceGL_OnGPUUnbind				();
 	bool					MOAIGfxResourceGL_OnGPUUpdate				();
+	void					MOAILuaObject_RegisterLuaClass				( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_RegisterLuaFuncs				( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_SerializeIn					( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void					MOAILuaObject_SerializeOut					( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 
 public:
 	
@@ -65,11 +69,7 @@ public:
 	size_t					CountVBOs					();
 							MOAIGfxBufferGL				();
 							~MOAIGfxBufferGL			();
-	void					MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	void					ReserveVBOs					( ZLSize gpuBuffers );
-	void					MOAILuaObject_SerializeIn					( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void					MOAILuaObject_SerializeOut				( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

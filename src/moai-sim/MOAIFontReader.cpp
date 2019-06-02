@@ -237,6 +237,10 @@ int MOAIFontReader::OpenFontFile ( cc8* filename ) {
 	return OK;
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIFontReader::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );

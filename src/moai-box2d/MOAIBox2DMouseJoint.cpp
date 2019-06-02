@@ -222,6 +222,10 @@ MOAIBox2DMouseJoint::MOAIBox2DMouseJoint () {
 MOAIBox2DMouseJoint::~MOAIBox2DMouseJoint () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIBox2DMouseJoint::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIBox2DJoint, MOAILuaObject_RegisterLuaClass ( composer, state ));

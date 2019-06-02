@@ -78,6 +78,10 @@ MOAICameraAnchor2D::MOAICameraAnchor2D () :
 MOAICameraAnchor2D::~MOAICameraAnchor2D () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAICameraAnchor2D::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
@@ -99,10 +103,6 @@ void MOAICameraAnchor2D::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer
 	
 	luaL_register ( state, 0, regTable );
 }
-
-//================================================================//
-// virtual
-//================================================================//
 
 //----------------------------------------------------------------//
 void MOAICameraAnchor2D::MOAINode_Update () {

@@ -87,27 +87,6 @@ MOAIDrawDeck::MOAIDrawDeck () {
 MOAIDrawDeck::~MOAIDrawDeck () {
 }
 
-//----------------------------------------------------------------//
-void MOAIDrawDeck::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIStretchDeck, MOAILuaObject_RegisterLuaClass ( composer, state ));
-}
-
-//----------------------------------------------------------------//
-void MOAIDrawDeck::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIStretchDeck, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-
-	luaL_Reg regTable [] = {
-		{ "setBounds",				_setBounds },
-		{ "setBoundsCallback",		_setBoundsCallback },
-		{ "setDrawCallback",		_setDrawCallback },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
 //================================================================//
 // virtual
 //================================================================//
@@ -183,4 +162,25 @@ bool MOAIDrawDeck::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 granu
 	UNUSED ( result );
 
 	return false;
+}
+
+//----------------------------------------------------------------//
+void MOAIDrawDeck::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIStretchDeck, MOAILuaObject_RegisterLuaClass ( composer, state ));
+}
+
+//----------------------------------------------------------------//
+void MOAIDrawDeck::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIStretchDeck, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+
+	luaL_Reg regTable [] = {
+		{ "setBounds",				_setBounds },
+		{ "setBoundsCallback",		_setBoundsCallback },
+		{ "setDrawCallback",		_setDrawCallback },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
 }

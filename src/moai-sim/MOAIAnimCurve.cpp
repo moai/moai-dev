@@ -188,36 +188,6 @@ MOAIAnimCurve::~MOAIAnimCurve () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurve::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaClass ( composer, state ));
-
-	state.SetField ( -1, "ATTR_TIME",	AttrID::Pack ( ATTR_TIME ).ToRaw ());
-	state.SetField ( -1, "ATTR_VALUE", 	AttrID::Pack ( ATTR_VALUE ).ToRaw ());
-
-	state.SetField ( -1, "CLAMP", ( u32 )CLAMP );
-	state.SetField ( -1, "WRAP", ( u32 )WRAP );
-	state.SetField ( -1, "MIRROR", ( u32 )MIRROR );
-	state.SetField ( -1, "APPEND", ( u32 )APPEND );
-}
-
-//----------------------------------------------------------------//
-void MOAIAnimCurve::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-
-	luaL_Reg regTable [] = {
-		{ "getLength",			_getLength },
-		{ "reserveKeys",		_reserveKeys },
-		{ "setTime",			_setTime },
-		{ "setWrapMode",		_setWrapMode },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAIAnimCurve::ReserveKeys ( u32 total ) {
 
 	this->mKeys.Init ( total );
@@ -332,6 +302,36 @@ void MOAIAnimCurve::MOAIAnimCurve_Draw ( u32 resolution ) const {
 ZLReal MOAIAnimCurve::MOAIAnimCurve_GetFloatForTime ( ZLReal t ) const {
 
 	return 0.0;
+}
+
+//----------------------------------------------------------------//
+void MOAIAnimCurve::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaClass ( composer, state ));
+
+	state.SetField ( -1, "ATTR_TIME",	AttrID::Pack ( ATTR_TIME ).ToRaw ());
+	state.SetField ( -1, "ATTR_VALUE", 	AttrID::Pack ( ATTR_VALUE ).ToRaw ());
+
+	state.SetField ( -1, "CLAMP", ( u32 )CLAMP );
+	state.SetField ( -1, "WRAP", ( u32 )WRAP );
+	state.SetField ( -1, "MIRROR", ( u32 )MIRROR );
+	state.SetField ( -1, "APPEND", ( u32 )APPEND );
+}
+
+//----------------------------------------------------------------//
+void MOAIAnimCurve::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+
+	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+
+	luaL_Reg regTable [] = {
+		{ "getLength",			_getLength },
+		{ "reserveKeys",		_reserveKeys },
+		{ "setTime",			_setTime },
+		{ "setWrapMode",		_setWrapMode },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//

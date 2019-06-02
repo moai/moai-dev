@@ -388,6 +388,24 @@ MOAICamera::MOAICamera () {
 MOAICamera::~MOAICamera () {
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAICamera::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
+
+	if ( AttrID::Check ( attrID )) {
+
+		switch ( attrID.Unpack ()) {
+			case ATTR_FOV:
+				this->mFieldOfView = attr.Apply ( this->mFieldOfView, op, ZLAttribute::ATTR_READ_WRITE );
+				return true;
+		}
+	}
+	return MOAITransform::MOAINode_ApplyAttrOp ( attrID, attr, op );
+}
+
 //----------------------------------------------------------------//
 void MOAICamera::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
@@ -429,24 +447,6 @@ void MOAICamera::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILu
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//================================================================//
-// virtual
-//================================================================//
-
-//----------------------------------------------------------------//
-bool MOAICamera::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
-
-	if ( AttrID::Check ( attrID )) {
-
-		switch ( attrID.Unpack ()) {
-			case ATTR_FOV:
-				this->mFieldOfView = attr.Apply ( this->mFieldOfView, op, ZLAttribute::ATTR_READ_WRITE );
-				return true;
-		}
-	}
-	return MOAITransform::MOAINode_ApplyAttrOp ( attrID, attr, op );
 }
 
 //----------------------------------------------------------------//

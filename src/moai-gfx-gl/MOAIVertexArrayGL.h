@@ -59,6 +59,10 @@ protected:
 	void					MOAIGfxResourceGL_OnGPUDeleteOrDiscard		( bool shouldDelete ); // delete or discard GPU resource
 	void					MOAIGfxResourceGL_OnGPUUnbind				(); // unbind GPU-side resource
 	bool					MOAIGfxResourceGL_OnGPUUpdate				();
+	void					MOAILuaObject_RegisterLuaClass				( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_RegisterLuaFuncs				( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_SerializeIn					( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void					MOAILuaObject_SerializeOut					( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 	MOAIVertexBuffer*		MOAIVertexArray_GetVertexBuffer				( ZLIndex idx );
 	MOAIVertexFormat*		MOAIVertexArray_GetVertexFormat				( ZLIndex idx );
 	void					MOAIVertexArray_SetVertexBuffer				( ZLIndex idx, MOAIVertexBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat );
@@ -72,12 +76,8 @@ public:
 	//----------------------------------------------------------------//
 							MOAIVertexArrayGL			();
 							~MOAIVertexArrayGL			();
-	void					MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	void					ReserveVAOs					( u32 total );
 	void					ReserveVertexBuffers		( u32 total );
-	void					MOAILuaObject_SerializeIn					( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void					MOAILuaObject_SerializeOut				( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif

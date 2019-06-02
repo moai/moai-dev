@@ -76,6 +76,12 @@ private:
 	static int		_setScale				( lua_State* L );
 	static int		_setSize				( lua_State* L );
 	
+	//----------------------------------------------------------------//
+	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_SerializeIn			( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void			MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
+	
 public:
 
 	DECL_LUA_FACTORY ( MOAITextStyle )
@@ -84,10 +90,6 @@ public:
 	void			Init					( MOAITextStyleState& style );
 					MOAITextStyle			();
 					~MOAITextStyle			();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_SerializeIn				( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void			MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 	void			SetFont					( MOAIFont* font );
 	void			SetShader				( MOAIShader* shader );
 };

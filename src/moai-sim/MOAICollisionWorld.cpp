@@ -374,6 +374,24 @@ void MOAICollisionWorld::PruneOverlaps ( MOAICollisionProp& prop ) {
 	}
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+bool MOAICollisionWorld::MOAIAction_IsDone () {
+
+	return false;
+}
+
+//----------------------------------------------------------------//
+void MOAICollisionWorld::MOAIAction_Update ( double step ) {
+	UNUSED ( step );
+
+	this->ResetShapeStream ();
+	this->ProcessOverlaps ();
+}
+
 //----------------------------------------------------------------//
 void MOAICollisionWorld::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
@@ -408,24 +426,6 @@ void MOAICollisionWorld::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOA
 //----------------------------------------------------------------//
 void MOAICollisionWorld::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_SerializeOut ( composer, state, serializer ));
-}
-
-//================================================================//
-// virtual
-//================================================================//
-
-//----------------------------------------------------------------//
-bool MOAICollisionWorld::MOAIAction_IsDone () {
-
-	return false;
-}
-
-//----------------------------------------------------------------//
-void MOAICollisionWorld::MOAIAction_Update ( double step ) {
-	UNUSED ( step );
-
-	this->ResetShapeStream ();
-	this->ProcessOverlaps ();
 }
 
 //----------------------------------------------------------------//

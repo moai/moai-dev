@@ -113,6 +113,10 @@ MOAIDeckHolderWithGrid::~MOAIDeckHolderWithGrid () {
 	this->mGrid.Set ( *this, 0 );
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIDeckHolderWithGrid::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	

@@ -26,6 +26,8 @@ protected:
 	void			MOAIAbstractBaseTransform_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx );
 	bool			MOAIAction_IsDone									();
 	void			MOAIAction_Update									( double step );
+	void			MOAILuaObject_RegisterLuaClass						( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs						( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 
@@ -34,8 +36,7 @@ public:
 	//----------------------------------------------------------------//
 					MOAIHeadTransform		();
 					~MOAIHeadTransform		();
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	
 };
 
 #endif

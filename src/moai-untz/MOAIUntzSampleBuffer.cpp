@@ -182,6 +182,11 @@ MOAIUntzSampleBuffer::~MOAIUntzSampleBuffer () {
 	if(mBuffer)
 		delete [] mBuffer;
 }
+
+//================================================================//
+// virtual
+//================================================================//
+
 //----------------------------------------------------------------//
 void MOAIUntzSampleBuffer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );

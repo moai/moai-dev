@@ -74,16 +74,22 @@ protected:
 	ZLColorBlendFunc	mBlendMode;
 
 	//----------------------------------------------------------------//
-	static int		_close					( lua_State* L );
-	static int		_getFaceMetrics			( lua_State* L );
-	static int		_getGlyphMetrics		( lua_State* L );
-	static int		_getKernVec				( lua_State* L );
-	static int		_hasKerning				( lua_State* L );
-	static int		_open					( lua_State* L );
-	static int		_renderGlyph			( lua_State* L );
-	static int		_selectFace				( lua_State* L );
-	static int		_selectGlyph			( lua_State* L );
-	static int		_setBlendMode			( lua_State* L );
+	static int			_close					( lua_State* L );
+	static int			_getFaceMetrics			( lua_State* L );
+	static int			_getGlyphMetrics		( lua_State* L );
+	static int			_getKernVec				( lua_State* L );
+	static int			_hasKerning				( lua_State* L );
+	static int			_open					( lua_State* L );
+	static int			_renderGlyph			( lua_State* L );
+	static int			_selectFace				( lua_State* L );
+	static int			_selectGlyph			( lua_State* L );
+	static int			_setBlendMode			( lua_State* L );
+
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_SerializeIn			( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void				MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 
 public:
 
@@ -102,13 +108,9 @@ public:
 						MOAIFontReader			();
 						~MOAIFontReader			();
 	virtual int			OpenFontFile			( cc8* filename );
-	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	virtual int			RenderGlyph				( MOAIImage& image, float x, float y ) = 0;
 	virtual int			SelectFace				( float size ) = 0;
 	virtual int			SelectGlyph				( u32 c ) = 0;
-	void				MOAILuaObject_SerializeIn				( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void				MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 };
 
 #endif
