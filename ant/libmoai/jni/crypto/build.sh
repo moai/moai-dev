@@ -18,7 +18,7 @@
 		popd > /dev/null
 
 		# combine libs into final libcrypto
-		for arch in "armeabi" "armeabi-v7a"; do 
+		for arch in "armeabi" "armeabi-v7a" "arm64-v8a"; do
 			if [ -d obj/local/$arch ]; then
 				pushd obj/local/$arch > /dev/null
 					ar -x libcrypto-a.a

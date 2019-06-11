@@ -9,10 +9,10 @@
 	set -e
 	
 	# check for command line switches
-	usage="usage: $0 [-v] [-i thumb | arm] [-a all | armeabi | armeabi-v7a] [-l appPlatform] [--use-fmod true | false] [--use-untz true | false] [--disable-adcolony] [--disable-billing] [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy]"
+	usage="usage: $0 [-v] [-i thumb | arm] [-a all | arm64-v8a | armeabi-v7a] [-l appPlatform] [--use-fmod true | false] [--use-untz true | false] [--disable-adcolony] [--disable-billing] [--disable-chartboost] [--disable-crittercism] [--disable-facebook] [--disable-push] [--disable-tapjoy]"
 	verbose=
 	arm_mode="arm"
-	arm_arch="armeabi-v7a"
+	arm_arch="all"
 	app_platform="android-16"
 	use_fmod="false"
 	use_untz="true"
@@ -53,11 +53,11 @@
 		exit 1		
 	fi
 
-	if [ x"$arm_arch" != xarmeabi ] && [ x"$arm_arch" != xarmeabi-v7a ] && [ x"$arm_arch" != xall ]; then
+	if [ x"$arm_arch" != arm64-v8a ] && [ x"$arm_arch" != xarmeabi-v7a ] && [ x"$arm_arch" != xall ]; then
 		echo $usage
-		exit 1		
+		exit 1
 	elif [ x"$arm_arch" = xall ]; then
-		arm_arch="armeabi armeabi-v7a"
+		arm_arch="armeabi-v7a arm64-v8a"
 	fi
 
 	# TODO: Validate app_platform
