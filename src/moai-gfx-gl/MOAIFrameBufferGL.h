@@ -59,7 +59,7 @@ public:
 						MOAIFrameBufferGL			();
 						~MOAIFrameBufferGL			();
 	void				SetGLFrameBuffer			( MOAIGfxMgrGL& gfxMgr, const ZLGfxHandle& frameBuffer );
-	ZLRect				WndRectToDevice				( ZLRect rect ) const;
+//	ZLRect				WndRectToDevice				( ZLRect rect ) const;
 };
 
 #endif

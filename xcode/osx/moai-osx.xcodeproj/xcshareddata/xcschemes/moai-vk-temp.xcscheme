@@ -14,10 +14,10 @@
             buildForAnalyzing = "YES">
             <BuildableReference
                BuildableIdentifier = "primary"
-               BlueprintIdentifier = "CD58296B22717F85009CD0B6"
-               BuildableName = "libmoai-osx-gfx-gl.a"
-               BlueprintName = "libmoai-osx-gfx-gl"
-               ReferencedContainer = "container:libmoai.xcodeproj">
+               BlueprintIdentifier = "CD9AB5FD22C41F280061A87F"
+               BuildableName = "moai-vk-temp"
+               BlueprintName = "moai-vk-temp"
+               ReferencedContainer = "container:moai-osx.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
       </BuildActionEntries>
@@ -29,6 +29,15 @@
       shouldUseLaunchSchemeArgsEnv = "YES">
       <Testables>
       </Testables>
+      <MacroExpansion>
+         <BuildableReference
+            BuildableIdentifier = "primary"
+            BlueprintIdentifier = "CD9AB5FD22C41F280061A87F"
+            BuildableName = "moai-vk-temp"
+            BlueprintName = "moai-vk-temp"
+            ReferencedContainer = "container:moai-osx.xcodeproj">
+         </BuildableReference>
+      </MacroExpansion>
       <AdditionalOptions>
       </AdditionalOptions>
    </TestAction>
@@ -37,20 +46,22 @@
       selectedDebuggerIdentifier = "Xcode.DebuggerFoundation.Debugger.LLDB"
       selectedLauncherIdentifier = "Xcode.DebuggerFoundation.Launcher.LLDB"
       launchStyle = "0"
-      useCustomWorkingDirectory = "NO"
+      useCustomWorkingDirectory = "YES"
+      customWorkingDirectory = "$PROJECT_DIR/../../samples/anim-basic"
       ignoresPersistentStateOnLaunch = "NO"
       debugDocumentVersioning = "YES"
       debugServiceExtension = "internal"
       allowLocationSimulation = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CD58296B22717F85009CD0B6"
-            BuildableName = "libmoai-osx-gfx-gl.a"
-            BlueprintName = "libmoai-osx-gfx-gl"
-            ReferencedContainer = "container:libmoai.xcodeproj">
+            BlueprintIdentifier = "CD9AB5FD22C41F280061A87F"
+            BuildableName = "moai-vk-temp"
+            BlueprintName = "moai-vk-temp"
+            ReferencedContainer = "container:moai-osx.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
       <AdditionalOptions>
       </AdditionalOptions>
    </LaunchAction>
@@ -60,15 +71,16 @@
       savedToolIdentifier = ""
       useCustomWorkingDirectory = "NO"
       debugDocumentVersioning = "YES">
-      <MacroExpansion>
+      <BuildableProductRunnable
+         runnableDebuggingMode = "0">
          <BuildableReference
             BuildableIdentifier = "primary"
-            BlueprintIdentifier = "CD58296B22717F85009CD0B6"
-            BuildableName = "libmoai-osx-gfx-gl.a"
-            BlueprintName = "libmoai-osx-gfx-gl"
-            ReferencedContainer = "container:libmoai.xcodeproj">
+            BlueprintIdentifier = "CD9AB5FD22C41F280061A87F"
+            BuildableName = "moai-vk-temp"
+            BlueprintName = "moai-vk-temp"
+            ReferencedContainer = "container:moai-osx.xcodeproj">
          </BuildableReference>
-      </MacroExpansion>
+      </BuildableProductRunnable>
    </ProfileAction>
    <AnalyzeAction
       buildConfiguration = "Debug">

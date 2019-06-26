@@ -5,76 +5,9 @@
 #include <moai-sim/host.h>
 #include <moai-sim/headers.h>
 
-#define MOAI_WITH_OPENGL
-#include <moai-gfx-gl/headers.h>
-#include <moai-gfx-gl/host.h>
-
 //================================================================//
 // aku
 //================================================================//
-
-//----------------------------------------------------------------//
-void AKUDetectFramebuffer () {
-
-	MOAIGfxMgrGL::Get ().DetectFramebuffer ();
-}
-
-//----------------------------------------------------------------//
-void AKUDetectGfxContext () {
-
-	MOAIGfxMgrGL::Get ().DetectContext ();
-	MOAIShaderMgrGL::Get ().AffirmAll ();
-//	MOAIGfxMgrGL::Get ().RenewResources (); // TODO: ZLGfx
-}
-
-//----------------------------------------------------------------//
-void AKUDiscardGfxResources () {
-
-	MOAIGfxMgrGL::Get ().DiscardResources ();
-}
-
-//----------------------------------------------------------------//
-void AKUDisplayListBeginPhase ( int phase ) {
-
-	MOAIGfxMgrGL::Get ().BeginPhase ( phase );
-}
-
-//----------------------------------------------------------------//
-void AKUDisplayListEnable ( int list ) {
-
-	MOAIGfxMgrGL::Get ().EnablePipeline ( list );
-}
-
-//----------------------------------------------------------------//
-void AKUDisplayListEndPhase ( int phase ) {
-
-	MOAIGfxMgrGL::Get ().EndPhase ( phase );
-}
-
-//----------------------------------------------------------------//
-bool AKUDisplayListHasContent ( int list ) {
-
-	return MOAIGfxMgrGL::Get ().HasContent ( list );
-}
-
-//----------------------------------------------------------------//
-bool AKUDisplayListIsEnabled ( int list ) {
-
-	return MOAIGfxMgrGL::Get ().IsPipelineEnabled ( list );
-}
-
-//----------------------------------------------------------------//
-void AKUDisplayListProcess ( int list ) {
-
-	MOAIGfxMgrGL::Get ().ProcessPipeline ( list );
-}
-
-//----------------------------------------------------------------//
-void AKUDisplayListPublishAndReset () {
-
-	MOAIGfxMgrGL::Get ().PublishAndReset ( MOAIGfxMgrGL::LOADING_PIPELINE );
-	MOAIGfxMgrGL::Get ().PublishAndReset ( MOAIGfxMgrGL::DRAWING_PIPELINE );
-}
 
 //----------------------------------------------------------------//
 void AKUEnqueueButtonEvent ( int deviceID, int sensorID, bool down ) {

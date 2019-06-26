@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-gfx/host.h>
 #include <moai-gfx-gl/host.h>
 #include <moai-gfx-gl/headers.h>
 
@@ -11,14 +12,20 @@
 
 //----------------------------------------------------------------//
 void AKUGfxGLAppFinalize () {
+
+	AKUGfxAppFinalize ();
 }
 
 //----------------------------------------------------------------//
 void AKUGfxGLAppInitialize () {
+
+	AKUGfxAppInitialize ();
 }
 
 //----------------------------------------------------------------//
 void AKUGfxGLContextInitialize () {
+
+	AKUGfxContextInitialize ();
 
 	MOAIGfxMgrGL::Affirm ();
 	MOAIGfxMgrGL::RegisterAlias < MOAIGfxMgr >();
@@ -39,4 +46,67 @@ void AKUGfxGLContextInitialize () {
 	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIVertexBufferGL, 		"MOAIVertexBuffer" )
 	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIVertexFormatGL, 		"MOAIVertexFormat" )
 	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIVertexFormatMgrGL, 		"MOAIVertexFormatMgr" )
+}
+
+//----------------------------------------------------------------//
+void AKUDetectFramebuffer () {
+
+	MOAIGfxMgrGL::Get ().DetectFramebuffer ();
+}
+
+//----------------------------------------------------------------//
+void AKUDetectGfxContext () {
+
+	MOAIGfxMgrGL::Get ().DetectContext ();
+	MOAIShaderMgrGL::Get ().AffirmAll ();
+//	MOAIGfxMgrGL::Get ().RenewResources (); // TODO: ZLGfx
+}
+
+//----------------------------------------------------------------//
+void AKUDiscardGfxResources () {
+
+	MOAIGfxMgrGL::Get ().DiscardResources ();
+}
+
+//----------------------------------------------------------------//
+void AKUDisplayListBeginPhase ( int phase ) {
+
+	MOAIGfxMgrGL::Get ().BeginPhase ( phase );
+}
+
+//----------------------------------------------------------------//
+void AKUDisplayListEnable ( int list ) {
+
+	MOAIGfxMgrGL::Get ().EnablePipeline ( list );
+}
+
+//----------------------------------------------------------------//
+void AKUDisplayListEndPhase ( int phase ) {
+
+	MOAIGfxMgrGL::Get ().EndPhase ( phase );
+}
+
+//----------------------------------------------------------------//
+bool AKUDisplayListHasContent ( int list ) {
+
+	return MOAIGfxMgrGL::Get ().HasContent ( list );
+}
+
+//----------------------------------------------------------------//
+bool AKUDisplayListIsEnabled ( int list ) {
+
+	return MOAIGfxMgrGL::Get ().IsPipelineEnabled ( list );
+}
+
+//----------------------------------------------------------------//
+void AKUDisplayListProcess ( int list ) {
+
+	MOAIGfxMgrGL::Get ().ProcessPipeline ( list );
+}
+
+//----------------------------------------------------------------//
+void AKUDisplayListPublishAndReset () {
+
+	MOAIGfxMgrGL::Get ().PublishAndReset ( MOAIGfxMgrGL::LOADING_PIPELINE );
+	MOAIGfxMgrGL::Get ().PublishAndReset ( MOAIGfxMgrGL::DRAWING_PIPELINE );
 }

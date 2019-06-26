@@ -4,15 +4,15 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#ifndef MOAI_GFX_GL_HOST_H
-#define MOAI_GFX_GL_HOST_H
+#ifndef MOAI_GFX_VK_HOST_H
+#define MOAI_GFX_VK_HOST_H
 
 #include <moai-core/host.h>
 
 // setup
-AKU_API void			AKUGfxGLAppFinalize				();
-AKU_API void			AKUGfxGLAppInitialize			();
-AKU_API void			AKUGfxGLContextInitialize		();
+AKU_API void			AKUGfxVKAppFinalize				();
+AKU_API void			AKUGfxVKAppInitialize			();
+AKU_API void			AKUGfxVKContextInitialize		();
 
 AKU_API void			AKUDetectFramebuffer			();
 AKU_API void			AKUDetectGfxContext				();

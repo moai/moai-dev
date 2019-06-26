@@ -82,6 +82,14 @@ void AKUModulesAppFinalize () {
 		AKUFmodExAppFinalize ();
 	#endif
 
+	#if AKU_WITH_GFX_GL
+		AKUGfxGLAppFinalize ();
+	#endif
+
+	#if AKU_WITH_GFX_VK
+		AKUGfxVKAppFinalize ();
+	#endif
+
 	#if AKU_WITH_HTTP_CLIENT
 		AKUHttpClientAppFinalize ();
 	#endif
@@ -99,8 +107,6 @@ void AKUModulesAppFinalize () {
 	#endif
 
 	#if AKU_WITH_SIM
-		AKUGfxAppFinalize ();
-		AKUGfxGLAppFinalize ();
 		AKUSimAppFinalize ();
 	#endif
 
@@ -160,6 +166,14 @@ int AKUModulesAppInitialize () {
 		AKUFmodExAppInitialize ();
 	#endif
 
+	#if AKU_WITH_GFX_GL
+		AKUGfxGLAppInitialize ();
+	#endif
+
+	#if AKU_WITH_GFX_VK
+		AKUGfxVKAppInitialize ();
+	#endif
+
 	#if AKU_WITH_HTTP_CLIENT
 		AKUHttpClientAppInitialize ();
 	#endif
@@ -177,8 +191,6 @@ int AKUModulesAppInitialize () {
 	#endif
 
 	#if AKU_WITH_SIM
-		AKUGfxAppInitialize ();
-		AKUGfxGLAppInitialize ();
 		AKUSimAppInitialize ();
 	#endif
 
@@ -246,6 +258,14 @@ int AKUModulesContextInitialize () {
 		AKUFmodExContextInitialize ();
 	#endif
 
+	#if AKU_WITH_GFX_GL
+		AKUGfxGLContextInitialize ();
+	#endif
+
+	#if AKU_WITH_GFX_VK
+		AKUGfxVKContextInitialize ();
+	#endif
+
 	#if AKU_WITH_HARFBUZZ
 		AKUHarfBuzzContextInitialize ();
 	#endif
@@ -271,8 +291,6 @@ int AKUModulesContextInitialize () {
 	#endif
 
 	#if AKU_WITH_SIM
-		AKUGfxContextInitialize ();
-		AKUGfxGLContextInitialize ();
 		AKUSimContextInitialize ();
 	#endif
 

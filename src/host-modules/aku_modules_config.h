@@ -29,6 +29,14 @@
 		#define AKU_WITH_FMOD_EX 0
 	#endif
 
+	#ifndef AKU_WITH_GFX_GL
+		#define AKU_WITH_GFX_GL 1
+	#endif
+
+	#ifndef AKU_WITH_GFX_VK
+		#define AKU_WITH_GFX_VK 0
+	#endif
+
 	#ifndef AKU_WITH_HARFBUZZ
 		#define AKU_WITH_HARFBUZZ 0
 	#endif

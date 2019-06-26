@@ -46,6 +46,14 @@
 	#include <moai-fmod-ex/host.h>
 #endif
 
+#if AKU_WITH_GFX_GL
+	#include <moai-gfx-gl/host.h>
+#endif
+
+#if AKU_WITH_GFX_VK
+	#include <moai-gfx-vk/host.h>
+#endif
+
 #if AKU_WITH_HARFBUZZ
 	#include <moai-harfbuzz/host.h>
 #endif
