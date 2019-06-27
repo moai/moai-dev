@@ -23,7 +23,7 @@
 //int MOAIGfxMgrVK::_enablePipelineLogging ( lua_State* L ) {
 //	MOAI_LUA_SETUP_SINGLE ( MOAIGfxMgrVK, "" )
 //
-//	MOAIGfxMgrVK::Get ().EnablePipelineLogging ( state.GetValue < bool >( 1, false ));
+//	MOAIGfxMgrVK::Get ().EnableQueueLogging ( state.GetValue < bool >( 1, false ));
 //
 //	ZLFileSys::DeleteDirectory ( GFX_PIPELINE_LOGGING_FOLDER, true, true );
 //	ZLFileSys::AffirmPath ( GFX_PIPELINE_LOGGING_FOLDER );
@@ -430,8 +430,8 @@ void MOAIGfxMgrVK::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAI
 
 //	state.SetField ( -1, "EVENT_RESIZE",	( u32 )EVENT_RESIZE );
 //	
-//	state.SetField ( -1, "DRAWING_PIPELINE",	( u32 )MOAIGfxMgrVK_PipelineClerkVK::DRAWING_PIPELINE );
-//	state.SetField ( -1, "LOADING_PIPELINE",	( u32 )MOAIGfxMgrVK_PipelineClerkVK::LOADING_PIPELINE );
+//	state.SetField ( -1, "DRAWING_QUEUE",	( u32 )MOAIGfxMgrVK_PipelineClerkVK::DRAWING_QUEUE );
+//	state.SetField ( -1, "LOADING_QUEUE",	( u32 )MOAIGfxMgrVK_PipelineClerkVK::LOADING_QUEUE );
 //
 //	luaL_Reg regTable [] = {
 //		{ "enablePipelineLogging",		_enablePipelineLogging },

@@ -77,7 +77,7 @@ void AKUDisplayListBeginPhase ( int phase ) {
 //----------------------------------------------------------------//
 void AKUDisplayListEnable ( int list ) {
 
-//	MOAIGfxMgrVK::Get ().EnablePipeline ( list );
+//	MOAIGfxMgrVK::Get ().EnableQueue ( list );
 }
 
 //----------------------------------------------------------------//
@@ -96,19 +96,19 @@ bool AKUDisplayListHasContent ( int list ) {
 //----------------------------------------------------------------//
 bool AKUDisplayListIsEnabled ( int list ) {
 
-//	return MOAIGfxMgrVK::Get ().IsPipelineEnabled ( list );
+//	return MOAIGfxMgrVK::Get ().IsQueueEnabled ( list );
 	return false;
 }
 
 //----------------------------------------------------------------//
 void AKUDisplayListProcess ( int list ) {
 
-//	MOAIGfxMgrVK::Get ().ProcessPipeline ( list );
+//	MOAIGfxMgrVK::Get ().ProcessQueue ( list );
 }
 
 //----------------------------------------------------------------//
 void AKUDisplayListPublishAndReset () {
 
-//	MOAIGfxMgrVK::Get ().PublishAndReset ( MOAIGfxMgrVK::LOADING_PIPELINE );
-//	MOAIGfxMgrVK::Get ().PublishAndReset ( MOAIGfxMgrVK::DRAWING_PIPELINE );
+//	MOAIGfxMgrVK::Get ().PublishAndReset ( MOAIGfxMgrVK::LOADING_QUEUE );
+//	MOAIGfxMgrVK::Get ().PublishAndReset ( MOAIGfxMgrVK::DRAWING_QUEUE );
 }

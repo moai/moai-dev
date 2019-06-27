@@ -1,30 +1,30 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGFXMGRGL_PIPELINECLERKGL_H
-#define	MOAIGFXMGRGL_PIPELINECLERKGL_H
+#ifndef	MOAIGFXMGRGL_DISPLAYLISTCLERKGL_H
+#define	MOAIGFXMGRGL_DISPLAYLISTCLERKGL_H
 
 #include <moai-gfx-gl/MOAIGfxMgrGLComponents.h>
 
 #define GFX_PIPELINE_LOGGING_FOLDER "renderlogs"
 
 //================================================================//
-// MOAIGfxPipelineGL
+// MOAIDisplayListQueueGL
 //================================================================//
-class MOAIGfxPipelineGL {
+class MOAIDisplayListQueueGL {
 private:
 
-	friend class MOAIGfxMgrGL_PipelineClerkGL;
+	friend class MOAIGfxMgrGL_DisplayListClerkGL;
 
 	ZLLeanArray < ZLGfxRetained* > mDisplayLists;
 	ZLLeanStack < ZLGfxRetained* > mFreeDisplayLists;
 	ZLLeanStack < ZLGfxRetained* > mFinishedDisplayLists;
 
 	enum {
-		PIPELINE_CPU,			// busy on the main thread
-		PIPELINE_PENDING,		// waiting for the graphics thread
-		PIPELINE_GPU,			// busy on the graphics thread
-		PIPELINE_TOTAL_STAGES,
+		QUEUE_FOR_CPU,			// busy on the main thread
+		QUEUE_PENDING,		// waiting for the graphics thread
+		QUEUE_FOR_GPU,			// busy on the graphics thread
+		QUEUE_TOTAL_STAGES,
 	};
 
 	enum {
@@ -32,7 +32,7 @@ private:
 		GPU_PHASE,
 	};
 
-	ZLGfxRetained* mPipeline [ PIPELINE_TOTAL_STAGES ];
+	ZLGfxRetained* mQueue [ QUEUE_TOTAL_STAGES ];
 
 	size_t		mRenderCount;
 	bool		mEnableLogging;
@@ -44,40 +44,40 @@ private:
 	void					PhaseEnd					( u32 phase );
 	void					PublishAndReset				();
 	void					ReleaseDisplayList			( ZLGfxRetained* list );
-							MOAIGfxPipelineGL			();
-							~MOAIGfxPipelineGL			();
+							MOAIDisplayListQueueGL		();
+							~MOAIDisplayListQueueGL		();
 };
 
 //================================================================//
-// MOAIGfxMgrGL_PipelineClerkGL
+// MOAIGfxMgrGL_DisplayListClerkGL
 //================================================================//
-class MOAIGfxMgrGL_PipelineClerkGL :
+class MOAIGfxMgrGL_DisplayListClerkGL :
 	public virtual MOAIGfxMgrGLComponents {
 public:
 
 	enum {
-		DRAWING_PIPELINE,
-		LOADING_PIPELINE,
-		TOTAL_PIPELINES,
+		DRAWING_QUEUE,
+		LOADING_QUEUE,
+		TOTAL_QUEUES,
 	};
 
 protected:
 
 	ZLGfxImmediate		mGfxImmediate;
 
-	MOAIGfxPipelineGL*	mPipelines [ TOTAL_PIPELINES ];
+	MOAIDisplayListQueueGL*	mQueues [ TOTAL_QUEUES ];
 	
 	ZLGfx*				mDrawingAPI;
 	
 	u32					mDrawCount;
-	u32					mPipelineRenderCount;
+	u32					mQueueRenderCount;
 	
-	bool				mEnablePipelineLogging;
+	bool				mEnableQueueLogging;
 
 	//----------------------------------------------------------------//
 	void				BeginPhase					( u32 list, u32 phase );
 	void				EndPhase					( u32 list, u32 phase );
-	void				LogPipelineRender			( ZLGfxRetained& gfx, size_t renderCount, cc8* name );
+	void				LogQueueRender				( ZLGfxRetained& gfx, size_t renderCount, cc8* name );
 
 public:
 	
@@ -92,18 +92,18 @@ public:
 	
 	//----------------------------------------------------------------//
 	void				BeginPhase							( u32 phase );
-	void				EnablePipeline						( u32 pipelineID );
-	void				EnablePipelineLogging				( bool enable );
+	void				EnableQueue							( u32 queueID );
+	void				EnableQueueLogging					( bool enable );
 	void				EndPhase							( u32 phase );
-	bool				HasContent							( u32 pipelineID );
-	bool				IsPipelineEnabled					( u32 pipelineID );
-	void				ProcessPipeline						( u32 pipelineID );
-	void				PublishAndReset						( u32 pipelineID );
+	bool				HasContent							( u32 queueID );
+	bool				IsQueueEnabled						( u32 queueID );
+	void				ProcessQueue						( u32 queueID );
+	void				PublishAndReset						( u32 queueID );
 	void				ResetDrawingAPIs					();
 	ZLGfx*				SelectDrawingAPI					();
-	ZLGfx*				SelectDrawingAPI					( u32 pipelineID );
-						MOAIGfxMgrGL_PipelineClerkGL		();
-	virtual				~MOAIGfxMgrGL_PipelineClerkGL		();
+	ZLGfx*				SelectDrawingAPI					( u32 queueID );
+						MOAIGfxMgrGL_DisplayListClerkGL		();
+	virtual				~MOAIGfxMgrGL_DisplayListClerkGL	();
 };
 
 #endif

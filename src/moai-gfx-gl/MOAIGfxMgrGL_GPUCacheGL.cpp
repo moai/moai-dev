@@ -4,7 +4,7 @@
 #include "pch.h"
 
 #include <moai-gfx-gl/MOAIFrameBufferGL.h>
-#include <moai-gfx-gl/MOAIGfxMgrGL_PipelineClerkGL.h>
+#include <moai-gfx-gl/MOAIGfxMgrGL_DisplayListClerkGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_GPUCacheGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_VertexCacheGL.h>
 #include <moai-gfx-gl/MOAIIndexBufferGL.h>
@@ -190,7 +190,7 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushBlendMode ( bool blendEnabled, const MOAIBlen
 	assert ( this->mApplyingStateChanges );
 	
 	MOAIGfxStateGPUCacheFrameGL& active = this->mActiveState;
-	ZLGfx& gfx = this->GetPipelineClerkGL ().GetDrawingAPI ();
+	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
 	
 	if ( blendEnabled ) {
 	
@@ -235,7 +235,7 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushCullFunc ( int cullFunc ) {
 	assert ( this->mApplyingStateChanges );
 	
 	MOAIGfxStateGPUCacheFrameGL& active = this->mActiveState;
-	ZLGfx& gfx = this->GetPipelineClerkGL ().GetDrawingAPI ();
+	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
 	
 	if ( active.mCullFunc != cullFunc ) {
 	
@@ -261,7 +261,7 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushDepthFunc ( int depthFunc ) {
 	assert ( this->mApplyingStateChanges );
 	
 	MOAIGfxStateGPUCacheFrameGL& active = this->mActiveState;
-	ZLGfx& gfx = this->GetPipelineClerkGL ().GetDrawingAPI ();
+	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
 
 	if ( active.mDepthFunc != depthFunc ) {
 	
@@ -287,7 +287,7 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushDepthMask ( bool depthMask ) {
 	assert ( this->mApplyingStateChanges );
 	
 	MOAIGfxStateGPUCacheFrameGL& active = this->mActiveState;
-	ZLGfx& gfx = this->GetPipelineClerkGL ().GetDrawingAPI ();
+	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
 	
 	if ( active.mDepthMask != depthMask ) {
 		
@@ -305,7 +305,7 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushFrameBuffer ( MOAIFrameBufferGL* frameBuffer 
 	assert ( this->mApplyingStateChanges );
 	
 	MOAIGfxStateGPUCacheFrameGL& active = this->mActiveState;
-	ZLGfx& gfx = this->GetPipelineClerkGL ().GetDrawingAPI ();
+	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
 		
 	if ( active.mFrameBuffer != frameBuffer ) {
 		
@@ -328,7 +328,7 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushIndexBuffer ( MOAIIndexBufferGL* buffer ) {
 	assert ( this->mApplyingStateChanges );
 	
 	MOAIGfxStateGPUCacheFrameGL& active = this->mActiveState;
-	ZLGfx& gfx = this->GetPipelineClerkGL ().GetDrawingAPI ();
+	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
 	
 	ZLSharedConstBuffer* bufferForBind = buffer ? buffer->GetBufferForBind ( gfx ) : 0;
 	
@@ -358,7 +358,7 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushPenWidth ( float penWidth ) {
 	assert ( this->mApplyingStateChanges );
 	
 	MOAIGfxStateGPUCacheFrameGL& active = this->mActiveState;
-	ZLGfx& gfx = this->GetPipelineClerkGL ().GetDrawingAPI ();
+	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
 	
 	if ( active.mPenWidth != penWidth ) {
 		
@@ -377,7 +377,7 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushScissorRect ( bool scissorEnabled, ZLRect rec
 	assert ( this->mApplyingStateChanges );
 	
 	MOAIGfxStateGPUCacheFrameGL& active = this->mActiveState;
-	ZLGfx& gfx = this->GetPipelineClerkGL ().GetDrawingAPI ();
+	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
 	
 	if ( scissorEnabled ) {
 	
@@ -434,7 +434,7 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushShader ( MOAIShaderGL* shader ) {
 	assert ( this->mApplyingStateChanges );
 	
 	MOAIGfxStateGPUCacheFrameGL& active = this->mActiveState;
-	ZLGfx& gfx = this->GetPipelineClerkGL ().GetDrawingAPI ();
+	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
 	
 	MOAIShaderProgramGL* program = shader ? shader->GetProgram () : 0;
 	shader = program ? shader : 0;
@@ -479,7 +479,7 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushTexture ( ZLIndex textureUnit, MOAITextureGL*
 	assert ( this->mApplyingStateChanges );
 	
 	MOAIGfxStateGPUCacheFrameGL& active = this->mActiveState;
-	ZLGfx& gfx = this->GetPipelineClerkGL ().GetDrawingAPI ();
+	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
 	
 	texture = texture && texture->Affirm () ? texture : ( MOAITextureGL* )this->mDefaultTexture;
 	MOAITextureGL* prevTexture = active.mTextureUnits [ textureUnit ];
@@ -512,7 +512,7 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushVertexArray ( MOAIVertexArrayGL* vtxArray ) {
 	assert ( this->mApplyingStateChanges );
 	
 	MOAIGfxStateGPUCacheFrameGL& active = this->mActiveState;
-	ZLGfx& gfx = this->GetPipelineClerkGL ().GetDrawingAPI ();
+	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
 	
 	if ( active.mVtxArray != vtxArray ) {
 
@@ -540,7 +540,7 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushVertexBuffer ( MOAIVertexBufferGL* buffer ) {
 	assert ( this->mApplyingStateChanges );
 
 	MOAIGfxStateGPUCacheFrameGL& active = this->mActiveState;
-	ZLGfx& gfx = this->GetPipelineClerkGL ().GetDrawingAPI ();
+	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
 	
 	ZLSharedConstBuffer* bufferForBind = buffer ? buffer->GetBufferForBind ( gfx ) : 0;
 
@@ -580,7 +580,7 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushVertexFormat ( MOAIVertexFormatGL* vtxFormat 
 	assert ( this->mApplyingStateChanges );
 	
 	MOAIGfxStateGPUCacheFrameGL& active = this->mActiveState;
-	ZLGfx& gfx = this->GetPipelineClerkGL ().GetDrawingAPI ();
+	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
 	
 	if ( active.mVtxFormat != vtxFormat ) {
 		
@@ -603,7 +603,7 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushViewRect ( ZLRect rect ) {
 	assert ( this->mApplyingStateChanges );
 	
 	MOAIGfxStateGPUCacheFrameGL& active = this->mActiveState;
-	ZLGfx& gfx = this->GetPipelineClerkGL ().GetDrawingAPI ();
+	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
 	
 	if ( !active.mViewRect.IsEqual ( rect )) {
 		
@@ -738,7 +738,7 @@ void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_ClearSurface () {
 
 	if ( clearFlags ) {
 	
-		ZLGfx& gfx = this->GetPipelineClerkGL ().GetDrawingAPI ();
+		ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
 	
 		// discard this if all buffers are to be cleared?
 		// (may still need to draw if depth or color only)
@@ -786,7 +786,7 @@ void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_DrawPrims ( u32 primType, u32 
 
 	if ( shader && ( this->mActiveState.mVtxBuffer || this->mActiveState.mVtxArray )) {
 		
-		ZLGfx& gfx = this->GetPipelineClerkGL ().GetDrawingAPI ();
+		ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
 		
 		MOAIIndexBufferGL* idxBuffer = this->mActiveState.mIdxBuffer;
 		
@@ -878,7 +878,7 @@ float MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_GetViewWidth () const {
 //----------------------------------------------------------------//
 void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_ResetGPUState () {
 
-	ZLGfx& gfx = this->GetPipelineClerkGL ().GetDrawingAPI ();
+	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
 	MOAIGfxStateGPUCacheFrameGL& pending = this->mPendingState;
 	MOAIGfxStateGPUCacheFrameGL& active = this->mActiveState;
 
@@ -1209,7 +1209,7 @@ void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_SetViewRect ( ZLRect rect ) {
 //----------------------------------------------------------------//
 void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_UnbindAll () {
 
-	ZLGfx& gfx = this->GetPipelineClerkGL ().GetDrawingAPI ();
+	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
 
 	ZGL_COMMENT ( gfx, "GFX UNBIND ALL" );
 

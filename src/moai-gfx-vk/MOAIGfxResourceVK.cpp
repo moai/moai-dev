@@ -5,7 +5,6 @@
 
 #include <moai-gfx-vk/MOAIGfxResourceVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
-#include <moai-gfx-vk/MOAIGfxMgrVK_PipelineClerkVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK_RenderTreeVK.h>
 
 //================================================================//
@@ -262,9 +261,9 @@ bool MOAIGfxResourceVK::MOAIGfxResource_ScheduleForGPUUpdate ( PipelineHint hint
 //			return false;
 //	}
 //
-//	u32 pipelineID = hint == PipelineHint::RENDER_PIPELINE ? MOAIGfxMgrVK_PipelineClerkVK::DRAWING_PIPELINE : MOAIGfxMgrVK_PipelineClerkVK::LOADING_PIPELINE;
+//	u32 queueID = hint == PipelineHint::RENDER_PIPELINE ? MOAIGfxMgrVK_PipelineClerkVK::DRAWING_QUEUE : MOAIGfxMgrVK_PipelineClerkVK::LOADING_QUEUE;
 //
-//	this->mGfxMgr->ScheduleGPUAffirm ( *this, pipelineID );
+//	this->mGfxMgr->ScheduleGPUAffirm ( *this, queueID );
 //	return true;
 	return true;
 }
@@ -282,8 +281,8 @@ void MOAIGfxResourceVK::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer,
 //
 //	state.SetField ( -1, "GFX_EVENT_CREATED",					( u32 )MOAIGfxResourceVK::GFX_EVENT_CREATED );
 //
-//	state.SetField ( -1, "DRAWING_PIPELINE",					( u32 )MOAIGfxMgrVK_PipelineClerkVK::DRAWING_PIPELINE );
-//	state.SetField ( -1, "LOADING_PIPELINE",					( u32 )MOAIGfxMgrVK_PipelineClerkVK::LOADING_PIPELINE );
+//	state.SetField ( -1, "DRAWING_QUEUE",					( u32 )MOAIGfxMgrVK_PipelineClerkVK::DRAWING_QUEUE );
+//	state.SetField ( -1, "LOADING_QUEUE",					( u32 )MOAIGfxMgrVK_PipelineClerkVK::LOADING_QUEUE );
 }
 
 //----------------------------------------------------------------//

@@ -2127,8 +2127,8 @@
 		CD4A95CE229DFD7200F9E400 /* MOAIGfxBufferGL.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A95A9229DFD7200F9E400 /* MOAIGfxBufferGL.h */; };
 		CD4A95D3229DFD7200F9E400 /* MOAIGfxMgrGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4A95AE229DFD7200F9E400 /* MOAIGfxMgrGL.cpp */; };
 		CD4A95D4229DFD7200F9E400 /* MOAIGfxMgrGL.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A95AF229DFD7200F9E400 /* MOAIGfxMgrGL.h */; };
-		CD4A95D5229DFD7200F9E400 /* MOAIGfxMgrGL_PipelineClerkGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4A95B0229DFD7200F9E400 /* MOAIGfxMgrGL_PipelineClerkGL.cpp */; };
-		CD4A95D6229DFD7200F9E400 /* MOAIGfxMgrGL_PipelineClerkGL.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A95B1229DFD7200F9E400 /* MOAIGfxMgrGL_PipelineClerkGL.h */; };
+		CD4A95D5229DFD7200F9E400 /* MOAIGfxMgrGL_DisplayListClerkGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4A95B0229DFD7200F9E400 /* MOAIGfxMgrGL_DisplayListClerkGL.cpp */; };
+		CD4A95D6229DFD7200F9E400 /* MOAIGfxMgrGL_DisplayListClerkGL.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A95B1229DFD7200F9E400 /* MOAIGfxMgrGL_DisplayListClerkGL.h */; };
 		CD4A95D7229DFD7200F9E400 /* MOAIGfxMgrGL_ResourceClerkGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4A95B2229DFD7200F9E400 /* MOAIGfxMgrGL_ResourceClerkGL.cpp */; };
 		CD4A95D8229DFD7200F9E400 /* MOAIGfxMgrGL_ResourceClerkGL.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A95B3229DFD7200F9E400 /* MOAIGfxMgrGL_ResourceClerkGL.h */; };
 		CD4A95D9229DFD7200F9E400 /* MOAIGfxMgrGL_GPUCacheGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4A95B4229DFD7200F9E400 /* MOAIGfxMgrGL_GPUCacheGL.cpp */; };
@@ -6543,8 +6543,8 @@
 		CD4A95A9229DFD7200F9E400 /* MOAIGfxBufferGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxBufferGL.h; path = "moai-gfx-gl/MOAIGfxBufferGL.h"; sourceTree = "<group>"; };
 		CD4A95AE229DFD7200F9E400 /* MOAIGfxMgrGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIGfxMgrGL.cpp; path = "moai-gfx-gl/MOAIGfxMgrGL.cpp"; sourceTree = "<group>"; };
 		CD4A95AF229DFD7200F9E400 /* MOAIGfxMgrGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxMgrGL.h; path = "moai-gfx-gl/MOAIGfxMgrGL.h"; sourceTree = "<group>"; };
-		CD4A95B0229DFD7200F9E400 /* MOAIGfxMgrGL_PipelineClerkGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIGfxMgrGL_PipelineClerkGL.cpp; path = "moai-gfx-gl/MOAIGfxMgrGL_PipelineClerkGL.cpp"; sourceTree = "<group>"; };
-		CD4A95B1229DFD7200F9E400 /* MOAIGfxMgrGL_PipelineClerkGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxMgrGL_PipelineClerkGL.h; path = "moai-gfx-gl/MOAIGfxMgrGL_PipelineClerkGL.h"; sourceTree = "<group>"; };
+		CD4A95B0229DFD7200F9E400 /* MOAIGfxMgrGL_DisplayListClerkGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIGfxMgrGL_DisplayListClerkGL.cpp; path = "moai-gfx-gl/MOAIGfxMgrGL_DisplayListClerkGL.cpp"; sourceTree = "<group>"; };
+		CD4A95B1229DFD7200F9E400 /* MOAIGfxMgrGL_DisplayListClerkGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxMgrGL_DisplayListClerkGL.h; path = "moai-gfx-gl/MOAIGfxMgrGL_DisplayListClerkGL.h"; sourceTree = "<group>"; };
 		CD4A95B2229DFD7200F9E400 /* MOAIGfxMgrGL_ResourceClerkGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIGfxMgrGL_ResourceClerkGL.cpp; path = "moai-gfx-gl/MOAIGfxMgrGL_ResourceClerkGL.cpp"; sourceTree = "<group>"; };
 		CD4A95B3229DFD7200F9E400 /* MOAIGfxMgrGL_ResourceClerkGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxMgrGL_ResourceClerkGL.h; path = "moai-gfx-gl/MOAIGfxMgrGL_ResourceClerkGL.h"; sourceTree = "<group>"; };
 		CD4A95B4229DFD7200F9E400 /* MOAIGfxMgrGL_GPUCacheGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIGfxMgrGL_GPUCacheGL.cpp; path = "moai-gfx-gl/MOAIGfxMgrGL_GPUCacheGL.cpp"; sourceTree = "<group>"; };
@@ -7249,8 +7249,6 @@
 		CD9AB54D22C41C7C0061A87F /* MOAIGfxBufferVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxBufferVK.h; path = "moai-gfx-vk/MOAIGfxBufferVK.h"; sourceTree = "<group>"; };
 		CD9AB54E22C41C7C0061A87F /* MOAIGfxMgrVK_GPUCacheVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIGfxMgrVK_GPUCacheVK.cpp; path = "moai-gfx-vk/MOAIGfxMgrVK_GPUCacheVK.cpp"; sourceTree = "<group>"; };
 		CD9AB54F22C41C7C0061A87F /* MOAIGfxMgrVK_GPUCacheVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxMgrVK_GPUCacheVK.h; path = "moai-gfx-vk/MOAIGfxMgrVK_GPUCacheVK.h"; sourceTree = "<group>"; };
-		CD9AB55022C41C7C0061A87F /* MOAIGfxMgrVK_PipelineClerkVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIGfxMgrVK_PipelineClerkVK.cpp; path = "moai-gfx-vk/MOAIGfxMgrVK_PipelineClerkVK.cpp"; sourceTree = "<group>"; };
-		CD9AB55122C41C7C0061A87F /* MOAIGfxMgrVK_PipelineClerkVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxMgrVK_PipelineClerkVK.h; path = "moai-gfx-vk/MOAIGfxMgrVK_PipelineClerkVK.h"; sourceTree = "<group>"; };
 		CD9AB55222C41C7C0061A87F /* MOAIGfxMgrVK_RenderTreeVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIGfxMgrVK_RenderTreeVK.cpp; path = "moai-gfx-vk/MOAIGfxMgrVK_RenderTreeVK.cpp"; sourceTree = "<group>"; };
 		CD9AB55322C41C7C0061A87F /* MOAIGfxMgrVK_RenderTreeVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxMgrVK_RenderTreeVK.h; path = "moai-gfx-vk/MOAIGfxMgrVK_RenderTreeVK.h"; sourceTree = "<group>"; };
 		CD9AB55422C41C7C0061A87F /* MOAIGfxMgrVK_ResourceClerkVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIGfxMgrVK_ResourceClerkVK.cpp; path = "moai-gfx-vk/MOAIGfxMgrVK_ResourceClerkVK.cpp"; sourceTree = "<group>"; };
@@ -10441,10 +10439,10 @@
 			children = (
 				CD4A95AE229DFD7200F9E400 /* MOAIGfxMgrGL.cpp */,
 				CD4A95AF229DFD7200F9E400 /* MOAIGfxMgrGL.h */,
+				CD4A95B0229DFD7200F9E400 /* MOAIGfxMgrGL_DisplayListClerkGL.cpp */,
+				CD4A95B1229DFD7200F9E400 /* MOAIGfxMgrGL_DisplayListClerkGL.h */,
 				CD4A95B4229DFD7200F9E400 /* MOAIGfxMgrGL_GPUCacheGL.cpp */,
 				CD4A95B5229DFD7200F9E400 /* MOAIGfxMgrGL_GPUCacheGL.h */,
-				CD4A95B0229DFD7200F9E400 /* MOAIGfxMgrGL_PipelineClerkGL.cpp */,
-				CD4A95B1229DFD7200F9E400 /* MOAIGfxMgrGL_PipelineClerkGL.h */,
 				CD4A9641229E91E900F9E400 /* MOAIGfxMgrGL_RenderTreeGL.cpp */,
 				CD4A9642229E91E900F9E400 /* MOAIGfxMgrGL_RenderTreeGL.h */,
 				CD4A95B2229DFD7200F9E400 /* MOAIGfxMgrGL_ResourceClerkGL.cpp */,
@@ -12789,8 +12787,6 @@
 				CD9AB55922C41C7C0061A87F /* MOAIGfxMgrVK.h */,
 				CD9AB54E22C41C7C0061A87F /* MOAIGfxMgrVK_GPUCacheVK.cpp */,
 				CD9AB54F22C41C7C0061A87F /* MOAIGfxMgrVK_GPUCacheVK.h */,
-				CD9AB55022C41C7C0061A87F /* MOAIGfxMgrVK_PipelineClerkVK.cpp */,
-				CD9AB55122C41C7C0061A87F /* MOAIGfxMgrVK_PipelineClerkVK.h */,
 				CD9AB55222C41C7C0061A87F /* MOAIGfxMgrVK_RenderTreeVK.cpp */,
 				CD9AB55322C41C7C0061A87F /* MOAIGfxMgrVK_RenderTreeVK.h */,
 				CD9AB55422C41C7C0061A87F /* MOAIGfxMgrVK_ResourceClerkVK.cpp */,
@@ -15306,7 +15302,7 @@
 				CD4A95C8229DFD7200F9E400 /* MOAIGfxResourceGL.h in Headers */,
 				CD4A952B229DE48C00F9E400 /* MOAIFontSnappingShaderGL-fsh.h in Headers */,
 				CD4A94FB229DE47300F9E400 /* MOAIIndexBufferGL.h in Headers */,
-				CD4A95D6229DFD7200F9E400 /* MOAIGfxMgrGL_PipelineClerkGL.h in Headers */,
+				CD4A95D6229DFD7200F9E400 /* MOAIGfxMgrGL_DisplayListClerkGL.h in Headers */,
 				CD4A95D8229DFD7200F9E400 /* MOAIGfxMgrGL_ResourceClerkGL.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -18815,7 +18811,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD4A95DF229DFD7200F9E400 /* MOAIShaderProgramGL.cpp in Sources */,
-				CD4A95D5229DFD7200F9E400 /* MOAIGfxMgrGL_PipelineClerkGL.cpp in Sources */,
+				CD4A95D5229DFD7200F9E400 /* MOAIGfxMgrGL_DisplayListClerkGL.cpp in Sources */,
 				CD4A9569229DF8F300F9E400 /* ZLViewport.cpp in Sources */,
 				CD4A956D229DF8F300F9E400 /* ZLViewProj.cpp in Sources */,
 				CD4A95D3229DFD7200F9E400 /* MOAIGfxMgrGL.cpp in Sources */,

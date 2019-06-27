@@ -4,7 +4,6 @@
 #include "pch.h"
 
 #include <moai-gfx-vk/MOAIFrameBufferVK.h>
-#include <moai-gfx-vk/MOAIGfxMgrVK_PipelineClerkVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK_GPUCacheVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK_VertexCacheVK.h>
 #include <moai-gfx-vk/MOAIIndexBufferVK.h>

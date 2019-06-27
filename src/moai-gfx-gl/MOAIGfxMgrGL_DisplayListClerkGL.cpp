@@ -3,19 +3,19 @@
 
 #include "pch.h"
 
-#include <moai-gfx-vk/MOAIGfxMgrVK_GPUCacheVK.h>
-#include <moai-gfx-vk/MOAIGfxMgrVK_PipelineClerkVK.h>
+#include <moai-gfx-gl/MOAIGfxMgrGL_GPUCacheGL.h>
+#include <moai-gfx-gl/MOAIGfxMgrGL_DisplayListClerkGL.h>
 
 #ifdef DeleteFile
 	#undef DeleteFile
 #endif
 
 //================================================================//
-// MOAIGfxPipelineVK
+// MOAIDisplayListQueueGL
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLGfxRetained* MOAIGfxPipelineVK::GetDisplayList () {
+ZLGfxRetained* MOAIDisplayListQueueGL::GetDisplayList () {
 
 	if ( this->mFreeDisplayLists.GetTop () > 0 ) {
 		return this->mFreeDisplayLists.Pop ();
@@ -28,21 +28,21 @@ ZLGfxRetained* MOAIGfxPipelineVK::GetDisplayList () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxPipelineVK::HasContent () {
+bool MOAIDisplayListQueueGL::HasContent () {
 
-	return ( this->mPipeline [ PIPELINE_PENDING ] != 0 );
+	return ( this->mQueue [ QUEUE_PENDING ] != 0 );
 }
 
 //----------------------------------------------------------------//
-MOAIGfxPipelineVK::MOAIGfxPipelineVK () :
+MOAIDisplayListQueueGL::MOAIDisplayListQueueGL () :
 	mRenderCount ( 0 ),
 	mEnableLogging ( false ) {
 
-	memset ( this->mPipeline, 0, sizeof ( this->mPipeline ));
+	memset ( this->mQueue, 0, sizeof ( this->mQueue ));
 }
 
 //----------------------------------------------------------------//
-MOAIGfxPipelineVK::~MOAIGfxPipelineVK () {
+MOAIDisplayListQueueGL::~MOAIDisplayListQueueGL () {
 
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mDisplayLists.Size (); ++i ) {
 		delete ( this->mDisplayLists [ i ]);
@@ -50,7 +50,7 @@ MOAIGfxPipelineVK::~MOAIGfxPipelineVK () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxPipelineVK::PhaseBegin ( u32 phase ) {
+void MOAIDisplayListQueueGL::PhaseBegin ( u32 phase ) {
 
 	switch ( phase ) {
 	
@@ -62,13 +62,13 @@ void MOAIGfxPipelineVK::PhaseBegin ( u32 phase ) {
 			}
 
 			// illegal to begin while already in progress
-			assert ( this->mPipeline [ PIPELINE_CPU ] == 0 );
+			assert ( this->mQueue [ QUEUE_FOR_CPU ] == 0 );
 
 			// bail if pending
-			if ( this->mPipeline [ PIPELINE_PENDING ]) return;
+			if ( this->mQueue [ QUEUE_PENDING ]) return;
 			
 			// begin the phase
-			this->mPipeline [ PIPELINE_CPU ] = this->GetDisplayList ();
+			this->mQueue [ QUEUE_FOR_CPU ] = this->GetDisplayList ();
 			
 			break;
 		}
@@ -76,10 +76,10 @@ void MOAIGfxPipelineVK::PhaseBegin ( u32 phase ) {
 		case GPU_PHASE: {
 		
 			// illegal to begin while already in progress
-			assert ( this->mPipeline [ PIPELINE_GPU ] == 0 );
+			assert ( this->mQueue [ QUEUE_FOR_GPU ] == 0 );
 			
-			this->mPipeline [ PIPELINE_GPU ] =  this->mPipeline [ PIPELINE_PENDING ];
-			this->mPipeline [ PIPELINE_PENDING ] = 0;
+			this->mQueue [ QUEUE_FOR_GPU ] =  this->mQueue [ QUEUE_PENDING ];
+			this->mQueue [ QUEUE_PENDING ] = 0;
 			
 			break;
 		}
@@ -87,21 +87,21 @@ void MOAIGfxPipelineVK::PhaseBegin ( u32 phase ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxPipelineVK::PhaseEnd ( u32 phase ) {
+void MOAIDisplayListQueueGL::PhaseEnd ( u32 phase ) {
 
 	switch ( phase ) {
 	
 		case CPU_PHASE: {
 			
-			ZLGfxRetained* list = this->mPipeline [ PIPELINE_CPU ];
+			ZLGfxRetained* list = this->mQueue [ QUEUE_FOR_CPU ];
 			if ( !list ) return;
 			
-			assert ( this->mPipeline [ PIPELINE_PENDING ] == 0 );
+			assert ( this->mQueue [ QUEUE_PENDING ] == 0 );
 			
-			this->mPipeline [ PIPELINE_CPU ] = 0;
+			this->mQueue [ QUEUE_FOR_CPU ] = 0;
 			
 			if ( list->HasContent ()) {
-				this->mPipeline [ PIPELINE_PENDING ] = list;
+				this->mQueue [ QUEUE_PENDING ] = list;
 			}
 			else {
 				this->ReleaseDisplayList ( list );
@@ -111,11 +111,11 @@ void MOAIGfxPipelineVK::PhaseEnd ( u32 phase ) {
 		
 		case GPU_PHASE: {
 		
-			ZLGfxRetained* list = this->mPipeline [ PIPELINE_GPU ];
+			ZLGfxRetained* list = this->mQueue [ QUEUE_FOR_GPU ];
 	
 			if ( list ) {
 				this->mFinishedDisplayLists.Push ( list );
-				this->mPipeline [ PIPELINE_GPU ] = 0;
+				this->mQueue [ QUEUE_FOR_GPU ] = 0;
 			}
 			break;
 		}
@@ -123,7 +123,7 @@ void MOAIGfxPipelineVK::PhaseEnd ( u32 phase ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxPipelineVK::PublishAndReset () {
+void MOAIDisplayListQueueGL::PublishAndReset () {
 
 	ZLSize top = this->mFinishedDisplayLists.GetTop ();
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < top; ++i ) {
@@ -135,7 +135,7 @@ void MOAIGfxPipelineVK::PublishAndReset () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxPipelineVK::ReleaseDisplayList ( ZLGfxRetained* list ) {
+void MOAIDisplayListQueueGL::ReleaseDisplayList ( ZLGfxRetained* list ) {
 
 	list->Reset ();
 
@@ -143,97 +143,97 @@ void MOAIGfxPipelineVK::ReleaseDisplayList ( ZLGfxRetained* list ) {
 }
 
 //================================================================//
-// MOAIGfxMgrVK_PipelineClerkVK
+// MOAIGfxMgrGL_DisplayListClerkGL
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrVK_PipelineClerkVK::BeginPhase ( u32 phase ) {
+void MOAIGfxMgrGL_DisplayListClerkGL::BeginPhase ( u32 phase ) {
 
 	switch ( phase ) {
 	
 		case LOGIC_PHASE:
 		
-			this->PublishAndReset ( LOADING_PIPELINE );
-			this->PublishAndReset ( DRAWING_PIPELINE );
+			this->PublishAndReset ( LOADING_QUEUE );
+			this->PublishAndReset ( DRAWING_QUEUE );
 		
-			this->BeginPhase ( LOADING_PIPELINE, MOAIGfxPipelineVK::CPU_PHASE );
-			this->BeginPhase ( DRAWING_PIPELINE, MOAIGfxPipelineVK::CPU_PHASE );
+			this->BeginPhase ( LOADING_QUEUE, MOAIDisplayListQueueGL::CPU_PHASE );
+			this->BeginPhase ( DRAWING_QUEUE, MOAIDisplayListQueueGL::CPU_PHASE );
 			
 			break;
 			
 		case LOADING_PHASE:
 		
-			this->BeginPhase ( LOADING_PIPELINE, MOAIGfxPipelineVK::GPU_PHASE );
+			this->BeginPhase ( LOADING_QUEUE, MOAIDisplayListQueueGL::GPU_PHASE );
 			break;
 			
 		case RENDER_PHASE:
 		
-			this->BeginPhase ( DRAWING_PIPELINE, MOAIGfxPipelineVK::GPU_PHASE );
+			this->BeginPhase ( DRAWING_QUEUE, MOAIDisplayListQueueGL::GPU_PHASE );
 			break;
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrVK_PipelineClerkVK::BeginPhase ( u32 pipelineID, u32 phase ) {
+void MOAIGfxMgrGL_DisplayListClerkGL::BeginPhase ( u32 queueID, u32 phase ) {
 
-	if ( pipelineID < TOTAL_PIPELINES ) {
+	if ( queueID < TOTAL_QUEUES ) {
 	
-		MOAIGfxPipelineVK* pipeline = this->mPipelines [ pipelineID ];
+		MOAIDisplayListQueueGL* pipeline = this->mQueues [ queueID ];
 		
 		if ( pipeline ) {
 		
-			pipeline->mEnableLogging = this->mEnablePipelineLogging;
+			pipeline->mEnableLogging = this->mEnableQueueLogging;
 			
 			pipeline->PhaseBegin ( phase );
 			
-			if (( phase == MOAIGfxPipelineVK::GPU_PHASE ) && ( pipeline->mPipeline [ MOAIGfxPipelineVK::PIPELINE_GPU ])) {
-				pipeline->mRenderCount = this->mPipelineRenderCount++;
+			if (( phase == MOAIDisplayListQueueGL::GPU_PHASE ) && ( pipeline->mQueue [ MOAIDisplayListQueueGL::QUEUE_FOR_GPU ])) {
+				pipeline->mRenderCount = this->mQueueRenderCount++;
 			}
 		}
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrVK_PipelineClerkVK::EnablePipeline ( u32 pipelineID ) {
+void MOAIGfxMgrGL_DisplayListClerkGL::EnableQueue ( u32 queueID ) {
 	
-	assert ( pipelineID < TOTAL_PIPELINES );
-	this->mPipelines [ pipelineID ] = new MOAIGfxPipelineVK ();
+	assert ( queueID < TOTAL_QUEUES );
+	this->mQueues [ queueID ] = new MOAIDisplayListQueueGL ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrVK_PipelineClerkVK::EnablePipelineLogging ( bool enable ) {
+void MOAIGfxMgrGL_DisplayListClerkGL::EnableQueueLogging ( bool enable ) {
 
-	this->mEnablePipelineLogging = enable;
+	this->mEnableQueueLogging = enable;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrVK_PipelineClerkVK::EndPhase ( u32 phase ) {
+void MOAIGfxMgrGL_DisplayListClerkGL::EndPhase ( u32 phase ) {
 
 	switch ( phase ) {
 	
 		case LOGIC_PHASE:
 		
-			this->EndPhase ( LOADING_PIPELINE, MOAIGfxPipelineVK::CPU_PHASE );
-			this->EndPhase ( DRAWING_PIPELINE, MOAIGfxPipelineVK::CPU_PHASE );
+			this->EndPhase ( LOADING_QUEUE, MOAIDisplayListQueueGL::CPU_PHASE );
+			this->EndPhase ( DRAWING_QUEUE, MOAIDisplayListQueueGL::CPU_PHASE );
 			break;
 			
 		case LOADING_PHASE:
 		
-			this->EndPhase ( LOADING_PIPELINE, MOAIGfxPipelineVK::GPU_PHASE );
+			this->EndPhase ( LOADING_QUEUE, MOAIDisplayListQueueGL::GPU_PHASE );
 			break;
 			
 		case RENDER_PHASE:
 		
-			this->EndPhase ( DRAWING_PIPELINE, MOAIGfxPipelineVK::GPU_PHASE );
+			this->EndPhase ( DRAWING_QUEUE, MOAIDisplayListQueueGL::GPU_PHASE );
 			break;
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrVK_PipelineClerkVK::EndPhase ( u32 pipelineID, u32 phase ) {
+void MOAIGfxMgrGL_DisplayListClerkGL::EndPhase ( u32 queueID, u32 phase ) {
 
-	if ( pipelineID < TOTAL_PIPELINES ) {
-		MOAIGfxPipelineVK* pipeline = this->mPipelines [ pipelineID ];
+	if ( queueID < TOTAL_QUEUES ) {
+		MOAIDisplayListQueueGL* pipeline = this->mQueues [ queueID ];
 		
 		if ( pipeline ) {
 			pipeline->PhaseEnd ( phase );
@@ -242,20 +242,20 @@ void MOAIGfxMgrVK_PipelineClerkVK::EndPhase ( u32 pipelineID, u32 phase ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxMgrVK_PipelineClerkVK::HasContent ( u32 pipelineID ) {
+bool MOAIGfxMgrGL_DisplayListClerkGL::HasContent ( u32 queueID ) {
 
-	assert ( pipelineID < TOTAL_PIPELINES );
-	return this->mPipelines [ pipelineID ] ? this->mPipelines [ pipelineID ]->HasContent () : false;
+	assert ( queueID < TOTAL_QUEUES );
+	return this->mQueues [ queueID ] ? this->mQueues [ queueID ]->HasContent () : false;
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxMgrVK_PipelineClerkVK::IsPipelineEnabled ( u32 pipelineID ) {
+bool MOAIGfxMgrGL_DisplayListClerkGL::IsQueueEnabled ( u32 queueID ) {
 
-	return ( pipelineID < TOTAL_PIPELINES ) && ( this->mPipelines [ pipelineID ] != NULL );
+	return ( queueID < TOTAL_QUEUES ) && ( this->mQueues [ queueID ] != NULL );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrVK_PipelineClerkVK::LogPipelineRender ( ZLGfxRetained& gfx, size_t renderCount, cc8* name ) {
+void MOAIGfxMgrGL_DisplayListClerkGL::LogQueueRender ( ZLGfxRetained& gfx, size_t renderCount, cc8* name ) {
 
 	STLString temp;
 	temp.write ( "%s/%p.tmp", GFX_PIPELINE_LOGGING_FOLDER, &gfx );
@@ -276,47 +276,47 @@ void MOAIGfxMgrVK_PipelineClerkVK::LogPipelineRender ( ZLGfxRetained& gfx, size_
 }
 
 //----------------------------------------------------------------//
-MOAIGfxMgrVK_PipelineClerkVK::MOAIGfxMgrVK_PipelineClerkVK () :
+MOAIGfxMgrGL_DisplayListClerkGL::MOAIGfxMgrGL_DisplayListClerkGL () :
 	mDrawingAPI ( &mGfxImmediate ),
 	mDrawCount ( 0 ),
-	mPipelineRenderCount ( 0 ),
-	mEnablePipelineLogging ( false ) {
+	mQueueRenderCount ( 0 ),
+	mEnableQueueLogging ( false ) {
 	
-	memset ( this->mPipelines, 0, sizeof ( this->mPipelines ));
+	memset ( this->mQueues, 0, sizeof ( this->mQueues ));
 }
 
 //----------------------------------------------------------------//
-MOAIGfxMgrVK_PipelineClerkVK::~MOAIGfxMgrVK_PipelineClerkVK () {
+MOAIGfxMgrGL_DisplayListClerkGL::~MOAIGfxMgrGL_DisplayListClerkGL () {
 
-	for ( u32 i = 0; i < TOTAL_PIPELINES; ++i ) {
-		if ( this->mPipelines [ i ]) {
-			delete this->mPipelines [ i ];
+	for ( u32 i = 0; i < TOTAL_QUEUES; ++i ) {
+		if ( this->mQueues [ i ]) {
+			delete this->mQueues [ i ];
 		}
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrVK_PipelineClerkVK::ProcessPipeline ( u32 pipelineID ) {
+void MOAIGfxMgrGL_DisplayListClerkGL::ProcessQueue ( u32 queueID ) {
 
-	assert ( pipelineID < TOTAL_PIPELINES );
-	MOAIGfxPipelineVK* pipeline = this->mPipelines [ pipelineID ];
+	assert ( queueID < TOTAL_QUEUES );
+	MOAIDisplayListQueueGL* pipeline = this->mQueues [ queueID ];
 	
-	if ( pipeline && pipeline->mPipeline [ MOAIGfxPipelineVK::PIPELINE_GPU ]) {
+	if ( pipeline && pipeline->mQueue [ MOAIDisplayListQueueGL::QUEUE_FOR_GPU ]) {
 
-		ZLGfxRetained* list = pipeline->mPipeline [ MOAIGfxPipelineVK::PIPELINE_GPU ];
+		ZLGfxRetained* list = pipeline->mQueue [ MOAIDisplayListQueueGL::QUEUE_FOR_GPU ];
 
 		if ( list->HasContent ()) {
 
 			if ( pipeline->mEnableLogging ) {
 			
-				cc8* name = pipelineID == DRAWING_PIPELINE ? "drawing" : "loading";
+				cc8* name = queueID == DRAWING_QUEUE ? "drawing" : "loading";
 			
-				this->LogPipelineRender ( *list, pipeline->mRenderCount, name );
+				this->LogQueueRender ( *list, pipeline->mRenderCount, name );
 			}
 
 			list->Draw ( this->mGfxImmediate );
 			
-			if ( pipelineID == LOADING_PIPELINE ) {
+			if ( queueID == LOADING_QUEUE ) {
 				this->mGfxImmediate.Flush ( true );
 			}
 		}
@@ -324,10 +324,10 @@ void MOAIGfxMgrVK_PipelineClerkVK::ProcessPipeline ( u32 pipelineID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrVK_PipelineClerkVK::PublishAndReset ( u32 pipelineID ) {
+void MOAIGfxMgrGL_DisplayListClerkGL::PublishAndReset ( u32 queueID ) {
 
-	assert ( pipelineID < TOTAL_PIPELINES );
-	MOAIGfxPipelineVK* pipeline = this->mPipelines [ pipelineID ];
+	assert ( queueID < TOTAL_QUEUES );
+	MOAIDisplayListQueueGL* pipeline = this->mQueues [ queueID ];
 	
 	if ( pipeline ) {
 		pipeline->PublishAndReset ();
@@ -335,42 +335,42 @@ void MOAIGfxMgrVK_PipelineClerkVK::PublishAndReset ( u32 pipelineID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrVK_PipelineClerkVK::ResetDrawingAPIs () {
+void MOAIGfxMgrGL_DisplayListClerkGL::ResetDrawingAPIs () {
 
-	ZLGfx* loadingAPI = this->SelectDrawingAPI ( LOADING_PIPELINE );
+	ZLGfx* loadingAPI = this->SelectDrawingAPI ( LOADING_QUEUE );
 	if ( loadingAPI ) {
 		this->GetGPUCache ().ResetGPUState ();
 	}
 	
-	ZLGfx* drawingAPI = this->SelectDrawingAPI ( DRAWING_PIPELINE );
+	ZLGfx* drawingAPI = this->SelectDrawingAPI ( DRAWING_QUEUE );
 	if ( drawingAPI && ( loadingAPI != drawingAPI )) {
 		this->GetGPUCache ().ResetGPUState ();
 	}
 }
 
 //----------------------------------------------------------------//
-ZLGfx* MOAIGfxMgrVK_PipelineClerkVK::SelectDrawingAPI () {
+ZLGfx* MOAIGfxMgrGL_DisplayListClerkGL::SelectDrawingAPI () {
 
 	this->mDrawingAPI = &this->mGfxImmediate;
 	return this->mDrawingAPI;
 }
 
 //----------------------------------------------------------------//
-ZLGfx* MOAIGfxMgrVK_PipelineClerkVK::SelectDrawingAPI ( u32 pipelineID ) {
+ZLGfx* MOAIGfxMgrGL_DisplayListClerkGL::SelectDrawingAPI ( u32 queueID ) {
 
 	this->mDrawingAPI = &this->mGfxImmediate;
 
-	if ( pipelineID < TOTAL_PIPELINES ) {
+	if ( queueID < TOTAL_QUEUES ) {
 	
-		MOAIGfxPipelineVK* pipeline = this->mPipelines [ pipelineID ];
+		MOAIDisplayListQueueGL* pipeline = this->mQueues [ queueID ];
 		
 		if ( pipeline ) {
 			
-			this->mDrawingAPI = pipeline->mPipeline [ MOAIGfxPipelineVK::PIPELINE_CPU ];
+			this->mDrawingAPI = pipeline->mQueue [ MOAIDisplayListQueueGL::QUEUE_FOR_CPU ];
 		}
-		else if ( pipelineID == LOADING_PIPELINE ) {
+		else if ( queueID == LOADING_QUEUE ) {
 		
-			this->SelectDrawingAPI ( DRAWING_PIPELINE );
+			this->SelectDrawingAPI ( DRAWING_QUEUE );
 		}
 	}
 	

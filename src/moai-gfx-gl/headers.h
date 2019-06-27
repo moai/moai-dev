@@ -11,7 +11,7 @@
 #include <moai-gfx-gl/MOAIGfxBufferGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_GPUCacheGL.h>
-#include <moai-gfx-gl/MOAIGfxMgrGL_PipelineClerkGL.h>
+#include <moai-gfx-gl/MOAIGfxMgrGL_DisplayListClerkGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_ResourceClerkGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_VertexCacheGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGLComponents.h>

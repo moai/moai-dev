@@ -55,7 +55,7 @@ protected:
 	//----------------------------------------------------------------//
 	void			Clear							();
 					MOAIGfxStateGPUCacheFrameGL		();
-					~MOAIGfxStateGPUCacheFrameGL		();
+					~MOAIGfxStateGPUCacheFrameGL	();
 };
 
 //================================================================//

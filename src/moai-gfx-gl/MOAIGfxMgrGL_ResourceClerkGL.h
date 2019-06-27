@@ -7,7 +7,7 @@
 #include <moai-gfx-gl/MOAIGfxMgrGLComponents.h>
 
 class MOAIGfxResourceGL;
-class MOAIGfxMgrGL_PipelineClerkGL;
+class MOAIGfxMgrGL_DisplayListClerkGL;
 class MOAIGfxMgrGL;
 
 //================================================================//

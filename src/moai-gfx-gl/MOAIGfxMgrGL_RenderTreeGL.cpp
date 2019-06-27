@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <moai-gfx-gl/MOAIFrameBufferGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL.h>
-#include <moai-gfx-gl/MOAIGfxMgrGL_PipelineClerkGL.h>
+#include <moai-gfx-gl/MOAIGfxMgrGL_DisplayListClerkGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_RenderTreeGL.h>
 
 //================================================================//
@@ -38,7 +38,7 @@ void MOAIGfxMgrGL_RenderTreeGL::MOAIGfxMgr_RenderTree_Render () {
 	// Measure performance
 	double startTime = ZLDeviceTime::GetTimeInSeconds ();
 	
-	ZLGfx* gfx = gfxMgr.SelectDrawingAPI ( MOAIGfxMgrGL_PipelineClerkGL::DRAWING_PIPELINE );
+	ZLGfx* gfx = gfxMgr.SelectDrawingAPI ( MOAIGfxMgrGL_DisplayListClerkGL::DRAWING_QUEUE );
 	if ( !gfx ) return;
 
 	ZGL_COMMENT ( *gfx, "RENDER MGR RENDER" );

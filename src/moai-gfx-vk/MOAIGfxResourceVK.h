@@ -4,8 +4,6 @@
 #ifndef	MOAIGFXRESOURCEVK_H
 #define	MOAIGFXRESOURCEVK_H
 
-#include <moai-gfx-vk/MOAIGfxMgrVK_PipelineClerkVK.h>
-
 class MOAIGfxMgrVK;
 
 //================================================================//

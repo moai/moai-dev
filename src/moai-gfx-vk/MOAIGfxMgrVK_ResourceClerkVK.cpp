@@ -123,11 +123,11 @@ void MOAIGfxMgrVK_ResourceClerkVK::ScheduleGPUAffirm ( MOAIGfxResourceVK& resour
 
 	switch ( listID ) {
 
-		case MOAIGfxMgrVK_PipelineClerkVK::LOADING_PIPELINE:
+		case MOAIGfxMgrVK_PipelineClerkVK::LOADING_QUEUE:
 			this->mPendingForLoadList.PushBack ( resource.mPendingLink );
 			break;
 		
-		case MOAIGfxMgrVK_PipelineClerkVK::DRAWING_PIPELINE:
+		case MOAIGfxMgrVK_PipelineClerkVK::DRAWING_QUEUE:
 			this->mPendingForDrawList.PushBack ( resource.mPendingLink );
 			break;
 	}
@@ -140,7 +140,7 @@ void MOAIGfxMgrVK_ResourceClerkVK::Update () {
 
 	if ( this->mDeleterStack.GetTop () || this->mPendingForLoadList.Count ()) {
 	
-		ZLGfx* gfxLoading = pipelineClerk.SelectDrawingAPI ( MOAIGfxMgrVK_PipelineClerkVK::LOADING_PIPELINE );
+		ZLGfx* gfxLoading = pipelineClerk.SelectDrawingAPI ( MOAIGfxMgrVK_PipelineClerkVK::LOADING_QUEUE );
 		
 		if ( gfxLoading ) {
 		
@@ -153,7 +153,7 @@ void MOAIGfxMgrVK_ResourceClerkVK::Update () {
 	
 	if ( this->mPendingForDrawList.Count ()) {
 	
-		ZLGfx* gfxDrawing = pipelineClerk.SelectDrawingAPI ( MOAIGfxMgrVK_PipelineClerkVK::DRAWING_PIPELINE );
+		ZLGfx* gfxDrawing = pipelineClerk.SelectDrawingAPI ( MOAIGfxMgrVK_PipelineClerkVK::DRAWING_QUEUE );
 		
 		if ( gfxDrawing ) {
 		

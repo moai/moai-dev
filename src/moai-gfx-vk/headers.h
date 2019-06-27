@@ -11,7 +11,6 @@
 #include <moai-gfx-vk/MOAIGfxBufferVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK_GPUCacheVK.h>
-#include <moai-gfx-vk/MOAIGfxMgrVK_PipelineClerkVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK_ResourceClerkVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK_VertexCacheVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVKComponents.h>

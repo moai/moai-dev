@@ -19,7 +19,7 @@ class MOAIGfxBufferGL :
 	public virtual MOAIGfxBuffer {
 protected:
 	
-	friend class MOAIGfxMgrGL_PipelineClerkGL;
+	friend class MOAIGfxMgrGL_DisplayListClerkGL;
 	friend class MOAIGfxMgrGL_GPUCacheGL;
 	friend class MOAIVertexArrayItem;
 	friend class MOAIVertexArrayGL;

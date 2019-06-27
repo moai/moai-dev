@@ -5,7 +5,7 @@
 #define	MOAIGFXMGRGL_H
 
 #include <moai-gfx-gl/MOAIGfxMgrGLComponents.h>
-#include <moai-gfx-gl/MOAIGfxMgrGL_PipelineClerkGL.h>
+#include <moai-gfx-gl/MOAIGfxMgrGL_DisplayListClerkGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_GPUCacheGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_RenderTreeGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_ResourceClerkGL.h>
@@ -27,8 +27,8 @@ class MOAIGfxMgrGL :
 	public ZLContextClass < MOAIGfxMgrGL >,
 	public virtual MOAIGfxMgrGLComponents,
 	public virtual MOAIGfxMgr,
+	public virtual MOAIGfxMgrGL_DisplayListClerkGL,
 	public virtual MOAIGfxMgrGL_GPUCacheGL,
-	public virtual MOAIGfxMgrGL_PipelineClerkGL,
 	public virtual MOAIGfxMgrGL_RenderTreeGL,
 	public virtual MOAIGfxMgrGL_ResourceClerkGL,
 	public virtual MOAIGfxMgrGL_VertexCacheGL {
@@ -64,25 +64,25 @@ protected:
 	void							OnGlobalsInitialize			();
 
 	//----------------------------------------------------------------//
-	MOAIShader*						MOAIGfxMgr_AffirmShader						( MOAILuaState& state, int idx ) const;
-	MOAITexture*					MOAIGfxMgr_AffirmTexture					( MOAILuaState& state, int idx ) const;
-	MOAIImageTexture*				MOAIGfxMgr_CreateImageTexture				() const;
-	MOAIIndexBuffer*				MOAIGfxMgr_CreateIndexBuffer				() const;
-	MOAITexture2D*					MOAIGfxMgr_CreateTexture2D					() const;
-	MOAIVertexArray*				MOAIGfxMgr_CreateVertexArray				() const;
-	MOAIVertexBuffer*				MOAIGfxMgr_CreateVertexBuffer				() const;
-	MOAIShader*						MOAIGfxMgr_GetShaderPreset					( MOAIShaderPresetEnum preset ) const;
-	size_t							MOAIGfxMgr_GetTextureMemoryUsage			() const;
-	MOAIVertexFormat*				MOAIGfxMgr_GetVertexFormatPreset			( MOAIVertexFormatPresetEnum preset ) const;
-	void							MOAIGfxMgr_PopState							();
-	void							MOAIGfxMgr_PushState						();
-	MOAIGfxMgrGL&					MOAIGfxMgrGLComponents_GetGfxMgrGL			();
-	MOAIGfxMgrGL_GPUCacheGL&		MOAIGfxMgrGLComponents_GetGPUCacheGL		();
-	MOAIGfxMgrGL_PipelineClerkGL&	MOAIGfxMgrGLComponents_GetPipelineClerkGL	();
-	MOAIGfxMgrGL_RenderTreeGL&		MOAIGfxMgrGLComponents_GetRenderTreeGL		();
-	MOAIGfxMgrGL_ResourceClerkGL&	MOAIGfxMgrGLComponents_GetResourceClerkGL	();
-	MOAIGfxMgrGL_VertexCacheGL&		MOAIGfxMgrGLComponents_GetVertexCacheGL		();
-	void							MOAILuaObject_RegisterLuaClass				( MOAIComposer& composer, MOAILuaState& state );
+	MOAIShader*							MOAIGfxMgr_AffirmShader							( MOAILuaState& state, int idx ) const;
+	MOAITexture*						MOAIGfxMgr_AffirmTexture						( MOAILuaState& state, int idx ) const;
+	MOAIImageTexture*					MOAIGfxMgr_CreateImageTexture					() const;
+	MOAIIndexBuffer*					MOAIGfxMgr_CreateIndexBuffer					() const;
+	MOAITexture2D*						MOAIGfxMgr_CreateTexture2D						() const;
+	MOAIVertexArray*					MOAIGfxMgr_CreateVertexArray					() const;
+	MOAIVertexBuffer*					MOAIGfxMgr_CreateVertexBuffer					() const;
+	MOAIShader*							MOAIGfxMgr_GetShaderPreset						( MOAIShaderPresetEnum preset ) const;
+	size_t								MOAIGfxMgr_GetTextureMemoryUsage				() const;
+	MOAIVertexFormat*					MOAIGfxMgr_GetVertexFormatPreset				( MOAIVertexFormatPresetEnum preset ) const;
+	void								MOAIGfxMgr_PopState								();
+	void								MOAIGfxMgr_PushState							();
+	MOAIGfxMgrGL_DisplayListClerkGL&	MOAIGfxMgrGLComponents_GetDisplayListClerkGL	();
+	MOAIGfxMgrGL&						MOAIGfxMgrGLComponents_GetGfxMgrGL				();
+	MOAIGfxMgrGL_GPUCacheGL&			MOAIGfxMgrGLComponents_GetGPUCacheGL			();
+	MOAIGfxMgrGL_RenderTreeGL&			MOAIGfxMgrGLComponents_GetRenderTreeGL			();
+	MOAIGfxMgrGL_ResourceClerkGL&		MOAIGfxMgrGLComponents_GetResourceClerkGL		();
+	MOAIGfxMgrGL_VertexCacheGL&			MOAIGfxMgrGLComponents_GetVertexCacheGL			();
+	void								MOAILuaObject_RegisterLuaClass					( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 

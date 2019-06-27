@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-gfx-gl/MOAIGfxResourceGL.h>
-#include <moai-gfx-gl/MOAIGfxMgrGL_PipelineClerkGL.h>
+#include <moai-gfx-gl/MOAIGfxMgrGL_DisplayListClerkGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_ResourceClerkGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_GPUCacheGL.h>
 
@@ -123,11 +123,11 @@ void MOAIGfxMgrGL_ResourceClerkGL::ScheduleGPUAffirm ( MOAIGfxResourceGL& resour
 
 	switch ( listID ) {
 
-		case MOAIGfxMgrGL_PipelineClerkGL::LOADING_PIPELINE:
+		case MOAIGfxMgrGL_DisplayListClerkGL::LOADING_QUEUE:
 			this->mPendingForLoadList.PushBack ( resource.mPendingLink );
 			break;
 		
-		case MOAIGfxMgrGL_PipelineClerkGL::DRAWING_PIPELINE:
+		case MOAIGfxMgrGL_DisplayListClerkGL::DRAWING_QUEUE:
 			this->mPendingForDrawList.PushBack ( resource.mPendingLink );
 			break;
 	}
@@ -136,11 +136,11 @@ void MOAIGfxMgrGL_ResourceClerkGL::ScheduleGPUAffirm ( MOAIGfxResourceGL& resour
 //----------------------------------------------------------------//
 void MOAIGfxMgrGL_ResourceClerkGL::Update () {
 
-	MOAIGfxMgrGL_PipelineClerkGL& pipelineClerk = this->GetPipelineClerkGL ();
+	MOAIGfxMgrGL_DisplayListClerkGL& pipelineClerk = this->GetDisplayListClerkGL ();
 
 	if ( this->mDeleterStack.GetTop () || this->mPendingForLoadList.Count ()) {
 	
-		ZLGfx* gfxLoading = pipelineClerk.SelectDrawingAPI ( MOAIGfxMgrGL_PipelineClerkGL::LOADING_PIPELINE );
+		ZLGfx* gfxLoading = pipelineClerk.SelectDrawingAPI ( MOAIGfxMgrGL_DisplayListClerkGL::LOADING_QUEUE );
 		
 		if ( gfxLoading ) {
 		
@@ -153,7 +153,7 @@ void MOAIGfxMgrGL_ResourceClerkGL::Update () {
 	
 	if ( this->mPendingForDrawList.Count ()) {
 	
-		ZLGfx* gfxDrawing = pipelineClerk.SelectDrawingAPI ( MOAIGfxMgrGL_PipelineClerkGL::DRAWING_PIPELINE );
+		ZLGfx* gfxDrawing = pipelineClerk.SelectDrawingAPI ( MOAIGfxMgrGL_DisplayListClerkGL::DRAWING_QUEUE );
 		
 		if ( gfxDrawing ) {
 		

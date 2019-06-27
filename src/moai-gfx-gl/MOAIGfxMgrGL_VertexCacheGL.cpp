@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx-gl/MOAIGfxMgrGL_PipelineClerkGL.h>
+#include <moai-gfx-gl/MOAIGfxMgrGL_DisplayListClerkGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_GPUCacheGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_VertexCacheGL.h>
 
@@ -106,7 +106,7 @@ void MOAIGfxMgrGL_VertexCacheGL::MOAIGfxMgr_VertexCache_FlushToGPU () {
 		this->mIsDrawing = false;
 		this->mPrimCount = 0;
 
-		if ( this->GetPipelineClerkGL ().GetDrawingAPI ().IsImmediate ()) {
+		if ( this->GetDisplayListClerkGL ().GetDrawingAPI ().IsImmediate ()) {
 			this->Reset ();
 		}
 	}

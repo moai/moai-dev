@@ -4,7 +4,7 @@
 #ifndef	MOAIGFXRESOURCEGL_H
 #define	MOAIGFXRESOURCEGL_H
 
-#include <moai-gfx-gl/MOAIGfxMgrGL_PipelineClerkGL.h>
+#include <moai-gfx-gl/MOAIGfxMgrGL_DisplayListClerkGL.h>
 
 class MOAIGfxMgrGL;
 
@@ -22,7 +22,7 @@ class MOAIGfxResourceGL :
 	public ZLGfxListener {
 protected:
 
-	friend class MOAIGfxMgrGL_PipelineClerkGL;
+	friend class MOAIGfxMgrGL_DisplayListClerkGL;
 	friend class MOAIGfxMgrGL_GPUCacheGL;
 	friend class MOAIGfxMgrGL_ResourceClerkGL;
 	

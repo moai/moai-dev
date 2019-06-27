@@ -5,7 +5,7 @@
 #define	MOAIGFXMGRGLCOMPONENTS_H
 
 class MOAIGfxMgrGL;
-class MOAIGfxMgrGL_PipelineClerkGL;
+class MOAIGfxMgrGL_DisplayListClerkGL;
 class MOAIGfxMgrGL_GPUCacheGL;
 class MOAIGfxMgrGL_RenderTreeGL;
 class MOAIGfxMgrGL_ResourceClerkGL;
@@ -19,14 +19,19 @@ class MOAIGfxMgrGLComponents :
 protected:
 
 	//----------------------------------------------------------------//
+	virtual MOAIGfxMgrGL_DisplayListClerkGL&	MOAIGfxMgrGLComponents_GetDisplayListClerkGL	() = 0;
 	virtual MOAIGfxMgrGL&						MOAIGfxMgrGLComponents_GetGfxMgrGL				() = 0;
 	virtual MOAIGfxMgrGL_GPUCacheGL&			MOAIGfxMgrGLComponents_GetGPUCacheGL			() = 0;
-	virtual MOAIGfxMgrGL_PipelineClerkGL&		MOAIGfxMgrGLComponents_GetPipelineClerkGL		() = 0;
 	virtual MOAIGfxMgrGL_RenderTreeGL&			MOAIGfxMgrGLComponents_GetRenderTreeGL			() = 0;
 	virtual MOAIGfxMgrGL_ResourceClerkGL&		MOAIGfxMgrGLComponents_GetResourceClerkGL		() = 0;
 	virtual MOAIGfxMgrGL_VertexCacheGL&			MOAIGfxMgrGLComponents_GetVertexCacheGL			() = 0;
 
 public:
+
+	//----------------------------------------------------------------//
+	inline MOAIGfxMgrGL_DisplayListClerkGL& GetDisplayListClerkGL () {
+		return MOAIGfxMgrGLComponents_GetDisplayListClerkGL ();
+	}
 
 	//----------------------------------------------------------------//
 	inline MOAIGfxMgrGL& GetGfxMgrGL () {
@@ -36,11 +41,6 @@ public:
 	//----------------------------------------------------------------//
 	inline MOAIGfxMgrGL_GPUCacheGL& GetGPUCacheGL () {
 		return MOAIGfxMgrGLComponents_GetGPUCacheGL ();
-	}
-
-	//----------------------------------------------------------------//
-	inline MOAIGfxMgrGL_PipelineClerkGL& GetPipelineClerkGL () {
-		return MOAIGfxMgrGLComponents_GetPipelineClerkGL ();
 	}
 	
 	//----------------------------------------------------------------//
