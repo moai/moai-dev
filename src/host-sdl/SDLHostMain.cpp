@@ -6,7 +6,7 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "SDLHost.h"
+#include "SDLHostGL.h"
 
 #if _MSC_VER
 	#include <Crtdbg.h>
@@ -36,13 +36,13 @@
 			_CrtSetReportFile ( _CRT_ASSERT, _CRTDBG_FILE_STDERR );
 		#endif
 
-		SDLHost ( argc, argv );
+		SDLHostGL ().Run ( argc, argv );
 	}
 #endif
 
 //----------------------------------------------------------------//
 int main ( int argc, char** argv ) {
 
-	SDLHost ( argc, argv );
+	SDLHostGL ().Run ( argc, argv );
     return 0;
 }

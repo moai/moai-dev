@@ -117,9 +117,9 @@ void AKURender () {
 }
 
 //----------------------------------------------------------------//
-void AKUSetFunc_HideCursor ( AKUHideCursorFunc func ) {
+void AKUSetFunc_HideCursor ( AKUHideCursorFunc func, void* userdata ) {
 
-	MOAISim::Get ().SetHideCursorFunc ( func );
+	MOAISim::Get ().SetHideCursorFunc ( MOAISim::HideCursorFunc ( func, userdata ));
 }
 
 //----------------------------------------------------------------//
@@ -135,27 +135,27 @@ void AKUReserveInputDeviceSensors ( int deviceID, int total ) {
 }
 
 //----------------------------------------------------------------//
-void AKUSetFunc_EnterFullscreenMode ( AKUEnterFullscreenModeFunc func ) {
+void AKUSetFunc_EnterFullscreenMode ( AKUEnterFullscreenModeFunc func, void* userdata ) {
 
-	MOAISim::Get ().SetEnterFullscreenModeFunc ( func );
+	MOAISim::Get ().SetEnterFullscreenModeFunc ( MOAISim::EnterFullscreenModeFunc ( func, userdata ));
 }
 
 //----------------------------------------------------------------//
-void AKUSetFunc_ExitFullscreenMode ( AKUExitFullscreenModeFunc func ) {
+void AKUSetFunc_ExitFullscreenMode ( AKUExitFullscreenModeFunc func, void* userdata ) {
 
-	MOAISim::Get ().SetExitFullscreenModeFunc ( func );
+	MOAISim::Get ().SetExitFullscreenModeFunc ( MOAISim::ExitFullscreenModeFunc ( func, userdata ));
 }
 
 //----------------------------------------------------------------//
-void AKUSetFunc_OpenWindow ( AKUOpenWindowFunc func ) {
+void AKUSetFunc_OpenWindow ( AKUOpenWindowFunc func, void* userdata ) {
 
-	MOAISim::Get ().SetOpenWindowFunc ( func );
+	MOAISim::Get ().SetOpenWindowFunc ( MOAISim::OpenWindowFunc ( func, userdata ));
 }
 
 //----------------------------------------------------------------//
-void AKUSetFunc_SetSimStep ( AKUSetSimStepFunc func ) {
+void AKUSetFunc_SetSimStep ( AKUSetSimStepFunc func, void* userdata ) {
 
-	MOAISim::Get ().SetSetSimStepFunc ( func );
+	MOAISim::Get ().SetSetSimStepFunc ( MOAISim::SetSimStepFunc ( func, userdata ));
 }
 
 //----------------------------------------------------------------//
@@ -301,15 +301,15 @@ void AKUSetViewSize ( int width, int height ) {
 }
 
 //----------------------------------------------------------------//
-void AKUSetFunc_ShowCursor ( AKUShowCursorFunc func ) {
+void AKUSetFunc_ShowCursor ( AKUShowCursorFunc func, void* userdata ) {
 
-	MOAISim::Get ().SetShowCursorFunc ( func );
+	MOAISim::Get ().SetShowCursorFunc ( MOAISim::ShowCursorFunc ( func, userdata ));
 }
 
 //----------------------------------------------------------------//
-void AKUSetFunc_SetTextInputRect ( AKUSetTextInputRectFunc func ) {
+void AKUSetFunc_SetTextInputRect ( AKUSetTextInputRectFunc func, void* userdata ) {
 	
-	MOAISim::Get ().SetSetTextInputRectFunc ( func );
+	MOAISim::Get ().SetSetTextInputRectFunc ( MOAISim::SetTextInputRectFunc ( func, userdata ));
 }
 
 //----------------------------------------------------------------//

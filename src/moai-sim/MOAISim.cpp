@@ -72,8 +72,8 @@ int MOAISim::_enterFullscreenMode ( lua_State* L ) {
 	MOAILuaState state ( L );
 
 	EnterFullscreenModeFunc func = MOAISim::Get ().GetEnterFullscreenModeFunc ();
-	if ( func ) {
-		func ();
+	if ( func.first ) {
+		func.first ( func.second );
 	}
 
 	return 0;
@@ -90,8 +90,8 @@ int MOAISim::_exitFullscreenMode ( lua_State* L ) {
 	MOAILuaState state ( L );
 
 	ExitFullscreenModeFunc func = MOAISim::Get ().GetExitFullscreenModeFunc ();
-	if ( func ) {
-		func ();
+	if ( func.first ) {
+		func.first ( func.second );
 	}
 
 	return 0;
@@ -353,8 +353,8 @@ int MOAISim::_hideCursor ( lua_State* L ) {
 	MOAILuaState state ( L );
 
 	HideCursorFunc func = MOAISim::Get ().GetHideCursorFunc ();
-	if ( func ) {
-		func ();
+	if ( func.first ) {
+		func.first ( func.second );
 	}
 
 	return 0;
@@ -381,11 +381,11 @@ int MOAISim::_openWindow ( lua_State* L ) {
 	u32 height = state.GetValue < u32 >( 3, 480 );
 
 	OpenWindowFunc openWindow = MOAISim::Get ().GetOpenWindowFunc ();
-	if ( openWindow ) {
+	if ( openWindow.first ) {
 		MOAIFrameBuffer* buffer = gfxMgr.GetDefaultFrameBuffer ();
 		assert ( buffer );
 		buffer->SetBufferSize ( width, height );
-		openWindow ( title, width, height );
+		openWindow.first ( title, width, height, openWindow.second );
 	}
 
 	return 0;
@@ -616,8 +616,8 @@ int MOAISim::_setTextInputRect ( lua_State* L ) {
 	rect.Bless();
 	
 	SetTextInputRectFunc func = MOAISim::Get ().GetSetTextInputRectFunc ();
-	if ( func ) {
-		func ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMax );
+	if ( func.first ) {
+		func.first ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMax, func.second );
 	}
 	
 	return 0;
@@ -634,8 +634,8 @@ int MOAISim::_showCursor ( lua_State* L ) {
 	MOAILuaState state ( L );
 
 	ShowCursorFunc func = MOAISim::Get ().GetShowCursorFunc ();
-	if ( func ) {
-		func ();
+	if ( func.first ) {
+		func.first ( func.second );
 	}
 
 	return 0;
@@ -737,12 +737,12 @@ MOAISim::MOAISim () :
 	mStepMultiplier ( DEFAULT_STEP_MULTIPLIER ),
 	mTimerError ( 0.0 ),
 	mSimDuration ( 1.0 / 60.0 ),
-	mEnterFullscreenModeFunc ( 0 ),
-	mExitFullscreenModeFunc ( 0 ),
-	mOpenWindowFunc ( 0 ),
-	mSetSimStepFunc ( 0 ),
-	mShowCursorFunc ( 0 ),
-	mHideCursorFunc ( 0 ),
+	mEnterFullscreenModeFunc ( NULL, NULL ),
+	mExitFullscreenModeFunc ( NULL, NULL ),
+	mOpenWindowFunc ( NULL, NULL ),
+	mSetSimStepFunc ( NULL, NULL ),
+	mShowCursorFunc ( NULL, NULL ),
+	mHideCursorFunc ( NULL, NULL ),
 	mGCActive ( true ),
 	mSmoothIdx ( ZLIndexOp::ZERO ),
 	mGCStep ( 0 ) {
@@ -836,8 +836,8 @@ void MOAISim::SetStep ( double step ) {
 	if ( this->mStep != step ) {
 
 		this->mStep = step;
-		if ( this->mSetSimStepFunc ) {
-			this->mSetSimStepFunc ( step );
+		if ( this->mSetSimStepFunc.first ) {
+			this->mSetSimStepFunc.first ( step, this->mSetSimStepFunc.second );
 		}
 	}
 }

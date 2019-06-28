@@ -45,13 +45,13 @@ class MOAISim :
 	public virtual MOAIGlobalEventSource {
 public:
 
-	typedef void ( *EnterFullscreenModeFunc )		();
-	typedef void ( *ExitFullscreenModeFunc )		();
-	typedef void ( *ShowCursorFunc )				();
-	typedef void ( *HideCursorFunc )				();
-	typedef void ( *OpenWindowFunc )				( const char* title, int width, int height );
-	typedef void ( *SetSimStepFunc )				( double step );
-	typedef void ( *SetTextInputRectFunc )			( int xMin, int yMin, int xMax, int yMax );
+	typedef std::pair < void ( * )( void* userdata ), void* > EnterFullscreenModeFunc;
+	typedef std::pair < void ( * )( void* userdata ), void* > ExitFullscreenModeFunc;
+	typedef std::pair < void ( * )( void* userdata ), void* > ShowCursorFunc;
+	typedef std::pair < void ( * )( void* userdata ), void* > HideCursorFunc;
+	typedef std::pair < void ( * )( const char* title, int width, int height, void* userdata ), void* > OpenWindowFunc;
+	typedef std::pair < void ( * )( double step, void* userdata ), void* > SetSimStepFunc;
+	typedef std::pair < void ( * )( int xMin, int yMin, int xMax, int yMax, void* userdata ), void* > SetTextInputRectFunc;
 
 private:
 

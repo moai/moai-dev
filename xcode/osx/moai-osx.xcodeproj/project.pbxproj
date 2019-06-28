@@ -61,7 +61,7 @@
 		CD7E3765221D0ABE0065E863 /* VulkanDebug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7E375D221D0ABE0065E863 /* VulkanDebug.cpp */; };
 		CD7E3766221D0ABE0065E863 /* VulkanTools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7E3762221D0ABE0065E863 /* VulkanTools.cpp */; };
 		CD7E3769221D0FE50065E863 /* VulkanExampleBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7E3767221D0FE50065E863 /* VulkanExampleBase.cpp */; };
-		CD9AB5F922C41D680061A87F /* liblibmoai-osx-gfx-vk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD9AB5F822C41D330061A87F /* liblibmoai-osx-gfx-vk.a */; };
+		CD9AB5F922C41D680061A87F /* libmoai-osx-gfx-vk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD9AB5F822C41D330061A87F /* libmoai-osx-gfx-vk.a */; };
 		CD9AB5FA22C41EB90061A87F /* libzl-osx-gfx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4A955D229DE63200F9E400 /* libzl-osx-gfx.a */; };
 		CD9AB5FB22C41EDF0061A87F /* libmoai-osx-gfx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4A955B229DE63200F9E400 /* libmoai-osx-gfx.a */; };
 		CD9AB5FC22C41F0A0061A87F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6600651831CB5400D9862B /* OpenGL.framework */; };
@@ -69,7 +69,6 @@
 		CD9AB63622C41F280061A87F /* SDLKeyCodeMapping.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD323B051A8040CB00E2FEBB /* SDLKeyCodeMapping.cpp */; };
 		CD9AB63722C41F280061A87F /* SDLHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA633121A390CE000F3995F /* SDLHostMain.cpp */; };
 		CD9AB63822C41F280061A87F /* aku_modules.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA6331A1A390CFB00F3995F /* aku_modules.cpp */; };
-		CD9AB63922C41F280061A87F /* SDLHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA633101A390CE000F3995F /* SDLHost.cpp */; };
 		CD9AB63A22C41F280061A87F /* SDLHost-osx.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDF238101CAA7DAC00A45E31 /* SDLHost-osx.mm */; };
 		CD9AB63B22C41F280061A87F /* aku_modules_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA633181A390CFB00F3995F /* aku_modules_util.cpp */; };
 		CD9AB63D22C41F280061A87F /* libmoai-osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFD8FB01AD8653C0003F415 /* libmoai-osx.a */; };
@@ -116,9 +115,8 @@
 		CD9AB66722C41F280061A87F /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD273EF721B1F209006C4D84 /* Metal.framework */; };
 		CD9AB66822C41F280061A87F /* OpenGL.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD6600651831CB5400D9862B /* OpenGL.framework */; };
 		CD9AB66922C41F280061A87F /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1845BC1A626F0300FCCCE0 /* SystemConfiguration.framework */; };
-		CD9AB67122C41F6E0061A87F /* liblibmoai-osx-gfx-vk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD9AB5F822C41D330061A87F /* liblibmoai-osx-gfx-vk.a */; };
+		CD9AB67122C41F6E0061A87F /* libmoai-osx-gfx-vk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD9AB5F822C41D330061A87F /* libmoai-osx-gfx-vk.a */; };
 		CDA1D0CC1D1BE27A0006C5E5 /* libmoai-osx-image-tga.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDA1D0C91D1BE09C0006C5E5 /* libmoai-osx-image-tga.a */; };
-		CDA633141A390CE000F3995F /* SDLHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA633101A390CE000F3995F /* SDLHost.cpp */; };
 		CDA633151A390CE000F3995F /* SDLHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA633121A390CE000F3995F /* SDLHostMain.cpp */; };
 		CDA6331C1A390CFB00F3995F /* aku_modules_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA633181A390CFB00F3995F /* aku_modules_util.cpp */; };
 		CDA6331D1A390CFB00F3995F /* aku_modules.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA6331A1A390CFB00F3995F /* aku_modules.cpp */; };
@@ -166,6 +164,8 @@
 		CDD813FA1E1700D900996311 /* moai_gtest_main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD813F91E1700D900996311 /* moai_gtest_main.cpp */; };
 		CDD813FD1E17333700996311 /* moai_gtest_lua_lifecycle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD813FC1E17333700996311 /* moai_gtest_lua_lifecycle.cpp */; };
 		CDD813FF1E190DDD00996311 /* moai_gtest_ZLQuaternion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD813FE1E190DDD00996311 /* moai_gtest_ZLQuaternion.cpp */; };
+		CDD8551522C57B0200F78DF0 /* SDLAbstractHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD8551322C57B0200F78DF0 /* SDLAbstractHost.cpp */; };
+		CDD8551C22C5893700F78DF0 /* SDLHostGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD8551622C57B2100F78DF0 /* SDLHostGL.cpp */; };
 		CDDEA89E221D15A7005F7B52 /* VulkanExampleBase.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDDEA89D221D15A7005F7B52 /* VulkanExampleBase.mm */; };
 		CDDEA8A52220B5A7005F7B52 /* libzl-osx-core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE6C81D1AD8682200D6B83A /* libzl-osx-core.a */; };
 		CDDEA8A62220B5A7005F7B52 /* libzl-osx-vfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE6C8211AD8682200D6B83A /* libzl-osx-vfs.a */; };
@@ -241,7 +241,6 @@
 		CDDEA95022289EDD005F7B52 /* vulkan.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CD7E3757221D0A070065E863 /* vulkan.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CDDEA95522289F5E005F7B52 /* aku_modules_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA633181A390CFB00F3995F /* aku_modules_util.cpp */; };
 		CDDEA95622289F5E005F7B52 /* aku_modules.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA6331A1A390CFB00F3995F /* aku_modules.cpp */; };
-		CDDEA95722289F5E005F7B52 /* SDLHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA633101A390CE000F3995F /* SDLHost.cpp */; };
 		CDDEA95822289F5E005F7B52 /* SDLHost-osx.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDF238101CAA7DAC00A45E31 /* SDLHost-osx.mm */; };
 		CDDEA95922289F5E005F7B52 /* SDLHostMain.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA633121A390CE000F3995F /* SDLHostMain.cpp */; };
 		CDDEA95A22289F5E005F7B52 /* SDLJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD323B031A8040CB00E2FEBB /* SDLJoystick.cpp */; };
@@ -1658,7 +1657,7 @@
 		CD795EF117F08E4B006AEB47 /* Cocoa.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Cocoa.framework; path = /System/Library/Frameworks/Cocoa.framework; sourceTree = "<absolute>"; };
 		CD795EF317F08F4E006AEB47 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
 		CD795EF517F08F86006AEB47 /* ForceFeedback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ForceFeedback.framework; path = /System/Library/Frameworks/ForceFeedback.framework; sourceTree = "<absolute>"; };
-		CD7E3732221D09700065E863 /* moa-vk-onetri */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moa-vk-onetri"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD7E3732221D09700065E863 /* moai-vk-onetri */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moai-vk-onetri"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD7E3757221D0A070065E863 /* vulkan.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vulkan.framework; path = "../../../../../../../../../vulkan/vulkansdk-macos-1.1.92.1/macOS/Frameworks/vulkan.framework"; sourceTree = "<group>"; };
 		CD7E375A221D0ABE0065E863 /* camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = camera.hpp; path = "../../src/vulkan-onetri/camera.hpp"; sourceTree = "<group>"; };
 		CD7E375B221D0ABE0065E863 /* VulkanExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VulkanExample.h; path = "../../src/vulkan-onetri/VulkanExample.h"; sourceTree = "<group>"; };
@@ -1674,8 +1673,6 @@
 		CD7E3768221D0FE50065E863 /* VulkanExampleBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VulkanExampleBase.h; path = "../../src/vulkan-onetri/VulkanExampleBase.h"; sourceTree = "<group>"; };
 		CD7E376A221D14560065E863 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = "../../src/vulkan-onetri/main.cpp"; sourceTree = "<group>"; };
 		CD9AB66E22C41F280061A87F /* moai-vk-temp */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moai-vk-temp"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CDA633101A390CE000F3995F /* SDLHost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDLHost.cpp; path = "../../src/host-sdl/SDLHost.cpp"; sourceTree = "<group>"; };
-		CDA633111A390CE000F3995F /* SDLHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDLHost.h; path = "../../src/host-sdl/SDLHost.h"; sourceTree = "<group>"; };
 		CDA633121A390CE000F3995F /* SDLHostMain.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDLHostMain.cpp; path = "../../src/host-sdl/SDLHostMain.cpp"; sourceTree = "<group>"; };
 		CDA633161A390CFB00F3995F /* aku_modules_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules_config.h; path = "../../src/host-modules/aku_modules_config.h"; sourceTree = "<group>"; };
 		CDA633181A390CFB00F3995F /* aku_modules_util.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aku_modules_util.cpp; path = "../../src/host-modules/aku_modules_util.cpp"; sourceTree = "<group>"; };
@@ -1687,11 +1684,17 @@
 		CDD813FB1E1732D300996311 /* moai_gtest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = moai_gtest.h; path = "../../src/host-google-test/moai_gtest.h"; sourceTree = "<group>"; };
 		CDD813FC1E17333700996311 /* moai_gtest_lua_lifecycle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = moai_gtest_lua_lifecycle.cpp; path = "../../src/host-google-test/moai_gtest_lua_lifecycle.cpp"; sourceTree = "<group>"; };
 		CDD813FE1E190DDD00996311 /* moai_gtest_ZLQuaternion.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = moai_gtest_ZLQuaternion.cpp; path = "../../src/host-google-test/moai_gtest_ZLQuaternion.cpp"; sourceTree = "<group>"; };
+		CDD8551322C57B0200F78DF0 /* SDLAbstractHost.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDLAbstractHost.cpp; path = "../../src/host-sdl/SDLAbstractHost.cpp"; sourceTree = "<group>"; };
+		CDD8551422C57B0200F78DF0 /* SDLAbstractHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDLAbstractHost.h; path = "../../src/host-sdl/SDLAbstractHost.h"; sourceTree = "<group>"; };
+		CDD8551622C57B2100F78DF0 /* SDLHostGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDLHostGL.cpp; path = "../../src/host-sdl/SDLHostGL.cpp"; sourceTree = "<group>"; };
+		CDD8551722C57B2100F78DF0 /* SDLHostGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDLHostGL.h; path = "../../src/host-sdl/SDLHostGL.h"; sourceTree = "<group>"; };
+		CDD8551822C57B2100F78DF0 /* SDLHostGLMultiThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDLHostGLMultiThread.cpp; path = "../../src/host-sdl/SDLHostGLMultiThread.cpp"; sourceTree = "<group>"; };
+		CDD8551922C57B2100F78DF0 /* SDLHostGLMultiThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDLHostGLMultiThread.h; path = "../../src/host-sdl/SDLHostGLMultiThread.h"; sourceTree = "<group>"; };
 		CDDEA89D221D15A7005F7B52 /* VulkanExampleBase.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VulkanExampleBase.mm; path = "../../src/vulkan-onetri/VulkanExampleBase.mm"; sourceTree = "<group>"; };
 		CDDEA8AA2220C1AA005F7B52 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		CDDEA8AC2220C1B2005F7B52 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		CDDEA8B22224B892005F7B52 /* VulkanHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VulkanHost.h; path = "../../src/vulkan-onetri/VulkanHost.h"; sourceTree = "<group>"; };
-		CDDEA95422289EDD005F7B52 /* moa-vk */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moa-vk"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CDDEA95422289EDD005F7B52 /* moai-vk */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moai-vk"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDF2380E1CAA731C00A45E31 /* CoreVideo.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreVideo.framework; path = System/Library/Frameworks/CoreVideo.framework; sourceTree = SDKROOT; };
 		CDF238101CAA7DAC00A45E31 /* SDLHost-osx.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "SDLHost-osx.mm"; path = "../../src/host-sdl/SDLHost-osx.mm"; sourceTree = "<group>"; };
 		CDFD8FA11AD8653C0003F415 /* libmoai-osx-3rdparty-core.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = "libmoai-osx-3rdparty-core.a"; path = "../../../../Library/Developer/Xcode/DerivedData/MoaiSample-cqdbxugpyrgpwegimkiivzlhrioj/Build/Products/Debug/libmoai-osx-3rdparty-core.a"; sourceTree = "<group>"; };
@@ -1827,7 +1830,7 @@
 				CD9AB64522C41F280061A87F /* libmoai-osx-crypto.a in Frameworks */,
 				CD9AB64622C41F280061A87F /* libmoai-osx-expat.a in Frameworks */,
 				CD9AB64722C41F280061A87F /* libmoai-osx-gfx.a in Frameworks */,
-				CD9AB67122C41F6E0061A87F /* liblibmoai-osx-gfx-vk.a in Frameworks */,
+				CD9AB67122C41F6E0061A87F /* libmoai-osx-gfx-vk.a in Frameworks */,
 				CD9AB64922C41F280061A87F /* libmoai-osx-harfbuzz.a in Frameworks */,
 				CD9AB64A22C41F280061A87F /* libmoai-osx-http-client.a in Frameworks */,
 				CD9AB64B22C41F280061A87F /* libmoai-osx-http-server.a in Frameworks */,
@@ -1928,7 +1931,7 @@
 				CDDEA92B22289EDD005F7B52 /* libmoai-osx-crypto.a in Frameworks */,
 				CDDEA92C22289EDD005F7B52 /* libmoai-osx-expat.a in Frameworks */,
 				CD9AB5FB22C41EDF0061A87F /* libmoai-osx-gfx.a in Frameworks */,
-				CD9AB5F922C41D680061A87F /* liblibmoai-osx-gfx-vk.a in Frameworks */,
+				CD9AB5F922C41D680061A87F /* libmoai-osx-gfx-vk.a in Frameworks */,
 				CDDEA9612228A008005F7B52 /* libmoai-osx-harfbuzz.a in Frameworks */,
 				CDDEA92D22289EDD005F7B52 /* libmoai-osx-http-client.a in Frameworks */,
 				CDDEA92E22289EDD005F7B52 /* libmoai-osx-http-server.a in Frameworks */,
@@ -1973,8 +1976,8 @@
 			children = (
 				0300CF70140DC56200ABCC5B /* moai */,
 				CDD813D01E16FFA900996311 /* moai-test */,
-				CD7E3732221D09700065E863 /* moa-vk-onetri */,
-				CDDEA95422289EDD005F7B52 /* moa-vk */,
+				CD7E3732221D09700065E863 /* moai-vk-onetri */,
+				CDDEA95422289EDD005F7B52 /* moai-vk */,
 				CD9AB66E22C41F280061A87F /* moai-vk-temp */,
 			);
 			name = Products;
@@ -2071,9 +2074,13 @@
 				CDA633191A390CFB00F3995F /* aku_modules_util.h */,
 				CDA6331A1A390CFB00F3995F /* aku_modules.cpp */,
 				CDA6331B1A390CFB00F3995F /* aku_modules.h */,
-				CDA633101A390CE000F3995F /* SDLHost.cpp */,
-				CDA633111A390CE000F3995F /* SDLHost.h */,
+				CDD8551322C57B0200F78DF0 /* SDLAbstractHost.cpp */,
+				CDD8551422C57B0200F78DF0 /* SDLAbstractHost.h */,
 				CDF238101CAA7DAC00A45E31 /* SDLHost-osx.mm */,
+				CDD8551622C57B2100F78DF0 /* SDLHostGL.cpp */,
+				CDD8551722C57B2100F78DF0 /* SDLHostGL.h */,
+				CDD8551822C57B2100F78DF0 /* SDLHostGLMultiThread.cpp */,
+				CDD8551922C57B2100F78DF0 /* SDLHostGLMultiThread.h */,
 				CDA633121A390CE000F3995F /* SDLHostMain.cpp */,
 				CD323B031A8040CB00E2FEBB /* SDLJoystick.cpp */,
 				CD323B041A8040CB00E2FEBB /* SDLJoystick.h */,
@@ -2145,7 +2152,7 @@
 				CDE6C80B1AD8682200D6B83A /* libmoai-osx-crypto.a */,
 				CD4A955B229DE63200F9E400 /* libmoai-osx-gfx.a */,
 				CD582B1422718DA8009CD0B6 /* libmoai-osx-gfx-gl.a */,
-				CD9AB5F822C41D330061A87F /* liblibmoai-osx-gfx-vk.a */,
+				CD9AB5F822C41D330061A87F /* libmoai-osx-gfx-vk.a */,
 				CDD813F41E16FFA900996311 /* libmoai-osx-google-test.a */,
 				CD1F44E81BDEBB7800F5CF59 /* libmoai-osx-harfbuzz.a */,
 				CDE6C8111AD8682200D6B83A /* libmoai-osx-http-client.a */,
@@ -2214,9 +2221,9 @@
 			productReference = 0300CF70140DC56200ABCC5B /* moai */;
 			productType = "com.apple.product-type.tool";
 		};
-		CD7E36CA221D09700065E863 /* moa-vk-onetri */ = {
+		CD7E36CA221D09700065E863 /* moai-vk-onetri */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CD7E372F221D09700065E863 /* Build configuration list for PBXNativeTarget "moa-vk-onetri" */;
+			buildConfigurationList = CD7E372F221D09700065E863 /* Build configuration list for PBXNativeTarget "moai-vk-onetri" */;
 			buildPhases = (
 				CD7E36FB221D09700065E863 /* Sources */,
 				CD7E3703221D09700065E863 /* Frameworks */,
@@ -2250,9 +2257,9 @@
 				CDDEA8A22220B587005F7B52 /* PBXTargetDependency */,
 				CDDEA8A42220B587005F7B52 /* PBXTargetDependency */,
 			);
-			name = "moa-vk-onetri";
+			name = "moai-vk-onetri";
 			productName = moai;
-			productReference = CD7E3732221D09700065E863 /* moa-vk-onetri */;
+			productReference = CD7E3732221D09700065E863 /* moai-vk-onetri */;
 			productType = "com.apple.product-type.tool";
 		};
 		CD9AB5FD22C41F280061A87F /* moai-vk-temp */ = {
@@ -2341,9 +2348,9 @@
 			productReference = CDD813D01E16FFA900996311 /* moai-test */;
 			productType = "com.apple.product-type.tool";
 		};
-		CDDEA8F022289EDD005F7B52 /* moa-vk */ = {
+		CDDEA8F022289EDD005F7B52 /* moai-vk */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = CDDEA95122289EDD005F7B52 /* Build configuration list for PBXNativeTarget "moa-vk" */;
+			buildConfigurationList = CDDEA95122289EDD005F7B52 /* Build configuration list for PBXNativeTarget "moai-vk" */;
 			buildPhases = (
 				CDDEA91F22289EDD005F7B52 /* Sources */,
 				CDDEA92522289EDD005F7B52 /* Frameworks */,
@@ -2380,9 +2387,9 @@
 				CDDEA91522289EDD005F7B52 /* PBXTargetDependency */,
 				CDDEA91D22289EDD005F7B52 /* PBXTargetDependency */,
 			);
-			name = "moa-vk";
+			name = "moai-vk";
 			productName = moai;
-			productReference = CDDEA95422289EDD005F7B52 /* moa-vk */;
+			productReference = CDDEA95422289EDD005F7B52 /* moai-vk */;
 			productType = "com.apple.product-type.tool";
 		};
 /* End PBXNativeTarget section */
@@ -2416,8 +2423,8 @@
 			targets = (
 				0300CF4F140DC53C00ABCC5B /* moai */,
 				CDD813671E16FFA900996311 /* moai-test */,
-				CD7E36CA221D09700065E863 /* moa-vk-onetri */,
-				CDDEA8F022289EDD005F7B52 /* moa-vk */,
+				CD7E36CA221D09700065E863 /* moai-vk-onetri */,
+				CDDEA8F022289EDD005F7B52 /* moai-vk */,
 				CD9AB5FD22C41F280061A87F /* moai-vk-temp */,
 			);
 		};
@@ -2543,10 +2550,10 @@
 			remoteRef = CD8325981D18D2CC002CE2A1 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		CD9AB5F822C41D330061A87F /* liblibmoai-osx-gfx-vk.a */ = {
+		CD9AB5F822C41D330061A87F /* libmoai-osx-gfx-vk.a */ = {
 			isa = PBXReferenceProxy;
 			fileType = archive.ar;
-			path = "liblibmoai-osx-gfx-vk.a";
+			path = "libmoai-osx-gfx-vk.a";
 			remoteRef = CD9AB5F722C41D330061A87F /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
@@ -2947,10 +2954,11 @@
 			files = (
 				CD323B071A8040CB00E2FEBB /* SDLJoystick.cpp in Sources */,
 				CD323B081A8040CB00E2FEBB /* SDLKeyCodeMapping.cpp in Sources */,
+				CDD8551C22C5893700F78DF0 /* SDLHostGL.cpp in Sources */,
 				CDA633151A390CE000F3995F /* SDLHostMain.cpp in Sources */,
 				CDA6331D1A390CFB00F3995F /* aku_modules.cpp in Sources */,
-				CDA633141A390CE000F3995F /* SDLHost.cpp in Sources */,
 				CDF238111CAA7DAC00A45E31 /* SDLHost-osx.mm in Sources */,
+				CDD8551522C57B0200F78DF0 /* SDLAbstractHost.cpp in Sources */,
 				CDA6331C1A390CFB00F3995F /* aku_modules_util.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -2975,7 +2983,6 @@
 				CD9AB63622C41F280061A87F /* SDLKeyCodeMapping.cpp in Sources */,
 				CD9AB63722C41F280061A87F /* SDLHostMain.cpp in Sources */,
 				CD9AB63822C41F280061A87F /* aku_modules.cpp in Sources */,
-				CD9AB63922C41F280061A87F /* SDLHost.cpp in Sources */,
 				CD9AB63A22C41F280061A87F /* SDLHost-osx.mm in Sources */,
 				CD9AB63B22C41F280061A87F /* aku_modules_util.cpp in Sources */,
 			);
@@ -3007,7 +3014,6 @@
 				CDDEA92222289EDD005F7B52 /* VulkanExampleBase.mm in Sources */,
 				CDDEA95522289F5E005F7B52 /* aku_modules_util.cpp in Sources */,
 				CDDEA92322289EDD005F7B52 /* main.cpp in Sources */,
-				CDDEA95722289F5E005F7B52 /* SDLHost.cpp in Sources */,
 				CDDEA95622289F5E005F7B52 /* aku_modules.cpp in Sources */,
 				CDDEA92422289EDD005F7B52 /* VulkanExampleBase.cpp in Sources */,
 			);
@@ -3872,7 +3878,7 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					../frameworks/vulkan/macOS/include,
+					"$(VULKAN_SDK)/include",
 				);
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				LIBRARY_SEARCH_PATHS = (
@@ -3880,7 +3886,7 @@
 					"$(SDKROOT)/usr/lib/system",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SYSTEM_FRAMEWORK_SEARCH_PATHS = ../frameworks/vulkan/macOS/Frameworks;
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = "$(VULKAN_SDK)/Frameworks";
 			};
 			name = Debug;
 		};
@@ -3895,7 +3901,7 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					../frameworks/vulkan/macOS/include,
+					"$(VULKAN_SDK)/include",
 				);
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				LIBRARY_SEARCH_PATHS = (
@@ -3903,7 +3909,7 @@
 					"$(SDKROOT)/usr/lib/system",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SYSTEM_FRAMEWORK_SEARCH_PATHS = ../frameworks/vulkan/macOS/Frameworks;
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = "$(VULKAN_SDK)/Frameworks";
 			};
 			name = Release;
 		};
@@ -4123,7 +4129,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		CD7E372F221D09700065E863 /* Build configuration list for PBXNativeTarget "moa-vk-onetri" */ = {
+		CD7E372F221D09700065E863 /* Build configuration list for PBXNativeTarget "moai-vk-onetri" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CD7E3730221D09700065E863 /* Debug */,
@@ -4150,7 +4156,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Debug;
 		};
-		CDDEA95122289EDD005F7B52 /* Build configuration list for PBXNativeTarget "moa-vk" */ = {
+		CDDEA95122289EDD005F7B52 /* Build configuration list for PBXNativeTarget "moai-vk" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				CDDEA95222289EDD005F7B52 /* Debug */,

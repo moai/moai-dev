@@ -169,12 +169,12 @@ public:
 		VkPipelineShaderStageCreateInfo shaderStages [] = {
 			VkStruct::pipelineShaderStageCreateInfo (
 				VK_SHADER_STAGE_VERTEX_BIT,                                                     // Set pipeline stage for this shader
-				vks::tools::loadShaderSPIRV ( this->mHost.getAssetPath() + "shaders/triangle/triangle.vert.spv", this->mDevice ),      // Load binary SPIR-V shader
+				vks::tools::loadShaderSPIRV ( this->mHost.getAssetPath() + "data/shaders/triangle/triangle.vert.spv", this->mDevice ),      // Load binary SPIR-V shader
 				"main"                                                                          // Main entry point for the shader
 			),
 			VkStruct::pipelineShaderStageCreateInfo (
 				VK_SHADER_STAGE_FRAGMENT_BIT,                                                   // Set pipeline stage for this shader
-				vks::tools::loadShaderSPIRV ( this->mHost.getAssetPath() + "shaders/triangle/triangle.frag.spv", this->mDevice ),      // Load binary SPIR-V shader
+				vks::tools::loadShaderSPIRV ( this->mHost.getAssetPath() + "data/shaders/triangle/triangle.frag.spv", this->mDevice ),      // Load binary SPIR-V shader
 				"main"                                                                          // Main entry point for the shader
 			),
 		};

@@ -6,10 +6,9 @@
 
 #import <AppKit/AppKit.h>
 
-#include "SDLHost.h"
-
 //----------------------------------------------------------------//
-void GetDeviceToPixelScale ( float& w, float& h ) {
+void AppleGetDeviceToPixelScale ( float& w, float& h );
+void AppleGetDeviceToPixelScale ( float& w, float& h ) {
 
 	CGFloat scale = [[ NSScreen mainScreen ] backingScaleFactor ];
 
