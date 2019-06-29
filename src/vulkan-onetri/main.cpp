@@ -45,7 +45,6 @@ int main ( int argc, char** argv ) {
 
 	SDL_Init ( SDL_INIT_EVERYTHING );
 	
-	SDL_GL_SetAttribute ( SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1 );
 	static SDL_Window* window = SDL_CreateWindow (
 		"SLD Vulkan Onetri",
 		SDL_WINDOWPOS_CENTERED,
@@ -77,9 +76,6 @@ int main ( int argc, char** argv ) {
 		}
 
 		example->renderFrame ();
-
-//		SDL_GL_SwapWindow ( window );
-//		SDL_Delay ( 1000 );
 	}
 	delete example;
 	SDL_Quit ();

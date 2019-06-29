@@ -4413,6 +4413,9 @@
 		CDD813641E16FF1500996311 /* gtest-test-part.cc in Sources */ = {isa = PBXBuildFile; fileRef = CDD8135A1E16FF1500996311 /* gtest-test-part.cc */; };
 		CDD813651E16FF1500996311 /* gtest-typed-test.cc in Sources */ = {isa = PBXBuildFile; fileRef = CDD8135B1E16FF1500996311 /* gtest-typed-test.cc */; };
 		CDD813661E16FF1500996311 /* gtest.cc in Sources */ = {isa = PBXBuildFile; fileRef = CDD8135C1E16FF1500996311 /* gtest.cc */; };
+		CDD8554F22C5ABDD00F78DF0 /* MOAIGfxStructVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD8554D22C5ABDD00F78DF0 /* MOAIGfxStructVK.h */; };
+		CDD8555022C5ABDD00F78DF0 /* MOAISwapChainVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD8554E22C5ABDD00F78DF0 /* MOAISwapChainVK.h */; };
+		CDD8555222C67FF500F78DF0 /* MOAIGfxUtilVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD8555122C67FF500F78DF0 /* MOAIGfxUtilVK.h */; };
 		CDDAF4661C2FC5AA00F10946 /* ZLSample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDDAF4621C2F3D7C00F10946 /* ZLSample.cpp */; };
 		CDDAF4671C2FC5AA00F10946 /* ZLSample.h in Headers */ = {isa = PBXBuildFile; fileRef = CDDAF4631C2F3D7C00F10946 /* ZLSample.h */; };
 		CDDAF4681C2FC5AD00F10946 /* ZLSample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDDAF4621C2F3D7C00F10946 /* ZLSample.cpp */; };
@@ -7881,6 +7884,9 @@
 		CDD8135A1E16FF1500996311 /* gtest-test-part.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "gtest-test-part.cc"; path = "../../3rdparty/google-test/googletest/src/gtest-test-part.cc"; sourceTree = "<group>"; };
 		CDD8135B1E16FF1500996311 /* gtest-typed-test.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = "gtest-typed-test.cc"; path = "../../3rdparty/google-test/googletest/src/gtest-typed-test.cc"; sourceTree = "<group>"; };
 		CDD8135C1E16FF1500996311 /* gtest.cc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = gtest.cc; path = "../../3rdparty/google-test/googletest/src/gtest.cc"; sourceTree = "<group>"; };
+		CDD8554D22C5ABDD00F78DF0 /* MOAIGfxStructVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxStructVK.h; path = "moai-gfx-vk/MOAIGfxStructVK.h"; sourceTree = "<group>"; };
+		CDD8554E22C5ABDD00F78DF0 /* MOAISwapChainVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISwapChainVK.h; path = "moai-gfx-vk/MOAISwapChainVK.h"; sourceTree = "<group>"; };
+		CDD8555122C67FF500F78DF0 /* MOAIGfxUtilVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxUtilVK.h; path = "moai-gfx-vk/MOAIGfxUtilVK.h"; sourceTree = "<group>"; };
 		CDDAF4621C2F3D7C00F10946 /* ZLSample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLSample.cpp; sourceTree = "<group>"; };
 		CDDAF4631C2F3D7C00F10946 /* ZLSample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLSample.h; sourceTree = "<group>"; };
 		CDDB553E1CFC15E9009E82D8 /* ZLCleanup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLCleanup.h; sourceTree = "<group>"; };
@@ -12762,6 +12768,7 @@
 				CD9AB4EF22C41BE80061A87F /* shader */,
 				CD9AB4F022C41BEE0061A87F /* texture */,
 				CD9AB4F122C41BF40061A87F /* vertex */,
+				CDD8554C22C5ABC200F78DF0 /* vulkan */,
 				CD9AB54522C41C7C0061A87F /* headers.h */,
 				CD9AB54622C41C7C0061A87F /* host.cpp */,
 				CD9AB54722C41C7C0061A87F /* host.h */,
@@ -13155,6 +13162,16 @@
 				CDD8135C1E16FF1500996311 /* gtest.cc */,
 			);
 			name = "google-test";
+			sourceTree = "<group>";
+		};
+		CDD8554C22C5ABC200F78DF0 /* vulkan */ = {
+			isa = PBXGroup;
+			children = (
+				CDD8554D22C5ABDD00F78DF0 /* MOAIGfxStructVK.h */,
+				CDD8555122C67FF500F78DF0 /* MOAIGfxUtilVK.h */,
+				CDD8554E22C5ABDD00F78DF0 /* MOAISwapChainVK.h */,
+			);
+			name = vulkan;
 			sourceTree = "<group>";
 		};
 		CDE43FF41AB7A8D000C745DB /* camera */ = {
@@ -15625,6 +15642,7 @@
 				CD9AB58B22C41C7C0061A87F /* MOAIGfxMgrVK_VertexCacheVK.h in Headers */,
 				CD9AB5CA22C41CFF0061A87F /* MOAILineShaderGL-vsh.h in Headers */,
 				CD9AB5A822C41C7C0061A87F /* MOAIVertexFormatMgrVK.h in Headers */,
+				CDD8555022C5ABDD00F78DF0 /* MOAISwapChainVK.h in Headers */,
 				CD9AB57B22C41C7C0061A87F /* host.h in Headers */,
 				CD9AB5CC22C41CFF0061A87F /* MOAIMeshShaderGL-vsh.h in Headers */,
 				CD9AB59422C41C7C0061A87F /* MOAIIndexBufferVK.h in Headers */,
@@ -15647,6 +15665,8 @@
 				CD9AB59E22C41C7C0061A87F /* MOAITexture2DVK.h in Headers */,
 				CD9AB5A222C41C7C0061A87F /* MOAIVertexArrayVK.h in Headers */,
 				CD9AB5C722C41CFF0061A87F /* MOAILineShader3DGL-fsh.h in Headers */,
+				CDD8554F22C5ABDD00F78DF0 /* MOAIGfxStructVK.h in Headers */,
+				CDD8555222C67FF500F78DF0 /* MOAIGfxUtilVK.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -23698,7 +23718,6 @@
 					"${inherited}",
 					MACOSX,
 					LUA_USE_MACOSX,
-					MOAI_WITH_OPENGL,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -23735,7 +23754,6 @@
 					"${inherited}",
 					MACOSX,
 					LUA_USE_MACOSX,
-					MOAI_WITH_OPENGL,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -23772,7 +23790,6 @@
 					"${inherited}",
 					MACOSX,
 					LUA_USE_MACOSX,
-					MOAI_WITH_OPENGL,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -25757,7 +25774,7 @@
 					"${inherited}",
 					MACOSX,
 					LUA_USE_MACOSX,
-					MOAI_WITH_OPENGL,
+					VK_USE_PLATFORM_MACOS_MVK,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -25778,7 +25795,10 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(VULKAN_SDK)/include",
+				);
 				PRODUCT_NAME = "moai-osx-gfx-vk";
 				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
@@ -25794,7 +25814,7 @@
 					"${inherited}",
 					MACOSX,
 					LUA_USE_MACOSX,
-					MOAI_WITH_OPENGL,
+					VK_USE_PLATFORM_MACOS_MVK,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -25815,7 +25835,10 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(VULKAN_SDK)/include",
+				);
 				PRODUCT_NAME = "moai-osx-gfx-vk";
 				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";
@@ -25831,7 +25854,7 @@
 					"${inherited}",
 					MACOSX,
 					LUA_USE_MACOSX,
-					MOAI_WITH_OPENGL,
+					VK_USE_PLATFORM_MACOS_MVK,
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -25852,7 +25875,10 @@
 				GCC_WARN_UNUSED_PARAMETER = NO;
 				GCC_WARN_UNUSED_VALUE = NO;
 				GCC_WARN_UNUSED_VARIABLE = NO;
-				HEADER_SEARCH_PATHS = "$(inherited)";
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(VULKAN_SDK)/include",
+				);
 				PRODUCT_NAME = "moai-osx-gfx-vk";
 				SDKROOT = macosx;
 				WARNING_CFLAGS = "-w";

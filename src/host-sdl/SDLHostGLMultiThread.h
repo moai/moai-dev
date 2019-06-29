@@ -6,6 +6,8 @@
 
 #include "SDLHostGL.h"
 
+class WorkerThreadInfo;
+
 //================================================================//
 // SDLHostGLMultiThread
 //================================================================//
@@ -14,6 +16,9 @@ class SDLHostGLMultiThread :
 protected:
 	
 	size_t		mSimUpdateCounter;
+	
+	WorkerThreadInfo*	mLoadingThread;
+	WorkerThreadInfo*	mRenderThread;
 	
 	//----------------------------------------------------------------//
 	void		SDLAbstractHost_MainLoopDidFinish		();

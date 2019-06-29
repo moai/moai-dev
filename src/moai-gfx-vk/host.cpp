@@ -11,53 +11,15 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void AKUGfxVKAppFinalize () {
-
-	AKUGfxAppFinalize ();
-}
-
-//----------------------------------------------------------------//
-void AKUGfxVKAppInitialize () {
-
-	AKUGfxAppInitialize ();
-}
-
-//----------------------------------------------------------------//
-void AKUGfxVKContextInitialize () {
-
-	AKUGfxContextInitialize ();
-
-	MOAIGfxMgrVK::Affirm ();
-	MOAIGfxMgrVK::RegisterAlias < MOAIGfxMgr >();
-
-	MOAIVertexFormatMgrVK::Affirm ();
-	MOAIShaderMgrVK::Affirm ();
-
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIFrameBufferVK, 			"MOAIFrameBuffer" )
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIFrameBufferTextureVK, 	"MOAIFrameBufferTexture" )
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIGfxMgrVK, 				"MOAIGfxMgr" )
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIImageTextureVK, 		"MOAIImageTexture" )
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIIndexBufferVK, 			"MOAIIndexBuffer" )
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIShaderVK, 				"MOAIShaderVK" )
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIShaderMgrVK, 			"MOAIShaderMgr" )
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIShaderProgramVK, 		"MOAIShaderProgram" )
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAITexture2DVK,			"MOAITexture" )
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIVertexArrayVK, 			"MOAIVertexArray" )
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIVertexBufferVK, 		"MOAIVertexBuffer" )
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIVertexFormatVK, 		"MOAIVertexFormat" )
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIVertexFormatMgrVK, 		"MOAIVertexFormatMgr" )
-}
-
-//----------------------------------------------------------------//
 void AKUDetectFramebuffer () {
 
 //	MOAIGfxMgrVK::Get ().DetectFramebuffer ();
 }
 
 //----------------------------------------------------------------//
-void AKUDetectGfxContext () {
+void AKUDetectGfxContext ( int width, int height, bool vsync ) {
 
-//	MOAIGfxMgrVK::Get ().DetectContext ();
+	MOAIGfxMgrVK::Get ().DetectContext ( width, height, vsync );
 //	MOAIShaderMgrVK::Get ().AffirmAll ();
 //	MOAIGfxMgrVK::Get ().RenewResources (); // TODO: ZLGfx
 }
@@ -111,4 +73,48 @@ void AKUDisplayListPublishAndReset () {
 
 //	MOAIGfxMgrVK::Get ().PublishAndReset ( MOAIGfxMgrVK::LOADING_QUEUE );
 //	MOAIGfxMgrVK::Get ().PublishAndReset ( MOAIGfxMgrVK::DRAWING_QUEUE );
+}
+
+//----------------------------------------------------------------//
+void AKUGfxVKAppFinalize () {
+
+	AKUGfxAppFinalize ();
+}
+
+//----------------------------------------------------------------//
+void AKUGfxVKAppInitialize () {
+
+	AKUGfxAppInitialize ();
+}
+
+//----------------------------------------------------------------//
+void AKUGfxVKContextInitialize () {
+
+	AKUGfxContextInitialize ();
+
+	MOAIGfxMgrVK::Affirm ();
+	MOAIGfxMgrVK::RegisterAlias < MOAIGfxMgr >();
+
+	MOAIVertexFormatMgrVK::Affirm ();
+	MOAIShaderMgrVK::Affirm ();
+
+	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIFrameBufferVK, 			"MOAIFrameBuffer" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIFrameBufferTextureVK, 	"MOAIFrameBufferTexture" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIGfxMgrVK, 				"MOAIGfxMgr" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIImageTextureVK, 		"MOAIImageTexture" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIIndexBufferVK, 			"MOAIIndexBuffer" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIShaderVK, 				"MOAIShaderVK" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIShaderMgrVK, 			"MOAIShaderMgr" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIShaderProgramVK, 		"MOAIShaderProgram" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAITexture2DVK,			"MOAITexture" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIVertexArrayVK, 			"MOAIVertexArray" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIVertexBufferVK, 		"MOAIVertexBuffer" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIVertexFormatVK, 		"MOAIVertexFormat" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIVertexFormatMgrVK, 		"MOAIVertexFormatMgr" )
+}
+
+//----------------------------------------------------------------//
+AKU_API void AKUGfxVKSetFunc_CreateSurface ( AKUGfxVKFunc_CreateSurface func, void* userdata ) {
+
+	MOAIGfxMgrVK::Get ().SetHostCreateSurfaceFunc ( MOAIGfxMgrVK::HostCreateSurfaceFunc ( func, userdata ));
 }

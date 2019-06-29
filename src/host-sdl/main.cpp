@@ -6,7 +6,6 @@
 
 #include <stdio.h>
 #include <stdlib.h>
-#include "SDLHostGL.h"
 
 #if _MSC_VER
 	#include <Crtdbg.h>
@@ -15,6 +14,25 @@
 #ifdef _WIN32
 	#include <Windows.h>
 #endif
+
+#include <host-modules/aku_modules.h>
+
+#if AKU_WITH_GFX_GL
+	#include "SDLHostGL.h"
+#elif AKU_WITH_GFX_VK
+	#include "SDLHostVK.h"
+#endif
+
+//----------------------------------------------------------------//
+void _run ( int argc, char** argv );
+void _run ( int argc, char** argv ) {
+
+	#if AKU_WITH_GFX_GL
+		SDLHostGL ().Run ( argc, argv );
+	#elif AKU_WITH_GFX_VK
+		SDLHostVK ().Run ( argc, argv );
+	#endif
+}
 
 //----------------------------------------------------------------//
 #ifdef _WIN32
@@ -36,13 +54,13 @@
 			_CrtSetReportFile ( _CRT_ASSERT, _CRTDBG_FILE_STDERR );
 		#endif
 
-		SDLHostGL ().Run ( argc, argv );
+		_run ( argc, argv );
 	}
 #endif
 
 //----------------------------------------------------------------//
 int main ( int argc, char** argv ) {
 
-	SDLHostGL ().Run ( argc, argv );
+	_run ( argc, argv );
     return 0;
 }

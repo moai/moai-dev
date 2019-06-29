@@ -26,13 +26,13 @@ public:
 private:
 
 	static SDL_mutex*		sDisplayListMutex;
-	//static SDL_GLContext	sSharedContext;
 
 	SDL_Thread*		mThread;
 	SDL_cond*		mCondition;
 	SDL_mutex*		mConditionMutex;
 	bool			mIsDone;
-	
+
+	SDL_Window*		mWindow;
 	SDL_GLContext	mContext;
 	
 	int				mMask;
@@ -42,15 +42,15 @@ private:
 
 		SDL_LockMutex ( sDisplayListMutex );
 
-		WorkerThreadInfo* info = ( WorkerThreadInfo* )data;
+		WorkerThreadInfo* self = ( WorkerThreadInfo* )data;
 
-		SDL_GL_MakeCurrent ( sWindow, info->mContext );
+		SDL_GL_MakeCurrent ( self->mWindow, self->mContext );
 		
-		if ( info->mMask & LOADING_FLAG ) {
+		if ( self->mMask & LOADING_FLAG ) {
 			AKUDisplayListEnable ( AKU_DISPLAY_LIST_LOADING );
 		}
 		
-		if ( info->mMask & RENDER_FLAG ) {
+		if ( self->mMask & RENDER_FLAG ) {
 //			AKUDetectGfxContext ();
 			AKUDisplayListEnable ( AKU_DISPLAY_LIST_DRAWING );
 		}
@@ -60,17 +60,17 @@ private:
 		int loadUpdateCounter = 0;
 		int renderUpdateCounter = 0;
 
-		while ( info->mIsDone == false ) {
+		while ( self->mIsDone == false ) {
 		
-			SDL_LockMutex ( info->mConditionMutex );
-			SDL_CondWait ( info->mCondition, info->mConditionMutex );
-			SDL_UnlockMutex ( info->mConditionMutex );
+			SDL_LockMutex ( self->mConditionMutex );
+			SDL_CondWait ( self->mCondition, self->mConditionMutex );
+			SDL_UnlockMutex ( self->mConditionMutex );
 			
 			
 			if ( loadUpdateCounter >= ( LOAD_UPDATE_INTERVAL - 1 )) {
 				loadUpdateCounter = 0;
 			
-				if ( info->mMask & LOADING_FLAG ) {
+				if ( self->mMask & LOADING_FLAG ) {
 				
 					WorkerThreadInfo::DisplayListBeginPhase ( AKU_DISPLAY_LIST_LOADING_PHASE );
 					AKUDisplayListProcess ( AKU_DISPLAY_LIST_LOADING );
@@ -81,13 +81,13 @@ private:
 			if ( renderUpdateCounter >= ( RENDER_UPDATE_INTERVAL - 1 )) {
 				renderUpdateCounter = 0;
 			
-				if ( info->mMask & RENDER_FLAG ) {
+				if ( self->mMask & RENDER_FLAG ) {
 					
 					WorkerThreadInfo::DisplayListBeginPhase ( AKU_DISPLAY_LIST_DRAWING_PHASE );
 					AKUDisplayListProcess ( AKU_DISPLAY_LIST_DRAWING );
 					WorkerThreadInfo::DisplayListEndPhase ( AKU_DISPLAY_LIST_DRAWING_PHASE );
 					
-					SDL_GL_SwapWindow ( sWindow );
+					SDL_GL_SwapWindow ( self->mWindow );
 				}
 			}
 			
@@ -95,7 +95,7 @@ private:
 			renderUpdateCounter++;
 		}
 		
-		SDL_GL_DeleteContext ( info->mContext );
+		SDL_GL_DeleteContext ( self->mContext );
 		
 		return 0;
 	}
@@ -139,9 +139,10 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void Start ( int mask, const char* name ) {
+	void Start ( SDL_Window* window, int mask, const char* name ) {
 
-		this->mContext = SDL_GL_CreateContext ( sWindow );
+		this->mWindow = window;
+		this->mContext = SDL_GL_CreateContext ( this->mWindow );
 
 		this->mMask					= mask;
 		this->mCondition			= SDL_CreateCond ();
@@ -164,7 +165,9 @@ public:
 		mThread ( 0 ),
 		mCondition ( 0 ),
 		mConditionMutex ( 0 ),
-		mIsDone ( false ) {
+		mIsDone ( false ),
+		mWindow ( NULL ),
+		mContext ( NULL ) {
 		
 		if ( !sDisplayListMutex ) {
 			sDisplayListMutex = SDL_CreateMutex ();
@@ -181,10 +184,16 @@ SDL_mutex* WorkerThreadInfo::sDisplayListMutex = 0;
 //----------------------------------------------------------------//
 SDLHostGLMultiThread::SDLHostGLMultiThread () :
 	mSimUpdateCounter ( 0 ) {
+	
+	this->mLoadingThread = new WorkerThreadInfo ();
+	this->mRenderThread = new WorkerThreadInfo ();
 }
 
 //----------------------------------------------------------------//
 SDLHostGLMultiThread::~SDLHostGLMultiThread () {
+
+	delete this->mLoadingThread;
+	delete this->mRenderThread;
 }
 
 //================================================================//
@@ -194,18 +203,15 @@ SDLHostGLMultiThread::~SDLHostGLMultiThread () {
 //----------------------------------------------------------------//
 void SDLHostGLMultiThread::SDLAbstractHost_MainLoopDidFinish () {
 
-	loadingThread.Stop ();
-	renderThread.Stop ();
+	this->mLoadingThread->Stop ();
+	this->mRenderThread->Stop ();
 }
 
 //----------------------------------------------------------------//
 void SDLHostGLMultiThread::SDLAbstractHost_MainLoopDidStart () {
 	
-	WorkerThreadInfo loadingThread;
-	loadingThread.Start ( WorkerThreadInfo::LOADING_FLAG, "Loading Thread" );
-
-	WorkerThreadInfo renderThread;
-	renderThread.Start ( WorkerThreadInfo::RENDER_FLAG, "Render Thread" );
+	this->mLoadingThread->Start ( this->mWindow, WorkerThreadInfo::LOADING_FLAG, "Loading Thread" );
+	this->mRenderThread->Start ( this->mWindow, WorkerThreadInfo::RENDER_FLAG, "Render Thread" );
 
 	SDL_GL_MakeCurrent ( this->mWindow, NULL );
 }
@@ -220,8 +226,8 @@ void SDLHostGLMultiThread::SDLAbstractHost_Render () {
 		AKURender ();
 		WorkerThreadInfo::DisplayListEndPhase ( AKU_DISPLAY_LIST_LOGIC_PHASE );
 
-		loadingThread.Signal ();
-		renderThread.Signal ();
+		this->mLoadingThread->Signal ();
+		this->mRenderThread->Signal ();
 	}
 	this->mSimUpdateCounter++;
 }

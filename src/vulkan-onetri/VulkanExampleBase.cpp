@@ -47,7 +47,7 @@ VkResult VulkanExampleBase::createInstance ( std::string name, uint32_t apiVersi
     std::vector < const char* > instanceExtensions;
     std::vector < const char* > validationLayers;
 	
-	this->mHost.pushInstanceExtensions ( instanceExtensions );
+//	this->mHost.pushInstanceExtensions ( instanceExtensions );
 	
 //    instanceExtensions.push_back ( VK_KHR_SURFACE_EXTENSION_NAME );
 
@@ -56,6 +56,10 @@ VkResult VulkanExampleBase::createInstance ( std::string name, uint32_t apiVersi
 //    #elif defined ( VK_USE_PLATFORM_MACOS_MVK )
 //        instanceExtensions.push_back ( VK_MVK_MACOS_SURFACE_EXTENSION_NAME );
 //    #endif
+
+	// platform specific
+	instanceExtensions.push_back ( VK_KHR_SURFACE_EXTENSION_NAME );
+	instanceExtensions.push_back ( VK_MVK_MACOS_SURFACE_EXTENSION_NAME );
 
     for ( size_t i = 0; i < this->mEnabledInstanceExtensions.size (); ++i ) {
         instanceExtensions.push_back ( this->mEnabledInstanceExtensions [ i ]);
@@ -163,7 +167,9 @@ VkResult VulkanExampleBase::createLogicalDevice ( bool useSwapChain, VkQueueFlag
     deviceCreateInfo.pEnabledFeatures = &mEnabledFeatures;
 
 	std::vector < const char* > deviceExtensions;
-	this->mHost.pushDeviceExtensions ( deviceExtensions );
+
+	// platform specific
+	deviceExtensions.push_back ( VK_KHR_SWAPCHAIN_EXTENSION_NAME );
 
 //    // Enable the debug marker extension if it is present (likely meaning a debugging tool is present)
 //    if ( supportedExtensions.find ( VK_EXT_DEBUG_MARKER_EXTENSION_NAME ) != supportedExtensions.end ()) {

@@ -40,7 +40,37 @@ class MOAIGfxMgrVK :
 	public virtual MOAIGfxMgrVK_RenderTreeVK,
 //	public virtual MOAIGfxMgrVK_ResourceClerkVK,
 	public virtual MOAIGfxMgrVK_VertexCacheVK {
+public:
+
+	typedef std::pair < void ( * )( VkInstance instance, VkSurfaceKHR& surface, void* userdata ), void* > HostCreateSurfaceFunc;
+
 protected:
+
+	HostCreateSurfaceFunc				mHostCreateSurfaceFunc;
+
+	VkInstance                          mInstance; // Vulkan instance, stores all per-application states
+    VkPhysicalDevice                    mPhysicalDevice; // Physical device (GPU) that Vulkan will use
+	VkPhysicalDeviceProperties          mPhysicalDeviceProperties; // Stores physical device properties (for e.g. checking device limits)
+	VkPhysicalDeviceFeatures            mPhysicalDeviceFeature; // Stores the features available on the selected physical device (for e.g. checking if a feature is available)
+	VkPhysicalDeviceMemoryProperties    mPhysicalDeviceMemoryProperties; // Stores all available memory (type) properties for the physical device
+//    VkFormat                            mDepthFormat; // Depth buffer format (selected during Vulkan initialization)
+//
+//    std::vector<const char*>            mEnabledDeviceExtensions;
+	STLArray < cc8* >					mEnabledInstanceExtensions;
+    VkQueue                             mQueue; // Handle to the device graphics queue that command buffers are submitted to
+//    VkCommandPool                       mSwapChainQueueCommandPool; // Command buffer pool
+//    std::vector<VkCommandBuffer>        mDrawCmdBuffers; // Command buffers used for rendering
+//    VkRenderPass                        mRenderPass; // Global render pass for frame buffer writes
+//    std::vector<VkFramebuffer>          mFrameBuffers; // List of available frame buffers (same as number of swap chain images)
+//    uint32_t                            mCurrentBuffer = 0; // Active frame buffer index
+//    VkDescriptorPool                    mDescriptorPool = VK_NULL_HANDLE; // Descriptor set pool
+//    std::vector<VkShaderModule>         mShaderModules; // List of shader modules created (stored for cleanup)
+    VkPipelineCache                     mPipelineCache; // Pipeline cache object
+    MOAISwapChainVK                     mSwapChain; // Wraps the swap chain to present images (framebuffers) to the windowing system
+	VkPhysicalDeviceFeatures            mEnabledFeatures; // Set of physical device features to be enabled for this example (must be set in the derived constructor). By default no phyiscal device features are enabled
+//
+    VkDevice                            mDevice = VK_NULL_HANDLE;                // Logical device representation (application's view of the device)
+    VkCommandPool                       mGraphicsCommandPool = VK_NULL_HANDLE;   // Default command pool for the graphics queue family index
 
 //	bool									mHasContext;
 //
@@ -104,10 +134,14 @@ public:
 //
 //	GET ( u32, RenderCounter, mRenderCounter );
 
+	GET_SET ( HostCreateSurfaceFunc, HostCreateSurfaceFunc, mHostCreateSurfaceFunc );
+
 	//----------------------------------------------------------------//
 //	void					Clear						();
 //	void					ClearErrors					();
-//	void					DetectContext				();
+	VkResult				CreateInstance				( cc8* name, uint32_t apiVersion );
+	VkResult				CreateLogicalDevice			( bool useSwapChain = true, VkQueueFlags requestedQueueTypes = VK_QUEUE_GRAPHICS_BIT );
+	void					DetectContext				( u32 width, u32 height, bool vsync );
 //	void					DetectFramebuffer			();
 //	void					FinishFrame					();
 //	u32						LogErrors					();

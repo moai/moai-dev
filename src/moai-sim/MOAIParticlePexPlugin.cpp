@@ -524,10 +524,12 @@ void MOAIParticlePexPlugin::Parse ( cc8* filename, MOAIParticlePexPlugin& plugin
 				}
 			}
 			else if ( text == "blendFuncSource" ) {
-				plugin.mBlendFuncSrc = ZLGfxEnum::MapNativeToZL ( atoi(attribute->Value()));
+// TODO: vulkan fix
+//				plugin.mBlendFuncSrc = ZLGfxEnum::MapNativeToZL ( atoi(attribute->Value()));
 			}
 			else if ( text == "blendFuncDestination" ) {
-				plugin.mBlendFuncDst = ZLGfxEnum::MapNativeToZL ( atoi(attribute->Value()));
+// TODO: vulkan fix
+//				plugin.mBlendFuncDst = ZLGfxEnum::MapNativeToZL ( atoi(attribute->Value()));
 			}
 			else if ( text == "duration" ) {
 				plugin.mDuration = ( float )atof ( attribute->Value ());

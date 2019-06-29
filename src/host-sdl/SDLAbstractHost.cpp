@@ -375,6 +375,7 @@ void SDLAbstractHost::MainLoop () {
 	}
 	
 	this->SDLAbstractHost_MainLoopDidFinish ();
+	AKUDeleteContext ( AKUGetContext ());
 }
 
 //----------------------------------------------------------------//
