@@ -101,7 +101,7 @@ void MOAILogicalDeviceVK::InitQueueAndPool ( MOAIGfxQueueAndPoolVK& queueAndPool
 	vkGetDeviceQueue ( this->mDevice, index, 0, &queueAndPool.mQueue );
 	
 	if ( !this->mCommandPools.contains ( index )) {
-		VkCommandPoolCreateInfo commandPoolCreateInfo = MOAIGfxStructVK::commandPoolCreateInfo ( index );
+		VkCommandPoolCreateInfo commandPoolCreateInfo = MOAIGfxStructVK::commandPoolCreateInfo ( index, VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT );
 		VK_CHECK_RESULT ( vkCreateCommandPool ( this->mDevice, &commandPoolCreateInfo, NULL, &this->mCommandPools [ index ] ));
 	}
 	queueAndPool.mPool = this->mCommandPools [ index ];

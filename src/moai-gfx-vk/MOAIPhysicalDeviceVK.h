@@ -45,6 +45,7 @@ class MOAIPhysicalDeviceVK {
 private:
 
 	typedef const VkCompositeAlphaFlagBitsKHR* AlphaRank;
+	typedef const VkFormat* FormatRank;
 
 	// for internal use (normalizes 'present' as a bit flag for cleaner selection code)
 	enum {
@@ -55,6 +56,7 @@ private:
 	};
 
 	//----------------------------------------------------------------//
+	VkFormat			FindFormat						( const VkFormat* rankedFormats, VkFormatFeatureFlags optimalTilingFeatures, VkFormatFeatureFlags linearTilingFeatures = 0, VkFormatFeatureFlags bufferFeatures = 0 );
 	bool				FindQueue						( u32& queueIndex, u32 criteria, u32 exclude = 0 );
 	u32					GetQueueFlags					( ZLIndex queueIndex );
 	void				InitBasicInfo					( VkPhysicalDevice device );
@@ -65,6 +67,7 @@ private:
 	void				InitSurfaceCapabilities			( MOAIGfxInstanceVK& instance, MOAISurfaceVK& surface );
 	void				InitSurfaceFormats				( MOAIGfxInstanceVK& instance, MOAISurfaceVK& surface );
 	AlphaRank			RankCompositeAlphaBits			() const;
+	FormatRank			RankDepthFormats				() const;
 	size_t				ScoreDeviceType					() const; // TODO: make user configurable
 	static size_t		ScorePresentMode				( VkPresentModeKHR presentMode ); // TODO: make user configurable
 
@@ -78,6 +81,7 @@ public:
 	ZLLeanArray < bool >						mQueueFamilySupportsPresent;
 	ZLLeanArray < VkSurfaceFormatKHR >			mSurfaceFormats;
 	STLSet < STLString >						mSupportedExtensions;
+	VkFormat									mDepthFormat;
 	
 	VkSurfaceCapabilitiesKHR					mSurfaceCapabilities;
 	ZLLeanArray < VkPresentModeKHR >			mPresentModes;
@@ -112,6 +116,7 @@ public:
 
 	//----------------------------------------------------------------//
 	VkCompositeAlphaFlagBitsKHR		FindCompositeAlpha				();
+	bool							FindMemoryTypeIndex				( u32& index, u32 typeBits, VkMemoryPropertyFlags properties = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT );
 	VkPresentModeKHR				FindPresentMode					();
 	void							FindQueues						( MOAIGfxQueueSetVK& queueSet, VkQueueFlags requestedQueueTypes, bool requestPresent );
 	VkSurfaceFormatKHR				FindSurfaceFormat				( VkFormat colorFormat, VkColorSpaceKHR colorSpace );

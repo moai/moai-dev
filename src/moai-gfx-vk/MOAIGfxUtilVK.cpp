@@ -11,8 +11,8 @@
 //----------------------------------------------------------------//
 VkFormat FindDepthFormat (
 	VkPhysicalDevice physicalDevice,
-	VkFormatFeatureFlags linearTilingFeatures,
 	VkFormatFeatureFlags optimalTilingFeatures,
+	VkFormatFeatureFlags linearTilingFeatures,
 	VkFormatFeatureFlags bufferFeatures
 ) {
 
@@ -33,8 +33,8 @@ VkFormat FindDepthFormat (
 		VkFormatProperties props;
 		vkGetPhysicalDeviceFormatProperties ( physicalDevice, format, &props );
 		
-		if ((( props.linearTilingFeatures & linearTilingFeatures ) == linearTilingFeatures ) &&
-			(( props.optimalTilingFeatures & optimalTilingFeatures ) == optimalTilingFeatures ) &&
+		if ((( props.linearTilingFeatures & optimalTilingFeatures ) == optimalTilingFeatures ) &&
+			(( props.optimalTilingFeatures & linearTilingFeatures ) == linearTilingFeatures ) &&
 			(( props.bufferFeatures & bufferFeatures ) == bufferFeatures )) {
 			return format;
 		}

@@ -22,6 +22,44 @@ VkCompositeAlphaFlagBitsKHR MOAIPhysicalDeviceVK::FindCompositeAlpha () {
 }
 
 //----------------------------------------------------------------//
+VkFormat MOAIPhysicalDeviceVK::FindFormat (
+	const VkFormat* rankedFormats,
+	VkFormatFeatureFlags optimalTilingFeatures,
+	VkFormatFeatureFlags linearTilingFeatures,
+	VkFormatFeatureFlags bufferFeatures
+) {
+
+	for ( size_t i = 0; rankedFormats [ i ] != VK_FORMAT_UNDEFINED; ++i ) {
+		VkFormat format = rankedFormats [ i ];
+	
+		VkFormatProperties props;
+		vkGetPhysicalDeviceFormatProperties ( this->mDevice, format, &props );
+		
+		if ((( props.optimalTilingFeatures & optimalTilingFeatures ) == optimalTilingFeatures ) &&
+			(( props.linearTilingFeatures & linearTilingFeatures ) == linearTilingFeatures ) &&
+			(( props.bufferFeatures & bufferFeatures ) == bufferFeatures )) {
+			return format;
+		}
+	}
+	return VK_FORMAT_UNDEFINED;
+}
+
+//----------------------------------------------------------------//
+bool MOAIPhysicalDeviceVK::FindMemoryTypeIndex ( u32& index, u32 typeBits, VkMemoryPropertyFlags properties ) {
+
+	for ( u32 i = 0; i < this->mMemoryProperties.memoryTypeCount; i++ ) {
+		if (( typeBits & 1 ) == 1 ) {
+			if (( this->mMemoryProperties.memoryTypes [ i ].propertyFlags & properties ) == properties ) {
+				index = i;
+				return true;
+			}
+		}
+		typeBits >>= 1;
+	}
+	return false;
+}
+
+//----------------------------------------------------------------//
 VkPresentModeKHR MOAIPhysicalDeviceVK::FindPresentMode () {
 
 	assert ( this->mPresentModes.Size ());
@@ -203,8 +241,11 @@ void MOAIPhysicalDeviceVK::Init ( MOAIGfxInstanceVK& instance, MOAISurfaceVK& su
 		if ( !this->mDevice || ( *this < compDevice )) {
 			
 			compDevice.InitFullInfo ( instance, surface );
-			if ( compDevice.SupportsExtension ( VK_KHR_SWAPCHAIN_EXTENSION_NAME ) && compDevice.SupportsRenderAndPresent ()) {
-//				VkFormat depthFormat = MOAIGfxUtilVK::FindDepthFormat ( physicalDevice, 0, VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT, 0 );
+			if (
+				compDevice.SupportsExtension ( VK_KHR_SWAPCHAIN_EXTENSION_NAME ) &&		// can swapchain
+				compDevice.SupportsRenderAndPresent () &&								// can present
+				( compDevice.mDepthFormat != VK_FORMAT_UNDEFINED )						// supports depth/stencil
+			) {
 				*this = compDevice;
 			}
 		}
@@ -230,6 +271,8 @@ void MOAIPhysicalDeviceVK::InitFullInfo ( MOAIGfxInstanceVK& instance, MOAISurfa
 	this->InitSupportedExtensions ();
 	this->InitSurfaceFormats ( instance, surface );
 	this->InitSurfaceCapabilities ( instance, surface );
+	
+	this->mDepthFormat = this->FindFormat ( this->RankDepthFormats (), VK_FORMAT_FEATURE_DEPTH_STENCIL_ATTACHMENT_BIT );
 }
 
 //----------------------------------------------------------------//
@@ -331,9 +374,24 @@ const VkCompositeAlphaFlagBitsKHR* MOAIPhysicalDeviceVK::RankCompositeAlphaBits 
     	VK_COMPOSITE_ALPHA_PRE_MULTIPLIED_BIT_KHR,
     	VK_COMPOSITE_ALPHA_POST_MULTIPLIED_BIT_KHR ,
     	VK_COMPOSITE_ALPHA_INHERIT_BIT_KHR,
-    	( VkCompositeAlphaFlagBitsKHR )0
+    	( VkCompositeAlphaFlagBitsKHR )0,
 	};
 	return rankedBits;
+}
+
+//----------------------------------------------------------------//
+const VkFormat* MOAIPhysicalDeviceVK::RankDepthFormats () const {
+
+	// start with the highest precision packed format
+	static const VkFormat depthFormats [] = {
+		VK_FORMAT_D32_SFLOAT_S8_UINT,
+		VK_FORMAT_D32_SFLOAT,
+		VK_FORMAT_D24_UNORM_S8_UINT,
+		VK_FORMAT_D16_UNORM_S8_UINT,
+		VK_FORMAT_D16_UNORM,
+		VK_FORMAT_UNDEFINED,
+	};
+	return depthFormats;
 }
 
 //----------------------------------------------------------------//

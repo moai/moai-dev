@@ -55,38 +55,33 @@ protected:
 	HostGetInstanceExtensionsFunc		mHostGetInstanceExtensionsFunc;
 
 	MOAIGfxInstanceVK            		mInstance; // Vulkan instance, stores all per-application states
+    MOAISurfaceVK                     	mSurface; // Wraps the swap chain to present images (framebuffers) to the windowing system
 	MOAIPhysicalDeviceVK				mPhysicalDevice; // Physical device (GPU) that Vulkan will use
 	MOAILogicalDeviceVK					mLogicalDevice;
-//	VkPhysicalDeviceProperties          mPhysicalDeviceProperties; // Stores physical device properties (for e.g. checking device limits)
-//	VkPhysicalDeviceFeatures            mPhysicalDeviceFeature; // Stores the features available on the selected physical device (for e.g. checking if a feature is available)
-//	VkPhysicalDeviceMemoryProperties    mPhysicalDeviceMemoryProperties; // Stores all available memory (type) properties for the physical device
-//    VkFormat                            mDepthFormat; // Depth buffer format (selected during Vulkan initialization)
-//
-//    std::vector<const char*>            mEnabledDeviceExtensions;
-	STLArray < cc8* >					mEnabledInstanceExtensions;
-//    VkQueue                             mQueue; // Handle to the device graphics queue that command buffers are submitted to
-//    VkCommandPool                       mSwapChainQueueCommandPool; // Command buffer pool
-//    std::vector<VkCommandBuffer>        mDrawCmdBuffers; // Command buffers used for rendering
-//    VkRenderPass                        mRenderPass; // Global render pass for frame buffer writes
-//    std::vector<VkFramebuffer>          mFrameBuffers; // List of available frame buffers (same as number of swap chain images)
+	MOAISwapChainVK						mSwapChain;
+
+	struct {
+        VkImage                         mImage;
+        VkDeviceMemory                  mMem;
+        VkImageView                     mView;
+    } mDepthStencil;
+
+	VkRenderPass                        mRenderPass; // Global render pass for frame buffer writes
+	ZLLeanArray < VkCommandBuffer >		mDrawCommandBuffers;
+	ZLLeanArray < VkFramebuffer >		mFrameBuffers;
+	ZLLeanArray < VkFence >				mWaitFences;
+
+	VkSemaphore     					mPresentComplete;
+	VkSemaphore     					mRenderComplete;
+
 //    uint32_t                            mCurrentBuffer = 0; // Active frame buffer index
 //    VkDescriptorPool                    mDescriptorPool = VK_NULL_HANDLE; // Descriptor set pool
 //    std::vector<VkShaderModule>         mShaderModules; // List of shader modules created (stored for cleanup)
 //    VkPipelineCache                     mPipelineCache; // Pipeline cache object
-    MOAISurfaceVK                     	mSurface; // Wraps the swap chain to present images (framebuffers) to the windowing system
-	MOAISwapChainVK						mSwapChain;
-//	VkPhysicalDeviceFeatures            mEnabledFeatures; // Set of physical device features to be enabled for this example (must be set in the derived constructor). By default no phyiscal device features are enabled
-//
 		
-//    VkCommandPool                       mGraphicsCommandPool = VK_NULL_HANDLE;   // Default command pool for the graphics queue family index
-
 //	bool									mHasContext;
 //
 //	bool									mIsFramebufferSupported;
-//	bool									mIsOpenGLES;
-//
-//	u32										mMajorVersion;
-//	u32										mMinorVersion;
 //
 //	size_t									mTextureMemoryUsage;
 //	u32										mMaxTextureSize;
@@ -106,11 +101,13 @@ protected:
 //	static int						_renewResources				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void							InitInstance				( cc8* name, uint32_t apiVersion );
-	void							InitLogicalDevice			( bool useSwapChain = true, VkQueueFlags requestedQueueTypes = VK_QUEUE_GRAPHICS_BIT );
-	void							InitPhysicalDevice			();
 //	void							OnGlobalsFinalize			();
 //	void							OnGlobalsInitialize			();
+	void							InitCommandBuffers			();
+	void							InitDepthStencil			();
+	void							InitFrameBuffers			();
+	void							InitRenderPass				();
+	void							InitSemaphores				();
 
 	//----------------------------------------------------------------//
 	MOAIShader*						MOAIGfxMgr_AffirmShader						( MOAILuaState& state, int idx ) const;

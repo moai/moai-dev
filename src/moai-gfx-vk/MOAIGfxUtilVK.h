@@ -29,7 +29,7 @@ class MOAIGfxUtilVK {
 public:
 
 	//----------------------------------------------------------------//
-	static VkFormat			FindDepthFormat				( VkPhysicalDevice physicalDevice, VkFormatFeatureFlags linearTilingFeatures, VkFormatFeatureFlags optimalTilingFeatures, VkFormatFeatureFlags bufferFeatures );
+	static VkFormat			FindDepthFormat				( VkPhysicalDevice physicalDevice, VkFormatFeatureFlags optimalTilingFeatures, VkFormatFeatureFlags linearTilingFeatures, VkFormatFeatureFlags bufferFeatures );
 	static cc8*				GetErrorString				( VkResult errorCode );
 
 	//----------------------------------------------------------------//
