@@ -4416,6 +4416,18 @@
 		CDD8554F22C5ABDD00F78DF0 /* MOAIGfxStructVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD8554D22C5ABDD00F78DF0 /* MOAIGfxStructVK.h */; };
 		CDD8555022C5ABDD00F78DF0 /* MOAISwapChainVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD8554E22C5ABDD00F78DF0 /* MOAISwapChainVK.h */; };
 		CDD8555222C67FF500F78DF0 /* MOAIGfxUtilVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD8555122C67FF500F78DF0 /* MOAIGfxUtilVK.h */; };
+		CDD8555422C7E2CC00F78DF0 /* MOAISurfaceVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD8555322C7E2CC00F78DF0 /* MOAISurfaceVK.h */; };
+		CDD8555622C7E44700F78DF0 /* MOAISurfaceVK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD8555522C7E44700F78DF0 /* MOAISurfaceVK.cpp */; };
+		CDD8555822C7E45C00F78DF0 /* MOAISwapChainVK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD8555722C7E45C00F78DF0 /* MOAISwapChainVK.cpp */; };
+		CDD8555A22C7E4D100F78DF0 /* MOAIGfxUtilVK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD8555922C7E4D100F78DF0 /* MOAIGfxUtilVK.cpp */; };
+		CDD8555C22C934AD00F78DF0 /* ZLCallbackWithUserdata.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD8555B22C934AD00F78DF0 /* ZLCallbackWithUserdata.h */; };
+		CDD8555D22C934AD00F78DF0 /* ZLCallbackWithUserdata.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD8555B22C934AD00F78DF0 /* ZLCallbackWithUserdata.h */; };
+		CDD8555F22C9439000F78DF0 /* MOAIPhysicalDeviceVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD8555E22C9439000F78DF0 /* MOAIPhysicalDeviceVK.h */; };
+		CDD8556122C94F7900F78DF0 /* MOAIGfxInstanceVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD8556022C94F7900F78DF0 /* MOAIGfxInstanceVK.h */; };
+		CDD8556322C992CD00F78DF0 /* MOAIPhysicalDeviceVK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD8556222C992CD00F78DF0 /* MOAIPhysicalDeviceVK.cpp */; };
+		CDD8556622CAA28300F78DF0 /* MOAILogicalDeviceVK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD8556422CAA28300F78DF0 /* MOAILogicalDeviceVK.cpp */; };
+		CDD8556722CAA28300F78DF0 /* MOAILogicalDeviceVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD8556522CAA28300F78DF0 /* MOAILogicalDeviceVK.h */; };
+		CDD8556922CAC5FB00F78DF0 /* MOAIGfxInstanceVK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD8556822CAC5FB00F78DF0 /* MOAIGfxInstanceVK.cpp */; };
 		CDDAF4661C2FC5AA00F10946 /* ZLSample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDDAF4621C2F3D7C00F10946 /* ZLSample.cpp */; };
 		CDDAF4671C2FC5AA00F10946 /* ZLSample.h in Headers */ = {isa = PBXBuildFile; fileRef = CDDAF4631C2F3D7C00F10946 /* ZLSample.h */; };
 		CDDAF4681C2FC5AD00F10946 /* ZLSample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDDAF4621C2F3D7C00F10946 /* ZLSample.cpp */; };
@@ -7887,6 +7899,17 @@
 		CDD8554D22C5ABDD00F78DF0 /* MOAIGfxStructVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxStructVK.h; path = "moai-gfx-vk/MOAIGfxStructVK.h"; sourceTree = "<group>"; };
 		CDD8554E22C5ABDD00F78DF0 /* MOAISwapChainVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISwapChainVK.h; path = "moai-gfx-vk/MOAISwapChainVK.h"; sourceTree = "<group>"; };
 		CDD8555122C67FF500F78DF0 /* MOAIGfxUtilVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxUtilVK.h; path = "moai-gfx-vk/MOAIGfxUtilVK.h"; sourceTree = "<group>"; };
+		CDD8555322C7E2CC00F78DF0 /* MOAISurfaceVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAISurfaceVK.h; path = "moai-gfx-vk/MOAISurfaceVK.h"; sourceTree = "<group>"; };
+		CDD8555522C7E44700F78DF0 /* MOAISurfaceVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISurfaceVK.cpp; path = "moai-gfx-vk/MOAISurfaceVK.cpp"; sourceTree = "<group>"; };
+		CDD8555722C7E45C00F78DF0 /* MOAISwapChainVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAISwapChainVK.cpp; path = "moai-gfx-vk/MOAISwapChainVK.cpp"; sourceTree = "<group>"; };
+		CDD8555922C7E4D100F78DF0 /* MOAIGfxUtilVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIGfxUtilVK.cpp; path = "moai-gfx-vk/MOAIGfxUtilVK.cpp"; sourceTree = "<group>"; };
+		CDD8555B22C934AD00F78DF0 /* ZLCallbackWithUserdata.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLCallbackWithUserdata.h; sourceTree = "<group>"; };
+		CDD8555E22C9439000F78DF0 /* MOAIPhysicalDeviceVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIPhysicalDeviceVK.h; path = "moai-gfx-vk/MOAIPhysicalDeviceVK.h"; sourceTree = "<group>"; };
+		CDD8556022C94F7900F78DF0 /* MOAIGfxInstanceVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxInstanceVK.h; path = "moai-gfx-vk/MOAIGfxInstanceVK.h"; sourceTree = "<group>"; };
+		CDD8556222C992CD00F78DF0 /* MOAIPhysicalDeviceVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIPhysicalDeviceVK.cpp; path = "moai-gfx-vk/MOAIPhysicalDeviceVK.cpp"; sourceTree = "<group>"; };
+		CDD8556422CAA28300F78DF0 /* MOAILogicalDeviceVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAILogicalDeviceVK.cpp; path = "moai-gfx-vk/MOAILogicalDeviceVK.cpp"; sourceTree = "<group>"; };
+		CDD8556522CAA28300F78DF0 /* MOAILogicalDeviceVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAILogicalDeviceVK.h; path = "moai-gfx-vk/MOAILogicalDeviceVK.h"; sourceTree = "<group>"; };
+		CDD8556822CAC5FB00F78DF0 /* MOAIGfxInstanceVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIGfxInstanceVK.cpp; path = "moai-gfx-vk/MOAIGfxInstanceVK.cpp"; sourceTree = "<group>"; };
 		CDDAF4621C2F3D7C00F10946 /* ZLSample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLSample.cpp; sourceTree = "<group>"; };
 		CDDAF4631C2F3D7C00F10946 /* ZLSample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLSample.h; sourceTree = "<group>"; };
 		CDDB553E1CFC15E9009E82D8 /* ZLCleanup.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLCleanup.h; sourceTree = "<group>"; };
@@ -8858,6 +8881,7 @@
 				89BE68A9173974FC00DFE837 /* ZLBinarySearch.h */,
 				CD41F2FD1A20115E008E3420 /* ZLBitBuffer.cpp */,
 				CD41F2FE1A20115E008E3420 /* ZLBitBuffer.h */,
+				CDD8555B22C934AD00F78DF0 /* ZLCallbackWithUserdata.h */,
 				CDDB553E1CFC15E9009E82D8 /* ZLCleanup.h */,
 				89BE68B0173974FC00DFE837 /* ZLColor.cpp */,
 				89BE68B1173974FC00DFE837 /* ZLColor.h */,
@@ -13167,8 +13191,18 @@
 		CDD8554C22C5ABC200F78DF0 /* vulkan */ = {
 			isa = PBXGroup;
 			children = (
+				CDD8556822CAC5FB00F78DF0 /* MOAIGfxInstanceVK.cpp */,
+				CDD8556022C94F7900F78DF0 /* MOAIGfxInstanceVK.h */,
 				CDD8554D22C5ABDD00F78DF0 /* MOAIGfxStructVK.h */,
+				CDD8555922C7E4D100F78DF0 /* MOAIGfxUtilVK.cpp */,
 				CDD8555122C67FF500F78DF0 /* MOAIGfxUtilVK.h */,
+				CDD8556422CAA28300F78DF0 /* MOAILogicalDeviceVK.cpp */,
+				CDD8556522CAA28300F78DF0 /* MOAILogicalDeviceVK.h */,
+				CDD8556222C992CD00F78DF0 /* MOAIPhysicalDeviceVK.cpp */,
+				CDD8555E22C9439000F78DF0 /* MOAIPhysicalDeviceVK.h */,
+				CDD8555522C7E44700F78DF0 /* MOAISurfaceVK.cpp */,
+				CDD8555322C7E2CC00F78DF0 /* MOAISurfaceVK.h */,
+				CDD8555722C7E45C00F78DF0 /* MOAISwapChainVK.cpp */,
 				CDD8554E22C5ABDD00F78DF0 /* MOAISwapChainVK.h */,
 			);
 			name = vulkan;
@@ -14284,6 +14318,7 @@
 				CD2FB1A71C473ABE005F8D8D /* ZLRefCountedObject.h in Headers */,
 				89BE6A75173974FD00DFE837 /* ZLUnion.h in Headers */,
 				89BE6A77173974FD00DFE837 /* ZLUnique.h in Headers */,
+				CDD8555C22C934AD00F78DF0 /* ZLCallbackWithUserdata.h in Headers */,
 				CD1D85921E1922BD0089FFAD /* ZLStrongPtr.h in Headers */,
 				89BE6A7D173974FD00DFE837 /* ZLVec2D.h in Headers */,
 				89BE6A7F173974FD00DFE837 /* ZLVec3D.h in Headers */,
@@ -14397,6 +14432,7 @@
 				89BE6A4E173974FD00DFE837 /* ZLRect.h in Headers */,
 				89BE6A52173974FD00DFE837 /* ZLRhombus.h in Headers */,
 				CDCEFAF221CCDE5D00A16B7F /* ZLBoxCorners.h in Headers */,
+				CDD8555D22C934AD00F78DF0 /* ZLCallbackWithUserdata.h in Headers */,
 				CD4A9574229DF93800F9E400 /* ZLCamera.h in Headers */,
 				89BE6A56173974FD00DFE837 /* ZLStream.h in Headers */,
 				89BE6A5A173974FD00DFE837 /* ZLStreamAdapter.h in Headers */,
@@ -15634,6 +15670,7 @@
 				CD9AB58122C41C7C0061A87F /* MOAIGfxBufferVK.h in Headers */,
 				CD9AB59A22C41C7C0061A87F /* MOAIShaderProgramVK.h in Headers */,
 				CD9AB59622C41C7C0061A87F /* MOAIShaderVK.h in Headers */,
+				CDD8556722CAA28300F78DF0 /* MOAILogicalDeviceVK.h in Headers */,
 				CD9AB59822C41C7C0061A87F /* MOAIShaderMgrVK.h in Headers */,
 				CD9AB5C622C41CFF0061A87F /* MOAIFontSnappingShaderGL-vsh.h in Headers */,
 				CD9AB58D22C41C7C0061A87F /* MOAIGfxMgrVK.h in Headers */,
@@ -15642,12 +15679,15 @@
 				CD9AB58B22C41C7C0061A87F /* MOAIGfxMgrVK_VertexCacheVK.h in Headers */,
 				CD9AB5CA22C41CFF0061A87F /* MOAILineShaderGL-vsh.h in Headers */,
 				CD9AB5A822C41C7C0061A87F /* MOAIVertexFormatMgrVK.h in Headers */,
+				CDD8555F22C9439000F78DF0 /* MOAIPhysicalDeviceVK.h in Headers */,
 				CDD8555022C5ABDD00F78DF0 /* MOAISwapChainVK.h in Headers */,
 				CD9AB57B22C41C7C0061A87F /* host.h in Headers */,
 				CD9AB5CC22C41CFF0061A87F /* MOAIMeshShaderGL-vsh.h in Headers */,
+				CDD8555422C7E2CC00F78DF0 /* MOAISurfaceVK.h in Headers */,
 				CD9AB59422C41C7C0061A87F /* MOAIIndexBufferVK.h in Headers */,
 				CD9AB5C322C41CFF0061A87F /* MOAIFontShaderGL-fsh.h in Headers */,
 				CD9AB57D22C41C7C0061A87F /* MOAIFrameBufferVK.h in Headers */,
+				CDD8556122C94F7900F78DF0 /* MOAIGfxInstanceVK.h in Headers */,
 				CD9AB5C122C41CFF0061A87F /* MOAIDeck2DTexOnlyShaderGL-fsh.h in Headers */,
 				CD9AB59022C41C7C0061A87F /* MOAIGfxResourceVK.h in Headers */,
 				CD9AB5A022C41C7C0061A87F /* MOAITextureVK.h in Headers */,
@@ -19584,21 +19624,27 @@
 				CD9AB5A122C41C7C0061A87F /* MOAIVertexArrayVK.cpp in Sources */,
 				CD9AB59D22C41C7C0061A87F /* MOAITexture2DVK.cpp in Sources */,
 				CD9AB59922C41C7C0061A87F /* MOAIShaderProgramVK.cpp in Sources */,
+				CDD8556922CAC5FB00F78DF0 /* MOAIGfxInstanceVK.cpp in Sources */,
 				CD9AB5A922C41C7C0061A87F /* pch.cpp in Sources */,
 				CD9AB59122C41C7C0061A87F /* MOAIImageTextureVK.cpp in Sources */,
+				CDD8555622C7E44700F78DF0 /* MOAISurfaceVK.cpp in Sources */,
 				CD9AB5A722C41C7C0061A87F /* MOAIVertexFormatMgrVK.cpp in Sources */,
 				CD9AB59F22C41C7C0061A87F /* MOAITextureVK.cpp in Sources */,
 				CD9AB5A522C41C7C0061A87F /* MOAIVertexFormatVK.cpp in Sources */,
+				CDD8555822C7E45C00F78DF0 /* MOAISwapChainVK.cpp in Sources */,
 				CD9AB58022C41C7C0061A87F /* MOAIGfxBufferVK.cpp in Sources */,
 				CD9AB57E22C41C7C0061A87F /* MOAIFrameBufferTextureVK.cpp in Sources */,
 				CD9AB59B22C41C7C0061A87F /* MOAIShaderUniformVK.cpp in Sources */,
 				CD9AB58A22C41C7C0061A87F /* MOAIGfxMgrVK_VertexCacheVK.cpp in Sources */,
 				CD9AB57C22C41C7C0061A87F /* MOAIFrameBufferVK.cpp in Sources */,
+				CDD8556622CAA28300F78DF0 /* MOAILogicalDeviceVK.cpp in Sources */,
 				CD9AB58222C41C7C0061A87F /* MOAIGfxMgrVK_GPUCacheVK.cpp in Sources */,
 				CD9AB5A322C41C7C0061A87F /* MOAIVertexBufferVK.cpp in Sources */,
 				CD9AB58C22C41C7C0061A87F /* MOAIGfxMgrVK.cpp in Sources */,
 				CD9AB57A22C41C7C0061A87F /* host.cpp in Sources */,
+				CDD8555A22C7E4D100F78DF0 /* MOAIGfxUtilVK.cpp in Sources */,
 				CD9AB58F22C41C7C0061A87F /* MOAIGfxResourceVK.cpp in Sources */,
+				CDD8556322C992CD00F78DF0 /* MOAIPhysicalDeviceVK.cpp in Sources */,
 				CD9AB59722C41C7C0061A87F /* MOAIShaderMgrVK.cpp in Sources */,
 				CD9AB59522C41C7C0061A87F /* MOAIShaderVK.cpp in Sources */,
 				CD9AB58622C41C7C0061A87F /* MOAIGfxMgrVK_RenderTreeVK.cpp in Sources */,

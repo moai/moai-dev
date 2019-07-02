@@ -17,9 +17,9 @@ void AKUDetectFramebuffer () {
 }
 
 //----------------------------------------------------------------//
-void AKUDetectGfxContext ( int width, int height, bool vsync ) {
+void AKUDetectGfxContext ( int width, int height, bool enableValidation ) {
 
-	MOAIGfxMgrVK::Get ().DetectContext ( width, height, vsync );
+	MOAIGfxMgrVK::Get ().DetectContext ( width, height, enableValidation );
 //	MOAIShaderMgrVK::Get ().AffirmAll ();
 //	MOAIGfxMgrVK::Get ().RenewResources (); // TODO: ZLGfx
 }
@@ -117,4 +117,10 @@ void AKUGfxVKContextInitialize () {
 AKU_API void AKUGfxVKSetFunc_CreateSurface ( AKUGfxVKFunc_CreateSurface func, void* userdata ) {
 
 	MOAIGfxMgrVK::Get ().SetHostCreateSurfaceFunc ( MOAIGfxMgrVK::HostCreateSurfaceFunc ( func, userdata ));
+}
+
+//----------------------------------------------------------------//
+AKU_API void AKUGfxVKSetFunc_GetInstanceExtensions ( AKUGfxVKFunc_GetInstanceExtensions func, void* userdata ) {
+
+	MOAIGfxMgrVK::Get ().SetHostGetInstanceExtensionsFunc ( MOAIGfxMgrVK::HostGetInstanceExtensionsFunc ( func, userdata ));
 }

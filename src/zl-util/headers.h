@@ -29,6 +29,7 @@
 #include <zl-util/ZLBox.h>
 #include <zl-util/ZLBoxCorners.h>
 #include <zl-util/ZLByteStream.h>
+#include <zl-util/ZLCallbackWithUserdata.h>
 #include <zl-util/ZLCamera.h>
 #include <zl-util/ZLCgt.h>
 #include <zl-util/ZLCircle.h>

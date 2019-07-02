@@ -45,13 +45,13 @@ class MOAISim :
 	public virtual MOAIGlobalEventSource {
 public:
 
-	typedef std::pair < void ( * )( void* userdata ), void* > EnterFullscreenModeFunc;
-	typedef std::pair < void ( * )( void* userdata ), void* > ExitFullscreenModeFunc;
-	typedef std::pair < void ( * )( void* userdata ), void* > ShowCursorFunc;
-	typedef std::pair < void ( * )( void* userdata ), void* > HideCursorFunc;
-	typedef std::pair < void ( * )( const char* title, int width, int height, void* userdata ), void* > OpenWindowFunc;
-	typedef std::pair < void ( * )( double step, void* userdata ), void* > SetSimStepFunc;
-	typedef std::pair < void ( * )( int xMin, int yMin, int xMax, int yMax, void* userdata ), void* > SetTextInputRectFunc;
+	typedef ZLCallbackWithUserdata < void ( * )( void* userdata )>	EnterFullscreenModeFunc;
+	typedef ZLCallbackWithUserdata < void ( * )( void* userdata )>	ExitFullscreenModeFunc;
+	typedef ZLCallbackWithUserdata < void ( * )( void* userdata )>	ShowCursorFunc;
+	typedef ZLCallbackWithUserdata < void ( * )( void* userdata )>	HideCursorFunc;
+	typedef ZLCallbackWithUserdata < void ( * )( const char* title, int width, int height, void* userdata )>	OpenWindowFunc;
+	typedef ZLCallbackWithUserdata < void ( * )( double step, void* userdata )>									SetSimStepFunc;
+	typedef ZLCallbackWithUserdata < void ( * )( int xMin, int yMin, int xMax, int yMax, void* userdata )>		SetTextInputRectFunc;
 
 private:
 

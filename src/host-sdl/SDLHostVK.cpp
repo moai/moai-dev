@@ -13,12 +13,24 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void SDLHostVK::_AKUGfxVKFunc_CreateSurface ( VkInstance instance, VkSurfaceKHR& surface, void* userdata ) {
+VkSurfaceKHR SDLHostVK::_AKUGfxVKFunc_CreateSurface ( VkInstance instance, void* userdata ) {
 	SDLHostVK* self = ( SDLHostVK* )userdata;
 	assert ( self );
 
-	surface = NULL;
+	VkSurfaceKHR surface = VK_NULL_HANDLE;
 	SDL_Vulkan_CreateSurface ( self->mWindow, instance, &surface );
+	return surface;
+}
+
+//----------------------------------------------------------------//
+const char** SDLHostVK::_AKUGfxVKFunc_GetInstanceExtensions ( void* userdata ) {
+	UNUSED ( userdata );
+
+	static const char* extensions [] = {
+		VK_MVK_MACOS_SURFACE_EXTENSION_NAME,
+		NULL,
+	};
+	return extensions;
 }
 
 //================================================================//
@@ -65,6 +77,7 @@ void SDLHostVK::SDLAbstractHost_OpenWindow ( const char* title, int width, int h
 		AKUSdlSetWindow ( this->mWindow );
 
 		AKUGfxVKSetFunc_CreateSurface ( _AKUGfxVKFunc_CreateSurface, this );
+		AKUGfxVKSetFunc_GetInstanceExtensions ( _AKUGfxVKFunc_GetInstanceExtensions, this );
 		AKUDetectGfxContext ( width, height, false );
 
 		// Enable keyboard text input.

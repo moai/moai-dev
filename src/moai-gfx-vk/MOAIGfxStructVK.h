@@ -1,12 +1,5 @@
-/*
-* Initializers for Vulkan structures and objects used by the examples
-* Saves lot of VK_STRUCTURE_TYPE assignments
-* Some initializers are parameterized for convenience
-*
-* Copyright (C) 2016 by Sascha Willems - www.saschawillems.de
-*
-* This code is licensed under the MIT license (MIT) (http://opensource.org/licenses/MIT)
-*/
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
+// http://getmoai.com
 
 #ifndef MOAIGFXSTRUCTVK_H
 #define MOAIGFXSTRUCTVK_H
@@ -178,7 +171,7 @@ public:
     }
 
     //----------------------------------------------------------------//
-    static VkCommandPoolCreateInfo commandPoolCreateInfo ( uint32_t queueFamilyIndex, VkCommandPoolCreateFlags flags ) {
+    static VkCommandPoolCreateInfo commandPoolCreateInfo ( uint32_t queueFamilyIndex, VkCommandPoolCreateFlags flags = 0 ) {
         DECL_VK_STRUCT ( VkCommandPoolCreateInfo, cmdPoolCreateInfo );
         cmdPoolCreateInfo.sType                 = VK_STRUCTURE_TYPE_COMMAND_POOL_CREATE_INFO;
         cmdPoolCreateInfo.pNext                 = NULL;
@@ -290,6 +283,31 @@ public:
         descriptorSetLayoutCreateInfo.pBindings         = pBindings;
         descriptorSetLayoutCreateInfo.bindingCount      = bindingCount;
         return descriptorSetLayoutCreateInfo;
+    }
+
+	//----------------------------------------------------------------//
+    static VkDeviceCreateInfo deviceCreateInfo (
+		const VkDeviceQueueCreateInfo* pQueueCreateInfos		= NULL,
+		uint32_t queueCreateInfoCount							= 0,
+		const char* const* ppEnabledLayerNames					= NULL,
+		uint32_t enabledLayerCount								= 0,
+		const char* const* ppEnabledExtensionNames				= NULL,
+		uint32_t enabledExtensionCount							= 0,
+		const VkPhysicalDeviceFeatures* pEnabledFeatures		= NULL,
+		VkDeviceCreateFlags flags								= 0
+    ) {
+        DECL_VK_STRUCT ( VkDeviceCreateInfo, deviceCreateInfo );
+        deviceCreateInfo.sType             			= VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
+        deviceCreateInfo.pNext             			= NULL;
+		deviceCreateInfo.queueCreateInfoCount		= queueCreateInfoCount;
+		deviceCreateInfo.pQueueCreateInfos			= pQueueCreateInfos;
+		deviceCreateInfo.enabledLayerCount			= enabledLayerCount;
+		deviceCreateInfo.ppEnabledLayerNames		= ppEnabledLayerNames;
+		deviceCreateInfo.enabledExtensionCount		= enabledExtensionCount;
+		deviceCreateInfo.ppEnabledExtensionNames	= ppEnabledExtensionNames;
+		deviceCreateInfo.pEnabledFeatures			= pEnabledFeatures;
+        deviceCreateInfo.flags             			= flags;
+        return deviceCreateInfo;
     }
 
     //----------------------------------------------------------------//
@@ -876,6 +894,27 @@ public:
         return pipelineViewportStateCreateInfo;
     }
 
+	//----------------------------------------------------------------//
+    static VkPresentInfoKHR presentInfoKHR (
+		const VkSemaphore* pWaitSemaphores	= NULL,
+        uint32_t waitSemaphoreCount			= 0,
+		const VkSwapchainKHR* pSwapchains	= NULL,
+		uint32_t swapchainCount				= 0,
+		const uint32_t* pImageIndices		= NULL,
+		VkResult* pResults					= NULL
+    ) {
+        DECL_VK_STRUCT ( VkPresentInfoKHR, presentInfoKHR );
+        presentInfoKHR.sType               	= VK_STRUCTURE_TYPE_PRESENT_INFO_KHR;
+        presentInfoKHR.pNext               	= NULL;
+        presentInfoKHR.pWaitSemaphores		= pWaitSemaphores;
+        presentInfoKHR.waitSemaphoreCount	= waitSemaphoreCount;
+        presentInfoKHR.pSwapchains          = pSwapchains;
+        presentInfoKHR.swapchainCount		= swapchainCount;
+        presentInfoKHR.pImageIndices		= pImageIndices;
+        presentInfoKHR.pResults          	= pResults;
+        return presentInfoKHR;
+    }
+
     //----------------------------------------------------------------//
     static VkPushConstantRange pushConstantRange ( VkShaderStageFlags stageFlags, uint32_t size, uint32_t offset ) {
         DECL_VK_STRUCT ( VkPushConstantRange, pushConstantRange );
@@ -1068,8 +1107,8 @@ public:
 		uint32_t                         imageArrayLayers,
 		VkImageUsageFlags                imageUsage,
 		VkSharingMode                    imageSharingMode,
-		uint32_t                         queueFamilyIndexCount,
 		const uint32_t*                  pQueueFamilyIndices,
+		uint32_t                         queueFamilyIndexCount,
 		VkSurfaceTransformFlagBitsKHR    preTransform,
 		VkCompositeAlphaFlagBitsKHR      compositeAlpha,
 		VkPresentModeKHR                 presentMode,

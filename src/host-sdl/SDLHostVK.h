@@ -15,7 +15,8 @@ class SDLHostVK :
 protected:
 	
 	//----------------------------------------------------------------//
-	static void		_AKUGfxVKFunc_CreateSurface		( VkInstance instance, VkSurfaceKHR& surface, void* userdata );
+	static VkSurfaceKHR		_AKUGfxVKFunc_CreateSurface				( VkInstance instance, void* userdata );
+	static const char**		_AKUGfxVKFunc_GetInstanceExtensions		( void* userdata );
 	
 	//----------------------------------------------------------------//
 	void		SDLAbstractHost_MainLoopDidFinish		();

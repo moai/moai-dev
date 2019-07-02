@@ -72,8 +72,8 @@ int MOAISim::_enterFullscreenMode ( lua_State* L ) {
 	MOAILuaState state ( L );
 
 	EnterFullscreenModeFunc func = MOAISim::Get ().GetEnterFullscreenModeFunc ();
-	if ( func.first ) {
-		func.first ( func.second );
+	if ( func ) {
+		func.mFunc ( func.mUserdata );
 	}
 
 	return 0;
@@ -90,8 +90,8 @@ int MOAISim::_exitFullscreenMode ( lua_State* L ) {
 	MOAILuaState state ( L );
 
 	ExitFullscreenModeFunc func = MOAISim::Get ().GetExitFullscreenModeFunc ();
-	if ( func.first ) {
-		func.first ( func.second );
+	if ( func ) {
+		func.mFunc ( func.mUserdata );
 	}
 
 	return 0;
@@ -353,8 +353,8 @@ int MOAISim::_hideCursor ( lua_State* L ) {
 	MOAILuaState state ( L );
 
 	HideCursorFunc func = MOAISim::Get ().GetHideCursorFunc ();
-	if ( func.first ) {
-		func.first ( func.second );
+	if ( func ) {
+		func.mFunc ( func.mUserdata );
 	}
 
 	return 0;
@@ -381,11 +381,11 @@ int MOAISim::_openWindow ( lua_State* L ) {
 	u32 height = state.GetValue < u32 >( 3, 480 );
 
 	OpenWindowFunc openWindow = MOAISim::Get ().GetOpenWindowFunc ();
-	if ( openWindow.first ) {
+	if ( openWindow ) {
 		MOAIFrameBuffer* buffer = gfxMgr.GetDefaultFrameBuffer ();
 		assert ( buffer );
 		buffer->SetBufferSize ( width, height );
-		openWindow.first ( title, width, height, openWindow.second );
+		openWindow.mFunc ( title, width, height, openWindow.mUserdata );
 	}
 
 	return 0;
@@ -616,8 +616,8 @@ int MOAISim::_setTextInputRect ( lua_State* L ) {
 	rect.Bless();
 	
 	SetTextInputRectFunc func = MOAISim::Get ().GetSetTextInputRectFunc ();
-	if ( func.first ) {
-		func.first ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMax, func.second );
+	if ( func ) {
+		func.mFunc ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMax, func.mUserdata );
 	}
 	
 	return 0;
@@ -634,8 +634,8 @@ int MOAISim::_showCursor ( lua_State* L ) {
 	MOAILuaState state ( L );
 
 	ShowCursorFunc func = MOAISim::Get ().GetShowCursorFunc ();
-	if ( func.first ) {
-		func.first ( func.second );
+	if ( func ) {
+		func.mFunc ( func.mUserdata );
 	}
 
 	return 0;
@@ -836,8 +836,8 @@ void MOAISim::SetStep ( double step ) {
 	if ( this->mStep != step ) {
 
 		this->mStep = step;
-		if ( this->mSetSimStepFunc.first ) {
-			this->mSetSimStepFunc.first ( step, this->mSetSimStepFunc.second );
+		if ( this->mSetSimStepFunc ) {
+			this->mSetSimStepFunc.mFunc ( step, this->mSetSimStepFunc.mUserdata );
 		}
 	}
 }
