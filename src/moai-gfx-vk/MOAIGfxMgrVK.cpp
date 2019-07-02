@@ -168,29 +168,6 @@ void MOAIGfxMgrVK::DetectContext ( u32 width, u32 height, bool enableValidation 
 //	VkPipelineCacheCreateInfo pipelineCacheCreateInfo = MOAIGfxStructVK::pipelineCacheCreateInfo ();
 //	VK_CHECK_RESULT ( vkCreatePipelineCache ( this->mLogicalDevice, &pipelineCacheCreateInfo, nullptr, &this->mPipelineCache ));
 
-
-//    // gotta do after creating the swap chain
-//    setupRenderPass ();
-//    createCommandBuffers ();
-//    setupDepthStencil ();
-//    setupFrameBuffer ();
-//
-//    // create synchronization primitives
-//    // Wait fences to sync command buffer access
-//    VkFenceCreateInfo fenceCreateInfo = MOAIGfxStructVK::fenceCreateInfo ( VK_FENCE_CREATE_SIGNALED_BIT );
-//    mWaitFences.resize ( mDrawCmdBuffers.size ());
-//    for ( auto& fence : mWaitFences ) {
-//        VK_CHECK_RESULT ( vkCreateFence ( mDevice, &fenceCreateInfo, nullptr, &fence ));
-//    }
-//
-//    // Create synchronization objects
-//    VkSemaphoreCreateInfo semaphoreCreateInfo = MOAIGfxStructVK::semaphoreCreateInfo();
-//
-//    VK_CHECK_RESULT ( vkCreateSemaphore ( mDevice, &semaphoreCreateInfo, nullptr, &semaphores.presentComplete )); // Create a semaphore used to synchronize image presentation
-//    VK_CHECK_RESULT ( vkCreateSemaphore ( mDevice, &semaphoreCreateInfo, nullptr, &semaphores.renderComplete )); // Create a semaphore used to synchronize command submission
-
-
-
 //	this->mHasContext = true;
 //
 //	ZLGfxDevice::Initialize ();
@@ -235,27 +212,27 @@ void MOAIGfxMgrVK::InitCommandBuffers () {
     	VK_COMMAND_BUFFER_LEVEL_PRIMARY,
     	( u32 )imageCount
 	);
-    VK_CHECK_RESULT ( vkAllocateCommandBuffers ( this->mLogicalDevice, &cmdBufAllocateInfo, this->mDrawCommandBuffers.GetBuffer ()));
+    this->mLogicalDevice.AllocateCommandBuffers ( cmdBufAllocateInfo, this->mDrawCommandBuffers.GetBuffer ());
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxMgrVK::InitDepthStencil () {
 
-	VkImageCreateInfo image = MOAIGfxStructVK::imageCreateInfo (
+	VkImageCreateInfo imageCreateInfo = MOAIGfxStructVK::imageCreateInfo (
 		VK_IMAGE_TYPE_2D,
 		this->mPhysicalDevice.mDepthFormat,
 		MOAIGfxStructVK::extent3D ( this->mSwapChain.mExtent.width, this->mSwapChain.mExtent.height, 1 ),
 		VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT
 	);
+	this->mDepthStencil.mImage = this->mLogicalDevice.CreateImage ( imageCreateInfo );
 
-	VkImageViewCreateInfo depthStencilView = MOAIGfxStructVK::imageViewCreateInfo (
+	VkImageViewCreateInfo depthStencilImageViewCreateInfo = MOAIGfxStructVK::imageViewCreateInfo (
 		VK_IMAGE_VIEW_TYPE_2D,
 		NULL,
 		this->mPhysicalDevice.mDepthFormat,
 		MOAIGfxStructVK::componentMapping (),
 		MOAIGfxStructVK::imageSubresourceRange ( VK_IMAGE_ASPECT_DEPTH_BIT | VK_IMAGE_ASPECT_STENCIL_BIT )
 	);
-	VK_CHECK_RESULT ( vkCreateImage ( this->mLogicalDevice, &image, NULL, &this->mDepthStencil.mImage ));
 
 	VkMemoryRequirements memReqs;
 	vkGetImageMemoryRequirements ( this->mLogicalDevice, mDepthStencil.mImage, &memReqs );
@@ -264,12 +241,12 @@ void MOAIGfxMgrVK::InitDepthStencil () {
 	bool didFindMemoryTypeIndex = this->mPhysicalDevice.FindMemoryTypeIndex ( memoryTypeIndex, memReqs.memoryTypeBits );
 	assert ( didFindMemoryTypeIndex );
 
-	VkMemoryAllocateInfo mem_alloc = MOAIGfxStructVK::memoryAllocateInfo ( memReqs.size, memoryTypeIndex );
-	VK_CHECK_RESULT ( vkAllocateMemory ( this->mLogicalDevice, &mem_alloc, NULL, &this->mDepthStencil.mMem ));
-	VK_CHECK_RESULT ( vkBindImageMemory ( this->mLogicalDevice, this->mDepthStencil.mImage, this->mDepthStencil.mMem, 0 ));
+	VkMemoryAllocateInfo memAllocInfo = MOAIGfxStructVK::memoryAllocateInfo ( memReqs.size, memoryTypeIndex );
+	this->mDepthStencil.mMem = this->mLogicalDevice.AllocateMemory ( memAllocInfo );
+	this->mLogicalDevice.BindImageMemory ( this->mDepthStencil.mImage, this->mDepthStencil.mMem );
 
-	depthStencilView.image = mDepthStencil.mImage;
-	VK_CHECK_RESULT ( vkCreateImageView ( this->mLogicalDevice, &depthStencilView, NULL, &this->mDepthStencil.mView ));
+	depthStencilImageViewCreateInfo.image = mDepthStencil.mImage;
+	this->mDepthStencil.mView = this->mLogicalDevice.CreateImageView ( depthStencilImageViewCreateInfo );
 }
 
 //----------------------------------------------------------------//
@@ -294,7 +271,7 @@ void MOAIGfxMgrVK::InitFrameBuffers () {
     this->mFrameBuffers.Init ( imageCount );
     for ( ZLIndex i = ZLIndexOp::ZERO; i < imageCount; ++i ) {
         attachments [ 0 ] = this->mSwapChain.mBuffers [ i ].view;
-        VK_CHECK_RESULT ( vkCreateFramebuffer ( this->mLogicalDevice, &framebufferCreateInfo, NULL, &this->mFrameBuffers [ i ]));
+        this->mFrameBuffers [ i ] = this->mLogicalDevice.CreateFramebuffer ( framebufferCreateInfo );
     }
 }
 
@@ -363,7 +340,7 @@ void MOAIGfxMgrVK::InitRenderPass () {
         2
     );
 
-    VK_CHECK_RESULT ( vkCreateRenderPass ( this->mLogicalDevice, &renderPassInfo, NULL, &this->mRenderPass ));
+ 	this->mRenderPass = this->mLogicalDevice.CreateRenderPass ( renderPassInfo );
 }
 
 //----------------------------------------------------------------//
@@ -379,8 +356,8 @@ void MOAIGfxMgrVK::InitSemaphores () {
 
     VkSemaphoreCreateInfo semaphoreCreateInfo = MOAIGfxStructVK::semaphoreCreateInfo ();
 
-    VK_CHECK_RESULT ( vkCreateSemaphore ( this->mLogicalDevice, &semaphoreCreateInfo, NULL, &this->mPresentComplete )); // Create a semaphore used to synchronize image presentation
-    VK_CHECK_RESULT ( vkCreateSemaphore ( this->mLogicalDevice, &semaphoreCreateInfo, NULL, &this->mRenderComplete )); // Create a semaphore used to synchronize command submission
+	this->mPresentComplete	= this->mLogicalDevice.CreateSemaphore ( semaphoreCreateInfo ); // Create a semaphore used to synchronize image presentation
+	this->mRenderComplete	= this->mLogicalDevice.CreateSemaphore ( semaphoreCreateInfo ); // Create a semaphore used to synchronize command submission
 }
 
 ////----------------------------------------------------------------//

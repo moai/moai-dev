@@ -10,11 +10,11 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-VkResult MOAISwapChainVK::AcquireNextImage ( MOAILogicalDeviceVK& logicalDevice, VkSemaphore presentCompleteSemaphore, uint32_t *imageIndex ) {
+u32 MOAISwapChainVK::AcquireNextImage ( MOAILogicalDeviceVK& logicalDevice, VkSemaphore presentCompleteSemaphore ) {
 
 	// By setting timeout to UINT64_MAX we will always wait until the next image has been acquired or an actual error is thrown
 	// With that we don't have to handle VK_NOT_READY
-	return logicalDevice.AcquireNextImageKHR ( this->mSwapChain, UINT64_MAX, presentCompleteSemaphore, ( VkFence )nullptr, imageIndex );
+	return logicalDevice.AcquireNextImageKHR ( this->mSwapChain, UINT64_MAX, presentCompleteSemaphore, ( VkFence )NULL );
 }
 
 //----------------------------------------------------------------//
@@ -84,7 +84,7 @@ void MOAISwapChainVK::Init ( MOAIGfxInstanceVK& instance, MOAIPhysicalDeviceVK& 
 //		swapchainCreateInfo.imageUsage |= VK_IMAGE_USAGE_TRANSFER_DST_BIT;
 //	}
 
-	VK_CHECK_RESULT ( logicalDevice.CreateSwapchainKHR ( &swapchainCreateInfo, NULL, &this->mSwapChain ));
+	this->mSwapChain = logicalDevice.CreateSwapchainKHR ( swapchainCreateInfo );
 
 	// If an existing swap chain is re-created, destroy the old swap chain
 	// This also cleans up all the presentable images
@@ -96,11 +96,11 @@ void MOAISwapChainVK::Init ( MOAIGfxInstanceVK& instance, MOAIPhysicalDeviceVK& 
 	}
 	
 	u32 imageCount;
-	logicalDevice.GetSwapchainImagesKHR ( this->mSwapChain, &imageCount, NULL );
+	logicalDevice.GetSwapchainImagesKHR ( this->mSwapChain, imageCount );
 
 	// Get the swap chain images
 	this->mImages.Init ( imageCount );
-	VK_CHECK_RESULT ( logicalDevice.GetSwapchainImagesKHR ( this->mSwapChain, &imageCount, this->mImages.GetBuffer ()));
+	logicalDevice.GetSwapchainImagesKHR ( this->mSwapChain, imageCount, this->mImages.GetBuffer ());
 
 	// Get the swap chain buffers containing the image and imageview
 	this->mBuffers.Init ( imageCount );
@@ -131,7 +131,7 @@ MOAISwapChainVK::MOAISwapChainVK () :
 }
 
 //----------------------------------------------------------------//
-VkResult MOAISwapChainVK::QueuePresent ( MOAILogicalDeviceVK& logicalDevice, VkQueue queue, uint32_t imageIndex, VkSemaphore waitSemaphore ) {
+void MOAISwapChainVK::QueuePresent ( MOAILogicalDeviceVK& logicalDevice, VkQueue queue, uint32_t imageIndex, VkSemaphore waitSemaphore ) {
 
 	VkPresentInfoKHR presentInfo = MOAIGfxStructVK::presentInfoKHR (
 		NULL,
@@ -147,5 +147,5 @@ VkResult MOAISwapChainVK::QueuePresent ( MOAILogicalDeviceVK& logicalDevice, VkQ
 		presentInfo.pWaitSemaphores = &waitSemaphore;
 		presentInfo.waitSemaphoreCount = 1;
 	}
-	return logicalDevice.QueuePresentKHR ( queue, &presentInfo );
+	logicalDevice.QueuePresentKHR ( queue, presentInfo );
 }

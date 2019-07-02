@@ -43,11 +43,11 @@ public:
 	VkSurfaceFormatKHR					mSurfaceFormat;
 
 	//----------------------------------------------------------------//
-	VkResult		AcquireNextImage		( MOAILogicalDeviceVK& logicalDevice, VkSemaphore presentCompleteSemaphore, uint32_t *imageIndex );
+	u32				AcquireNextImage		( MOAILogicalDeviceVK& logicalDevice, VkSemaphore presentCompleteSemaphore );
 	void			Cleanup					( MOAILogicalDeviceVK& logicalDevice );
 	void			Init					( MOAIGfxInstanceVK& instance, MOAIPhysicalDeviceVK& physicalDevice, MOAILogicalDeviceVK& logicalDevice, MOAISurfaceVK& surface, u32 width, u32 height );
 					MOAISwapChainVK			();
-	VkResult		QueuePresent			( MOAILogicalDeviceVK& logicalDevice, VkQueue queue, uint32_t imageIndex, VkSemaphore waitSemaphore = VK_NULL_HANDLE );
+	void			QueuePresent			( MOAILogicalDeviceVK& logicalDevice, VkQueue queue, uint32_t imageIndex, VkSemaphore waitSemaphore = VK_NULL_HANDLE );
 };
 
 #endif

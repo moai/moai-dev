@@ -10,15 +10,79 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-VkResult MOAILogicalDeviceVK::AcquireNextImageKHR ( VkSwapchainKHR swapchain, uint64_t timeout, VkSemaphore semaphore, VkFence fence, uint32_t* pImageIndex ) {
+u32 MOAILogicalDeviceVK::AcquireNextImageKHR ( VkSwapchainKHR swapchain, uint64_t timeout, VkSemaphore semaphore, VkFence fence ) {
 
-	return this->mAcquireNextImageKHR ( this->mDevice, swapchain, timeout, semaphore, fence, pImageIndex );
+	u32 index;
+	VK_CHECK_RESULT ( this->mAcquireNextImageKHR ( this->mDevice, swapchain, timeout, semaphore, fence, &index ));
+	return index;
 }
 
 //----------------------------------------------------------------//
-VkResult MOAILogicalDeviceVK::CreateSwapchainKHR ( const VkSwapchainCreateInfoKHR* pCreateInfo, const VkAllocationCallbacks* pAllocator, VkSwapchainKHR* pSwapchain ) {
+void MOAILogicalDeviceVK::AllocateCommandBuffers ( const VkCommandBufferAllocateInfo& allocateInfo, VkCommandBuffer* commandBuffers ) {
 
-	return this->mCreateSwapchainKHR ( this->mDevice, pCreateInfo, pAllocator, pSwapchain );
+	VK_CHECK_RESULT ( vkAllocateCommandBuffers ( this->mDevice, &allocateInfo, commandBuffers ));
+}
+
+//----------------------------------------------------------------//
+VkDeviceMemory MOAILogicalDeviceVK::AllocateMemory ( const VkMemoryAllocateInfo& allocateInfo, const VkAllocationCallbacks* pAllocator ) {
+
+	VkDeviceMemory deviceMemory;
+	VK_CHECK_RESULT ( vkAllocateMemory ( this->mDevice, &allocateInfo, pAllocator, &deviceMemory ));
+	return deviceMemory;
+}
+
+//----------------------------------------------------------------//
+void MOAILogicalDeviceVK::BindImageMemory ( VkImage image, VkDeviceMemory memory, VkDeviceSize memoryOffset ) {
+
+	VK_CHECK_RESULT ( vkBindImageMemory ( this->mDevice, image, memory, memoryOffset ));
+}
+
+//----------------------------------------------------------------//
+VkImage MOAILogicalDeviceVK::CreateImage ( const VkImageCreateInfo& createInfo, const VkAllocationCallbacks* pAllocator  ) {
+
+	VkImage image;
+	VK_CHECK_RESULT ( vkCreateImage ( this->mDevice, &createInfo, pAllocator, &image ));
+	return image;
+}
+
+//----------------------------------------------------------------//
+VkImageView MOAILogicalDeviceVK::CreateImageView ( const VkImageViewCreateInfo& createInfo, const VkAllocationCallbacks* pAllocator  ) {
+
+	VkImageView imageView;
+	VK_CHECK_RESULT ( vkCreateImageView ( this->mDevice, &createInfo, pAllocator, &imageView ));
+	return imageView;
+}
+
+//----------------------------------------------------------------//
+VkFramebuffer MOAILogicalDeviceVK::CreateFramebuffer ( const VkFramebufferCreateInfo& createInfo, const VkAllocationCallbacks* pAllocator ) {
+
+	VkFramebuffer framebuffer;
+	VK_CHECK_RESULT ( vkCreateFramebuffer ( this->mDevice, &createInfo, pAllocator, &framebuffer ));
+	return framebuffer;
+}
+
+//----------------------------------------------------------------//
+VkRenderPass MOAILogicalDeviceVK::CreateRenderPass ( const VkRenderPassCreateInfo& createInfo, const VkAllocationCallbacks* pAllocator ) {
+
+	VkRenderPass renderPass;
+	VK_CHECK_RESULT ( vkCreateRenderPass ( this->mDevice, &createInfo, pAllocator, &renderPass ));
+	return renderPass;
+}
+
+//----------------------------------------------------------------//
+VkSemaphore MOAILogicalDeviceVK::CreateSemaphore ( const VkSemaphoreCreateInfo& createInfo, const VkAllocationCallbacks* pAllocator ) {
+
+	VkSemaphore semaphore;
+	VK_CHECK_RESULT ( vkCreateSemaphore ( this->mDevice, &createInfo, pAllocator, &semaphore ));
+	return semaphore;
+}
+
+//----------------------------------------------------------------//
+VkSwapchainKHR MOAILogicalDeviceVK::CreateSwapchainKHR ( const VkSwapchainCreateInfoKHR& createInfo, const VkAllocationCallbacks* pAllocator ) {
+
+	VkSwapchainKHR swapChain;
+	VK_CHECK_RESULT ( this->mCreateSwapchainKHR ( this->mDevice, &createInfo, pAllocator, &swapChain ));
+	return swapChain;
 }
 
 //----------------------------------------------------------------//
@@ -28,9 +92,13 @@ void MOAILogicalDeviceVK::DestroySwapchainKHR ( VkSwapchainKHR swapchain, const 
 }
 
 //----------------------------------------------------------------//
-VkResult MOAILogicalDeviceVK::GetSwapchainImagesKHR ( VkSwapchainKHR swapchain, uint32_t* pSwapchainImageCount, VkImage* pSwapchainImages ) {
+VkMemoryRequirements MOAILogicalDeviceVK::GetImageMemoryRequirements ( VkImage image ) {
+}
 
-	return this->mGetSwapchainImagesKHR ( this->mDevice, swapchain, pSwapchainImageCount, pSwapchainImages );
+//----------------------------------------------------------------//
+void MOAILogicalDeviceVK::GetSwapchainImagesKHR ( VkSwapchainKHR swapchain, uint32_t& swapchainImageCount, VkImage* images ) {
+
+	VK_CHECK_RESULT ( this->mGetSwapchainImagesKHR ( this->mDevice, swapchain, &swapchainImageCount, images ));
 }
 
 //----------------------------------------------------------------//
@@ -113,7 +181,7 @@ MOAILogicalDeviceVK::MOAILogicalDeviceVK () :
 }
 
 //----------------------------------------------------------------//
-VkResult MOAILogicalDeviceVK::QueuePresentKHR ( VkQueue queue, const VkPresentInfoKHR* pPresentInfo ) {
+void MOAILogicalDeviceVK::QueuePresentKHR ( VkQueue queue, const VkPresentInfoKHR& presentInfo ) {
 
-	return this->mQueuePresentKHR ( queue, pPresentInfo );
+	VK_CHECK_RESULT ( this->mQueuePresentKHR ( queue, &presentInfo ));
 }
