@@ -59,7 +59,7 @@ int main ( int argc, char** argv ) {
 	if ( argc > 1 ) {
 		host.setAssetPath ( argv [ 1 ]);
 	}
-	VulkanExampleBase* example = new VulkanExample ( host );
+	VulkanAbstractExample* example = new VulkanExample ( host );
 	
 	bool running = true;
 	while ( running ) {

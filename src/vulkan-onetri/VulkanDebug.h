@@ -18,9 +18,6 @@
 #ifdef __ANDROID__
 #include "VulkanAndroid.h"
 #endif
-#define GLM_FORCE_RADIANS
-#define GLM_FORCE_DEPTH_ZERO_TO_ONE
-#include <glm/glm.hpp>
 
 namespace vks
 {
@@ -58,7 +55,7 @@ namespace vks
 	// Extension spec can be found at https://github.com/KhronosGroup/Vulkan-Docs/blob/1.0-VK_EXT_debug_marker/doc/specs/vulkan/appendices/VK_EXT_debug_marker.txt
 	// Note that the extension will only be present if run from an offline debugging application
 	// The actual check for extension presence and enabling it on the device is done in the example base class
-	// See VulkanExampleBase::createInstance and VulkanExampleBase::createDevice (base/vulkanexamplebase.cpp)
+	// See VulkanAbstractExample::createInstance and VulkanAbstractExample::createDevice (base/vulkanexamplebase.cpp)
 	namespace debugmarker {
     
 		// Set to true if function pointer for the debug marker are available
@@ -76,10 +73,10 @@ namespace vks
 		void        setObjectTag                    ( VkDevice device, uint64_t object, VkDebugReportObjectTypeEXT objectType, uint64_t name, size_t tagSize, const void* tag );
 
 		// Start a new debug marker region
-		void        beginRegion                     ( VkCommandBuffer cmdbuffer, const char* pMarkerName, glm::vec4 color );
+		void        beginRegion                     ( VkCommandBuffer cmdbuffer, const char* pMarkerName, float r, float g, float b, float a );
 
 		// Insert a new debug marker into the command buffer
-		void        insert                          ( VkCommandBuffer cmdbuffer, std::string markerName, glm::vec4 color );
+		void        insert                          ( VkCommandBuffer cmdbuffer, std::string markerName, float r, float g, float b, float a );
 
 		// End the current debug marker region
 		void        endRegion                       ( VkCommandBuffer cmdBuffer );

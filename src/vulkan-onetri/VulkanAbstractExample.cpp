@@ -7,16 +7,16 @@
 */
 
 #include <set>
-#include "VulkanExampleBase.h"
+#include "VulkanAbstractExample.h"
 
 //================================================================//
-// VulkanExampleBase
+// VulkanAbstractExample
 //================================================================//
 
-std::vector<const char*> VulkanExampleBase::mArgs;
+std::vector<const char*> VulkanAbstractExample::mArgs;
 
 //----------------------------------------------------------------//
-void VulkanExampleBase::createCommandBuffers ()
+void VulkanAbstractExample::createCommandBuffers ()
 {
     // Create one command buffer for each swap chain image and reuse for rendering
     mDrawCmdBuffers.resize ( mSwapChain.imageCount );
@@ -25,7 +25,7 @@ void VulkanExampleBase::createCommandBuffers ()
 }
 
 //----------------------------------------------------------------//
-VkResult VulkanExampleBase::createInstance ( std::string name, uint32_t apiVersion ) {
+VkResult VulkanAbstractExample::createInstance ( std::string name, uint32_t apiVersion ) {
 
     printf ( "VK_LAYER_PATH: %s\n", getenv ( "VK_LAYER_PATH" ));
     printf ( "VK_ICD_FILENAMES: %s\n", getenv ( "VK_ICD_FILENAMES" ));
@@ -89,7 +89,7 @@ VkResult VulkanExampleBase::createInstance ( std::string name, uint32_t apiVersi
 
 //----------------------------------------------------------------//
 // Create the logical device based on the assigned physical device, also gets default queue family indices
-VkResult VulkanExampleBase::createLogicalDevice ( bool useSwapChain, VkQueueFlags requestedQueueTypes ) {
+VkResult VulkanAbstractExample::createLogicalDevice ( VkQueueFlags requestedQueueTypes ) {
 
     assert ( this->mPhysicalDevice );
 
@@ -196,14 +196,14 @@ VkResult VulkanExampleBase::createLogicalDevice ( bool useSwapChain, VkQueueFlag
 //----------------------------------------------------------------//
 // Destroy all command buffers and set their handles to VK_NULL_HANDLE
 // May be necessary during runtime if options are toggled
-void VulkanExampleBase::destroyCommandBuffers () {
+void VulkanAbstractExample::destroyCommandBuffers () {
     vkFreeCommandBuffers(mDevice, mSwapChainQueueCommandPool, static_cast<uint32_t>(mDrawCmdBuffers.size()), mDrawCmdBuffers.data());
 }
 
 //----------------------------------------------------------------//
 // End the command buffer, submit it to the queue and free (if requested)
 // Note : Waits for the queue to become idle
-void VulkanExampleBase::flushCommandBuffer(VkCommandBuffer commandBuffer, VkQueue queue, bool free)
+void VulkanAbstractExample::flushCommandBuffer(VkCommandBuffer commandBuffer, VkQueue queue, bool free)
 {
 	if (commandBuffer == VK_NULL_HANDLE)
 	{
@@ -223,7 +223,7 @@ void VulkanExampleBase::flushCommandBuffer(VkCommandBuffer commandBuffer, VkQueu
 }
 
 //----------------------------------------------------------------//
-VkPipelineShaderStageCreateInfo VulkanExampleBase::loadShader ( std::string fileName, VkShaderStageFlagBits stage ) {
+VkPipelineShaderStageCreateInfo VulkanAbstractExample::loadShader ( std::string fileName, VkShaderStageFlagBits stage ) {
     VkShaderModule module = vks::tools::loadShaderSPIRV ( fileName.c_str (), mDevice );
     assert ( module != VK_NULL_HANDLE );
     VkPipelineShaderStageCreateInfo shaderStage = VkStruct::pipelineShaderStageCreateInfo ( stage, module, "main" );
@@ -232,7 +232,7 @@ VkPipelineShaderStageCreateInfo VulkanExampleBase::loadShader ( std::string file
 }
 
 //----------------------------------------------------------------//
-void VulkanExampleBase::prepareFrame () {
+void VulkanAbstractExample::prepareFrame () {
     VkResult err = mSwapChain.acquireNextImage ( semaphores.presentComplete, &mCurrentBuffer );
     if (( err == VK_ERROR_OUT_OF_DATE_KHR ) || ( err == VK_SUBOPTIMAL_KHR )) {
         windowResize ();
@@ -243,48 +243,13 @@ void VulkanExampleBase::prepareFrame () {
 }
 
 //----------------------------------------------------------------//
-void VulkanExampleBase::renderFrame()
+void VulkanAbstractExample::renderFrame()
 {
-	auto tStart = std::chrono::high_resolution_clock::now();
-	if (mViewUpdated)
-	{
-		mViewUpdated = false;
-		viewChanged();
-	}
-
-	render();
-	mFrameCounter++;
-	auto tEnd = std::chrono::high_resolution_clock::now();
-	auto tDiff = std::chrono::duration<double, std::milli>(tEnd - tStart).count();
-	mFrameTimer = (float)tDiff / 1000.0f;
-	mCamera.update(mFrameTimer);
-	if (mCamera.moving())
-	{
-		mViewUpdated = true;
-	}
-	// Convert to clamped timer value
-	if (!mPaused)
-	{
-		mTimer += mTimerSpeed * mFrameTimer;
-		if (mTimer > 1.0)
-		{
-			mTimer -= 1.0f;
-		}
-	}
-	mFPSTimer += (float)tDiff;
-	if (mFPSTimer > 1000.0f)
-	{
-		mLastFPS = static_cast<uint32_t>((float)mFrameCounter * (1000.0f / mFPSTimer));
-		mFPSTimer = 0.0f;
-		mFrameCounter = 0;
-	}
+	VulkanAbstractExample_render();
 }
 
 //----------------------------------------------------------------//
-void VulkanExampleBase::renderLoop() {
-
-	mDestWidth = mWidth;
-	mDestHeight = mHeight;
+void VulkanAbstractExample::renderLoop() {
 
 	// Flush device to make sure all resources can be freed
 	if (mDevice != VK_NULL_HANDLE) {
@@ -293,7 +258,7 @@ void VulkanExampleBase::renderLoop() {
 }
 
 //----------------------------------------------------------------//
-void VulkanExampleBase::setupDepthStencil()
+void VulkanAbstractExample::setupDepthStencil()
 {
     VkImageCreateInfo image = VkStruct::imageCreateInfo (
         VK_IMAGE_TYPE_2D,
@@ -325,7 +290,7 @@ void VulkanExampleBase::setupDepthStencil()
 //----------------------------------------------------------------//
 // Create framebuffers for all requested swap chain images
 // Can be overriden in derived class to setup a custom framebuffer (e.g. for MSAA)
-void VulkanExampleBase::setupFrameBuffer()
+void VulkanAbstractExample::setupFrameBuffer()
 {
     VkImageView attachments [ 2 ];
 
@@ -345,7 +310,7 @@ void VulkanExampleBase::setupFrameBuffer()
 //----------------------------------------------------------------//
 // Setup a default render pass
 // Can be overriden in derived class to setup a custom render pass (e.g. for MSAA)
-void VulkanExampleBase::setupRenderPass()
+void VulkanAbstractExample::setupRenderPass()
 {
     std::array < VkAttachmentDescription, 2 > attachments = {};
     
@@ -414,7 +379,7 @@ void VulkanExampleBase::setupRenderPass()
 }
 
 //----------------------------------------------------------------//
-void VulkanExampleBase::submitFrame () {
+void VulkanAbstractExample::submitFrame () {
 
     VkResult result = mSwapChain.queuePresent ( mQueue, mCurrentBuffer, semaphores.renderComplete );
     if (!((result == VK_SUCCESS) || (result == VK_SUBOPTIMAL_KHR))) {
@@ -430,10 +395,10 @@ void VulkanExampleBase::submitFrame () {
 }
 
 //----------------------------------------------------------------//
-VulkanExampleBase::VulkanExampleBase ( VulkanHost& host, std::string name, bool enableValidation, bool useVsync, uint32_t apiVersion ) :
-    mHost ( host ),
+VulkanAbstractExample::VulkanAbstractExample ( VulkanHost& host, std::string name, bool enableValidation, bool useVsync, uint32_t apiVersion ) :
     mEnableValidation ( enableValidation ),
-    mUseVsync ( useVsync ) {
+    mUseVsync ( useVsync ),
+    mHost ( host ) {
 
     // Check for a valid asset path
     struct stat info;
@@ -498,7 +463,7 @@ VulkanExampleBase::VulkanExampleBase ( VulkanHost& host, std::string name, bool 
 }
 
 //----------------------------------------------------------------//
-VulkanExampleBase::~VulkanExampleBase () {
+VulkanAbstractExample::~VulkanAbstractExample () {
 
 	vkDeviceWaitIdle(mDevice);
 
@@ -543,14 +508,12 @@ VulkanExampleBase::~VulkanExampleBase () {
 }
 
 //----------------------------------------------------------------//
-void VulkanExampleBase::windowResize () {
+void VulkanAbstractExample::windowResize () {
 
     // Ensure all operations on the device have been finished before destroying resources
     vkDeviceWaitIdle ( mDevice );
 
     // Recreate swap chain
-    mWidth = mDestWidth;
-    mHeight = mDestHeight;
     mSwapChain.create ( &mWidth, &mHeight, this->mUseVsync );
 
     // Recreate the frame buffers
@@ -565,16 +528,11 @@ void VulkanExampleBase::windowResize () {
 
     // Command buffers need to be recreated as they may store
     // references to the recreated frame buffer
-    destroyCommandBuffers();
-    createCommandBuffers();
-    buildCommandBuffers();
+    destroyCommandBuffers ();
+    createCommandBuffers ();
 
-    vkDeviceWaitIdle(mDevice);
-
-    if (( mWidth > 0.0f ) && ( mHeight > 0.0f )) {
-        mCamera.updateAspectRatio (( float )mWidth / ( float )mHeight );
-    }
+    vkDeviceWaitIdle ( mDevice );
 
     // Notify derived class
-    viewChanged();
+    VulkanAbstractExample_viewChanged();
 }

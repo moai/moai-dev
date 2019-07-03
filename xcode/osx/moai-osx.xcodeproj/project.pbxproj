@@ -60,7 +60,7 @@
 		CD7E3758221D0A070065E863 /* vulkan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD7E3757221D0A070065E863 /* vulkan.framework */; };
 		CD7E3765221D0ABE0065E863 /* VulkanDebug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7E375D221D0ABE0065E863 /* VulkanDebug.cpp */; };
 		CD7E3766221D0ABE0065E863 /* VulkanTools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7E3762221D0ABE0065E863 /* VulkanTools.cpp */; };
-		CD7E3769221D0FE50065E863 /* VulkanExampleBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7E3767221D0FE50065E863 /* VulkanExampleBase.cpp */; };
+		CD7E3769221D0FE50065E863 /* VulkanAbstractExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7E3767221D0FE50065E863 /* VulkanAbstractExample.cpp */; };
 		CD9AB5F922C41D680061A87F /* libmoai-osx-gfx-vk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD9AB5F822C41D330061A87F /* libmoai-osx-gfx-vk.a */; };
 		CD9AB5FB22C41EDF0061A87F /* libmoai-osx-gfx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4A955B229DE63200F9E400 /* libmoai-osx-gfx.a */; };
 		CD9AB63522C41F280061A87F /* SDLJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD323B031A8040CB00E2FEBB /* SDLJoystick.cpp */; };
@@ -170,7 +170,7 @@
 		CDD8554822C596DE00F78DF0 /* SDLAbstractHost.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD8551322C57B0200F78DF0 /* SDLAbstractHost.cpp */; };
 		CDD8554922C5995000F78DF0 /* vulkan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD7E3757221D0A070065E863 /* vulkan.framework */; };
 		CDD8554B22C59A1300F78DF0 /* main.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7E376A221D14560065E863 /* main.cpp */; };
-		CDDEA89E221D15A7005F7B52 /* VulkanExampleBase.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDDEA89D221D15A7005F7B52 /* VulkanExampleBase.mm */; };
+		CDD8556B22CC19B500F78DF0 /* VulkanExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD8556A22CC19B500F78DF0 /* VulkanExample.cpp */; };
 		CDDEA8A52220B5A7005F7B52 /* libzl-osx-core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE6C81D1AD8682200D6B83A /* libzl-osx-core.a */; };
 		CDDEA8A62220B5A7005F7B52 /* libzl-osx-vfs.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE6C8211AD8682200D6B83A /* libzl-osx-vfs.a */; };
 		CDDEA8A92220BA18005F7B52 /* libmoai-osx-3rdparty-core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE6C8011AD8682200D6B83A /* libmoai-osx-3rdparty-core.a */; };
@@ -1650,7 +1650,6 @@
 		CD795EF517F08F86006AEB47 /* ForceFeedback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ForceFeedback.framework; path = /System/Library/Frameworks/ForceFeedback.framework; sourceTree = "<absolute>"; };
 		CD7E3732221D09700065E863 /* moai-vk-onetri */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moai-vk-onetri"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD7E3757221D0A070065E863 /* vulkan.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vulkan.framework; path = "../../../../../../../../../vulkan/vulkansdk-macos-1.1.92.1/macOS/Frameworks/vulkan.framework"; sourceTree = "<group>"; };
-		CD7E375A221D0ABE0065E863 /* camera.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = camera.hpp; path = "../../src/vulkan-onetri/camera.hpp"; sourceTree = "<group>"; };
 		CD7E375B221D0ABE0065E863 /* VulkanExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VulkanExample.h; path = "../../src/vulkan-onetri/VulkanExample.h"; sourceTree = "<group>"; };
 		CD7E375C221D0ABE0065E863 /* VkStruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VkStruct.h; path = "../../src/vulkan-onetri/VkStruct.h"; sourceTree = "<group>"; };
 		CD7E375D221D0ABE0065E863 /* VulkanDebug.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VulkanDebug.cpp; path = "../../src/vulkan-onetri/VulkanDebug.cpp"; sourceTree = "<group>"; };
@@ -1660,8 +1659,8 @@
 		CD7E3761221D0ABE0065E863 /* VulkanTexture.hpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = VulkanTexture.hpp; path = "../../src/vulkan-onetri/VulkanTexture.hpp"; sourceTree = "<group>"; };
 		CD7E3762221D0ABE0065E863 /* VulkanTools.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VulkanTools.cpp; path = "../../src/vulkan-onetri/VulkanTools.cpp"; sourceTree = "<group>"; };
 		CD7E3763221D0ABE0065E863 /* VulkanTools.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VulkanTools.h; path = "../../src/vulkan-onetri/VulkanTools.h"; sourceTree = "<group>"; };
-		CD7E3767221D0FE50065E863 /* VulkanExampleBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VulkanExampleBase.cpp; path = "../../src/vulkan-onetri/VulkanExampleBase.cpp"; sourceTree = "<group>"; };
-		CD7E3768221D0FE50065E863 /* VulkanExampleBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VulkanExampleBase.h; path = "../../src/vulkan-onetri/VulkanExampleBase.h"; sourceTree = "<group>"; };
+		CD7E3767221D0FE50065E863 /* VulkanAbstractExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VulkanAbstractExample.cpp; path = "../../src/vulkan-onetri/VulkanAbstractExample.cpp"; sourceTree = "<group>"; };
+		CD7E3768221D0FE50065E863 /* VulkanAbstractExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VulkanAbstractExample.h; path = "../../src/vulkan-onetri/VulkanAbstractExample.h"; sourceTree = "<group>"; };
 		CD7E376A221D14560065E863 /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = "../../src/vulkan-onetri/main.cpp"; sourceTree = "<group>"; };
 		CD9AB66E22C41F280061A87F /* moai-vk-temp */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moai-vk-temp"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDA633121A390CE000F3995F /* main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = main.cpp; path = "../../src/host-sdl/main.cpp"; sourceTree = "<group>"; };
@@ -1683,7 +1682,7 @@
 		CDD8551922C57B2100F78DF0 /* SDLHostGLMultiThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDLHostGLMultiThread.h; path = "../../src/host-sdl/SDLHostGLMultiThread.h"; sourceTree = "<group>"; };
 		CDD8551E22C594C100F78DF0 /* SDLHostVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDLHostVK.cpp; path = "../../src/host-sdl/SDLHostVK.cpp"; sourceTree = "<group>"; };
 		CDD8551F22C594C100F78DF0 /* SDLHostVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDLHostVK.h; path = "../../src/host-sdl/SDLHostVK.h"; sourceTree = "<group>"; };
-		CDDEA89D221D15A7005F7B52 /* VulkanExampleBase.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = VulkanExampleBase.mm; path = "../../src/vulkan-onetri/VulkanExampleBase.mm"; sourceTree = "<group>"; };
+		CDD8556A22CC19B500F78DF0 /* VulkanExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VulkanExample.cpp; path = "../../src/vulkan-onetri/VulkanExample.cpp"; sourceTree = "<group>"; };
 		CDDEA8AA2220C1AA005F7B52 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		CDDEA8AC2220C1B2005F7B52 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		CDDEA8B22224B892005F7B52 /* VulkanHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VulkanHost.h; path = "../../src/vulkan-onetri/VulkanHost.h"; sourceTree = "<group>"; };
@@ -2038,15 +2037,14 @@
 		CD7E3759221D0AA90065E863 /* vulkan-onetri */ = {
 			isa = PBXGroup;
 			children = (
-				CD7E375A221D0ABE0065E863 /* camera.hpp */,
 				CD7E376A221D14560065E863 /* main.cpp */,
 				CD7E375C221D0ABE0065E863 /* VkStruct.h */,
+				CD7E3767221D0FE50065E863 /* VulkanAbstractExample.cpp */,
+				CD7E3768221D0FE50065E863 /* VulkanAbstractExample.h */,
 				CD7E375D221D0ABE0065E863 /* VulkanDebug.cpp */,
 				CD7E375E221D0ABE0065E863 /* VulkanDebug.h */,
+				CDD8556A22CC19B500F78DF0 /* VulkanExample.cpp */,
 				CD7E375B221D0ABE0065E863 /* VulkanExample.h */,
-				CD7E3767221D0FE50065E863 /* VulkanExampleBase.cpp */,
-				CD7E3768221D0FE50065E863 /* VulkanExampleBase.h */,
-				CDDEA89D221D15A7005F7B52 /* VulkanExampleBase.mm */,
 				CD7E375F221D0ABE0065E863 /* VulkanFrameBuffer.hpp */,
 				CDDEA8B22224B892005F7B52 /* VulkanHost.h */,
 				CD7E3760221D0ABE0065E863 /* VulkanSwapChain.hpp */,
@@ -2962,9 +2960,9 @@
 			files = (
 				CD7E3765221D0ABE0065E863 /* VulkanDebug.cpp in Sources */,
 				CD7E3766221D0ABE0065E863 /* VulkanTools.cpp in Sources */,
-				CDDEA89E221D15A7005F7B52 /* VulkanExampleBase.mm in Sources */,
 				CDD8554B22C59A1300F78DF0 /* main.cpp in Sources */,
-				CD7E3769221D0FE50065E863 /* VulkanExampleBase.cpp in Sources */,
+				CD7E3769221D0FE50065E863 /* VulkanAbstractExample.cpp in Sources */,
+				CDD8556B22CC19B500F78DF0 /* VulkanExample.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -3755,7 +3753,6 @@
 					"\"../../src/config-default\"",
 					"\"../../3rdparty/sdl2-2.0.9/include\"",
 					"\"../../3rdparty/google-test/googletest/include\"",
-					"\"../../3rdparty/glm\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				SDKROOT = macosx;
@@ -3843,7 +3840,6 @@
 					"\"../../src/config-default\"",
 					"\"../../3rdparty/sdl2-2.0.9/include\"",
 					"\"../../3rdparty/google-test/googletest/include\"",
-					"\"../../3rdparty/glm\"",
 				);
 				MACOSX_DEPLOYMENT_TARGET = 10.9;
 				ONLY_ACTIVE_ARCH = YES;

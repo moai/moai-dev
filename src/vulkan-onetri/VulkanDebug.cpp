@@ -179,27 +179,37 @@ namespace vks
 			}
 		}
 
-		void beginRegion(VkCommandBuffer cmdbuffer, const char* pMarkerName, glm::vec4 color)
+		void beginRegion(VkCommandBuffer cmdbuffer, const char* pMarkerName, float r, float g, float b, float a)
 		{
 			// Check for valid function pointer (may not be present if not running in a debugging application)
 			if (pfnCmdDebugMarkerBegin)
 			{
 				VkDebugMarkerMarkerInfoEXT markerInfo = {};
 				markerInfo.sType = VK_STRUCTURE_TYPE_DEBUG_MARKER_MARKER_INFO_EXT;
-				memcpy(markerInfo.color, &color[0], sizeof(float) * 4);
+				
+				markerInfo.color [ 0 ] = r;
+				markerInfo.color [ 1 ] = g;
+				markerInfo.color [ 2 ] = b;
+				markerInfo.color [ 3 ] = a;
+				
 				markerInfo.pMarkerName = pMarkerName;
 				pfnCmdDebugMarkerBegin(cmdbuffer, &markerInfo);
 			}
 		}
 
-		void insert(VkCommandBuffer cmdbuffer, std::string markerName, glm::vec4 color)
+		void insert(VkCommandBuffer cmdbuffer, std::string markerName, float r, float g, float b, float a)
 		{
 			// Check for valid function pointer (may not be present if not running in a debugging application)
 			if (pfnCmdDebugMarkerInsert)
 			{
 				VkDebugMarkerMarkerInfoEXT markerInfo = {};
 				markerInfo.sType = VK_STRUCTURE_TYPE_DEBUG_MARKER_MARKER_INFO_EXT;
-				memcpy(markerInfo.color, &color[0], sizeof(float) * 4);
+				
+				markerInfo.color [ 0 ] = r;
+				markerInfo.color [ 1 ] = g;
+				markerInfo.color [ 2 ] = b;
+				markerInfo.color [ 3 ] = a;
+				
 				markerInfo.pMarkerName = markerName.c_str();
 				pfnCmdDebugMarkerInsert(cmdbuffer, &markerInfo);
 			}
