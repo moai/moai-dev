@@ -46,9 +46,9 @@ void VulkanExample::buildCommandBuffers () {
 		vkCmdBindPipeline ( commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, mPipeline );
 
 		VkDeviceSize offsets [] = { 0 };
-		vkCmdBindVertexBuffers ( commandBuffer, 0, 1, &mVertices.buffer, offsets );
-		vkCmdBindIndexBuffer ( commandBuffer, mIndices.buffer, 0, VK_INDEX_TYPE_UINT32 );
-		vkCmdDrawIndexed ( commandBuffer, mIndices.count, 1, 0, 0, 1 );
+		vkCmdBindVertexBuffers ( commandBuffer, 0, 1, &mVertices.mBuffer, offsets );
+		vkCmdBindIndexBuffer ( commandBuffer, mIndices.mBuffer, 0, VK_INDEX_TYPE_UINT32 );
+		vkCmdDrawIndexed ( commandBuffer, this->mTotalIndices, 1, 0, 0, 1 );
 		vkCmdEndRenderPass ( commandBuffer );
 
 		// Update dynamic state
@@ -155,15 +155,15 @@ void VulkanExample::prepareUniformBuffers () {
 	bufferInfo.usage = VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT;
 
 	// Create a new buffer
-	VK_CHECK_RESULT(vkCreateBuffer(this->mDevice, &bufferInfo, nullptr, &mUniformBufferVS.buffer));
+	VK_CHECK_RESULT(vkCreateBuffer ( this->mDevice, &bufferInfo, nullptr, &mUniformBufferVS.buffer ));
 	// Get memory requirements including size, alignment and memory type
-	vkGetBufferMemoryRequirements(this->mDevice, mUniformBufferVS.buffer, &memReqs);
+	vkGetBufferMemoryRequirements ( this->mDevice, mUniformBufferVS.buffer, &memReqs );
 	allocInfo.allocationSize = memReqs.size;
 	// Get the memory type index that supports host visibile memory access
 	// Most implementations offer multiple memory types and selecting the correct one to allocate memory from is crucial
 	// We also want the buffer to be host coherent so we don't have to flush (or sync after every update.
 	// Note: This may affect performance so you might not want to do this in a real world application that updates buffers on a regular base
-	allocInfo.memoryTypeIndex = vks::tools::getMemoryTypeIndex(memReqs.memoryTypeBits, mPhysicalDeviceMemoryProperties, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
+	allocInfo.memoryTypeIndex = vks::tools::getMemoryTypeIndex ( memReqs.memoryTypeBits, mPhysicalDeviceMemoryProperties, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT );
 	// Allocate memory for the uniform buffer
 	VK_CHECK_RESULT(vkAllocateMemory(this->mDevice, &allocInfo, nullptr, &(mUniformBufferVS.memory)));
 	// Bind memory to buffer
@@ -183,126 +183,63 @@ void VulkanExample::prepareUniformBuffers () {
 void VulkanExample::prepareVertices ( bool useStagingBuffers ) {
 	
 	// Setup vertices
-	std::vector<Vertex> vertexBuffer;
+	std::vector < Vertex > vertexBuffer;
 	vertexBuffer.push_back ( Vertex (  1.0f,  1.0f, 0.0f, 	1.0f, 0.0f, 0.0f ));
 	vertexBuffer.push_back ( Vertex ( -1.0f,  1.0f, 0.0f, 	0.0f, 1.0f, 0.0f ));
 	vertexBuffer.push_back ( Vertex (  0.0f, -1.0f, 0.0f, 	0.0f, 0.0f, 1.0f ));
-	uint32_t vertexBufferSize = static_cast<uint32_t>(vertexBuffer.size()) * sizeof(Vertex);
+	uint32_t vertexBufferSize = static_cast < uint32_t >( vertexBuffer.size ()) * sizeof ( Vertex );
 
 	// Setup indices
-	std::vector<uint32_t> indexBuffer;
+	std::vector < uint32_t > indexBuffer;
 	indexBuffer.push_back ( 0 );
 	indexBuffer.push_back ( 1 );
 	indexBuffer.push_back ( 2 );
-	mIndices.count = static_cast<uint32_t>(indexBuffer.size());
-	uint32_t indexBufferSize = mIndices.count * sizeof(uint32_t);
-
-	VkMemoryAllocateInfo memAlloc = {};
-	memAlloc.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-	VkMemoryRequirements memReqs;
-
-	void *data;
+	this->mTotalIndices = static_cast < uint32_t >( indexBuffer.size ());
+	uint32_t indexBufferSize = this->mTotalIndices * sizeof ( uint32_t );
 
 	if ( useStagingBuffers ) {
 		
 		// Static data like vertex and index buffer should be stored on the device memory
 		// for optimal (and fastest) access by the GPU
-		//
-		// To achieve this we use so-called "staging buffers" :
-		// - Create a buffer that's visible to the host (and can be mapped)
-		// - Copy the data to this buffer
-		// - Create another buffer that's local on the device (VRAM) with the same size
-		// - Copy the data from the host to the device using a command buffer
-		// - Delete the host visible (staging) buffer
-		// - Use the device local buffers for rendering
 
-		struct StagingBuffer {
-			VkDeviceMemory memory;
-			VkBuffer buffer;
-		};
+		BufferVK stageVerts;
+		stageVerts.init ( this->mDevice, this->mPhysicalDeviceMemoryProperties, vertexBufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT );
+		stageVerts.mapAndCopy ( this->mDevice, vertexBuffer.data (), vertexBufferSize );
+		stageVerts.bind ( this->mDevice );
 
-		struct {
-			StagingBuffer vertices;
-			StagingBuffer indices;
-		} stagingBuffers;
+		this->mVertices.init ( this->mDevice, this->mPhysicalDeviceMemoryProperties, vertexBufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT );
+		this->mVertices.bind ( this->mDevice );
+		
+		BufferVK stageIndices;
+		stageIndices.init ( this->mDevice, this->mPhysicalDeviceMemoryProperties, indexBufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT );
+		stageIndices.mapAndCopy ( this->mDevice, indexBuffer.data (), indexBufferSize );
+		stageIndices.bind ( this->mDevice );
 
-		// Vertex buffer
-		VkBufferCreateInfo vertexBufferInfo = {};
-		vertexBufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-		vertexBufferInfo.size = vertexBufferSize;
-		// Buffer is used as the copy source
-		vertexBufferInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
-		// Create a host-visible buffer to copy the vertex data to (staging buffer)
-		VK_CHECK_RESULT(vkCreateBuffer(this->mDevice, &vertexBufferInfo, nullptr, &stagingBuffers.vertices.buffer));
-		vkGetBufferMemoryRequirements(this->mDevice, stagingBuffers.vertices.buffer, &memReqs);
-		memAlloc.allocationSize = memReqs.size;
-		// Request a host visible memory type that can be used to copy our data do
-		// Also request it to be coherent, so that writes are visible to the GPU right after unmapping the buffer
-		memAlloc.memoryTypeIndex = vks::tools::getMemoryTypeIndex(memReqs.memoryTypeBits, mPhysicalDeviceMemoryProperties, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
-		VK_CHECK_RESULT(vkAllocateMemory(this->mDevice, &memAlloc, nullptr, &stagingBuffers.vertices.memory));
-		// Map and copy
-		VK_CHECK_RESULT(vkMapMemory(this->mDevice, stagingBuffers.vertices.memory, 0, memAlloc.allocationSize, 0, &data));
-		memcpy(data, vertexBuffer.data(), vertexBufferSize);
-		vkUnmapMemory(this->mDevice, stagingBuffers.vertices.memory);
-		VK_CHECK_RESULT(vkBindBufferMemory(this->mDevice, stagingBuffers.vertices.buffer, stagingBuffers.vertices.memory, 0));
-
-		// Create a device local buffer to which the (host local) vertex data will be copied and which will be used for rendering
-		vertexBufferInfo.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT;
-		VK_CHECK_RESULT(vkCreateBuffer(this->mDevice, &vertexBufferInfo, nullptr, &mVertices.buffer));
-		vkGetBufferMemoryRequirements(this->mDevice, mVertices.buffer, &memReqs);
-		memAlloc.allocationSize = memReqs.size;
-		memAlloc.memoryTypeIndex = vks::tools::getMemoryTypeIndex(memReqs.memoryTypeBits, mPhysicalDeviceMemoryProperties, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
-		VK_CHECK_RESULT(vkAllocateMemory(this->mDevice, &memAlloc, nullptr, &mVertices.memory));
-		VK_CHECK_RESULT(vkBindBufferMemory(this->mDevice, mVertices.buffer, mVertices.memory, 0));
-
-		// Index buffer
-		VkBufferCreateInfo indexbufferInfo = {};
-		indexbufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-		indexbufferInfo.size = indexBufferSize;
-		indexbufferInfo.usage = VK_BUFFER_USAGE_TRANSFER_SRC_BIT;
-		// Copy index data to a buffer visible to the host (staging buffer)
-		VK_CHECK_RESULT(vkCreateBuffer(this->mDevice, &indexbufferInfo, nullptr, &stagingBuffers.indices.buffer));
-		vkGetBufferMemoryRequirements(this->mDevice, stagingBuffers.indices.buffer, &memReqs);
-		memAlloc.allocationSize = memReqs.size;
-		memAlloc.memoryTypeIndex = vks::tools::getMemoryTypeIndex(memReqs.memoryTypeBits, mPhysicalDeviceMemoryProperties, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
-		VK_CHECK_RESULT(vkAllocateMemory(this->mDevice, &memAlloc, nullptr, &stagingBuffers.indices.memory));
-		VK_CHECK_RESULT(vkMapMemory(this->mDevice, stagingBuffers.indices.memory, 0, indexBufferSize, 0, &data));
-		memcpy(data, indexBuffer.data(), indexBufferSize);
-		vkUnmapMemory(this->mDevice, stagingBuffers.indices.memory);
-		VK_CHECK_RESULT(vkBindBufferMemory(this->mDevice, stagingBuffers.indices.buffer, stagingBuffers.indices.memory, 0));
-
-		// Create destination buffer with device only visibility
-		indexbufferInfo.usage = VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT;
-		VK_CHECK_RESULT(vkCreateBuffer(this->mDevice, &indexbufferInfo, nullptr, &mIndices.buffer));
-		vkGetBufferMemoryRequirements(this->mDevice, mIndices.buffer, &memReqs);
-		memAlloc.allocationSize = memReqs.size;
-		memAlloc.memoryTypeIndex = vks::tools::getMemoryTypeIndex(memReqs.memoryTypeBits, mPhysicalDeviceMemoryProperties, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT);
-		VK_CHECK_RESULT(vkAllocateMemory(this->mDevice, &memAlloc, nullptr, &mIndices.memory));
-		VK_CHECK_RESULT(vkBindBufferMemory(this->mDevice, mIndices.buffer, mIndices.memory, 0));
+		this->mIndices.init ( this->mDevice, this->mPhysicalDeviceMemoryProperties, indexBufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT );
+		this->mIndices.bind ( this->mDevice );
 
 		// Buffer copies have to be submitted to a queue, so we need a command buffer for them
 		// Note: Some devices offer a dedicated transfer queue (with only the transfer bit set) that may be faster when doing lots of copies
-		VkCommandBuffer copyCmd = vks::tools::createCommandBuffer ( this->mDevice, mSwapChainQueueCommandPool );
+		VkCommandBuffer copyCmd = vks::tools::createCommandBuffer ( this->mDevice, this->mSwapChainQueueCommandPool );
 
 		// Put buffer region copies into command buffer
 		VkBufferCopy copyRegion = {};
 
 		// Vertex buffer
 		copyRegion.size = vertexBufferSize;
-		vkCmdCopyBuffer(copyCmd, stagingBuffers.vertices.buffer, mVertices.buffer, 1, &copyRegion);
+		vkCmdCopyBuffer ( copyCmd, stageVerts, this->mVertices, 1, &copyRegion );
+		
 		// Index buffer
 		copyRegion.size = indexBufferSize;
-		vkCmdCopyBuffer(copyCmd, stagingBuffers.indices.buffer, mIndices.buffer,    1, &copyRegion);
+		vkCmdCopyBuffer ( copyCmd, stageIndices, this->mIndices, 1, &copyRegion );
 
 		// Flushing the command buffer will also submit it to the queue and uses a fence to ensure that all commands have been executed before returning
-		vks::tools::flushAndFreeCommandBuffer ( this->mDevice, mQueue, copyCmd, mSwapChainQueueCommandPool );
+		vks::tools::flushAndFreeCommandBuffer ( this->mDevice, this->mQueue, copyCmd, this->mSwapChainQueueCommandPool );
 
 		// Destroy staging buffers
 		// Note: Staging buffer must not be deleted before the copies have been submitted and executed
-		vkDestroyBuffer(this->mDevice, stagingBuffers.vertices.buffer, nullptr);
-		vkFreeMemory(this->mDevice, stagingBuffers.vertices.memory, nullptr);
-		vkDestroyBuffer(this->mDevice, stagingBuffers.indices.buffer, nullptr);
-		vkFreeMemory(this->mDevice, stagingBuffers.indices.memory, nullptr);
+		stageVerts.cleanup ( this->mDevice );
+		stageIndices.cleanup ( this->mDevice );
 	}
 	else {
 		
@@ -310,39 +247,13 @@ void VulkanExample::prepareVertices ( bool useStagingBuffers ) {
 		// Create host-visible buffers only and use these for rendering. This is not advised and will usually result in lower rendering performance
 
 		// Vertex buffer
-		VkBufferCreateInfo vertexBufferInfo = {};
-		vertexBufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-		vertexBufferInfo.size = vertexBufferSize;
-		vertexBufferInfo.usage = VK_BUFFER_USAGE_VERTEX_BUFFER_BIT;
-
-		// Copy vertex data to a buffer visible to the host
-		VK_CHECK_RESULT(vkCreateBuffer(this->mDevice, &vertexBufferInfo, nullptr, &mVertices.buffer));
-		vkGetBufferMemoryRequirements(this->mDevice, mVertices.buffer, &memReqs);
-		memAlloc.allocationSize = memReqs.size;
-		// VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT is host visible memory, and VK_MEMORY_PROPERTY_HOST_COHERENT_BIT makes sure writes are directly visible
-		memAlloc.memoryTypeIndex = vks::tools::getMemoryTypeIndex(memReqs.memoryTypeBits, mPhysicalDeviceMemoryProperties, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
-		VK_CHECK_RESULT(vkAllocateMemory(this->mDevice, &memAlloc, nullptr, &mVertices.memory));
-		VK_CHECK_RESULT(vkMapMemory(this->mDevice, mVertices.memory, 0, memAlloc.allocationSize, 0, &data));
-		memcpy(data, vertexBuffer.data(), vertexBufferSize);
-		vkUnmapMemory(this->mDevice, mVertices.memory);
-		VK_CHECK_RESULT(vkBindBufferMemory(this->mDevice, mVertices.buffer, mVertices.memory, 0));
-
-		// Index buffer
-		VkBufferCreateInfo indexbufferInfo = {};
-		indexbufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-		indexbufferInfo.size = indexBufferSize;
-		indexbufferInfo.usage = VK_BUFFER_USAGE_INDEX_BUFFER_BIT;
-
-		// Copy index data to a buffer visible to the host
-		VK_CHECK_RESULT(vkCreateBuffer(this->mDevice, &indexbufferInfo, nullptr, &mIndices.buffer));
-		vkGetBufferMemoryRequirements(this->mDevice, mIndices.buffer, &memReqs);
-		memAlloc.allocationSize = memReqs.size;
-		memAlloc.memoryTypeIndex = vks::tools::getMemoryTypeIndex(memReqs.memoryTypeBits, mPhysicalDeviceMemoryProperties, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT);
-		VK_CHECK_RESULT(vkAllocateMemory(this->mDevice, &memAlloc, nullptr, &mIndices.memory));
-		VK_CHECK_RESULT(vkMapMemory(this->mDevice, mIndices.memory, 0, indexBufferSize, 0, &data));
-		memcpy(data, indexBuffer.data(), indexBufferSize);
-		vkUnmapMemory(this->mDevice, mIndices.memory);
-		VK_CHECK_RESULT(vkBindBufferMemory(this->mDevice, mIndices.buffer, mIndices.memory, 0));
+		this->mVertices.init ( this->mDevice, this->mPhysicalDeviceMemoryProperties, vertexBufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT );
+		this->mVertices.mapAndCopy ( this->mDevice, vertexBuffer.data (), vertexBufferSize );
+		this->mVertices.bind ( this->mDevice );
+		
+		this->mIndices.init ( this->mDevice, this->mPhysicalDeviceMemoryProperties, indexBufferSize, VK_BUFFER_USAGE_INDEX_BUFFER_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT );
+		this->mIndices.mapAndCopy ( this->mDevice, indexBuffer.data (), indexBufferSize );
+		this->mIndices.bind ( this->mDevice );
 	}
 }
 
@@ -502,19 +413,16 @@ VulkanExample::~VulkanExample () {
 	
 	// Clean up used Vulkan resources
 	// Note: Inherited destructor cleans up resources stored in base class
-	vkDestroyPipeline(this->mDevice, mPipeline, nullptr);
+	vkDestroyPipeline ( this->mDevice, mPipeline, nullptr );
 
-	vkDestroyPipelineLayout(this->mDevice, mPipelineLayout, nullptr);
-	vkDestroyDescriptorSetLayout(this->mDevice, mDescriptorSetLayout, nullptr);
+	vkDestroyPipelineLayout ( this->mDevice, mPipelineLayout, nullptr );
+	vkDestroyDescriptorSetLayout ( this->mDevice, mDescriptorSetLayout, nullptr );
 
-	vkDestroyBuffer(this->mDevice, mVertices.buffer, nullptr);
-	vkFreeMemory(this->mDevice, mVertices.memory, nullptr);
+	this->mVertices.cleanup ( this->mDevice );
+	this->mIndices.cleanup ( this->mDevice );
 
-	vkDestroyBuffer(this->mDevice, mIndices.buffer, nullptr);
-	vkFreeMemory(this->mDevice, mIndices.memory, nullptr);
-
-	vkDestroyBuffer(this->mDevice, mUniformBufferVS.buffer, nullptr);
-	vkFreeMemory(this->mDevice, mUniformBufferVS.memory, nullptr);
+	vkDestroyBuffer ( this->mDevice, mUniformBufferVS.buffer, nullptr );
+	vkFreeMemory ( this->mDevice, mUniformBufferVS.memory, nullptr );
 }
 
 //================================================================//

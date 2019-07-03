@@ -31,6 +31,65 @@
 #define USE_STAGING true
 
 //================================================================//
+// BufferVK
+//================================================================//
+class BufferVK {
+public:
+
+	VkBuffer		mBuffer;
+	VkDeviceMemory	mMemory;
+	VkDeviceSize	mAllocationSize;
+	
+	//----------------------------------------------------------------//
+	operator VkBuffer () {
+		return this->mBuffer;
+	}
+	
+	//----------------------------------------------------------------//
+	void bind ( VkDevice device ) {
+	
+		VK_CHECK_RESULT ( vkBindBufferMemory ( device, this->mBuffer, this->mMemory, 0 ));
+	}
+	
+	//----------------------------------------------------------------//
+	void cleanup ( VkDevice device ) {
+	
+		vkDestroyBuffer ( device, this->mBuffer, NULL );
+		vkFreeMemory ( device, this->mMemory, NULL );
+	}
+	
+	//----------------------------------------------------------------//
+	void init ( VkDevice device, VkPhysicalDeviceMemoryProperties memProps, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags memPropFlags ) {
+	
+		VkBufferCreateInfo vertexBufferInfo = {};
+		vertexBufferInfo.sType	= VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
+		vertexBufferInfo.size	= size;
+		vertexBufferInfo.usage	= usage;
+		VK_CHECK_RESULT ( vkCreateBuffer ( device, &vertexBufferInfo, NULL, &this->mBuffer ));
+		
+		VkMemoryRequirements memReqs;
+		vkGetBufferMemoryRequirements ( device, this->mBuffer, &memReqs );
+		
+		this->mAllocationSize = memReqs.size;
+		
+		VkMemoryAllocateInfo memAlloc = {};
+		memAlloc.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
+		memAlloc.allocationSize = memReqs.size;
+		memAlloc.memoryTypeIndex = vks::tools::getMemoryTypeIndex ( memReqs.memoryTypeBits, memProps, memPropFlags );
+		VK_CHECK_RESULT ( vkAllocateMemory ( device, &memAlloc, NULL, &this->mMemory ));
+	}
+	
+	//----------------------------------------------------------------//
+	void mapAndCopy ( VkDevice device, const void* data, size_t size ) {
+	
+		void* mappedAddr;
+		VK_CHECK_RESULT ( vkMapMemory ( device, this->mMemory, 0, this->mAllocationSize, 0, &mappedAddr ));
+		memcpy ( mappedAddr, data, size );
+		vkUnmapMemory ( device, this->mMemory );
+	}
+};
+
+//================================================================//
 // VulkanExample
 //================================================================//
 class VulkanExample :
@@ -38,8 +97,8 @@ class VulkanExample :
 public:
 
 	struct Vertex {
-		float position[3];
-		float color[3];
+		float position [ 3 ];
+		float color [ 3 ];
 		
 		Vertex ( float x, float y, float z, float r, float g, float b ) {
 		
@@ -53,16 +112,10 @@ public:
 		}
 	};
 
-	struct {
-		VkDeviceMemory memory;
-		VkBuffer buffer;
-	} mVertices;
-
-	struct {
-		VkDeviceMemory memory;
-		VkBuffer buffer;
-		uint32_t count;
-	} mIndices;
+	BufferVK 	mVertices;
+	BufferVK 	mIndices;
+	
+	uint32_t	mTotalIndices;
 
 	struct {
 		VkDeviceMemory memory;
