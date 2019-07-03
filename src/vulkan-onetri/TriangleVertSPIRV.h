@@ -1,4 +1,30 @@
 
+//	#version 450
+//
+//	layout (location = 0) in vec3 inPos;
+//	layout (location = 1) in vec3 inColor;
+//
+//	layout (binding = 0) uniform UBO
+//	{
+//		mat4 projectionMatrix;
+//		mat4 modelMatrix;
+//		mat4 viewMatrix;
+//	} ubo;
+//
+//	layout (location = 0) out vec3 outColor;
+//
+//	out gl_PerVertex
+//	{
+//		vec4 gl_Position;
+//	};
+//
+//
+//	void main()
+//	{
+//		outColor = inColor;
+//		gl_Position = ubo.projectionMatrix * ubo.viewMatrix * ubo.modelMatrix * vec4(inPos.xyz, 1.0);
+//	}
+
 // hexdump -e '"    " 16/1 "0x%02x, " "\n" ' triangle.frag.spv
 const unsigned char triangleVertSPIRV [] = {
 	0x03, 0x02, 0x23, 0x07, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 0x08, 0x00, 0x2c, 0x00, 0x00, 0x00,

@@ -459,35 +459,7 @@ namespace vks
             }
             return fallback;
         }
-
-        //----------------------------------------------------------------//
-        // Load a GLSL shader (text)
-        // Note: GLSL support requires vendor-specific extensions to be enabled and is not a core-feature of Vulkan
-        VkShaderModule loadShaderGLSL ( std::string fileName, VkDevice device, VkShaderStageFlagBits stage ) {
-            std::string shaderSrc = readTextFile(fileName);
-            const char *shaderCode = shaderSrc.c_str();
-            size_t size = strlen(shaderCode);
-            assert(size > 0);
-
-            VkShaderModule shaderModule;
-            VkShaderModuleCreateInfo moduleCreateInfo;
-            moduleCreateInfo.sType = VK_STRUCTURE_TYPE_SHADER_MODULE_CREATE_INFO;
-            moduleCreateInfo.pNext = NULL;
-            moduleCreateInfo.codeSize = 3 * sizeof(uint32_t) + size + 1;
-            moduleCreateInfo.pCode = (uint32_t*)malloc(moduleCreateInfo.codeSize);
-            moduleCreateInfo.flags = 0;
-
-            // Magic SPV number
-            ((uint32_t *)moduleCreateInfo.pCode)[0] = 0x07230203;
-            ((uint32_t *)moduleCreateInfo.pCode)[1] = 0;
-            ((uint32_t *)moduleCreateInfo.pCode)[2] = stage;
-            memcpy(((uint32_t *)moduleCreateInfo.pCode + 3), shaderCode, size + 1);
-
-            VK_CHECK_RESULT(vkCreateShaderModule(device, &moduleCreateInfo, NULL, &shaderModule));
-
-            return shaderModule;
-        }
-        
+		
         //----------------------------------------------------------------//
         // Vulkan loads it's shaders from an immediate binary representation called SPIR-V
         // Shaders are compiled offline from e.g. GLSL using the reference glslang compiler
@@ -509,14 +481,14 @@ namespace vks
                 is.close ();
                 assert ( shaderSize > 0 );
 				
-               	shader = loadShaderSPIRV (( const unsigned char* )shaderCode, shaderSize, device );
+               	shader = loadShaderSPIRV ( shaderCode, shaderSize, device );
                	delete [] shaderCode;
             }
 			return shader;
         }
 		
 		//----------------------------------------------------------------//
-        VkShaderModule loadShaderSPIRV ( const unsigned char* shaderCode, size_t shaderSize, VkDevice device ) {
+        VkShaderModule loadShaderSPIRV ( const void* shaderCode, size_t shaderSize, VkDevice device ) {
 			
 			// Create a new shader module that will be used for pipeline creation
 			VkShaderModuleCreateInfo moduleCreateInfo = VkStruct::shaderModuleCreateInfo (( uint32_t* )shaderCode, shaderSize );

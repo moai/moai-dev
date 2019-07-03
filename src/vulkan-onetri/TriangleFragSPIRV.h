@@ -1,4 +1,15 @@
 
+//	#version 450
+//
+//	layout (location = 0) in vec3 inColor;
+//
+//	layout (location = 0) out vec4 outFragColor;
+//
+//	void main()
+//	{
+//	  outFragColor = vec4(inColor, 1.0);
+//	}
+
 // hexdump -e '"    " 16/1 "0x%02x, " "\n" ' triangle.frag.spv
 const unsigned char triangleFragSPIRV [] = {
 	0x03, 0x02, 0x23, 0x07, 0x00, 0x00, 0x01, 0x00, 0x01, 0x00, 0x08, 0x00, 0x13, 0x00, 0x00, 0x00,

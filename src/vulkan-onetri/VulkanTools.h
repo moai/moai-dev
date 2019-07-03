@@ -124,9 +124,8 @@ namespace vks
         void                flushAndFreeCommandBuffer       ( VkDevice device, VkQueue queue, VkCommandBuffer commandBuffer, VkCommandPool commandPool );
         uint32_t            getMemoryTypeIndex              ( uint32_t typeBits, VkPhysicalDeviceMemoryProperties memoryProperties, VkMemoryPropertyFlags properties, VkBool32 *memTypeFound = nullptr );
         uint32_t            getQueueFamilyIndex             ( const std::vector < VkQueueFamilyProperties >& queueFamilyProperties, VkQueueFlagBits queueFlags, uint32_t fallback );
-		VkShaderModule      loadShaderGLSL                  ( std::string fileName, VkDevice device, VkShaderStageFlagBits stage );
         VkShaderModule      loadShaderSPIRV                 ( std::string fileName, VkDevice device );
-		VkShaderModule      loadShaderSPIRV                 ( const unsigned char* shaderCode, size_t shaderSize, VkDevice device );
+		VkShaderModule      loadShaderSPIRV                 ( const void* shaderCode, size_t shaderSize, VkDevice device );
 
 		/** @brief Checks if a file exists */
 		bool fileExists(const std::string &filename);

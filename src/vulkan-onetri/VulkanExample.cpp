@@ -11,6 +11,8 @@
 #include "TriangleFragSPIRV.h"
 #include "TriangleVertSPIRV.h"
 
+#define SHADER(str) #str
+
 //================================================================//
 // VulkanExample
 //================================================================//
