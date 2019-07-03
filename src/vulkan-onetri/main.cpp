@@ -77,6 +77,8 @@ int main ( int argc, char** argv ) {
 
 		example->renderFrame ();
 	}
+	
+	
 	delete example;
 	SDL_Quit ();
 	return 0;

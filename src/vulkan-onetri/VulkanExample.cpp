@@ -376,6 +376,8 @@ VulkanExample::VulkanExample ( VulkanHost& host, bool enableValidation, bool use
 //----------------------------------------------------------------//
 VulkanExample::~VulkanExample () {
 	
+	vkDeviceWaitIdle ( mDevice );
+	
 	// Clean up used Vulkan resources
 	// Note: Inherited destructor cleans up resources stored in base class
 	vkDestroyPipeline ( this->mDevice, mPipeline, nullptr );

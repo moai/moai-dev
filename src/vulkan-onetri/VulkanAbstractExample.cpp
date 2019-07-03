@@ -465,7 +465,7 @@ VulkanAbstractExample::VulkanAbstractExample ( VulkanHost& host, std::string nam
 //----------------------------------------------------------------//
 VulkanAbstractExample::~VulkanAbstractExample () {
 
-	vkDeviceWaitIdle(mDevice);
+	vkDeviceWaitIdle ( mDevice );
 
     // Clean up Vulkan resources
     mSwapChain.cleanup();
