@@ -496,6 +496,7 @@ namespace vks
 
             size_t shaderSize;
             char* shaderCode = NULL;
+            VkShaderModule shader = VK_NULL_HANDLE;
 
             std::ifstream is ( filename, std::ios::binary | std::ios::in | std::ios::ate );
 
@@ -507,23 +508,23 @@ namespace vks
                 is.read ( shaderCode, shaderSize );
                 is.close ();
                 assert ( shaderSize > 0 );
+				
+               	shader = loadShaderSPIRV (( const unsigned char* )shaderCode, shaderSize, device );
+               	delete [] shaderCode;
             }
+			return shader;
+        }
+		
+		//----------------------------------------------------------------//
+        VkShaderModule loadShaderSPIRV ( const unsigned char* shaderCode, size_t shaderSize, VkDevice device ) {
+			
+			// Create a new shader module that will be used for pipeline creation
+			VkShaderModuleCreateInfo moduleCreateInfo = VkStruct::shaderModuleCreateInfo (( uint32_t* )shaderCode, shaderSize );
 
-            if ( shaderCode ) {
+			VkShaderModule shaderModule;
+			VK_CHECK_RESULT ( vkCreateShaderModule(device, &moduleCreateInfo, NULL, &shaderModule ));
 
-                // Create a new shader module that will be used for pipeline creation
-                VkShaderModuleCreateInfo moduleCreateInfo = VkStruct::shaderModuleCreateInfo (( uint32_t* )shaderCode, shaderSize );
-
-                VkShaderModule shaderModule;
-                VK_CHECK_RESULT ( vkCreateShaderModule(device, &moduleCreateInfo, NULL, &shaderModule ));
-
-                delete [] shaderCode;
-                return shaderModule;
-            }
-            else {
-                std::cerr << "Error: Could not open shader file \"" << filename << "\"" << std::endl;
-                return VK_NULL_HANDLE;
-            }
+			return shaderModule;
         }
 	}
 }

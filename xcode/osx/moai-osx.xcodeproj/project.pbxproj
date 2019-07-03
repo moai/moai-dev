@@ -1683,6 +1683,8 @@
 		CDD8551E22C594C100F78DF0 /* SDLHostVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDLHostVK.cpp; path = "../../src/host-sdl/SDLHostVK.cpp"; sourceTree = "<group>"; };
 		CDD8551F22C594C100F78DF0 /* SDLHostVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDLHostVK.h; path = "../../src/host-sdl/SDLHostVK.h"; sourceTree = "<group>"; };
 		CDD8556A22CC19B500F78DF0 /* VulkanExample.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VulkanExample.cpp; path = "../../src/vulkan-onetri/VulkanExample.cpp"; sourceTree = "<group>"; };
+		CDD8556C22CC2FD200F78DF0 /* TriangleFragSPIRV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TriangleFragSPIRV.h; path = "../../src/vulkan-onetri/TriangleFragSPIRV.h"; sourceTree = "<group>"; };
+		CDD8556D22CC2FD200F78DF0 /* TriangleVertSPIRV.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = TriangleVertSPIRV.h; path = "../../src/vulkan-onetri/TriangleVertSPIRV.h"; sourceTree = "<group>"; };
 		CDDEA8AA2220C1AA005F7B52 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		CDDEA8AC2220C1B2005F7B52 /* AudioUnit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioUnit.framework; path = System/Library/Frameworks/AudioUnit.framework; sourceTree = SDKROOT; };
 		CDDEA8B22224B892005F7B52 /* VulkanHost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VulkanHost.h; path = "../../src/vulkan-onetri/VulkanHost.h"; sourceTree = "<group>"; };
@@ -2038,6 +2040,8 @@
 			isa = PBXGroup;
 			children = (
 				CD7E376A221D14560065E863 /* main.cpp */,
+				CDD8556C22CC2FD200F78DF0 /* TriangleFragSPIRV.h */,
+				CDD8556D22CC2FD200F78DF0 /* TriangleVertSPIRV.h */,
 				CD7E375C221D0ABE0065E863 /* VkStruct.h */,
 				CD7E3767221D0FE50065E863 /* VulkanAbstractExample.cpp */,
 				CD7E3768221D0FE50065E863 /* VulkanAbstractExample.h */,

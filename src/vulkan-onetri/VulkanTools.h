@@ -126,6 +126,7 @@ namespace vks
         uint32_t            getQueueFamilyIndex             ( const std::vector < VkQueueFamilyProperties >& queueFamilyProperties, VkQueueFlagBits queueFlags, uint32_t fallback );
 		VkShaderModule      loadShaderGLSL                  ( std::string fileName, VkDevice device, VkShaderStageFlagBits stage );
         VkShaderModule      loadShaderSPIRV                 ( std::string fileName, VkDevice device );
+		VkShaderModule      loadShaderSPIRV                 ( const unsigned char* shaderCode, size_t shaderSize, VkDevice device );
 
 		/** @brief Checks if a file exists */
 		bool fileExists(const std::string &filename);
