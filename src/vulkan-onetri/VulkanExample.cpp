@@ -137,44 +137,15 @@ void VulkanExample::preparePipelines () {
 //----------------------------------------------------------------//
 void VulkanExample::prepareUniformBuffers () {
 	
-	// Prepare and initialize a uniform buffer block containing shader uniforms
-	// Single uniforms like in OpenGL are no longer present in Vulkan. All Shader uniforms are passed via uniform buffer blocks
-	VkMemoryRequirements memReqs;
-
-	// Vertex shader uniform buffer block
-	VkBufferCreateInfo bufferInfo = {};
-	VkMemoryAllocateInfo allocInfo = {};
-	allocInfo.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-	allocInfo.pNext = nullptr;
-	allocInfo.allocationSize = 0;
-	allocInfo.memoryTypeIndex = 0;
-
-	bufferInfo.sType = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-	bufferInfo.size = sizeof(mMatrixUniforms);
-	// This buffer will be used as a uniform buffer
-	bufferInfo.usage = VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT;
-
-	// Create a new buffer
-	VK_CHECK_RESULT(vkCreateBuffer ( this->mDevice, &bufferInfo, nullptr, &mUniformBufferVS.buffer ));
-	// Get memory requirements including size, alignment and memory type
-	vkGetBufferMemoryRequirements ( this->mDevice, mUniformBufferVS.buffer, &memReqs );
-	allocInfo.allocationSize = memReqs.size;
-	// Get the memory type index that supports host visibile memory access
-	// Most implementations offer multiple memory types and selecting the correct one to allocate memory from is crucial
-	// We also want the buffer to be host coherent so we don't have to flush (or sync after every update.
-	// Note: This may affect performance so you might not want to do this in a real world application that updates buffers on a regular base
-	allocInfo.memoryTypeIndex = vks::tools::getMemoryTypeIndex ( memReqs.memoryTypeBits, mPhysicalDeviceMemoryProperties, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT );
-	// Allocate memory for the uniform buffer
-	VK_CHECK_RESULT(vkAllocateMemory(this->mDevice, &allocInfo, nullptr, &(mUniformBufferVS.memory)));
-	// Bind memory to buffer
-	VK_CHECK_RESULT(vkBindBufferMemory(this->mDevice, mUniformBufferVS.buffer, mUniformBufferVS.memory, 0));
+	this->mUniforms.init ( this->mDevice, this->mPhysicalDeviceMemoryProperties, sizeof ( mMatrixUniforms ), VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT );
+	this->mUniforms.bind ( this->mDevice );
 	
 	// Store information in the uniform's descriptor that is used by the descriptor set
-	mUniformBufferVS.descriptor.buffer = mUniformBufferVS.buffer;
-	mUniformBufferVS.descriptor.offset = 0;
-	mUniformBufferVS.descriptor.range = sizeof(mMatrixUniforms);
+	this->mUniformsDescriptor.buffer = this->mUniforms;
+	this->mUniformsDescriptor.offset = 0;
+	this->mUniformsDescriptor.range = sizeof ( mMatrixUniforms );
 
-	updateUniformBuffers();
+	updateUniformBuffers ();
 }
 
 //----------------------------------------------------------------//
@@ -306,7 +277,7 @@ void VulkanExample::setupDescriptorSet ()
 	writeDescriptorSet.dstSet = mDescriptorSet;
 	writeDescriptorSet.descriptorCount = 1;
 	writeDescriptorSet.descriptorType = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-	writeDescriptorSet.pBufferInfo = &mUniformBufferVS.descriptor;
+	writeDescriptorSet.pBufferInfo = &this->mUniformsDescriptor;
 	// Binds this uniform buffer to binding point 0
 	writeDescriptorSet.dstBinding = 0;
 
@@ -385,14 +356,8 @@ void VulkanExample::updateUniformBuffers ()
 	memcpy ( mMatrixUniforms.projectionMatrix, projectionMatrix, sizeof ( projectionMatrix ));
 	memcpy ( mMatrixUniforms.viewMatrix, viewMatrix, sizeof ( viewMatrix ));
 	memcpy ( mMatrixUniforms.modelMatrix, modelMatrix, sizeof ( modelMatrix ));
-
-	// Map uniform buffer and update it
-	uint8_t *pData;
-	VK_CHECK_RESULT ( vkMapMemory ( this->mDevice, mUniformBufferVS.memory, 0, sizeof ( mMatrixUniforms ), 0, ( void** )&pData ));
-	memcpy ( pData, &mMatrixUniforms, sizeof ( mMatrixUniforms ));
-	// Unmap after data has been copied
-	// Note: Since we requested a host coherent memory type for the uniform buffer, the write is instantly visible to the GPU
-	vkUnmapMemory ( this->mDevice, mUniformBufferVS.memory );
+	
+	this->mUniforms.mapAndCopy ( this->mDevice, &mMatrixUniforms, sizeof ( mMatrixUniforms ));
 }
 
 //----------------------------------------------------------------//
@@ -420,9 +385,7 @@ VulkanExample::~VulkanExample () {
 
 	this->mVertices.cleanup ( this->mDevice );
 	this->mIndices.cleanup ( this->mDevice );
-
-	vkDestroyBuffer ( this->mDevice, mUniformBufferVS.buffer, nullptr );
-	vkFreeMemory ( this->mDevice, mUniformBufferVS.memory, nullptr );
+	this->mUniforms.cleanup ( this->mDevice );
 }
 
 //================================================================//

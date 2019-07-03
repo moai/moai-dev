@@ -36,6 +36,8 @@
 class BufferVK {
 public:
 
+	static const VkMemoryPropertyFlags STAGING_BUFFER_PROPS = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
+
 	VkBuffer		mBuffer;
 	VkDeviceMemory	mMemory;
 	VkDeviceSize	mAllocationSize;
@@ -59,7 +61,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void init ( VkDevice device, VkPhysicalDeviceMemoryProperties memProps, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags memPropFlags ) {
+	void init ( VkDevice device, VkPhysicalDeviceMemoryProperties memProps, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags memPropFlags = STAGING_BUFFER_PROPS ) {
 	
 		VkBufferCreateInfo vertexBufferInfo = {};
 		vertexBufferInfo.sType	= VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
@@ -114,14 +116,10 @@ public:
 
 	BufferVK 	mVertices;
 	BufferVK 	mIndices;
+	BufferVK	mUniforms;
 	
-	uint32_t	mTotalIndices;
-
-	struct {
-		VkDeviceMemory memory;
-		VkBuffer buffer;
-		VkDescriptorBufferInfo descriptor;
-	}  mUniformBufferVS;
+	uint32_t				mTotalIndices;
+	VkDescriptorBufferInfo	mUniformsDescriptor;
 
 	struct {
 		float projectionMatrix [ 16 ];
