@@ -60,7 +60,7 @@ int MOAIFrameBuffer::_grabNextFrame ( lua_State* L ) {
 		self->mFrameImage.Set ( *self, image );
 	}
 	
-	self->mGrabNextFrame = self->mFrameImage != 0;
+	self->mGrabNextFrame = (bool) self->mFrameImage != (int) 0;
 	
 	if ( self->mGrabNextFrame ) {
 		self->mOnFrameFinish.SetRef ( *self, state, 3 );

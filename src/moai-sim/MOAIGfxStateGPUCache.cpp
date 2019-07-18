@@ -506,7 +506,7 @@ void MOAIGfxStateGPUCache::FlushScissorRect ( bool scissorEnabled, ZLRect rect )
 			
 			active.mScissorRect = rect;
 		
-			ZLRect rect = active.mFrameBuffer->WndRectToDevice ( rect );
+			active.mFrameBuffer->WndRectToDevice ( rect );
 		
 			s32 x = ( s32 )active.mScissorRect.mXMin;
 			s32 y = ( s32 )active.mScissorRect.mYMin;
@@ -720,7 +720,7 @@ void MOAIGfxStateGPUCache::FlushViewRect ( ZLRect rect ) {
 	
 		active.mViewRect = rect;
 
-		ZLRect rect = this->mActiveState.mFrameBuffer->WndRectToDevice ( rect );
+		this->mActiveState.mFrameBuffer->WndRectToDevice ( rect );
 
 		s32 x = ( s32 )active.mViewRect.mXMin;
 		s32 y = ( s32 )active.mViewRect.mYMin;

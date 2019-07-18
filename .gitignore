@@ -11,6 +11,8 @@ Thumbs.db
 /vs2010/ipch
 /vs2010/bin
 /vs2008/bin
+/vs2015/bin
+/vs2019/bin
 
 /ide/bin
 /ide/obj
@@ -54,3 +56,7 @@ android-studio/libmoai/.externalNativeBuild/
 cmake/cmake/hosts/host-win-sdl/.vs/
 cmake/lib/
 cmake/env-local.bat
+/**/Win32/Debug/
+/**/windows/Debug/
+/**/Win32/Release/
+/**/windows/Release/
