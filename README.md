@@ -31,7 +31,7 @@ At the Moai SDK project level, pito does very little beyond generating the HTML 
 * __samples__ - Moai SDK desktop and mobile samples.
 * __src__ - All Moai SDK source code for Moai libraries and hosts.
 * __test__ - This is a legacy, Lua-based test runner. Will be replaced by Google Test.
-* __vs2015__ - Visual Studio reference build system and reference project.
+* __vs2019__ - Visual Studio reference build system and reference project.
 * __xcode__ - Xcode build system and reference projects.
 
 Be sure to check for README files in these folders.
