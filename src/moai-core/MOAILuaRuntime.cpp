@@ -826,7 +826,7 @@ bool MOAILuaRuntime::IsLuaIdentifier ( const char *str ) {
 //----------------------------------------------------------------//
 bool MOAILuaRuntime::IsOpen () {
 
-	return ( this->mState != 0 );
+	return ( this->mState != (lua_State*) 0 );
 }
 
 //----------------------------------------------------------------//
