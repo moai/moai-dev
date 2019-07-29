@@ -53,9 +53,23 @@ MOAILuaFactoryClass < TYPE >& MOAILuaFactoryClass < TYPE >::Get () {
 	MOAILuaFactoryClass < TYPE >* typeClass = ZLContextMgr::Get ()->GetGlobal < MOAILuaFactoryClass >();
 	if ( !typeClass ) {
 		typeClass = ZLContextMgr::Get ()->AffirmGlobal < MOAILuaFactoryClass >();
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		TYPE type;
-		typeClass->InitLuaFactoryClass ( type, state );
+		
+		MOAILuaRuntime& luaRuntime = MOAILuaRuntime::Get ();
+		MOAIScopedLuaState state = luaRuntime.State ();
+		
+		// get a (stack) buffer big enough to store the type
+		TYPE* type = ( TYPE* )alloca ( sizeof ( TYPE ));
+		assert ( type );
+		
+		// let runtime know address range of type buffer (so we can check 'this' pointers later)
+		luaRuntime.SetInitializationInstance ( type, sizeof ( TYPE ));
+		
+		new ( type ) TYPE (); // placement new
+		typeClass->InitLuaFactoryClass ( *type, state );
+		type->~TYPE (); // destructor
+		
+		// clear initialization type info
+		luaRuntime.SetInitializationInstance ();
 	}
 	assert ( typeClass );
 	return *typeClass;

@@ -104,6 +104,9 @@ private:
 	bool				mAllocLogEnabled;
 	bool				mReportGC;
 
+	void*				mInitializationAddr;
+	size_t				mInitializationSize;
+
 	//----------------------------------------------------------------//
 	static int				_clearRef				( lua_State* L );
 	static int				_debugCall				( lua_State* L );
@@ -165,6 +168,7 @@ public:
 	void					ForceGarbageCollection		();
 	size_t					GetMemoryUsage				();
 	MOAILuaState&			GetMainState				();
+	bool					IsInitializing				( void* addr ) const;
 	bool					IsMainThread				( lua_State* L );
 	bool					IsOpen						();
 	void					LoadLibs					();
@@ -184,6 +188,7 @@ public:
 	void					ReportLeaksFormatted		( cc8* filename, cc8* trackingGroup );
 	void					ReportLeaksRaw				( cc8* filename, cc8* trackingGroup );
 	void					ResetTracking				();
+	void					SetInitializationInstance	( void* addr = NULL, size_t size = 0 );
 	void					SetPath						( cc8* path );
 	void					SetTrackingFlags			( u32 flags );
 	void					SetTrackingGroup			();

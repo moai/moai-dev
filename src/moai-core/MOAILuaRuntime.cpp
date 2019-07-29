@@ -815,6 +815,16 @@ int MOAILuaRuntime::GetRef ( MOAILuaState& state, int idx, u32 type ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAILuaRuntime::IsInitializing ( void* addr ) const {
+
+	size_t base = ( size_t )this->mInitializationAddr;
+	size_t top = base + this->mInitializationSize;
+	size_t check = ( size_t )addr;
+
+	return (( base <= check ) && ( check < top ));
+}
+
+//----------------------------------------------------------------//
 bool MOAILuaRuntime::IsLuaIdentifier ( const char *str ) {
 	const char *p = str;
 	while ( *p != '\0' && ( isalnum(*p) || *p == '_' )) {
@@ -873,7 +883,9 @@ MOAILuaRuntime::MOAILuaRuntime () :
 	mTotalBytes ( 0 ),
 	mObjectCount ( 0 ),
 	mAllocLogEnabled ( false ),
-	mReportGC ( false ) {
+	mReportGC ( false ),
+	mInitializationAddr ( NULL ),
+	mInitializationSize ( 0 ) {
 }
 
 //----------------------------------------------------------------//
@@ -1172,6 +1184,19 @@ void MOAILuaRuntime::ReportLeaksRaw ( cc8* filename, cc8* trackingGroup ) {
 void MOAILuaRuntime::ResetTracking () {
 
 	this->mTrackingMap.clear ();
+}
+
+//----------------------------------------------------------------//
+void MOAILuaRuntime::SetInitializationInstance ( void* addr, size_t size ) {
+
+	// no nestec initializations
+	assert (
+		(( addr != NULL ) && ( this->mInitializationAddr == NULL )) ||
+		(( addr == NULL ) && ( this->mInitializationAddr != NULL ))
+	);
+	
+	this->mInitializationAddr = addr;
+	this->mInitializationSize = size;
 }
 
 //----------------------------------------------------------------//
