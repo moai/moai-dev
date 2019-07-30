@@ -6,6 +6,7 @@
 
 #include <moai-gfx/pch.h>
 
+#include <moai-gfx/MOAIAbstractMaterialGlobalsContext.h>
 #include <moai-gfx/MOAIBlendMode.h>
 #include <moai-gfx/MOAIDrawable.h>
 #include <moai-gfx/MOAIFrameBuffer.h>
@@ -21,10 +22,10 @@
 #include <moai-gfx/MOAILight.h>
 #include <moai-gfx/MOAILightFormat.h>
 #include <moai-gfx/MOAIMaterial.h>
-#include <moai-gfx/MOAIMaterialBase.h>
 #include <moai-gfx/MOAIMaterialBatch.h>
 #include <moai-gfx/MOAIMaterialBatchHolder.h>
 #include <moai-gfx/MOAIMaterialBatchInterface.h>
+#include <moai-gfx/MOAIMaterialGlobalsContext.h>
 #include <moai-gfx/MOAIMaterialInterface.h>
 #include <moai-gfx/MOAIMaterialMgr.h>
 #include <moai-gfx/MOAIShader.h>

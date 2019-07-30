@@ -86,26 +86,33 @@ private:
 //================================================================//
 class MOAIMaterialMgr :
 	public ZLContextClass < MOAIMaterialMgr >,
-	public MOAIMaterialBase {
+	public MOAIMaterialInterface,
+	public MOAIAbstractMaterialGlobalsContext {
 private:
 	
 	friend class MOAIMaterialStackScope;
 
-	ZLLeanPool < MOAIMaterialStackClearCmd, 32 >		mRestoreCmdPool;
-	ZLLeanArray < MOAIMaterialGlobal >					mNamedLights;		// TODO: semantics
-	ZLLeanArray < MOAIMaterialGlobal >					mNamedTextures;		// TODO: semantics
-	ZLLeanStack < MOAIMaterialStackFrame, 8 >			mStack;
+	ZLLeanPool < MOAIMaterialStackClearCmd, 32 >	mRestoreCmdPool;
+	ZLLeanArray < MOAIMaterialGlobal >				mNamedLights;		// TODO: semantics
+	ZLLeanArray < MOAIMaterialGlobal >				mNamedTextures;		// TODO: semantics
+	ZLLeanStack < MOAIMaterialStackFrame, 8 >		mStack;
 
-	ZLStrongPtr < MOAIMaterial >						mComposedMaterial;
+	ZLStrongPtr < MOAIMaterial >					mComposedMaterial;
 
 	//----------------------------------------------------------------//
-	void				Compose						( const MOAIMaterial& material );
 	void				SetGlobal					( MOAIMaterialGlobal& global, void* ptr );
 
-public:
+	//----------------------------------------------------------------//
+	void				MOAIAbstractMaterialGlobalsContext_Apply			( MOAIAbstractMaterialGlobalsContext& dest );
+	MOAILight*			MOAIAbstractMaterialGlobalsContext_Clear			();
+	MOAILight*			MOAIAbstractMaterialGlobalsContext_GetLight			( u32 name );
+	MOAITexture*		MOAIAbstractMaterialGlobalsContext_GetTexture		( u32 name );
+	void				MOAIAbstractMaterialGlobalsContext_SetLight			( u32 name, MOAILight* light );
+	void				MOAIAbstractMaterialGlobalsContext_SetTexture		( u32 name, MOAITexture* texture );
+	MOAIMaterial&		MOAIMaterialInterface_AffirmMaterial				();
+	MOAIMaterial*		MOAIMaterialInterface_GetMaterial					();
 
-	static const u32 MAX_GLOBAL_LIGHTS		= 256;
-	static const u32 MAX_GLOBAL_TEXTURES	= 32;
+public:
 
 	//----------------------------------------------------------------//
 	MOAILight*			GetLight					( u32 lightID );
@@ -113,16 +120,7 @@ public:
 						MOAIMaterialMgr				();
 						~MOAIMaterialMgr			();
 	void				Pop							();
-	void				Push						( const MOAIMaterial* material = 0 );
-	void				SetBlendMode				( const MOAIBlendMode& blendMode );
-	void				SetCullMode					( int cullMode );
-	void				SetDepthMask				( bool depthMask );
-	void				SetDepthTest				( int depthTest );
-	void				SetLight					( u32 lightID, MOAILight* light );
-	void				SetShader					( MOAIShaderPresetEnum shaderID );
-	void				SetShader					( MOAIShader* shader );
-	void				SetTexture					( MOAITexture* texture );
-	void				SetTexture					( u32 textureID, MOAITexture* texture );
+	void				Push						( MOAIMaterial* material = 0 );
 };
 
 #endif

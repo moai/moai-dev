@@ -48,77 +48,12 @@ MOAIMaterialGlobal::~MOAIMaterialGlobal () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIMaterialMgr::Compose ( const MOAIMaterial& material ) {
-
-	u32 available = ~this->mFlags & material.mFlags;
-
-	// only apply if there are some flags open
-	if ( available ) {
-	
-		if ( available & DRAW_FLAGS ) {
-	
-			if ( available & BLEND_MODE_FLAG ) {
-				this->mBlendMode = material.mBlendMode;
-			}
-			
-			if ( available & CULL_MODE_FLAG ) {
-				this->mCullMode = material.mCullMode;
-			}
-			
-			if ( available & DEPTH_MASK_FLAG ) {
-				this->mDepthMask = material.mDepthMask;
-			}
-			
-			if ( available & DEPTH_TEST_FLAG ) {
-				this->mDepthTest = material.mDepthTest;
-			}
-		}
-		
-		if ( available & ( SHADER_FLAG | TEXTURE_FLAG )) {
-			
-			if ( available & SHADER_FLAG ) {
-				this->mShader = material.mShader;
-			}
-			
-			if ( available & TEXTURE_FLAG ) {
-				this->mTexture = material.mTexture;
-			}
-		}
-		
-		this->mFlags |= available;
-	}
-	
-	MOAIMaterialNamedGlobal < MOAILight >* namedLightIt = material.mLights;
-	for ( ; namedLightIt; namedLightIt = namedLightIt->mNext ) {
-		this->SetLight ( namedLightIt->mName, namedLightIt->mValue );
-	}
-	
-	MOAIMaterialNamedGlobal < MOAITexture >* namedTexturelIt = material.mTextures;
-	for ( ; namedTexturelIt; namedTexturelIt = namedTexturelIt->mNext ) {
-		this->SetTexture ( namedTexturelIt->mName, namedTexturelIt->mValue );
-	}
-}
-
-//----------------------------------------------------------------//
-MOAILight* MOAIMaterialMgr::GetLight ( u32 lightID ) {
-
-	assert ( lightID < MAX_GLOBAL_LIGHTS );
-	return this->mNamedLights [ ZLIndexCast ( lightID )].mLight;
-}
-
-//----------------------------------------------------------------//
-MOAITexture* MOAIMaterialMgr::GetTexture ( u32 textureID ) {
-
-	assert ( textureID < MAX_GLOBAL_TEXTURES );
-	MOAITexture* texture = this->mNamedTextures [ ZLIndexCast ( textureID )].mTexture;
-	return texture ? texture : ( MOAITexture* )this->mTexture;
-}
-
-//----------------------------------------------------------------//
 MOAIMaterialMgr::MOAIMaterialMgr () {
 
-	this->mNamedLights.Init ( MAX_GLOBAL_LIGHTS );
-	this->mNamedTextures.Init ( MAX_GLOBAL_TEXTURES );
+	this->mNamedLights.Init ( MOAIMaterialGlobals::MAX_GLOBAL_LIGHTS );
+	this->mNamedTextures.Init ( MOAIMaterialGlobals::MAX_GLOBAL_TEXTURES );
+	
+	this->AffirmMaterial ().mOverwrite = true;
 }
 
 //----------------------------------------------------------------//
@@ -135,11 +70,11 @@ void MOAIMaterialMgr::Pop () {
 		MOAIMaterialStackFrame frame = this->mStack.Pop ();
 		
 		if ( stackTop > 1 ) {
-			this->MOAIMaterialBase::Clear ( ~frame.mFlags );
+			this->MOAIMaterial::Clear ( ~frame.mFlags );
 		}
 		else {
 			this->mStack.Reset ();
-			this->MOAIMaterialBase::Clear ();
+			this->MOAIMaterial::Clear ();
 		}
 		
 		MOAIMaterialStackClearCmd* cursor = frame.mClearList;
@@ -160,51 +95,15 @@ void MOAIMaterialMgr::Pop () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialMgr::Push ( const MOAIMaterial* material ) {
+void MOAIMaterialMgr::Push ( MOAIMaterial* material ) {
 	
 	MOAIMaterialStackFrame& frame = this->mStack.Push ();
 	
-	frame.mFlags = this->mFlags;
+	frame.mFlags = this->AffirmMaterial ().mFlags;
 	frame.mClearList = 0;
 	
 	if ( material ) {
 		this->Compose ( *material );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIMaterialMgr::SetBlendMode ( const MOAIBlendMode& blendMode ) {
-
-	if ( !( this->mFlags & BLEND_MODE_FLAG )) {
-		this->mBlendMode = blendMode;
-		this->mFlags |= BLEND_MODE_FLAG;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIMaterialMgr::SetCullMode ( int cullMode ) {
-
-	if ( !( this->mFlags & CULL_MODE_FLAG )) {
-		this->mCullMode = cullMode;
-		this->mFlags |= CULL_MODE_FLAG;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIMaterialMgr::SetDepthMask ( bool depthMask ) {
-
-	if ( !( this->mFlags & DEPTH_MASK_FLAG )) {
-		this->mDepthMask = depthMask;
-		this->mFlags |= DEPTH_MASK_FLAG;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIMaterialMgr::SetDepthTest ( int depthTest ) {
-
-	if ( !( this->mFlags & DEPTH_TEST_FLAG )) {
-		this->mDepthTest = depthTest;
-		this->mFlags |= DEPTH_TEST_FLAG;
 	}
 }
 
@@ -232,40 +131,58 @@ void MOAIMaterialMgr::SetGlobal ( MOAIMaterialGlobal& global, void* ptr ) {
 	global.mStackDepth = stackDepth;
 }
 
-//----------------------------------------------------------------//
-void MOAIMaterialMgr::SetLight ( u32 lightID, MOAILight* light ) {
+//================================================================//
+// virtual
+//================================================================//
 
-	assert ( lightID < MAX_GLOBAL_LIGHTS );
-	this->SetGlobal ( this->mNamedLights [ ZLIndexCast ( lightID )], light );
+//----------------------------------------------------------------//
+void MOAIMaterialMgr::MOAIAbstractMaterialGlobalsContext_Apply ( MOAIAbstractMaterialGlobalsContext& dest ) {
+	UNUSED ( dest );
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialMgr::SetShader ( MOAIShaderPresetEnum shaderID ) {
-
-	this->SetShader ( MOAIGfxMgr::Get ().GetShaderPreset ( shaderID ));
+MOAILight* MOAIMaterialMgr::MOAIAbstractMaterialGlobalsContext_Clear () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialMgr::SetShader ( MOAIShader* shader ) {
+MOAILight* MOAIMaterialMgr::MOAIAbstractMaterialGlobalsContext_GetLight ( u32 name ) {
 
-	if ( !( this->mFlags & SHADER_FLAG )) {
-		this->mShader = shader;
-		this->mFlags |= SHADER_FLAG;
+	assert ( name < MOAIMaterialGlobals::MAX_GLOBAL_TEXTURES );
+	return this->mNamedLights [ ZLIndexCast ( name )].mLight;
+}
+
+//----------------------------------------------------------------//
+MOAITexture* MOAIMaterialMgr::MOAIAbstractMaterialGlobalsContext_GetTexture ( u32 name ) {
+
+	assert ( name < MOAIMaterialGlobals::MAX_GLOBAL_TEXTURES );
+	return this->mNamedTextures [ ZLIndexCast ( name )].mTexture;
+}
+
+//----------------------------------------------------------------//
+void MOAIMaterialMgr::MOAIAbstractMaterialGlobalsContext_SetLight ( u32 name, MOAILight* light ) {
+
+	assert ( name < MOAIMaterialGlobals::MAX_GLOBAL_LIGHTS );
+	this->SetGlobal ( this->mNamedLights [ ZLIndexCast ( name )], light );
+}
+
+//----------------------------------------------------------------//
+void MOAIMaterialMgr::MOAIAbstractMaterialGlobalsContext_SetTexture ( u32 name, MOAITexture* texture ) {
+
+	assert ( name < MOAIMaterialGlobals::MAX_GLOBAL_TEXTURES );
+	this->SetGlobal ( this->mNamedTextures [ ZLIndexCast ( name )], texture );
+}
+
+//----------------------------------------------------------------//
+MOAIMaterial& MOAIMaterialMgr::MOAIMaterialInterface_AffirmMaterial () {
+
+	if ( !this->mComposedMaterial ) {
+		this->mComposedMaterial = new MOAIMaterial ();
 	}
+	return *this->mComposedMaterial;
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialMgr::SetTexture ( MOAITexture* texture ) {
+MOAIMaterial* MOAIMaterialMgr::MOAIMaterialInterface_GetMaterial () {
 
-	if ( !( this->mFlags & TEXTURE_FLAG )) {
-		this->mTexture = texture;
-		this->mFlags |= TEXTURE_FLAG;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIMaterialMgr::SetTexture ( u32 textureID, MOAITexture* texture ) {
-	
-	assert ( textureID < MAX_GLOBAL_TEXTURES );
-	this->SetGlobal ( this->mNamedTextures [ ZLIndexCast ( textureID )], texture );
+	return this->mComposedMaterial;
 }

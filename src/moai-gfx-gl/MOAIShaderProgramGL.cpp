@@ -23,7 +23,7 @@ MOAIShaderProgramGlobalGL::MOAIShaderProgramGlobalGL () :
 
 //----------------------------------------------------------------//
 MOAIShaderProgramTextureGL::MOAIShaderProgramTextureGL () :
-	mName ( MOAI_UNKNOWN_MATERIAL_GLOBAL ),
+	mName ( MOAIMaterialGlobals::MOAI_UNKNOWN_MATERIAL_GLOBAL ),
 	mUnit ( ZLIndexOp::ZERO ) {
 }
 
@@ -148,7 +148,7 @@ int MOAIShaderProgramGL::_setTexture ( lua_State* L ) {
 	
 		self->SetTexture (
 			idx,
-			state.GetValue < u32 >( 3, MOAI_UNKNOWN_MATERIAL_GLOBAL + 1 ) - 1,
+			state.GetValue < u32 >( 3, MOAIMaterialGlobals::MOAI_UNKNOWN_MATERIAL_GLOBAL + 1 ) - 1,
 			unit,
 			state.GetLuaObject < MOAITextureGL >( 5, false )
 		);
@@ -426,7 +426,7 @@ void MOAIShaderProgramGL::SetTexture ( ZLIndex idx, MOAITextureGL* texture, ZLIn
 	if ( idx < this->mTextures.Size ()) {
 	
 		MOAIShaderProgramTextureGL& shaderTexture = this->mTextures [ idx ];
-		shaderTexture.mName = MOAI_UNKNOWN_MATERIAL_GLOBAL;
+		shaderTexture.mName = MOAIMaterialGlobals::MOAI_UNKNOWN_MATERIAL_GLOBAL;
 		shaderTexture.mUnit = unit;
 		shaderTexture.mTexture = texture;
 	}
