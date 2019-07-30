@@ -59,6 +59,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void			Clear						();
+	void			LoadGfxState				();
 					MOAIMaterialBase			();
 					~MOAIMaterialBase			();
 	void			SetBlendMode				();

@@ -411,12 +411,11 @@ MOAIDeck* MOAISpriteDeck2D::AffirmDeck ( MOAILuaState& state, int idx ) {
 	if ( texture ) {
 		
 		MOAISpriteDeck2D* quadDeck = new MOAISpriteDeck2D ();
-		MOAIMaterialBatch* batch = quadDeck->AffirmMaterialBatch ();
+		MOAIMaterialBatch& batch = quadDeck->AffirmMaterialBatch ();
 	
 		assert ( quadDeck );
-		assert ( batch );
 		
-		batch->SetTexture ( ZLIndexOp::ZERO, texture );
+		batch.AffirmMaterial ( ZLIndexOp::ZERO ).SetTexture ( texture );
 		
 		int hWidth = ( int )( texture->GetWidth () / 2 );
 		int hHeight = ( int )( texture->GetHeight () / 2 );

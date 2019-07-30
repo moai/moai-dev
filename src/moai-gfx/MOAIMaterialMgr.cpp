@@ -115,21 +115,6 @@ MOAITexture* MOAIMaterialMgr::GetTexture ( u32 textureID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialMgr::LoadGfxState () {
-
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-
-	gfxMgr.SetBlendMode ( this->mBlendMode );
-	gfxMgr.SetCullFunc ( this->mCullMode );
-	gfxMgr.SetDepthMask ( this->mDepthMask );
-	gfxMgr.SetDepthFunc ( this->mDepthTest );
-	gfxMgr.SetTexture ( this->mTexture );
-	
-	// load shader last!
-	gfxMgr.SetShader ( this->mShader );
-}
-
-//----------------------------------------------------------------//
 MOAIMaterialMgr::MOAIMaterialMgr () {
 
 	this->mNamedLights.Init ( MAX_GLOBAL_LIGHTS );

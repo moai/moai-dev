@@ -44,8 +44,8 @@ private:
 	
 	union {
 		MOAITexture*	mTexture;
-		MOAILight*			mLight;
-		void*				mPtr;
+		MOAILight*		mLight;
+		void*			mPtr;
 	};
 	
 	u32					mStackDepth;
@@ -96,6 +96,8 @@ private:
 	ZLLeanArray < MOAIMaterialGlobal >					mNamedTextures;		// TODO: semantics
 	ZLLeanStack < MOAIMaterialStackFrame, 8 >			mStack;
 
+	ZLStrongPtr < MOAIMaterial >						mComposedMaterial;
+
 	//----------------------------------------------------------------//
 	void				Compose						( const MOAIMaterial& material );
 	void				SetGlobal					( MOAIMaterialGlobal& global, void* ptr );
@@ -108,7 +110,6 @@ public:
 	//----------------------------------------------------------------//
 	MOAILight*			GetLight					( u32 lightID );
 	MOAITexture*		GetTexture					( u32 textureID );
-	void				LoadGfxState				();
 						MOAIMaterialMgr				();
 						~MOAIMaterialMgr			();
 	void				Pop							();

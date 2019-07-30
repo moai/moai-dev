@@ -5,6 +5,7 @@
 #define	MOAIMATERIAL_H
 
 #include <moai-gfx/MOAIMaterialBase.h>
+#include <moai-gfx/MOAIMaterialInterface.h>
 
 class MOAILight;
 class MOAITextureBaseGL;
@@ -39,12 +40,14 @@ public:
 //================================================================//
 // TODO: doxygen
 class MOAIMaterial :
-	public MOAIMaterialBase {
+	public virtual MOAIMaterialBase,
+	public virtual MOAIMaterialInterface {
 private:
 
 	friend class MOAIMaterialMgr;
+	friend class MOAIMaterialInterface;
 
-	MOAIMaterialNamedGlobal < MOAILight >*			mLights;
+	MOAIMaterialNamedGlobal < MOAILight >*		mLights;
 	MOAIMaterialNamedGlobal < MOAITexture >*	mTextures;
 	
 	//----------------------------------------------------------------//
@@ -52,7 +55,6 @@ private:
 	void ClearNamedGlobalList ( MOAIMaterialNamedGlobal < TYPE >*& list ) {
 
 		while ( list ) {
-		
 			MOAIMaterialNamedGlobal < TYPE >* global = list;
 			list = list->mNext;
 			delete global;
@@ -110,7 +112,18 @@ private:
 		return 0;
 	}
 
+	//----------------------------------------------------------------//
+	static u32			GetNamedGlobalID			( MOAILuaState& state, int idx );
+
+	//----------------------------------------------------------------//
+	void				MOAILuaObject_RegisterLuaClass				( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs				( MOAIComposer& composer, MOAILuaState& state );
+	MOAIMaterial&		MOAIMaterialInterface_AffirmMaterial		();
+	MOAIMaterial*		MOAIMaterialInterface_GetMaterial			();
+
 public:
+
+	DECL_LUA_FACTORY ( MOAIMaterial )
 
 	//----------------------------------------------------------------//
 	void				Clear					();

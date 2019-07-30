@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIShader.h>
 #include <moai-gfx/MOAITexture.h>
 #include <moai-gfx/MOAIMaterialBase.h>
@@ -63,6 +64,21 @@ void MOAIMaterialBase::Clear ( u32 flags ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIMaterialBase::LoadGfxState () {
+
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+
+	gfxMgr.SetBlendMode ( this->mBlendMode );
+	gfxMgr.SetCullFunc ( this->mCullMode );
+	gfxMgr.SetDepthMask ( this->mDepthMask );
+	gfxMgr.SetDepthFunc ( this->mDepthTest );
+	gfxMgr.SetTexture ( this->mTexture );
+	
+	// load shader last!
+	gfxMgr.SetShader ( this->mShader );
+}
+
+//----------------------------------------------------------------//
 MOAIMaterialBase::MOAIMaterialBase () :
 	mShader ( 0 ),
 	mTexture ( 0 ),
@@ -74,9 +90,6 @@ MOAIMaterialBase::MOAIMaterialBase () :
 
 //----------------------------------------------------------------//
 MOAIMaterialBase::~MOAIMaterialBase () {
-
-//	ZLRelease ( this->mShader );
-//	ZLRelease ( this->mTexture );
 }
 
 //----------------------------------------------------------------//

@@ -24,7 +24,8 @@
 #include <moai-gfx/MOAIMaterialBase.h>
 #include <moai-gfx/MOAIMaterialBatch.h>
 #include <moai-gfx/MOAIMaterialBatchHolder.h>
-#include <moai-gfx/MOAIMaterialHolder.h>
+#include <moai-gfx/MOAIMaterialBatchInterface.h>
+#include <moai-gfx/MOAIMaterialInterface.h>
 #include <moai-gfx/MOAIMaterialMgr.h>
 #include <moai-gfx/MOAIShader.h>
 #include <moai-gfx/MOAIShaderUniform.h>

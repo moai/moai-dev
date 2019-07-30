@@ -122,7 +122,7 @@ void VulkanExample::preparePipelines () {
 		&depthStencilState,
 		&colorBlendState,
 		&dynamicState,
-		mPipelineLayout,
+		this->mPipelineLayout,
 		this->mRenderPass
 	);
 

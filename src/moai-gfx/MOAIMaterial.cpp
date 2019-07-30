@@ -29,6 +29,12 @@ MOAILight* MOAIMaterial::GetLight ( u32 name ) {
 }
 
 //----------------------------------------------------------------//
+u32 MOAIMaterial::GetNamedGlobalID ( MOAILuaState& state, int idx ) {
+
+	return state.GetValue < u32 >( idx++, MOAI_UNKNOWN_MATERIAL_GLOBAL + 1 ) - 1;
+}
+
+//----------------------------------------------------------------//
 MOAITexture* MOAIMaterial::GetTexture () {
 
 	return this->MOAIMaterialBase::GetTexture ();
@@ -48,6 +54,10 @@ MOAITexture* MOAIMaterial::GetTexture ( u32 name ) {
 MOAIMaterial::MOAIMaterial () :
 	mLights ( 0 ),
 	mTextures ( 0 ) {
+	
+	RTTI_BEGIN
+		RTTI_EXTEND ( MOAIMaterialInterface )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//
@@ -94,4 +104,30 @@ void MOAIMaterial::SetTexture ( u32 name, MOAITexture* texture ) {
 	if ( name < MOAIMaterialMgr::MAX_GLOBAL_TEXTURES ) {
 		this->SetNamedGlobal < MOAITexture >( this->mTextures, name, texture );
 	}
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIMaterial::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAIMaterialInterface::MOAILuaObject_RegisterLuaClass ( composer, state );
+}
+
+//----------------------------------------------------------------//
+void MOAIMaterial::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAIMaterialInterface::MOAILuaObject_RegisterLuaFuncs ( composer, state );
+}
+
+//----------------------------------------------------------------//
+MOAIMaterial& MOAIMaterial::MOAIMaterialInterface_AffirmMaterial () {
+
+	return *this;
+}
+
+//----------------------------------------------------------------//
+MOAIMaterial* MOAIMaterial::MOAIMaterialInterface_GetMaterial () {
+
+	return this;
 }
