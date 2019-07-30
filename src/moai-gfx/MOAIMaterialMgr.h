@@ -86,7 +86,7 @@ private:
 //================================================================//
 class MOAIMaterialMgr :
 	public ZLContextClass < MOAIMaterialMgr >,
-	public MOAIMaterialInterface,
+	public MOAIAbstractMaterialInterface,
 	public MOAIAbstractMaterialGlobalsContext {
 private:
 	
@@ -109,8 +109,8 @@ private:
 	MOAITexture*		MOAIAbstractMaterialGlobalsContext_GetTexture		( u32 name );
 	void				MOAIAbstractMaterialGlobalsContext_SetLight			( u32 name, MOAILight* light );
 	void				MOAIAbstractMaterialGlobalsContext_SetTexture		( u32 name, MOAITexture* texture );
-	MOAIMaterial&		MOAIMaterialInterface_AffirmMaterial				();
-	MOAIMaterial*		MOAIMaterialInterface_GetMaterial					();
+	MOAIMaterial&		MOAIAbstractMaterialInterface_AffirmMaterial		();
+	MOAIMaterial*		MOAIAbstractMaterialInterface_GetMaterial			();
 
 public:
 

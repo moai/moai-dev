@@ -6,19 +6,19 @@
 
 #include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIAbstractMaterialGlobalsContext.h>
-#include <moai-gfx/MOAIMaterialInterface.h>
+#include <moai-gfx/MOAIAbstractMaterialInterface.h>
 
 //================================================================//
 // MOAIMaterial
 //================================================================//
 // TODO: doxygen
 class MOAIMaterial :
-	public virtual MOAIMaterialInterface {
+	public virtual MOAIAbstractMaterialInterface {
 private:
 
 	friend class MOAIMaterial;
 	friend class MOAIMaterialBatch;
-	friend class MOAIMaterialInterface;
+	friend class MOAIAbstractMaterialInterface;
 	friend class MOAIMaterialMgr;
 		
 	enum {
@@ -49,10 +49,10 @@ private:
 	ZLStrongPtr < MOAIAbstractMaterialGlobalsContext >	mGlobals;
 	
 	//----------------------------------------------------------------//
-	void				MOAILuaObject_RegisterLuaClass				( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs				( MOAIComposer& composer, MOAILuaState& state );
-	MOAIMaterial&		MOAIMaterialInterface_AffirmMaterial		();
-	MOAIMaterial*		MOAIMaterialInterface_GetMaterial			();
+	void				MOAILuaObject_RegisterLuaClass						( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs						( MOAIComposer& composer, MOAILuaState& state );
+	MOAIMaterial&		MOAIAbstractMaterialInterface_AffirmMaterial		();
+	MOAIMaterial*		MOAIAbstractMaterialInterface_GetMaterial			();
 
 public:
 

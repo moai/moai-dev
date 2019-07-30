@@ -18,7 +18,7 @@ MOAIMaterial::MOAIMaterial () :
 	mOverwrite ( true ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIMaterialInterface )
+		RTTI_EXTEND ( MOAIAbstractMaterialInterface )
 	RTTI_END
 	
 	this->Clear ( ALL_FLAGS, true );
@@ -36,20 +36,20 @@ MOAIMaterial::~MOAIMaterial () {
 
 //----------------------------------------------------------------//
 void MOAIMaterial::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAIMaterialInterface::MOAILuaObject_RegisterLuaClass ( composer, state );
+	MOAIAbstractMaterialInterface::MOAILuaObject_RegisterLuaClass ( composer, state );
 }
 
 //----------------------------------------------------------------//
 void MOAIMaterial::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAIMaterialInterface::MOAILuaObject_RegisterLuaFuncs ( composer, state );
+	MOAIAbstractMaterialInterface::MOAILuaObject_RegisterLuaFuncs ( composer, state );
 }
 
 //----------------------------------------------------------------//
-MOAIMaterial& MOAIMaterial::MOAIMaterialInterface_AffirmMaterial () {
+MOAIMaterial& MOAIMaterial::MOAIAbstractMaterialInterface_AffirmMaterial () {
 	return *this;
 }
 
 //----------------------------------------------------------------//
-MOAIMaterial* MOAIMaterial::MOAIMaterialInterface_GetMaterial () {
+MOAIMaterial* MOAIMaterial::MOAIAbstractMaterialInterface_GetMaterial () {
 	return this;
 }

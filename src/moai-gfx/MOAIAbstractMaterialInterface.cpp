@@ -7,7 +7,7 @@
 #include <moai-gfx/MOAILight.h>
 #include <moai-gfx/MOAIMaterial.h>
 #include <moai-gfx/MOAIMaterialGlobalsContext.h>
-#include <moai-gfx/MOAIMaterialInterface.h>
+#include <moai-gfx/MOAIAbstractMaterialInterface.h>
 #include <moai-gfx/MOAIShader.h>
 #include <moai-gfx/MOAITexture.h>
 
@@ -17,8 +17,8 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIMaterialInterface::_getBlendMode ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialInterface, "U" )
+int MOAIAbstractMaterialInterface::_getBlendMode ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractMaterialInterface, "U" )
 
 	MOAIMaterial* material = self->GetMaterial ();
 	if ( material ) {
@@ -35,8 +35,8 @@ int MOAIMaterialInterface::_getBlendMode ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIMaterialInterface::_getCullMode ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialInterface, "U" )
+int MOAIAbstractMaterialInterface::_getCullMode ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractMaterialInterface, "U" )
 	
 	MOAIMaterial* material = self->GetMaterial ();
 	if ( material ) {
@@ -48,8 +48,8 @@ int MOAIMaterialInterface::_getCullMode ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIMaterialInterface::_getDepthMask ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialInterface, "U" )
+int MOAIAbstractMaterialInterface::_getDepthMask ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractMaterialInterface, "U" )
 	
 	MOAIMaterial* material = self->GetMaterial ();
 	if ( material ) {
@@ -61,8 +61,8 @@ int MOAIMaterialInterface::_getDepthMask ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIMaterialInterface::_getDepthTest ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialInterface, "U" )
+int MOAIAbstractMaterialInterface::_getDepthTest ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractMaterialInterface, "U" )
 	
 	MOAIMaterial* material = self->GetMaterial ();
 	if ( material ) {
@@ -75,8 +75,8 @@ int MOAIMaterialInterface::_getDepthTest ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIMaterialInterface::_getLight ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialInterface, "U" )
+int MOAIAbstractMaterialInterface::_getLight ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractMaterialInterface, "U" )
 	
 	MOAIMaterial* material = self->GetMaterial ();
 	if ( material ) {
@@ -89,8 +89,8 @@ int MOAIMaterialInterface::_getLight ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIMaterialInterface::_getShader ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialInterface, "U" )
+int MOAIAbstractMaterialInterface::_getShader ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractMaterialInterface, "U" )
 
 	MOAIMaterial* material = self->GetMaterial ();
 	if ( material ) {
@@ -102,8 +102,8 @@ int MOAIMaterialInterface::_getShader ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIMaterialInterface::_getTexture ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialInterface, "U" )
+int MOAIAbstractMaterialInterface::_getTexture ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractMaterialInterface, "U" )
 
 	MOAIMaterial* material = self->GetMaterial ();
 	if ( material ) {
@@ -115,16 +115,16 @@ int MOAIMaterialInterface::_getTexture ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/** @lua	Set blend mode using OpenGL source and dest factors. OpenGl blend factor constants are exposed as members of MOAIMaterialInterface.
+/** @lua	Set blend mode using OpenGL source and dest factors. OpenGl blend factor constants are exposed as members of MOAIAbstractMaterialInterface.
 			See the OpenGL documentation for an explanation of blending constants.
 
-	@in		MOAIMaterialInterface self
+	@in		MOAIAbstractMaterialInterface self
 	@in		number srcFactor
 	@in		number dstFactor
 	@out	nil
 */
-int MOAIMaterialInterface::_setBlendMode ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialInterface, "U" )
+int MOAIAbstractMaterialInterface::_setBlendMode ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractMaterialInterface, "U" )
 	
 	u32 equation	= state.GetValue < u32 >( 2, ZGL_BLEND_MODE_ADD );
 	u32 srcFactor	= state.GetValue < u32 >( 3, ZGL_BLEND_FACTOR_ONE );
@@ -141,12 +141,12 @@ int MOAIMaterialInterface::_setBlendMode ( lua_State* L ) {
 /**	@lua	setCullMode
 	@text	Sets and enables face culling.
  
-	@in		MOAIMaterialInterface self
+	@in		MOAIAbstractMaterialInterface self
 	@opt	number cullMode			Default value is MOAIMaterialBatchHolder.CULL_NONE.
 	@out	nil
 */
-int MOAIMaterialInterface::_setCullMode ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialInterface, "U" )
+int MOAIAbstractMaterialInterface::_setCullMode ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractMaterialInterface, "U" )
 
 	self->AffirmMaterial ().SetCullMode ( state.GetValue < u32 >( 2, 0 ));
 	return 0;
@@ -156,12 +156,12 @@ int MOAIMaterialInterface::_setCullMode ( lua_State* L ) {
 /**	@lua	setDepthMask
 	@text	Disables or enables depth writing.
  
-	@in		MOAIMaterialInterface self
+	@in		MOAIAbstractMaterialInterface self
 	@opt	boolean depthMask		Default value is true.
 	@out	nil
 */
-int MOAIMaterialInterface::_setDepthMask ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialInterface, "U" )
+int MOAIAbstractMaterialInterface::_setDepthMask ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractMaterialInterface, "U" )
 	
 	self->AffirmMaterial ().SetDepthMask ( state.GetValue < bool >( 2, false ));
 	return 0;
@@ -171,12 +171,12 @@ int MOAIMaterialInterface::_setDepthMask ( lua_State* L ) {
 /**	@lua	setDepthTest
 	@text	Sets and enables depth testing (assuming depth buffer is present).
  
-	@in		MOAIMaterialInterface self
+	@in		MOAIAbstractMaterialInterface self
 	@opt	number depthFunc		Default value is MOAIMaterialBatchHolder.DEPTH_TEST_DISABLE.
 	@out	nil
 */
-int MOAIMaterialInterface::_setDepthTest ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialInterface, "U" )
+int MOAIAbstractMaterialInterface::_setDepthTest ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractMaterialInterface, "U" )
 
 	self->AffirmMaterial ().SetDepthTest ( state.GetValue < u32 >( 2, 0 ));
 	return 0;
@@ -184,8 +184,8 @@ int MOAIMaterialInterface::_setDepthTest ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIMaterialInterface::_setLight ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialInterface, "U" )
+int MOAIAbstractMaterialInterface::_setLight ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractMaterialInterface, "U" )
 
 	u32 name = MOAIMaterialGlobals::GetNamedGlobalID ( state, 2 );
 	MOAILight* light = state.GetLuaObject < MOAILight >( 3, true );
@@ -198,12 +198,12 @@ int MOAIMaterialInterface::_setLight ( lua_State* L ) {
 /**	@lua	setShader
 	@text	Sets a shader in the associated material.
  
-	@in		MOAIMaterialInterface self
+	@in		MOAIAbstractMaterialInterface self
 	@in		variant shader			Overloaded to accept a MOAIShaderGL or a shader preset.
 	@out	MOAIShaderGL shader		The shader that was set or created.
 */
-int MOAIMaterialInterface::_setShader ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialInterface, "U" )
+int MOAIAbstractMaterialInterface::_setShader ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractMaterialInterface, "U" )
 	
 	MOAIShader* shader = MOAIGfxMgr::Get ().AffirmShader ( state, 2 );
 	self->AffirmMaterial ().SetShader ( shader );
@@ -215,12 +215,12 @@ int MOAIMaterialInterface::_setShader ( lua_State* L ) {
 /**	@lua	setTexture
 	@text	Sets a texture in the associated material.
  
-	@in		MOAIMaterialInterface self
+	@in		MOAIAbstractMaterialInterface self
 	@in		variant texture				Overloaded to accept a filename, MOAITextureGL, MOAIImage, MOAIStream or MOAIDataBuffer.
 	@out	MOAITextureGL texture		The texture that was set or created.
 */
-int MOAIMaterialInterface::_setTexture ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialInterface, "U" )
+int MOAIAbstractMaterialInterface::_setTexture ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractMaterialInterface, "U" )
 
 	u32 name = MOAIMaterialGlobals::GetNamedGlobalID ( state, 2 );
 	MOAITexture* texture = NULL;
@@ -240,11 +240,11 @@ int MOAIMaterialInterface::_setTexture ( lua_State* L ) {
 }
 
 //================================================================//
-// MOAIMaterialInterface
+// MOAIAbstractMaterialInterface
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIAbstractMaterialGlobalsContext& MOAIMaterialInterface::AffirmGlobalsContext () {
+MOAIAbstractMaterialGlobalsContext& MOAIAbstractMaterialInterface::AffirmGlobalsContext () {
 
 	MOAIMaterial& material = this->AffirmMaterial ();
 
@@ -255,13 +255,13 @@ MOAIAbstractMaterialGlobalsContext& MOAIMaterialInterface::AffirmGlobalsContext 
 }
 
 //----------------------------------------------------------------//
-MOAIMaterial& MOAIMaterialInterface::AffirmMaterial () {
+MOAIMaterial& MOAIAbstractMaterialInterface::AffirmMaterial () {
 
-	return this->MOAIMaterialInterface_AffirmMaterial ();
+	return this->MOAIAbstractMaterialInterface_AffirmMaterial ();
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialInterface::Clear () {
+void MOAIAbstractMaterialInterface::Clear () {
 
 	MOAIMaterial* material = this->GetMaterial ();
 	if ( !material ) return;
@@ -273,7 +273,7 @@ void MOAIMaterialInterface::Clear () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialInterface::Clear ( u32 flags, bool force ) {
+void MOAIAbstractMaterialInterface::Clear ( u32 flags, bool force ) {
 	
 	MOAIMaterial* material = this->GetMaterial ();
 	if ( !material ) return;
@@ -309,7 +309,7 @@ void MOAIMaterialInterface::Clear ( u32 flags, bool force ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialInterface::Compose ( MOAIMaterial& source ) {
+void MOAIAbstractMaterialInterface::Compose ( MOAIMaterial& source ) {
 
 	MOAIMaterial& material = this->AffirmMaterial ();
 
@@ -357,50 +357,62 @@ void MOAIMaterialInterface::Compose ( MOAIMaterial& source ) {
 }
 
 //----------------------------------------------------------------//
-MOAIBlendMode MOAIMaterialInterface::GetBlendMode () {
+MOAIBlendMode MOAIAbstractMaterialInterface::GetBlendMode () {
+
+	MOAIMaterial* material = this->GetMaterial ();
+	return material ? material->mBlendMode : MOAIBlendMode ();
 }
 
 //----------------------------------------------------------------//
-int MOAIMaterialInterface::GetCullMode () {
+int MOAIAbstractMaterialInterface::GetCullMode () {
+
+	MOAIMaterial* material = this->GetMaterial ();
+	return material ? material->mCullMode : 0;
 }
 
 //----------------------------------------------------------------//
-int MOAIMaterialInterface::GetDepthTest () {
+bool MOAIAbstractMaterialInterface::GetDepthMask () {
+
+	MOAIMaterial* material = this->GetMaterial ();
+	return material ? material->mDepthMask : false;
 }
 
 //----------------------------------------------------------------//
-bool MOAIMaterialInterface::GetDepthMask () {
+int MOAIAbstractMaterialInterface::GetDepthTest () {
+
+	MOAIMaterial* material = this->GetMaterial ();
+	return material ? material->mDepthTest : 0;
 }
 
 //----------------------------------------------------------------//
-MOAILight* MOAIMaterialInterface::GetLight ( u32 name ) {
+MOAILight* MOAIAbstractMaterialInterface::GetLight ( u32 name ) {
 
 	MOAIMaterial* material = this->GetMaterial ();
 	return ( material && material->mGlobals ) ? material->mGlobals->GetLight ( name ) : NULL;
 }
 
 //----------------------------------------------------------------//
-MOAIMaterial* MOAIMaterialInterface::GetMaterial () {
+MOAIMaterial* MOAIAbstractMaterialInterface::GetMaterial () {
 
-	return this->MOAIMaterialInterface_GetMaterial ();
+	return this->MOAIAbstractMaterialInterface_GetMaterial ();
 }
 
 //----------------------------------------------------------------//
-MOAIShader* MOAIMaterialInterface::GetShader () {
+MOAIShader* MOAIAbstractMaterialInterface::GetShader () {
 
 	MOAIMaterial* material = this->GetMaterial ();
 	return material ? ( MOAIShader* )material->mShader : NULL;
 }
 
 //----------------------------------------------------------------//
-MOAITexture* MOAIMaterialInterface::GetTexture () {
+MOAITexture* MOAIAbstractMaterialInterface::GetTexture () {
 
 	MOAIMaterial* material = this->GetMaterial ();
 	return material ? ( MOAITexture* )material->mTexture : NULL;
 }
 
 //----------------------------------------------------------------//
-MOAITexture* MOAIMaterialInterface::GetTexture ( u32 name ) {
+MOAITexture* MOAIAbstractMaterialInterface::GetTexture ( u32 name ) {
 
 	MOAIMaterial* material = this->GetMaterial ();
 	if ( !material ) return NULL;
@@ -410,7 +422,7 @@ MOAITexture* MOAIMaterialInterface::GetTexture ( u32 name ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialInterface::LoadGfxState () {
+void MOAIAbstractMaterialInterface::LoadGfxState () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
@@ -440,7 +452,7 @@ void MOAIMaterialInterface::LoadGfxState () {
 }
 
 //----------------------------------------------------------------//
-MOAIMaterialInterface::MOAIMaterialInterface () {
+MOAIAbstractMaterialInterface::MOAIAbstractMaterialInterface () {
 
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )
@@ -448,11 +460,11 @@ MOAIMaterialInterface::MOAIMaterialInterface () {
 }
 
 //----------------------------------------------------------------//
-MOAIMaterialInterface::~MOAIMaterialInterface () {
+MOAIAbstractMaterialInterface::~MOAIAbstractMaterialInterface () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialInterface::SetBlendMode () {
+void MOAIAbstractMaterialInterface::SetBlendMode () {
 
 	MOAIMaterial& material = this->AffirmMaterial ();
 
@@ -462,7 +474,7 @@ void MOAIMaterialInterface::SetBlendMode () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialInterface::SetBlendMode ( const MOAIBlendMode& blendMode ) {
+void MOAIAbstractMaterialInterface::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 	
 	MOAIMaterial& material = this->AffirmMaterial ();
 	
@@ -473,7 +485,7 @@ void MOAIMaterialInterface::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialInterface::SetCullMode () {
+void MOAIAbstractMaterialInterface::SetCullMode () {
 
 	MOAIMaterial& material = this->AffirmMaterial ();
 
@@ -483,7 +495,7 @@ void MOAIMaterialInterface::SetCullMode () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialInterface::SetCullMode ( int cullMode ) {
+void MOAIAbstractMaterialInterface::SetCullMode ( int cullMode ) {
 
 	MOAIMaterial& material = this->AffirmMaterial ();
 
@@ -494,7 +506,7 @@ void MOAIMaterialInterface::SetCullMode ( int cullMode ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialInterface::SetDepthMask () {
+void MOAIAbstractMaterialInterface::SetDepthMask () {
 
 	MOAIMaterial& material = this->AffirmMaterial ();
 
@@ -504,7 +516,7 @@ void MOAIMaterialInterface::SetDepthMask () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialInterface::SetDepthMask ( bool depthMask ) {
+void MOAIAbstractMaterialInterface::SetDepthMask ( bool depthMask ) {
 
 	MOAIMaterial& material = this->AffirmMaterial ();
 
@@ -515,7 +527,7 @@ void MOAIMaterialInterface::SetDepthMask ( bool depthMask ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialInterface::SetDepthTest () {
+void MOAIAbstractMaterialInterface::SetDepthTest () {
 
 	MOAIMaterial& material = this->AffirmMaterial ();
 
@@ -525,7 +537,7 @@ void MOAIMaterialInterface::SetDepthTest () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialInterface::SetDepthTest ( int depthTest ) {
+void MOAIAbstractMaterialInterface::SetDepthTest ( int depthTest ) {
 
 	MOAIMaterial& material = this->AffirmMaterial ();
 
@@ -536,13 +548,13 @@ void MOAIMaterialInterface::SetDepthTest ( int depthTest ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialInterface::SetLight ( u32 name ) {
+void MOAIAbstractMaterialInterface::SetLight ( u32 name ) {
 
 	this->SetLight ( name, 0 );
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialInterface::SetLight ( u32 name, MOAILight* light ) {
+void MOAIAbstractMaterialInterface::SetLight ( u32 name, MOAILight* light ) {
 
 	if ( name < MOAIMaterialGlobals::MAX_GLOBAL_LIGHTS ) {
 		this->AffirmGlobalsContext ().SetLight ( name, light );
@@ -550,19 +562,19 @@ void MOAIMaterialInterface::SetLight ( u32 name, MOAILight* light ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialInterface::SetShader () {
+void MOAIAbstractMaterialInterface::SetShader () {
 
 	this->SetShader ( 0 );
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialInterface::SetShader ( MOAIShaderPresetEnum shaderID ) {
+void MOAIAbstractMaterialInterface::SetShader ( MOAIShaderPresetEnum shaderID ) {
 
 	this->SetShader ( MOAIGfxMgr::Get ().GetShaderPreset ( shaderID ));
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialInterface::SetShader ( MOAIShader* shader ) {
+void MOAIAbstractMaterialInterface::SetShader ( MOAIShader* shader ) {
 
 	MOAIMaterial& material = this->AffirmMaterial ();
 
@@ -580,13 +592,13 @@ void MOAIMaterialInterface::SetShader ( MOAIShader* shader ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialInterface::SetTexture () {
+void MOAIAbstractMaterialInterface::SetTexture () {
 
 	this->SetTexture (( MOAITexture* )NULL );
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialInterface::SetTexture ( MOAITexture* texture ) {
+void MOAIAbstractMaterialInterface::SetTexture ( MOAITexture* texture ) {
 
 	MOAIMaterial& material = this->AffirmMaterial ();
 
@@ -604,13 +616,13 @@ void MOAIMaterialInterface::SetTexture ( MOAITexture* texture ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialInterface::SetTexture ( u32 name ) {
+void MOAIAbstractMaterialInterface::SetTexture ( u32 name ) {
 
 	this->AffirmMaterial ().SetTexture ( name, NULL );
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialInterface::SetTexture ( u32 name, MOAITexture* texture ) {
+void MOAIAbstractMaterialInterface::SetTexture ( u32 name, MOAITexture* texture ) {
 
 	if ( name < MOAIMaterialGlobals::MAX_GLOBAL_LIGHTS ) {
 		this->AffirmMaterial ().AffirmGlobalsContext ().SetTexture ( name, texture );
@@ -622,12 +634,12 @@ void MOAIMaterialInterface::SetTexture ( u32 name, MOAITexture* texture ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIMaterialInterface::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIAbstractMaterialInterface::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialInterface::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIAbstractMaterialInterface::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "getBlendMode",			_getBlendMode },

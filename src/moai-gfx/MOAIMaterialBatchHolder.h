@@ -16,7 +16,7 @@ class MOAITextureBaseGL;
 //================================================================//
 // TODO: doxygen
 class MOAIMaterialBatchHolder :
-	public virtual MOAIMaterialBatchInterface {
+	public virtual MOAIAbstractMaterialBatchInterface {
 protected:
 
 	MOAILuaSharedPtr < MOAIMaterialBatch > mMaterialBatch;
@@ -27,14 +27,14 @@ protected:
 	static int				_setMaterialBatch		( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void					MOAILuaObject_RegisterLuaClass						( MOAIComposer& composer, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs						( MOAIComposer& composer, MOAILuaState& state );
-	void					MOAILuaObject_SerializeIn							( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void					MOAILuaObject_SerializeOut							( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
-	MOAIMaterial&			MOAIMaterialBatchInterface_AffirmMaterial			( ZLIndex index );
-	MOAIMaterialBatch&		MOAIMaterialBatchInterface_AffirmMaterialBatch		();
-	MOAIMaterial*			MOAIMaterialBatchInterface_GetMaterial				( ZLIndex index );
-	MOAIMaterialBatch* 		MOAIMaterialBatchInterface_GetMaterialBatch 		();
+	void					MOAILuaObject_RegisterLuaClass								( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_RegisterLuaFuncs								( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_SerializeIn									( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void					MOAILuaObject_SerializeOut									( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
+	MOAIMaterial&			MOAIAbstractMaterialBatchInterface_AffirmMaterial			( ZLIndex index );
+	MOAIMaterialBatch&		MOAIAbstractMaterialBatchInterface_AffirmMaterialBatch		();
+	MOAIMaterial*			MOAIAbstractMaterialBatchInterface_GetMaterial				( ZLIndex index );
+	MOAIMaterialBatch* 		MOAIAbstractMaterialBatchInterface_GetMaterialBatch 		();
 
 public:
 

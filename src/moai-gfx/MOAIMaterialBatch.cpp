@@ -25,7 +25,7 @@ MOAIMaterialBatch::MOAIMaterialBatch () :
 	mIndexBatchSize ( 1 ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIMaterialBatchInterface )
+		RTTI_EXTEND ( MOAIAbstractMaterialBatchInterface )
 	RTTI_END
 }
 
@@ -56,12 +56,12 @@ size_t MOAIMaterialBatch::Size () {
 
 //----------------------------------------------------------------//
 void MOAIMaterialBatch::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAIMaterialBatchInterface::MOAILuaObject_RegisterLuaClass ( composer, state );
+	MOAIAbstractMaterialBatchInterface::MOAILuaObject_RegisterLuaClass ( composer, state );
 }
 
 //----------------------------------------------------------------//
 void MOAIMaterialBatch::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAIMaterialBatchInterface::MOAILuaObject_RegisterLuaFuncs ( composer, state );
+	MOAIAbstractMaterialBatchInterface::MOAILuaObject_RegisterLuaFuncs ( composer, state );
 }
 
 //----------------------------------------------------------------//
@@ -77,7 +77,7 @@ void MOAIMaterialBatch::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOA
 }
 
 //----------------------------------------------------------------//
-MOAIMaterial& MOAIMaterialBatch::MOAIMaterialBatchInterface_AffirmMaterial ( ZLIndex index ) {
+MOAIMaterial& MOAIMaterialBatch::MOAIAbstractMaterialBatchInterface_AffirmMaterial ( ZLIndex index ) {
 
 	this->mMaterials.Grow (( ZLSize )index + 1 );
 
@@ -90,19 +90,19 @@ MOAIMaterial& MOAIMaterialBatch::MOAIMaterialBatchInterface_AffirmMaterial ( ZLI
 }
 
 //----------------------------------------------------------------//
-MOAIMaterialBatch& MOAIMaterialBatch::MOAIMaterialBatchInterface_AffirmMaterialBatch () {
+MOAIMaterialBatch& MOAIMaterialBatch::MOAIAbstractMaterialBatchInterface_AffirmMaterialBatch () {
 
 	return *this;
 }
 
 //----------------------------------------------------------------//
-MOAIMaterial* MOAIMaterialBatch::MOAIMaterialBatchInterface_GetMaterial ( ZLIndex index ) {
+MOAIMaterial* MOAIMaterialBatch::MOAIAbstractMaterialBatchInterface_GetMaterial ( ZLIndex index ) {
 
 	return ( index < this->mMaterials.Size ()) ? ( MOAIMaterial* )this->mMaterials [ index ] : NULL;
 }
 
 //----------------------------------------------------------------//
-MOAIMaterialBatch* MOAIMaterialBatch::MOAIMaterialBatchInterface_GetMaterialBatch () {
+MOAIMaterialBatch* MOAIMaterialBatch::MOAIAbstractMaterialBatchInterface_GetMaterialBatch () {
 
 	return this;
 }

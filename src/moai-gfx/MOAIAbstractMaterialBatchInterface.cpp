@@ -9,7 +9,7 @@
 #include <moai-gfx/MOAILight.h>
 #include <moai-gfx/MOAIMaterial.h>
 #include <moai-gfx/MOAIMaterialBatch.h>
-#include <moai-gfx/MOAIMaterialBatchInterface.h>
+#include <moai-gfx/MOAIAbstractMaterialBatchInterface.h>
 
 //================================================================//
 // lua
@@ -17,8 +17,8 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIMaterialBatchInterface::_affirmMaterial ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialBatchInterface, "U" );
+int MOAIAbstractMaterialBatchInterface::_affirmMaterial ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractMaterialBatchInterface, "U" );
 	state.Push ( &self->AffirmMaterial ( state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO )));
 	return 1;
 }
@@ -30,8 +30,8 @@ int MOAIMaterialBatchInterface::_affirmMaterial ( lua_State* L ) {
 	@in		MOAIMaterialBatch self
 	@out	number indexBatchSize
 */
-int MOAIMaterialBatchInterface::_getIndexBatchSize ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialBatchInterface, "U" );
+int MOAIAbstractMaterialBatchInterface::_getIndexBatchSize ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractMaterialBatchInterface, "U" );
 	
 	MOAIMaterialBatch* materialBatch = self->GetMaterialBatch ();
 	if ( materialBatch ) {
@@ -43,8 +43,8 @@ int MOAIMaterialBatchInterface::_getIndexBatchSize ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIMaterialBatchInterface::_getMaterial ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialBatchInterface, "U" );
+int MOAIAbstractMaterialBatchInterface::_getMaterial ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractMaterialBatchInterface, "U" );
 	state.Push ( self->GetMaterial ( state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO )));
 	return 1;
 }
@@ -57,8 +57,8 @@ int MOAIMaterialBatchInterface::_getMaterial ( lua_State* L ) {
 	@opt	number count
 	@out	nil
 */
-int MOAIMaterialBatchInterface::_reserveMaterials ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialBatchInterface, "U" )
+int MOAIAbstractMaterialBatchInterface::_reserveMaterials ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractMaterialBatchInterface, "U" )
 	
 	self->AffirmMaterialBatch ().Reserve ( state.GetValue ( 2, 0 ));
 	return 0;
@@ -79,63 +79,63 @@ int MOAIMaterialBatchInterface::_reserveMaterials ( lua_State* L ) {
 	@opt	number indexBatchSize		Default value is 1.
 	@out	nil
 */
-int MOAIMaterialBatchInterface::_setIndexBatchSize ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialBatchInterface, "U" )
+int MOAIAbstractMaterialBatchInterface::_setIndexBatchSize ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractMaterialBatchInterface, "U" )
 	
 	self->AffirmMaterialBatch ().mIndexBatchSize = state.GetValue < u32 >( 2, 1 );
 	return 0;
 }
 
 //================================================================//
-// MOAIMaterialBatchInterface
+// MOAIAbstractMaterialBatchInterface
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIMaterial& MOAIMaterialBatchInterface::AffirmMaterial () {
+MOAIMaterial& MOAIAbstractMaterialBatchInterface::AffirmMaterial () {
 
-	return this->MOAIMaterialInterface::AffirmMaterial ();
+	return this->MOAIAbstractMaterialInterface::AffirmMaterial ();
 }
 
 //----------------------------------------------------------------//
-MOAIMaterial& MOAIMaterialBatchInterface::AffirmMaterial ( ZLIndex index ) {
+MOAIMaterial& MOAIAbstractMaterialBatchInterface::AffirmMaterial ( ZLIndex index ) {
 
-	return this->MOAIMaterialBatchInterface_AffirmMaterial ( index );
+	return this->MOAIAbstractMaterialBatchInterface_AffirmMaterial ( index );
 }
 
 //----------------------------------------------------------------//
-MOAIMaterialBatch& MOAIMaterialBatchInterface::AffirmMaterialBatch () {
+MOAIMaterialBatch& MOAIAbstractMaterialBatchInterface::AffirmMaterialBatch () {
 
-	return this->MOAIMaterialBatchInterface_AffirmMaterialBatch ();
+	return this->MOAIAbstractMaterialBatchInterface_AffirmMaterialBatch ();
 }
 
 //----------------------------------------------------------------//
-MOAIMaterial* MOAIMaterialBatchInterface::GetMaterial () {
+MOAIMaterial* MOAIAbstractMaterialBatchInterface::GetMaterial () {
 
-	return this->MOAIMaterialInterface::GetMaterial ();
+	return this->MOAIAbstractMaterialInterface::GetMaterial ();
 }
 
 //----------------------------------------------------------------//
-MOAIMaterial* MOAIMaterialBatchInterface::GetMaterial ( ZLIndex index ) {
+MOAIMaterial* MOAIAbstractMaterialBatchInterface::GetMaterial ( ZLIndex index ) {
 
-	return this->MOAIMaterialBatchInterface_GetMaterial ( index );
+	return this->MOAIAbstractMaterialBatchInterface_GetMaterial ( index );
 }
 
 //----------------------------------------------------------------//
-MOAIMaterialBatch* MOAIMaterialBatchInterface::GetMaterialBatch () {
+MOAIMaterialBatch* MOAIAbstractMaterialBatchInterface::GetMaterialBatch () {
 
-	return this->MOAIMaterialBatchInterface_GetMaterialBatch ();
+	return this->MOAIAbstractMaterialBatchInterface_GetMaterialBatch ();
 }
 
 //----------------------------------------------------------------//
-MOAIMaterialBatchInterface::MOAIMaterialBatchInterface () {
+MOAIAbstractMaterialBatchInterface::MOAIAbstractMaterialBatchInterface () {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIMaterialInterface )
+		RTTI_EXTEND ( MOAIAbstractMaterialInterface )
 	RTTI_END
 }
 
 //----------------------------------------------------------------//
-MOAIMaterialBatchInterface::~MOAIMaterialBatchInterface () {
+MOAIAbstractMaterialBatchInterface::~MOAIAbstractMaterialBatchInterface () {
 }
 
 //================================================================//
@@ -143,13 +143,13 @@ MOAIMaterialBatchInterface::~MOAIMaterialBatchInterface () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatchInterface::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAIMaterialInterface::MOAILuaObject_RegisterLuaClass ( composer, state );
+void MOAIAbstractMaterialBatchInterface::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAIAbstractMaterialInterface::MOAILuaObject_RegisterLuaClass ( composer, state );
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatchInterface::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAIMaterialInterface::MOAILuaObject_RegisterLuaFuncs ( composer, state );
+void MOAIAbstractMaterialBatchInterface::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAIAbstractMaterialInterface::MOAILuaObject_RegisterLuaFuncs ( composer, state );
 	
 	luaL_Reg regTable [] = {
 		{ "affirmMaterial",			_affirmMaterial },
@@ -164,13 +164,13 @@ void MOAIMaterialBatchInterface::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& 
 }
 
 //----------------------------------------------------------------//
-MOAIMaterial& MOAIMaterialBatchInterface::MOAIMaterialInterface_AffirmMaterial () {
+MOAIMaterial& MOAIAbstractMaterialBatchInterface::MOAIAbstractMaterialInterface_AffirmMaterial () {
 
 	return this->AffirmMaterial ( ZLIndexOp::ZERO );
 }
 
 //----------------------------------------------------------------//
-MOAIMaterial* MOAIMaterialBatchInterface::MOAIMaterialInterface_GetMaterial () {
+MOAIMaterial* MOAIAbstractMaterialBatchInterface::MOAIAbstractMaterialInterface_GetMaterial () {
 
 	return this->GetMaterial ( ZLIndexOp::ZERO );
 }

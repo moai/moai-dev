@@ -173,7 +173,7 @@ void MOAIMaterialMgr::MOAIAbstractMaterialGlobalsContext_SetTexture ( u32 name, 
 }
 
 //----------------------------------------------------------------//
-MOAIMaterial& MOAIMaterialMgr::MOAIMaterialInterface_AffirmMaterial () {
+MOAIMaterial& MOAIMaterialMgr::MOAIAbstractMaterialInterface_AffirmMaterial () {
 
 	if ( !this->mComposedMaterial ) {
 		this->mComposedMaterial = new MOAIMaterial ();
@@ -182,7 +182,7 @@ MOAIMaterial& MOAIMaterialMgr::MOAIMaterialInterface_AffirmMaterial () {
 }
 
 //----------------------------------------------------------------//
-MOAIMaterial* MOAIMaterialMgr::MOAIMaterialInterface_GetMaterial () {
+MOAIMaterial* MOAIMaterialMgr::MOAIAbstractMaterialInterface_GetMaterial () {
 
 	return this->mComposedMaterial;
 }

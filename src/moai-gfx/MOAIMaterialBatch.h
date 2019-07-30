@@ -4,7 +4,7 @@
 #ifndef	MOAIMATERIALBATCH_H
 #define	MOAIMATERIALBATCH_H
 
-#include <moai-gfx/MOAIMaterialBatchInterface.h>
+#include <moai-gfx/MOAIAbstractMaterialBatchInterface.h>
 
 class MOAIImage;
 class MOAIMaterial;
@@ -23,24 +23,24 @@ class MOAITextureBaseGL;
 			need elements form multiple shaders and textures.
 */
 class MOAIMaterialBatch :
-	public virtual MOAIMaterialBatchInterface {
+	public virtual MOAIAbstractMaterialBatchInterface {
 private:
 
 	friend class MOAIMaterialBatchHolder;
-	friend class MOAIMaterialBatchInterface;
+	friend class MOAIAbstractMaterialBatchInterface;
 
 	ZLSize											mIndexBatchSize;
 	ZLLeanArray < ZLStrongPtr < MOAIMaterial > >	mMaterials;
 
 	//----------------------------------------------------------------//
-	void					MOAILuaObject_RegisterLuaClass						( MOAIComposer& composer, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs						( MOAIComposer& composer, MOAILuaState& state );
-	void					MOAILuaObject_SerializeIn							( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void					MOAILuaObject_SerializeOut							( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
-	MOAIMaterial&			MOAIMaterialBatchInterface_AffirmMaterial			( ZLIndex index );
-	MOAIMaterialBatch&		MOAIMaterialBatchInterface_AffirmMaterialBatch		();
-	MOAIMaterial*			MOAIMaterialBatchInterface_GetMaterial				( ZLIndex index );
-	MOAIMaterialBatch*		MOAIMaterialBatchInterface_GetMaterialBatch			();
+	void					MOAILuaObject_RegisterLuaClass								( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_RegisterLuaFuncs								( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_SerializeIn									( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void					MOAILuaObject_SerializeOut									( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
+	MOAIMaterial&			MOAIAbstractMaterialBatchInterface_AffirmMaterial			( ZLIndex index );
+	MOAIMaterialBatch&		MOAIAbstractMaterialBatchInterface_AffirmMaterialBatch		();
+	MOAIMaterial*			MOAIAbstractMaterialBatchInterface_GetMaterial				( ZLIndex index );
+	MOAIMaterialBatch*		MOAIAbstractMaterialBatchInterface_GetMaterialBatch			();
 
 	//----------------------------------------------------------------//
 	inline ZLIndex GetRawIndex ( ZLIndex idx ) {

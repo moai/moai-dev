@@ -60,7 +60,7 @@ int MOAIMaterialBatchHolder::_setMaterialBatch ( lua_State* L ) {
 MOAIMaterialBatchHolder::MOAIMaterialBatchHolder () {
 
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIMaterialBatchInterface )
+		RTTI_EXTEND ( MOAIAbstractMaterialBatchInterface )
 	RTTI_END
 }
 
@@ -76,12 +76,12 @@ MOAIMaterialBatchHolder::~MOAIMaterialBatchHolder () {
 
 //----------------------------------------------------------------//
 void MOAIMaterialBatchHolder::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAIMaterialBatchInterface::MOAILuaObject_RegisterLuaClass ( composer, state );
+	MOAIAbstractMaterialBatchInterface::MOAILuaObject_RegisterLuaClass ( composer, state );
 }
 
 //----------------------------------------------------------------//
 void MOAIMaterialBatchHolder::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAIMaterialBatchInterface::MOAILuaObject_RegisterLuaFuncs ( composer, state );
+	MOAIAbstractMaterialBatchInterface::MOAILuaObject_RegisterLuaFuncs ( composer, state );
 
 	luaL_Reg regTable [] = {
 		{ "affirmMaterialBatch",	_affirmMaterialBatch },
@@ -106,13 +106,13 @@ void MOAIMaterialBatchHolder::MOAILuaObject_SerializeOut ( MOAIComposer& compose
 }
 
 //----------------------------------------------------------------//
-MOAIMaterial& MOAIMaterialBatchHolder::MOAIMaterialBatchInterface_AffirmMaterial ( ZLIndex index ) {
+MOAIMaterial& MOAIMaterialBatchHolder::MOAIAbstractMaterialBatchInterface_AffirmMaterial ( ZLIndex index ) {
 
 	return this->AffirmMaterialBatch ().AffirmMaterial ( index );
 }
 
 //----------------------------------------------------------------//
-MOAIMaterialBatch& MOAIMaterialBatchHolder::MOAIMaterialBatchInterface_AffirmMaterialBatch () {
+MOAIMaterialBatch& MOAIMaterialBatchHolder::MOAIAbstractMaterialBatchInterface_AffirmMaterialBatch () {
 
 	if ( !this->mMaterialBatch ) {
 		this->mMaterialBatch.Set ( *this, new MOAIMaterialBatch ());
@@ -121,13 +121,13 @@ MOAIMaterialBatch& MOAIMaterialBatchHolder::MOAIMaterialBatchInterface_AffirmMat
 }
 
 //----------------------------------------------------------------//
-MOAIMaterial* MOAIMaterialBatchHolder::MOAIMaterialBatchInterface_GetMaterial ( ZLIndex index ) {
+MOAIMaterial* MOAIMaterialBatchHolder::MOAIAbstractMaterialBatchInterface_GetMaterial ( ZLIndex index ) {
 
 	return this->mMaterialBatch ? this->mMaterialBatch->GetMaterial ( index ) : NULL;
 }
 
 //----------------------------------------------------------------//
-MOAIMaterialBatch* MOAIMaterialBatchHolder::MOAIMaterialBatchInterface_GetMaterialBatch () {
+MOAIMaterialBatch* MOAIMaterialBatchHolder::MOAIAbstractMaterialBatchInterface_GetMaterialBatch () {
 
 	return this->mMaterialBatch;
 }
