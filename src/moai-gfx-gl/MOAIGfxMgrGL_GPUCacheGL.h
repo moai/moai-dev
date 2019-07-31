@@ -26,8 +26,6 @@ class MOAIGfxMgrGL_GPUCacheGL :
 	public virtual MOAIGfxMgr_GPUCache {
 protected:
 
-	static const u32 MAX_TEXTURE_UNITS = 32; // enough? will need more flags below if not.
-
 	friend class MOAIGfxMgrGL_VertexCacheGL;
 	friend class MOAIVertexArrayGL;
 
@@ -56,7 +54,6 @@ protected:
 	void			FlushViewRect					();
 	void			ForceIndexBuffer				( MOAIIndexBufferGL* buffer );
 	void			ForceVertexBuffer				( MOAIVertexBufferGL* buffer );
-	void			InitTextureUnits				( size_t nTextureUnits );
 	void			RecalculateDirtyFlags			();
 	void			RestoreGPUState					( const MOAIGfxStateGPUCacheFrame& frame );
 	void			StoreGPUState					( MOAIGfxStateGPUCacheFrame& frame ) const;

@@ -666,20 +666,6 @@ void MOAIGfxMgrGL_GPUCacheGL::ForceVertexBuffer ( MOAIVertexBufferGL* buffer ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrGL_GPUCacheGL::InitTextureUnits ( size_t nTextureUnits ) {
-
-	if ( MAX_TEXTURE_UNITS < nTextureUnits ) {
-		ZLLog_Warning ( "Hardware textures units (%d) exceed Moai maximum supported texture units (%d)\n", nTextureUnits, MAX_TEXTURE_UNITS );
-		nTextureUnits = MAX_TEXTURE_UNITS;
-	}
-
-	this->mPendingState->mTextureUnits.Grow ( nTextureUnits, 0 );
-	this->mActiveState->mTextureUnits.Grow ( nTextureUnits, 0 );
-	
-	this->mMaxTextureUnits = nTextureUnits;
-}
-
-//----------------------------------------------------------------//
 MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgrGL_GPUCacheGL () :
 	mBoundIdxBuffer ( NULL ),
 	mBoundVtxBuffer ( NULL ) {

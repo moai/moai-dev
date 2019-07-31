@@ -49,6 +49,8 @@ protected:
 	void			Unbind						();
 	
 	//----------------------------------------------------------------//
+	bool			MOAIGfxResource_DoCPUCreate					();
+	bool			MOAIGfxResource_IsReady						() const;
 	void			MOAIGfxResource_ScheduleForGPUDestroy		();
 	bool			MOAIGfxResource_ScheduleForGPUUpdate		( PipelineHint hint );
 	virtual void	MOAIGfxResourceGL_OnGPUBind					() = 0; // select GPU-side resource on device for use
@@ -80,7 +82,6 @@ public:
 	GET ( u32, LastRenderCount, mLastRenderCount )
 	GET ( u32, State, mState )
 	IS ( Pending, mState, STATE_PENDING )
-	IS ( Ready, mState, STATE_READY_TO_BIND )
 
 	//----------------------------------------------------------------//
 					MOAIGfxResourceGL				();

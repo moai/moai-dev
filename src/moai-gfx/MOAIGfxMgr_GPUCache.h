@@ -24,6 +24,8 @@ class MOAIGfxMgr_GPUCache :
 	public virtual MOAIGfxMgrComponents {
 protected:
 
+	static const u32 MAX_TEXTURE_UNITS = 32; // enough? will need more flags below if not.
+
 	// right now we just test every flag for an update in a for loop.
 	// these flags ordered roughly by (guessed) call frequency so we can bail out of the
 	// state update loop early. if the update loop is ever a bottleneck (or if this list grows
@@ -60,6 +62,7 @@ protected:
 
 	//----------------------------------------------------------------//
 	void					GfxStateWillChange			();
+	void					InitTextureUnits			( size_t nTextureUnits );
 	void					ResumeChanges				();
 	void					SuspendChanges				();
 

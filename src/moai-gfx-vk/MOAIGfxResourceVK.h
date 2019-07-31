@@ -47,6 +47,7 @@ protected:
 	
 	//----------------------------------------------------------------//
 	bool			MOAIGfxResource_DoCPUCreate					();
+	bool			MOAIGfxResource_IsReady						() const;
 	void			MOAIGfxResource_ScheduleForGPUDestroy		();
 	bool			MOAIGfxResource_ScheduleForGPUUpdate		( PipelineHint hint );
 	virtual void	MOAIGfxResourceVK_OnGPUBind					() = 0; // select GPU-side resource on device for use

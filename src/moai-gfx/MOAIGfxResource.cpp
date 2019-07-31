@@ -91,6 +91,12 @@ bool MOAIGfxResource::InvokeLoader () {
 }
 
 //----------------------------------------------------------------//
+bool MOAIGfxResource::IsReady () const {
+
+	return this->MOAIGfxResource_IsReady ();
+}
+
+//----------------------------------------------------------------//
 MOAIGfxResource::MOAIGfxResource () {
 
 	RTTI_SINGLE ( MOAILuaObject )

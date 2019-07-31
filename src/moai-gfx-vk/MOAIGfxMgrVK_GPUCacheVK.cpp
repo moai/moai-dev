@@ -638,6 +638,8 @@ MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgrVK_GPUCacheVK () {
 	this->mPendingState = new MOAIGfxStateGPUCacheFrameVK ();
 	
 	this->mCurrentState = this->mPendingState;
+	
+	this->InitTextureUnits ( 16 );
 }
 
 //----------------------------------------------------------------//

@@ -223,6 +223,8 @@ MOAIGfxResourceVK::~MOAIGfxResourceVK () {
 //----------------------------------------------------------------//
 bool MOAIGfxResourceVK::MOAIGfxResource_DoCPUCreate () {
 
+	return this->MOAIGfxResource_OnCPUCreate ();
+
 //	if ( this->mState == STATE_READY_TO_BIND ) return true;
 //	if (( this->mState == STATE_ERROR ) || ( this->mState == STATE_UNINITIALIZED )) return false;
 //
@@ -231,6 +233,11 @@ bool MOAIGfxResourceVK::MOAIGfxResource_DoCPUCreate () {
 //		this->mState = this->MOAIGfxResource_OnCPUCreate () ? STATE_READY_FOR_GPU_CREATE : STATE_ERROR;
 //	}
 //	return this->mState != STATE_ERROR;
+}
+
+//----------------------------------------------------------------//
+bool MOAIGfxResourceVK::MOAIGfxResource_IsReady () const {
+
 	return true;
 }
 

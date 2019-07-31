@@ -120,6 +120,20 @@ void MOAIGfxMgr_GPUCache::GfxStateWillChange () {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxMgr_GPUCache::InitTextureUnits ( size_t nTextureUnits ) {
+
+	if ( MAX_TEXTURE_UNITS < nTextureUnits ) {
+		ZLLog_Warning ( "Hardware textures units (%d) exceed Moai maximum supported texture units (%d)\n", nTextureUnits, MAX_TEXTURE_UNITS );
+		nTextureUnits = MAX_TEXTURE_UNITS;
+	}
+
+	this->mPendingState->mTextureUnits.Grow ( nTextureUnits, 0 );
+	this->mActiveState->mTextureUnits.Grow ( nTextureUnits, 0 );
+	
+	this->mMaxTextureUnits = nTextureUnits;
+}
+
+//----------------------------------------------------------------//
 MOAIGfxMgr_GPUCache::MOAIGfxMgr_GPUCache () :
 	mDirtyFlags ( 0 ),
 	mTextureDirtyFlags ( 0 ),
