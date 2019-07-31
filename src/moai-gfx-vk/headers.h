@@ -12,12 +12,13 @@
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK_GPUCacheVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK_ResourceClerkVK.h>
+#include <moai-gfx-vk/MOAIGfxMgrVK_RenderTreeVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK_VertexCacheVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVKComponents.h>
 #include <moai-gfx-vk/MOAIGfxResourceVK.h>
+#include <moai-gfx-vk/MOAIGfxStateGPUCacheFrameVK.h>
 #include <moai-gfx-vk/MOAIImageTextureVK.h>
 #include <moai-gfx-vk/MOAIIndexBufferVK.h>
-#include <moai-gfx-vk/MOAIGfxMgrVK_RenderTreeVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAIShaderMgrVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>

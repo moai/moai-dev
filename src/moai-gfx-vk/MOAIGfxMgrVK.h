@@ -150,7 +150,7 @@ public:
 //	void					ClearErrors					();
 	void					DetectContext				( u32 width, u32 height, bool enableValidation );
 //	void					DetectFramebuffer			();
-//	void					FinishFrame					();
+	void					FinishFrame					();
 //	u32						LogErrors					();
 							MOAIGfxMgrVK				();
 							~MOAIGfxMgrVK				();

@@ -71,9 +71,9 @@ public:
 	bool			CanBind				() const;
 	u32				GetStatus			() const;
 	u32				GetType				() const;
-					ZLGfxHandle		();
-					ZLGfxHandle		( const ZLGfxHandle& handle );
-					ZLGfxHandle		( ZLGfxResource::Type type, u32 glid, ZLGfxResource::Status status );
+					ZLGfxHandle			();
+					ZLGfxHandle			( const ZLGfxHandle& handle );
+					ZLGfxHandle			( ZLGfxResource::Type type, u32 glid, ZLGfxResource::Status status );
 					~ZLGfxHandle		();
 	
 	//----------------------------------------------------------------//

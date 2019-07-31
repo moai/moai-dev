@@ -262,7 +262,8 @@ void MOAITextLayout::Draw ( u32 reveal ) {
 			
 				MOAIShader* spriteShader = sprite.mShader ? sprite.mShader : defaultShader;
 				if ( spriteShader != currentShader ) {
-					if ( !gfxMgr.SetShader ( spriteShader )) continue;
+					if ( !spriteShader->IsReady ()) continue;
+					gfxMgr.SetShader ( spriteShader );
 					currentShader = spriteShader;
 				}
 			}

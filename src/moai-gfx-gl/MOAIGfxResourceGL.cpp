@@ -213,19 +213,6 @@ void MOAIGfxResourceGL::Unbind () {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIGfxResourceGL::MOAIGfxResource_DoCPUCreate () {
-
-	if ( this->mState == STATE_READY_TO_BIND ) return true;
-	if (( this->mState == STATE_ERROR ) || ( this->mState == STATE_UNINITIALIZED )) return false;
-
-	// whether or not GPU is deferred, do the CPU part
-	if ( this->mState == STATE_READY_FOR_CPU_CREATE ) {
-		this->mState = this->MOAIGfxResource_OnCPUCreate () ? STATE_READY_FOR_GPU_CREATE : STATE_ERROR;
-	}
-	return this->mState != STATE_ERROR;
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxResourceGL::MOAIGfxResource_ScheduleForGPUDestroy () {
 
 	this->MOAIGfxResourceGL_OnGPUDeleteOrDiscard ( true );

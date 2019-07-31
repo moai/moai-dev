@@ -9,11 +9,19 @@
 //================================================================//
 class MOAIShader :
 	public virtual MOAILuaObject {
+	
+	//----------------------------------------------------------------//
+	virtual bool	MOAIShader_IsReady		() const = 0;
+	
 public:
 
 	//----------------------------------------------------------------//
+	bool			HasProgram				() const;
+	bool			IsReady					() const;
 					MOAIShader				();
 					~MOAIShader				();
+	void			ScheduleTextures		();
+	void			UpdateUniforms			();
 };
 
 #endif

@@ -123,7 +123,6 @@ public:
 						~MOAIPartitionHull		();
 	void				SetPartition			( MOAIPartition* partition );
 	void				UpdateWorldBounds		( const ZLBounds& bounds );
-	void				UpdateWorldBounds		( const ZLPrism& prism );
 };
 
 #endif

@@ -162,3 +162,9 @@ bool MOAIShaderGL::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u3
 	}
 	return false;
 }
+
+//----------------------------------------------------------------//
+bool MOAIShaderGL::MOAIShader_IsReady () const {
+
+	return ( this->mProgram && this->mProgram->IsReady ());
+}

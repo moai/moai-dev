@@ -221,7 +221,7 @@ void MOAIDraw::EndDrawString () {
 	//glGetIntegerv ( GL_BLEND_DST, &orgDestBlend );
 
 	// Apply render state
-	if ( !gfxMgr.SetShader ( MOAIGfxMgr::Get ().GetShaderPreset ( MOAIShaderPresetEnum::FONT_SHADER ))) return;
+	gfxMgr.SetShader ( MOAIShaderPresetEnum::FONT_SHADER );
 	
 	gfxMgr.SetBlendMode ( ZGL_BLEND_FACTOR_ONE, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
 	gfxMgr.SetVertexTransform ( MOAIGfxMgr::MODEL_TO_WORLD_MTX );
@@ -1172,9 +1172,9 @@ bool MOAIDraw::Bind () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
-	if ( !gfxMgr.SetTexture ()) return false;
-	if ( !gfxMgr.SetShader ( MOAIGfxMgr::Get ().GetShaderPreset ( MOAIShaderPresetEnum::LINE_SHADER ))) return false;
-	gfxMgr.SetVertexFormat ( MOAIGfxMgr::Get ().GetVertexFormatPreset ( MOAIVertexFormatPresetEnum::XYZWC ));
+	gfxMgr.SetTexture ();
+	gfxMgr.SetShader ( MOAIShaderPresetEnum::LINE_SHADER );
+	gfxMgr.SetVertexFormat ( MOAIVertexFormatPresetEnum::XYZWC );
 	
 	gfxMgr.SetVertexTransform ( MOAIGfxMgr::MODEL_TO_CLIP_MTX );
 	gfxMgr.SetUVTransform ( MOAIGfxMgr::UV_TO_MODEL_MTX );
@@ -1446,11 +1446,11 @@ void MOAIDraw::DrawTexture ( float left, float top, float right, float bottom, M
 	
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
-	if ( texture ) {
+	if ( texture && texture->IsReady ()) {
 
 //		gfxMgr.SetBlendMode ( ZGL_BLEND_FACTOR_ONE, ZGL_BLEND_FACTOR_ZERO );
-		if ( !gfxMgr.SetTexture ( texture )) return;
-		if ( !gfxMgr.SetShader ( MOAIGfxMgr::Get ().GetShaderPreset ( MOAIShaderPresetEnum::DECK2D_SHADER ))) return;
+		gfxMgr.SetTexture ( texture );
+		gfxMgr.SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
 
 		const ZLColorVec& orgColor = gfxMgr.GetPenColor ();
 		gfxMgr.SetPenColor ( 1, 1, 1, 1 );

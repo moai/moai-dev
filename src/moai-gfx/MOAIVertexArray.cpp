@@ -23,7 +23,7 @@ MOAIVertexFormat* MOAIVertexArray::GetVertexFormat ( ZLIndex idx ) {
 //----------------------------------------------------------------//
 MOAIVertexArray::MOAIVertexArray () {
 
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAIGfxResource )
 }
 
 //----------------------------------------------------------------//

@@ -192,14 +192,14 @@ void MOAIGfxMgrVK::DetectContext ( u32 width, u32 height, bool enableValidation 
 //	MOAICast < MOAIFrameBufferVK >( this->GetDefaultFrameBuffer ())->DetectGLFrameBufferID ( *this );
 //	this->SetFrameBuffer ();
 //}
-//
-////----------------------------------------------------------------//
-//void MOAIGfxMgrVK::FinishFrame () {
-//
-//	this->FlushToGPU (); // TODO: need to do this here?
+
+//----------------------------------------------------------------//
+void MOAIGfxMgrVK::FinishFrame () {
+
+	this->FlushToGPU (); // TODO: need to do this here?
 //	this->UnbindAll ();
-//	this->Reset ();
-//}
+	this->Reset ();
+}
 
 //----------------------------------------------------------------//
 void MOAIGfxMgrVK::InitCommandBuffers () {
@@ -484,20 +484,18 @@ MOAIShader* MOAIGfxMgrVK::MOAIGfxMgr_AffirmShader ( MOAILuaState& state, int idx
 //----------------------------------------------------------------//
 MOAITexture* MOAIGfxMgrVK::MOAIGfxMgr_AffirmTexture ( MOAILuaState& state, int idx ) const {
 
-//	MOAITextureVK* textureBase = 0;
-//
-//	textureBase = state.GetLuaObject < MOAITextureVK >( idx, false );
-//	if ( textureBase ) return textureBase;
-//
-//	MOAITexture2DVK* texture = new MOAITexture2DVK ();
-//	if ( !texture->Init ( state, idx )) {
-//		// TODO: report error
-//		delete texture;
-//		texture = 0;
-//	}
-//	return texture;
+	MOAITextureVK* textureBase = 0;
 
-	return new MOAITexture2DVK ();
+	textureBase = state.GetLuaObject < MOAITextureVK >( idx, false );
+	if ( textureBase ) return textureBase;
+
+	MOAITexture2DVK* texture = new MOAITexture2DVK ();
+	if ( !texture->Init ( state, idx )) {
+		// TODO: report error
+		delete texture;
+		texture = NULL;
+	}
+	return texture;
 }
 
 //----------------------------------------------------------------//

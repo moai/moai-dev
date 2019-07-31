@@ -163,3 +163,9 @@ bool MOAIShaderVK::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u3
 //	return false;
 	return true;
 }
+
+//----------------------------------------------------------------//
+bool MOAIShaderVK::MOAIShader_IsReady () const {
+
+	return true;
+}

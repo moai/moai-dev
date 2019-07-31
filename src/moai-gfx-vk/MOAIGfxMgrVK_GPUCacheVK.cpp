@@ -6,6 +6,7 @@
 #include <moai-gfx-vk/MOAIFrameBufferVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK_GPUCacheVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK_VertexCacheVK.h>
+#include <moai-gfx-vk/MOAIGfxStateGPUCacheFrameVK.h>
 #include <moai-gfx-vk/MOAIIndexBufferVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
@@ -127,51 +128,28 @@
 //			break;
 //	}
 //}
-//
-////----------------------------------------------------------------//
-//void MOAIGfxMgrVK_GPUCacheVK::ApplyStateChanges () {
-//
-//	if ( !this->mApplyingStateChanges ) {
-//
-//		if ( this->mPendingState.mShader ) {
-//			this->mPendingState.mShader->ScheduleTextures ();
-//		}
-//
-//		if ( this->mDirtyFlags || this->mTextureDirtyFlags ) {
-//
-//			this->SuspendChanges ();
-//			this->mCurrentState = &this->mActiveState;
-//
-//			u32 dirtyFlags = this->mDirtyFlags;
-//			this->mDirtyFlags = 0;
-//
-//			DEBUG_LOG ( "APPLY STATE CHANGES\n" );
-//
-//			for ( u32 i = 0; dirtyFlags; ++i ) {
-//				u32 mask = 1 << i;
-//				if ( dirtyFlags & mask ) {
-//					this->ApplyStateChange ( mask );
-//					dirtyFlags &= ~mask;
-//				}
-//			}
-//
-//			u32 textureDirtyFlags = this->mTextureDirtyFlags;
-//			this->mTextureDirtyFlags = 0;
-//
-//			for ( ZLIndex i = ZLIndexOp::ZERO; textureDirtyFlags; ++i ) {
-//				u32 mask = 1 << i;
-//				if ( textureDirtyFlags & mask ) {
-//					this->FlushTexture ( i, this->mPendingState.mTextureUnits [ i ]);
-//					textureDirtyFlags &= ~mask;
-//				}
-//			}
-//
-//			this->mCurrentState = &this->mPendingState;
-//			this->ResumeChanges ();
-//		}
-//	}
-//}
-//
+
+//----------------------------------------------------------------//
+void MOAIGfxMgrVK_GPUCacheVK::ApplyStateChanges () {
+
+	if ( !this->mApplyingStateChanges ) {
+
+		if ( this->mDirtyFlags || this->mTextureDirtyFlags ) {
+
+			this->SuspendChanges ();
+			this->mCurrentState = this->mActiveState;
+
+			u32 dirtyFlags = this->mDirtyFlags;
+			this->mDirtyFlags = 0;
+
+			this->GfxStateWillChange ();
+
+			this->mCurrentState = this->mPendingState;
+			this->ResumeChanges ();
+		}
+	}
+}
+
 ////----------------------------------------------------------------//
 //void MOAIGfxMgrVK_GPUCacheVK::Clear () {
 //
@@ -623,13 +601,7 @@
 //		gfx.Viewport ( x, y, w, h );
 //	}
 //}
-//
-////----------------------------------------------------------------//
-//void MOAIGfxMgrVK_GPUCacheVK::GfxStateWillChange () {
-//
-//	this->GetVertexCache ().FlushToGPU ();
-//}
-//
+
 ////----------------------------------------------------------------//
 //void MOAIGfxMgrVK_GPUCacheVK::InitTextureUnits ( size_t nTextureUnits ) {
 //
@@ -661,12 +633,15 @@
 MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgrVK_GPUCacheVK () {
 
 	this->mDefaultFrameBuffer = new MOAIFrameBufferVK ();
+	
+	this->mActiveState = new MOAIGfxStateGPUCacheFrameVK ();
+	this->mPendingState = new MOAIGfxStateGPUCacheFrameVK ();
+	
+	this->mCurrentState = this->mPendingState;
 }
 
 //----------------------------------------------------------------//
 MOAIGfxMgrVK_GPUCacheVK::~MOAIGfxMgrVK_GPUCacheVK () {
-
-	delete ( this->mDefaultFrameBuffer );
 }
 
 ////----------------------------------------------------------------//
@@ -710,13 +685,7 @@ MOAIGfxMgrVK_GPUCacheVK::~MOAIGfxMgrVK_GPUCacheVK () {
 //	this->mPendingState = frame;
 //	this->RecalculateDirtyFlags ();
 //}
-//
-////----------------------------------------------------------------//
-//void MOAIGfxMgrVK_GPUCacheVK::ResumeChanges () {
-//
-//	this->mApplyingStateChanges--;
-//}
-//
+
 ////----------------------------------------------------------------//
 //void MOAIGfxMgrVK_GPUCacheVK::StoreGPUState ( MOAIGfxStateGPUCacheFrameVK& frame ) const {
 //
@@ -724,12 +693,6 @@ MOAIGfxMgrVK_GPUCacheVK::~MOAIGfxMgrVK_GPUCacheVK () {
 //		frame.mTextureUnits.Grow ( this->mMaxTextureUnits, 0 );
 //	}
 //	frame = this->mPendingState;
-//}
-//
-////----------------------------------------------------------------//
-//void MOAIGfxMgrVK_GPUCacheVK::SuspendChanges () {
-//
-//	this->mApplyingStateChanges++;
 //}
 
 //================================================================//
@@ -814,87 +777,6 @@ void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_DrawPrims ( u32 primType, u32 
 }
 
 //----------------------------------------------------------------//
-MOAIBlendMode MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_GetBlendMode () const {
-//	this->mCurrentState->mBlendMode;
-}
-
-//----------------------------------------------------------------//
-u32 MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_GetBufferHeight () const {
-
-//	assert ( this->mCurrentState );
-//	const MOAIFrameBufferVK* frameBuffer = this->mCurrentState->mFrameBuffer;
-//	return frameBuffer ? frameBuffer->mBufferHeight : 0;
-	return 0;
-}
-
-//----------------------------------------------------------------//
-u32 MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_GetBufferWidth () const {
-
-//	assert ( this->mCurrentState );
-//	const MOAIFrameBufferVK* frameBuffer = this->mCurrentState->mFrameBuffer;
-//	return frameBuffer ? frameBuffer->mBufferWidth : 0;
-	return 0;
-}
-
-//----------------------------------------------------------------//
-MOAIFrameBuffer* MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_GetCurrentFrameBuffer () {
-//	return this->mCurrentState->mFrameBuffer;
-	return 0;
-}
-
-//----------------------------------------------------------------//
-MOAIShader* MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_GetCurrentShader () {
-//	return this->mCurrentState->mShader;
-	return 0;
-}
-
-//----------------------------------------------------------------//
-MOAIVertexFormat* MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_GetCurrentVtxFormat () {
-//	return this->mCurrentState->mVtxFormat;
-	return 0;
-}
-
-//----------------------------------------------------------------//
-MOAIFrameBuffer* MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_GetDefaultFrameBuffer () {
-//	return this->mDefaultFrameBuffer;
-	return this->mDefaultFrameBuffer;;
-}
-
-//----------------------------------------------------------------//
-MOAITexture* MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_GetDefaultTexture () {
-//	return this->mDefaultTexture;
-	return 0;
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_GetDepthMask () const {
-//	return this->mCurrentState->mDepthMask;
-	return false;
-}
-
-//----------------------------------------------------------------//
-float MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_GetViewHeight () const {
-
-//	assert ( this->mCurrentState );
-//	return this->mCurrentState->mViewRect.Height ();
-	return 0;
-}
-
-//----------------------------------------------------------------//
-ZLRect MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_GetViewRect () const {
-//	return this->mCurrentState->mViewRect;
-	return ZLRect::EMPTY;
-}
-
-//----------------------------------------------------------------//
-float MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_GetViewWidth () const {
-
-//	assert ( this->mCurrentState );
-//	return this->mCurrentState->mViewRect.Width ();
-	return 0;
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_ResetGPUState () {
 
 //	ZLGfx& gfx = this->GetPipelineClerkVK ().GetDrawingAPI ();
@@ -969,267 +851,6 @@ void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_ResetGPUState () {
 //	this->mTextureDirtyFlags = 0;
 //
 //	ZGL_COMMENT ( gfx, "" );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_SetBlendMode () {
-
-//	assert ( !this->mApplyingStateChanges );
-//
-//	this->mPendingState.mBlendEnabled = false;
-//	this->mDirtyFlags = ( !this->mActiveState.mBlendEnabled ) ? ( this->mDirtyFlags & ~BLEND_MODE ) : ( this->mDirtyFlags | BLEND_MODE );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_SetBlendMode ( const MOAIBlendMode& blendMode ) {
-
-//	assert ( !this->mApplyingStateChanges );
-//
-//	this->mPendingState.mBlendEnabled = true;
-//	this->mPendingState.mBlendMode = blendMode;
-//	this->mDirtyFlags = ( this->mActiveState.mBlendEnabled && ( this->mActiveState.mBlendMode.IsSame ( blendMode ))) ? ( this->mDirtyFlags & ~BLEND_MODE ) : ( this->mDirtyFlags | BLEND_MODE );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_SetBlendMode ( int srcFactor, int dstFactor, int equation ) {
-
-//	MOAIBlendMode blendMode;
-//	blendMode.SetBlend ( equation, srcFactor, dstFactor );
-//
-//	this->SetBlendMode ( blendMode );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_SetCullFunc () {
-
-//	this->SetCullFunc ( 0 );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_SetCullFunc ( int cullFunc ) {
-
-//	assert ( !this->mApplyingStateChanges );
-//
-//	this->mPendingState.mCullFunc = cullFunc;
-//	this->mDirtyFlags = ( this->mActiveState.mCullFunc == cullFunc ) ? ( this->mDirtyFlags & ~CULL_FUNC ) : ( this->mDirtyFlags | CULL_FUNC );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_SetDefaultFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
-
-//	MOAIFrameBufferVK* frameBufferVK = MOAICast < MOAIFrameBufferVK >( frameBuffer );
-//	assert ( frameBufferVK || ( frameBufferVK == NULL ));
-//
-//	this->mDefaultFrameBuffer = frameBufferVK;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_SetDefaultTexture ( MOAITexture* texture ) {
-
-//	MOAITextureVK* textureVK = MOAICast < MOAITextureVK >( texture );
-//	assert ( textureVK || ( texture == NULL ));
-//
-//	this->mDefaultTexture = textureVK;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_SetDepthFunc () {
-
-//	this->SetDepthFunc ( 0 );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_SetDepthFunc ( int depthFunc ) {
-
-//	assert ( !this->mApplyingStateChanges );
-//
-//	this->mPendingState.mDepthFunc = depthFunc;
-//	this->mDirtyFlags = (( this->mActiveState.mDepthFunc == depthFunc ) && ( this->mActiveState.mDepthMask == this->mPendingState.mDepthMask )) ? ( this->mDirtyFlags & ~DEPTH_MODE ) : ( this->mDirtyFlags | DEPTH_MODE );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_SetDepthMask ( bool depthMask ) {
-
-//	assert ( !this->mApplyingStateChanges );
-//
-//	this->mPendingState.mDepthMask = depthMask;
-//	this->mDirtyFlags = (( this->mActiveState.mDepthMask == depthMask ) && ( this->mActiveState.mDepthFunc == this->mPendingState.mDepthFunc )) ? ( this->mDirtyFlags & ~DEPTH_MODE ) : ( this->mDirtyFlags | DEPTH_MODE );
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
-
-//	MOAIFrameBufferVK* frameBufferVK = MOAICast < MOAIFrameBufferVK >( frameBuffer );
-//	assert ( frameBufferVK || ( frameBufferVK == NULL ));
-//
-//	assert ( !this->mApplyingStateChanges );
-//
-//	frameBufferVK = frameBufferVK ? frameBufferVK : ( MOAIFrameBufferVK* )this->mDefaultFrameBuffer;
-//	this->mPendingState.mFrameBuffer = frameBufferVK;
-//	this->mDirtyFlags = ( this->mActiveState.mFrameBuffer == frameBufferVK ) ? ( this->mDirtyFlags & ~FRAME_BUFFER ) : ( this->mDirtyFlags | FRAME_BUFFER );
-//
-//	return true;
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_SetIndexBuffer ( MOAIIndexBuffer* buffer ) {
-	
-//	MOAIIndexBufferVK* indexBufferVK = MOAICast < MOAIIndexBufferVK >( buffer );
-//	assert ( indexBufferVK || ( indexBufferVK == NULL ));
-//
-//	assert ( !this->mApplyingStateChanges );
-//
-//	this->mPendingState.mIdxBuffer = indexBufferVK;
-//	this->mDirtyFlags = ( this->mActiveState.mIdxBuffer == indexBufferVK ) ? ( this->mDirtyFlags & ~INDEX_BUFFER ) : ( this->mDirtyFlags | INDEX_BUFFER );
-//
-//	return indexBufferVK ? indexBufferVK->IsReady () : true;
-	return true;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_SetPenWidth ( float penWidth ) {
-
-//	assert ( !this->mApplyingStateChanges );
-//
-//	this->mPendingState.mPenWidth = penWidth;
-//	this->mDirtyFlags = ( this->mActiveState.mPenWidth == penWidth ) ? ( this->mDirtyFlags & ~PEN_WIDTH ) : ( this->mDirtyFlags | PEN_WIDTH );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_SetScissorRect () {
-
-//	assert ( !this->mApplyingStateChanges );
-//
-//	this->mPendingState.mScissorEnabled = false;
-//	this->mDirtyFlags = ( !this->mActiveState.mScissorEnabled ) ? ( this->mDirtyFlags & ~SCISSOR_RECT ) : ( this->mDirtyFlags | SCISSOR_RECT );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_SetScissorRect ( ZLRect rect ) {
-	
-//	rect.Bless ();
-//
-//	assert ( !this->mApplyingStateChanges );
-//
-//	this->mPendingState.mScissorEnabled = true;
-//	this->mPendingState.mScissorRect = rect;
-//	this->mDirtyFlags = ( this->mActiveState.mScissorEnabled && ( this->mActiveState.mScissorRect.IsEqual ( rect ))) ? ( this->mDirtyFlags & ~SCISSOR_RECT ) : ( this->mDirtyFlags | SCISSOR_RECT );
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_SetShader ( MOAIShader* shader ) {
-
-//	assert ( !this->mApplyingStateChanges );
-//
-//	MOAIShaderVK* shaderVK = MOAICastAssert < MOAIShaderVK >( shader );
-//
-//	MOAIShaderProgramVK* program = shaderVK ? shaderVK->GetProgram () : 0;
-//	shaderVK = program ? shaderVK : 0;
-//
-//	this->mPendingState.mShader = shaderVK;
-//
-//	// shader dirty flag only ceared if both are null
-//	this->mDirtyFlags = ( !( shaderVK || this->mActiveState.mShader )) ? ( this->mDirtyFlags & ~SHADER ) : ( this->mDirtyFlags | SHADER );
-//
-//	return program ? program->IsReady () : true;
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_SetTexture ( MOAITexture* texture, ZLIndex textureUnit ) {
-
-//	assert ( !this->mApplyingStateChanges );
-//
-//	MOAITextureVK* textureVK = MOAICastAssert < MOAITextureVK >( texture );
-//
-//	u32 mask = 1 << textureUnit;
-//	this->mPendingState.mTextureUnits [ textureUnit ] = textureVK;
-//	if ( this->mActiveState.mTextureUnits [ textureUnit ] == textureVK ) {
-//		this->mTextureDirtyFlags = this->mTextureDirtyFlags & ~mask;
-//	}
-//	else {
-//		this->mTextureDirtyFlags = this->mTextureDirtyFlags | mask;
-//	}
-	
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_SetVertexArray ( MOAIVertexArray* vtxArray ) {
-
-//	assert ( !this->mApplyingStateChanges );
-//
-//	MOAIVertexArrayVK* vertexArrayVK = MOAICastAssert < MOAIVertexArrayVK >( vtxArray );
-//
-//	if ( vtxArray ) {
-//		this->mPendingState.mVtxBuffer = 0;
-//		this->mPendingState.mVtxFormat = 0;
-//		this->mDirtyFlags &= ~VERTEX_BUFFER;
-//	}
-//
-//	this->mPendingState.mVtxArray = vertexArrayVK;
-//	this->mDirtyFlags = ( this->mActiveState.mVtxArray == vertexArrayVK ) ? ( this->mDirtyFlags & ~VERTEX_ARRAY ) : ( this->mDirtyFlags | VERTEX_ARRAY );
-//
-//	return vertexArrayVK ? vertexArrayVK->IsReady () : true;
-
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_SetVertexBuffer ( MOAIVertexBuffer* buffer ) {
-
-//	MOAIVertexBufferVK* vertexBufferVK = MOAICast < MOAIVertexBufferVK >( buffer );
-//	assert ( vertexBufferVK || ( vertexBufferVK == NULL ));
-//
-//	assert ( !this->mApplyingStateChanges );
-//
-//	if ( buffer ) {
-//		this->mPendingState.mVtxArray = 0;
-//		this->mDirtyFlags &= ~VERTEX_ARRAY;
-//	}
-//
-//	this->mPendingState.mVtxBuffer = vertexBufferVK;
-//	this->mDirtyFlags = ( this->mActiveState.mVtxBuffer == vertexBufferVK ) ? ( this->mDirtyFlags & ~VERTEX_BUFFER ) : ( this->mDirtyFlags | VERTEX_BUFFER );
-//
-//	return vertexBufferVK ? vertexBufferVK->IsReady () : true;
-	
-	return true;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_SetVertexFormat ( MOAIVertexFormat* format ) {
-
-//	MOAIVertexFormatVK* vertexFormatVK = MOAICast < MOAIVertexFormatVK >( format );
-//	assert ( vertexFormatVK || ( vertexFormatVK == NULL ));
-//
-//	assert ( !this->mApplyingStateChanges );
-//
-//	this->mPendingState.mVtxFormat = vertexFormatVK;
-//	this->mDirtyFlags = ( this->mActiveState.mVtxFormat == vertexFormatVK ) ? ( this->mDirtyFlags & ~VERTEX_FORMAT ) : ( this->mDirtyFlags | VERTEX_FORMAT );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_SetViewRect () {
-
-//	float width = ( float )this->GetBufferWidth ();
-//	float height = ( float )this->GetBufferHeight ();
-//
-//	ZLRect rect;
-//	rect.Init ( 0.0f, 0.0f, width, height );
-//
-//	this->SetViewRect ( rect );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_SetViewRect ( ZLRect rect ) {
-	
-//	rect.Bless ();
-//
-//	assert ( !this->mApplyingStateChanges );
-//
-//	this->mPendingState.mViewRect = rect;
-//	this->mDirtyFlags = ( this->mActiveState.mViewRect.IsEqual ( rect )) ? ( this->mDirtyFlags & ~VIEW_RECT ) : ( this->mDirtyFlags | VIEW_RECT );
 }
 
 //----------------------------------------------------------------//

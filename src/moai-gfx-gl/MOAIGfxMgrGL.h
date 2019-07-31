@@ -16,7 +16,7 @@
 //================================================================//
 class MOAIGfxStateFrameGL :
 	public MOAIGfxStateCPUCacheFrame,
-	public MOAIGfxStateGPUCacheFrameGL {
+	public MOAIGfxStateGPUCacheFrame {
 protected:
 };
 

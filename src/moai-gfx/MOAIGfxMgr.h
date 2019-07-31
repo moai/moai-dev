@@ -9,35 +9,10 @@
 #include <moai-gfx/MOAIGfxMgr_RenderTree.h>
 #include <moai-gfx/MOAIGfxMgr_VertexCache.h>
 #include <moai-gfx/MOAIGfxMgrComponents.h>
+#include <moai-gfx/MOAIGfxPresetEnum.h>
 
 class MOAIImageTexture;
 class MOAITexture2D;
-
-enum MOAIShaderPresetEnum {
-	DECK2D_SHADER,
-	DECK2D_SNAPPING_SHADER,
-	DECK2D_TEX_ONLY_SHADER,
-	FONT_SHADER,
-	FONT_SNAPPING_SHADER,
-	FONT_EFFECTS_SHADER,
-	LINE_SHADER,
-	LINE_SHADER_3D,
-	MESH_SHADER,
-	TOTAL_SHADERS,
-	
-	UNKNOWN_SHADER = 0xffffffff,
-};
-
-enum MOAIVertexFormatPresetEnum {
-	XYZC,
-	XYZWC,
-	XYZWUVC,
-	XYZWNNNC,
-	XYZWNNNUVC,
-	TOTAL_FORMATS,
-	
-	UNKNOWN_FORMAT = 0xffffffff,
-};
 
 //================================================================//
 // MOAIGfxMgr

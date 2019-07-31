@@ -4,6 +4,8 @@
 #ifndef	MOAIVERTEXARRAY_H
 #define	MOAIVERTEXARRAY_H
 
+#include <moai-gfx/MOAIGfxResource.h>
+
 class MOAIVertexBuffer;
 class MOAIVertexFormat;
 
@@ -11,7 +13,7 @@ class MOAIVertexFormat;
 // MOAIVertexArray
 //================================================================//
 class MOAIVertexArray :
-	public virtual MOAILuaObject {
+	public virtual MOAIGfxResource {
 protected:
 
 	//----------------------------------------------------------------//
