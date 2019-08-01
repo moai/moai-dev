@@ -6,7 +6,6 @@
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAIShaderMgrVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
-#include <moai-gfx-vk/MOAIVertexFormatMgrVK.h>
 
 //#include <moai-gfx-vk/shaders/MOAIDeck2DShaderVK-fsh.h>
 //#include <moai-gfx-vk/shaders/MOAIDeck2DShaderVK-vsh.h>

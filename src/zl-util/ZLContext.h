@@ -278,7 +278,8 @@ public:
 	@text	Base class for Moai singleton aliases.
 */
 template < typename TYPE >
-class ZLContextClassAlias {
+class ZLContextClassAlias :
+	public virtual ZLContextClassBase {
 public:
 	
 	//----------------------------------------------------------------//

@@ -229,8 +229,8 @@ void VulkanExample::prepareVertices ( bool useStagingBuffers ) {
 }
 
 //----------------------------------------------------------------//
-void VulkanExample::setupDescriptorPool ()
-{
+void VulkanExample::setupDescriptorPool () {
+
 	// We need to tell the API the number of max. requested descriptors per type
 	VkDescriptorPoolSize typeCounts [ 1 ];
 	// This example only uses one descriptor type (uniform buffer) and only requests one descriptor of this type
@@ -255,8 +255,8 @@ void VulkanExample::setupDescriptorPool ()
 }
 
 //----------------------------------------------------------------//
-void VulkanExample::setupDescriptorSet ()
-{
+void VulkanExample::setupDescriptorSet () {
+
 	// Allocate a new descriptor set from the global descriptor pool
 	VkDescriptorSetAllocateInfo allocInfo = {};
 	allocInfo.sType = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
@@ -285,8 +285,8 @@ void VulkanExample::setupDescriptorSet ()
 }
 
 //----------------------------------------------------------------//
-void VulkanExample::setupDescriptorSetLayout ()
-{
+void VulkanExample::setupDescriptorSetLayout () {
+
 	// Setup layout of descriptors used in this example
 	// Basically connects the different shader stages to descriptors for binding uniform buffers, image samplers, etc.
 	// So every shader binding should map to one descriptor set layout binding
@@ -318,8 +318,8 @@ void VulkanExample::setupDescriptorSetLayout ()
 }
 
 //----------------------------------------------------------------//
-void VulkanExample::updateUniformBuffers ()
-{
+void VulkanExample::updateUniformBuffers () {
+
 	float aspect		= ( float )mWidth / ( float )mHeight;
 	float fovy			= 60.0 * 0.01745329251994329576923690768489; // D2R
 	float tanHalfFovy	= tan ( fovy / 2 );
@@ -384,6 +384,7 @@ VulkanExample::~VulkanExample () {
 
 	vkDestroyPipelineLayout ( this->mDevice, mPipelineLayout, nullptr );
 	vkDestroyDescriptorSetLayout ( this->mDevice, mDescriptorSetLayout, nullptr );
+	vkDestroyDescriptorPool ( this->mDevice, mDescriptorPool, nullptr );
 
 	this->mVertices.cleanup ( this->mDevice );
 	this->mIndices.cleanup ( this->mDevice );
@@ -398,32 +399,20 @@ VulkanExample::~VulkanExample () {
 void VulkanExample::VulkanAbstractExample_render () {
 	
 	// Get next image in the swap chain (back/front buffer)
-	VK_CHECK_RESULT ( mSwapChain.acquireNextImage ( semaphores.presentComplete, &mCurrentBuffer ));
+	uint32_t currentBuffer = this->prepareFrame ();
+	//VK_CHECK_RESULT ( mSwapChain.acquireNextImage ( semaphores.presentComplete, &currentBuffer ));
 
-	// Use a fence to wait until the command buffer has finished execution before using it again
-	VK_CHECK_RESULT ( vkWaitForFences ( this->mDevice, 1, &mWaitFences [ mCurrentBuffer ], VK_TRUE, UINT64_MAX ));
-	VK_CHECK_RESULT ( vkResetFences ( this->mDevice, 1, &mWaitFences [ mCurrentBuffer ]));
+	// render goes here (if dynamic)
 
-	// Pipeline stage at which the queue submission will wait (via pWaitSemaphores)
-	VkPipelineStageFlags waitStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-	// The submit info structure specifices a command buffer queue submission batch
-	VkSubmitInfo submitInfo = VkStruct::submitInfo (
-		&mDrawCmdBuffers [ mCurrentBuffer ],      // Command buffers(s) to execute in this batch (submission)
-		1,                                      // One command buffer
-		&semaphores.renderComplete,             // Semaphore(s) to be signaled when command buffers have completed
-		1,                                      // One signal semaphore
-		&semaphores.presentComplete,            // Semaphore(s) to wait upon before the submitted command buffer starts executing
-		1,                                      // One wait semaphore
-		&waitStageMask                          // Pointer to the list of pipeline stages that the semaphore waits will occur at
-	);
+	this->submitFrame ( currentBuffer );
 
-	// Submit to the graphics queue passing a wait fence
-	VK_CHECK_RESULT ( vkQueueSubmit ( mQueue, 1, &submitInfo, mWaitFences [ mCurrentBuffer ]));
-	
-	// Present the current buffer to the swap chain
-	// Pass the semaphore signaled by the command buffer submission from the submit info as the wait semaphore for swap chain presentation
-	// This ensures that the image is not presented to the windowing system until all commands have been submitted
-	VK_CHECK_RESULT ( mSwapChain.queuePresent ( mQueue, mCurrentBuffer, semaphores.renderComplete ));
+//	// Submit to the graphics queue passing a wait fence
+//	VK_CHECK_RESULT ( vkQueueSubmit ( mQueue, 1, &submitInfo, mWaitFences [ currentBuffer ]));
+//
+//	// Present the current buffer to the swap chain
+//	// Pass the semaphore signaled by the command buffer submission from the submit info as the wait semaphore for swap chain presentation
+//	// This ensures that the image is not presented to the windowing system until all commands have been submitted
+//	VK_CHECK_RESULT ( mSwapChain.queuePresent ( mQueue, currentBuffer, semaphores.renderComplete ));
 }
 
 //----------------------------------------------------------------//

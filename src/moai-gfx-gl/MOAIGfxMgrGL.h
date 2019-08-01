@@ -60,10 +60,6 @@ protected:
 	static int						_renewResources				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void							OnGlobalsFinalize			();
-	void							OnGlobalsInitialize			();
-
-	//----------------------------------------------------------------//
 	MOAIShader*							MOAIGfxMgr_AffirmShader							( MOAILuaState& state, int idx ) const;
 	MOAITexture*						MOAIGfxMgr_AffirmTexture						( MOAILuaState& state, int idx ) const;
 	MOAIImageTexture*					MOAIGfxMgr_CreateImageTexture					() const;
@@ -71,9 +67,9 @@ protected:
 	MOAITexture2D*						MOAIGfxMgr_CreateTexture2D						() const;
 	MOAIVertexArray*					MOAIGfxMgr_CreateVertexArray					() const;
 	MOAIVertexBuffer*					MOAIGfxMgr_CreateVertexBuffer					() const;
+	MOAIVertexFormat*					MOAIGfxMgr_CreateVertexFormat					() const;
 	MOAIShader*							MOAIGfxMgr_GetShaderPreset						( MOAIShaderPresetEnum preset ) const;
 	size_t								MOAIGfxMgr_GetTextureMemoryUsage				() const;
-	MOAIVertexFormat*					MOAIGfxMgr_GetVertexFormatPreset				( MOAIVertexFormatPresetEnum preset ) const;
 	void								MOAIGfxMgr_PopState								();
 	void								MOAIGfxMgr_PushState							();
 	MOAIGfxMgrGL_DisplayListClerkGL&	MOAIGfxMgrGLComponents_GetDisplayListClerkGL	();

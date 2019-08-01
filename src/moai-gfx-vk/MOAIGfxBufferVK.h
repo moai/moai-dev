@@ -19,29 +19,23 @@ class MOAIGfxBufferVK :
 	public virtual MOAIGfxBuffer {
 protected:
 	
-//	friend class MOAIGfxMgrVK_PipelineClerkVK;
-//	friend class MOAIGfxMgrVK_GPUCacheVK;
-//	friend class MOAIVertexArrayItem;
-//	friend class MOAIVertexArrayVK;
-//
-//	enum {
-//		UPDATE_MODE_MAPBUFFER,
-//		UPDATE_MODE_ORPHAN,
-//		UPDATE_MODE_SUBDATA,
-//	};
-//
-//	ZLLeanArray < ZLGfxHandle >		mVBOs;
-//	ZLIndex							mCurrentVBO;
-//	u32								mTarget;
-//
-//	bool							mUseVBOs;
-//	bool							mCopyOnUpdate;
+	static const VkMemoryPropertyFlags HOST_BUFFER_PROPS = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
+	static const VkMemoryPropertyFlags DEVICE_BUFFER_PROPS = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+
+	VkBuffer		mBuffer;
+	VkDeviceMemory	mMemory;
+	VkDeviceSize	mAllocationSize;
 	
 	//----------------------------------------------------------------//
-//	static int				_reserveVBOs			( lua_State* L );
+	operator VkBuffer () {
+		return this->mBuffer;
+	}
 	
 	//----------------------------------------------------------------//
-//	ZLSharedConstBuffer*	GetBufferForBind		( ZLGfx& gfx );
+	void					Bind										( VkDevice device );
+	void					Cleanup										( VkDevice device );
+	void					Init										( VkDevice device, VkPhysicalDeviceMemoryProperties memProps, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags memPropFlags = HOST_BUFFER_PROPS );
+	void					MapAndCopy									( VkDevice device, const void* data, size_t size );
 	
 	//----------------------------------------------------------------//
 	bool					MOAIGfxResource_OnCPUCreate					();

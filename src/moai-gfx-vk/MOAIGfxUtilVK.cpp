@@ -2,6 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-gfx-vk/MOAIGfxStructVK.h>
+#include <moai-gfx-vk/MOAIGfxUtilVK.h>
 #include <moai-gfx-vk/MOAISwapChainVK.h>
 
 //================================================================//
@@ -74,4 +76,61 @@ cc8* MOAIGfxUtilVK::GetErrorString ( VkResult errorCode ) {
 	default:
 		return "UNKNOWN_ERROR";
 	}
+}
+
+//----------------------------------------------------------------//
+uint32_t MOAIGfxUtilVK::GetMemoryTypeIndex ( uint32_t typeBits, VkPhysicalDeviceMemoryProperties memoryProperties, VkMemoryPropertyFlags properties, VkBool32 *memTypeFound ) {
+
+	for ( uint32_t i = 0; i < memoryProperties.memoryTypeCount; i++ ) {
+		if (( typeBits & 1 ) == 1 ) {
+			if ((memoryProperties.memoryTypes [ i ].propertyFlags & properties ) == properties ) {
+				if ( memTypeFound ) {
+					*memTypeFound = true;
+				}
+				return i;
+			}
+		}
+		typeBits >>= 1;
+	}
+
+	if ( memTypeFound ) {
+		*memTypeFound = false;
+		return 0;
+	}
+	assert ( false );
+}
+
+////----------------------------------------------------------------//
+//VkShaderModule MOAIGfxUtilVK::LoadShaderSPIRV ( cc8* fileName, VkDevice device ) {
+//	size_t shaderSize;
+//		char* shaderCode = NULL;
+//		VkShaderModule shader = VK_NULL_HANDLE;
+//
+//		std::ifstream is ( filename, std::ios::binary | std::ios::in | std::ios::ate );
+//
+//		if ( is.is_open ()) {
+//			shaderSize = is.tellg ();
+//			is.seekg ( 0, std::ios::beg );
+//			// Copy file contents into a buffer
+//			shaderCode = new char [ shaderSize ];
+//			is.read ( shaderCode, shaderSize );
+//			is.close ();
+//			assert ( shaderSize > 0 );
+//			
+//			shader = loadShaderSPIRV ( shaderCode, shaderSize, device );
+//			delete [] shaderCode;
+//		}
+//		return shader;
+//}
+
+//----------------------------------------------------------------//
+VkShaderModule MOAIGfxUtilVK::LoadShaderSPIRV ( const void* shaderCode, size_t shaderSize, VkDevice device ) {
+
+	// Create a new shader module that will be used for pipeline creation
+	VkShaderModuleCreateInfo moduleCreateInfo = MOAIGfxStructVK::shaderModuleCreateInfo (( uint32_t* )shaderCode, shaderSize );
+
+	VkShaderModule shaderModule;
+	VK_CHECK_RESULT ( vkCreateShaderModule(device, &moduleCreateInfo, NULL, &shaderModule ));
+
+	return shaderModule;
 }

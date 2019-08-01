@@ -6,7 +6,6 @@
 #include <moai-gfx-gl/MOAIShaderGL.h>
 #include <moai-gfx-gl/MOAIShaderMgrGL.h>
 #include <moai-gfx-gl/MOAIShaderProgramGL.h>
-#include <moai-gfx-gl/MOAIVertexFormatMgrGL.h>
 
 #include <moai-gfx-gl/shaders/MOAIDeck2DShaderGL-fsh.h>
 #include <moai-gfx-gl/shaders/MOAIDeck2DShaderGL-vsh.h>
@@ -97,18 +96,18 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 				
 				case MOAIShaderPresetEnum::DECK2D_SHADER:
 					
-					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_POSITION, "position" );
-					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_TEXCOORD, "uv" );
-					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_COLOR, "color" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
 					
 					program->Load ( _deck2DShaderVSH, _deck2DShaderFSH );
 					break;
 				
 				case MOAIShaderPresetEnum::DECK2D_SNAPPING_SHADER:
 					
-					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_POSITION, "position" );
-					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_TEXCOORD, "uv" );
-					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_COLOR, "color" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
 					
 					program->ReserveUniforms ( 2 );
 					program->DeclareUniform ( ZLIndexCast ( 0 ), "xSnap", MOAIShaderUniformGL::UNIFORM_TYPE_FLOAT );
@@ -123,27 +122,27 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 				
 				case MOAIShaderPresetEnum::DECK2D_TEX_ONLY_SHADER:
 					
-					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_POSITION, "position" );
-					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_TEXCOORD, "uv" );
-					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_COLOR, "color" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
 					
 					program->Load ( _deck2DTexOnlyShaderVSH, _deck2DTexOnlyShaderFSH );
 					break;
 				
 				case MOAIShaderPresetEnum::FONT_SHADER:
 					
-					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_POSITION, "position" );
-					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_TEXCOORD, "uv" );
-					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_COLOR, "color" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
 					
 					program->Load ( _fontShaderVSH, _fontShaderFSH );
 					break;
 				
 				case MOAIShaderPresetEnum::FONT_SNAPPING_SHADER:
 					
-					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_POSITION, "position" );
-					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_TEXCOORD, "uv" );
-					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_COLOR, "color" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
 					
 					program->ReserveUniforms ( 2 );
 					program->DeclareUniform ( ZLIndexCast ( 0 ), "xSnap", MOAIShaderUniformGL::UNIFORM_TYPE_FLOAT );
@@ -158,8 +157,8 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 				
 				case MOAIShaderPresetEnum::LINE_SHADER:
 					
-					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWC_POSITION, "position" );
-					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWC_COLOR, "color" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWC_POSITION, "position" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWC_COLOR, "color" );
 					program->Load ( _lineShaderVSH, _lineShaderFSH );
 					break;
 				
@@ -182,9 +181,9 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 
 				case MOAIShaderPresetEnum::MESH_SHADER:
 
-					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_POSITION, "position" );
-					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_TEXCOORD, "uv" );
-					program->SetVertexAttribute ( MOAIVertexFormatMgrGL::XYZWUVC_COLOR, "color" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
+					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
 
 					program->ReserveUniforms ( 2 );
 					program->DeclareUniform ( ZLIndexCast ( 0 ), "transform", MOAIShaderUniformGL::UNIFORM_TYPE_FLOAT, MOAIShaderUniformGL::UNIFORM_WIDTH_MATRIX_4X4 );

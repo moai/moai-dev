@@ -95,7 +95,6 @@ void AKUGfxVKContextInitialize () {
 	MOAIGfxMgrVK::Affirm ();
 	MOAIGfxMgrVK::RegisterAlias < MOAIGfxMgr >();
 
-	MOAIVertexFormatMgrVK::Affirm ();
 	MOAIShaderMgrVK::Affirm ();
 
 	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIFrameBufferVK, 			"MOAIFrameBuffer" )
@@ -110,7 +109,6 @@ void AKUGfxVKContextInitialize () {
 	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIVertexArrayVK, 			"MOAIVertexArray" )
 	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIVertexBufferVK, 		"MOAIVertexBuffer" )
 	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIVertexFormatVK, 		"MOAIVertexFormat" )
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIVertexFormatMgrVK, 		"MOAIVertexFormatMgr" )
 }
 
 //----------------------------------------------------------------//

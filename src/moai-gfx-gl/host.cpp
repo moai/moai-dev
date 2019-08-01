@@ -30,7 +30,6 @@ void AKUGfxGLContextInitialize () {
 	MOAIGfxMgrGL::Affirm ();
 	MOAIGfxMgrGL::RegisterAlias < MOAIGfxMgr >();
 
-	MOAIVertexFormatMgrGL::Affirm ();
 	MOAIShaderMgrGL::Affirm ();
 
 	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIFrameBufferGL, 			"MOAIFrameBuffer" )
@@ -45,7 +44,6 @@ void AKUGfxGLContextInitialize () {
 	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIVertexArrayGL, 			"MOAIVertexArray" )
 	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIVertexBufferGL, 		"MOAIVertexBuffer" )
 	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIVertexFormatGL, 		"MOAIVertexFormat" )
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIVertexFormatMgrGL, 		"MOAIVertexFormatMgr" )
 }
 
 //----------------------------------------------------------------//

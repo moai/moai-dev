@@ -42,5 +42,6 @@
 #include <moai-gfx/MOAIVertexArray.h>
 #include <moai-gfx/MOAIVertexBuffer.h>
 #include <moai-gfx/MOAIVertexFormat.h>
+#include <moai-gfx/MOAIVertexFormatMgr.h>
 
 #endif

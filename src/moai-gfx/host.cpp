@@ -19,4 +19,8 @@ void AKUGfxAppInitialize () {
 
 //----------------------------------------------------------------//
 void AKUGfxContextInitialize () {
+
+	MOAIVertexFormatMgr::Affirm ();
+	
+	REGISTER_LUA_CLASS ( MOAIVertexFormatMgr )
 }

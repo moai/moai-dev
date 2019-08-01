@@ -14,7 +14,7 @@
 #include <moai-gfx-vk/MOAITexture2DVK.h>
 #include <moai-gfx-vk/MOAIVertexArrayVK.h>
 #include <moai-gfx-vk/MOAIVertexBufferVK.h>
-#include <moai-gfx-vk/MOAIVertexFormatMgrVK.h>
+#include <moai-gfx-vk/MOAIVertexFormatVK.h>
 
 //================================================================//
 // lua
@@ -127,6 +127,19 @@
 // MOAIGfxMgrVK
 //================================================================//
 
+//----------------------------------------------------------------//
+void MOAIGfxMgrVK::BeginFrame () {
+
+	VkResult result = this->mSwapChain.AcquireNextImage ( this->mLogicalDevice, this->mPresentCompleteSemaphore, this->mCurrentBufferIndex );
+	
+    if (( result == VK_ERROR_OUT_OF_DATE_KHR ) || ( result == VK_SUBOPTIMAL_KHR )) {
+//        windowResize ();
+    }
+    else {
+        VK_CHECK_RESULT ( result );
+    }
+}
+
 ////----------------------------------------------------------------//
 //void MOAIGfxMgrVK::Clear () {
 //
@@ -195,8 +208,43 @@ void MOAIGfxMgrVK::DetectContext ( u32 width, u32 height, bool enableValidation 
 
 //----------------------------------------------------------------//
 void MOAIGfxMgrVK::FinishFrame () {
+	
+	VkCommandBuffer& cmdBuffer = this->GetCommandBuffer ();
+	VkFence& fence = this->GetFence ();
+	
+	// Use a fence to wait until the command buffer has finished execution before using it again
+	VK_CHECK_RESULT ( vkWaitForFences ( this->mLogicalDevice, 1, &fence, VK_TRUE, UINT64_MAX ));
+	VK_CHECK_RESULT ( vkResetFences ( this->mLogicalDevice, 1, &fence ));
 
-	this->FlushToGPU (); // TODO: need to do this here?
+	// Pipeline stage at which the queue submission will wait (via pWaitSemaphores)
+	VkPipelineStageFlags waitStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+	// The submit info structure specifices a command buffer queue submission batch
+	VkSubmitInfo submitInfo = MOAIGfxStructVK::submitInfo (
+		&cmdBuffer, 						// Command buffers to submit in this batch
+		1,									// One command buffer
+		&this->mRenderCompleteSemaphore,	// Semaphore(s) to be signaled when command buffers have completed
+		1,									// One signal semaphore
+		&this->mPresentCompleteSemaphore,	// Semaphore(s) to wait upon before the submitted command buffer starts executing
+		1,									// One wait semaphore
+		&waitStageMask						// Pointer to the list of pipeline stages that the semaphore waits will occur at
+	);
+
+	MOAIQueueVK& graphicsQueue = this->mLogicalDevice.GetGraphicsQueue ();
+
+	VK_CHECK_RESULT ( graphicsQueue.Submit ( &submitInfo, 1, fence ));
+
+    VkResult result = this->mSwapChain.QueuePresent ( graphicsQueue, this->mCurrentBufferIndex, this->mRenderCompleteSemaphore );
+    if (!((result == VK_SUCCESS) || (result == VK_SUBOPTIMAL_KHR))) {
+        if (result == VK_ERROR_OUT_OF_DATE_KHR) {
+            // Swap chain is no longer compatible with the surface and needs to be recreated
+//            windowResize();
+            return;
+        } else {
+            VK_CHECK_RESULT ( result );
+        }
+    }
+    VK_CHECK_RESULT ( graphicsQueue.WaitIdle ());
+	
 //	this->UnbindAll ();
 	this->Reset ();
 }
@@ -207,8 +255,9 @@ void MOAIGfxMgrVK::InitCommandBuffers () {
 	ZLSize imageCount = this->mSwapChain.mImages.Size ();
 
 	this->mDrawCommandBuffers.Init ( this->mSwapChain.mImages.Size ());
+	
     VkCommandBufferAllocateInfo cmdBufAllocateInfo = MOAIGfxStructVK::commandBufferAllocateInfo (
-    	this->mLogicalDevice.mGraphics.mPool,
+    	this->mLogicalDevice.GetGraphicsQueue ().mPool,
     	VK_COMMAND_BUFFER_LEVEL_PRIMARY,
     	( u32 )imageCount
 	);
@@ -356,8 +405,8 @@ void MOAIGfxMgrVK::InitSemaphores () {
 
     VkSemaphoreCreateInfo semaphoreCreateInfo = MOAIGfxStructVK::semaphoreCreateInfo ();
 
-	this->mPresentComplete	= this->mLogicalDevice.CreateSemaphore ( semaphoreCreateInfo ); // Create a semaphore used to synchronize image presentation
-	this->mRenderComplete	= this->mLogicalDevice.CreateSemaphore ( semaphoreCreateInfo ); // Create a semaphore used to synchronize command submission
+	this->mPresentCompleteSemaphore	= this->mLogicalDevice.CreateSemaphore ( semaphoreCreateInfo ); // Create a semaphore used to synchronize image presentation
+	this->mRenderCompleteSemaphore	= this->mLogicalDevice.CreateSemaphore ( semaphoreCreateInfo ); // Create a semaphore used to synchronize command submission
 }
 
 ////----------------------------------------------------------------//
@@ -401,7 +450,8 @@ void MOAIGfxMgrVK::InitSemaphores () {
 
 //----------------------------------------------------------------//
 MOAIGfxMgrVK::MOAIGfxMgrVK () :
-	mHostCreateSurfaceFunc ( NULL, NULL ) {
+	mHostCreateSurfaceFunc ( NULL, NULL ),
+	mCurrentBufferIndex ( ZLIndexOp::ZERO ) {
 	
 	RTTI_BEGIN
 		RTTI_SINGLE ( MOAIGfxMgr )
@@ -529,6 +579,12 @@ MOAIVertexBuffer* MOAIGfxMgrVK::MOAIGfxMgr_CreateVertexBuffer () const {
 }
 
 //----------------------------------------------------------------//
+MOAIVertexFormat* MOAIGfxMgrVK::MOAIGfxMgr_CreateVertexFormat () const {
+
+	return new MOAIVertexFormatVK ();
+}
+
+//----------------------------------------------------------------//
 MOAIShader* MOAIGfxMgrVK::MOAIGfxMgr_GetShaderPreset ( MOAIShaderPresetEnum preset ) const {
 
 	return MOAIShaderMgrVK::Get ().GetShader ( preset );
@@ -539,12 +595,6 @@ size_t MOAIGfxMgrVK::MOAIGfxMgr_GetTextureMemoryUsage () const {
 
 //	return this->mTextureMemoryUsage;
 	return 0;
-}
-
-//----------------------------------------------------------------//
-MOAIVertexFormat* MOAIGfxMgrVK::MOAIGfxMgr_GetVertexFormatPreset ( MOAIVertexFormatPresetEnum preset ) const {
-
-	return MOAIVertexFormatMgrVK::Get ().GetFormat ( preset );
 }
 
 //----------------------------------------------------------------//

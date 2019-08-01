@@ -29,6 +29,5 @@
 #include <moai-gfx-gl/MOAIVertexArrayGL.h>
 #include <moai-gfx-gl/MOAIVertexBufferGL.h>
 #include <moai-gfx-gl/MOAIVertexFormatGL.h>
-#include <moai-gfx-gl/MOAIVertexFormatMgrGL.h>
 
 #endif

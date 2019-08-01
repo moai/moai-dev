@@ -29,8 +29,12 @@ class MOAIGfxUtilVK {
 public:
 
 	//----------------------------------------------------------------//
-	static VkFormat			FindDepthFormat				( VkPhysicalDevice physicalDevice, VkFormatFeatureFlags optimalTilingFeatures, VkFormatFeatureFlags linearTilingFeatures, VkFormatFeatureFlags bufferFeatures );
-	static cc8*				GetErrorString				( VkResult errorCode );
+	static VkFormat				FindDepthFormat				( VkPhysicalDevice physicalDevice, VkFormatFeatureFlags optimalTilingFeatures, VkFormatFeatureFlags linearTilingFeatures, VkFormatFeatureFlags bufferFeatures );
+	static cc8*					GetErrorString				( VkResult errorCode );
+	static uint32_t				GetMemoryTypeIndex			( uint32_t typeBits, VkPhysicalDeviceMemoryProperties memoryProperties, VkMemoryPropertyFlags properties, VkBool32 *memTypeFound = nullptr );
+//	static VkShaderModule		LoadShaderSPIRV				( cc8* fileName, VkDevice device );
+	static VkShaderModule		LoadShaderSPIRV				( const void* shaderCode, size_t shaderSize, VkDevice device );
+
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >

@@ -10,11 +10,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-u32 MOAILogicalDeviceVK::AcquireNextImageKHR ( VkSwapchainKHR swapchain, uint64_t timeout, VkSemaphore semaphore, VkFence fence ) {
+VkResult MOAILogicalDeviceVK::AcquireNextImageKHR ( VkSwapchainKHR swapchain, uint64_t timeout, VkSemaphore semaphore, VkFence fence, ZLIndex& index ) {
 
-	u32 index;
-	VK_CHECK_RESULT ( this->mAcquireNextImageKHR ( this->mDevice, swapchain, timeout, semaphore, fence, &index ));
-	return index;
+	u32 index32 = 0;
+	VkResult result = this->mAcquireNextImageKHR ( this->mDevice, swapchain, timeout, semaphore, fence, &index32 );
+	index = ZLIndexCast ( index );
+	return result;
 }
 
 //----------------------------------------------------------------//
@@ -105,6 +106,7 @@ void MOAILogicalDeviceVK::GetSwapchainImagesKHR ( VkSwapchainKHR swapchain, uint
 void MOAILogicalDeviceVK::Init ( MOAIPhysicalDeviceVK& physicalDevice, VkQueueFlags requestedQueueTypes, bool requestPresent ) {
 
 	assert ( physicalDevice );
+	this->mPhysicalDevice = &physicalDevice;
 
     // Desired queues need to be requested upon logical device creation
     // Due to differing queue family configurations of Vulkan implementations this can be a bit tricky, especially if the application
@@ -146,42 +148,38 @@ void MOAILogicalDeviceVK::Init ( MOAIPhysicalDeviceVK& physicalDevice, VkQueueFl
 	this->mQueuePresentKHR			= VK_GET_DEVICE_PROC_ADDR ( this->mDevice, vkQueuePresentKHR );
 	
 	if ( requestedQueueTypes & VK_QUEUE_COMPUTE_BIT ) {
-		this->InitQueueAndPool ( this->mCompute, queueSet.mComputeQueueIndex );
+		this->InitQueue ( this->mQueues [ COMPUTE_QUEUE ], queueSet.mComputeQueueIndex );
     }
 	
 	if ( requestedQueueTypes & VK_QUEUE_GRAPHICS_BIT ) {
-		this->InitQueueAndPool ( this->mGraphics, queueSet.mGraphicsQueueIndex );
+		this->InitQueue ( this->mQueues [ GRAPHICS_QUEUE ], queueSet.mGraphicsQueueIndex );
     }
 	
     if ( requestPresent ) {
-		this->InitQueueAndPool ( this->mPresent, queueSet.mPresentQueueIndex );
+		this->InitQueue ( this->mQueues [ PRESENT_QUEUE ], queueSet.mPresentQueueIndex );
     }
 	
 	if ( requestedQueueTypes & VK_QUEUE_TRANSFER_BIT ) {
-		this->InitQueueAndPool ( this->mTransfer, queueSet.mTransferQueueIndex );
+		this->InitQueue ( this->mQueues [ TRANSFER_QUEUE ], queueSet.mTransferQueueIndex );
     }
 }
 
 //----------------------------------------------------------------//
-void MOAILogicalDeviceVK::InitQueueAndPool ( MOAIGfxQueueAndPoolVK& queueAndPool, u32 index ) {
+void MOAILogicalDeviceVK::InitQueue ( MOAIQueueVK& queue, u32 index ) {
 
-	queueAndPool.mIndex = index;
-	vkGetDeviceQueue ( this->mDevice, index, 0, &queueAndPool.mQueue );
+	queue.mQueuePresentKHR = this->mQueuePresentKHR;
+	queue.mIndex = index;
+	vkGetDeviceQueue ( this->mDevice, index, 0, &queue.mQueue );
 	
 	if ( !this->mCommandPools.contains ( index )) {
 		VkCommandPoolCreateInfo commandPoolCreateInfo = MOAIGfxStructVK::commandPoolCreateInfo ( index, VK_COMMAND_POOL_CREATE_RESET_COMMAND_BUFFER_BIT );
-		VK_CHECK_RESULT ( vkCreateCommandPool ( this->mDevice, &commandPoolCreateInfo, NULL, &this->mCommandPools [ index ] ));
+		VK_CHECK_RESULT ( vkCreateCommandPool ( this->mDevice, &commandPoolCreateInfo, NULL, &this->mCommandPools [ index ]));
 	}
-	queueAndPool.mPool = this->mCommandPools [ index ];
+	queue.mPool = this->mCommandPools [ index ];
 }
 
 //----------------------------------------------------------------//
 MOAILogicalDeviceVK::MOAILogicalDeviceVK () :
+	mPhysicalDevice ( NULL ),
 	mDevice ( VK_NULL_HANDLE ) {
-}
-
-//----------------------------------------------------------------//
-void MOAILogicalDeviceVK::QueuePresentKHR ( VkQueue queue, const VkPresentInfoKHR& presentInfo ) {
-
-	VK_CHECK_RESULT ( this->mQueuePresentKHR ( queue, &presentInfo ));
 }

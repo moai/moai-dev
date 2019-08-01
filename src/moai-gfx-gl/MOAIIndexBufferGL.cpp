@@ -6,7 +6,6 @@
 #include <moai-gfx-gl/MOAIGfxMgrGL.h>
 #include <moai-gfx-gl/MOAIIndexBufferGL.h>
 #include <moai-gfx-gl/MOAIVertexFormatGL.h>
-#include <moai-gfx-gl/MOAIVertexFormatMgrGL.h>
 
 //================================================================//
 // MOAIIndexBufferGL

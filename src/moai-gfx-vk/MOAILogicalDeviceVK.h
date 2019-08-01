@@ -7,31 +7,8 @@
 #include <vector>
 #include <moai-gfx-vk/MOAIGfxInstanceVK.h>
 #include <moai-gfx-vk/MOAIPhysicalDeviceVK.h>
+#include <moai-gfx-vk/MOAIQueueVK.h>
 #include <moai-gfx-vk/MOAISurfaceVK.h>
-
-//================================================================//
-// MOAIGfxQueueAndPoolVK
-//================================================================//
-class MOAIGfxQueueAndPoolVK {
-public:
-
-	u32				mIndex;
-	VkCommandPool	mPool;
-	VkQueue			mQueue;
-
-	//----------------------------------------------------------------//
-	operator bool () const {
-	
-		return (( this->mPool != VK_NULL_HANDLE ) && ( this->mQueue != VK_NULL_HANDLE ));
-	}
-	
-	//----------------------------------------------------------------//
-	MOAIGfxQueueAndPoolVK () :
-		mIndex (( u32 )-1 ),
-		mPool ( VK_NULL_HANDLE ),
-		mQueue ( VK_NULL_HANDLE ) {
-	}
-};
 
 //================================================================//
 // MOAILogicalDeviceVK
@@ -39,29 +16,42 @@ public:
 class MOAILogicalDeviceVK {
 private:
 
+	enum QueueID {
+		COMPUTE_QUEUE,
+		GRAPHICS_QUEUE,
+		PRESENT_QUEUE,
+		TRANSFER_QUEUE,
+		TOTAL_QUEUES,
+	};
+
 	PFN_vkAcquireNextImageKHR		mAcquireNextImageKHR;
 	PFN_vkCreateSwapchainKHR		mCreateSwapchainKHR;
 	PFN_vkDestroySwapchainKHR		mDestroySwapchainKHR;
 	PFN_vkGetSwapchainImagesKHR		mGetSwapchainImagesKHR;
 	PFN_vkQueuePresentKHR			mQueuePresentKHR;
 
+	MOAIPhysicalDeviceVK*			mPhysicalDevice;
+
+	STLMap < u32, VkCommandPool >	mCommandPools;
+
+	MOAIQueueVK						mQueues [ TOTAL_QUEUES ];
+
+	VkDevice						mDevice;
+
 	//----------------------------------------------------------------//
-	void			InitQueueAndPool				( MOAIGfxQueueAndPoolVK& queueAndPool, u32 index );
+	void					InitQueue						( MOAIQueueVK& queueAndPool, u32 index );
 
 public:
-
-	VkDevice			mDevice;
 	
-	MOAIGfxQueueAndPoolVK	mGraphics;
-	MOAIGfxQueueAndPoolVK	mCompute;
-	MOAIGfxQueueAndPoolVK	mPresent;
-	MOAIGfxQueueAndPoolVK	mTransfer;
+	GET ( MOAIQueueVK&, ComputeQueue, this->mQueues [ COMPUTE_QUEUE ]);
+	GET ( MOAIQueueVK&, GraphicsQueue, this->mQueues [ GRAPHICS_QUEUE ]);
+	GET ( MOAIQueueVK&, PresentQueue, this->mQueues [ PRESENT_QUEUE ]);
+	GET ( MOAIQueueVK&, TransferQueue, this->mQueues [ TRANSFER_QUEUE ]);
 	
-	STLMap < u32, VkCommandPool > mCommandPools;
+	GET ( MOAIPhysicalDeviceVK*, PhysicalDevice, this->mPhysicalDevice );
 	
 	//----------------------------------------------------------------//
 	operator bool () const {
-	
 		return ( this->mDevice != VK_NULL_HANDLE );
 	}
 
@@ -71,7 +61,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	u32						AcquireNextImageKHR				( VkSwapchainKHR swapchain, uint64_t timeout, VkSemaphore semaphore, VkFence fence );
+	VkResult				AcquireNextImageKHR				( VkSwapchainKHR swapchain, uint64_t timeout, VkSemaphore semaphore, VkFence fence, ZLIndex& index );
 	void					AllocateCommandBuffers			( const VkCommandBufferAllocateInfo& allocateInfo, VkCommandBuffer* commandBuffers );
 	VkDeviceMemory 			AllocateMemory					( const VkMemoryAllocateInfo& allocateInfo, const VkAllocationCallbacks* pAllocator = NULL );
 	void					BindImageMemory					( VkImage image, VkDeviceMemory memory, VkDeviceSize memoryOffset = 0 );
@@ -86,7 +76,6 @@ public:
 	void					GetSwapchainImagesKHR			( VkSwapchainKHR swapchain, uint32_t& swapchainImageCount, VkImage* images = NULL );
 	void					Init							( MOAIPhysicalDeviceVK& physicalDevice, VkQueueFlags requestedQueueTypes = VK_QUEUE_GRAPHICS_BIT, bool requestPresent = true );
 							MOAILogicalDeviceVK				();
-	void					QueuePresentKHR					( VkQueue queue, const VkPresentInfoKHR& presentInfo );
 };
 
 #endif

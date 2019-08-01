@@ -53,11 +53,8 @@ protected:
     bool                                mEnableValidation;
     bool                                mUseVsync;
 
-    // Synchronization semaphores
-    struct {
-        VkSemaphore     presentComplete;    // Swap chain image presentation
-        VkSemaphore     renderComplete;     // Command buffer submission and execution
-    } semaphores;
+	VkSemaphore							mPresentCompleteSemaphore;
+	VkSemaphore							mRenderCompleteSemaphore;
 	
     std::vector<VkFence>                mWaitFences;
     
@@ -75,9 +72,6 @@ protected:
     std::vector<VkCommandBuffer>        mDrawCmdBuffers; // Command buffers used for rendering
     VkRenderPass                        mRenderPass; // Global render pass for frame buffer writes
     std::vector<VkFramebuffer>          mFrameBuffers; // List of available frame buffers (same as number of swap chain images)
-    uint32_t                            mCurrentBuffer = 0; // Active frame buffer index
-    VkDescriptorPool                    mDescriptorPool = VK_NULL_HANDLE; // Descriptor set pool
-    std::vector<VkShaderModule>         mShaderModules; // List of shader modules created (stored for cleanup)
     VkPipelineCache                     mPipelineCache; // Pipeline cache object
     VulkanSwapChain                     mSwapChain; // Wraps the swap chain to present images (framebuffers) to the windowing system
 	VkPhysicalDeviceFeatures            mEnabledFeatures; // Set of physical device features to be enabled for this example (must be set in the derived constructor). By default no phyiscal device features are enabled
@@ -114,14 +108,13 @@ public:
     void                                createSynchronizationPrimitives     	();
     void                                destroyCommandBuffers               	();
     void                                flushCommandBuffer                  	( VkCommandBuffer commandBuffer, VkQueue queue, bool free );
-    VkPipelineShaderStageCreateInfo     loadShader                          	( std::string fileName, VkShaderStageFlagBits stage ); // Load a SPIR-V shader
-    void                                prepareFrame                        	();
+    uint32_t                            prepareFrame                        	();
     void                                renderFrame                         	(); // Render one frame of a render loop on platforms that sync rendering
     void                                renderLoop                          	(); // Start the main render loop
 	void                        		setupDepthStencil                   	(); // Setup default depth and stencil views
 	void                        		setupFrameBuffer                    	();
 	void                        		setupRenderPass                     	();
-    void                                submitFrame                         	(); // Submit the frames' workload
+    void                                submitFrame                         	( uint32_t currentBuffer ); // Submit the frames' workload
                                         VulkanAbstractExample                   ( VulkanHost& host, std::string name, bool enableValidation, bool useVsync, uint32_t apiVersion );
     virtual                             ~VulkanAbstractExample                  ();
 };

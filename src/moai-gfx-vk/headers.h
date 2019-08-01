@@ -19,15 +19,16 @@
 #include <moai-gfx-vk/MOAIGfxStateGPUCacheFrameVK.h>
 #include <moai-gfx-vk/MOAIImageTextureVK.h>
 #include <moai-gfx-vk/MOAIIndexBufferVK.h>
+#include <moai-gfx-vk/MOAIOneTriVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAIShaderMgrVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
 #include <moai-gfx-vk/MOAIShaderUniformVK.h>
+#include <moai-gfx-vk/MOAISwapChainVK.h>
 #include <moai-gfx-vk/MOAITexture2DVK.h>
 #include <moai-gfx-vk/MOAITextureVK.h>
 #include <moai-gfx-vk/MOAIVertexArrayVK.h>
 #include <moai-gfx-vk/MOAIVertexBufferVK.h>
 #include <moai-gfx-vk/MOAIVertexFormatVK.h>
-#include <moai-gfx-vk/MOAIVertexFormatMgrVK.h>
 
 #endif

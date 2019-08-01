@@ -6,6 +6,8 @@
 
 #include <moai-gfx-vk/MOAIGfxMgrVKComponents.h>
 
+class MOAIOneTriVK;
+
 //================================================================//
 // MOAIGfxMgrVK_RenderTreeVK
 //================================================================//
@@ -14,6 +16,11 @@ class MOAIGfxMgrVK_RenderTreeVK :
 	public virtual MOAIGfxMgrVKComponents,
 	public virtual MOAIGfxMgr_RenderTree {
 private:
+
+	ZLStrongPtr < MOAIOneTriVK >	mOneTri;
+
+	//----------------------------------------------------------------//
+	MOAIOneTriVK&	AffirmOneTri					();
 
 	//----------------------------------------------------------------//
 	void			MOAIGfxMgr_RenderTree_Render	();

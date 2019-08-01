@@ -129,6 +129,7 @@ public:
 
 	VkPipelineLayout		mPipelineLayout;
 	VkPipeline				mPipeline;
+	VkDescriptorPool		mDescriptorPool;
 	VkDescriptorSetLayout	mDescriptorSetLayout;
 	VkDescriptorSet			mDescriptorSet;
 

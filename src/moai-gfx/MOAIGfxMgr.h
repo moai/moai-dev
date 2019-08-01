@@ -33,6 +33,10 @@ class MOAIGfxMgr :
 protected:
 
 	//----------------------------------------------------------------//
+	void						OnGlobalsFinalize					();
+	void						OnGlobalsInitialize					();
+
+	//----------------------------------------------------------------//
 	virtual MOAIShader*			MOAIGfxMgr_AffirmShader				( MOAILuaState& state, int idx ) const = 0;
 	virtual MOAITexture*		MOAIGfxMgr_AffirmTexture			( MOAILuaState& state, int idx ) const = 0;
 	virtual MOAIImageTexture*	MOAIGfxMgr_CreateImageTexture		() const = 0;
@@ -40,9 +44,9 @@ protected:
 	virtual MOAITexture2D*		MOAIGfxMgr_CreateTexture2D			() const = 0;
 	virtual MOAIVertexArray*	MOAIGfxMgr_CreateVertexArray		() const = 0;
 	virtual MOAIVertexBuffer*	MOAIGfxMgr_CreateVertexBuffer		() const = 0;
+	virtual MOAIVertexFormat*	MOAIGfxMgr_CreateVertexFormat		() const = 0;
 	virtual MOAIShader*			MOAIGfxMgr_GetShaderPreset			( MOAIShaderPresetEnum preset ) const = 0;
 	virtual size_t				MOAIGfxMgr_GetTextureMemoryUsage	() const = 0;
-	virtual MOAIVertexFormat*	MOAIGfxMgr_GetVertexFormatPreset	( MOAIVertexFormatPresetEnum preset ) const = 0;
 	virtual void				MOAIGfxMgr_PopState					() = 0;
 	virtual void				MOAIGfxMgr_PushState				() = 0;
 
@@ -70,6 +74,7 @@ public:
 	MOAITexture2D*			CreateTexture2D				() const;
 	MOAIVertexArray*		CreateVertexArray			() const;
 	MOAIVertexBuffer*		CreateVertexBuffer			() const;
+	MOAIVertexFormat*		CreateVertexFormat			() const;
 	ZLMatrix4x4				GetNormToWndMtx				();
 	ZLMatrix4x4				GetNormToWndMtx				( const ZLRect& wndRect );
 	MOAIShader*				GetShaderPreset				( MOAIShaderPresetEnum preset ) const;

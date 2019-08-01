@@ -12,7 +12,7 @@
 #include <moai-gfx-gl/MOAITexture2DGL.h>
 #include <moai-gfx-gl/MOAIVertexArrayGL.h>
 #include <moai-gfx-gl/MOAIVertexBufferGL.h>
-#include <moai-gfx-gl/MOAIVertexFormatMgrGL.h>
+#include <moai-gfx-gl/MOAIVertexFormatGL.h>
 
 //================================================================//
 // lua
@@ -231,16 +231,6 @@ MOAIGfxMgrGL::~MOAIGfxMgrGL () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrGL::OnGlobalsFinalize () {
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrGL::OnGlobalsInitialize () {
-
-	this->AffirmBuffers ();
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxMgrGL::ReportTextureAlloc ( cc8* name, size_t size ) {
 	UNUSED ( name );
 	UNUSED ( size );
@@ -335,6 +325,12 @@ MOAIVertexBuffer* MOAIGfxMgrGL::MOAIGfxMgr_CreateVertexBuffer () const {
 }
 
 //----------------------------------------------------------------//
+MOAIVertexFormat* MOAIGfxMgrGL::MOAIGfxMgr_CreateVertexFormat () const {
+
+	return new MOAIVertexFormatGL ();
+}
+
+//----------------------------------------------------------------//
 MOAIShader* MOAIGfxMgrGL::MOAIGfxMgr_GetShaderPreset ( MOAIShaderPresetEnum preset ) const {
 
 	return MOAIShaderMgrGL::Get ().GetShader ( preset );
@@ -344,12 +340,6 @@ MOAIShader* MOAIGfxMgrGL::MOAIGfxMgr_GetShaderPreset ( MOAIShaderPresetEnum pres
 size_t MOAIGfxMgrGL::MOAIGfxMgr_GetTextureMemoryUsage () const {
 
 	return this->mTextureMemoryUsage;
-}
-
-//----------------------------------------------------------------//
-MOAIVertexFormat* MOAIGfxMgrGL::MOAIGfxMgr_GetVertexFormatPreset ( MOAIVertexFormatPresetEnum preset ) const {
-
-	return MOAIVertexFormatMgrGL::Get ().GetFormat ( preset );
 }
 
 //----------------------------------------------------------------//

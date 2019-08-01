@@ -1,12 +1,5 @@
-/*
-* Class wrapping access to the swap chain
-* 
-* A swap chain is a collection of framebuffers used for rendering and presentation to the windowing system
-*
-* Copyright (C) 2016-2017 by Sascha Willems - www.saschawillems.de
-*
-* This code is licensed under the MIT license (MIT) (http://opensource.org/licenses/MIT)
-*/
+// Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
+// http://getmoai.com
 
 #ifndef MOAISWAPCHAINVK_H
 #define MOAISWAPCHAINVK_H
@@ -29,6 +22,15 @@ typedef struct _SwapChainBuffers {
 } SwapChainBuffer;
 
 //================================================================//
+// MOAISwapChainBuffersVK
+//================================================================//
+class MOAISwapChainBuffersVK {
+public:
+	VkImage			mImage;
+	VkImageView		mView;
+};
+
+//================================================================//
 // MOAISwapChainVK
 //================================================================//
 class MOAISwapChainVK {
@@ -42,12 +44,15 @@ public:
 	VkPresentModeKHR					mPresentMode;
 	VkSurfaceFormatKHR					mSurfaceFormat;
 
+	GET ( u32, Height, this->mExtent.height );
+	GET ( u32, Width, this->mExtent.width );
+
 	//----------------------------------------------------------------//
-	u32				AcquireNextImage		( MOAILogicalDeviceVK& logicalDevice, VkSemaphore presentCompleteSemaphore );
+	VkResult		AcquireNextImage		( MOAILogicalDeviceVK& logicalDevice, VkSemaphore presentCompleteSemaphore, ZLIndex& index );
 	void			Cleanup					( MOAILogicalDeviceVK& logicalDevice );
 	void			Init					( MOAIGfxInstanceVK& instance, MOAIPhysicalDeviceVK& physicalDevice, MOAILogicalDeviceVK& logicalDevice, MOAISurfaceVK& surface, u32 width, u32 height );
 					MOAISwapChainVK			();
-	void			QueuePresent			( MOAILogicalDeviceVK& logicalDevice, VkQueue queue, uint32_t imageIndex, VkSemaphore waitSemaphore = VK_NULL_HANDLE );
+	VkResult		QueuePresent			( MOAIQueueVK& queue, uint32_t imageIndex, VkSemaphore waitSemaphore = VK_NULL_HANDLE );
 };
 
 #endif

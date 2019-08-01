@@ -6,7 +6,6 @@
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIVertexBufferVK.h>
 #include <moai-gfx-vk/MOAIVertexFormatVK.h>
-#include <moai-gfx-vk/MOAIVertexFormatMgrVK.h>
 
 //================================================================//
 // MOAIVertexBufferVK

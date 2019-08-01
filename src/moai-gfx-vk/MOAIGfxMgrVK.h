@@ -71,14 +71,16 @@ protected:
 	ZLLeanArray < VkFramebuffer >		mFrameBuffers;
 	ZLLeanArray < VkFence >				mWaitFences;
 
-	VkSemaphore     					mPresentComplete;
-	VkSemaphore     					mRenderComplete;
+	VkSemaphore     					mPresentCompleteSemaphore;
+	VkSemaphore     					mRenderCompleteSemaphore;
+
+	ZLIndex								mCurrentBufferIndex; // updated in BeginFrame ()
 
 //    uint32_t                            mCurrentBuffer = 0; // Active frame buffer index
 //    VkDescriptorPool                    mDescriptorPool = VK_NULL_HANDLE; // Descriptor set pool
 //    std::vector<VkShaderModule>         mShaderModules; // List of shader modules created (stored for cleanup)
 //    VkPipelineCache                     mPipelineCache; // Pipeline cache object
-		
+
 //	bool									mHasContext;
 //
 //	bool									mIsFramebufferSupported;
@@ -117,9 +119,9 @@ protected:
 	MOAITexture2D*					MOAIGfxMgr_CreateTexture2D					() const;
 	MOAIVertexArray*				MOAIGfxMgr_CreateVertexArray				() const;
 	MOAIVertexBuffer*				MOAIGfxMgr_CreateVertexBuffer				() const;
+	MOAIVertexFormat*				MOAIGfxMgr_CreateVertexFormat				() const;
 	MOAIShader*						MOAIGfxMgr_GetShaderPreset					( MOAIShaderPresetEnum preset ) const;
 	size_t							MOAIGfxMgr_GetTextureMemoryUsage			() const;
-	MOAIVertexFormat*				MOAIGfxMgr_GetVertexFormatPreset			( MOAIVertexFormatPresetEnum preset ) const;
 	void							MOAIGfxMgr_PopState							();
 	void							MOAIGfxMgr_PushState						();
 	MOAIGfxMgrVK&					MOAIGfxMgrVKComponents_GetGfxMgrVK			();
@@ -142,10 +144,19 @@ public:
 //
 //	GET ( u32, RenderCounter, mRenderCounter );
 
+	GET ( VkCommandBuffer&, CommandBuffer, this->mDrawCommandBuffers [ this->mCurrentBufferIndex ]);
+	GET ( VkFence&, Fence, this->mWaitFences [ this->mCurrentBufferIndex ]);
+	GET ( VkFramebuffer&, FrameBuffer, this->mFrameBuffers [ this->mCurrentBufferIndex ]);
+	GET ( MOAILogicalDeviceVK&, LogicalDevice, this->mLogicalDevice );
+	GET ( MOAIPhysicalDeviceVK&, PhysicalDevice, this->mPhysicalDevice );
+	GET ( VkRenderPass&, RenderPass, this->mRenderPass );
+	GET ( MOAISwapChainVK&, SwapChain, this->mSwapChain );
+
 	GET_SET ( HostCreateSurfaceFunc, HostCreateSurfaceFunc, mHostCreateSurfaceFunc );
 	GET_SET ( HostGetInstanceExtensionsFunc, HostGetInstanceExtensionsFunc, mHostGetInstanceExtensionsFunc );
 
 	//----------------------------------------------------------------//
+	void					BeginFrame					();
 //	void					Clear						();
 //	void					ClearErrors					();
 	void					DetectContext				( u32 width, u32 height, bool enableValidation );

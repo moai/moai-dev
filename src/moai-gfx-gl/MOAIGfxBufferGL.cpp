@@ -172,7 +172,7 @@ bool MOAIGfxBufferGL::MOAIGfxResourceGL_OnGPUUpdate () {
 	bool dirty = this->GetCursor () > 0;
 	
 	if ( dirty ) {
-		this->mCurrentVBO =  ZLIndexOp::AddAndWrap ( this->mCurrentVBO, 1, this->mVBOs.Size ());
+		this->mCurrentVBO = ZLIndexOp::AddAndWrap ( this->mCurrentVBO, 1, this->mVBOs.Size ());
 	}
 	
 	const ZLGfxHandle& vbo = this->mVBOs [ this->mCurrentVBO ];

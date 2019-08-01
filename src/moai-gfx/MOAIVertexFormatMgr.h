@@ -1,33 +1,20 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIVERTEXFORMATMGRGL_H
-#define	MOAIVERTEXFORMATMGRGL_H
+#ifndef	MOAIVERTEXFORMATMGR_H
+#define	MOAIVERTEXFORMATMGR_H
 
-#include <moai-gfx-gl/MOAIVertexFormatGL.h>
+#include <moai-gfx/MOAIVertexFormat.h>
 
 //================================================================//
-// MOAIVertexFormatMgrGL
+// MOAIVertexFormatMgr
 //================================================================//
-class MOAIVertexFormatMgrGL :
-	public ZLContextClass < MOAIVertexFormatMgrGL >,
+class MOAIVertexFormatMgr :
+	public ZLContextClass < MOAIVertexFormatMgr >,
 	public virtual MOAILuaObject {
-public:
-
-	enum Preset {
-		XYZC,
-		XYZWC,
-		XYZWUVC,
-		XYZWNNNC,
-		XYZWNNNUVC,
-		TOTAL_FORMATS,
-	};
-
-	static const u32 UNKNOWN_FORMAT = 0xffffffff;
-
 private:
 	
-	MOAIVertexFormatGL* mFormats [ TOTAL_FORMATS ];
+	MOAIVertexFormat* mFormats [ TOTAL_FORMATS ];
 	
 	//----------------------------------------------------------------//
 	static int			_getFormat			( lua_State* L );
@@ -67,14 +54,14 @@ public:
 		XYZWNNNUVC_COLOR,
 	};
 	
-	DECL_LUA_SINGLETON ( MOAIVertexFormatMgrGL )
+	DECL_LUA_SINGLETON ( MOAIVertexFormatMgr )
 	
 	//----------------------------------------------------------------//
-	MOAIVertexFormatGL*			GetFormat					( MOAIVertexFormatPresetEnum formatID );
-	MOAIVertexFormatGL* 		GetFormat 					( lua_State* L, int idx );
+	MOAIVertexFormat*			GetFormat					( MOAIVertexFormatPresetEnum formatID );
+	MOAIVertexFormat* 			GetFormat 					( lua_State* L, int idx );
 	u32							GetVertexSize				( MOAIVertexFormatPresetEnum formatID );
-								MOAIVertexFormatMgrGL		();
-								~MOAIVertexFormatMgrGL		();
+								MOAIVertexFormatMgr			();
+								~MOAIVertexFormatMgr		();
 };
 
 #endif

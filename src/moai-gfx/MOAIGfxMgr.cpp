@@ -6,6 +6,7 @@
 #include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIImageTexture.h>
 #include <moai-gfx/MOAITexture2D.h>
+#include <moai-gfx/MOAIVertexFormatMgr.h>
 
 #if AKU_WITH_SIM
 	#include <moai-gfx/host.h>
@@ -59,6 +60,12 @@ MOAIVertexBuffer* MOAIGfxMgr::CreateVertexBuffer () const {
 }
 
 //----------------------------------------------------------------//
+MOAIVertexFormat* MOAIGfxMgr::CreateVertexFormat () const {
+
+	return this->MOAIGfxMgr_CreateVertexFormat ();
+}
+
+//----------------------------------------------------------------//
 ZLMatrix4x4 MOAIGfxMgr::GetNormToWndMtx () {
 
 	return this->GetNormToWndMtx ( this->GetViewRect ());
@@ -96,7 +103,7 @@ size_t MOAIGfxMgr::GetTextureMemoryUsage () const {
 //----------------------------------------------------------------//
 MOAIVertexFormat* MOAIGfxMgr::GetVertexFormatPreset ( MOAIVertexFormatPresetEnum preset ) const {
 
-	return this->MOAIGfxMgr_GetVertexFormatPreset ( preset );
+	return MOAIVertexFormatMgr::Get ().GetFormat ( preset );
 }
 
 //----------------------------------------------------------------//
@@ -176,6 +183,16 @@ void MOAIGfxMgr::PopState () {
 //----------------------------------------------------------------//
 void MOAIGfxMgr::PushState () {
 	this->MOAIGfxMgr_PushState ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxMgr::OnGlobalsFinalize () {
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxMgr::OnGlobalsInitialize () {
+
+	this->AffirmBuffers ();
 }
 
 //================================================================//

@@ -223,23 +223,17 @@ void VulkanAbstractExample::flushCommandBuffer(VkCommandBuffer commandBuffer, Vk
 }
 
 //----------------------------------------------------------------//
-VkPipelineShaderStageCreateInfo VulkanAbstractExample::loadShader ( std::string fileName, VkShaderStageFlagBits stage ) {
-    VkShaderModule module = vks::tools::loadShaderSPIRV ( fileName.c_str (), mDevice );
-    assert ( module != VK_NULL_HANDLE );
-    VkPipelineShaderStageCreateInfo shaderStage = VkStruct::pipelineShaderStageCreateInfo ( stage, module, "main" );
-    mShaderModules.push_back ( module );
-    return shaderStage;
-}
+uint32_t VulkanAbstractExample::prepareFrame () {
 
-//----------------------------------------------------------------//
-void VulkanAbstractExample::prepareFrame () {
-    VkResult err = mSwapChain.acquireNextImage ( semaphores.presentComplete, &mCurrentBuffer );
+	uint32_t currentBuffer = 0;
+    VkResult err = this->mSwapChain.acquireNextImage ( this->mPresentCompleteSemaphore, &currentBuffer );
     if (( err == VK_ERROR_OUT_OF_DATE_KHR ) || ( err == VK_SUBOPTIMAL_KHR )) {
         windowResize ();
     }
     else {
         VK_CHECK_RESULT ( err );
     }
+    return currentBuffer;
 }
 
 //----------------------------------------------------------------//
@@ -379,19 +373,38 @@ void VulkanAbstractExample::setupRenderPass()
 }
 
 //----------------------------------------------------------------//
-void VulkanAbstractExample::submitFrame () {
+void VulkanAbstractExample::submitFrame ( uint32_t currentBuffer ) {
 
-    VkResult result = mSwapChain.queuePresent ( mQueue, mCurrentBuffer, semaphores.renderComplete );
+	// Use a fence to wait until the command buffer has finished execution before using it again
+	VK_CHECK_RESULT ( vkWaitForFences ( this->mDevice, 1, &mWaitFences [ currentBuffer ], VK_TRUE, UINT64_MAX ));
+	VK_CHECK_RESULT ( vkResetFences ( this->mDevice, 1, &mWaitFences [ currentBuffer ]));
+
+	// Pipeline stage at which the queue submission will wait (via pWaitSemaphores)
+	VkPipelineStageFlags waitStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
+	// The submit info structure specifices a command buffer queue submission batch
+	VkSubmitInfo submitInfo = VkStruct::submitInfo (
+		&mDrawCmdBuffers [ currentBuffer ],		// Command buffers(s) to execute in this batch (submission)
+		1,                                      // One command buffer
+		&mRenderCompleteSemaphore,             	// Semaphore(s) to be signaled when command buffers have completed
+		1,                                      // One signal semaphore
+		&mPresentCompleteSemaphore,            	// Semaphore(s) to wait upon before the submitted command buffer starts executing
+		1,                                      // One wait semaphore
+		&waitStageMask                          // Pointer to the list of pipeline stages that the semaphore waits will occur at
+	);
+
+	VK_CHECK_RESULT ( vkQueueSubmit ( mQueue, 1, &submitInfo, mWaitFences [ currentBuffer ]));
+
+    VkResult result = mSwapChain.queuePresent ( mQueue, currentBuffer, this->mRenderCompleteSemaphore );
     if (!((result == VK_SUCCESS) || (result == VK_SUBOPTIMAL_KHR))) {
         if (result == VK_ERROR_OUT_OF_DATE_KHR) {
             // Swap chain is no longer compatible with the surface and needs to be recreated
             windowResize();
             return;
         } else {
-            VK_CHECK_RESULT(result);
+            VK_CHECK_RESULT ( result );
         }
     }
-    VK_CHECK_RESULT(vkQueueWaitIdle(mQueue));
+    VK_CHECK_RESULT ( vkQueueWaitIdle ( this->mQueue ));
 }
 
 //----------------------------------------------------------------//
@@ -458,8 +471,8 @@ VulkanAbstractExample::VulkanAbstractExample ( VulkanHost& host, std::string nam
     // Create synchronization objects
     VkSemaphoreCreateInfo semaphoreCreateInfo = VkStruct::semaphoreCreateInfo();
     
-    VK_CHECK_RESULT ( vkCreateSemaphore ( mDevice, &semaphoreCreateInfo, nullptr, &semaphores.presentComplete )); // Create a semaphore used to synchronize image presentation
-    VK_CHECK_RESULT ( vkCreateSemaphore ( mDevice, &semaphoreCreateInfo, nullptr, &semaphores.renderComplete )); // Create a semaphore used to synchronize command submission
+    VK_CHECK_RESULT ( vkCreateSemaphore ( mDevice, &semaphoreCreateInfo, nullptr, &mPresentCompleteSemaphore )); // Create a semaphore used to synchronize image presentation
+    VK_CHECK_RESULT ( vkCreateSemaphore ( mDevice, &semaphoreCreateInfo, nullptr, &mRenderCompleteSemaphore )); // Create a semaphore used to synchronize command submission
 }
 
 //----------------------------------------------------------------//
@@ -469,19 +482,13 @@ VulkanAbstractExample::~VulkanAbstractExample () {
 
     // Clean up Vulkan resources
     mSwapChain.cleanup();
-    if (mDescriptorPool != VK_NULL_HANDLE)
-    {
-        vkDestroyDescriptorPool(mDevice, mDescriptorPool, nullptr);
-    }
+
     destroyCommandBuffers();
     vkDestroyRenderPass(mDevice, mRenderPass, nullptr);
     for (uint32_t i = 0; i < mFrameBuffers.size(); i++) {
         vkDestroyFramebuffer(mDevice, mFrameBuffers[i], nullptr);
     }
 
-    for (auto& shaderModule : mShaderModules) {
-        vkDestroyShaderModule(mDevice, shaderModule, nullptr);
-    }
     vkDestroyImageView(mDevice, mDepthStencil.mView, nullptr);
     vkDestroyImage(mDevice, mDepthStencil.mImage, nullptr);
     vkFreeMemory(mDevice, mDepthStencil.mMem, nullptr);
@@ -490,8 +497,8 @@ VulkanAbstractExample::~VulkanAbstractExample () {
 
     vkDestroyCommandPool(mDevice, mSwapChainQueueCommandPool, nullptr);
 
-    vkDestroySemaphore(mDevice, semaphores.presentComplete, nullptr);
-    vkDestroySemaphore(mDevice, semaphores.renderComplete, nullptr);
+    vkDestroySemaphore(mDevice, mPresentCompleteSemaphore, nullptr);
+    vkDestroySemaphore(mDevice, mRenderCompleteSemaphore, nullptr);
     
     for (auto& fence : mWaitFences) {
         vkDestroyFence(mDevice, fence, nullptr);

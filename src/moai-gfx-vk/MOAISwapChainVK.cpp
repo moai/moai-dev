@@ -10,11 +10,11 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-u32 MOAISwapChainVK::AcquireNextImage ( MOAILogicalDeviceVK& logicalDevice, VkSemaphore presentCompleteSemaphore ) {
+VkResult MOAISwapChainVK::AcquireNextImage ( MOAILogicalDeviceVK& logicalDevice, VkSemaphore presentCompleteSemaphore, ZLIndex& index ) {
 
 	// By setting timeout to UINT64_MAX we will always wait until the next image has been acquired or an actual error is thrown
 	// With that we don't have to handle VK_NOT_READY
-	return logicalDevice.AcquireNextImageKHR ( this->mSwapChain, UINT64_MAX, presentCompleteSemaphore, ( VkFence )NULL );
+	return logicalDevice.AcquireNextImageKHR ( this->mSwapChain, UINT64_MAX, presentCompleteSemaphore, ( VkFence )NULL, index );
 }
 
 //----------------------------------------------------------------//
@@ -47,12 +47,16 @@ void MOAISwapChainVK::Init ( MOAIGfxInstanceVK& instance, MOAIPhysicalDeviceVK& 
 	u32 queueFamilyIndexCount = 0;
 	uint32_t queueFamilyIndices [ 2 ];
 	
-	if ( logicalDevice.mGraphics && logicalDevice.mPresent ) {
-		if ( logicalDevice.mGraphics.mIndex != logicalDevice.mPresent.mIndex ) {
+	MOAIQueueVK graphicsQueue	= logicalDevice.GetGraphicsQueue ();
+	MOAIQueueVK presentQueue	= logicalDevice.GetPresentQueue ();
+	
+	if ( graphicsQueue && presentQueue ) {
+	
+		if ( graphicsQueue.mIndex != presentQueue.mIndex ) {
 			sharingMode = VK_SHARING_MODE_CONCURRENT;
 			queueFamilyIndexCount = 2;
-			queueFamilyIndices [ 0 ] = logicalDevice.mGraphics.mIndex;
-			queueFamilyIndices [ 1 ] = logicalDevice.mPresent.mIndex;
+			queueFamilyIndices [ 0 ] = graphicsQueue.mIndex;
+			queueFamilyIndices [ 1 ] = presentQueue.mIndex;
 		}
 	}
 
@@ -131,7 +135,8 @@ MOAISwapChainVK::MOAISwapChainVK () :
 }
 
 //----------------------------------------------------------------//
-void MOAISwapChainVK::QueuePresent ( MOAILogicalDeviceVK& logicalDevice, VkQueue queue, uint32_t imageIndex, VkSemaphore waitSemaphore ) {
+// TODO: move to MOAILogicalDeviceVK
+VkResult MOAISwapChainVK::QueuePresent ( MOAIQueueVK& queue, uint32_t imageIndex, VkSemaphore waitSemaphore ) {
 
 	VkPresentInfoKHR presentInfo = MOAIGfxStructVK::presentInfoKHR (
 		NULL,
@@ -142,10 +147,9 @@ void MOAISwapChainVK::QueuePresent ( MOAILogicalDeviceVK& logicalDevice, VkQueue
 		NULL
     );
 	
-	// Check if a wait semaphore has been specified to wait for before presenting the image
 	if ( waitSemaphore != VK_NULL_HANDLE ) {
 		presentInfo.pWaitSemaphores = &waitSemaphore;
 		presentInfo.waitSemaphoreCount = 1;
 	}
-	logicalDevice.QueuePresentKHR ( queue, presentInfo );
+	return queue.PresentKHR ( presentInfo );
 }
