@@ -20,16 +20,17 @@ private:
 	ZLStrongPtr < MOAIOneTriVK >	mOneTri;
 
 	//----------------------------------------------------------------//
-	MOAIOneTriVK&	AffirmOneTri					();
+	MOAIOneTriVK&		AffirmOneTri						();
+	void				DrawOneTri							( VkCommandBuffer& commandBuffer, u32 width, u32 height );
 
 	//----------------------------------------------------------------//
-	void			MOAIGfxMgr_RenderTree_Render	();
+	void				MOAIGfxMgr_RenderTree_Render		();
 
 public:
 
 	//----------------------------------------------------------------//
-					MOAIGfxMgrVK_RenderTreeVK		();
-					~MOAIGfxMgrVK_RenderTreeVK		();
+						MOAIGfxMgrVK_RenderTreeVK			();
+						~MOAIGfxMgrVK_RenderTreeVK			();
 	
 	//----------------------------------------------------------------//
 	// disambiguate

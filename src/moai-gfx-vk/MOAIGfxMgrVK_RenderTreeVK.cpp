@@ -13,12 +13,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIOneTriVK& MOAIGfxMgrVK_RenderTreeVK::AffirmOneTri () {
+void MOAIGfxMgrVK_RenderTreeVK::DrawOneTri ( VkCommandBuffer& commandBuffer, u32 width, u32 height ) {
 
 	if ( !this->mOneTri ) {
 		this->mOneTri = new MOAIOneTriVK ();
 	}
-	return *this->mOneTri;
+	this->mOneTri->Draw ( commandBuffer, width, height );
 }
 
 //----------------------------------------------------------------//
@@ -81,7 +81,7 @@ void MOAIGfxMgrVK_RenderTreeVK::MOAIGfxMgr_RenderTree_Render () {
 	VkRenderPassBeginInfo renderPassBeginInfo = MOAIGfxStructVK::renderPassBeginInfo ( renderPass, frameBuffer, MOAIGfxStructVK::rect2D ( width, height ), clearValues, 2 );
 	vkCmdBeginRenderPass ( commandBuffer, &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE );
 
-	this->AffirmOneTri ().Draw ( commandBuffer, width, height );
+	this->DrawOneTri ( commandBuffer, width, height );
 
 	vkCmdEndRenderPass ( commandBuffer );
 

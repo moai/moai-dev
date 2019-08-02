@@ -215,18 +215,7 @@ public:
     }
 
     //----------------------------------------------------------------//
-    static VkDescriptorPoolCreateInfo descriptorPoolCreateInfo ( const std::vector<VkDescriptorPoolSize>& poolSizes, uint32_t maxSets ) {
-        DECL_VK_STRUCT ( VkDescriptorPoolCreateInfo, descriptorPoolInfo );
-        descriptorPoolInfo.sType            = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
-        descriptorPoolInfo.pNext            = NULL;
-        descriptorPoolInfo.poolSizeCount    = static_cast<uint32_t>(poolSizes.size());
-        descriptorPoolInfo.pPoolSizes       = poolSizes.data();
-        descriptorPoolInfo.maxSets          = maxSets;
-        return descriptorPoolInfo;
-    }
-
-    //----------------------------------------------------------------//
-    static VkDescriptorPoolCreateInfo descriptorPoolCreateInfo ( uint32_t poolSizeCount, VkDescriptorPoolSize* pPoolSizes, uint32_t maxSets ) {
+    static VkDescriptorPoolCreateInfo descriptorPoolCreateInfo ( VkDescriptorPoolSize* pPoolSizes, uint32_t poolSizeCount, uint32_t maxSets ) {
         DECL_VK_STRUCT ( VkDescriptorPoolCreateInfo, descriptorPoolInfo );
         descriptorPoolInfo.sType            = VK_STRUCTURE_TYPE_DESCRIPTOR_POOL_CREATE_INFO;
         descriptorPoolInfo.pNext            = NULL;
@@ -245,7 +234,7 @@ public:
     }
 
     //----------------------------------------------------------------//
-    static VkDescriptorSetAllocateInfo descriptorSetAllocateInfo ( VkDescriptorPool descriptorPool, const VkDescriptorSetLayout* pSetLayouts, uint32_t descriptorSetCount ) {
+    static VkDescriptorSetAllocateInfo descriptorSetAllocateInfo ( VkDescriptorPool descriptorPool, const VkDescriptorSetLayout* pSetLayouts, uint32_t descriptorSetCount = 1 ) {
         DECL_VK_STRUCT ( VkDescriptorSetAllocateInfo, descriptorSetAllocateInfo );
         descriptorSetAllocateInfo.sType                 = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_ALLOCATE_INFO;
         descriptorSetAllocateInfo.pNext                 = NULL;
@@ -256,27 +245,24 @@ public:
     }
 
     //----------------------------------------------------------------//
-    static VkDescriptorSetLayoutBinding descriptorSetLayoutBinding ( VkDescriptorType type, VkShaderStageFlags stageFlags, uint32_t binding, uint32_t descriptorCount = 1 ) {
+    static VkDescriptorSetLayoutBinding descriptorSetLayoutBinding (
+    	uint32_t binding,
+    	VkDescriptorType type,
+    	VkShaderStageFlags stageFlags,
+    	uint32_t descriptorCount = 1,
+    	const VkSampler* pImmutableSamplers = NULL
+	) {
         DECL_VK_STRUCT ( VkDescriptorSetLayoutBinding, setLayoutBinding );
-        setLayoutBinding.descriptorType             = type;
-        setLayoutBinding.stageFlags                 = stageFlags;
         setLayoutBinding.binding                    = binding;
+        setLayoutBinding.descriptorType             = type;
         setLayoutBinding.descriptorCount            = descriptorCount;
+        setLayoutBinding.stageFlags                 = stageFlags;
+        setLayoutBinding.pImmutableSamplers			= pImmutableSamplers;
         return setLayoutBinding;
     }
 
     //----------------------------------------------------------------//
-    static VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo ( const std::vector<VkDescriptorSetLayoutBinding>& bindings ) {
-        DECL_VK_STRUCT ( VkDescriptorSetLayoutCreateInfo, descriptorSetLayoutCreateInfo );
-        descriptorSetLayoutCreateInfo.sType             = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
-        descriptorSetLayoutCreateInfo.pNext             = NULL;
-        descriptorSetLayoutCreateInfo.pBindings         = bindings.data ();
-        descriptorSetLayoutCreateInfo.bindingCount      = static_cast<uint32_t>(bindings.size());
-        return descriptorSetLayoutCreateInfo;
-    }
-
-    //----------------------------------------------------------------//
-    static VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo ( const VkDescriptorSetLayoutBinding* pBindings, uint32_t bindingCount ) {
+    static VkDescriptorSetLayoutCreateInfo descriptorSetLayoutCreateInfo ( const VkDescriptorSetLayoutBinding* pBindings, uint32_t bindingCount = 1 ) {
         DECL_VK_STRUCT ( VkDescriptorSetLayoutCreateInfo, descriptorSetLayoutCreateInfo );
         descriptorSetLayoutCreateInfo.sType             = VK_STRUCTURE_TYPE_DESCRIPTOR_SET_LAYOUT_CREATE_INFO;
         descriptorSetLayoutCreateInfo.pNext             = NULL;
@@ -1137,20 +1123,21 @@ public:
     }
 
     //----------------------------------------------------------------//
-    static VkWriteDescriptorSet writeDescriptorSet ( VkDescriptorSet dstSet, VkDescriptorType type, uint32_t binding, VkDescriptorBufferInfo* bufferInfo, uint32_t descriptorCount = 1 ) {
+    static VkWriteDescriptorSet writeDescriptorSet ( VkDescriptorSet dstSet, uint32_t binding, VkDescriptorType type, VkDescriptorBufferInfo* bufferInfo, uint32_t descriptorCount = 1 ) {
         DECL_VK_STRUCT ( VkWriteDescriptorSet, writeDescriptorSet );
         writeDescriptorSet.sType                    = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
         writeDescriptorSet.pNext                    = NULL;
         writeDescriptorSet.dstSet                   = dstSet;
         writeDescriptorSet.descriptorType           = type;
         writeDescriptorSet.dstBinding               = binding;
+        writeDescriptorSet.pImageInfo 				= NULL;
         writeDescriptorSet.pBufferInfo              = bufferInfo;
         writeDescriptorSet.descriptorCount          = descriptorCount;
         return writeDescriptorSet;
     }
 
     //----------------------------------------------------------------//
-    static VkWriteDescriptorSet writeDescriptorSet ( VkDescriptorSet dstSet, VkDescriptorType type, uint32_t binding, VkDescriptorImageInfo *imageInfo, uint32_t descriptorCount = 1 ) {
+    static VkWriteDescriptorSet writeDescriptorSet ( VkDescriptorSet dstSet, uint32_t binding, VkDescriptorType type, VkDescriptorImageInfo *imageInfo, uint32_t descriptorCount = 1 ) {
         DECL_VK_STRUCT ( VkWriteDescriptorSet, writeDescriptorSet );
         writeDescriptorSet.sType                = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
         writeDescriptorSet.pNext                = NULL;
@@ -1158,6 +1145,7 @@ public:
         writeDescriptorSet.descriptorType       = type;
         writeDescriptorSet.dstBinding           = binding;
         writeDescriptorSet.pImageInfo           = imageInfo;
+        writeDescriptorSet.pBufferInfo			= NULL;
         writeDescriptorSet.descriptorCount      = descriptorCount;
         return writeDescriptorSet;
     }
