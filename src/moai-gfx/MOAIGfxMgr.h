@@ -33,10 +33,6 @@ class MOAIGfxMgr :
 protected:
 
 	//----------------------------------------------------------------//
-	void						OnGlobalsFinalize					();
-	void						OnGlobalsInitialize					();
-
-	//----------------------------------------------------------------//
 	virtual MOAIShader*			MOAIGfxMgr_AffirmShader				( MOAILuaState& state, int idx ) const = 0;
 	virtual MOAITexture*		MOAIGfxMgr_AffirmTexture			( MOAILuaState& state, int idx ) const = 0;
 	virtual MOAIImageTexture*	MOAIGfxMgr_CreateImageTexture		() const = 0;
@@ -49,6 +45,7 @@ protected:
 	virtual size_t				MOAIGfxMgr_GetTextureMemoryUsage	() const = 0;
 	virtual void				MOAIGfxMgr_PopState					() = 0;
 	virtual void				MOAIGfxMgr_PushState				() = 0;
+	
 
 	//----------------------------------------------------------------//
 	MOAIGfxMgr_CPUCache&		MOAIGfxMgrComponents_GetCPUCache		();
@@ -58,6 +55,8 @@ protected:
 	MOAIGfxMgr_VertexCache&		MOAIGfxMgrComponents_GetVertexCache		();
 	void						MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
 	void						MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
+	void						ZLContextClass_Finalize					();
+	void						ZLContextClass_Initialize				();
 
 public:
 	

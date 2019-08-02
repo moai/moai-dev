@@ -478,10 +478,6 @@ MOAIAppIOS::~MOAIAppIOS () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAppIOS::OnGlobalsFinalize () {
-}
-
-//----------------------------------------------------------------//
 void MOAIAppIOS::OpenUrl ( NSURL* url, NSString* sourceApplication ) {
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();

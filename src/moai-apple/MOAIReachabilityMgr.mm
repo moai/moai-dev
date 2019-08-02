@@ -151,14 +151,18 @@ MOAIReachabilityMgr::~MOAIReachabilityMgr () {
 }
 
 //----------------------------------------------------------------//
-void MOAIReachabilityMgr::OnGlobalsFinalize () {
-
-	[ this->mReachabilityListener release ];
-	this->mReachabilityListener = nil;
-}
-
-//----------------------------------------------------------------//
 void MOAIReachabilityMgr::UpdateReachability () {
 
 	[ this->mReachabilityListener updateMoaiEnvironment ];
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIReachabilityMgr::ZLContextClass_Finalize () {
+
+	[ this->mReachabilityListener release ];
+	this->mReachabilityListener = nil;
 }

@@ -13,11 +13,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void ZLContextClassBase::OnGlobalsFinalize () {
+void ZLContextClassBase::Finalize () {
+	this->ZLContextClassBase_Finalize ();
 }
 
 //----------------------------------------------------------------//
-void ZLContextClassBase::OnGlobalsInitialize () {
+void ZLContextClassBase::Initialize () {
+	this->ZLContextClassBase_Initialize ();
 }
 
 //----------------------------------------------------------------//
@@ -26,6 +28,14 @@ ZLContextClassBase::ZLContextClassBase () {
 
 //----------------------------------------------------------------//
 ZLContextClassBase::~ZLContextClassBase () {
+}
+
+//----------------------------------------------------------------//
+void ZLContextClassBase::ZLContextClassBase_Finalize () {
+}
+
+//----------------------------------------------------------------//
+void ZLContextClassBase::ZLContextClassBase_Initialize () {
 }
 
 //================================================================//
@@ -83,7 +93,7 @@ ZLContext::~ZLContext () {
 				log.LogF ( ZLLog::LOG_DEBUG, ZLLog::CONSOLE, "ZLContext: finalizing global %p\n", global );
 			#endif
 			
-			global->OnGlobalsFinalize ();
+			global->Finalize ();
 		}
 	}
 	

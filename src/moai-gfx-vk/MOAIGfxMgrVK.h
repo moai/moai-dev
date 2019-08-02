@@ -110,8 +110,6 @@ protected:
 	void							InitSemaphores				();
 
 	//----------------------------------------------------------------//
-	void							OnGlobalsFinalize							();
-	void							OnGlobalsInitialize							();
 	MOAIShader*						MOAIGfxMgr_AffirmShader						( MOAILuaState& state, int idx ) const;
 	MOAITexture*					MOAIGfxMgr_AffirmTexture					( MOAILuaState& state, int idx ) const;
 	MOAIImageTexture*				MOAIGfxMgr_CreateImageTexture				() const;
@@ -131,6 +129,8 @@ protected:
 //	MOAIGfxMgrVK_ResourceClerkVK&	MOAIGfxMgrVKComponents_GetResourceClerkVK	();
 	MOAIGfxMgrVK_VertexCacheVK&		MOAIGfxMgrVKComponents_GetVertexCacheVK		();
 	void							MOAILuaObject_RegisterLuaClass				( MOAIComposer& composer, MOAILuaState& state );
+	void							ZLContextClass_Finalize						();
+	void							ZLContextClass_Initialize					();
 
 public:
 

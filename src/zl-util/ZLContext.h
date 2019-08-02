@@ -46,12 +46,16 @@ class ZLContextClassBase {
 protected:
 
 	friend class ZLContext;
+	
+	//----------------------------------------------------------------//
+	virtual void		ZLContextClassBase_Finalize			();
+	virtual void		ZLContextClassBase_Initialize		();
 
 	//----------------------------------------------------------------//
-	virtual void			OnGlobalsFinalize			();
-	virtual void			OnGlobalsInitialize			();
-							ZLContextClassBase			();
-	virtual					~ZLContextClassBase			();
+	void				Finalize					();
+	void				Initialize					();
+						ZLContextClassBase			();
+	virtual				~ZLContextClassBase			();
 };
 
 //================================================================//
@@ -116,7 +120,7 @@ public:
 			pair.mAliasOf		= NULL;
 			pair.mIsValid		= true;
 			
-			pair.mGlobalBase->OnGlobalsInitialize ();
+			pair.mGlobalBase->Initialize ();
 		}
 		
 		if ( !this->mGlobals [ globalID ].mIsValid ) {
@@ -231,6 +235,26 @@ public:
 template < typename TYPE >
 class ZLContextClass :
 	public virtual ZLContextClassBase {
+protected:
+
+	//----------------------------------------------------------------//
+	virtual void ZLContextClass_Finalize () {
+	}
+	
+	//----------------------------------------------------------------//
+	virtual void ZLContextClass_Initialize () {
+	}
+
+	//----------------------------------------------------------------//
+	void ZLContextClassBase_Finalize () {
+		this->ZLContextClass_Finalize ();
+	}
+	
+	//----------------------------------------------------------------//
+	void ZLContextClassBase_Initialize () {
+		this->ZLContextClass_Initialize ();
+	}
+
 public:
 	
 	//----------------------------------------------------------------//

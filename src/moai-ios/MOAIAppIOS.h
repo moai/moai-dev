@@ -106,7 +106,6 @@ public:
 	static BOOL			IsSystemVersionLessThan					( NSString* version ); // TODO: move to MOAIWebView or MOAIAppDelegate when those are added later
 						MOAIAppIOS								();
 						~MOAIAppIOS								();
-	void				OnGlobalsFinalize						();
 	void				OpenUrl									( NSURL* url, NSString* sourceApplication );
 
 	static void			callTakeCameraLuaCallback				( NSString* imagePath );

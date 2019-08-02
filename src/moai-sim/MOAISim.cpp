@@ -793,12 +793,6 @@ double MOAISim::MeasureFrameRate () {
 }
 
 //----------------------------------------------------------------//
-void MOAISim::OnGlobalsFinalize () {
-
-	this->InvokeListener ( EVENT_FINALIZE );
-}
-
-//----------------------------------------------------------------//
 void MOAISim::ResetPerformanceTimers () {
 
 	this->mLastActionTreeTime = this->mActionTreeTime;
@@ -1137,4 +1131,10 @@ void MOAISim::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaSt
 //----------------------------------------------------------------//
 void MOAISim::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIGlobalEventSource, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+}
+
+//----------------------------------------------------------------//
+void MOAISim::ZLContextClass_Finalize () {
+
+	this->InvokeListener ( EVENT_FINALIZE );
 }

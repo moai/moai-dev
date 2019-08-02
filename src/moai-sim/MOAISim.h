@@ -166,7 +166,6 @@ private:
 
 	//----------------------------------------------------------------//
 	double			MeasureFrameRate			();
-	void			OnGlobalsFinalize			();
 	void			ResetPerformanceTimers		();
 	double			SmoothStep					( double step );
 	double			StepSim						( double step, u32 multiplier );
@@ -174,6 +173,7 @@ private:
 	//----------------------------------------------------------------//
 	void			MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
 	void			MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
+	void			ZLContextClass_Finalize					();
 
 public:
 	

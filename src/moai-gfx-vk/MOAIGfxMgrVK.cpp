@@ -503,20 +503,8 @@ MOAIGfxMgrVK::~MOAIGfxMgrVK () {
 //}
 
 //================================================================//
-// overrides
+// virtual
 //================================================================//
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrVK::OnGlobalsFinalize () {
-	MOAIGfxMgr::OnGlobalsFinalize ();
-
-	this->GetRenderTreeVK ().mOneTri = NULL;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrVK::OnGlobalsInitialize () {
-	MOAIGfxMgr::OnGlobalsInitialize ();
-}
 
 //----------------------------------------------------------------//
 MOAIShader* MOAIGfxMgrVK::MOAIGfxMgr_AffirmShader ( MOAILuaState& state, int idx ) const {
@@ -680,4 +668,16 @@ void MOAIGfxMgrVK::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAI
 //	};
 //
 //	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxMgrVK::ZLContextClass_Finalize () {
+	MOAIGfxMgr::ZLContextClass_Finalize ();
+
+	this->GetRenderTreeVK ().mOneTri = NULL;
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxMgrVK::ZLContextClass_Initialize () {
+	MOAIGfxMgr::ZLContextClass_Initialize ();
 }

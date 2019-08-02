@@ -18,7 +18,7 @@ private:
 	MOAIReachabilityListener*	mReachabilityListener;
 	
 	//----------------------------------------------------------------//
-	void			OnGlobalsFinalize			();
+	void			ZLContextClass_Finalize			();
 	
 public:
 

@@ -185,16 +185,6 @@ void MOAIGfxMgr::PushState () {
 	this->MOAIGfxMgr_PushState ();
 }
 
-//----------------------------------------------------------------//
-void MOAIGfxMgr::OnGlobalsFinalize () {
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgr::OnGlobalsInitialize () {
-
-	this->AffirmBuffers ();
-}
-
 //================================================================//
 // virtual
 //================================================================//
@@ -224,10 +214,6 @@ MOAIGfxMgr_VertexCache& MOAIGfxMgr::MOAIGfxMgrComponents_GetVertexCache () {
 	return *this;
 }
 
-//================================================================//
-// virtual
-//================================================================//
-
 //----------------------------------------------------------------//
 void MOAIGfxMgr::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxMgr_RenderTree, MOAILuaObject_RegisterLuaClass ( composer, state ));
@@ -236,4 +222,14 @@ void MOAIGfxMgr::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILu
 //----------------------------------------------------------------//
 void MOAIGfxMgr::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxMgr_RenderTree, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxMgr::ZLContextClass_Finalize () {
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxMgr::ZLContextClass_Initialize () {
+
+	this->AffirmBuffers ();
 }
