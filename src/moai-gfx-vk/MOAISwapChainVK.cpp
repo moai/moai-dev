@@ -136,7 +136,7 @@ MOAISwapChainVK::MOAISwapChainVK () :
 
 //----------------------------------------------------------------//
 // TODO: move to MOAILogicalDeviceVK
-VkResult MOAISwapChainVK::QueuePresent ( MOAIQueueVK& queue, uint32_t imageIndex, VkSemaphore waitSemaphore ) {
+VkResult MOAISwapChainVK::QueuePresent ( MOAILogicalDeviceVK& logicalDevice, MOAIQueueVK& queue, uint32_t imageIndex, VkSemaphore waitSemaphore ) {
 
 	VkPresentInfoKHR presentInfo = MOAIGfxStructVK::presentInfoKHR (
 		NULL,
@@ -151,5 +151,5 @@ VkResult MOAISwapChainVK::QueuePresent ( MOAIQueueVK& queue, uint32_t imageIndex
 		presentInfo.pWaitSemaphores = &waitSemaphore;
 		presentInfo.waitSemaphoreCount = 1;
 	}
-	return queue.PresentKHR ( presentInfo );
+	return queue.PresentKHR ( logicalDevice, presentInfo );
 }

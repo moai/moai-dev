@@ -203,47 +203,48 @@ void MOAIOneTriVK::PrepareVertices ( bool useStagingBuffers ) {
 
 	if ( useStagingBuffers ) {
 		
-//		// Static data like vertex and index buffer should be stored on the device memory
-//		// for optimal (and fastest) access by the GPU
-//
-//		MOAIOneTriBufferVK stageVerts;
-//		stageVerts.init ( logicalDevice, physicalDevice.mMemoryProperties, vertexBufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT );
-//		stageVerts.mapAndCopy ( logicalDevice, vertexBuffer.data (), vertexBufferSize );
-//		stageVerts.bind ( logicalDevice );
-//
-//		this->mVertices->init ( logicalDevice, physicalDevice.mMemoryProperties, vertexBufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT );
-//		this->mVertices->bind ( logicalDevice );
-//		
-//		MOAIOneTriBufferVK stageIndices;
-//		stageIndices.init ( logicalDevice, physicalDevice.mMemoryProperties, indexBufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT );
-//		stageIndices.mapAndCopy ( logicalDevice, indexBuffer.data (), indexBufferSize );
-//		stageIndices.bind ( logicalDevice );
-//
-//		this->mIndices->init ( logicalDevice, physicalDevice.mMemoryProperties, indexBufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT );
-//		this->mIndices->bind ( logicalDevice );
-//
-//		// Buffer copies have to be submitted to a queue, so we need a command buffer for them
-//		// Note: Some devices offer a dedicated transfer queue (with only the transfer bit set) that may be faster when doing lots of copies
-//		VkCommandBuffer copyCmd = MOAIGfxUtilVK::createCommandBuffer ( logicalDevice, this->mSwapChainQueueCommandPool );
-//
-//		// Put buffer region copies into command buffer
-//		VkBufferCopy copyRegion = {};
-//
-//		// Vertex buffer
-//		copyRegion.size = vertexBufferSize;
-//		vkCmdCopyBuffer ( copyCmd, stageVerts, this->mVertices, 1, &copyRegion );
-//		
-//		// Index buffer
-//		copyRegion.size = indexBufferSize;
-//		vkCmdCopyBuffer ( copyCmd, stageIndices, this->mIndices, 1, &copyRegion );
-//
-//		// Flushing the command buffer will also submit it to the queue and uses a fence to ensure that all commands have been executed before returning
-//		MOAIGfxUtilVK::flushAndFreeCommandBuffer ( logicalDevice, this->mQueue, copyCmd, this->mSwapChainQueueCommandPool );
-//
-//		// Destroy staging buffers
-//		// Note: Staging buffer must not be deleted before the copies have been submitted and executed
-//		stageVerts.cleanup ( logicalDevice );
-//		stageIndices.cleanup ( logicalDevice );
+		// Static data like vertex and index buffer should be stored on the device memory
+		// for optimal (and fastest) access by the GPU
+
+		MOAIOneTriBufferVK stageVerts;
+		stageVerts.init ( logicalDevice, physicalDevice.mMemoryProperties, vertexBufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT );
+		stageVerts.mapAndCopy ( logicalDevice, vertexBuffer.data (), vertexBufferSize );
+		stageVerts.bind ( logicalDevice );
+
+		this->mVertices->init ( logicalDevice, physicalDevice.mMemoryProperties, vertexBufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT );
+		this->mVertices->bind ( logicalDevice );
+		
+		MOAIOneTriBufferVK stageIndices;
+		stageIndices.init ( logicalDevice, physicalDevice.mMemoryProperties, indexBufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT, VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT );
+		stageIndices.mapAndCopy ( logicalDevice, indexBuffer.data (), indexBufferSize );
+		stageIndices.bind ( logicalDevice );
+
+		this->mIndices->init ( logicalDevice, physicalDevice.mMemoryProperties, indexBufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT );
+		this->mIndices->bind ( logicalDevice );
+
+		// Buffer copies have to be submitted to a queue, so we need a command buffer for them
+		// Note: Some devices offer a dedicated transfer queue (with only the transfer bit set) that may be faster when doing lots of copies
+		MOAIQueueVK& graphicsQueue = logicalDevice.GetGraphicsQueue ();
+		VkCommandBuffer commandBuffer = graphicsQueue.CreateCommandBuffer ( logicalDevice );
+
+		// Put buffer region copies into command buffer
+		VkBufferCopy copyRegion = {};
+
+		// Vertex buffer
+		copyRegion.size = vertexBufferSize;
+		vkCmdCopyBuffer ( commandBuffer, stageVerts, *this->mVertices, 1, &copyRegion );
+		
+		// Index buffer
+		copyRegion.size = indexBufferSize;
+		vkCmdCopyBuffer ( commandBuffer, stageIndices, *this->mIndices, 1, &copyRegion );
+
+		// Flushing the command buffer will also submit it to the queue and uses a fence to ensure that all commands have been executed before returning
+		graphicsQueue.FlushAndFreeCommandBuffer ( logicalDevice, commandBuffer );
+
+		// Destroy staging buffers
+		// Note: Staging buffer must not be deleted before the copies have been submitted and executed
+		stageVerts.cleanup ( logicalDevice );
+		stageIndices.cleanup ( logicalDevice );
 	}
 	else {
 		
@@ -408,7 +409,7 @@ void MOAIOneTriVK::UpdateUniformBuffers ( u32 width, u32 height ) {
 //----------------------------------------------------------------//
 MOAIOneTriVK::MOAIOneTriVK () {
 
-	this->PrepareVertices ( false );
+	this->PrepareVertices ();
 	this->PrepareUniformBuffers ();
 	this->SetupDescriptorSetLayout ();
 	this->PreparePipeline ();

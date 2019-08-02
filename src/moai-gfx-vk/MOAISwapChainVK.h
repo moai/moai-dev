@@ -52,7 +52,7 @@ public:
 	void			Cleanup					( MOAILogicalDeviceVK& logicalDevice );
 	void			Init					( MOAIGfxInstanceVK& instance, MOAIPhysicalDeviceVK& physicalDevice, MOAILogicalDeviceVK& logicalDevice, MOAISurfaceVK& surface, u32 width, u32 height );
 					MOAISwapChainVK			();
-	VkResult		QueuePresent			( MOAIQueueVK& queue, uint32_t imageIndex, VkSemaphore waitSemaphore = VK_NULL_HANDLE );
+	VkResult		QueuePresent			( MOAILogicalDeviceVK& logicalDevice, MOAIQueueVK& queue, uint32_t imageIndex, VkSemaphore waitSemaphore = VK_NULL_HANDLE );
 };
 
 #endif

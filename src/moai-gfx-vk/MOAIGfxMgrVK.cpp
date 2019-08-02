@@ -233,7 +233,7 @@ void MOAIGfxMgrVK::FinishFrame () {
 
 	VK_CHECK_RESULT ( graphicsQueue.Submit ( &submitInfo, 1, fence ));
 
-    VkResult result = this->mSwapChain.QueuePresent ( graphicsQueue, this->mCurrentBufferIndex, this->mRenderCompleteSemaphore );
+    VkResult result = this->mSwapChain.QueuePresent ( this->mLogicalDevice, graphicsQueue, this->mCurrentBufferIndex, this->mRenderCompleteSemaphore );
     if (!((result == VK_SUCCESS) || (result == VK_SUBOPTIMAL_KHR))) {
         if (result == VK_ERROR_OUT_OF_DATE_KHR) {
             // Swap chain is no longer compatible with the surface and needs to be recreated

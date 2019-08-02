@@ -16,6 +16,8 @@
 class MOAILogicalDeviceVK {
 private:
 
+	friend class MOAIQueueVK;
+
 	enum QueueID {
 		COMPUTE_QUEUE,
 		GRAPHICS_QUEUE,

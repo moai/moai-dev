@@ -167,7 +167,6 @@ void MOAILogicalDeviceVK::Init ( MOAIPhysicalDeviceVK& physicalDevice, VkQueueFl
 //----------------------------------------------------------------//
 void MOAILogicalDeviceVK::InitQueue ( MOAIQueueVK& queue, u32 index ) {
 
-	queue.mQueuePresentKHR = this->mQueuePresentKHR;
 	queue.mIndex = index;
 	vkGetDeviceQueue ( this->mDevice, index, 0, &queue.mQueue );
 	

@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAIQueueVK.h>
 
@@ -10,8 +11,52 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+VkCommandBuffer MOAIQueueVK::CreateCommandBuffer ( MOAILogicalDeviceVK& logicalDevice, bool begin, VkCommandBufferLevel level ) {
+
+	VkCommandBufferAllocateInfo cmdBufAllocateInfo = MOAIGfxStructVK::commandBufferAllocateInfo (
+    	this->mPool,
+    	VK_COMMAND_BUFFER_LEVEL_PRIMARY,
+    	1
+	);
+	VkCommandBuffer commandBuffer;
+    logicalDevice.AllocateCommandBuffers ( cmdBufAllocateInfo, &commandBuffer );
+	
+	assert ( commandBuffer );
+	if ( begin ) {
+		VkCommandBufferBeginInfo cmdBufInfo = MOAIGfxStructVK::commandBufferBeginInfo ();
+		VK_CHECK_RESULT ( vkBeginCommandBuffer ( commandBuffer, &cmdBufInfo ));
+	}
+    return commandBuffer;
+}
+
+//----------------------------------------------------------------//
+void MOAIQueueVK::FlushAndFreeCommandBuffer	( MOAILogicalDeviceVK& logicalDevice, VkCommandBuffer commandBuffer, u64 timeout ) {
+
+	if ( commandBuffer == VK_NULL_HANDLE ) return;
+
+	VK_CHECK_RESULT ( vkEndCommandBuffer ( commandBuffer ));
+
+	VkSubmitInfo submitInfo = MOAIGfxStructVK::submitInfo ( &commandBuffer, 1 );
+
+	// Create fence to ensure that the command buffer has finished executing
+	VkFenceCreateInfo fenceInfo = MOAIGfxStructVK::fenceCreateInfo ( 0 );
+
+	VkFence fence;
+	VK_CHECK_RESULT ( vkCreateFence ( logicalDevice, &fenceInfo, NULL, &fence ));
+
+	// Submit to the queue
+	VK_CHECK_RESULT ( vkQueueSubmit ( this->mQueue, 1, &submitInfo, fence ));
+
+	// Wait for the fence to signal that command buffer has finished executing
+	VK_CHECK_RESULT ( vkWaitForFences ( logicalDevice, 1, &fence, VK_TRUE, timeout ));
+
+	vkDestroyFence ( logicalDevice, fence, nullptr );
+
+	vkFreeCommandBuffers ( logicalDevice, this->mPool, 1, &commandBuffer );
+}
+
+//----------------------------------------------------------------//
 MOAIQueueVK::MOAIQueueVK () :
-	mQueuePresentKHR ( NULL ),
 	mIndex (( u32 )-1 ),
 	mPool ( VK_NULL_HANDLE ),
 	mQueue ( VK_NULL_HANDLE ) {
@@ -22,10 +67,10 @@ MOAIQueueVK::~MOAIQueueVK () {
 }
 
 //----------------------------------------------------------------//
-VkResult MOAIQueueVK::PresentKHR ( const VkPresentInfoKHR& presentInfo ) {
+VkResult MOAIQueueVK::PresentKHR ( MOAILogicalDeviceVK& logicalDevice, const VkPresentInfoKHR& presentInfo ) {
 
-	if ( this->mQueuePresentKHR ) {
-		this->mQueuePresentKHR ( this->mQueue, &presentInfo );
+	if ( logicalDevice.mQueuePresentKHR ) {
+		logicalDevice.mQueuePresentKHR ( this->mQueue, &presentInfo );
 	}
 }
 

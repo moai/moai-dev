@@ -4,10 +4,7 @@
 #ifndef MOAIQUEUEVK_H
 #define MOAIQUEUEVK_H
 
-#include <vector>
-#include <moai-gfx-vk/MOAIGfxInstanceVK.h>
-#include <moai-gfx-vk/MOAIPhysicalDeviceVK.h>
-#include <moai-gfx-vk/MOAISurfaceVK.h>
+class MOAILogicalDeviceVK;
 
 //================================================================//
 // MOAIQueueVK
@@ -16,9 +13,7 @@ class MOAIQueueVK {
 private:
 
 	friend class MOAILogicalDeviceVK;
-
-	PFN_vkQueuePresentKHR	mQueuePresentKHR;
-
+	
 public:
 
 	u32				mIndex;
@@ -32,11 +27,13 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-					MOAIQueueVK 			();
-					~MOAIQueueVK			();
-	VkResult		PresentKHR				( const VkPresentInfoKHR& presentInfo );
-	VkResult		Submit					( const VkSubmitInfo* submits, u32 submitCount, VkFence fence );
-	VkResult		WaitIdle				();
+	VkCommandBuffer		CreateCommandBuffer			( MOAILogicalDeviceVK& logicalDevice, bool begin = true, VkCommandBufferLevel level = VK_COMMAND_BUFFER_LEVEL_PRIMARY );
+	void				FlushAndFreeCommandBuffer	( MOAILogicalDeviceVK& logicalDevice, VkCommandBuffer commandBuffer, u64 timeout = VK_DEFAULT_FENCE_TIMEOUT );
+						MOAIQueueVK 				();
+						~MOAIQueueVK				();
+	VkResult			PresentKHR					( MOAILogicalDeviceVK& logicalDevice, const VkPresentInfoKHR& presentInfo );
+	VkResult			Submit						( const VkSubmitInfo* submits, u32 submitCount, VkFence fence );
+	VkResult			WaitIdle					();
 };
 
 #endif
