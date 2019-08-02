@@ -28,7 +28,6 @@
 #include <moai-gfx-vk/MOAISwapChainVK.h>
 #include <moai-gfx-vk/MOAITexture2DVK.h>
 #include <moai-gfx-vk/MOAITextureVK.h>
-#include <moai-gfx-vk/MOAIVertexArrayVK.h>
 #include <moai-gfx-vk/MOAIVertexBufferVK.h>
 #include <moai-gfx-vk/MOAIVertexFormatVK.h>
 

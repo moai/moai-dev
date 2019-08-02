@@ -95,9 +95,9 @@ void MOAIOneTriVK::PreparePipeline () {
 //----------------------------------------------------------------//
 void MOAIOneTriVK::PrepareUniformBuffers () {
 
-	this->mUniforms = new MOAIGfxBufferVK ();
+	this->mUniforms = new MOAIUniformBufferVK ();
 
-	this->mUniforms->Init ( sizeof ( mMatrixUniforms ), VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT );
+	this->mUniforms->Init ( sizeof ( mMatrixUniforms ));
 	this->mUniforms->Bind ();
 
 	// Store information in the uniform's descriptor that is used by the descriptor set
@@ -115,8 +115,8 @@ void MOAIOneTriVK::PrepareVertices ( bool useStagingBuffers ) {
 	MOAIPhysicalDeviceVK& physicalDevice = gfxMgr.GetPhysicalDevice ();
 	MOAILogicalDeviceVK& logicalDevice = gfxMgr.GetLogicalDevice ();
 	
-	this->mIndices		= new MOAIGfxBufferVK ();
-	this->mVertices		= new MOAIGfxBufferVK ();
+	this->mVertices		= new MOAIVertexBufferVK ();
+	this->mIndices		= new MOAIIndexBufferVK ();
 	
 	// Setup vertices
 	std::vector < Vertex > vertexBuffer;
@@ -138,20 +138,20 @@ void MOAIOneTriVK::PrepareVertices ( bool useStagingBuffers ) {
 		// Static data like vertex and index buffer should be stored on the device memory
 		// for optimal (and fastest) access by the GPU
 
-		MOAIGfxBufferVK stageVerts;
+		MOAIVertexBufferVK stageVerts;
 		stageVerts.Init ( vertexBufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT );
 		stageVerts.MapAndCopy ( vertexBuffer.data (), vertexBufferSize );
 		stageVerts.Bind ();
 
-		this->mVertices->Init ( vertexBufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, MOAIGfxBufferVK::DEVICE_BUFFER_PROPS );
+		this->mVertices->Init ( vertexBufferSize,  VK_BUFFER_USAGE_TRANSFER_DST_BIT, MOAIGfxBufferVK::DEVICE_BUFFER_PROPS );
 		this->mVertices->Bind ();
 		
-		MOAIGfxBufferVK stageIndices;
+		MOAIIndexBufferVK stageIndices;
 		stageIndices.Init ( indexBufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT );
 		stageIndices.MapAndCopy ( indexBuffer.data (), indexBufferSize );
 		stageIndices.Bind ();
 
-		this->mIndices->Init ( indexBufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, MOAIGfxBufferVK::DEVICE_BUFFER_PROPS );
+		this->mIndices->Init ( indexBufferSize, VK_BUFFER_USAGE_TRANSFER_DST_BIT, MOAIGfxBufferVK::DEVICE_BUFFER_PROPS );
 		this->mIndices->Bind ();
 
 		// Buffer copies have to be submitted to a queue, so we need a command buffer for them
@@ -184,11 +184,11 @@ void MOAIOneTriVK::PrepareVertices ( bool useStagingBuffers ) {
 		// Create host-visible buffers only and use these for rendering. This is not advised and will usually result in lower rendering performance
 
 		// Vertex buffer
-		this->mVertices->Init ( vertexBufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT );
+		this->mVertices->Init ( vertexBufferSize );
 		this->mVertices->MapAndCopy ( vertexBuffer.data (), vertexBufferSize );
 		this->mVertices->Bind ();
 		
-		this->mIndices->Init ( indexBufferSize, VK_BUFFER_USAGE_INDEX_BUFFER_BIT );
+		this->mIndices->Init ( indexBufferSize );
 		this->mIndices->MapAndCopy ( indexBuffer.data (), indexBufferSize );
 		this->mIndices->Bind ();
 	}
@@ -269,33 +269,18 @@ void MOAIOneTriVK::UpdateUniformBuffers ( u32 width, u32 height ) {
 	float zn = 0.1;
 	float zf = 256;
 
-	float projectionMatrix [] = {
-		xs, 0, 0, 0,
-		0, ys, 0, 0,
-		0, 0, zf / ( zn - zf ), -1,
-		0, 0, -( zf * zn ) / ( zf - zn ), 0,
-	};
+	ZLMatrix4x4 projectionMatrix;
+	projectionMatrix.Perspective ( xs, ys, zn, zf );
 
-	float modelMatrixUnpack [ 16 ];
-	memcpy ( modelMatrixUnpack, &projectionMatrix, sizeof ( float [ 16 ]));
+	ZLMatrix4x4 viewMatrix;
+	viewMatrix.Ident ();
 
-	float viewMatrix [] = {
-		1, 0, 0, 0,
-		0, 1, 0, 0,
-		0, 0, 1, 0,
-		0, 0, 0, 1,
-	};
+	ZLMatrix4x4 modelMatrix;
+	modelMatrix.Translate ( 0, 0, -2.5 );
 
-	float modelMatrix [] = {
-		1, 0, 0, 0,
-		0, 1, 0, 0,
-		0, 0, 1, 0,
-		0, 0, -2.5, 1,
-	};
-
-	memcpy ( mMatrixUniforms.projectionMatrix, projectionMatrix, sizeof ( projectionMatrix ));
-	memcpy ( mMatrixUniforms.viewMatrix, viewMatrix, sizeof ( viewMatrix ));
-	memcpy ( mMatrixUniforms.modelMatrix, modelMatrix, sizeof ( modelMatrix ));
+	memcpy ( mMatrixUniforms.projectionMatrix, &projectionMatrix, sizeof ( projectionMatrix ));
+	memcpy ( mMatrixUniforms.viewMatrix, &viewMatrix, sizeof ( viewMatrix ));
+	memcpy ( mMatrixUniforms.modelMatrix, &modelMatrix, sizeof ( modelMatrix ));
 
 	this->mUniforms->MapAndCopy ( &this->mMatrixUniforms, sizeof ( this->mMatrixUniforms ));
 }

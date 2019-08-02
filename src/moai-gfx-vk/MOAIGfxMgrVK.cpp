@@ -13,7 +13,6 @@
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAIShaderMgrVK.h>
 #include <moai-gfx-vk/MOAITexture2DVK.h>
-#include <moai-gfx-vk/MOAIVertexArrayVK.h>
 #include <moai-gfx-vk/MOAIVertexBufferVK.h>
 #include <moai-gfx-vk/MOAIVertexFormatVK.h>
 
@@ -572,7 +571,7 @@ MOAITexture2D* MOAIGfxMgrVK::MOAIGfxMgr_CreateTexture2D () const {
 //----------------------------------------------------------------//
 MOAIVertexArray* MOAIGfxMgrVK::MOAIGfxMgr_CreateVertexArray () const {
 
-	return new MOAIVertexArrayVK ();
+	return NULL;
 }
 
 //----------------------------------------------------------------//

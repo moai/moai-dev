@@ -16,11 +16,9 @@ class MOAIVertexFormatVK;
 */
 class MOAIVertexBufferVK :
 	public virtual MOAIVertexBuffer,
-	public virtual MOAIGfxBufferVK {
+	public virtual MOAIGfxBufferVK,
+	public virtual MOAIGfxBufferUsageVK < VK_BUFFER_USAGE_VERTEX_BUFFER_BIT > {
 private:
-	
-//	friend class MOAIGfxMgrVK_PipelineClerkVK;
-//	friend class MOAIVertexBufferWithFormatVK;
 	
 	//----------------------------------------------------------------//
 	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );

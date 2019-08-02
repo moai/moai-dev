@@ -3649,8 +3649,6 @@
 		CD9AB59E22C41C7C0061A87F /* MOAITexture2DVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CD9AB56A22C41C7C0061A87F /* MOAITexture2DVK.h */; };
 		CD9AB59F22C41C7C0061A87F /* MOAITextureVK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD9AB56B22C41C7C0061A87F /* MOAITextureVK.cpp */; };
 		CD9AB5A022C41C7C0061A87F /* MOAITextureVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CD9AB56C22C41C7C0061A87F /* MOAITextureVK.h */; };
-		CD9AB5A122C41C7C0061A87F /* MOAIVertexArrayVK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD9AB56D22C41C7C0061A87F /* MOAIVertexArrayVK.cpp */; };
-		CD9AB5A222C41C7C0061A87F /* MOAIVertexArrayVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CD9AB56E22C41C7C0061A87F /* MOAIVertexArrayVK.h */; };
 		CD9AB5A322C41C7C0061A87F /* MOAIVertexBufferVK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD9AB56F22C41C7C0061A87F /* MOAIVertexBufferVK.cpp */; };
 		CD9AB5A422C41C7C0061A87F /* MOAIVertexBufferVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CD9AB57022C41C7C0061A87F /* MOAIVertexBufferVK.h */; };
 		CD9AB5A522C41C7C0061A87F /* MOAIVertexFormatVK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD9AB57122C41C7C0061A87F /* MOAIVertexFormatVK.cpp */; };
@@ -7331,8 +7329,6 @@
 		CD9AB56A22C41C7C0061A87F /* MOAITexture2DVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAITexture2DVK.h; path = "moai-gfx-vk/MOAITexture2DVK.h"; sourceTree = "<group>"; };
 		CD9AB56B22C41C7C0061A87F /* MOAITextureVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAITextureVK.cpp; path = "moai-gfx-vk/MOAITextureVK.cpp"; sourceTree = "<group>"; };
 		CD9AB56C22C41C7C0061A87F /* MOAITextureVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAITextureVK.h; path = "moai-gfx-vk/MOAITextureVK.h"; sourceTree = "<group>"; };
-		CD9AB56D22C41C7C0061A87F /* MOAIVertexArrayVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIVertexArrayVK.cpp; path = "moai-gfx-vk/MOAIVertexArrayVK.cpp"; sourceTree = "<group>"; };
-		CD9AB56E22C41C7C0061A87F /* MOAIVertexArrayVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIVertexArrayVK.h; path = "moai-gfx-vk/MOAIVertexArrayVK.h"; sourceTree = "<group>"; };
 		CD9AB56F22C41C7C0061A87F /* MOAIVertexBufferVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIVertexBufferVK.cpp; path = "moai-gfx-vk/MOAIVertexBufferVK.cpp"; sourceTree = "<group>"; };
 		CD9AB57022C41C7C0061A87F /* MOAIVertexBufferVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIVertexBufferVK.h; path = "moai-gfx-vk/MOAIVertexBufferVK.h"; sourceTree = "<group>"; };
 		CD9AB57122C41C7C0061A87F /* MOAIVertexFormatVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIVertexFormatVK.cpp; path = "moai-gfx-vk/MOAIVertexFormatVK.cpp"; sourceTree = "<group>"; };
@@ -12888,8 +12884,6 @@
 				CD9AB54D22C41C7C0061A87F /* MOAIGfxBufferVK.h */,
 				CD9AB55F22C41C7C0061A87F /* MOAIIndexBufferVK.cpp */,
 				CD9AB56022C41C7C0061A87F /* MOAIIndexBufferVK.h */,
-				CD9AB56D22C41C7C0061A87F /* MOAIVertexArrayVK.cpp */,
-				CD9AB56E22C41C7C0061A87F /* MOAIVertexArrayVK.h */,
 				CD9AB56F22C41C7C0061A87F /* MOAIVertexBufferVK.cpp */,
 				CD9AB57022C41C7C0061A87F /* MOAIVertexBufferVK.h */,
 			);
@@ -15771,7 +15765,6 @@
 				CD9AB5CB22C41CFF0061A87F /* MOAIMeshShaderGL-fsh.h in Headers */,
 				CD9AB58722C41C7C0061A87F /* MOAIGfxMgrVK_RenderTreeVK.h in Headers */,
 				CD9AB59E22C41C7C0061A87F /* MOAITexture2DVK.h in Headers */,
-				CD9AB5A222C41C7C0061A87F /* MOAIVertexArrayVK.h in Headers */,
 				CD9AB5C722C41CFF0061A87F /* MOAILineShader3DGL-fsh.h in Headers */,
 				CDD8554F22C5ABDD00F78DF0 /* MOAIGfxStructVK.h in Headers */,
 				CDD8555222C67FF500F78DF0 /* MOAIGfxUtilVK.h in Headers */,
@@ -19694,7 +19687,6 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				CD9AB5A122C41C7C0061A87F /* MOAIVertexArrayVK.cpp in Sources */,
 				CD9AB59D22C41C7C0061A87F /* MOAITexture2DVK.cpp in Sources */,
 				CD9AB59922C41C7C0061A87F /* MOAIShaderProgramVK.cpp in Sources */,
 				CDD8556922CAC5FB00F78DF0 /* MOAIGfxInstanceVK.cpp in Sources */,

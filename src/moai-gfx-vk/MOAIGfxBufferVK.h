@@ -11,9 +11,7 @@ class MOAIVertexFormatVK;
 //================================================================//
 // MOAIGfxBufferVK
 //================================================================//
-/**	@lua	MOAIGfxBufferVK
-	@text	Base class for MOAIVertexBufferVK and MOAIIndexBufferVK.
-*/
+// TODO: doxygen
 class MOAIGfxBufferVK :
 	public virtual MOAIGfxResourceVK,
 	public virtual MOAIGfxBuffer {
@@ -22,6 +20,9 @@ protected:
 	VkBuffer		mBuffer;
 	VkDeviceMemory	mMemory;
 	VkDeviceSize	mAllocationSize;
+	
+	//----------------------------------------------------------------//
+	void					GenericInit									( VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags memPropFlags );
 	
 	//----------------------------------------------------------------//
 	bool					MOAIGfxResource_OnCPUCreate					();
@@ -52,10 +53,27 @@ public:
 	//----------------------------------------------------------------//
 	void					Bind						();
 	void					Cleanup						();
-	void					Init						( VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags memPropFlags = HOST_BUFFER_PROPS );
 	void					MapAndCopy					( const void* data, size_t size );
 							MOAIGfxBufferVK				();
 							~MOAIGfxBufferVK			();
 };
+
+//================================================================//
+// MOAIBufferVK
+//================================================================//
+template < VkBufferUsageFlags USAGE >
+class MOAIGfxBufferUsageVK :
+	public virtual MOAIGfxBufferVK {
+public:
+
+	//----------------------------------------------------------------//
+	void Init ( VkDeviceSize size, VkBufferUsageFlags usage = 0, VkMemoryPropertyFlags memPropFlags = HOST_BUFFER_PROPS ) {
+
+		usage = usage & ( VK_BUFFER_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT );
+		this->GenericInit ( size, USAGE | usage, memPropFlags );
+	}
+};
+
+typedef MOAIGfxBufferUsageVK < VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT > MOAIUniformBufferVK;
 
 #endif

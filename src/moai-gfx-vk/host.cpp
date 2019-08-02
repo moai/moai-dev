@@ -106,7 +106,6 @@ void AKUGfxVKContextInitialize () {
 	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIShaderMgrVK, 			"MOAIShaderMgr" )
 	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIShaderProgramVK, 		"MOAIShaderProgram" )
 	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAITexture2DVK,			"MOAITexture" )
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIVertexArrayVK, 			"MOAIVertexArray" )
 	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIVertexBufferVK, 		"MOAIVertexBuffer" )
 	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIVertexFormatVK, 		"MOAIVertexFormat" )
 }

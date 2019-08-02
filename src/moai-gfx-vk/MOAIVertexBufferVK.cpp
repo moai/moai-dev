@@ -18,8 +18,6 @@ MOAIVertexBufferVK::MOAIVertexBufferVK () {
 		RTTI_EXTEND ( MOAIVertexBuffer )
 		RTTI_EXTEND ( MOAIGfxBufferVK )
 	RTTI_END
-	
-//	this->mTarget = ZGL_BUFFER_TARGET_ARRAY;
 }
 
 //----------------------------------------------------------------//
@@ -44,10 +42,12 @@ void MOAIVertexBufferVK::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer
 
 //----------------------------------------------------------------//
 void MOAIVertexBufferVK::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIVertexBuffer, MOAILuaObject_SerializeIn ( composer, state, serializer ));
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxBufferVK, MOAILuaObject_SerializeIn ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//
 void MOAIVertexBufferVK::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIVertexBuffer, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxBufferVK, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }

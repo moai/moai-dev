@@ -10,7 +10,6 @@ class MOAIFrameBufferVK;
 class MOAIIndexBufferVK;
 class MOAIShaderVK;
 class MOAIShaderProgramVK;
-class MOAIVertexArrayVK;
 class MOAIVertexBufferVK;
 class MOAIVertexFormatVK;
 class MOAIGfxResourceVK;
@@ -28,8 +27,7 @@ protected:
 //	static const u32 MAX_TEXTURE_UNITS = 32; // enough? will need more flags below if not.
 //
 	friend class MOAIGfxMgrVK_VertexCacheVK;
-//	friend class MOAIVertexArrayVK;
-//
+
 //	friend class MOAIGfxMgr;
 //
 //	// right now we just test every flag for an update in a for loop.
@@ -84,7 +82,6 @@ protected:
 //	void			FlushScissorRect				( bool scissorEnabled, ZLRect rect );
 //	void			FlushShader						( MOAIShaderVK* shader );
 //	void			FlushTexture					( ZLIndex textureUnit, MOAITextureVK* texture );
-//	void			FlushVertexArray				( MOAIVertexArrayVK* vtxArray );
 //	void			FlushVertexBuffer				( MOAIVertexBufferVK* buffer );
 //	void			FlushVertexFormat				( MOAIVertexFormatVK* vtxFormat );
 //	void			FlushViewRect					( ZLRect rect );

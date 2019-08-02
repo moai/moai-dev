@@ -18,8 +18,6 @@ MOAIIndexBufferVK::MOAIIndexBufferVK () {
 		RTTI_EXTEND ( MOAIIndexBuffer )
 		RTTI_EXTEND ( MOAIGfxBufferVK )
 	RTTI_END
-	
-//	this->mTarget = ZGL_BUFFER_TARGET_ELEMENT_ARRAY;
 }
 
 //----------------------------------------------------------------//

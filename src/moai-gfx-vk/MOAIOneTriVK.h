@@ -23,9 +23,9 @@ private:
 		}
 	};
 
-	ZLStrongPtr < MOAIGfxBufferVK >		mVertices;
-	ZLStrongPtr < MOAIGfxBufferVK >		mIndices;
-	ZLStrongPtr < MOAIGfxBufferVK >		mUniforms;
+	ZLStrongPtr < MOAIVertexBufferVK >		mVertices;
+	ZLStrongPtr < MOAIIndexBufferVK >		mIndices;
+	ZLStrongPtr < MOAIUniformBufferVK >		mUniforms;
 	
 	uint32_t				mTotalIndices;
 	VkDescriptorBufferInfo	mUniformsDescriptor;

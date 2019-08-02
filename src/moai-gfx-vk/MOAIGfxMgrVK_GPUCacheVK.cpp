@@ -11,7 +11,6 @@
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
 #include <moai-gfx-vk/MOAITextureVK.h>
-#include <moai-gfx-vk/MOAIVertexArrayVK.h>
 #include <moai-gfx-vk/MOAIVertexBufferVK.h>
 #include <moai-gfx-vk/MOAIVertexFormatVK.h>
 
@@ -479,34 +478,6 @@ void MOAIGfxMgrVK_GPUCacheVK::ApplyStateChanges () {
 //
 //			DEBUG_LOG ( "    binding texture: %d %p\n", i, bindTexture );
 //			texture->Bind ();
-//		}
-//	}
-//}
-//
-////----------------------------------------------------------------//
-//void MOAIGfxMgrVK_GPUCacheVK::FlushVertexArray ( MOAIVertexArrayVK* vtxArray ) {
-//
-//	assert ( this->mApplyingStateChanges );
-//
-//	MOAIGfxStateGPUCacheFrameVK& active = this->mActiveState;
-//	ZLGfx& gfx = this->GetPipelineClerkVK ().GetDrawingAPI ();
-//
-//	if ( active.mVtxArray != vtxArray ) {
-//
-//		this->GfxStateWillChange ();
-//
-//		DEBUG_LOG ( "  binding vertex array: %p\n", vtxArray );
-//
-//		if ( active.mVtxArray ) {
-//			active.mVtxArray->Unbind ();
-//		}
-//
-//		active.mVtxArray = vtxArray;
-//
-//		if ( vtxArray ) {
-//
-//			this->FlushVertexBuffer ( 0 ); // force the unbind in case it hasn't happened yet
-//			vtxArray->Bind ();
 //		}
 //	}
 //}

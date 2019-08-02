@@ -336,9 +336,6 @@ void VulkanExample::updateUniformBuffers () {
 		0, 0, -( zf * zn ) / ( zf - zn ), 0,
 	};
 
-	float modelMatrixUnpack [ 16 ];
-	memcpy ( modelMatrixUnpack, &projectionMatrix, sizeof ( float [ 16 ]));
-
 	float viewMatrix [] = {
 		1, 0, 0, 0,
 		0, 1, 0, 0,
