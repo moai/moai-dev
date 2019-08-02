@@ -1,31 +1,37 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MOAIONETRIVK_H
-#define MOAIONETRIVK_H
+#ifndef MOAIONETRINATIVEVK_H
+#define MOAIONETRINATIVEVK_H
 
-class MOAIGfxBufferVK;
+class MOAINativeBufferVK;
 
 //================================================================//
-// MOAIOneTriVK
+// MOAIOneTriNativeVK
 //================================================================//
-class MOAIOneTriVK :
+class MOAIOneTriNativeVK :
 	public virtual ZLRefCountedObject {
 private:
 
 	struct Vertex {
-		ZLVec3D32	mPosition;
-		u32			mRGBA32;
+		float position [ 3 ];
+		float color [ 3 ];
 		
 		Vertex ( float x, float y, float z, float r, float g, float b ) {
-			this->mPosition.Init ( x, y, z );
-			this->mRGBA32 = ZLColor::PackRGBA ( r, g, b, 1.0 );
+		
+			position [ 0 ] = x;
+			position [ 1 ] = y;
+			position [ 2 ] = z;
+			
+			color [ 0 ] = r;
+			color [ 1 ] = g;
+			color [ 2 ] = b;
 		}
 	};
 
-	ZLStrongPtr < MOAIGfxBufferVK >		mVertices;
-	ZLStrongPtr < MOAIGfxBufferVK >		mIndices;
-	ZLStrongPtr < MOAIGfxBufferVK >		mUniforms;
+	ZLStrongPtr < MOAINativeBufferVK >	mVertices;
+	ZLStrongPtr < MOAINativeBufferVK >	mIndices;
+	ZLStrongPtr < MOAINativeBufferVK >	mUniforms;
 	
 	uint32_t				mTotalIndices;
 	VkDescriptorBufferInfo	mUniformsDescriptor;
@@ -55,8 +61,8 @@ public:
 
 	//----------------------------------------------------------------//
 	void			Draw						( VkCommandBuffer& commandBuffer, u32 width, u32 height );
-					MOAIOneTriVK				();
-					~MOAIOneTriVK				();
+					MOAIOneTriNativeVK				();
+					~MOAIOneTriNativeVK				();
 };
 
 #endif

@@ -2,23 +2,78 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAIVertexFormatVK.h>
 
 //================================================================//
 // MOAIVertexFormatVK
 //================================================================//
 
-////----------------------------------------------------------------//
-//void MOAIVertexFormatVK::Bind ( ZLGfx& gfx, ZLSharedConstBuffer* buffer ) const {
-//
-//	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mTotalAttributes; ++i ) {
-//
-//		const MOAIVertexAttribute& attr = this->mAttributes [ i ];
-//
-//		gfx.EnableVertexAttribArray ( attr.mIndex );
-//		gfx.VertexAttribPointer ( attr.mIndex, attr.mSize, attr.mType, attr.mNormalized, this->mVertexSize, buffer, attr.mOffset );
-//	}
-//}
+//----------------------------------------------------------------//
+VkFormat MOAIVertexFormatVK::GuessFormat ( const MOAIVertexAttribute& attribute ) {
+	
+	switch ( attribute.mType ) {
+	
+		case ZGL_TYPE_BYTE:
+			switch ( attribute.mSize ) {
+				case 1:		return VK_FORMAT_R8_SINT;
+				case 2:		return VK_FORMAT_R8G8_SINT;
+				case 3:		return VK_FORMAT_R8G8B8_SINT;
+				case 4:		return VK_FORMAT_R8G8B8A8_SINT;
+			}
+			break;
+			
+		case ZGL_TYPE_FLOAT:
+			switch ( attribute.mSize ) {
+				case 1:		return VK_FORMAT_R32_SFLOAT;
+				case 2:		return VK_FORMAT_R32G32_SFLOAT;
+				case 3:		return VK_FORMAT_R32G32B32_SFLOAT;
+				case 4:		return VK_FORMAT_R32G32B32A32_SFLOAT;
+			}
+			break;
+		
+		case ZGL_TYPE_SHORT:
+			switch ( attribute.mSize ) {
+				case 1:		return VK_FORMAT_R16_SINT;
+				case 2:		return VK_FORMAT_R16G16_SINT;
+				case 3:		return VK_FORMAT_R16G16B16_SINT;
+				case 4:		return VK_FORMAT_R16G16B16A16_SINT;
+			}
+			break;
+		
+		case ZGL_TYPE_UNSIGNED_BYTE:
+		
+			if ( attribute.mNormalized ) {
+				switch ( attribute.mSize ) {
+					case 1:		return VK_FORMAT_R8_UNORM;
+					case 2:		return VK_FORMAT_R8G8_UNORM;
+					case 3:		return VK_FORMAT_R8G8B8_UNORM;
+					case 4:		return VK_FORMAT_R8G8B8A8_UNORM;
+				}
+			}
+			else {
+				switch ( attribute.mSize ) {
+					case 1:		return VK_FORMAT_R8_UINT;
+					case 2:		return VK_FORMAT_R8G8_UINT;
+					case 3:		return VK_FORMAT_R8G8B8_UINT;
+					case 4:		return VK_FORMAT_R8G8B8A8_UINT;
+				}
+			}
+			break;
+		
+		case ZGL_TYPE_UNSIGNED_SHORT:
+			switch ( attribute.mSize ) {
+				case 1:		return VK_FORMAT_R16_UINT;
+				case 2:		return VK_FORMAT_R16G16_UINT;
+				case 3:		return VK_FORMAT_R16G16B16_UINT;
+				case 4:		return VK_FORMAT_R16G16B16A16_UINT;
+			}
+			break;
+	}
+	
+	assert ( false );
+	return VK_FORMAT_UNDEFINED;
+};
 
 //----------------------------------------------------------------//
 MOAIVertexFormatVK::MOAIVertexFormatVK () {
@@ -32,15 +87,47 @@ MOAIVertexFormatVK::MOAIVertexFormatVK () {
 MOAIVertexFormatVK::~MOAIVertexFormatVK () {
 }
 
-////----------------------------------------------------------------//
-//void MOAIVertexFormatVK::Unbind ( ZLGfx& gfx ) const {
-//
-//	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mTotalAttributes; ++i ) {
-//		
-//		MOAIVertexAttribute& attr = this->mAttributes [ i ];
-//		gfx.DisableVertexAttribArray ( attr.mIndex );
-//	}
-//}
+//----------------------------------------------------------------//
+void MOAIVertexFormatVK::UpdatePipelineCreateInfo ( VkGraphicsPipelineCreateInfo& info ) {
+
+	info.pVertexInputState = NULL;
+
+	ZLSize nAttributes = this->mAttributes.Size ();
+
+	if ( nAttributes == 0 ) return;
+
+	if ( this->mVertexInputAttributeDescriptionsVK.Size () != nAttributes ) {
+	
+		this->mVertexInputAttributeDescriptionsVK.Init ( nAttributes );
+		
+		for ( ZLIndex i = ZLIndexOp::ZERO; i < nAttributes; ++i ) {
+		
+			MOAIVertexAttribute& attribute = this->mAttributes [ i ];
+	
+			this->mVertexInputAttributeDescriptionsVK [ i ] = MOAIGfxStructVK::vertexInputAttributeDescription (
+				0,
+				( u32 )attribute.mIndex,
+				this->GuessFormat ( attribute ),
+				attribute.mOffset
+			);
+		}
+		
+		this->mVertexInputBindingDescriptionVK = MOAIGfxStructVK::vertexInputBindingDescription (
+			0,
+			( u32 )this->GetVertexSize (),
+			VK_VERTEX_INPUT_RATE_VERTEX
+		);
+		
+		this->mPipelineVertexInputStateCreateInfoVK = MOAIGfxStructVK::pipelineVertexInputStateCreateInfo (
+			&this->mVertexInputBindingDescriptionVK,
+			1,
+			this->mVertexInputAttributeDescriptionsVK.GetBuffer (),
+			( u32 )nAttributes
+		);
+	}
+
+	info.pVertexInputState = &this->mPipelineVertexInputStateCreateInfoVK;
+}
 
 //================================================================//
 // virtual

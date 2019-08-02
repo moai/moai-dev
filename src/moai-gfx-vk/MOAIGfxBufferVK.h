@@ -18,24 +18,10 @@ class MOAIGfxBufferVK :
 	public virtual MOAIGfxResourceVK,
 	public virtual MOAIGfxBuffer {
 protected:
-	
-	static const VkMemoryPropertyFlags HOST_BUFFER_PROPS = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
-	static const VkMemoryPropertyFlags DEVICE_BUFFER_PROPS = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
 
 	VkBuffer		mBuffer;
 	VkDeviceMemory	mMemory;
 	VkDeviceSize	mAllocationSize;
-	
-	//----------------------------------------------------------------//
-	operator VkBuffer () {
-		return this->mBuffer;
-	}
-	
-	//----------------------------------------------------------------//
-	void					Bind										( VkDevice device );
-	void					Cleanup										( VkDevice device );
-	void					Init										( VkDevice device, VkPhysicalDeviceMemoryProperties memProps, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags memPropFlags = HOST_BUFFER_PROPS );
-	void					MapAndCopy									( VkDevice device, const void* data, size_t size );
 	
 	//----------------------------------------------------------------//
 	bool					MOAIGfxResource_OnCPUCreate					();
@@ -53,17 +39,23 @@ protected:
 
 public:
 	
-//	GET ( size_t, BufferCount, mVBOs.Size ())
-//	GET ( u32, Target, mTarget )
-//	GET_SET ( bool, CopyOnUpdate, mCopyOnUpdate )
-//
-//	IS ( UsingVBOs, mUseVBOs, true )
+	static const VkMemoryPropertyFlags HOST_BUFFER_PROPS = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
+	static const VkMemoryPropertyFlags DEVICE_BUFFER_PROPS = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
+	
+	GET ( VkBuffer&, Buffer, this->mBuffer );
 	
 	//----------------------------------------------------------------//
-//	size_t					CountVBOs					();
+	operator VkBuffer () {
+		return this->mBuffer;
+	}
+	
+	//----------------------------------------------------------------//
+	void					Bind						();
+	void					Cleanup						();
+	void					Init						( VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags memPropFlags = HOST_BUFFER_PROPS );
+	void					MapAndCopy					( const void* data, size_t size );
 							MOAIGfxBufferVK				();
 							~MOAIGfxBufferVK			();
-//	void					ReserveVBOs					( ZLSize gpuBuffers );
 };
 
 #endif

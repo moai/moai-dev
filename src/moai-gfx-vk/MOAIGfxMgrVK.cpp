@@ -9,6 +9,7 @@
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAIImageTextureVK.h>
 #include <moai-gfx-vk/MOAIIndexBufferVK.h>
+#include <moai-gfx-vk/MOAIOneTriVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAIShaderMgrVK.h>
 #include <moai-gfx-vk/MOAITexture2DVK.h>
@@ -474,16 +475,6 @@ MOAIGfxMgrVK::~MOAIGfxMgrVK () {
 }
 
 ////----------------------------------------------------------------//
-//void MOAIGfxMgrVK::OnGlobalsFinalize () {
-//}
-//
-////----------------------------------------------------------------//
-//void MOAIGfxMgrVK::OnGlobalsInitialize () {
-//
-//	this->AffirmBuffers ();
-//}
-//
-////----------------------------------------------------------------//
 //void MOAIGfxMgrVK::ReportTextureAlloc ( cc8* name, size_t size ) {
 //	UNUSED ( name );
 //	UNUSED ( size );
@@ -515,6 +506,18 @@ MOAIGfxMgrVK::~MOAIGfxMgrVK () {
 //================================================================//
 // overrides
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAIGfxMgrVK::OnGlobalsFinalize () {
+	MOAIGfxMgr::OnGlobalsFinalize ();
+
+	this->GetRenderTreeVK ().mOneTri = NULL;
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxMgrVK::OnGlobalsInitialize () {
+	MOAIGfxMgr::OnGlobalsInitialize ();
+}
 
 //----------------------------------------------------------------//
 MOAIShader* MOAIGfxMgrVK::MOAIGfxMgr_AffirmShader ( MOAILuaState& state, int idx ) const {

@@ -17,10 +17,11 @@ class MOAIGfxMgrVK_RenderTreeVK :
 	public virtual MOAIGfxMgr_RenderTree {
 private:
 
+	friend class MOAIGfxMgrVK;
+
 	ZLStrongPtr < MOAIOneTriVK >	mOneTri;
 
 	//----------------------------------------------------------------//
-	MOAIOneTriVK&		AffirmOneTri						();
 	void				DrawOneTri							( VkCommandBuffer& commandBuffer, u32 width, u32 height );
 
 	//----------------------------------------------------------------//

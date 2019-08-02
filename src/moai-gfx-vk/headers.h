@@ -20,6 +20,7 @@
 #include <moai-gfx-vk/MOAIImageTextureVK.h>
 #include <moai-gfx-vk/MOAIIndexBufferVK.h>
 #include <moai-gfx-vk/MOAIOneTriVK.h>
+#include <moai-gfx-vk/MOAIOneTriNativeVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAIShaderMgrVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>

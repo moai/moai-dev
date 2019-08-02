@@ -14,6 +14,13 @@ class MOAIVertexFormatVK :
 	public virtual MOAIVertexFormat {
 protected:
 
+	ZLLeanArray < VkVertexInputAttributeDescription >	mVertexInputAttributeDescriptionsVK;
+	VkVertexInputBindingDescription						mVertexInputBindingDescriptionVK;
+	VkPipelineVertexInputStateCreateInfo				mPipelineVertexInputStateCreateInfoVK;
+
+	//----------------------------------------------------------------//
+	static VkFormat		GuessFormat							( const MOAIVertexAttribute& attribute );
+
 	//----------------------------------------------------------------//
 	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
 	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
@@ -25,10 +32,9 @@ public:
 	DECL_LUA_FACTORY ( MOAIVertexFormatVK )
 		
 	//----------------------------------------------------------------//
-//	void				Bind							( ZLGfx& gfx, ZLSharedConstBuffer* buffer ) const;
 						MOAIVertexFormatVK				();
 						~MOAIVertexFormatVK				();
-//	void				Unbind							( ZLGfx& gfx ) const;
+	void				UpdatePipelineCreateInfo		( VkGraphicsPipelineCreateInfo& info );
 };
 
 #endif

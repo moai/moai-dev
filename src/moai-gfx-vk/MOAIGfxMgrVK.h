@@ -103,8 +103,6 @@ protected:
 //	static int						_renewResources				( lua_State* L );
 
 	//----------------------------------------------------------------//
-//	void							OnGlobalsFinalize			();
-//	void							OnGlobalsInitialize			();
 	void							InitCommandBuffers			();
 	void							InitDepthStencil			();
 	void							InitFrameBuffers			();
@@ -112,6 +110,8 @@ protected:
 	void							InitSemaphores				();
 
 	//----------------------------------------------------------------//
+	void							OnGlobalsFinalize							();
+	void							OnGlobalsInitialize							();
 	MOAIShader*						MOAIGfxMgr_AffirmShader						( MOAILuaState& state, int idx ) const;
 	MOAITexture*					MOAIGfxMgr_AffirmTexture					( MOAILuaState& state, int idx ) const;
 	MOAIImageTexture*				MOAIGfxMgr_CreateImageTexture				() const;
