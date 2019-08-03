@@ -26,13 +26,13 @@
 ////----------------------------------------------------------------//
 //size_t MOAIShaderUniformVK::GetSize () const {
 //
-//	return this->MOAIShaderUniformDescriptor::GetSize () * this->mCount;
+//	return this->MOAIUniformDescriptor::GetSize () * this->mCount;
 //}
 //
 ////----------------------------------------------------------------//
 //void MOAIShaderUniformVK::Init ( u32 type, u32 width, u32 count ) {
 //
-//	this->MOAIShaderUniformDescriptor::Init ( type, width );
+//	this->MOAIUniformDescriptor::Init ( type, width );
 //	this->mCount = count;
 //	this->mCPUOffset = 0;
 //}

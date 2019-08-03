@@ -127,13 +127,13 @@ void MOAILight::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILua
 //----------------------------------------------------------------//
 bool MOAILight::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 
-	return this->mFormat ? this->MOAIShaderUniformSchema::ApplyAttrOp ( this->mBuffer.GetBuffer (), attrID, attr, op ) : false;
+	return this->mFormat ? this->MOAIUniformSchema::ApplyAttrOp ( this->mBuffer.GetBuffer (), attrID, attr, op ) : false;
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformHandle MOAILight::MOAIAbstractShaderUniformSchema_GetUniformHandle ( void* buffer, ZLIndex uniformID ) const {
+MOAIUniformHandle MOAILight::MOAIAbstractShaderUniformSchema_GetUniformHandle ( void* buffer, ZLIndex uniformID ) const {
 
-	MOAIShaderUniformHandle uniform;
+	MOAIUniformHandle uniform;
 	uniform.mBuffer = 0;
 
 	if ( this->mFormat ) {

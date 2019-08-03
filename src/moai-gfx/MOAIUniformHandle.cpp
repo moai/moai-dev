@@ -2,14 +2,14 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx/MOAIShaderUniformHandle.h>
+#include <moai-gfx/MOAIUniformHandle.h>
 
 //================================================================//
-// MOAIShaderUniformHandle
+// MOAIUniformHandle
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIShaderUniformHandle::AddValue ( const ZLAttribute& attr ) {
+void MOAIUniformHandle::AddValue ( const ZLAttribute& attr ) {
 
 	switch ( attr.GetTypeID ()) {
 
@@ -35,11 +35,11 @@ void MOAIShaderUniformHandle::AddValue ( const ZLAttribute& attr ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniformHandle::Default ( u32 count ) {
+void MOAIUniformHandle::Default ( u32 count ) {
 	
 	if ( this->mWidth == 9 ) {
 	
-		MOAIShaderUniformHandle cursor = *this;
+		MOAIUniformHandle cursor = *this;
 	
 		for ( u32 i = 0; i < count; ++i ) {
 			cursor.SetValue ( ZLMatrix3x3::IDENT );
@@ -48,7 +48,7 @@ void MOAIShaderUniformHandle::Default ( u32 count ) {
 	}
 	else if ( this->mWidth == 16 ) {
 	
-		MOAIShaderUniformHandle cursor = *this;
+		MOAIUniformHandle cursor = *this;
 	
 		for ( u32 i = 0; i < count; ++i ) {
 			cursor.SetValue ( ZLMatrix4x4::IDENT );
@@ -62,41 +62,41 @@ void MOAIShaderUniformHandle::Default ( u32 count ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIShaderUniformHandle::IsValid () {
+bool MOAIUniformHandle::IsValid () {
 
 	return ( this->mBuffer != NULL );
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformHandle::MOAIShaderUniformHandle () {
+MOAIUniformHandle::MOAIUniformHandle () {
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformHandle::~MOAIShaderUniformHandle () {
+MOAIUniformHandle::~MOAIUniformHandle () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniformHandle::Next () {
+void MOAIUniformHandle::Next () {
 
 	this->mBuffer = ( void* )(( size_t )this->mBuffer + ( this->mWidth * COMPONENT_SIZE ));
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformHandle MOAIShaderUniformHandle::Offset ( ZLIndex index ) {
+MOAIUniformHandle MOAIUniformHandle::Offset ( ZLIndex index ) {
 
-	MOAIShaderUniformHandle offset = *this;
+	MOAIUniformHandle offset = *this;
 	offset.mBuffer = ( void* )(( size_t )this->mBuffer + ( this->mWidth * COMPONENT_SIZE * ( ZLSize )index ));
 	return offset;
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniformHandle::SetRawValue ( const void* srcBuffer ) {
+void MOAIUniformHandle::SetRawValue ( const void* srcBuffer ) {
 	
 	memcpy ( this->mBuffer, srcBuffer, this->mWidth * COMPONENT_SIZE );
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniformHandle::SetValue ( const s32* srcBuffer ) {
+void MOAIUniformHandle::SetValue ( const s32* srcBuffer ) {
 
 	if ( this->mType == UNIFORM_TYPE_FLOAT ) {
 	
@@ -111,7 +111,7 @@ void MOAIShaderUniformHandle::SetValue ( const s32* srcBuffer ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniformHandle::SetValue ( const float* srcBuffer ) {
+void MOAIUniformHandle::SetValue ( const float* srcBuffer ) {
 
 	if ( this->mType == UNIFORM_TYPE_INT ) {
 	
@@ -126,9 +126,9 @@ void MOAIShaderUniformHandle::SetValue ( const float* srcBuffer ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniformHandle::SetValue ( float value ) {
+void MOAIUniformHandle::SetValue ( float value ) {
 
-	if ( this->mType == MOAIShaderUniformHandle::UNIFORM_TYPE_INT ) {
+	if ( this->mType == MOAIUniformHandle::UNIFORM_TYPE_INT ) {
 		this->SetValue (( s32 )value );
 		return;
 	}
@@ -137,9 +137,9 @@ void MOAIShaderUniformHandle::SetValue ( float value ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniformHandle::SetValue ( s32 value ) {
+void MOAIUniformHandle::SetValue ( s32 value ) {
 
-	if ( this->mType == MOAIShaderUniformHandle::UNIFORM_TYPE_FLOAT ) {
+	if ( this->mType == MOAIUniformHandle::UNIFORM_TYPE_FLOAT ) {
 		this->SetValue (( float )value );
 		return;
 	}
@@ -148,7 +148,7 @@ void MOAIShaderUniformHandle::SetValue ( s32 value ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniformHandle::SetValue ( const ZLAttribute& attr ) {
+void MOAIUniformHandle::SetValue ( const ZLAttribute& attr ) {
 
 	switch ( attr.GetTypeID ()) {
 
@@ -193,7 +193,7 @@ void MOAIShaderUniformHandle::SetValue ( const ZLAttribute& attr ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniformHandle::SetValue ( const ZLColorVec& value ) {
+void MOAIUniformHandle::SetValue ( const ZLColorVec& value ) {
 
 	if ( this->mWidth == 1 ) {
 		this->SetValue ( value.mA );
@@ -211,7 +211,7 @@ void MOAIShaderUniformHandle::SetValue ( const ZLColorVec& value ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniformHandle::SetValue ( const ZLIntVec4D& value ) {
+void MOAIUniformHandle::SetValue ( const ZLIntVec4D& value ) {
 
 	if ( this->mWidth == 1 ) {
 		this->SetValue ( value.mX );
@@ -229,7 +229,7 @@ void MOAIShaderUniformHandle::SetValue ( const ZLIntVec4D& value ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniformHandle::SetValue ( const ZLAffine2D& value ) {
+void MOAIUniformHandle::SetValue ( const ZLAffine2D& value ) {
 
 	if ( this->mWidth == 9 ) {
 	
@@ -242,7 +242,7 @@ void MOAIShaderUniformHandle::SetValue ( const ZLAffine2D& value ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniformHandle::SetValue ( const ZLAffine3D& value ) {
+void MOAIUniformHandle::SetValue ( const ZLAffine3D& value ) {
 
 	if ( this->mWidth == 9 ) {
 	
@@ -255,7 +255,7 @@ void MOAIShaderUniformHandle::SetValue ( const ZLAffine3D& value ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniformHandle::SetValue ( const ZLMatrix3x3& value ) {
+void MOAIUniformHandle::SetValue ( const ZLMatrix3x3& value ) {
 
 	if ( this->mWidth == 9 ) {
 	
@@ -268,7 +268,7 @@ void MOAIShaderUniformHandle::SetValue ( const ZLMatrix3x3& value ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniformHandle::SetValue ( const ZLMatrix4x4& value ) {
+void MOAIUniformHandle::SetValue ( const ZLMatrix4x4& value ) {
 
 	if ( this->mWidth == 9 ) {
 	
@@ -281,7 +281,7 @@ void MOAIShaderUniformHandle::SetValue ( const ZLMatrix4x4& value ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniformHandle::SetValue ( const ZLVec4D& value ) {
+void MOAIUniformHandle::SetValue ( const ZLVec4D& value ) {
 
 	if ( this->mWidth == 1 ) {
 		this->SetValue ( value.mX );

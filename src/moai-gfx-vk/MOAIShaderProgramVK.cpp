@@ -217,7 +217,7 @@
 //
 //	for ( ZLIndex i = ZLIndexOp::ZERO; i < nUniforms; ++i ) {
 //
-//		MOAIShaderUniformHandle uniform = this->GetUniformHandle ( this->mUniformBuffer.GetBuffer (), i );
+//		MOAIUniformHandle uniform = this->GetUniformHandle ( this->mUniformBuffer.GetBuffer (), i );
 //
 //		if ( uniform.IsValid ()) {
 //			this->mUniforms [ i ].Bind ( gfx, uniform.mBuffer );
@@ -297,7 +297,7 @@
 //	buffer.Init ( this->mUniformBufferSize );
 //
 //	for ( ZLIndex i = ZLIndexOp::ZERO; i < nUniforms; ++i ) {
-//		MOAIShaderUniformHandle uniform = this->GetUniformHandle ( buffer.GetBuffer (), i );
+//		MOAIUniformHandle uniform = this->GetUniformHandle ( buffer.GetBuffer (), i );
 //		uniform.Default ( this->mUniforms [ i ].mCount );
 //	}
 //}
@@ -467,7 +467,7 @@ MOAIShaderProgramVK::~MOAIShaderProgramVK () {
 //
 //		if ( global.mUniformID == ZLIndexOp::INVALID ) continue;
 //
-//		MOAIShaderUniformHandle uniform = this->GetUniformHandle ( buffer.GetBuffer (), global.mUniformID, global.mIndex );
+//		MOAIUniformHandle uniform = this->GetUniformHandle ( buffer.GetBuffer (), global.mUniformID, global.mIndex );
 //		if ( !uniform.IsValid ()) continue;
 //
 //		if ( global.mGlobalID < MOAIGfxMgrVK::TOTAL_MATRICES ) {
@@ -695,9 +695,9 @@ void MOAIShaderProgramVK::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& compose
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformHandle MOAIShaderProgramVK::MOAIAbstractShaderUniformSchema_GetUniformHandle ( void* buffer, ZLIndex uniformID ) const {
+MOAIUniformHandle MOAIShaderProgramVK::MOAIAbstractShaderUniformSchema_GetUniformHandle ( void* buffer, ZLIndex uniformID ) const {
 
-	MOAIShaderUniformHandle uniform;
+	MOAIUniformHandle uniform;
 //	uniform.mBuffer = 0;
 //
 //	if ( uniformID < this->mUniforms.Size ()) {

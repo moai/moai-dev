@@ -33,11 +33,11 @@
 #include <moai-gfx/MOAIMaterialGlobalsContext.h>
 #include <moai-gfx/MOAIMaterialMgr.h>
 #include <moai-gfx/MOAIShader.h>
-#include <moai-gfx/MOAIShaderUniformDescriptor.h>
-#include <moai-gfx/MOAIShaderUniformHandle.h>
-#include <moai-gfx/MOAIShaderUniformSchema.h>
 #include <moai-gfx/MOAITexture.h>
 #include <moai-gfx/MOAITexture2D.h>
+#include <moai-gfx/MOAIUniformDescriptor.h>
+#include <moai-gfx/MOAIUniformHandle.h>
+#include <moai-gfx/MOAIUniformSchema.h>
 #include <moai-gfx/MOAIVertexArray.h>
 #include <moai-gfx/MOAIVertexBuffer.h>
 #include <moai-gfx/MOAIVertexFormat.h>

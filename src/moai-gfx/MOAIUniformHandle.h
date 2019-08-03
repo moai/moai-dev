@@ -1,16 +1,16 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAISHADERUNIFORMHANDLE_H
-#define	MOAISHADERUNIFORMHANDLE_H
+#ifndef	MOAIUNIFORMHANDLE_H
+#define	MOAIUNIFORMHANDLE_H
 
-#include <moai-gfx/MOAIShaderUniformDescriptor.h>
+#include <moai-gfx/MOAIUniformDescriptor.h>
 
 //================================================================//
-// MOAIShaderUniformHandle
+// MOAIUniformHandle
 //================================================================//
-class MOAIShaderUniformHandle :
-	public MOAIShaderUniformDescriptor {
+class MOAIUniformHandle :
+	public MOAIUniformDescriptor {
 private:
 
 	//----------------------------------------------------------------//
@@ -24,8 +24,8 @@ public:
 	void*						mBuffer;
 
 	//----------------------------------------------------------------//
-	MOAIShaderUniformHandle& operator = ( const MOAIShaderUniformDescriptor& assign ) {
-		*( MOAIShaderUniformDescriptor* )this = assign;
+	MOAIUniformHandle& operator = ( const MOAIUniformDescriptor& assign ) {
+		*( MOAIUniformDescriptor* )this = assign;
 		return *this;
 	}
 
@@ -34,7 +34,7 @@ public:
 	void						Default							( u32 count = 1 );
 	bool						IsValid							();
 	void						Next							();
-	MOAIShaderUniformHandle		Offset							( ZLIndex index );
+	MOAIUniformHandle			Offset							( ZLIndex index );
 	void						SetValue						( float value );
 	void						SetValue						( s32 value );
 	void						SetValue						( const ZLAttribute& attr );
@@ -45,8 +45,8 @@ public:
 	void						SetValue						( const ZLMatrix3x3& value );
 	void						SetValue						( const ZLMatrix4x4& value );
 	void						SetValue						( const ZLVec4D& value );
-								MOAIShaderUniformHandle			();
-								~MOAIShaderUniformHandle		();
+								MOAIUniformHandle				();
+								~MOAIUniformHandle				();
 };
 
 #endif

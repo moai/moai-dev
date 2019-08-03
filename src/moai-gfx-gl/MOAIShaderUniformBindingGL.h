@@ -21,8 +21,8 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-	void			Bind							( ZLGfx&gfx, const MOAIShaderUniformDescriptor& descriptor, const void* buffer ) const;
-	size_t			GetSize							( const MOAIShaderUniformDescriptor& descriptor ) const;
+	void			Bind							( ZLGfx&gfx, const MOAIUniformDescriptor& descriptor, const void* buffer ) const;
+	size_t			GetSize							( const MOAIUniformDescriptor& descriptor ) const;
 					MOAIShaderUniformBindingGL		();
 					~MOAIShaderUniformBindingGL		();
 	

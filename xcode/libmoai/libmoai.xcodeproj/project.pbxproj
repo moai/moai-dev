@@ -2192,13 +2192,13 @@
 		CD4A9603229E091F00F9E400 /* MOAIBlendMode.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A957F229DFAB500F9E400 /* MOAIBlendMode.h */; };
 		CD4A9604229E091F00F9E400 /* MOAIGfxMgr_CPUCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4A9580229DFAB500F9E400 /* MOAIGfxMgr_CPUCache.cpp */; };
 		CD4A9605229E091F00F9E400 /* MOAIGfxMgr_CPUCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A9581229DFAB500F9E400 /* MOAIGfxMgr_CPUCache.h */; };
-		CD4A9606229E091F00F9E400 /* MOAIShaderUniformDescriptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4A9584229DFAB500F9E400 /* MOAIShaderUniformDescriptor.cpp */; };
-		CD4A9607229E091F00F9E400 /* MOAIShaderUniformDescriptor.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A9585229DFAB500F9E400 /* MOAIShaderUniformDescriptor.h */; };
-		CD4A9608229E091F00F9E400 /* MOAIShaderUniformHandle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4A9586229DFAB500F9E400 /* MOAIShaderUniformHandle.cpp */; };
-		CD4A9609229E091F00F9E400 /* MOAIShaderUniformHandle.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A9587229DFAB500F9E400 /* MOAIShaderUniformHandle.h */; };
+		CD4A9606229E091F00F9E400 /* MOAIUniformDescriptor.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4A9584229DFAB500F9E400 /* MOAIUniformDescriptor.cpp */; };
+		CD4A9607229E091F00F9E400 /* MOAIUniformDescriptor.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A9585229DFAB500F9E400 /* MOAIUniformDescriptor.h */; };
+		CD4A9608229E091F00F9E400 /* MOAIUniformHandle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4A9586229DFAB500F9E400 /* MOAIUniformHandle.cpp */; };
+		CD4A9609229E091F00F9E400 /* MOAIUniformHandle.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A9587229DFAB500F9E400 /* MOAIUniformHandle.h */; };
 		CD4A960D229E0B9C00F9E400 /* MOAIGfxMgrComponents.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A960C229E0B9C00F9E400 /* MOAIGfxMgrComponents.h */; };
-		CD4A9610229E0E4100F9E400 /* MOAIShaderUniformSchema.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4A960E229E0E4100F9E400 /* MOAIShaderUniformSchema.cpp */; };
-		CD4A9611229E0E4100F9E400 /* MOAIShaderUniformSchema.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A960F229E0E4100F9E400 /* MOAIShaderUniformSchema.h */; };
+		CD4A9610229E0E4100F9E400 /* MOAIUniformSchema.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4A960E229E0E4100F9E400 /* MOAIUniformSchema.cpp */; };
+		CD4A9611229E0E4100F9E400 /* MOAIUniformSchema.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A960F229E0E4100F9E400 /* MOAIUniformSchema.h */; };
 		CD4A9614229E125200F9E400 /* MOAIGfxMgr_RenderTree.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4A9612229E125200F9E400 /* MOAIGfxMgr_RenderTree.cpp */; };
 		CD4A9615229E125200F9E400 /* MOAIGfxMgr_RenderTree.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A9613229E125200F9E400 /* MOAIGfxMgr_RenderTree.h */; };
 		CD4A9625229E682200F9E400 /* MOAIVertexFormat.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4A9621229E682200F9E400 /* MOAIVertexFormat.cpp */; };
@@ -6582,10 +6582,10 @@
 		CD4A9581229DFAB500F9E400 /* MOAIGfxMgr_CPUCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxMgr_CPUCache.h; path = "moai-gfx/MOAIGfxMgr_CPUCache.h"; sourceTree = "<group>"; };
 		CD4A9582229DFAB500F9E400 /* MOAIGfxMgr_VertexCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIGfxMgr_VertexCache.cpp; path = "moai-gfx/MOAIGfxMgr_VertexCache.cpp"; sourceTree = "<group>"; };
 		CD4A9583229DFAB500F9E400 /* MOAIGfxMgr_VertexCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxMgr_VertexCache.h; path = "moai-gfx/MOAIGfxMgr_VertexCache.h"; sourceTree = "<group>"; };
-		CD4A9584229DFAB500F9E400 /* MOAIShaderUniformDescriptor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIShaderUniformDescriptor.cpp; path = "moai-gfx/MOAIShaderUniformDescriptor.cpp"; sourceTree = "<group>"; };
-		CD4A9585229DFAB500F9E400 /* MOAIShaderUniformDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIShaderUniformDescriptor.h; path = "moai-gfx/MOAIShaderUniformDescriptor.h"; sourceTree = "<group>"; };
-		CD4A9586229DFAB500F9E400 /* MOAIShaderUniformHandle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIShaderUniformHandle.cpp; path = "moai-gfx/MOAIShaderUniformHandle.cpp"; sourceTree = "<group>"; };
-		CD4A9587229DFAB500F9E400 /* MOAIShaderUniformHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIShaderUniformHandle.h; path = "moai-gfx/MOAIShaderUniformHandle.h"; sourceTree = "<group>"; };
+		CD4A9584229DFAB500F9E400 /* MOAIUniformDescriptor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIUniformDescriptor.cpp; path = "moai-gfx/MOAIUniformDescriptor.cpp"; sourceTree = "<group>"; };
+		CD4A9585229DFAB500F9E400 /* MOAIUniformDescriptor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIUniformDescriptor.h; path = "moai-gfx/MOAIUniformDescriptor.h"; sourceTree = "<group>"; };
+		CD4A9586229DFAB500F9E400 /* MOAIUniformHandle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIUniformHandle.cpp; path = "moai-gfx/MOAIUniformHandle.cpp"; sourceTree = "<group>"; };
+		CD4A9587229DFAB500F9E400 /* MOAIUniformHandle.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIUniformHandle.h; path = "moai-gfx/MOAIUniformHandle.h"; sourceTree = "<group>"; };
 		CD4A95A1229DFD7200F9E400 /* MOAIGfxMgrGLComponents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxMgrGLComponents.h; path = "moai-gfx-gl/MOAIGfxMgrGLComponents.h"; sourceTree = "<group>"; };
 		CD4A95A2229DFD7200F9E400 /* MOAIGfxResourceGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIGfxResourceGL.cpp; path = "moai-gfx-gl/MOAIGfxResourceGL.cpp"; sourceTree = "<group>"; };
 		CD4A95A3229DFD7200F9E400 /* MOAIGfxResourceGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxResourceGL.h; path = "moai-gfx-gl/MOAIGfxResourceGL.h"; sourceTree = "<group>"; };
@@ -6620,8 +6620,8 @@
 		CD4A95F3229E085D00F9E400 /* ZLGfxDevice.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLGfxDevice.cpp; sourceTree = "<group>"; };
 		CD4A95F4229E085D00F9E400 /* ZLGfxDevice.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLGfxDevice.h; sourceTree = "<group>"; };
 		CD4A960C229E0B9C00F9E400 /* MOAIGfxMgrComponents.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxMgrComponents.h; path = "moai-gfx/MOAIGfxMgrComponents.h"; sourceTree = "<group>"; };
-		CD4A960E229E0E4100F9E400 /* MOAIShaderUniformSchema.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIShaderUniformSchema.cpp; path = "moai-gfx/MOAIShaderUniformSchema.cpp"; sourceTree = "<group>"; };
-		CD4A960F229E0E4100F9E400 /* MOAIShaderUniformSchema.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIShaderUniformSchema.h; path = "moai-gfx/MOAIShaderUniformSchema.h"; sourceTree = "<group>"; };
+		CD4A960E229E0E4100F9E400 /* MOAIUniformSchema.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIUniformSchema.cpp; path = "moai-gfx/MOAIUniformSchema.cpp"; sourceTree = "<group>"; };
+		CD4A960F229E0E4100F9E400 /* MOAIUniformSchema.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIUniformSchema.h; path = "moai-gfx/MOAIUniformSchema.h"; sourceTree = "<group>"; };
 		CD4A9612229E125200F9E400 /* MOAIGfxMgr_RenderTree.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIGfxMgr_RenderTree.cpp; path = "moai-gfx/MOAIGfxMgr_RenderTree.cpp"; sourceTree = "<group>"; };
 		CD4A9613229E125200F9E400 /* MOAIGfxMgr_RenderTree.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxMgr_RenderTree.h; path = "moai-gfx/MOAIGfxMgr_RenderTree.h"; sourceTree = "<group>"; };
 		CD4A9621229E682200F9E400 /* MOAIVertexFormat.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIVertexFormat.cpp; path = "moai-gfx/MOAIVertexFormat.cpp"; sourceTree = "<group>"; };
@@ -9578,12 +9578,12 @@
 		CD17129A22F50F0300381882 /* uniform */ = {
 			isa = PBXGroup;
 			children = (
-				CD4A9584229DFAB500F9E400 /* MOAIShaderUniformDescriptor.cpp */,
-				CD4A9585229DFAB500F9E400 /* MOAIShaderUniformDescriptor.h */,
-				CD4A9586229DFAB500F9E400 /* MOAIShaderUniformHandle.cpp */,
-				CD4A9587229DFAB500F9E400 /* MOAIShaderUniformHandle.h */,
-				CD4A960E229E0E4100F9E400 /* MOAIShaderUniformSchema.cpp */,
-				CD4A960F229E0E4100F9E400 /* MOAIShaderUniformSchema.h */,
+				CD4A9584229DFAB500F9E400 /* MOAIUniformDescriptor.cpp */,
+				CD4A9585229DFAB500F9E400 /* MOAIUniformDescriptor.h */,
+				CD4A9586229DFAB500F9E400 /* MOAIUniformHandle.cpp */,
+				CD4A9587229DFAB500F9E400 /* MOAIUniformHandle.h */,
+				CD4A960E229E0E4100F9E400 /* MOAIUniformSchema.cpp */,
+				CD4A960F229E0E4100F9E400 /* MOAIUniformSchema.h */,
 			);
 			name = uniform;
 			sourceTree = "<group>";
@@ -15121,7 +15121,7 @@
 				CD4A9482229DE21A00F9E400 /* pch.h in Headers */,
 				CD17119E22F0364F00381882 /* MOAIAbstractMaterialBatchInterface.h in Headers */,
 				CD4A9488229DE21A00F9E400 /* headers.h in Headers */,
-				CD4A9609229E091F00F9E400 /* MOAIShaderUniformHandle.h in Headers */,
+				CD4A9609229E091F00F9E400 /* MOAIUniformHandle.h in Headers */,
 				CD4A963D229E787500F9E400 /* MOAIVertexArray.h in Headers */,
 				CD4A95FB229E091F00F9E400 /* MOAIShader.h in Headers */,
 				CD4A948A229DE21A00F9E400 /* MOAIGfxMgr.h in Headers */,
@@ -15141,12 +15141,12 @@
 				CD4A9492229DE21A00F9E400 /* MOAIMaterialBatchHolder.h in Headers */,
 				CD1711A222F04C3200381882 /* MOAIAbstractMaterialInterface.h in Headers */,
 				CD4A95F9229E091F00F9E400 /* MOAIGfxMgr_GPUCache.h in Headers */,
-				CD4A9607229E091F00F9E400 /* MOAIShaderUniformDescriptor.h in Headers */,
+				CD4A9607229E091F00F9E400 /* MOAIUniformDescriptor.h in Headers */,
 				CD1711B822F16A5700381882 /* MOAIGfxStateCPUConsts.h in Headers */,
 				CD4A9615229E125200F9E400 /* MOAIGfxMgr_RenderTree.h in Headers */,
 				CD1711AA22F0EEE100381882 /* MOAIMaterialGlobalsContext.h in Headers */,
 				CD1711B622F1698300381882 /* MOAIGfxStateCPUCacheFrame.h in Headers */,
-				CD4A9611229E0E4100F9E400 /* MOAIShaderUniformSchema.h in Headers */,
+				CD4A9611229E0E4100F9E400 /* MOAIUniformSchema.h in Headers */,
 				CD4A9497229DE21A00F9E400 /* host.h in Headers */,
 				CD1711BA22F1737900381882 /* MOAIGfxPresetEnum.h in Headers */,
 				CD4A967022A2129E00F9E400 /* MOAIGfxResource.h in Headers */,
@@ -18540,11 +18540,11 @@
 				CD1711C522F2441A00381882 /* MOAIVertexFormatMgr.cpp in Sources */,
 				CD1711A122F04C3200381882 /* MOAIAbstractMaterialInterface.cpp in Sources */,
 				CD4A94A1229DE21A00F9E400 /* pch.cpp in Sources */,
-				CD4A9606229E091F00F9E400 /* MOAIShaderUniformDescriptor.cpp in Sources */,
+				CD4A9606229E091F00F9E400 /* MOAIUniformDescriptor.cpp in Sources */,
 				CD4A9600229E091F00F9E400 /* MOAIGfxMgr_VertexCache.cpp in Sources */,
 				CD4A94A2229DE21A00F9E400 /* MOAIMaterialBatch.cpp in Sources */,
 				CD4A94A4229DE21A00F9E400 /* MOAIMaterial.cpp in Sources */,
-				CD4A9610229E0E4100F9E400 /* MOAIShaderUniformSchema.cpp in Sources */,
+				CD4A9610229E0E4100F9E400 /* MOAIUniformSchema.cpp in Sources */,
 				CD4A94A6229DE21A00F9E400 /* MOAIMaterialMgr.cpp in Sources */,
 				CD4A963C229E787500F9E400 /* MOAIVertexArray.cpp in Sources */,
 				CD4A94A7229DE21A00F9E400 /* host.cpp in Sources */,
@@ -18567,7 +18567,7 @@
 				CD1711B522F1698300381882 /* MOAIGfxStateCPUCacheFrame.cpp in Sources */,
 				CD4A963A229E787500F9E400 /* MOAIIndexBuffer.cpp in Sources */,
 				CD4A94B7229DE21A00F9E400 /* MOAIGfxMgr.cpp in Sources */,
-				CD4A9608229E091F00F9E400 /* MOAIShaderUniformHandle.cpp in Sources */,
+				CD4A9608229E091F00F9E400 /* MOAIUniformHandle.cpp in Sources */,
 				CD4A94BA229DE21A00F9E400 /* MOAILight.cpp in Sources */,
 				CD1711B122F168C800381882 /* MOAIGfxStateGPUCacheFrame.cpp in Sources */,
 				CD4A966822A2045900F9E400 /* MOAIImageTexture.cpp in Sources */,

@@ -49,7 +49,7 @@ int MOAIShaderProgramGL::_declareUniform ( lua_State* L ) {
 
 	ZLIndex idx			= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	STLString name		= state.GetValue < cc8* >( 3, "" );
-	u32 type			= state.GetValue < u32 >( 4, MOAIShaderUniformDescriptor::UNIFORM_TYPE_FLOAT );
+	u32 type			= state.GetValue < u32 >( 4, MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT );
 	u32 width			= state.GetValue < u32 >( 5, 1 );
 	u32 count			= state.GetValue < u32 >( 6, 1 );
 
@@ -207,7 +207,7 @@ void MOAIShaderProgramGL::BindUniforms () {
 	
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < nUniforms; ++i ) {
 	
-		MOAIShaderUniformHandle handle = this->GetUniformHandle ( this->mUniformBuffer.GetBuffer (), i );
+		MOAIUniformHandle handle = this->GetUniformHandle ( this->mUniformBuffer.GetBuffer (), i );
 		
 		if ( handle.IsValid ()) {
 			this->mUniformBindings [ i ].Bind ( gfx, this->mUniformDescriptors [ i ], handle.mBuffer );
@@ -280,7 +280,7 @@ void MOAIShaderProgramGL::InitUniformBuffer ( ZLLeanArray < u8 >& buffer ) {
 	buffer.Init ( this->mUniformBufferSize );
 	
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < nUniforms; ++i ) {
-		MOAIShaderUniformHandle handle = this->GetUniformHandle ( buffer.GetBuffer (), i );
+		MOAIUniformHandle handle = this->GetUniformHandle ( buffer.GetBuffer (), i );
 		handle.Default ( this->mUniformDescriptors [ i ].mCount );
 	}
 }
@@ -441,7 +441,7 @@ void MOAIShaderProgramGL::UpdateUniforms ( ZLLeanArray < u8 >& buffer ) {
 		
 		if ( global.mUniformID == ZLIndexOp::INVALID ) continue;
 		
-		MOAIShaderUniformHandle uniform = this->GetUniformHandle ( buffer.GetBuffer (), global.mUniformID, global.mIndex );
+		MOAIUniformHandle uniform = this->GetUniformHandle ( buffer.GetBuffer (), global.mUniformID, global.mIndex );
 		if ( !uniform.IsValid ()) continue;
 		
 		if ( global.mGlobalID < MOAIGfxMgrGL::TOTAL_MATRICES ) {
@@ -569,14 +569,14 @@ void MOAIShaderProgramGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& compose
 
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxResourceGL, MOAILuaObject_RegisterLuaClass ( composer, state ));
 
-	state.SetField ( -1, "UNIFORM_TYPE_FLOAT",						( u32 )MOAIShaderUniformDescriptor::UNIFORM_TYPE_FLOAT );
-	state.SetField ( -1, "UNIFORM_TYPE_INT",						( u32 )MOAIShaderUniformDescriptor::UNIFORM_TYPE_INT );
+	state.SetField ( -1, "UNIFORM_TYPE_FLOAT",						( u32 )MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT );
+	state.SetField ( -1, "UNIFORM_TYPE_INT",						( u32 )MOAIUniformDescriptor::UNIFORM_TYPE_INT );
 	
-	state.SetField ( -1, "UNIFORM_WIDTH_VEC_2",						( u32 )MOAIShaderUniformDescriptor::UNIFORM_WIDTH_VEC_2 );
-	state.SetField ( -1, "UNIFORM_WIDTH_VEC_3",						( u32 )MOAIShaderUniformDescriptor::UNIFORM_WIDTH_VEC_3 );
-	state.SetField ( -1, "UNIFORM_WIDTH_VEC_4",						( u32 )MOAIShaderUniformDescriptor::UNIFORM_WIDTH_VEC_4 );
-	state.SetField ( -1, "UNIFORM_WIDTH_MATRIX_3X3",				( u32 )MOAIShaderUniformDescriptor::UNIFORM_WIDTH_MATRIX_3X3 );
-	state.SetField ( -1, "UNIFORM_WIDTH_MATRIX_4X4",				( u32 )MOAIShaderUniformDescriptor::UNIFORM_WIDTH_MATRIX_4X4 );
+	state.SetField ( -1, "UNIFORM_WIDTH_VEC_2",						( u32 )MOAIUniformDescriptor::UNIFORM_WIDTH_VEC_2 );
+	state.SetField ( -1, "UNIFORM_WIDTH_VEC_3",						( u32 )MOAIUniformDescriptor::UNIFORM_WIDTH_VEC_3 );
+	state.SetField ( -1, "UNIFORM_WIDTH_VEC_4",						( u32 )MOAIUniformDescriptor::UNIFORM_WIDTH_VEC_4 );
+	state.SetField ( -1, "UNIFORM_WIDTH_MATRIX_3X3",				( u32 )MOAIUniformDescriptor::UNIFORM_WIDTH_MATRIX_3X3 );
+	state.SetField ( -1, "UNIFORM_WIDTH_MATRIX_4X4",				( u32 )MOAIUniformDescriptor::UNIFORM_WIDTH_MATRIX_4X4 );
 	
 	state.SetField ( -1, "GLOBAL_CLIP_TO_DISPLAY_MTX",				( u32 )MOAIGfxMgrGL::CLIP_TO_DISPLAY_MTX );
 	state.SetField ( -1, "GLOBAL_CLIP_TO_MODEL_MTX",				( u32 )MOAIGfxMgrGL::CLIP_TO_MODEL_MTX );
@@ -669,13 +669,13 @@ void MOAIShaderProgramGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& compose
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformHandle MOAIShaderProgramGL::MOAIAbstractShaderUniformSchema_GetUniformHandle ( void* buffer, ZLIndex uniformID ) const {
+MOAIUniformHandle MOAIShaderProgramGL::MOAIAbstractShaderUniformSchema_GetUniformHandle ( void* buffer, ZLIndex uniformID ) const {
 
-	MOAIShaderUniformHandle uniform;
+	MOAIUniformHandle uniform;
 	uniform.mBuffer = 0;
 
 	if ( uniformID < this->mUniformDescriptors.Size ()) {
-		const MOAIShaderUniformDescriptor& descriptor = this->mUniformDescriptors [ uniformID ];
+		const MOAIUniformDescriptor& descriptor = this->mUniformDescriptors [ uniformID ];
 		uniform.mType		= descriptor.mType;
 		uniform.mWidth		= descriptor.mWidth;
 		uniform.mBuffer		= ( void* )(( size_t )buffer + descriptor.mCPUOffset );

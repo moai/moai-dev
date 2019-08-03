@@ -64,7 +64,7 @@ class MOAITextureVK;
 */
 class MOAIShaderProgramVK :
 	public virtual MOAIGfxResourceVK,
-	public virtual MOAIShaderUniformSchema {
+	public virtual MOAIUniformSchema {
 protected:
 
 //	friend class MOAIShaderVK;
@@ -119,7 +119,7 @@ protected:
 	bool						MOAIGfxResourceVK_OnGPUUpdate						();
 	void						MOAILuaObject_RegisterLuaClass						( MOAIComposer& composer, MOAILuaState& state );
 	void						MOAILuaObject_RegisterLuaFuncs						( MOAIComposer& composer, MOAILuaState& state );
-	MOAIShaderUniformHandle		MOAIAbstractShaderUniformSchema_GetUniformHandle		( void* buffer, ZLIndex uniformID ) const;
+	MOAIUniformHandle		MOAIAbstractShaderUniformSchema_GetUniformHandle		( void* buffer, ZLIndex uniformID ) const;
 //	void						ZLGfxListener_OnUniformLocation						( u32 addr, void* userdata );
 	
 public:

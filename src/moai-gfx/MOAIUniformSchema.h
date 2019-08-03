@@ -1,38 +1,38 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAISHADERUNIFORMSCHEMA_H
-#define	MOAISHADERUNIFORMSCHEMA_H
+#ifndef	MOAIUNIFORMSCHEMA_H
+#define	MOAIUNIFORMSCHEMA_H
 
-#include <moai-gfx/MOAIShaderUniformHandle.h>
+#include <moai-gfx/MOAIUniformHandle.h>
 
 //================================================================//
-// MOAIShaderUniformSchema
+// MOAIUniformSchema
 //================================================================//
-class MOAIShaderUniformSchema {
+class MOAIUniformSchema {
 protected:
 
-	ZLLeanArray < MOAIShaderUniformDescriptor >	mUniformDescriptors;
+	ZLLeanArray < MOAIUniformDescriptor >	mUniformDescriptors;
 
 public:
 	
-	static const ZLSize					MAX_UNIFORM_ARRAY_SIZE = 256;
+	static const ZLSize			MAX_UNIFORM_ARRAY_SIZE = 256;
 
 	//----------------------------------------------------------------//
 	bool						ApplyAttrOp							( void* buffer, ZLAttrID attrID, ZLAttribute& attr, u32 op ) const;
 	u32							GetAttributeID						( u32 uniformID, ZLIndex index = ZLIndexOp::ZERO ) const;
-	MOAIShaderUniformHandle		GetUniformHandle					( void* buffer, ZLIndex uniformID, ZLIndex index = ZLIndexOp::ZERO ) const;
-	MOAIShaderUniformHandle		GetUniformHandleForAttributeID		( void* buffer, ZLAttrID attrID ) const;
+	MOAIUniformHandle			GetUniformHandle					( void* buffer, ZLIndex uniformID, ZLIndex index = ZLIndexOp::ZERO ) const;
+	MOAIUniformHandle			GetUniformHandleForAttributeID		( void* buffer, ZLAttrID attrID ) const;
 	void						SetUniformValue						( lua_State* L, int idx, void* buffer, ZLIndex uniformID, ZLIndex index = ZLIndexOp::ZERO ) const;
-								MOAIShaderUniformSchema				();
-								~MOAIShaderUniformSchema			();
+								MOAIUniformSchema					();
+								~MOAIUniformSchema					();
 	ZLSize						UpdateUniformOffsets				();
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
 	void SetUniformValue ( void* buffer, ZLIndex uniformID, const TYPE& value ) const {
 
-		MOAIShaderUniformHandle uniform = this->GetUniformHandle ( buffer, uniformID, ZLIndexOp::ZERO );
+		MOAIUniformHandle uniform = this->GetUniformHandle ( buffer, uniformID, ZLIndexOp::ZERO );
 		assert ( uniform.IsValid ());
 		uniform.SetValue ( value );
 	}

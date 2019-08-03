@@ -2,32 +2,32 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx/MOAIShaderUniformDescriptor.h>
+#include <moai-gfx/MOAIUniformDescriptor.h>
 
 //================================================================//
-// MOAIShaderUniformDescriptor
+// MOAIUniformDescriptor
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLSize MOAIShaderUniformDescriptor::GetBufferSize () const {
+ZLSize MOAIUniformDescriptor::GetBufferSize () const {
 
 	return this->mCount * this->mWidth * COMPONENT_SIZE;
 }
 
 //----------------------------------------------------------------//
-ZLSize MOAIShaderUniformDescriptor::GetComponentSize () const {
+ZLSize MOAIUniformDescriptor::GetComponentSize () const {
 
 	return COMPONENT_SIZE;
 }
 
 //----------------------------------------------------------------//
-ZLSize MOAIShaderUniformDescriptor::GetUniformSize () const {
+ZLSize MOAIUniformDescriptor::GetUniformSize () const {
 
 	return this->mWidth * COMPONENT_SIZE;
 }
 
 //----------------------------------------------------------------//
-bool MOAIShaderUniformDescriptor::Init ( u32 type, u32 width, u32 count ) {
+bool MOAIUniformDescriptor::Init ( u32 type, u32 width, u32 count ) {
 	
 	this->mType			= type;
 	this->mWidth		= width;
@@ -38,7 +38,7 @@ bool MOAIShaderUniformDescriptor::Init ( u32 type, u32 width, u32 count ) {
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformDescriptor::MOAIShaderUniformDescriptor () :
+MOAIUniformDescriptor::MOAIUniformDescriptor () :
 	mType ( UNIFORM_TYPE_FLOAT ),
 	mWidth ( 1 ),
 	mCount ( 0 ),
@@ -46,5 +46,5 @@ MOAIShaderUniformDescriptor::MOAIShaderUniformDescriptor () :
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformDescriptor::~MOAIShaderUniformDescriptor () {
+MOAIUniformDescriptor::~MOAIUniformDescriptor () {
 }

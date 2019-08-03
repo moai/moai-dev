@@ -2,16 +2,16 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx/MOAIShaderUniformSchema.h>
+#include <moai-gfx/MOAIUniformSchema.h>
 
 //================================================================//
-// MOAIShaderUniformSchema
+// MOAIUniformSchema
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIShaderUniformSchema::ApplyAttrOp ( void* buffer, ZLAttrID attrID, ZLAttribute& attr, u32 op ) const {
+bool MOAIUniformSchema::ApplyAttrOp ( void* buffer, ZLAttrID attrID, ZLAttribute& attr, u32 op ) const {
 	
-	MOAIShaderUniformHandle uniform = this->GetUniformHandleForAttributeID ( buffer, attrID );
+	MOAIUniformHandle uniform = this->GetUniformHandleForAttributeID ( buffer, attrID );
 	
 	if ( uniform.IsValid ()) {
 	
@@ -34,19 +34,19 @@ bool MOAIShaderUniformSchema::ApplyAttrOp ( void* buffer, ZLAttrID attrID, ZLAtt
 }
 
 //----------------------------------------------------------------//
-u32 MOAIShaderUniformSchema::GetAttributeID ( u32 uniformID, ZLIndex index ) const {
+u32 MOAIUniformSchema::GetAttributeID ( u32 uniformID, ZLIndex index ) const {
 
 	return ( uniformID * MAX_UNIFORM_ARRAY_SIZE ) + index;
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformHandle MOAIShaderUniformSchema::GetUniformHandle ( void* buffer, ZLIndex uniformID, ZLIndex index ) const {
+MOAIUniformHandle MOAIUniformSchema::GetUniformHandle ( void* buffer, ZLIndex uniformID, ZLIndex index ) const {
 	
-	MOAIShaderUniformHandle handle;
+	MOAIUniformHandle handle;
 	handle.mBuffer = NULL;
 
 	if ( uniformID < this->mUniformDescriptors.Size ()) {
-		const MOAIShaderUniformDescriptor& descriptor = this->mUniformDescriptors [ uniformID ];
+		const MOAIUniformDescriptor& descriptor = this->mUniformDescriptors [ uniformID ];
 		handle				= descriptor;
 		handle.mIndex 		= index;
 		handle.mBuffer		= ( void* )(( uintptr )buffer + descriptor.mCPUOffset + ( descriptor.GetUniformSize () * index ));
@@ -55,7 +55,7 @@ MOAIShaderUniformHandle MOAIShaderUniformSchema::GetUniformHandle ( void* buffer
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformHandle MOAIShaderUniformSchema::GetUniformHandleForAttributeID ( void* buffer, ZLAttrID attrID ) const {
+MOAIUniformHandle MOAIUniformSchema::GetUniformHandleForAttributeID ( void* buffer, ZLAttrID attrID ) const {
 
 	// TODO: check for overflow
 
@@ -68,19 +68,19 @@ MOAIShaderUniformHandle MOAIShaderUniformSchema::GetUniformHandleForAttributeID 
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformSchema::MOAIShaderUniformSchema () {
+MOAIUniformSchema::MOAIUniformSchema () {
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformSchema::~MOAIShaderUniformSchema () {
+MOAIUniformSchema::~MOAIUniformSchema () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniformSchema::SetUniformValue ( lua_State* L, int idx, void* buffer, ZLIndex uniformID, ZLIndex index ) const {
+void MOAIUniformSchema::SetUniformValue ( lua_State* L, int idx, void* buffer, ZLIndex uniformID, ZLIndex index ) const {
 
 	MOAILuaState state ( L );
 
-	MOAIShaderUniformHandle uniform = this->GetUniformHandle ( buffer, uniformID, index );
+	MOAIUniformHandle uniform = this->GetUniformHandle ( buffer, uniformID, index );
 	
 	if ( uniform.IsValid ()) {
 		
@@ -122,14 +122,14 @@ void MOAIShaderUniformSchema::SetUniformValue ( lua_State* L, int idx, void* buf
 }
 
 //----------------------------------------------------------------//
-ZLSize MOAIShaderUniformSchema::UpdateUniformOffsets () {
+ZLSize MOAIUniformSchema::UpdateUniformOffsets () {
 
 	ZLSize bufferSize = 0;
 	ZLSize nUniforms = this->mUniformDescriptors.Size ();
 	
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < nUniforms; ++i ) {
 		
-		MOAIShaderUniformDescriptor& descriptor = this->mUniformDescriptors [ i ];
+		MOAIUniformDescriptor& descriptor = this->mUniformDescriptors [ i ];
 		descriptor.mCPUOffset = bufferSize;
 		bufferSize += descriptor.GetBufferSize ();
 	}
