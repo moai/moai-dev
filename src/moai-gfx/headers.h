@@ -9,7 +9,6 @@
 #include <moai-gfx/MOAIAbstractMaterialBatchInterface.h>
 #include <moai-gfx/MOAIAbstractMaterialGlobalsContext.h>
 #include <moai-gfx/MOAIAbstractMaterialInterface.h>
-#include <moai-gfx/MOAIAbstractShaderUniformSchema.h>
 #include <moai-gfx/MOAIBlendMode.h>
 #include <moai-gfx/MOAIDrawable.h>
 #include <moai-gfx/MOAIFrameBuffer.h>

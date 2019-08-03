@@ -9,9 +9,21 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-size_t MOAIShaderUniformDescriptor::GetSize () const {
+ZLSize MOAIShaderUniformDescriptor::GetBufferSize () const {
 
-	return this->mCount * this->mWidth * ELEMENT_SIZE;
+	return this->mCount * this->mWidth * COMPONENT_SIZE;
+}
+
+//----------------------------------------------------------------//
+ZLSize MOAIShaderUniformDescriptor::GetComponentSize () const {
+
+	return COMPONENT_SIZE;
+}
+
+//----------------------------------------------------------------//
+ZLSize MOAIShaderUniformDescriptor::GetUniformSize () const {
+
+	return this->mWidth * COMPONENT_SIZE;
 }
 
 //----------------------------------------------------------------//

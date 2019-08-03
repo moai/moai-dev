@@ -11,7 +11,7 @@ class MOAIShaderUniformDescriptor {
 protected:
 
 	static const size_t MAX_BUFFER_WIDTH = 16; // 4x4 matrix
-	static const size_t ELEMENT_SIZE = 4;
+	static const size_t COMPONENT_SIZE = 4;
 
 public:
 
@@ -31,10 +31,12 @@ public:
 	u32				mType;				// type of buffer
 	u32				mWidth;				// number of elements (ELEMENT_SIZE bytes each)
 	u32				mCount;				// (default) size of array
-	size_t			mCPUOffset;			// offset in CPU buffer
+	uintptr			mCPUOffset;			// offset in CPU buffer
 
 	//----------------------------------------------------------------//
-	size_t			GetSize							() const;
+	ZLSize			GetBufferSize					() const;
+	ZLSize			GetComponentSize				() const;
+	ZLSize			GetUniformSize					() const;
 	bool			Init							( u32 type, u32 width = 1, u32 count = 1 );
 					MOAIShaderUniformDescriptor		();
 					~MOAIShaderUniformDescriptor	();

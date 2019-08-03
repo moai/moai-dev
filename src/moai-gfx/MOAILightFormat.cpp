@@ -61,7 +61,7 @@ void MOAILightFormat::Bless () {
 			
 			MOAILightFormatUniform& uniform = this->mUniforms [ i ];
 			uniform.mBase = base;
-			base += uniform.GetSize ();
+			base += uniform.GetBufferSize ();
 		}
 		this->mBufferSize = base;
 		this->mDirty = false;

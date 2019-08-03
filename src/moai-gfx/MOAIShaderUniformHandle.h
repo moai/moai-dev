@@ -20,7 +20,14 @@ private:
 
 public:
 
+	ZLIndex						mIndex;
 	void*						mBuffer;
+
+	//----------------------------------------------------------------//
+	MOAIShaderUniformHandle& operator = ( const MOAIShaderUniformDescriptor& assign ) {
+		*( MOAIShaderUniformDescriptor* )this = assign;
+		return *this;
+	}
 
 	//----------------------------------------------------------------//
 	void						AddValue						( const ZLAttribute& attr );

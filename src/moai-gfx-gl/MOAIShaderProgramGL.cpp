@@ -185,15 +185,7 @@ void MOAIShaderProgramGL::AffirmUniforms () {
 
 	if ( this->mUniformBufferSize ) return;
 	
-	this->mUniformBufferSize = 0;
-	size_t nUniforms = this->mUniformDescriptors.Size ();
-	
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < nUniforms; ++i ) {
-		
-		MOAIShaderUniformDescriptor& descriptor = this->mUniformDescriptors [ i ];
-		descriptor.mCPUOffset = this->mUniformBufferSize;
-		this->mUniformBufferSize += descriptor.GetSize ();
-	}
+	this->mUniformBufferSize = this->UpdateUniformOffsets ();
 	
 	this->mUniformBuffer.Clear ();
 	this->mUniformBuffer.Init ( this->mUniformBufferSize );

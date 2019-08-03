@@ -79,7 +79,6 @@ protected:
 	typedef STLMap < u32, STLString >::iterator AttributeMapIt;
 	STLMap < u32, STLString > mAttributeMap;
 
-	ZLLeanArray < MOAIShaderUniformDescriptor >	mUniformDescriptors;
 	ZLLeanArray < MOAIShaderUniformBindingGL >	mUniformBindings;
 	ZLLeanArray < MOAIShaderProgramGlobalGL >	mGlobals;
 	ZLLeanArray < MOAIShaderProgramTextureGL >	mTextures;

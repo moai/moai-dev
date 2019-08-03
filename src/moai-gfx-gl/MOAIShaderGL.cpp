@@ -42,7 +42,7 @@ int MOAIShaderGL::_setUniform ( lua_State* L ) {
 	MOAIShaderProgramGL* program = MOAICast < MOAIShaderProgramGL >( self->mProgram );
 
 	if ( program ) {
-		program->SetUniform ( L, 3, self->mPendingUniformBuffer.GetBuffer (), uniformID, ZLIndexOp::ZERO );
+		program->SetUniformValue ( L, 3, self->mPendingUniformBuffer.GetBuffer (), uniformID, ZLIndexOp::ZERO );
 	}
 	return 0;
 }
@@ -57,7 +57,7 @@ int MOAIShaderGL::_setUniformArrayItem ( lua_State* L ) {
 	MOAIShaderProgramGL* program = MOAICast < MOAIShaderProgramGL >( self->mProgram );
 
 	if ( program ) {
-		program->SetUniform ( L, 4, self->mPendingUniformBuffer.GetBuffer (), uniformID, index );
+		program->SetUniformValue ( L, 4, self->mPendingUniformBuffer.GetBuffer (), uniformID, index );
 	}
 	return 0;
 }

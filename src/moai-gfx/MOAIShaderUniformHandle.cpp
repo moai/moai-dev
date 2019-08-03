@@ -57,7 +57,7 @@ void MOAIShaderUniformHandle::Default ( u32 count ) {
 	}
 	else {
 	
-		memset ( this->mBuffer, 0, this->mWidth * count * ELEMENT_SIZE );
+		memset ( this->mBuffer, 0, this->mWidth * count * COMPONENT_SIZE );
 	}
 }
 
@@ -78,21 +78,21 @@ MOAIShaderUniformHandle::~MOAIShaderUniformHandle () {
 //----------------------------------------------------------------//
 void MOAIShaderUniformHandle::Next () {
 
-	this->mBuffer = ( void* )(( size_t )this->mBuffer + ( this->mWidth * ELEMENT_SIZE ));
+	this->mBuffer = ( void* )(( size_t )this->mBuffer + ( this->mWidth * COMPONENT_SIZE ));
 }
 
 //----------------------------------------------------------------//
 MOAIShaderUniformHandle MOAIShaderUniformHandle::Offset ( ZLIndex index ) {
 
 	MOAIShaderUniformHandle offset = *this;
-	offset.mBuffer = ( void* )(( size_t )this->mBuffer + ( this->mWidth * ELEMENT_SIZE * ( ZLSize )index ));
+	offset.mBuffer = ( void* )(( size_t )this->mBuffer + ( this->mWidth * COMPONENT_SIZE * ( ZLSize )index ));
 	return offset;
 }
 
 //----------------------------------------------------------------//
 void MOAIShaderUniformHandle::SetRawValue ( const void* srcBuffer ) {
 	
-	memcpy ( this->mBuffer, srcBuffer, this->mWidth * ELEMENT_SIZE );
+	memcpy ( this->mBuffer, srcBuffer, this->mWidth * COMPONENT_SIZE );
 }
 
 //----------------------------------------------------------------//

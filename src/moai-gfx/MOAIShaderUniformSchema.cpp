@@ -34,6 +34,40 @@ bool MOAIShaderUniformSchema::ApplyAttrOp ( void* buffer, ZLAttrID attrID, ZLAtt
 }
 
 //----------------------------------------------------------------//
+u32 MOAIShaderUniformSchema::GetAttributeID ( u32 uniformID, ZLIndex index ) const {
+
+	return ( uniformID * MAX_UNIFORM_ARRAY_SIZE ) + index;
+}
+
+//----------------------------------------------------------------//
+MOAIShaderUniformHandle MOAIShaderUniformSchema::GetUniformHandle ( void* buffer, ZLIndex uniformID, ZLIndex index ) const {
+	
+	MOAIShaderUniformHandle handle;
+	handle.mBuffer = NULL;
+
+	if ( uniformID < this->mUniformDescriptors.Size ()) {
+		const MOAIShaderUniformDescriptor& descriptor = this->mUniformDescriptors [ uniformID ];
+		handle				= descriptor;
+		handle.mIndex 		= index;
+		handle.mBuffer		= ( void* )(( uintptr )buffer + descriptor.mCPUOffset + ( descriptor.GetUniformSize () * index ));
+	}
+	return handle;
+}
+
+//----------------------------------------------------------------//
+MOAIShaderUniformHandle MOAIShaderUniformSchema::GetUniformHandleForAttributeID ( void* buffer, ZLAttrID attrID ) const {
+
+	// TODO: check for overflow
+
+	u32 rawID = attrID.Unpack ();
+
+	ZLSize uniformID = rawID / MAX_UNIFORM_ARRAY_SIZE;
+	ZLSize index = rawID - ( uniformID * MAX_UNIFORM_ARRAY_SIZE );
+	
+	return this->GetUniformHandle ( buffer, ZLIndexCast ( uniformID ), ZLIndexCast ( index ));
+}
+
+//----------------------------------------------------------------//
 MOAIShaderUniformSchema::MOAIShaderUniformSchema () {
 }
 
@@ -42,7 +76,7 @@ MOAIShaderUniformSchema::~MOAIShaderUniformSchema () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderUniformSchema::SetUniform ( lua_State* L, int idx, void* buffer, ZLIndex uniformID, ZLIndex index ) const {
+void MOAIShaderUniformSchema::SetUniformValue ( lua_State* L, int idx, void* buffer, ZLIndex uniformID, ZLIndex index ) const {
 
 	MOAILuaState state ( L );
 
@@ -85,4 +119,19 @@ void MOAIShaderUniformSchema::SetUniform ( lua_State* L, int idx, void* buffer, 
 			}
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+ZLSize MOAIShaderUniformSchema::UpdateUniformOffsets () {
+
+	ZLSize bufferSize = 0;
+	ZLSize nUniforms = this->mUniformDescriptors.Size ();
+	
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < nUniforms; ++i ) {
+		
+		MOAIShaderUniformDescriptor& descriptor = this->mUniformDescriptors [ i ];
+		descriptor.mCPUOffset = bufferSize;
+		bufferSize += descriptor.GetBufferSize ();
+	}
+	return bufferSize;
 }
