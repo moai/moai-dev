@@ -374,7 +374,7 @@ MOAIShaderProgramVK::~MOAIShaderProgramVK () {
 //	// TODO: ZLGfx
 //
 ////	MOAIGfxMgrVK& gfxMgr = this->mGfxMgr;
-////	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
+////	MOAIMaterialMgr& materialMgr = MOAIMaterialMgr::Get ();
 ////
 ////	size_t nTextures = this->mTextures.Size ();
 ////	for ( ZLIndex i = ZLIndexOp::ZERO; i < nTextures; ++i ) {
@@ -385,7 +385,7 @@ MOAIShaderProgramVK::~MOAIShaderProgramVK () {
 ////
 ////		// load texture by name
 ////		if ( !texture ) {
-////			texture = materialStack.GetTexture ( shaderTexture.mName );
+////			texture = materialMgr.GetTexture ( shaderTexture.mName );
 ////		}
 ////
 ////		gfx.mGfxState.SetTexture ( texture, shaderTexture.mUnit );
@@ -446,64 +446,6 @@ MOAIShaderProgramVK::~MOAIShaderProgramVK () {
 //
 //	if ( attribute ) {
 //		this->mAttributeMap [ idx ] = attribute;
-//	}
-//}
-//
-////----------------------------------------------------------------//
-//void MOAIShaderProgramVK::UpdateUniforms ( ZLLeanArray < u8 >& buffer ) {
-//
-//	MOAIGfxMgrVK& gfxMgr = *this->mGfxMgr;
-//
-//	ZLRect viewRect = gfxMgr.GetViewRect ();
-//
-//	// NOTE: matrices are submitted *column major*; it is up to the shader to transform vertices correctly
-//	// vert * matrix implicitely transposes the matrix; martix * vert uses the matrix as submitted
-//
-//	u32 nGlobals = this->mGlobals.Size ();
-//
-//	for ( ZLIndex i = ZLIndexOp::ZERO; i < nGlobals; ++i ) {
-//
-//		const MOAIShaderProgramGlobalVK& global = this->mGlobals [ i ];
-//
-//		if ( global.mUniformID == ZLIndexOp::INVALID ) continue;
-//
-//		MOAIUniformHandle uniform = this->GetUniformHandle ( buffer.GetBuffer (), global.mUniformID, global.mIndex );
-//		if ( !uniform.IsValid ()) continue;
-//
-//		if ( global.mGlobalID < MOAIGfxMgrVK::TOTAL_MATRICES ) {
-//
-//			uniform.SetValue ( gfxMgr.GetMtx ( global.mGlobalID ));
-//		}
-//		else {
-//
-//			switch (( ZLSize )global.mGlobalID ) {
-//
-//				case MOAIGfxMgrVK::PEN_COLOR:
-//
-//					uniform.SetValue ( gfxMgr.GetFinalColor ());
-//					break;
-//
-//				case MOAIGfxMgrVK::VIEW_HALF_HEIGHT:
-//
-//					uniform.SetValue ( viewRect.Height () * 0.5f );
-//					break;
-//
-//				case MOAIGfxMgrVK::VIEW_HALF_WIDTH: {
-//
-//					uniform.SetValue ( viewRect.Width () * 0.5f );
-//					break;
-//				}
-//				case MOAIGfxMgrVK::VIEW_HEIGHT:
-//
-//					uniform.SetValue ( viewRect.Height ());
-//					break;
-//
-//				case MOAIGfxMgrVK::VIEW_WIDTH:
-//
-//					uniform.SetValue ( viewRect.Width ());
-//					break;
-//			}
-//		}
 //	}
 //}
 

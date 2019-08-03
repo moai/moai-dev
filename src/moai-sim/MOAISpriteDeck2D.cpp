@@ -604,7 +604,7 @@ ZLBounds MOAISpriteDeck2D::MOAIDeck_ComputeMaxAABB () {
 //----------------------------------------------------------------//
 void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 
-	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
+	MOAIMaterialMgr& materialMgr = MOAIMaterialMgr::Get ();
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	MOAIQuadBrush::BindVertexFormat ();
@@ -634,7 +634,7 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 		}
 		
 		ZLIndex materialID = ZLIndexOp::INVALID;
-		materialStack.Push (); // push an empty stack frame to facilitate "swap" below
+		materialMgr.Push (); // push an empty stack frame to facilitate "swap" below
 		
 		for ( ZLIndex i = base; i < top; ++i ) {
 			
@@ -647,10 +647,10 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 				MOAIMaterial* spriteMaterial = this->GetMaterial ( materialID );
 				if ( spriteMaterial ) {
 					
-					materialStack.Pop ();
-					materialStack.Push ( spriteMaterial );
-					materialStack.SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
-					materialStack.LoadGfxState ();
+					materialMgr.Pop ();
+					materialMgr.Push ( spriteMaterial );
+					materialMgr.GetMaterial ().SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
+					materialMgr.LoadGfxState ();
 				}
 			}
 			
@@ -660,7 +660,7 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 			glQuad.Draw ();
 		}
 		
-		materialStack.Pop ();
+		materialMgr.Pop ();
 	}
 	else {
 		
@@ -689,13 +689,13 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 			quadBrush.mUVQuad.Init ( 0.0f, 1.0f, 1.0f, 0.0f );
 		}
 		
-		materialStack.Push ( material );
-		materialStack.SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
-		materialStack.LoadGfxState ();
+		materialMgr.Push ( material );
+		materialMgr.GetMaterial ().SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
+		materialMgr.LoadGfxState ();
 		
 		quadBrush.Draw ();
 		
-		materialStack.Pop ();
+		materialMgr.Pop ();
 	}
 }
 

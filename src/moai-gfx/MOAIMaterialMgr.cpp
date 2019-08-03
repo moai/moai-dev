@@ -48,16 +48,27 @@ MOAIMaterialGlobal::~MOAIMaterialGlobal () {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIMaterialMgr::LoadGfxState () {
+
+	this->mComposedMaterial->LoadGfxState ();
+}
+
+//----------------------------------------------------------------//
 MOAIMaterialMgr::MOAIMaterialMgr () {
 
 	this->mNamedLights.Init ( MOAIMaterialGlobals::MAX_GLOBAL_LIGHTS );
 	this->mNamedTextures.Init ( MOAIMaterialGlobals::MAX_GLOBAL_TEXTURES );
 	
-	this->AffirmMaterial ().mOverwrite = true;
+	this->mComposedMaterial = new MOAIMaterial ();
+	this->mComposedMaterial->mOverwrite = false;
+	this->mComposedMaterial->mGlobals = this;
 }
 
 //----------------------------------------------------------------//
 MOAIMaterialMgr::~MOAIMaterialMgr () {
+
+	// avoid circular dependency
+	this->mComposedMaterial->mGlobals = NULL;
 }
 
 //----------------------------------------------------------------//
@@ -70,11 +81,11 @@ void MOAIMaterialMgr::Pop () {
 		MOAIMaterialStackFrame frame = this->mStack.Pop ();
 		
 		if ( stackTop > 1 ) {
-			this->MOAIMaterial::Clear ( ~frame.mFlags );
+			this->mComposedMaterial->Clear ( ~frame.mFlags );
 		}
 		else {
 			this->mStack.Reset ();
-			this->MOAIMaterial::Clear ();
+			this->mComposedMaterial->Clear ();
 		}
 		
 		MOAIMaterialStackClearCmd* cursor = frame.mClearList;
@@ -99,11 +110,11 @@ void MOAIMaterialMgr::Push ( MOAIMaterial* material ) {
 	
 	MOAIMaterialStackFrame& frame = this->mStack.Push ();
 	
-	frame.mFlags = this->AffirmMaterial ().mFlags;
+	frame.mFlags = this->mComposedMaterial->mFlags;
 	frame.mClearList = 0;
 	
 	if ( material ) {
-		this->Compose ( *material );
+		this->mComposedMaterial->Compose ( *material );
 	}
 }
 

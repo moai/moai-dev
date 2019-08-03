@@ -86,7 +86,6 @@ private:
 //================================================================//
 class MOAIMaterialMgr :
 	public ZLContextClass < MOAIMaterialMgr >,
-	public MOAIAbstractMaterialInterface,
 	public MOAIAbstractMaterialGlobalsContext {
 private:
 	
@@ -114,9 +113,10 @@ private:
 
 public:
 
+	GET ( MOAIMaterial&, Material, *this->mComposedMaterial );
+
 	//----------------------------------------------------------------//
-	MOAILight*			GetLight					( u32 lightID );
-	MOAITexture*		GetTexture					( u32 textureID );
+	void				LoadGfxState				();
 						MOAIMaterialMgr				();
 						~MOAIMaterialMgr			();
 	void				Pop							();

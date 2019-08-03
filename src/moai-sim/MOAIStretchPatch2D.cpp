@@ -379,14 +379,14 @@ void MOAIStretchPatch2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	
 	MOAIQuadBrush::BindVertexFormat ();
 	
-	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
-	materialStack.Push ( this->GetMaterial ( idx ));
-	materialStack.SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
-	materialStack.LoadGfxState ();
+	MOAIMaterialMgr& materialMgr = MOAIMaterialMgr::Get ();
+	materialMgr.Push ( this->GetMaterial ( idx ));
+	materialMgr.GetMaterial ().SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
+	materialMgr.LoadGfxState ();
 	
 	this->DrawStretch ( idx, stretch.mX, stretch.mY );
 	
-	materialStack.Pop ();
+	materialMgr.Pop ();
 }
 
 //----------------------------------------------------------------//

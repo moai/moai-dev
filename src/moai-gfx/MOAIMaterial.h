@@ -46,7 +46,7 @@ private:
 	u32					mFlags;
 	bool				mOverwrite;
 	
-	ZLStrongPtr < MOAIAbstractMaterialGlobalsContext >	mGlobals;
+	MOAIAbstractMaterialGlobalsContext*		mGlobals;
 	
 	//----------------------------------------------------------------//
 	void				MOAILuaObject_RegisterLuaClass						( MOAIComposer& composer, MOAILuaState& state );

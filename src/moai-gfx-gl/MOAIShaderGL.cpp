@@ -11,54 +11,11 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIShaderGL::_getAttributeID ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIShaderGL, "UN" )
-
-	ZLIndex uniformID		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-	ZLIndex index			= state.GetValue < MOAILuaIndex >( 3, ZLIndexOp::ZERO );
-	
-	if ( self->mProgram ) {
-		state.Push ( self->mProgram->GetAttributeID ( uniformID, index ));
-	}
-	return 1;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
 int MOAIShaderGL::_setProgram ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShaderGL, "U" )
 	
 	self->SetProgram ( state.GetLuaObject < MOAIShaderProgramGL >( 2, true ));
 
-	return 0;
-}
-
-//----------------------------------------------------------------//
-int MOAIShaderGL::_setUniform ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIShaderGL, "U" )
-
-	ZLIndex uniformID	= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-
-	MOAIShaderProgramGL* program = MOAICast < MOAIShaderProgramGL >( self->mProgram );
-
-	if ( program ) {
-		program->SetUniformValue ( L, 3, self->mPendingUniformBuffer.GetBuffer (), uniformID, ZLIndexOp::ZERO );
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-int MOAIShaderGL::_setUniformArrayItem ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIShaderGL, "U" )
-
-	ZLIndex uniformID	= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-	ZLIndex index		= state.GetValue < MOAILuaIndex >( 3, ZLIndexOp::ZERO );
-
-	MOAIShaderProgramGL* program = MOAICast < MOAIShaderProgramGL >( self->mProgram );
-
-	if ( program ) {
-		program->SetUniformValue ( L, 4, self->mPendingUniformBuffer.GetBuffer (), uniformID, index );
-	}
 	return 0;
 }
 
@@ -70,7 +27,7 @@ int MOAIShaderGL::_setUniformArrayItem ( lua_State* L ) {
 void MOAIShaderGL::ApplyUniforms () {
 
 	if ( this->mProgram ) {
-		this->mProgram->ApplyUniforms ( this->mPendingUniformBuffer );
+		this->mProgram->ApplyUniforms ( this->mUniforms );
 	}
 }
 
@@ -85,7 +42,7 @@ void MOAIShaderGL::BindUniforms () {
 //----------------------------------------------------------------//
 bool MOAIShaderGL::HasDirtyUniforms () {
 
-	return !this->mProgram->mUniformBuffer.IsIdentical ( this->mPendingUniformBuffer );
+	return !this->mProgram->mUniformBuffer.IsIdentical ( this->mUniforms );
 }
 
 //----------------------------------------------------------------//
@@ -93,7 +50,8 @@ MOAIShaderGL::MOAIShaderGL () {
 
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIShader )
-		RTTI_EXTEND ( MOAINode )
+		RTTI_EXTEND ( MOAIAbstractUniformBuffer )
+		RTTI_EXTEND ( MOAIHasUniformComposer )
 	RTTI_END
 }
 
@@ -109,7 +67,7 @@ void MOAIShaderGL::SetProgram ( MOAIShaderProgramGL* program ) {
 	this->mProgram = program;
 	
 	if ( program ) {
-		program->InitUniformBuffer ( this->mPendingUniformBuffer );
+		program->InitUniformBuffer ( this->mUniforms );
 	}
 }
 
@@ -118,33 +76,41 @@ void MOAIShaderGL::SetProgram ( MOAIShaderProgramGL* program ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+const MOAIUniformSchema* MOAIShaderGL::MOAIAbstractUniformBuffer_GetSchema () const {
+
+	return this->mProgram;
+}
+
+//----------------------------------------------------------------//
 void MOAIShaderGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
-	UNUSED ( state );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIShader, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractUniformBuffer, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasUniformComposer, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
 void MOAIShaderGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIShader, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractUniformBuffer, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasUniformComposer, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
-		{ "getAttributeID",				_getAttributeID },
 		{ "setProgram",					_setProgram },
-		{ "setUniform",					_setUniform },
-		{ "setUniformArrayItem",		_setUniformArrayItem },
 		{ NULL, NULL }
 	};
 	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
-bool MOAIShaderGL::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
+void MOAIShaderGL::MOAIShader_ComposeUniforms () {
 
-	MOAIShaderProgramGL* program = MOAICast < MOAIShaderProgramGL >( this->mProgram );
-	if ( program ) {
-		return program->ApplyAttrOp ( this->mPendingUniformBuffer.GetBuffer (), attrID, attr, op );
+	if ( !this->mProgram ) return;
+	MOAIUniformComposer* composer = this->GetComposer ();
+	composer = composer ? composer : this->mProgram->GetComposer ();
+
+	if ( composer ) {
+		composer->ComposeUniforms ( *this->mProgram, *this );
 	}
-	return false;
 }
 
 //----------------------------------------------------------------//
@@ -156,15 +122,12 @@ bool MOAIShaderGL::MOAIShader_IsReady () const {
 //----------------------------------------------------------------//
 void MOAIShaderGL::MOAIShader_SelectTextures () {
 
-	if ( this->mProgram ) {
-		this->mProgram->SelectTextures ();
+	if ( !this->mProgram ) return;
+	MOAIUniformComposer* composer = this->GetComposer ();
+	composer = composer ? composer : this->mProgram->GetComposer ();
+
+	if ( composer ) {
+		composer->SelectTextures ();
 	}
 }
 
-//----------------------------------------------------------------//
-void MOAIShaderGL::MOAIShader_UpdateUniforms () {
-
-	if ( this->mProgram ) {
-		this->mProgram->UpdateUniforms ( this->mPendingUniformBuffer );
-	}
-}

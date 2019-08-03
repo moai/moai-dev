@@ -231,7 +231,7 @@ void MOAITextLayout::Draw ( u32 reveal ) {
 	if ( reveal ) {
 		
 		MOAIMaterialMgr& materialMgr = MOAIMaterialMgr::Get ();
-		MOAIShader* currentShader = materialMgr.GetShader ();
+		MOAIShader* currentShader = materialMgr.GetMaterial ().GetShader ();
 		bool useSpriteShaders = ( currentShader == 0 );
 		MOAIShader* defaultShader = MOAIGfxMgr::Get ().GetShaderPreset ( MOAIShaderPresetEnum::FONT_SNAPPING_SHADER );
 		

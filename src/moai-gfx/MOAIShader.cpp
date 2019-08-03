@@ -9,6 +9,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIShader::ComposeUniforms () {
+
+	this->MOAIShader_ComposeUniforms ();
+}
+
+//----------------------------------------------------------------//
 bool MOAIShader::HasProgram () const {
 
 	return true;
@@ -34,10 +40,4 @@ MOAIShader::~MOAIShader () {
 void MOAIShader::SelectTextures () {
 
 	this->MOAIShader_SelectTextures ();
-}
-
-//----------------------------------------------------------------//
-void MOAIShader::UpdateUniforms () {
-
-	this->MOAIShader_UpdateUniforms ();
 }

@@ -516,11 +516,11 @@ u32 MOAIMesh::CountPrims () const {
 //----------------------------------------------------------------//
 void MOAIMesh::DrawIndex ( ZLIndex idx, MOAIMeshSpan* span ) {
 
-	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
-	materialStack.Push ( this->GetMaterial ( idx ));
-	materialStack.SetShader ( MOAIShaderPresetEnum::MESH_SHADER );
-	materialStack.LoadGfxState ();
-	materialStack.Pop ();
+	MOAIMaterialMgr& materialMgr = MOAIMaterialMgr::Get ();
+	materialMgr.Push ( this->GetMaterial ( idx ));
+	materialMgr.GetMaterial ().SetShader ( MOAIShaderPresetEnum::MESH_SHADER );
+	materialMgr.LoadGfxState ();
+	materialMgr.Pop ();
 
 	//if ( !this->LoadGfxState ( materials, idx, MOAIShaderPresetEnum::MESH_SHADER )) return;
 

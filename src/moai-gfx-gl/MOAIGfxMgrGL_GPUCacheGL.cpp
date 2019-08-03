@@ -427,7 +427,7 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushShader () {
 	nextShader = program ? nextShader : 0;
 	
 	if ( nextShader ) {
-		nextShader->UpdateUniforms ();
+		nextShader->ComposeUniforms ();
 	}
 	
 	bool applyUniforms	= ( nextShader && nextShader->HasDirtyUniforms ());

@@ -21,19 +21,19 @@ class MOAIShader :
 	public virtual MOAILuaObject {
 	
 	//----------------------------------------------------------------//
+	virtual void	MOAIShader_ComposeUniforms		() = 0;
 	virtual bool	MOAIShader_IsReady				() const = 0;
 	virtual void	MOAIShader_SelectTextures		() = 0;
-	virtual void	MOAIShader_UpdateUniforms		() = 0;
 	
 public:
 
 	//----------------------------------------------------------------//
+	void			ComposeUniforms			();
 	bool			HasProgram				() const;
 	bool			IsReady					() const;
 					MOAIShader				();
 					~MOAIShader				();
 	void			SelectTextures			();
-	void			UpdateUniforms			();
 };
 
 #endif

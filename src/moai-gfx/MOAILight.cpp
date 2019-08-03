@@ -129,20 +129,3 @@ bool MOAILight::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 o
 
 	return this->mFormat ? this->MOAIUniformSchema::ApplyAttrOp ( this->mBuffer.GetBuffer (), attrID, attr, op ) : false;
 }
-
-//----------------------------------------------------------------//
-MOAIUniformHandle MOAILight::MOAIAbstractShaderUniformSchema_GetUniformHandle ( void* buffer, ZLIndex uniformID ) const {
-
-	MOAIUniformHandle uniform;
-	uniform.mBuffer = 0;
-
-	if ( this->mFormat ) {
-	
-		const MOAILightFormatUniform& lightUniform = this->mFormat->mUniforms [ uniformID ];
-
-		uniform.mType		= lightUniform.mType;
-		uniform.mWidth		= lightUniform.mWidth;
-		uniform.mBuffer		= ( void* )(( size_t )this->mBuffer.GetBuffer () + lightUniform.mBase );
-	}
-	return uniform;
-}

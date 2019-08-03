@@ -39,8 +39,6 @@ protected:
 
 public:
 
-	
-
 	//----------------------------------------------------------------//
 	void				Apply									( MOAIAbstractMaterialGlobalsContext& dest );
 	void				Clear									();

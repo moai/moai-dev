@@ -15,7 +15,8 @@
 
 //----------------------------------------------------------------//
 MOAIMaterial::MOAIMaterial () :
-	mOverwrite ( true ) {
+	mOverwrite ( true ),
+	mGlobals ( NULL ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIAbstractMaterialInterface )
@@ -28,6 +29,9 @@ MOAIMaterial::MOAIMaterial () :
 MOAIMaterial::~MOAIMaterial () {
 
 	this->Clear ();
+	if ( this->mGlobals ) {
+		delete this->mGlobals;
+	}
 }
 
 //================================================================//

@@ -15,44 +15,6 @@ class MOAIShaderGL;
 class MOAITextureGL;
 
 //================================================================//
-// MOAIShaderProgramGlobalGL
-//================================================================//
-class MOAIShaderProgramGlobalGL {
-private:
-
-	friend class MOAIShaderGL;
-	friend class MOAIShaderGlobals;
-	friend class MOAIShaderProgramGL;
-
-	u32			mGlobalID;
-	ZLIndex		mUniformID;
-	ZLIndex		mIndex;
-
-public:
-
-	//----------------------------------------------------------------//
-		MOAIShaderProgramGlobalGL		();
-};
-
-//================================================================//
-// MOAIShaderProgramTextureGL
-//================================================================//
-class MOAIShaderProgramTextureGL {
-private:
-
-	friend class MOAIShaderProgramGL;
-
-	u32								mName;
-	ZLIndex							mUnit;
-	ZLStrongPtr < MOAITextureGL >	mTexture;
-
-public:
-
-	//----------------------------------------------------------------//
-		MOAIShaderProgramTextureGL		();
-};
-
-//================================================================//
 // MOAIShaderProgramGL
 //================================================================//
 /**	@lua	MOAIShaderProgramGL
@@ -64,7 +26,8 @@ public:
 */
 class MOAIShaderProgramGL :
 	public virtual MOAIGfxResourceGL,
-	public virtual MOAIUniformSchema {
+	public virtual MOAIUniformSchema,
+	public virtual MOAIHasUniformComposer {
 protected:
 
 	friend class MOAIShaderGL;
@@ -80,8 +43,6 @@ protected:
 	STLMap < u32, STLString > mAttributeMap;
 
 	ZLLeanArray < MOAIShaderUniformBindingGL >	mUniformBindings;
-	ZLLeanArray < MOAIShaderProgramGlobalGL >	mGlobals;
-	ZLLeanArray < MOAIShaderProgramTextureGL >	mTextures;
 
 	size_t										mUniformBufferSize;
 	ZLLeanArray < u8 >							mUniformBuffer;
@@ -89,11 +50,7 @@ protected:
 	//----------------------------------------------------------------//
 	static int					_declareUniform				( lua_State* L );
 	static int					_load						( lua_State* L );
-	static int					_reserveGlobals				( lua_State* L );
-	static int					_reserveTextures			( lua_State* L );
 	static int					_reserveUniforms			( lua_State* L );
-	static int					_setGlobal					( lua_State* L );
-	static int					_setTexture					( lua_State* L );
 	static int					_setVertexAttribute			( lua_State* L );
 
 	//----------------------------------------------------------------//
@@ -102,9 +59,6 @@ protected:
 	void						BindUniforms				();
 	ZLGfxHandle					CompileShader				( u32 type, cc8* source );
 	void						InitUniformBuffer			( ZLLeanArray < u8 >& buffer );
-	int							ReserveGlobals 				( lua_State* L, int idx );
-	void						SelectTextures				();
-	void						UpdateUniforms				( ZLLeanArray < u8 >& buffer );
 	
 	//----------------------------------------------------------------//
 	bool						MOAIGfxResource_OnCPUCreate							();
@@ -116,7 +70,6 @@ protected:
 	bool						MOAIGfxResourceGL_OnGPUUpdate						();
 	void						MOAILuaObject_RegisterLuaClass						( MOAIComposer& composer, MOAILuaState& state );
 	void						MOAILuaObject_RegisterLuaFuncs						( MOAIComposer& composer, MOAILuaState& state );
-	MOAIUniformHandle		MOAIAbstractShaderUniformSchema_GetUniformHandle			( void* buffer, ZLIndex uniformID ) const;
 	void						ZLGfxListener_OnUniformLocation						( u32 addr, void* userdata );
 	
 public:
@@ -129,12 +82,7 @@ public:
 	void				DeclareUniform				( ZLIndex idx, cc8* name, u32 type, u32 width = 1, u32 count = 1 );
 	void				Load						( cc8* vshSource, cc8* fshSource );
 	void				ReserveAttributes			( ZLSize nAttributes );
-	void				ReserveGlobals				( ZLSize nGlobals );
-	void				ReserveTextures				( ZLSize nTextures );
 	void				ReserveUniforms				( ZLSize nUniforms );
-	void				SetGlobal					( ZLIndex idx, u32 globalID, ZLIndex uniformID, ZLIndex index );
-	void				SetTexture					( ZLIndex idx, u32 name, ZLIndex unit, MOAITextureGL* fallback );
-	void				SetTexture					( ZLIndex idx, MOAITextureGL* texture, ZLIndex unit );
 	void				SetVertexAttribute			( u32 idx, cc8* attribute );
 						MOAIShaderProgramGL			();
 						~MOAIShaderProgramGL		();

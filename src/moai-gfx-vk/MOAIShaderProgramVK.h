@@ -106,8 +106,6 @@ protected:
 //	MOAIShaderUniformVK*		GetUniform					( ZLIndex uniformID );
 //	void						InitUniformBuffer			( ZLLeanArray < u8 >& buffer );
 //	int							ReserveGlobals 				( lua_State* L, int idx );
-//	void						ScheduleTextures			();
-//	void						UpdateUniforms				( ZLLeanArray < u8 >& buffer );
 	
 	//----------------------------------------------------------------//
 	bool						MOAIGfxResource_OnCPUCreate							();

@@ -286,14 +286,14 @@ void MOAITileDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	float uOff = uvRect.mXMin + ( 0.5f * uScale );
 	float vOff = uvRect.mYMin - ( 0.5f * vScale );
 	
-	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
-	materialStack.Push ( this->GetMaterial ( idx ));
-	materialStack.SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
-	materialStack.LoadGfxState ();
+	MOAIMaterialMgr& materialMgr = MOAIMaterialMgr::Get ();
+	materialMgr.Push ( this->GetMaterial ( idx ));
+	materialMgr.GetMaterial ().SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
+	materialMgr.LoadGfxState ();
 	
 	this->mQuad.Draw ( 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, uOff, vOff, uScale, vScale );
 	
-	materialStack.Pop ();
+	materialMgr.Pop ();
 }
 
 //----------------------------------------------------------------//

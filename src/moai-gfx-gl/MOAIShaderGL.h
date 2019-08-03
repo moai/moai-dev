@@ -6,6 +6,10 @@
 
 class MOAIShaderProgramGL;
 
+// MOAIShaderUniformComposerInterface
+// MOAIShaderUniformComposer
+// MOAIHasShaderUniformComposer
+
 //================================================================//
 // MOAIShaderGL
 //================================================================//
@@ -16,31 +20,25 @@ class MOAIShaderProgramGL;
 */
 class MOAIShaderGL :
 	public virtual MOAIShader,
-	public virtual MOAINode {
+	public virtual MOAIAbstractUniformBuffer,
+	public virtual MOAIHasUniformComposer {
 protected:
 
 	friend class MOAIGfxMgrGL_GPUCacheGL;
 	friend class MOAIShaderProgramGL;
 
 	ZLStrongPtr < MOAIShaderProgramGL >	mProgram;
-	ZLLeanArray < u8 >					mPendingUniformBuffer;
 
 	//----------------------------------------------------------------//
-	static int				_getAttributeID				( lua_State* L );
 	static int				_setProgram					( lua_State* L );
-	static int				_setUniform					( lua_State* L );
-	static int				_setUniformArrayItem		( lua_State* L );
-
+	
 	//----------------------------------------------------------------//
-	bool					IsDirty						();
-
-	//----------------------------------------------------------------//
-	void					MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
-	bool					MOAINode_ApplyAttrOp				( ZLAttrID attrID, ZLAttribute& attr, u32 op );
-	bool					MOAIShader_IsReady					() const;
-	void					MOAIShader_SelectTextures			();
-	void					MOAIShader_UpdateUniforms			();
+	const MOAIUniformSchema*	MOAIAbstractUniformBuffer_GetSchema		() const;
+	void						MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
+	void						MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
+	void						MOAIShader_ComposeUniforms				();
+	bool						MOAIShader_IsReady						() const;
+	void						MOAIShader_SelectTextures				();
 
 public:
 

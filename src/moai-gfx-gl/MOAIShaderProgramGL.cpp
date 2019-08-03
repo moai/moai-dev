@@ -7,27 +7,6 @@
 #include <moai-gfx-gl/MOAITextureGL.h>
 
 //================================================================//
-// MOAIShaderProgramGlobalGL
-//================================================================//
-	
-//----------------------------------------------------------------//
-MOAIShaderProgramGlobalGL::MOAIShaderProgramGlobalGL () :
-	mGlobalID ( ZLIndexOp::INVALID ),
-	mUniformID ( ZLIndexOp::INVALID ),
-	mIndex ( ZLIndexOp::ZERO ) {
-}
-
-//================================================================//
-// MOAIShaderProgramTextureGL
-//================================================================//
-
-//----------------------------------------------------------------//
-MOAIShaderProgramTextureGL::MOAIShaderProgramTextureGL () :
-	mName ( MOAIMaterialGlobals::MOAI_UNKNOWN_MATERIAL_GLOBAL ),
-	mUnit ( ZLIndexOp::ZERO ) {
-}
-
-//================================================================//
 // lua
 //================================================================//
 
@@ -79,28 +58,6 @@ int MOAIShaderProgramGL::_load ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIShaderProgramGL::_reserveGlobals ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIShaderProgramGL, "U" )
-
-//	return self->ReserveGlobals ( L, 2 );
-	
-	u32 nGlobals = state.GetValue < u32 >( 2, 0 );
-	self->ReserveGlobals ( nGlobals );
-	
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIShaderProgramGL::_reserveTextures ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIShaderProgramGL, "U" )
-
-	self->ReserveTextures ( state.GetValue < u32 >( 2, 0 ));
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@lua	reserveUniforms
 	@text	Reserve shader uniforms.
 
@@ -114,45 +71,6 @@ int MOAIShaderProgramGL::_reserveUniforms ( lua_State* L ) {
 	u32 nUniforms = state.GetValue < u32 >( 2, 0 );
 	self->ReserveUniforms ( nUniforms );
 
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIShaderProgramGL::_setGlobal ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIShaderProgramGL, "UNNN" )
-
-	ZLIndex globalIdx	= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-	u32 globalID		= state.GetValue < u32 >( 3, MOAIGfxMgrGL::NULL_GLOBAL );
-	ZLIndex uniformID	= state.GetValue < MOAILuaIndex >( 4, ZLIndexOp::ZERO );
-	ZLIndex index		= state.GetValue < MOAILuaIndex >( 5, ZLIndexOp::ZERO );
-	
-	self->SetGlobal ( globalIdx, globalID, uniformID, index );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIShaderProgramGL::_setTexture ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIShaderProgramGL, "U" )
-	
-	ZLIndex idx		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-	ZLIndex unit	= state.GetValue < MOAILuaIndex >( 3, ZLIndexOp::ZERO );
-	
-	if ( state.IsType ( 3, LUA_TUSERDATA )) {
-	
-		self->SetTexture ( idx, state.GetLuaObject < MOAITextureGL >( 3, true ), unit );
-	}
-	else {
-	
-		self->SetTexture (
-			idx,
-			state.GetValue < u32 >( 3, MOAIMaterialGlobals::MOAI_UNKNOWN_MATERIAL_GLOBAL + 1 ) - 1,
-			unit,
-			state.GetLuaObject < MOAITextureGL >( 5, false )
-		);
-	}
 	return 0;
 }
 
@@ -224,7 +142,6 @@ void MOAIShaderProgramGL::Clear () {
 	this->mAttributeMap.clear ();
 	this->mUniformDescriptors.Clear ();
 	this->mUniformBindings.Clear ();
-	this->mGlobals.Clear ();
 	
 	this->Destroy ();
 }
@@ -303,6 +220,7 @@ MOAIShaderProgramGL::MOAIShaderProgramGL () :
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIGfxResourceGL )
+		RTTI_EXTEND ( MOAIHasUniformComposer )
 	RTTI_END
 }
 
@@ -313,29 +231,6 @@ MOAIShaderProgramGL::~MOAIShaderProgramGL () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderProgramGL::ReserveGlobals ( ZLSize nGlobals ) {
-
-	this->mGlobals.Init ( nGlobals );
-}
-
-//----------------------------------------------------------------//
-int MOAIShaderProgramGL::ReserveGlobals ( lua_State* L, int idx ) {
-
-	MOAILuaState state ( L );
-
-	u32 nGlobals = state.GetValue < u32 >( idx, 0 );
-	this->ReserveGlobals ( nGlobals );
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderProgramGL::ReserveTextures ( ZLSize nTextures ) {
-
-	this->mTextures.Init ( nTextures );
-}
-
-//----------------------------------------------------------------//
 void MOAIShaderProgramGL::ReserveUniforms ( ZLSize nUniforms ) {
 
 	this->mUniformDescriptors.Init ( nUniforms );
@@ -343,141 +238,10 @@ void MOAIShaderProgramGL::ReserveUniforms ( ZLSize nUniforms ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderProgramGL::SelectTextures () {
-
-	// TODO: ZLGfx
-
-//	MOAIGfxMgrGL& gfxMgr = this->mGfxMgr;
-//	MOAIMaterialMgr& materialStack = MOAIMaterialMgr::Get ();
-//
-//	size_t nTextures = this->mTextures.Size ();
-//	for ( ZLIndex i = ZLIndexOp::ZERO; i < nTextures; ++i ) {
-//
-//		MOAIShaderProgramTextureGL& shaderTexture = this->mTextures [ i ];
-//
-//		MOAITextureGL* texture = shaderTexture.mTexture;
-//
-//		// load texture by name
-//		if ( !texture ) {
-//			texture = materialStack.GetTexture ( shaderTexture.mName );
-//		}
-//
-//		gfx.mGfxState.SetTexture ( texture, shaderTexture.mUnit );
-//	}
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderProgramGL::SetGlobal ( ZLIndex idx, u32 globalID, ZLIndex uniformID, ZLIndex index ) {
-	
-	MOAIShaderProgramGlobalGL& global = this->mGlobals [ idx ];
-	
-	global.mUniformID	= uniformID;
-	global.mIndex		= index;
-	global.mGlobalID	= globalID;
-}
-
-//----------------------------------------------------------------//
-//int MOAIShaderProgramGL::SetGlobal ( lua_State* L, int idx ) {
-//
-//	MOAILuaState state ( L );
-//
-//	ZLIndex globalIdx	= state.GetValue < MOAILuaIndex >( idx, ZLIndexOp::ZERO );
-//	u32 globalID		= state.GetValue < u32 >( idx + 1, MOAIGfxMgrGL::NULL_GLOBAL );
-//	ZLIndex uniformID	= state.GetValue < MOAILuaIndex >( idx + 2, ZLIndexOp::ZERO );
-//	ZLIndex index		= state.GetValue < MOAILuaIndex >( idx + 3, ZLIndexOp::ZERO );
-//
-//	this->SetGlobal ( globalIdx, globalID, uniformID, index );
-//
-//	return 0;
-//}
-
-//----------------------------------------------------------------//
-void MOAIShaderProgramGL::SetTexture ( ZLIndex idx, u32 name, ZLIndex unit, MOAITextureGL* fallback ) {
-
-	if ( idx < this->mTextures.Size ()) {
-	
-		MOAIShaderProgramTextureGL& shaderTexture = this->mTextures [ idx ];
-		shaderTexture.mName = name;
-		shaderTexture.mUnit = unit;
-		shaderTexture.mTexture = fallback;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderProgramGL::SetTexture ( ZLIndex idx, MOAITextureGL* texture, ZLIndex unit ) {
-
-	if ( idx < this->mTextures.Size ()) {
-	
-		MOAIShaderProgramTextureGL& shaderTexture = this->mTextures [ idx ];
-		shaderTexture.mName = MOAIMaterialGlobals::MOAI_UNKNOWN_MATERIAL_GLOBAL;
-		shaderTexture.mUnit = unit;
-		shaderTexture.mTexture = texture;
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIShaderProgramGL::SetVertexAttribute ( u32 idx, cc8* attribute ) {
 
 	if ( attribute ) {
 		this->mAttributeMap [ idx ] = attribute;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderProgramGL::UpdateUniforms ( ZLLeanArray < u8 >& buffer ) {
-
-	MOAIGfxMgrGL& gfxMgr = *this->mGfxMgr;
-	
-	ZLRect viewRect = gfxMgr.GetViewRect ();
-
-	// NOTE: matrices are submitted *column major*; it is up to the shader to transform vertices correctly
-	// vert * matrix implicitely transposes the matrix; martix * vert uses the matrix as submitted
-
-	u32 nGlobals = this->mGlobals.Size ();
-
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < nGlobals; ++i ) {
-	
-		const MOAIShaderProgramGlobalGL& global = this->mGlobals [ i ];
-		
-		if ( global.mUniformID == ZLIndexOp::INVALID ) continue;
-		
-		MOAIUniformHandle uniform = this->GetUniformHandle ( buffer.GetBuffer (), global.mUniformID, global.mIndex );
-		if ( !uniform.IsValid ()) continue;
-		
-		if ( global.mGlobalID < MOAIGfxMgrGL::TOTAL_MATRICES ) {
-		
-			uniform.SetValue ( gfxMgr.GetMtx ( global.mGlobalID ));
-		}
-		else {
-		
-			switch (( ZLSize )global.mGlobalID ) {
-				
-				case MOAIGfxMgrGL::PEN_COLOR:
-				
-					uniform.SetValue ( gfxMgr.GetFinalColor ());
-					break;
-				
-				case MOAIGfxMgrGL::VIEW_HALF_HEIGHT:
-				
-					uniform.SetValue ( viewRect.Height () * 0.5f );
-					break;
-					
-				case MOAIGfxMgrGL::VIEW_HALF_WIDTH: {
-				
-					uniform.SetValue ( viewRect.Width () * 0.5f );
-					break;
-				}
-				case MOAIGfxMgrGL::VIEW_HEIGHT:
-				
-					uniform.SetValue ( viewRect.Height ());
-					break;
-					
-				case MOAIGfxMgrGL::VIEW_WIDTH:
-				
-					uniform.SetValue ( viewRect.Width ());
-					break;
-			}
-		}
 	}
 }
 
@@ -566,93 +330,14 @@ bool MOAIShaderProgramGL::MOAIGfxResourceGL_OnGPUUpdate () {
 
 //----------------------------------------------------------------//
 void MOAIShaderProgramGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxResourceGL, MOAILuaObject_RegisterLuaClass ( composer, state ));
-
-	state.SetField ( -1, "UNIFORM_TYPE_FLOAT",						( u32 )MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT );
-	state.SetField ( -1, "UNIFORM_TYPE_INT",						( u32 )MOAIUniformDescriptor::UNIFORM_TYPE_INT );
-	
-	state.SetField ( -1, "UNIFORM_WIDTH_VEC_2",						( u32 )MOAIUniformDescriptor::UNIFORM_WIDTH_VEC_2 );
-	state.SetField ( -1, "UNIFORM_WIDTH_VEC_3",						( u32 )MOAIUniformDescriptor::UNIFORM_WIDTH_VEC_3 );
-	state.SetField ( -1, "UNIFORM_WIDTH_VEC_4",						( u32 )MOAIUniformDescriptor::UNIFORM_WIDTH_VEC_4 );
-	state.SetField ( -1, "UNIFORM_WIDTH_MATRIX_3X3",				( u32 )MOAIUniformDescriptor::UNIFORM_WIDTH_MATRIX_3X3 );
-	state.SetField ( -1, "UNIFORM_WIDTH_MATRIX_4X4",				( u32 )MOAIUniformDescriptor::UNIFORM_WIDTH_MATRIX_4X4 );
-	
-	state.SetField ( -1, "GLOBAL_CLIP_TO_DISPLAY_MTX",				( u32 )MOAIGfxMgrGL::CLIP_TO_DISPLAY_MTX );
-	state.SetField ( -1, "GLOBAL_CLIP_TO_MODEL_MTX",				( u32 )MOAIGfxMgrGL::CLIP_TO_MODEL_MTX );
-	state.SetField ( -1, "GLOBAL_CLIP_TO_VIEW_MTX",					( u32 )MOAIGfxMgrGL::CLIP_TO_VIEW_MTX );
-	state.SetField ( -1, "GLOBAL_CLIP_TO_WINDOW_MTX",				( u32 )MOAIGfxMgrGL::CLIP_TO_WINDOW_MTX );
-	state.SetField ( -1, "GLOBAL_CLIP_TO_WORLD_MTX",				( u32 )MOAIGfxMgrGL::CLIP_TO_WORLD_MTX );
-
-	state.SetField ( -1, "GLOBAL_DISPLAY_TO_CLIP_MTX",				( u32 )MOAIGfxMgrGL::DISPLAY_TO_CLIP_MTX );
-	state.SetField ( -1, "GLOBAL_DISPLAY_TO_MODEL_MTX",				( u32 )MOAIGfxMgrGL::DISPLAY_TO_MODEL_MTX );
-	state.SetField ( -1, "GLOBAL_DISPLAY_TO_VIEW_MTX",				( u32 )MOAIGfxMgrGL::DISPLAY_TO_VIEW_MTX );
-	state.SetField ( -1, "GLOBAL_DISPLAY_TO_WORLD_MTX",				( u32 )MOAIGfxMgrGL::DISPLAY_TO_WORLD_MTX );
-
-	state.SetField ( -1, "GLOBAL_MODEL_TO_CLIP_MTX",				( u32 )MOAIGfxMgrGL::MODEL_TO_CLIP_MTX );
-	state.SetField ( -1, "GLOBAL_MODEL_TO_DISPLAY_MTX",				( u32 )MOAIGfxMgrGL::MODEL_TO_DISPLAY_MTX );
-	state.SetField ( -1, "GLOBAL_MODEL_TO_UV_MTX",					( u32 )MOAIGfxMgrGL::MODEL_TO_UV_MTX );
-	state.SetField ( -1, "GLOBAL_MODEL_TO_VIEW_MTX",				( u32 )MOAIGfxMgrGL::MODEL_TO_VIEW_MTX );
-	state.SetField ( -1, "GLOBAL_MODEL_TO_WORLD_MTX",				( u32 )MOAIGfxMgrGL::MODEL_TO_WORLD_MTX );
-
-	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_DISPLAY_MTX",		( u32 )MOAIGfxMgrGL::NORMAL_CLIP_TO_DISPLAY_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_MODEL_MTX",			( u32 )MOAIGfxMgrGL::NORMAL_CLIP_TO_MODEL_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_VIEW_MTX",			( u32 )MOAIGfxMgrGL::NORMAL_CLIP_TO_VIEW_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_WINDOW_MTX",		( u32 )MOAIGfxMgrGL::NORMAL_CLIP_TO_WINDOW_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_WORLD_MTX",			( u32 )MOAIGfxMgrGL::NORMAL_CLIP_TO_WORLD_MTX );
-
-	state.SetField ( -1, "GLOBAL_NORMAL_DISPLAY_TO_CLIP_MTX",		( u32 )MOAIGfxMgrGL::NORMAL_DISPLAY_TO_CLIP_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_DISPLAY_TO_MODEL_MTX",		( u32 )MOAIGfxMgrGL::NORMAL_DISPLAY_TO_MODEL_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_DISPLAY_TO_VIEW_MTX",		( u32 )MOAIGfxMgrGL::NORMAL_DISPLAY_TO_VIEW_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_DISPLAY_TO_WORLD_MTX",		( u32 )MOAIGfxMgrGL::NORMAL_DISPLAY_TO_WORLD_MTX );
-
-	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_CLIP_MTX",			( u32 )MOAIGfxMgrGL::NORMAL_MODEL_TO_CLIP_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_DISPLAY_MTX",		( u32 )MOAIGfxMgrGL::NORMAL_MODEL_TO_DISPLAY_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_UV_MTX",			( u32 )MOAIGfxMgrGL::NORMAL_MODEL_TO_UV_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_VIEW_MTX",			( u32 )MOAIGfxMgrGL::NORMAL_MODEL_TO_VIEW_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_WORLD_MTX",		( u32 )MOAIGfxMgrGL::NORMAL_MODEL_TO_WORLD_MTX );
-
-	state.SetField ( -1, "GLOBAL_NORMAL_WORLD_TO_DISPLAY_MTX",		( u32 )MOAIGfxMgrGL::NORMAL_WORLD_TO_DISPLAY_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_WORLD_TO_VIEW_MTX",			( u32 )MOAIGfxMgrGL::NORMAL_WORLD_TO_VIEW_MTX );
-
-	state.SetField ( -1, "GLOBAL_NORMAL_UV_TO_MODEL_MTX",			( u32 )MOAIGfxMgrGL::NORMAL_UV_TO_MODEL_MTX );
-
-	state.SetField ( -1, "GLOBAL_NORMAL_VIEW_TO_CLIP_MTX",			( u32 )MOAIGfxMgrGL::NORMAL_VIEW_TO_CLIP_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_VIEW_TO_DISPLAY_MTX",		( u32 )MOAIGfxMgrGL::NORMAL_VIEW_TO_DISPLAY_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_VIEW_TO_MODEL_MTX",			( u32 )MOAIGfxMgrGL::NORMAL_VIEW_TO_MODEL_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_VIEW_TO_WORLD_MTX",			( u32 )MOAIGfxMgrGL::NORMAL_VIEW_TO_WORLD_MTX );
-
-	state.SetField ( -1, "GLOBAL_NORMAL_WINDOW_TO_CLIP_MTX",		( u32 )MOAIGfxMgrGL::NORMAL_WINDOW_TO_CLIP_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_WORLD_TO_CLIP_MTX",			( u32 )MOAIGfxMgrGL::NORMAL_WORLD_TO_CLIP_MTX );
-	state.SetField ( -1, "GLOBAL_NORMAL_WORLD_TO_MODEL_MTX",		( u32 )MOAIGfxMgrGL::NORMAL_WORLD_TO_MODEL_MTX );
-
-	state.SetField ( -1, "GLOBAL_PEN_COLOR",						( u32 )MOAIGfxMgrGL::PEN_COLOR );
-
-	state.SetField ( -1, "GLOBAL_UV_TO_MODEL_MTX",					( u32 )MOAIGfxMgrGL::UV_TO_MODEL_MTX );
-
-	state.SetField ( -1, "GLOBAL_VIEW_TO_CLIP_MTX",					( u32 )MOAIGfxMgrGL::VIEW_TO_CLIP_MTX );
-	state.SetField ( -1, "GLOBAL_VIEW_TO_DISPLAY_MTX",				( u32 )MOAIGfxMgrGL::VIEW_TO_DISPLAY_MTX );
-	state.SetField ( -1, "GLOBAL_VIEW_TO_MODEL_MTX",				( u32 )MOAIGfxMgrGL::VIEW_TO_MODEL_MTX );
-	state.SetField ( -1, "GLOBAL_VIEW_TO_WORLD_MTX",				( u32 )MOAIGfxMgrGL::VIEW_TO_WORLD_MTX );
-
-	state.SetField ( -1, "GLOBAL_WINDOW_TO_CLIP_MTX",				( u32 )MOAIGfxMgrGL::WINDOW_TO_CLIP_MTX );
-
-	state.SetField ( -1, "GLOBAL_WORLD_TO_CLIP_MTX",				( u32 )MOAIGfxMgrGL::WORLD_TO_CLIP_MTX );
-	state.SetField ( -1, "GLOBAL_WORLD_TO_DISPLAY_MTX",				( u32 )MOAIGfxMgrGL::WORLD_TO_DISPLAY_MTX );
-	state.SetField ( -1, "GLOBAL_WORLD_TO_MODEL_MTX",				( u32 )MOAIGfxMgrGL::WORLD_TO_MODEL_MTX );
-	state.SetField ( -1, "GLOBAL_WORLD_TO_VIEW_MTX",				( u32 )MOAIGfxMgrGL::WORLD_TO_VIEW_MTX );
-
-	state.SetField ( -1, "GLOBAL_VIEW_HEIGHT",						( u32 )MOAIGfxMgrGL::VIEW_HEIGHT );
-	state.SetField ( -1, "GLOBAL_VIEW_WIDTH",						( u32 )MOAIGfxMgrGL::VIEW_WIDTH );
-	
-	state.SetField ( -1, "GLOBAL_VIEW_HALF_HEIGHT",					( u32 )MOAIGfxMgrGL::VIEW_HALF_HEIGHT );
-	state.SetField ( -1, "GLOBAL_VIEW_HALF_WIDTH",					( u32 )MOAIGfxMgrGL::VIEW_HALF_WIDTH );
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasUniformComposer, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
 void MOAIShaderProgramGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxResourceGL, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasUniformComposer, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "declareUniform",				_declareUniform },
@@ -666,21 +351,6 @@ void MOAIShaderProgramGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& compose
 		{ NULL, NULL }
 	};
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-MOAIUniformHandle MOAIShaderProgramGL::MOAIAbstractShaderUniformSchema_GetUniformHandle ( void* buffer, ZLIndex uniformID ) const {
-
-	MOAIUniformHandle uniform;
-	uniform.mBuffer = 0;
-
-	if ( uniformID < this->mUniformDescriptors.Size ()) {
-		const MOAIUniformDescriptor& descriptor = this->mUniformDescriptors [ uniformID ];
-		uniform.mType		= descriptor.mType;
-		uniform.mWidth		= descriptor.mWidth;
-		uniform.mBuffer		= ( void* )(( size_t )buffer + descriptor.mCPUOffset );
-	}
-	return uniform;
 }
 
 //----------------------------------------------------------------//
