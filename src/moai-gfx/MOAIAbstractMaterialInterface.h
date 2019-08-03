@@ -6,10 +6,8 @@
 
 #include <moai-gfx/MOAIGfxMgr.h>
 
-class MOAIAbstractMaterialGlobalsContext;
-class MOAIImage;
+class MOAIAbstractMaterial;
 class MOAILight;
-class MOAIMaterial;
 class MOAIShader;
 class MOAITexture;
 
@@ -38,52 +36,51 @@ protected:
 	static int			_setTexture					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void									Clear					( u32 flags, bool force = false );
-	MOAIAbstractMaterialGlobalsContext&		AffirmGlobalsContext	();
+	void						Clear								( u32 flags, bool force = false );
 
 	//----------------------------------------------------------------//
-	virtual MOAIMaterial&		MOAIAbstractMaterialInterface_AffirmMaterial	() = 0;
-	virtual MOAIMaterial*		MOAIAbstractMaterialInterface_GetMaterial		() = 0;
+	virtual MOAIAbstractMaterial&		MOAIAbstractMaterialInterface_AffirmMaterial	() = 0;
+	virtual MOAIAbstractMaterial*		MOAIAbstractMaterialInterface_GetMaterial		() = 0;
 	
 	//----------------------------------------------------------------//
-	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void						MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void						MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	
 public:
 
 	//----------------------------------------------------------------//
-	MOAIMaterial&		AffirmMaterial						();
-	void				Clear								();
-	void				Compose 							( MOAIMaterial& source );
-	MOAIBlendMode		GetBlendMode						();
-	int					GetCullMode							();
-	bool				GetDepthMask						();
-	int					GetDepthTest						();
-	MOAILight*			GetLight							( u32 name );
-	MOAIMaterial*		GetMaterial							();
-	MOAIShader*			GetShader							();
-	MOAITexture*		GetTexture							();
-	MOAITexture*		GetTexture							( u32 name );
-	void				LoadGfxState						();
-						MOAIAbstractMaterialInterface		();
-	virtual				~MOAIAbstractMaterialInterface		();
-	void				SetBlendMode						();
-	void				SetBlendMode						( const MOAIBlendMode& blendMode );
-	void				SetCullMode							();
-	void				SetCullMode							( int cullMode );
-	void				SetDepthMask						();
-	void				SetDepthMask						( bool depthMask );
-	void				SetDepthTest						();
-	void				SetDepthTest						( int depthTest );
-	void				SetLight							( u32 name );
-	void				SetLight							( u32 name, MOAILight* light );
-	void				SetShader							();
-	void				SetShader							( MOAIShaderPresetEnum shaderID );
-	void				SetShader							( MOAIShader* shader );
-	void				SetTexture							();
-	void				SetTexture							( MOAITexture* texture );
-	void				SetTexture							( u32 name );
-	void				SetTexture							( u32 name, MOAITexture* texture );
+	MOAIAbstractMaterial&		AffirmMaterial						();
+	void						Clear								();
+	void						Compose 							( MOAIAbstractMaterial& source );
+	MOAIBlendMode				GetBlendMode						();
+	int							GetCullMode							();
+	bool						GetDepthMask						();
+	int							GetDepthTest						();
+	MOAILight*					GetLight							( u32 name );
+	MOAIAbstractMaterial*		GetMaterial							();
+	MOAIShader*					GetShader							();
+	MOAITexture*				GetTexture							();
+	MOAITexture*				GetTexture							( u32 name );
+	void						LoadGfxState						();
+								MOAIAbstractMaterialInterface		();
+	virtual						~MOAIAbstractMaterialInterface		();
+	void						SetBlendMode						();
+	void						SetBlendMode						( const MOAIBlendMode& blendMode );
+	void						SetCullMode							();
+	void						SetCullMode							( int cullMode );
+	void						SetDepthMask						();
+	void						SetDepthMask						( bool depthMask );
+	void						SetDepthTest						();
+	void						SetDepthTest						( int depthTest );
+	void						SetLight							( u32 name );
+	void						SetLight							( u32 name, MOAILight* light );
+	void						SetShader							();
+	void						SetShader							( MOAIShaderPresetEnum shaderID );
+	void						SetShader							( MOAIShader* shader );
+	void						SetTexture							();
+	void						SetTexture							( MOAITexture* texture );
+	void						SetTexture							( u32 name );
+	void						SetTexture							( u32 name, MOAITexture* texture );
 };
 
 #endif

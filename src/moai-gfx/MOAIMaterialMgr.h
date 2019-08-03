@@ -86,7 +86,7 @@ private:
 //================================================================//
 class MOAIMaterialMgr :
 	public ZLContextClass < MOAIMaterialMgr >,
-	public MOAIAbstractMaterialGlobalsContext {
+	public virtual MOAIAbstractMaterial {
 private:
 	
 	friend class MOAIMaterialStackScope;
@@ -96,31 +96,26 @@ private:
 	ZLLeanArray < MOAIMaterialGlobal >				mNamedTextures;		// TODO: semantics
 	ZLLeanStack < MOAIMaterialStackFrame, 8 >		mStack;
 
-	ZLStrongPtr < MOAIMaterial >					mComposedMaterial;
-
 	//----------------------------------------------------------------//
 	void				SetGlobal					( MOAIMaterialGlobal& global, void* ptr );
 
 	//----------------------------------------------------------------//
-	void				MOAIAbstractMaterialGlobalsContext_Apply			( MOAIAbstractMaterialGlobalsContext& dest );
-	MOAILight*			MOAIAbstractMaterialGlobalsContext_Clear			();
-	MOAILight*			MOAIAbstractMaterialGlobalsContext_GetLight			( u32 name );
-	MOAITexture*		MOAIAbstractMaterialGlobalsContext_GetTexture		( u32 name );
-	void				MOAIAbstractMaterialGlobalsContext_SetLight			( u32 name, MOAILight* light );
-	void				MOAIAbstractMaterialGlobalsContext_SetTexture		( u32 name, MOAITexture* texture );
-	MOAIMaterial&		MOAIAbstractMaterialInterface_AffirmMaterial		();
-	MOAIMaterial*		MOAIAbstractMaterialInterface_GetMaterial			();
+	void						MOAIAbstractMaterial_ApplyGlobals					( MOAIAbstractMaterialInterface& dest );
+	MOAILight*					MOAIAbstractMaterial_ClearGlobals					();
+	MOAILight*					MOAIAbstractMaterial_GetLight						( u32 name );
+	MOAITexture*				MOAIAbstractMaterial_GetTexture						( u32 name );
+	void						MOAIAbstractMaterial_SetLight						( u32 name, MOAILight* light );
+	void						MOAIAbstractMaterial_SetTexture						( u32 name, MOAITexture* texture );
+	MOAIAbstractMaterial&		MOAIAbstractMaterialInterface_AffirmMaterial		();
+	MOAIAbstractMaterial*		MOAIAbstractMaterialInterface_GetMaterial			();
 
 public:
 
-	GET ( MOAIMaterial&, Material, *this->mComposedMaterial );
-
 	//----------------------------------------------------------------//
-	void				LoadGfxState				();
 						MOAIMaterialMgr				();
 						~MOAIMaterialMgr			();
 	void				Pop							();
-	void				Push						( MOAIMaterial* material = 0 );
+	void				Push						( MOAIAbstractMaterial* material = 0 );
 };
 
 #endif

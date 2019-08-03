@@ -288,7 +288,7 @@ void MOAITileDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	
 	MOAIMaterialMgr& materialMgr = MOAIMaterialMgr::Get ();
 	materialMgr.Push ( this->GetMaterial ( idx ));
-	materialMgr.GetMaterial ().SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
+	materialMgr.SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
 	materialMgr.LoadGfxState ();
 	
 	this->mQuad.Draw ( 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, uOff, vOff, uScale, vScale );

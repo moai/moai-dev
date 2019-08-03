@@ -649,7 +649,7 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 					
 					materialMgr.Pop ();
 					materialMgr.Push ( spriteMaterial );
-					materialMgr.GetMaterial ().SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
+					materialMgr.SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
 					materialMgr.LoadGfxState ();
 				}
 			}
@@ -683,14 +683,14 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 		}
 		else {
 		
-			material = this->GetMaterial ();
+			material = this->GetMaterial ( ZLIndexOp::ZERO );
 			
 			quadBrush.mModelQuad.Init ( -0.5f, -0.5f, 0.5f, 0.5f );
 			quadBrush.mUVQuad.Init ( 0.0f, 1.0f, 1.0f, 0.0f );
 		}
 		
 		materialMgr.Push ( material );
-		materialMgr.GetMaterial ().SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
+		materialMgr.SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
 		materialMgr.LoadGfxState ();
 		
 		quadBrush.Draw ();

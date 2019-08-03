@@ -165,6 +165,10 @@ bool MOAIShaderVK::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u3
 }
 
 //----------------------------------------------------------------//
+void MOAIShaderVK::MOAIShader_ComposeUniforms () {
+}
+
+//----------------------------------------------------------------//
 bool MOAIShaderVK::MOAIShader_IsReady () const {
 
 	return true;
@@ -172,8 +176,4 @@ bool MOAIShaderVK::MOAIShader_IsReady () const {
 
 //----------------------------------------------------------------//
 void MOAIShaderVK::MOAIShader_SelectTextures () {
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderVK::MOAIShader_UpdateUniforms () {
 }

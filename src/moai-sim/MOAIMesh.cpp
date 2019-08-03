@@ -518,7 +518,7 @@ void MOAIMesh::DrawIndex ( ZLIndex idx, MOAIMeshSpan* span ) {
 
 	MOAIMaterialMgr& materialMgr = MOAIMaterialMgr::Get ();
 	materialMgr.Push ( this->GetMaterial ( idx ));
-	materialMgr.GetMaterial ().SetShader ( MOAIShaderPresetEnum::MESH_SHADER );
+	materialMgr.SetShader ( MOAIShaderPresetEnum::MESH_SHADER );
 	materialMgr.LoadGfxState ();
 	materialMgr.Pop ();
 

@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx/MOAIAbstractMaterialGlobalsContext.h>
+#include <moai-gfx/MOAIMaterialMgr.h>
 #include <moai-gfx/MOAIHasUniformComposer.h>
 #include <moai-gfx/MOAIUniformComposer.h>
 

@@ -7,7 +7,6 @@
 #include <moai-gfx/MOAIMaterialBatch.h>
 
 class MOAIImage;
-class MOAIMaterial;
 class MOAIShaderGL;
 class MOAITextureBaseGL;
 

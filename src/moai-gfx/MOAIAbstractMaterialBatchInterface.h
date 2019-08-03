@@ -34,22 +34,22 @@ protected:
 	virtual MOAIMaterialBatch*		MOAIAbstractMaterialBatchInterface_GetMaterialBatch			() = 0;
 	
 	//----------------------------------------------------------------//
-	void					MOAILuaObject_RegisterLuaClass					( MOAIComposer& composer, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs					( MOAIComposer& composer, MOAILuaState& state );
-	MOAIMaterial&			MOAIAbstractMaterialInterface_AffirmMaterial	();
-	MOAIMaterial*			MOAIAbstractMaterialInterface_GetMaterial		();
+	void							MOAILuaObject_RegisterLuaClass					( MOAIComposer& composer, MOAILuaState& state );
+	void							MOAILuaObject_RegisterLuaFuncs					( MOAIComposer& composer, MOAILuaState& state );
+	MOAIAbstractMaterial&			MOAIAbstractMaterialInterface_AffirmMaterial	();
+	MOAIAbstractMaterial*			MOAIAbstractMaterialInterface_GetMaterial		();
 	
 public:
 
 	//----------------------------------------------------------------//
-	MOAIMaterial&			AffirmMaterial							();
-	MOAIMaterial&			AffirmMaterial							( ZLIndex index );
-	MOAIMaterialBatch&		AffirmMaterialBatch						();
-	MOAIMaterial*			GetMaterial								();
-	MOAIMaterial*			GetMaterial								( ZLIndex index );
-	MOAIMaterialBatch*		GetMaterialBatch						();
-							MOAIAbstractMaterialBatchInterface		();
-	virtual					~MOAIAbstractMaterialBatchInterface		();
+	MOAIAbstractMaterial&			AffirmMaterial							();
+	MOAIMaterial&					AffirmMaterial							( ZLIndex index );
+	MOAIMaterialBatch&				AffirmMaterialBatch						();
+	MOAIAbstractMaterial*			GetMaterial								();
+	MOAIMaterial*					GetMaterial								( ZLIndex index );
+	MOAIMaterialBatch*				GetMaterialBatch						();
+									MOAIAbstractMaterialBatchInterface		();
+	virtual							~MOAIAbstractMaterialBatchInterface		();
 };
 
 #endif

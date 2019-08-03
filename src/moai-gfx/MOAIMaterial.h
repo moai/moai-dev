@@ -5,52 +5,109 @@
 #define	MOAIMATERIAL_H
 
 #include <moai-gfx/MOAIGfxMgr.h>
-#include <moai-gfx/MOAIAbstractMaterialGlobalsContext.h>
-#include <moai-gfx/MOAIAbstractMaterialInterface.h>
+#include <moai-gfx/MOAIAbstractMaterial.h>
+
+//================================================================//
+// MOAIMaterialNamedGlobal
+//================================================================//
+template < typename TYPE >
+class MOAIMaterialNamedGlobal {
+private:
+
+	friend class MOAIMaterial;
+	
+	u32							mName;
+	ZLStrongPtr < TYPE >		mValue;
+	MOAIMaterialNamedGlobal*	mNext;
+
+public:
+
+	//----------------------------------------------------------------//
+	static void Clear ( MOAIMaterialNamedGlobal < TYPE >*& list ) {
+
+		while ( list ) {
+			MOAIMaterialNamedGlobal < TYPE >* global = list;
+			list = list->mNext;
+			delete global;
+		}
+	}
+
+	//----------------------------------------------------------------//
+	MOAIMaterialNamedGlobal () :
+		mName ( MOAIMaterialGlobals::MOAI_UNKNOWN_MATERIAL_GLOBAL ),
+		mNext ( 0 ) {
+	}
+	
+	//----------------------------------------------------------------//
+	static MOAIMaterialNamedGlobal < TYPE >* FindNamedGlobal ( MOAIMaterialNamedGlobal < TYPE >* list, u32 name ) {
+	
+		for ( ; list; list = list->mNext ) {
+			if ( list->mName == name ) return list;
+		}
+		return 0;
+	}
+	
+	//----------------------------------------------------------------//
+	static MOAIMaterialNamedGlobal < TYPE >* SetNamedGlobal ( MOAIMaterialNamedGlobal < TYPE >*& list, u32 name, TYPE* value ) {
+	
+		if ( value ) {
+	
+			MOAIMaterialNamedGlobal < TYPE >* global = MOAIMaterialNamedGlobal < TYPE >::FindNamedGlobal ( list, name );
+			
+			if ( !global ) {
+			
+				global = new MOAIMaterialNamedGlobal < TYPE >();
+				
+				global->mName = name;
+				global->mValue = value;
+				global->mNext = list;
+				list = global;
+			}
+			return global;
+		}
+		else {
+		
+			MOAIMaterialNamedGlobal < TYPE >* cursor = list;
+			list = 0;
+			
+			while ( cursor ) {
+			
+				MOAIMaterialNamedGlobal < TYPE >* global = cursor;
+				cursor = cursor->mNext;
+				
+				if ( global->mName == name ) {
+					delete global;
+				}
+				else {
+					global->mNext = list;
+					list = global;
+				}
+			}
+		}
+		return 0;
+	}
+};
 
 //================================================================//
 // MOAIMaterial
 //================================================================//
 // TODO: doxygen
 class MOAIMaterial :
-	public virtual MOAIAbstractMaterialInterface {
+	public virtual MOAIAbstractMaterial {
 private:
 
-	friend class MOAIMaterial;
-	friend class MOAIMaterialBatch;
-	friend class MOAIAbstractMaterialInterface;
-	friend class MOAIMaterialMgr;
-		
-	enum {
-		BLEND_MODE_FLAG		= 0x01 << 0,
-		CULL_MODE_FLAG		= 0x01 << 1,
-		DEPTH_MASK_FLAG		= 0x01 << 2,
-		DEPTH_TEST_FLAG		= 0x01 << 3,
-		SHADER_FLAG			= 0x01 << 4,
-		TEXTURE_FLAG		= 0x01 << 5,
-		
-		MAX_FLAG			= 0x01 << 6,
-	};
-	
-	static const u32	DRAW_FLAGS	= BLEND_MODE_FLAG | CULL_MODE_FLAG | DEPTH_MASK_FLAG | DEPTH_TEST_FLAG;
-	static const u32	ALL_FLAGS	= MAX_FLAG - 1;
-	
-	ZLStrongPtr < MOAIShader >	mShader;
-	ZLStrongPtr < MOAITexture >	mTexture;
-	
-	MOAIBlendMode		mBlendMode;
-	int					mCullMode;
-	int					mDepthTest;
-	bool				mDepthMask;
-
-	u32					mFlags;
-	bool				mOverwrite;
-	
-	MOAIAbstractMaterialGlobalsContext*		mGlobals;
+	MOAIMaterialNamedGlobal < MOAILight >*		mLights;
+	MOAIMaterialNamedGlobal < MOAITexture >*	mTextures;
 	
 	//----------------------------------------------------------------//
 	void				MOAILuaObject_RegisterLuaClass						( MOAIComposer& composer, MOAILuaState& state );
 	void				MOAILuaObject_RegisterLuaFuncs						( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAIAbstractMaterial_ApplyGlobals					( MOAIAbstractMaterialInterface& dest );
+	MOAILight*			MOAIAbstractMaterial_ClearGlobals					();
+	MOAILight*			MOAIAbstractMaterial_GetLight						( u32 name );
+	MOAITexture*		MOAIAbstractMaterial_GetTexture						( u32 name );
+	void				MOAIAbstractMaterial_SetLight						( u32 name, MOAILight* light );
+	void				MOAIAbstractMaterial_SetTexture						( u32 name, MOAITexture* texture );
 	MOAIMaterial&		MOAIAbstractMaterialInterface_AffirmMaterial		();
 	MOAIMaterial*		MOAIAbstractMaterialInterface_GetMaterial			();
 

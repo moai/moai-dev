@@ -381,7 +381,7 @@ void MOAIStretchPatch2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	
 	MOAIMaterialMgr& materialMgr = MOAIMaterialMgr::Get ();
 	materialMgr.Push ( this->GetMaterial ( idx ));
-	materialMgr.GetMaterial ().SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
+	materialMgr.SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
 	materialMgr.LoadGfxState ();
 	
 	this->DrawStretch ( idx, stretch.mX, stretch.mY );

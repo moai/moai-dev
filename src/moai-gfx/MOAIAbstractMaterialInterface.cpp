@@ -6,7 +6,6 @@
 #include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAILight.h>
 #include <moai-gfx/MOAIMaterial.h>
-#include <moai-gfx/MOAIMaterialGlobalsContext.h>
 #include <moai-gfx/MOAIAbstractMaterialInterface.h>
 #include <moai-gfx/MOAIShader.h>
 #include <moai-gfx/MOAITexture.h>
@@ -20,7 +19,7 @@
 int MOAIAbstractMaterialInterface::_getBlendMode ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractMaterialInterface, "U" )
 
-	MOAIMaterial* material = self->GetMaterial ();
+	MOAIAbstractMaterial* material = self->GetMaterial ();
 	if ( material ) {
 
 		MOAIBlendMode& blendMode = material->mBlendMode;
@@ -38,7 +37,7 @@ int MOAIAbstractMaterialInterface::_getBlendMode ( lua_State* L ) {
 int MOAIAbstractMaterialInterface::_getCullMode ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractMaterialInterface, "U" )
 	
-	MOAIMaterial* material = self->GetMaterial ();
+	MOAIAbstractMaterial* material = self->GetMaterial ();
 	if ( material ) {
 		state.Push ( material->mCullMode );
 		return 1;
@@ -51,7 +50,7 @@ int MOAIAbstractMaterialInterface::_getCullMode ( lua_State* L ) {
 int MOAIAbstractMaterialInterface::_getDepthMask ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractMaterialInterface, "U" )
 	
-	MOAIMaterial* material = self->GetMaterial ();
+	MOAIAbstractMaterial* material = self->GetMaterial ();
 	if ( material ) {
 		state.Push ( material->mDepthMask );
 		return 1;
@@ -64,7 +63,7 @@ int MOAIAbstractMaterialInterface::_getDepthMask ( lua_State* L ) {
 int MOAIAbstractMaterialInterface::_getDepthTest ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractMaterialInterface, "U" )
 	
-	MOAIMaterial* material = self->GetMaterial ();
+	MOAIAbstractMaterial* material = self->GetMaterial ();
 	if ( material ) {
 	
 		state.Push ( material->mDepthTest );
@@ -78,7 +77,7 @@ int MOAIAbstractMaterialInterface::_getDepthTest ( lua_State* L ) {
 int MOAIAbstractMaterialInterface::_getLight ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractMaterialInterface, "U" )
 	
-	MOAIMaterial* material = self->GetMaterial ();
+	MOAIAbstractMaterial* material = self->GetMaterial ();
 	if ( material ) {
 		u32 name = MOAIMaterialGlobals::GetNamedGlobalID ( state, 2 );
 		state.Push ( material->GetLight ( name ));
@@ -92,7 +91,7 @@ int MOAIAbstractMaterialInterface::_getLight ( lua_State* L ) {
 int MOAIAbstractMaterialInterface::_getShader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractMaterialInterface, "U" )
 
-	MOAIMaterial* material = self->GetMaterial ();
+	MOAIAbstractMaterial* material = self->GetMaterial ();
 	if ( material ) {
 		state.Push (( MOAILuaObject* )material->mShader );
 		return 1;
@@ -105,7 +104,7 @@ int MOAIAbstractMaterialInterface::_getShader ( lua_State* L ) {
 int MOAIAbstractMaterialInterface::_getTexture ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractMaterialInterface, "U" )
 
-	MOAIMaterial* material = self->GetMaterial ();
+	MOAIAbstractMaterial* material = self->GetMaterial ();
 	if ( material ) {
 		u32 name = MOAIMaterialGlobals::GetNamedGlobalID ( state, 2 );
 		state.Push ( material->GetTexture ( name ));
@@ -225,7 +224,7 @@ int MOAIAbstractMaterialInterface::_setTexture ( lua_State* L ) {
 	u32 name = MOAIMaterialGlobals::GetNamedGlobalID ( state, 2 );
 	MOAITexture* texture = NULL;
 	
-	MOAIMaterial& material = self->AffirmMaterial ();
+	MOAIAbstractMaterial& material = self->AffirmMaterial ();
 	
 	if ( name != MOAIMaterialGlobals::MOAI_UNKNOWN_MATERIAL_GLOBAL ) {
 		texture = MOAIGfxMgr::Get ().AffirmTexture ( state, 3 );
@@ -244,18 +243,7 @@ int MOAIAbstractMaterialInterface::_setTexture ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIAbstractMaterialGlobalsContext& MOAIAbstractMaterialInterface::AffirmGlobalsContext () {
-
-	MOAIMaterial& material = this->AffirmMaterial ();
-
-	if ( !material.mGlobals ) {
-		material.mGlobals = new MOAIMaterialGlobalsContext ();
-	}
-	return *material.mGlobals;
-}
-
-//----------------------------------------------------------------//
-MOAIMaterial& MOAIAbstractMaterialInterface::AffirmMaterial () {
+MOAIAbstractMaterial& MOAIAbstractMaterialInterface::AffirmMaterial () {
 
 	return this->MOAIAbstractMaterialInterface_AffirmMaterial ();
 }
@@ -263,19 +251,17 @@ MOAIMaterial& MOAIAbstractMaterialInterface::AffirmMaterial () {
 //----------------------------------------------------------------//
 void MOAIAbstractMaterialInterface::Clear () {
 
-	MOAIMaterial* material = this->GetMaterial ();
+	MOAIAbstractMaterial* material = this->GetMaterial ();
 	if ( !material ) return;
-	
-	if ( material->mGlobals ) {
-		material->mGlobals->Clear ();
-	}
+
 	this->Clear ( MOAIMaterial::ALL_FLAGS );
+	material->MOAIAbstractMaterial_ClearGlobals ();
 }
 
 //----------------------------------------------------------------//
 void MOAIAbstractMaterialInterface::Clear ( u32 flags, bool force ) {
 	
-	MOAIMaterial* material = this->GetMaterial ();
+	MOAIAbstractMaterial* material = this->GetMaterial ();
 	if ( !material ) return;
 	
 	if ( force || ( material->mFlags & flags )) {
@@ -309,9 +295,9 @@ void MOAIAbstractMaterialInterface::Clear ( u32 flags, bool force ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractMaterialInterface::Compose ( MOAIMaterial& source ) {
+void MOAIAbstractMaterialInterface::Compose ( MOAIAbstractMaterial& source ) {
 
-	MOAIMaterial& material = this->AffirmMaterial ();
+	MOAIAbstractMaterial& material = this->AffirmMaterial ();
 
 	u32 available = ~material.mFlags & source.mFlags;
 
@@ -351,48 +337,46 @@ void MOAIAbstractMaterialInterface::Compose ( MOAIMaterial& source ) {
 		material.mFlags |= available;
 	}
 	
-	if ( source.mGlobals ) {
-		source.mGlobals->Apply ( material.AffirmGlobalsContext ());
-	}
+	source.MOAIAbstractMaterial_ApplyGlobals ( material );
 }
 
 //----------------------------------------------------------------//
 MOAIBlendMode MOAIAbstractMaterialInterface::GetBlendMode () {
 
-	MOAIMaterial* material = this->GetMaterial ();
+	MOAIAbstractMaterial* material = this->GetMaterial ();
 	return material ? material->mBlendMode : MOAIBlendMode ();
 }
 
 //----------------------------------------------------------------//
 int MOAIAbstractMaterialInterface::GetCullMode () {
 
-	MOAIMaterial* material = this->GetMaterial ();
+	MOAIAbstractMaterial* material = this->GetMaterial ();
 	return material ? material->mCullMode : 0;
 }
 
 //----------------------------------------------------------------//
 bool MOAIAbstractMaterialInterface::GetDepthMask () {
 
-	MOAIMaterial* material = this->GetMaterial ();
+	MOAIAbstractMaterial* material = this->GetMaterial ();
 	return material ? material->mDepthMask : false;
 }
 
 //----------------------------------------------------------------//
 int MOAIAbstractMaterialInterface::GetDepthTest () {
 
-	MOAIMaterial* material = this->GetMaterial ();
+	MOAIAbstractMaterial* material = this->GetMaterial ();
 	return material ? material->mDepthTest : 0;
 }
 
 //----------------------------------------------------------------//
 MOAILight* MOAIAbstractMaterialInterface::GetLight ( u32 name ) {
 
-	MOAIMaterial* material = this->GetMaterial ();
-	return ( material && material->mGlobals ) ? material->mGlobals->GetLight ( name ) : NULL;
+	MOAIAbstractMaterial* material = this->GetMaterial ();
+	return material ? material->MOAIAbstractMaterial_GetLight ( name ) : NULL;
 }
 
 //----------------------------------------------------------------//
-MOAIMaterial* MOAIAbstractMaterialInterface::GetMaterial () {
+MOAIAbstractMaterial* MOAIAbstractMaterialInterface::GetMaterial () {
 
 	return this->MOAIAbstractMaterialInterface_GetMaterial ();
 }
@@ -400,25 +384,22 @@ MOAIMaterial* MOAIAbstractMaterialInterface::GetMaterial () {
 //----------------------------------------------------------------//
 MOAIShader* MOAIAbstractMaterialInterface::GetShader () {
 
-	MOAIMaterial* material = this->GetMaterial ();
+	MOAIAbstractMaterial* material = this->GetMaterial ();
 	return material ? ( MOAIShader* )material->mShader : NULL;
 }
 
 //----------------------------------------------------------------//
 MOAITexture* MOAIAbstractMaterialInterface::GetTexture () {
 
-	MOAIMaterial* material = this->GetMaterial ();
+	MOAIAbstractMaterial* material = this->GetMaterial ();
 	return material ? ( MOAITexture* )material->mTexture : NULL;
 }
 
 //----------------------------------------------------------------//
 MOAITexture* MOAIAbstractMaterialInterface::GetTexture ( u32 name ) {
 
-	MOAIMaterial* material = this->GetMaterial ();
-	if ( !material ) return NULL;
-	
-	MOAITexture* texture = material->mGlobals ? material->mGlobals->GetTexture ( name ) : NULL;
-	return texture ? texture : material->GetTexture ();
+	MOAIAbstractMaterial* material = this->GetMaterial ();
+	return material ? material->MOAIAbstractMaterial_GetTexture ( name ) : NULL;
 }
 
 //----------------------------------------------------------------//
@@ -426,7 +407,7 @@ void MOAIAbstractMaterialInterface::LoadGfxState () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	MOAIMaterial* material = this->GetMaterial ();
+	MOAIAbstractMaterial* material = this->GetMaterial ();
 	if ( material ) {
 	
 		gfxMgr.SetBlendMode ( material->mBlendMode );
@@ -466,7 +447,7 @@ MOAIAbstractMaterialInterface::~MOAIAbstractMaterialInterface () {
 //----------------------------------------------------------------//
 void MOAIAbstractMaterialInterface::SetBlendMode () {
 
-	MOAIMaterial& material = this->AffirmMaterial ();
+	MOAIAbstractMaterial& material = this->AffirmMaterial ();
 
 	if ( material.mOverwrite ) {
 		material.mFlags &= ~MOAIMaterial::BLEND_MODE_FLAG;
@@ -476,7 +457,7 @@ void MOAIAbstractMaterialInterface::SetBlendMode () {
 //----------------------------------------------------------------//
 void MOAIAbstractMaterialInterface::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 	
-	MOAIMaterial& material = this->AffirmMaterial ();
+	MOAIAbstractMaterial& material = this->AffirmMaterial ();
 	
 	if ( material.mOverwrite || !( material.mFlags & MOAIMaterial::BLEND_MODE_FLAG )) {
 		material.mBlendMode = blendMode;
@@ -487,7 +468,7 @@ void MOAIAbstractMaterialInterface::SetBlendMode ( const MOAIBlendMode& blendMod
 //----------------------------------------------------------------//
 void MOAIAbstractMaterialInterface::SetCullMode () {
 
-	MOAIMaterial& material = this->AffirmMaterial ();
+	MOAIAbstractMaterial& material = this->AffirmMaterial ();
 
 	if ( material.mOverwrite ) {
 		material.mFlags &= ~MOAIMaterial::CULL_MODE_FLAG;
@@ -497,7 +478,7 @@ void MOAIAbstractMaterialInterface::SetCullMode () {
 //----------------------------------------------------------------//
 void MOAIAbstractMaterialInterface::SetCullMode ( int cullMode ) {
 
-	MOAIMaterial& material = this->AffirmMaterial ();
+	MOAIAbstractMaterial& material = this->AffirmMaterial ();
 
 	if ( material.mOverwrite || !( material.mFlags & MOAIMaterial::CULL_MODE_FLAG )) {
 		material.mCullMode = cullMode;
@@ -508,7 +489,7 @@ void MOAIAbstractMaterialInterface::SetCullMode ( int cullMode ) {
 //----------------------------------------------------------------//
 void MOAIAbstractMaterialInterface::SetDepthMask () {
 
-	MOAIMaterial& material = this->AffirmMaterial ();
+	MOAIAbstractMaterial& material = this->AffirmMaterial ();
 
 	if ( material.mOverwrite ) {
 		material.mFlags &= ~MOAIMaterial::DEPTH_MASK_FLAG;
@@ -518,7 +499,7 @@ void MOAIAbstractMaterialInterface::SetDepthMask () {
 //----------------------------------------------------------------//
 void MOAIAbstractMaterialInterface::SetDepthMask ( bool depthMask ) {
 
-	MOAIMaterial& material = this->AffirmMaterial ();
+	MOAIAbstractMaterial& material = this->AffirmMaterial ();
 
 	if ( material.mOverwrite || !( material.mFlags & MOAIMaterial::DEPTH_MASK_FLAG )) {
 		material.mDepthMask = depthMask;
@@ -529,7 +510,7 @@ void MOAIAbstractMaterialInterface::SetDepthMask ( bool depthMask ) {
 //----------------------------------------------------------------//
 void MOAIAbstractMaterialInterface::SetDepthTest () {
 
-	MOAIMaterial& material = this->AffirmMaterial ();
+	MOAIAbstractMaterial& material = this->AffirmMaterial ();
 
 	if ( material.mOverwrite ) {
 		material.mFlags &= ~MOAIMaterial::DEPTH_TEST_FLAG;
@@ -539,7 +520,7 @@ void MOAIAbstractMaterialInterface::SetDepthTest () {
 //----------------------------------------------------------------//
 void MOAIAbstractMaterialInterface::SetDepthTest ( int depthTest ) {
 
-	MOAIMaterial& material = this->AffirmMaterial ();
+	MOAIAbstractMaterial& material = this->AffirmMaterial ();
 
 	if ( material.mOverwrite || !( material.mFlags & MOAIMaterial::DEPTH_TEST_FLAG )) {
 		material.mDepthTest = depthTest;
@@ -557,7 +538,7 @@ void MOAIAbstractMaterialInterface::SetLight ( u32 name ) {
 void MOAIAbstractMaterialInterface::SetLight ( u32 name, MOAILight* light ) {
 
 	if ( name < MOAIMaterialGlobals::MAX_GLOBAL_LIGHTS ) {
-		this->AffirmGlobalsContext ().SetLight ( name, light );
+		this->AffirmMaterial ().MOAIAbstractMaterial_SetLight ( name, light );
 	}
 }
 
@@ -576,7 +557,7 @@ void MOAIAbstractMaterialInterface::SetShader ( MOAIShaderPresetEnum shaderID ) 
 //----------------------------------------------------------------//
 void MOAIAbstractMaterialInterface::SetShader ( MOAIShader* shader ) {
 
-	MOAIMaterial& material = this->AffirmMaterial ();
+	MOAIAbstractMaterial& material = this->AffirmMaterial ();
 
 	if ( material.mOverwrite || !( material.mFlags & MOAIMaterial::SHADER_FLAG )) {
 
@@ -600,7 +581,7 @@ void MOAIAbstractMaterialInterface::SetTexture () {
 //----------------------------------------------------------------//
 void MOAIAbstractMaterialInterface::SetTexture ( MOAITexture* texture ) {
 
-	MOAIMaterial& material = this->AffirmMaterial ();
+	MOAIAbstractMaterial& material = this->AffirmMaterial ();
 
 	if ( material.mOverwrite || !( material.mFlags & MOAIMaterial::TEXTURE_FLAG )) {
 
@@ -625,7 +606,7 @@ void MOAIAbstractMaterialInterface::SetTexture ( u32 name ) {
 void MOAIAbstractMaterialInterface::SetTexture ( u32 name, MOAITexture* texture ) {
 
 	if ( name < MOAIMaterialGlobals::MAX_GLOBAL_LIGHTS ) {
-		this->AffirmMaterial ().AffirmGlobalsContext ().SetTexture ( name, texture );
+		this->AffirmMaterial ().MOAIAbstractMaterial_SetTexture ( name, texture );
 	}
 }
 

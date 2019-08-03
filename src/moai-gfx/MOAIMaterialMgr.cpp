@@ -48,27 +48,16 @@ MOAIMaterialGlobal::~MOAIMaterialGlobal () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIMaterialMgr::LoadGfxState () {
-
-	this->mComposedMaterial->LoadGfxState ();
-}
-
-//----------------------------------------------------------------//
 MOAIMaterialMgr::MOAIMaterialMgr () {
 
 	this->mNamedLights.Init ( MOAIMaterialGlobals::MAX_GLOBAL_LIGHTS );
 	this->mNamedTextures.Init ( MOAIMaterialGlobals::MAX_GLOBAL_TEXTURES );
 	
-	this->mComposedMaterial = new MOAIMaterial ();
-	this->mComposedMaterial->mOverwrite = false;
-	this->mComposedMaterial->mGlobals = this;
+	this->mOverwrite = false;
 }
 
 //----------------------------------------------------------------//
 MOAIMaterialMgr::~MOAIMaterialMgr () {
-
-	// avoid circular dependency
-	this->mComposedMaterial->mGlobals = NULL;
 }
 
 //----------------------------------------------------------------//
@@ -81,11 +70,11 @@ void MOAIMaterialMgr::Pop () {
 		MOAIMaterialStackFrame frame = this->mStack.Pop ();
 		
 		if ( stackTop > 1 ) {
-			this->mComposedMaterial->Clear ( ~frame.mFlags );
+			this->Clear ( ~frame.mFlags );
 		}
 		else {
 			this->mStack.Reset ();
-			this->mComposedMaterial->Clear ();
+			this->Clear ();
 		}
 		
 		MOAIMaterialStackClearCmd* cursor = frame.mClearList;
@@ -106,15 +95,15 @@ void MOAIMaterialMgr::Pop () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialMgr::Push ( MOAIMaterial* material ) {
+void MOAIMaterialMgr::Push ( MOAIAbstractMaterial* material ) {
 	
 	MOAIMaterialStackFrame& frame = this->mStack.Push ();
 	
-	frame.mFlags = this->mComposedMaterial->mFlags;
+	frame.mFlags = this->mFlags;
 	frame.mClearList = 0;
 	
 	if ( material ) {
-		this->mComposedMaterial->Compose ( *material );
+		this->Compose ( *material );
 	}
 }
 
@@ -147,53 +136,50 @@ void MOAIMaterialMgr::SetGlobal ( MOAIMaterialGlobal& global, void* ptr ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIMaterialMgr::MOAIAbstractMaterialGlobalsContext_Apply ( MOAIAbstractMaterialGlobalsContext& dest ) {
+void MOAIMaterialMgr::MOAIAbstractMaterial_ApplyGlobals ( MOAIAbstractMaterialInterface& dest ) {
 	UNUSED ( dest );
 }
 
 //----------------------------------------------------------------//
-MOAILight* MOAIMaterialMgr::MOAIAbstractMaterialGlobalsContext_Clear () {
+MOAILight* MOAIMaterialMgr::MOAIAbstractMaterial_ClearGlobals () {
 }
 
 //----------------------------------------------------------------//
-MOAILight* MOAIMaterialMgr::MOAIAbstractMaterialGlobalsContext_GetLight ( u32 name ) {
+MOAILight* MOAIMaterialMgr::MOAIAbstractMaterial_GetLight ( u32 name ) {
 
 	assert ( name < MOAIMaterialGlobals::MAX_GLOBAL_TEXTURES );
 	return this->mNamedLights [ ZLIndexCast ( name )].mLight;
 }
 
 //----------------------------------------------------------------//
-MOAITexture* MOAIMaterialMgr::MOAIAbstractMaterialGlobalsContext_GetTexture ( u32 name ) {
+MOAITexture* MOAIMaterialMgr::MOAIAbstractMaterial_GetTexture ( u32 name ) {
 
 	assert ( name < MOAIMaterialGlobals::MAX_GLOBAL_TEXTURES );
 	return this->mNamedTextures [ ZLIndexCast ( name )].mTexture;
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialMgr::MOAIAbstractMaterialGlobalsContext_SetLight ( u32 name, MOAILight* light ) {
+void MOAIMaterialMgr::MOAIAbstractMaterial_SetLight ( u32 name, MOAILight* light ) {
 
 	assert ( name < MOAIMaterialGlobals::MAX_GLOBAL_LIGHTS );
 	this->SetGlobal ( this->mNamedLights [ ZLIndexCast ( name )], light );
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialMgr::MOAIAbstractMaterialGlobalsContext_SetTexture ( u32 name, MOAITexture* texture ) {
+void MOAIMaterialMgr::MOAIAbstractMaterial_SetTexture ( u32 name, MOAITexture* texture ) {
 
 	assert ( name < MOAIMaterialGlobals::MAX_GLOBAL_TEXTURES );
 	this->SetGlobal ( this->mNamedTextures [ ZLIndexCast ( name )], texture );
 }
 
 //----------------------------------------------------------------//
-MOAIMaterial& MOAIMaterialMgr::MOAIAbstractMaterialInterface_AffirmMaterial () {
+MOAIAbstractMaterial& MOAIMaterialMgr::MOAIAbstractMaterialInterface_AffirmMaterial () {
 
-	if ( !this->mComposedMaterial ) {
-		this->mComposedMaterial = new MOAIMaterial ();
-	}
-	return *this->mComposedMaterial;
+	return *this;
 }
 
 //----------------------------------------------------------------//
-MOAIMaterial* MOAIMaterialMgr::MOAIAbstractMaterialInterface_GetMaterial () {
+MOAIAbstractMaterial* MOAIMaterialMgr::MOAIAbstractMaterialInterface_GetMaterial () {
 
-	return this->mComposedMaterial;
+	return this;
 }

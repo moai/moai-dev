@@ -91,7 +91,7 @@ int MOAIAbstractMaterialBatchInterface::_setIndexBatchSize ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIMaterial& MOAIAbstractMaterialBatchInterface::AffirmMaterial () {
+MOAIAbstractMaterial& MOAIAbstractMaterialBatchInterface::AffirmMaterial () {
 
 	return this->MOAIAbstractMaterialInterface::AffirmMaterial ();
 }
@@ -109,7 +109,7 @@ MOAIMaterialBatch& MOAIAbstractMaterialBatchInterface::AffirmMaterialBatch () {
 }
 
 //----------------------------------------------------------------//
-MOAIMaterial* MOAIAbstractMaterialBatchInterface::GetMaterial () {
+MOAIAbstractMaterial* MOAIAbstractMaterialBatchInterface::GetMaterial () {
 
 	return this->MOAIAbstractMaterialInterface::GetMaterial ();
 }
@@ -164,13 +164,13 @@ void MOAIAbstractMaterialBatchInterface::MOAILuaObject_RegisterLuaFuncs ( MOAICo
 }
 
 //----------------------------------------------------------------//
-MOAIMaterial& MOAIAbstractMaterialBatchInterface::MOAIAbstractMaterialInterface_AffirmMaterial () {
+MOAIAbstractMaterial& MOAIAbstractMaterialBatchInterface::MOAIAbstractMaterialInterface_AffirmMaterial () {
 
 	return this->AffirmMaterial ( ZLIndexOp::ZERO );
 }
 
 //----------------------------------------------------------------//
-MOAIMaterial* MOAIAbstractMaterialBatchInterface::MOAIAbstractMaterialInterface_GetMaterial () {
+MOAIAbstractMaterial* MOAIAbstractMaterialBatchInterface::MOAIAbstractMaterialInterface_GetMaterial () {
 
 	return this->GetMaterial ( ZLIndexOp::ZERO );
 }
