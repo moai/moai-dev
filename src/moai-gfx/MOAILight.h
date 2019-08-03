@@ -19,7 +19,7 @@ private:
 
 	MOAILuaSharedPtr < MOAILightFormat >	mFormat;
 	ZLLeanArray < u8 >						mBuffer;
-	ZLLeanArray < MOAITexture* >	mTextures;
+	ZLLeanArray < MOAITexture* >			mTextures;
 
 	//----------------------------------------------------------------//
 	static int			_getFormat					( lua_State* L );

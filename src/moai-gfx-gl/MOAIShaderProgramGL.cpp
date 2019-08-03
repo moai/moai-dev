@@ -360,7 +360,7 @@ void MOAIShaderProgramGL::ReserveUniforms ( ZLSize nUniforms ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderProgramGL::ScheduleTextures () {
+void MOAIShaderProgramGL::SelectTextures () {
 
 	// TODO: ZLGfx
 

@@ -101,7 +101,7 @@ void MOAIGfxMgrGL_GPUCacheGL::ApplyStateChanges () {
 	if ( !this->mApplyingStateChanges ) {
 	
 		if ( this->mPendingState->mShader ) {
-			this->mPendingState->mShader->ScheduleTextures ();
+			this->mPendingState->mShader->SelectTextures ();
 		}
 
 		if ( this->mDirtyFlags || this->mTextureDirtyFlags ) {

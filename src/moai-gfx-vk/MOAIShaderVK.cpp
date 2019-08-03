@@ -169,3 +169,11 @@ bool MOAIShaderVK::MOAIShader_IsReady () const {
 
 	return true;
 }
+
+//----------------------------------------------------------------//
+void MOAIShaderVK::MOAIShader_SelectTextures () {
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderVK::MOAIShader_UpdateUniforms () {
+}

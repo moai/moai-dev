@@ -106,12 +106,12 @@ protected:
 	MOAIShaderUniformGL*		GetUniform					( ZLIndex uniformID );
 	void						InitUniformBuffer			( ZLLeanArray < u8 >& buffer );
 	int							ReserveGlobals 				( lua_State* L, int idx );
-	void						ScheduleTextures			();
+	void						SelectTextures				();
 	void						UpdateUniforms				( ZLLeanArray < u8 >& buffer );
 	
 	//----------------------------------------------------------------//
 	bool						MOAIGfxResource_OnCPUCreate							();
-	void						MOAIGfxResource_OnCPUPurgeRecoverable						();
+	void						MOAIGfxResource_OnCPUPurgeRecoverable				();
 	void						MOAIGfxResourceGL_OnGPUBind							();
 	bool						MOAIGfxResourceGL_OnGPUCreate						();
 	void						MOAIGfxResourceGL_OnGPUDeleteOrDiscard				( bool shouldDelete );
@@ -119,7 +119,7 @@ protected:
 	bool						MOAIGfxResourceGL_OnGPUUpdate						();
 	void						MOAILuaObject_RegisterLuaClass						( MOAIComposer& composer, MOAILuaState& state );
 	void						MOAILuaObject_RegisterLuaFuncs						( MOAIComposer& composer, MOAILuaState& state );
-	MOAIShaderUniformHandle		MOAIShaderUniformSchema_GetUniformHandle		( void* buffer, ZLIndex uniformID ) const;
+	MOAIShaderUniformHandle		MOAIShaderUniformSchema_GetUniformHandle			( void* buffer, ZLIndex uniformID ) const;
 	void						ZLGfxListener_OnUniformLocation						( u32 addr, void* userdata );
 	
 public:

@@ -14,12 +14,12 @@
 
 //----------------------------------------------------------------//
 void ZLContextClassBase::Finalize () {
-	this->ZLContextClassBase_Finalize ();
+	this->ZLContextClass_Finalize ();
 }
 
 //----------------------------------------------------------------//
 void ZLContextClassBase::Initialize () {
-	this->ZLContextClassBase_Initialize ();
+	this->ZLContextClass_Initialize ();
 }
 
 //----------------------------------------------------------------//
@@ -31,11 +31,11 @@ ZLContextClassBase::~ZLContextClassBase () {
 }
 
 //----------------------------------------------------------------//
-void ZLContextClassBase::ZLContextClassBase_Finalize () {
+void ZLContextClassBase::ZLContextClass_Finalize () {
 }
 
 //----------------------------------------------------------------//
-void ZLContextClassBase::ZLContextClassBase_Initialize () {
+void ZLContextClassBase::ZLContextClass_Initialize () {
 }
 
 //================================================================//

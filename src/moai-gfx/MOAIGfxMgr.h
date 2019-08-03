@@ -46,7 +46,6 @@ protected:
 	virtual void				MOAIGfxMgr_PopState					() = 0;
 	virtual void				MOAIGfxMgr_PushState				() = 0;
 	
-
 	//----------------------------------------------------------------//
 	MOAIGfxMgr_CPUCache&		MOAIGfxMgrComponents_GetCPUCache		();
 	MOAIGfxMgr&					MOAIGfxMgrComponents_GetGfxMgr			();

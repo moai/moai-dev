@@ -104,28 +104,12 @@ MOAIShaderGL::~MOAIShaderGL () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderGL::ScheduleTextures () {
-
-	if ( this->mProgram ) {
-		this->mProgram->ScheduleTextures ();
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIShaderGL::SetProgram ( MOAIShaderProgramGL* program ) {
 	
 	this->mProgram = program;
 	
 	if ( program ) {
 		program->InitUniformBuffer ( this->mPendingUniformBuffer );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderGL::UpdateUniforms () {
-
-	if ( this->mProgram ) {
-		this->mProgram->UpdateUniforms ( this->mPendingUniformBuffer );
 	}
 }
 
@@ -167,4 +151,20 @@ bool MOAIShaderGL::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u3
 bool MOAIShaderGL::MOAIShader_IsReady () const {
 
 	return ( this->mProgram && this->mProgram->IsReady ());
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderGL::MOAIShader_SelectTextures () {
+
+	if ( this->mProgram ) {
+		this->mProgram->SelectTextures ();
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderGL::MOAIShader_UpdateUniforms () {
+
+	if ( this->mProgram ) {
+		this->mProgram->UpdateUniforms ( this->mPendingUniformBuffer );
+	}
 }

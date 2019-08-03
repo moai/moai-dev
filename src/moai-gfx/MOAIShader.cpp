@@ -5,7 +5,7 @@
 #include <moai-gfx/MOAIShader.h>
 
 //================================================================//
-// ZLShaderGL
+// MOAIShader
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -31,9 +31,13 @@ MOAIShader::~MOAIShader () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShader::ScheduleTextures () {
+void MOAIShader::SelectTextures () {
+
+	this->MOAIShader_SelectTextures ();
 }
 
 //----------------------------------------------------------------//
 void MOAIShader::UpdateUniforms () {
+
+	this->MOAIShader_UpdateUniforms ();
 }
