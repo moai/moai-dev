@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIDECKHOLDER_H
-#define	MOAIDECKHOLDER_H
+#ifndef	MOAIHASDECK_H
+#define	MOAIHASDECK_H
 
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIPartitionHull.h>
@@ -12,10 +12,10 @@
 class MOAIDeck;
 
 //================================================================//
-// MOAIDeckHolder
+// MOAIHasDeck
 //================================================================//
 // TODO: doxygen
-class MOAIDeckHolder :
+class MOAIHasDeck :
 	public virtual MOAINode {
 protected:
 	
@@ -37,8 +37,8 @@ public:
 	GET ( MOAIDeck*, Deck, mDeck )
 
 	//----------------------------------------------------------------//
-						MOAIDeckHolder			();
-						~MOAIDeckHolder			();
+						MOAIHasDeck				();
+						~MOAIHasDeck			();
 };
 
 #endif

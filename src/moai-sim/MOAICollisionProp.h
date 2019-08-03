@@ -6,7 +6,7 @@
 
 #include <moai-sim/MOAIAbstractProp.h>
 #include <moai-sim/MOAICollisionPrim.h>
-#include <moai-sim/MOAIDeckHolderWithIndex.h>
+#include <moai-sim/MOAIHasDeckAndIndex.h>
 
 class MOAICollisionShape;
 class MOAICollisionProp;
@@ -61,7 +61,7 @@ private:
 class MOAICollisionProp :
 	public virtual MOAIAbstractProp,
 	public virtual MOAIDrawable,
-	public virtual MOAIDeckHolderWithIndex {
+	public virtual MOAIHasDeckAndIndex {
 private:
 	
 	friend class MOAICollisionWorld;

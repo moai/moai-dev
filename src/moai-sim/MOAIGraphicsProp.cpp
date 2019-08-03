@@ -26,7 +26,7 @@
 MOAIGraphicsProp::MOAIGraphicsProp () {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIDeckHolderWithIndex )
+		RTTI_EXTEND ( MOAIHasDeckAndIndex )
 		RTTI_EXTEND ( MOAIGraphicsPropBase )
 	RTTI_END
 }
@@ -65,7 +65,7 @@ ZLBounds MOAIGraphicsProp::MOAIAbstractProp_GetModelBounds () {
 //----------------------------------------------------------------//
 bool MOAIGraphicsProp::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 	
-	if ( MOAIDeckHolderWithIndex::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
+	if ( MOAIHasDeckAndIndex::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
 	if ( MOAIGraphicsPropBase::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
 	return false;
 }
@@ -73,28 +73,28 @@ bool MOAIGraphicsProp::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr
 //----------------------------------------------------------------//
 void MOAIGraphicsProp::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckHolderWithIndex, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasDeckAndIndex, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIGraphicsPropBase, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
 void MOAIGraphicsProp::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckHolderWithIndex, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasDeckAndIndex, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIGraphicsPropBase, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 }
 
 //----------------------------------------------------------------//
 void MOAIGraphicsProp::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckHolderWithIndex, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasDeckAndIndex, MOAILuaObject_SerializeIn ( composer, state, serializer ));
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIGraphicsPropBase, MOAILuaObject_SerializeIn ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//
 void MOAIGraphicsProp::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckHolderWithIndex, MOAILuaObject_SerializeOut ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasDeckAndIndex, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIGraphicsPropBase, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }
 

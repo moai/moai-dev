@@ -5,7 +5,7 @@
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIPartition.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
-#include <moai-sim/MOAIDeckHolderWithGrid.h>
+#include <moai-sim/MOAIHasDeckAndGrid.h>
 
 //================================================================//
 // lua
@@ -15,11 +15,11 @@
 /**	@lua	getGrid
 	@text	Get the grid currently connected to the prop.
 	
-	@in		MOAIDeckHolderWithGrid self
+	@in		MOAIHasDeckAndGrid self
 	@out	MOAIGrid grid		Current grid or nil.
 */
-int MOAIDeckHolderWithGrid::_getGrid ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeckHolderWithGrid, "U" )
+int MOAIHasDeckAndGrid::_getGrid ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHasDeckAndGrid, "U" )
 	
 	if ( self->mGrid ) {
 		self->mGrid->PushLuaUserdata ( state );
@@ -33,12 +33,12 @@ int MOAIDeckHolderWithGrid::_getGrid ( lua_State* L ) {
 	@text	Sets or clears the prop's grid indexer. The grid indexer (if any)
 			will override the standard indexer.
 	
-	@in		MOAIDeckHolderWithGrid self
+	@in		MOAIHasDeckAndGrid self
 	@opt	MOAIGrid grid		Default value is nil.
 	@out	nil
 */
-int MOAIDeckHolderWithGrid::_setGrid ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeckHolderWithGrid, "U" )
+int MOAIHasDeckAndGrid::_setGrid ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHasDeckAndGrid, "U" )
 	
 	MOAIGrid* grid = state.GetLuaObject < MOAIGrid >( 2, true );
 	if ( !grid ) return 0;
@@ -53,13 +53,13 @@ int MOAIDeckHolderWithGrid::_setGrid ( lua_State* L ) {
 /**	@lua	setGridScale
 	@text	Scale applied to deck items before rendering to grid cell.
 	
-	@in		MOAIDeckHolderWithGrid self
+	@in		MOAIHasDeckAndGrid self
 	@opt	number xScale		Default value is 1.
 	@opt	number yScale		Default value is 1.
 	@out	nil
 */
-int MOAIDeckHolderWithGrid::_setGridScale ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeckHolderWithGrid, "U" )
+int MOAIHasDeckAndGrid::_setGridScale ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHasDeckAndGrid, "U" )
 
 	self->mGridScale.mX = state.GetValue < float >( 2, 1.0f );
 	self->mGridScale.mY = state.GetValue < float >( 3, 1.0f );
@@ -70,11 +70,11 @@ int MOAIDeckHolderWithGrid::_setGridScale ( lua_State* L ) {
 }
 
 //================================================================//
-// MOAIDeckHolderWithGrid
+// MOAIHasDeckAndGrid
 //================================================================//
 
 //----------------------------------------------------------------//
-//void MOAIDeckHolderWithGrid::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
+//void MOAIHasDeckAndGrid::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
 //	UNUSED ( sampler );
 
 	//if ( !this->mDeck ) return;
@@ -99,16 +99,16 @@ int MOAIDeckHolderWithGrid::_setGridScale ( lua_State* L ) {
 //}
 
 //----------------------------------------------------------------//
-MOAIDeckHolderWithGrid::MOAIDeckHolderWithGrid () :
+MOAIHasDeckAndGrid::MOAIHasDeckAndGrid () :
 	mGridScale ( 1.0f, 1.0f ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIDeckHolder )
+		RTTI_EXTEND ( MOAIHasDeck )
 	RTTI_END
 }
 
 //----------------------------------------------------------------//
-MOAIDeckHolderWithGrid::~MOAIDeckHolderWithGrid () {
+MOAIHasDeckAndGrid::~MOAIHasDeckAndGrid () {
 	
 	this->mGrid.Set ( *this, 0 );
 }
@@ -118,15 +118,15 @@ MOAIDeckHolderWithGrid::~MOAIDeckHolderWithGrid () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDeckHolderWithGrid::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIHasDeckAndGrid::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckHolder, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasDeck, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckHolderWithGrid::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIHasDeckAndGrid::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckHolder, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasDeck, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "getGrid",				_getGrid },
@@ -139,17 +139,17 @@ void MOAIDeckHolderWithGrid::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& comp
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckHolderWithGrid::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIHasDeckAndGrid::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckHolder, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasDeck, MOAILuaObject_SerializeIn ( composer, state, serializer ));
 	
 	this->mGrid.Set ( *this, serializer.MemberIDToObject < MOAIGrid >( state.GetFieldValue < cc8*, MOAISerializerBase::ObjID >( -1, "mGrid", 0 )));
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckHolderWithGrid::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIHasDeckAndGrid::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckHolder, MOAILuaObject_SerializeOut ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasDeck, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 	
 	state.SetField ( -1, "mGrid", serializer.AffirmMemberID ( this->mGrid ));
 }

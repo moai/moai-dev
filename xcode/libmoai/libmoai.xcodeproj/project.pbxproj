@@ -1100,22 +1100,22 @@
 		CD1D85A31E1B2AA80089FFAD /* MOAIPartitionHull.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1D85A01E1B2AA80089FFAD /* MOAIPartitionHull.cpp */; };
 		CD1D85A41E1B2AA80089FFAD /* MOAIPartitionHull.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1D85A11E1B2AA80089FFAD /* MOAIPartitionHull.h */; };
 		CD1D85A51E1B2AA80089FFAD /* MOAIPartitionHull.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1D85A11E1B2AA80089FFAD /* MOAIPartitionHull.h */; };
-		CD1D85AC1E1B5EDD0089FFAD /* MOAIDeckHolderWithGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1D85A71E1B5EDD0089FFAD /* MOAIDeckHolderWithGrid.cpp */; };
-		CD1D85AD1E1B5EDD0089FFAD /* MOAIDeckHolderWithGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1D85A71E1B5EDD0089FFAD /* MOAIDeckHolderWithGrid.cpp */; };
-		CD1D85AE1E1B5EDD0089FFAD /* MOAIDeckHolderWithGrid.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1D85A81E1B5EDD0089FFAD /* MOAIDeckHolderWithGrid.h */; };
-		CD1D85AF1E1B5EDD0089FFAD /* MOAIDeckHolderWithGrid.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1D85A81E1B5EDD0089FFAD /* MOAIDeckHolderWithGrid.h */; };
-		CD1D85B01E1B5EDD0089FFAD /* MOAIDeckHolderWithIndex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1D85A91E1B5EDD0089FFAD /* MOAIDeckHolderWithIndex.cpp */; };
-		CD1D85B11E1B5EDD0089FFAD /* MOAIDeckHolderWithIndex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1D85A91E1B5EDD0089FFAD /* MOAIDeckHolderWithIndex.cpp */; };
-		CD1D85B21E1B5EDD0089FFAD /* MOAIDeckHolderWithIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1D85AA1E1B5EDD0089FFAD /* MOAIDeckHolderWithIndex.h */; };
-		CD1D85B31E1B5EDD0089FFAD /* MOAIDeckHolderWithIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1D85AA1E1B5EDD0089FFAD /* MOAIDeckHolderWithIndex.h */; };
+		CD1D85AC1E1B5EDD0089FFAD /* MOAIHasDeckAndGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1D85A71E1B5EDD0089FFAD /* MOAIHasDeckAndGrid.cpp */; };
+		CD1D85AD1E1B5EDD0089FFAD /* MOAIHasDeckAndGrid.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1D85A71E1B5EDD0089FFAD /* MOAIHasDeckAndGrid.cpp */; };
+		CD1D85AE1E1B5EDD0089FFAD /* MOAIHasDeckAndGrid.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1D85A81E1B5EDD0089FFAD /* MOAIHasDeckAndGrid.h */; };
+		CD1D85AF1E1B5EDD0089FFAD /* MOAIHasDeckAndGrid.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1D85A81E1B5EDD0089FFAD /* MOAIHasDeckAndGrid.h */; };
+		CD1D85B01E1B5EDD0089FFAD /* MOAIHasDeckAndIndex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1D85A91E1B5EDD0089FFAD /* MOAIHasDeckAndIndex.cpp */; };
+		CD1D85B11E1B5EDD0089FFAD /* MOAIHasDeckAndIndex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1D85A91E1B5EDD0089FFAD /* MOAIHasDeckAndIndex.cpp */; };
+		CD1D85B21E1B5EDD0089FFAD /* MOAIHasDeckAndIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1D85AA1E1B5EDD0089FFAD /* MOAIHasDeckAndIndex.h */; };
+		CD1D85B31E1B5EDD0089FFAD /* MOAIHasDeckAndIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1D85AA1E1B5EDD0089FFAD /* MOAIHasDeckAndIndex.h */; };
 		CD1D85B81E1B631C0089FFAD /* MOAIGraphicsPropBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1D85B61E1B631C0089FFAD /* MOAIGraphicsPropBase.cpp */; };
 		CD1D85B91E1B631C0089FFAD /* MOAIGraphicsPropBase.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1D85B61E1B631C0089FFAD /* MOAIGraphicsPropBase.cpp */; };
 		CD1D85BA1E1B631C0089FFAD /* MOAIGraphicsPropBase.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1D85B71E1B631C0089FFAD /* MOAIGraphicsPropBase.h */; };
 		CD1D85BB1E1B631C0089FFAD /* MOAIGraphicsPropBase.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1D85B71E1B631C0089FFAD /* MOAIGraphicsPropBase.h */; };
-		CD1D85BF1E1B672C0089FFAD /* MOAIDeckHolder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1D85BD1E1B672C0089FFAD /* MOAIDeckHolder.cpp */; };
-		CD1D85C01E1B672C0089FFAD /* MOAIDeckHolder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1D85BD1E1B672C0089FFAD /* MOAIDeckHolder.cpp */; };
-		CD1D85C11E1B672C0089FFAD /* MOAIDeckHolder.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1D85BE1E1B672C0089FFAD /* MOAIDeckHolder.h */; };
-		CD1D85C21E1B672C0089FFAD /* MOAIDeckHolder.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1D85BE1E1B672C0089FFAD /* MOAIDeckHolder.h */; };
+		CD1D85BF1E1B672C0089FFAD /* MOAIHasDeck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1D85BD1E1B672C0089FFAD /* MOAIHasDeck.cpp */; };
+		CD1D85C01E1B672C0089FFAD /* MOAIHasDeck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1D85BD1E1B672C0089FFAD /* MOAIHasDeck.cpp */; };
+		CD1D85C11E1B672C0089FFAD /* MOAIHasDeck.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1D85BE1E1B672C0089FFAD /* MOAIHasDeck.h */; };
+		CD1D85C21E1B672C0089FFAD /* MOAIHasDeck.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1D85BE1E1B672C0089FFAD /* MOAIHasDeck.h */; };
 		CD1D85C51E1B87440089FFAD /* MOAIGraphicsGridProp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1D85C31E1B87440089FFAD /* MOAIGraphicsGridProp.cpp */; };
 		CD1D85C61E1B87440089FFAD /* MOAIGraphicsGridProp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1D85C31E1B87440089FFAD /* MOAIGraphicsGridProp.cpp */; };
 		CD1D85C71E1B87440089FFAD /* MOAIGraphicsGridProp.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1D85C41E1B87440089FFAD /* MOAIGraphicsGridProp.h */; };
@@ -2098,7 +2098,7 @@
 		CD4A948A229DE21A00F9E400 /* MOAIGfxMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD582B34227292C5009CD0B6 /* MOAIGfxMgr.h */; };
 		CD4A948C229DE21A00F9E400 /* MOAILightFormat.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A92DF229C94C100F9E400 /* MOAILightFormat.h */; };
 		CD4A948F229DE21A00F9E400 /* MOAILight.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A92DD229C94C100F9E400 /* MOAILight.h */; };
-		CD4A9492229DE21A00F9E400 /* MOAIMaterialBatchHolder.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A92EF229C94DF00F9E400 /* MOAIMaterialBatchHolder.h */; };
+		CD4A9492229DE21A00F9E400 /* MOAIHasMaterialBatch.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A92EF229C94DF00F9E400 /* MOAIHasMaterialBatch.h */; };
 		CD4A9497229DE21A00F9E400 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CD582ADD22718001009CD0B6 /* host.h */; };
 		CD4A9498229DE21A00F9E400 /* MOAIMaterialBatch.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A92ED229C94DF00F9E400 /* MOAIMaterialBatch.h */; };
 		CD4A949B229DE21A00F9E400 /* MOAIDrawable.h in Headers */ = {isa = PBXBuildFile; fileRef = CD582D6A2272A3DD009CD0B6 /* MOAIDrawable.h */; };
@@ -2108,7 +2108,7 @@
 		CD4A94A4229DE21A00F9E400 /* MOAIMaterial.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4A92E8229C94DF00F9E400 /* MOAIMaterial.cpp */; };
 		CD4A94A6229DE21A00F9E400 /* MOAIMaterialMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4A92F2229C94DF00F9E400 /* MOAIMaterialMgr.cpp */; };
 		CD4A94A7229DE21A00F9E400 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD582ADC22718001009CD0B6 /* host.cpp */; };
-		CD4A94A9229DE21A00F9E400 /* MOAIMaterialBatchHolder.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4A92EE229C94DF00F9E400 /* MOAIMaterialBatchHolder.cpp */; };
+		CD4A94A9229DE21A00F9E400 /* MOAIHasMaterialBatch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4A92EE229C94DF00F9E400 /* MOAIHasMaterialBatch.cpp */; };
 		CD4A94AF229DE21A00F9E400 /* MOAIDrawable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD582D692272A3DD009CD0B6 /* MOAIDrawable.cpp */; };
 		CD4A94B7229DE21A00F9E400 /* MOAIGfxMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD582B33227292C5009CD0B6 /* MOAIGfxMgr.cpp */; };
 		CD4A94BA229DE21A00F9E400 /* MOAILight.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4A92DC229C94C100F9E400 /* MOAILight.cpp */; };
@@ -5859,14 +5859,14 @@
 		CD1D859C1E1925650089FFAD /* ZLRefCountedObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLRefCountedObject.cpp; sourceTree = "<group>"; };
 		CD1D85A01E1B2AA80089FFAD /* MOAIPartitionHull.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPartitionHull.cpp; sourceTree = "<group>"; };
 		CD1D85A11E1B2AA80089FFAD /* MOAIPartitionHull.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPartitionHull.h; sourceTree = "<group>"; };
-		CD1D85A71E1B5EDD0089FFAD /* MOAIDeckHolderWithGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIDeckHolderWithGrid.cpp; sourceTree = "<group>"; };
-		CD1D85A81E1B5EDD0089FFAD /* MOAIDeckHolderWithGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIDeckHolderWithGrid.h; sourceTree = "<group>"; };
-		CD1D85A91E1B5EDD0089FFAD /* MOAIDeckHolderWithIndex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIDeckHolderWithIndex.cpp; sourceTree = "<group>"; };
-		CD1D85AA1E1B5EDD0089FFAD /* MOAIDeckHolderWithIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIDeckHolderWithIndex.h; sourceTree = "<group>"; };
+		CD1D85A71E1B5EDD0089FFAD /* MOAIHasDeckAndGrid.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIHasDeckAndGrid.cpp; sourceTree = "<group>"; };
+		CD1D85A81E1B5EDD0089FFAD /* MOAIHasDeckAndGrid.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIHasDeckAndGrid.h; sourceTree = "<group>"; };
+		CD1D85A91E1B5EDD0089FFAD /* MOAIHasDeckAndIndex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIHasDeckAndIndex.cpp; sourceTree = "<group>"; };
+		CD1D85AA1E1B5EDD0089FFAD /* MOAIHasDeckAndIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIHasDeckAndIndex.h; sourceTree = "<group>"; };
 		CD1D85B61E1B631C0089FFAD /* MOAIGraphicsPropBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGraphicsPropBase.cpp; sourceTree = "<group>"; };
 		CD1D85B71E1B631C0089FFAD /* MOAIGraphicsPropBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGraphicsPropBase.h; sourceTree = "<group>"; };
-		CD1D85BD1E1B672C0089FFAD /* MOAIDeckHolder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIDeckHolder.cpp; sourceTree = "<group>"; };
-		CD1D85BE1E1B672C0089FFAD /* MOAIDeckHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIDeckHolder.h; sourceTree = "<group>"; };
+		CD1D85BD1E1B672C0089FFAD /* MOAIHasDeck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIHasDeck.cpp; sourceTree = "<group>"; };
+		CD1D85BE1E1B672C0089FFAD /* MOAIHasDeck.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIHasDeck.h; sourceTree = "<group>"; };
 		CD1D85C31E1B87440089FFAD /* MOAIGraphicsGridProp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIGraphicsGridProp.cpp; sourceTree = "<group>"; };
 		CD1D85C41E1B87440089FFAD /* MOAIGraphicsGridProp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIGraphicsGridProp.h; sourceTree = "<group>"; };
 		CD1D85C91E1C6D9F0089FFAD /* MOAICollisionDeck.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICollisionDeck.cpp; sourceTree = "<group>"; };
@@ -6539,8 +6539,8 @@
 		CD4A92E9229C94DF00F9E400 /* MOAIMaterial.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIMaterial.h; path = "moai-gfx/MOAIMaterial.h"; sourceTree = "<group>"; };
 		CD4A92EC229C94DF00F9E400 /* MOAIMaterialBatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIMaterialBatch.cpp; path = "moai-gfx/MOAIMaterialBatch.cpp"; sourceTree = "<group>"; };
 		CD4A92ED229C94DF00F9E400 /* MOAIMaterialBatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIMaterialBatch.h; path = "moai-gfx/MOAIMaterialBatch.h"; sourceTree = "<group>"; };
-		CD4A92EE229C94DF00F9E400 /* MOAIMaterialBatchHolder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIMaterialBatchHolder.cpp; path = "moai-gfx/MOAIMaterialBatchHolder.cpp"; sourceTree = "<group>"; };
-		CD4A92EF229C94DF00F9E400 /* MOAIMaterialBatchHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIMaterialBatchHolder.h; path = "moai-gfx/MOAIMaterialBatchHolder.h"; sourceTree = "<group>"; };
+		CD4A92EE229C94DF00F9E400 /* MOAIHasMaterialBatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIHasMaterialBatch.cpp; path = "moai-gfx/MOAIHasMaterialBatch.cpp"; sourceTree = "<group>"; };
+		CD4A92EF229C94DF00F9E400 /* MOAIHasMaterialBatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIHasMaterialBatch.h; path = "moai-gfx/MOAIHasMaterialBatch.h"; sourceTree = "<group>"; };
 		CD4A92F2229C94DF00F9E400 /* MOAIMaterialMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIMaterialMgr.cpp; path = "moai-gfx/MOAIMaterialMgr.cpp"; sourceTree = "<group>"; };
 		CD4A92F3229C94DF00F9E400 /* MOAIMaterialMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIMaterialMgr.h; path = "moai-gfx/MOAIMaterialMgr.h"; sourceTree = "<group>"; };
 		CD4A9419229DE00F00F9E400 /* libzl-osx-gfx.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libzl-osx-gfx.a"; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -10475,12 +10475,12 @@
 				CD1711A022F04C3200381882 /* MOAIAbstractMaterialInterface.h */,
 				CD4A957E229DFAB500F9E400 /* MOAIBlendMode.cpp */,
 				CD4A957F229DFAB500F9E400 /* MOAIBlendMode.h */,
+				CD4A92EE229C94DF00F9E400 /* MOAIHasMaterialBatch.cpp */,
+				CD4A92EF229C94DF00F9E400 /* MOAIHasMaterialBatch.h */,
 				CD4A92E8229C94DF00F9E400 /* MOAIMaterial.cpp */,
 				CD4A92E9229C94DF00F9E400 /* MOAIMaterial.h */,
 				CD4A92EC229C94DF00F9E400 /* MOAIMaterialBatch.cpp */,
 				CD4A92ED229C94DF00F9E400 /* MOAIMaterialBatch.h */,
-				CD4A92EE229C94DF00F9E400 /* MOAIMaterialBatchHolder.cpp */,
-				CD4A92EF229C94DF00F9E400 /* MOAIMaterialBatchHolder.h */,
 				CD4A92F2229C94DF00F9E400 /* MOAIMaterialMgr.cpp */,
 				CD4A92F3229C94DF00F9E400 /* MOAIMaterialMgr.h */,
 			);
@@ -13330,18 +13330,18 @@
 				CD1D85CA1E1C6D9F0089FFAD /* MOAICollisionDeck.h */,
 				89BE6F4A173AD0CA00DFE837 /* MOAIDeck.cpp */,
 				89BE6F4B173AD0CA00DFE837 /* MOAIDeck.h */,
-				CD1D85BD1E1B672C0089FFAD /* MOAIDeckHolder.cpp */,
-				CD1D85BE1E1B672C0089FFAD /* MOAIDeckHolder.h */,
-				CD1D85A71E1B5EDD0089FFAD /* MOAIDeckHolderWithGrid.cpp */,
-				CD1D85A81E1B5EDD0089FFAD /* MOAIDeckHolderWithGrid.h */,
-				CD1D85A91E1B5EDD0089FFAD /* MOAIDeckHolderWithIndex.cpp */,
-				CD1D85AA1E1B5EDD0089FFAD /* MOAIDeckHolderWithIndex.h */,
 				CD67B45E1B264C9C004298CF /* MOAIDeckProxy.cpp */,
 				CD67B45F1B264C9C004298CF /* MOAIDeckProxy.h */,
 				89BE6F4C173AD0CA00DFE837 /* MOAIDeckRemapper.cpp */,
 				89BE6F4D173AD0CA00DFE837 /* MOAIDeckRemapper.h */,
 				89BE6FE7173AD0CA00DFE837 /* MOAIDrawDeck.cpp */,
 				89BE6FE8173AD0CA00DFE837 /* MOAIDrawDeck.h */,
+				CD1D85BD1E1B672C0089FFAD /* MOAIHasDeck.cpp */,
+				CD1D85BE1E1B672C0089FFAD /* MOAIHasDeck.h */,
+				CD1D85A71E1B5EDD0089FFAD /* MOAIHasDeckAndGrid.cpp */,
+				CD1D85A81E1B5EDD0089FFAD /* MOAIHasDeckAndGrid.h */,
+				CD1D85A91E1B5EDD0089FFAD /* MOAIHasDeckAndIndex.cpp */,
+				CD1D85AA1E1B5EDD0089FFAD /* MOAIHasDeckAndIndex.h */,
 				89BE6F77173AD0CA00DFE837 /* MOAIMetaTileDeck2D.cpp */,
 				89BE6F78173AD0CA00DFE837 /* MOAIMetaTileDeck2D.h */,
 				89BE6F67173AD0CA00DFE837 /* MOAISpriteDeck2D.cpp */,
@@ -13825,7 +13825,7 @@
 				CD6AFDA71B1683F800A36954 /* MOAIGeometryWriter.h in Headers */,
 				CD4C3E0A180A63BB00C02381 /* MOAICameraFitter2D.h in Headers */,
 				CD4C3E1E180A63BB00C02381 /* MOAIEaseType.h in Headers */,
-				CD1D85AE1E1B5EDD0089FFAD /* MOAIDeckHolderWithGrid.h in Headers */,
+				CD1D85AE1E1B5EDD0089FFAD /* MOAIHasDeckAndGrid.h in Headers */,
 				CD4C3EE4180A63BB00C02381 /* MOAIVecPathGraph.h in Headers */,
 				CD4C3E5D180A63BB00C02381 /* MOAILayoutFrame.h in Headers */,
 				CD4C3E08180A63BB00C02381 /* MOAICameraAnchor2D.h in Headers */,
@@ -13835,7 +13835,7 @@
 				CD4C3E7A180A63BB00C02381 /* MOAIParticleState.h in Headers */,
 				CD92388A1E2609A900D5048D /* MOAISpriteDeck2D.h in Headers */,
 				CD4C3E0E180A63BB00C02381 /* MOAIColor.h in Headers */,
-				CD1D85C11E1B672C0089FFAD /* MOAIDeckHolder.h in Headers */,
+				CD1D85C11E1B672C0089FFAD /* MOAIHasDeck.h in Headers */,
 				CD94BAF91E4876D0003A0CFF /* MOAIMoveConstraint2D.h in Headers */,
 				CDE7ED781E4033AB0005D63A /* MOAIDrawShapeImmediate.h in Headers */,
 				CDC02C841E380CDE007A02FB /* MOAIDeckRemapper.h in Headers */,
@@ -13862,7 +13862,7 @@
 				CD781097187CAA2D008B9C0A /* MOAITextStyleCache.h in Headers */,
 				CD4C3E2B180A63BB00C02381 /* MOAIFreeTypeFontReader.h in Headers */,
 				CD4C3DE9180A63BB00C02381 /* host_particles.h in Headers */,
-				CD1D85B21E1B5EDD0089FFAD /* MOAIDeckHolderWithIndex.h in Headers */,
+				CD1D85B21E1B5EDD0089FFAD /* MOAIHasDeckAndIndex.h in Headers */,
 				CD4C3E74180A63BB00C02381 /* MOAIParticlePexPlugin.h in Headers */,
 				CD4C3E3D180A63BB00C02381 /* MOAIDynamicGlyphCachePage.h in Headers */,
 				CD4C3E8A180A63BB00C02381 /* MOAIPathFinder.h in Headers */,
@@ -13975,7 +13975,7 @@
 				CD94BAEE1E4871CC003A0CFF /* MOAICollisionPrim.h in Headers */,
 				CD4C40BA180A63C200C02381 /* MOAIPartitionResultMgr.h in Headers */,
 				CD781098187CAA2D008B9C0A /* MOAITextStyleCache.h in Headers */,
-				CD1D85B31E1B5EDD0089FFAD /* MOAIDeckHolderWithIndex.h in Headers */,
+				CD1D85B31E1B5EDD0089FFAD /* MOAIHasDeckAndIndex.h in Headers */,
 				CD4C404C180A63C200C02381 /* MOAIDraw.h in Headers */,
 				CD21C20F21CB91A100B3C66E /* MOAIAbstractBaseTransform.h in Headers */,
 				CD4C40EF180A63C200C02381 /* MOAISim.h in Headers */,
@@ -14006,7 +14006,7 @@
 				CDD5D6981C24EB6A0070237E /* MOAIPathStepper.h in Headers */,
 				CD4C4091180A63C200C02381 /* MOAILocationSensor.h in Headers */,
 				CDD5D6921C24DDF10070237E /* MOAIPath.h in Headers */,
-				CD1D85AF1E1B5EDD0089FFAD /* MOAIDeckHolderWithGrid.h in Headers */,
+				CD1D85AF1E1B5EDD0089FFAD /* MOAIHasDeckAndGrid.h in Headers */,
 				CD4C406F180A63C200C02381 /* MOAIDynamicGlyphCachePage.h in Headers */,
 				CD4C4069180A63C200C02381 /* MOAIGlyph.h in Headers */,
 				CD4C4036180A63C200C02381 /* MOAICamera.h in Headers */,
@@ -14056,7 +14056,7 @@
 				CD1D85DA1E1CDC590089FFAD /* MOAIOverlap.h in Headers */,
 				CD48CF251A12F8F70029F932 /* MOAIRegion.h in Headers */,
 				CD1D85BB1E1B631C0089FFAD /* MOAIGraphicsPropBase.h in Headers */,
-				CD1D85C21E1B672C0089FFAD /* MOAIDeckHolder.h in Headers */,
+				CD1D85C21E1B672C0089FFAD /* MOAIHasDeck.h in Headers */,
 				CD94BAEB1E486F39003A0CFF /* MOAICollisionConsts.h in Headers */,
 				CD1401421A0C5F660065AEE7 /* MOAIInputMgr.h in Headers */,
 				CD4C4095180A63C200C02381 /* MOAIMotionSensor.h in Headers */,
@@ -15159,7 +15159,7 @@
 				CD4A9603229E091F00F9E400 /* MOAIBlendMode.h in Headers */,
 				CD1711C622F2441A00381882 /* MOAIVertexFormatMgr.h in Headers */,
 				CD1711B222F168C800381882 /* MOAIGfxStateGPUCacheFrame.h in Headers */,
-				CD4A9492229DE21A00F9E400 /* MOAIMaterialBatchHolder.h in Headers */,
+				CD4A9492229DE21A00F9E400 /* MOAIHasMaterialBatch.h in Headers */,
 				CD1711A222F04C3200381882 /* MOAIAbstractMaterialInterface.h in Headers */,
 				CD4A95F9229E091F00F9E400 /* MOAIGfxMgr_GPUCache.h in Headers */,
 				CD4A9607229E091F00F9E400 /* MOAIUniformDescriptor.h in Headers */,
@@ -17508,7 +17508,7 @@
 				CD4C3E13180A63BB00C02381 /* MOAIDebugLines.cpp in Sources */,
 				CDEFD56A181ECB3E0058D772 /* MOAITextLabel.cpp in Sources */,
 				CD4C3E7D180A63BB00C02381 /* MOAIParticleTimedEmitter.cpp in Sources */,
-				CD1D85B01E1B5EDD0089FFAD /* MOAIDeckHolderWithIndex.cpp in Sources */,
+				CD1D85B01E1B5EDD0089FFAD /* MOAIHasDeckAndIndex.cpp in Sources */,
 				CD73A5FC188F0AD200DFACDB /* MOAICollisionProp.cpp in Sources */,
 				CD4C3DF4180A63BB00C02381 /* MOAIAnimCurveQuat.cpp in Sources */,
 				CD21C20C21CB91A100B3C66E /* MOAIAbstractBaseTransform.cpp in Sources */,
@@ -17543,7 +17543,7 @@
 				CD4C3EE3180A63BB00C02381 /* MOAIVecPathGraph.cpp in Sources */,
 				CD73A600188F0AD200DFACDB /* MOAICollisionWorld.cpp in Sources */,
 				CD4C3E62180A63BB00C02381 /* MOAIMotionSensor.cpp in Sources */,
-				CD1D85BF1E1B672C0089FFAD /* MOAIDeckHolder.cpp in Sources */,
+				CD1D85BF1E1B672C0089FFAD /* MOAIHasDeck.cpp in Sources */,
 				CD9238891E2609A900D5048D /* MOAISpriteDeck2D.cpp in Sources */,
 				CD21C20821CB91A000B3C66E /* MOAIAbstractChildTransform.cpp in Sources */,
 				CD1D85B81E1B631C0089FFAD /* MOAIGraphicsPropBase.cpp in Sources */,
@@ -17573,7 +17573,7 @@
 				CD4C3E89180A63BB00C02381 /* MOAIPathFinder.cpp in Sources */,
 				CD1D85CB1E1C6D9F0089FFAD /* MOAICollisionDeck.cpp in Sources */,
 				CD4C3E50180A63BB00C02381 /* MOAIInputDevice.cpp in Sources */,
-				CD1D85AC1E1B5EDD0089FFAD /* MOAIDeckHolderWithGrid.cpp in Sources */,
+				CD1D85AC1E1B5EDD0089FFAD /* MOAIHasDeckAndGrid.cpp in Sources */,
 				CD5BFBFE1E3737370057CFDB /* MOAIDrawDeck.cpp in Sources */,
 				CD4C3EDB180A63BB00C02381 /* MOAITouchSensor.cpp in Sources */,
 				CD4C051018500C18005B0520 /* MOAIVectorUtil.cpp in Sources */,
@@ -17654,7 +17654,7 @@
 				CDE6CF601EA6D3B80020B819 /* MOAICollisionPrim.cpp in Sources */,
 				CD4C40AD180A63C200C02381 /* MOAIParticleSystem.cpp in Sources */,
 				CD4C40A3180A63C200C02381 /* MOAIParticleForce.cpp in Sources */,
-				CD1D85B11E1B5EDD0089FFAD /* MOAIDeckHolderWithIndex.cpp in Sources */,
+				CD1D85B11E1B5EDD0089FFAD /* MOAIHasDeckAndIndex.cpp in Sources */,
 				CD4C4094180A63C200C02381 /* MOAIMotionSensor.cpp in Sources */,
 				CDEFD577181ECB3E0058D772 /* MOAIVectorEllipse.cpp in Sources */,
 				CD4C40BF180A63C200C02381 /* MOAIPathTerrainDeck.cpp in Sources */,
@@ -17690,7 +17690,7 @@
 				CD4C40A9180A63C200C02381 /* MOAIParticleScript.cpp in Sources */,
 				CD4C4018180A63C200C02381 /* host.cpp in Sources */,
 				CDE7ED7B1E4033AB0005D63A /* MOAIDrawShapeRetained.cpp in Sources */,
-				CD1D85C01E1B672C0089FFAD /* MOAIDeckHolder.cpp in Sources */,
+				CD1D85C01E1B672C0089FFAD /* MOAIHasDeck.cpp in Sources */,
 				CD4C4024180A63C200C02381 /* MOAIAnimCurve.cpp in Sources */,
 				CD448CEF1D93528A00860BB5 /* MOAIMeshSparseQuadTree.cpp in Sources */,
 				CD1D85B91E1B631C0089FFAD /* MOAIGraphicsPropBase.cpp in Sources */,
@@ -17728,7 +17728,7 @@
 				CD4C40B7180A63C200C02381 /* MOAIPartitionResultBuffer.cpp in Sources */,
 				CD4C403F180A63C200C02381 /* MOAIColor.cpp in Sources */,
 				CDEFD573181ECB3E0058D772 /* MOAITextStyleParser.cpp in Sources */,
-				CD1D85AD1E1B5EDD0089FFAD /* MOAIDeckHolderWithGrid.cpp in Sources */,
+				CD1D85AD1E1B5EDD0089FFAD /* MOAIHasDeckAndGrid.cpp in Sources */,
 				CD5BFBF61E3737340057CFDB /* MOAIDrawDeck.cpp in Sources */,
 				CD1D85EA1E1F36560089FFAD /* MOAIDeckProxy.cpp in Sources */,
 				CD4C409F180A63C200C02381 /* MOAIParticleDistanceEmitter.cpp in Sources */,
@@ -18575,7 +18575,7 @@
 				CD4A963C229E787500F9E400 /* MOAIVertexArray.cpp in Sources */,
 				CD4A94A7229DE21A00F9E400 /* host.cpp in Sources */,
 				CD4A95FA229E091F00F9E400 /* MOAIShader.cpp in Sources */,
-				CD4A94A9229DE21A00F9E400 /* MOAIMaterialBatchHolder.cpp in Sources */,
+				CD4A94A9229DE21A00F9E400 /* MOAIHasMaterialBatch.cpp in Sources */,
 				CD4A9614229E125200F9E400 /* MOAIGfxMgr_RenderTree.cpp in Sources */,
 				CD4A9632229E786100F9E400 /* MOAIFrameBuffer.cpp in Sources */,
 				CD4A9625229E682200F9E400 /* MOAIVertexFormat.cpp in Sources */,

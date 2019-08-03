@@ -1,20 +1,20 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIDECKHOLDERWITHINDEX_H
-#define	MOAIDECKHOLDERWITHINDEX_H
+#ifndef	MOAIHASDECKANDINDEX_H
+#define	MOAIHASDECKANDINDEX_H
 
 #include <moai-sim/MOAIColor.h>
-#include <moai-sim/MOAIDeckHolder.h>
+#include <moai-sim/MOAIHasDeck.h>
 #include <moai-sim/MOAIPartitionHull.h>
 #include <moai-sim/MOAITransform.h>
 
 //================================================================//
-// MOAIDeckHolderWithIndex
+// MOAIHasDeckAndIndex
 //================================================================//
 // TODO: doxygen
-class MOAIDeckHolderWithIndex :
-	public virtual MOAIDeckHolder {
+class MOAIHasDeckAndIndex :
+	public virtual MOAIHasDeck {
 protected:
 	
 	ZLIndex		mIndex;
@@ -32,7 +32,7 @@ protected:
 
 public:
 
-	DECL_ATTR_HELPER ( MOAIDeckHolderWithIndex )
+	DECL_ATTR_HELPER ( MOAIHasDeckAndIndex )
 
 	enum {
 		ATTR_INDEX,
@@ -42,8 +42,8 @@ public:
 	GET_SET ( ZLIndex, Index, mIndex )
 
 	//----------------------------------------------------------------//
-					MOAIDeckHolderWithIndex		();
-					~MOAIDeckHolderWithIndex	();
+					MOAIHasDeckAndIndex		();
+					~MOAIHasDeckAndIndex	();
 };
 
 #endif

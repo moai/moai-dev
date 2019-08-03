@@ -4,7 +4,7 @@
 #ifndef	MOAIGRAPHICSGRIDPROP_H
 #define	MOAIGRAPHICSGRIDPROP_H
 
-#include <moai-sim/MOAIDeckHolderWithGrid.h>
+#include <moai-sim/MOAIHasDeckAndGrid.h>
 #include <moai-sim/MOAIGraphicsPropBase.h>
 
 //================================================================//
@@ -12,7 +12,7 @@
 //================================================================//
 // TODO: doxygen
 class MOAIGraphicsGridProp :
-	public virtual MOAIDeckHolderWithGrid,
+	public virtual MOAIHasDeckAndGrid,
 	public virtual MOAIGraphicsPropBase {
 private:
 

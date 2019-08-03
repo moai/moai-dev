@@ -27,7 +27,7 @@ private:
 */
 class MOAIStretchPatch2D :
 	public MOAIStretchDeck,
-	public MOAIMaterialBatchHolder {
+	public MOAIHasMaterialBatch {
 private:
 
 	ZLLeanArray < MOAIStretchPatchSpan >	mRows;

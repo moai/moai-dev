@@ -4,7 +4,7 @@
 #ifndef	MOAIGRAPHICSPROP_H
 #define	MOAIGRAPHICSPROP_H
 
-#include <moai-sim/MOAIDeckHolderWithIndex.h>
+#include <moai-sim/MOAIHasDeckAndIndex.h>
 #include <moai-sim/MOAIGraphicsPropBase.h>
 
 //================================================================//
@@ -12,7 +12,7 @@
 //================================================================//
 // TODO: doxygen
 class MOAIGraphicsProp :
-	public virtual MOAIDeckHolderWithIndex,
+	public virtual MOAIHasDeckAndIndex,
 	public virtual MOAIGraphicsPropBase {
 protected:
 

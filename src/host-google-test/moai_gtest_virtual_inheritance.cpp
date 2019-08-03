@@ -99,7 +99,7 @@ TEST_F ( GTESTMoaiContext, virtual_inheritance ) {
 	MOAINode* n0 = MOAICast < MOAINode >( graphicsProp );
 	ASSERT_TRUE ( n0 != NULL );
 	
-	MOAINode* n1 = MOAICast < MOAINode >( MOAICast < MOAIDeckHolderWithIndex >( graphicsProp ));
+	MOAINode* n1 = MOAICast < MOAINode >( MOAICast < MOAIHasDeckAndIndex >( graphicsProp ));
 	MOAINode* n2 = MOAICast < MOAINode >( MOAICast < MOAIPartitionHull >( MOAICast < MOAIGraphicsPropBase >( graphicsProp )));
 	MOAINode* n3 = MOAICast < MOAINode >( MOAICast < MOAIColor >( MOAICast < MOAIGraphicsPropBase >( graphicsProp )));
 	

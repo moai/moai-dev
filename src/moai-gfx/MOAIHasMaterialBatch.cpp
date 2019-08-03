@@ -4,7 +4,7 @@
 #include "pch.h"
 
 #include <moai-gfx/MOAIMaterialBatch.h>
-#include <moai-gfx/MOAIMaterialBatchHolder.h>
+#include <moai-gfx/MOAIHasMaterialBatch.h>
 
 //================================================================//
 // lua
@@ -12,8 +12,8 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIMaterialBatchHolder::_affirmMaterialBatch ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialBatchHolder, "U" )
+int MOAIHasMaterialBatch::_affirmMaterialBatch ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHasMaterialBatch, "U" )
 	
 	state.Push ( &self->AffirmMaterialBatch ());
 	return 1;
@@ -23,11 +23,11 @@ int MOAIMaterialBatchHolder::_affirmMaterialBatch ( lua_State* L ) {
 /**	@name	getMaterialBatch
 	@text	Return the material batch attached to the prop.
 	
-	@in		MOAIMaterialBatchHolder self
+	@in		MOAIHasMaterialBatch self
 	@out	MOAIMaterialBatch materialBatch
 */
-int MOAIMaterialBatchHolder::_getMaterialBatch ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialBatchHolder, "U" )
+int MOAIHasMaterialBatch::_getMaterialBatch ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHasMaterialBatch, "U" )
 	
 	if ( self->mMaterialBatch ) {
 		self->mMaterialBatch.PushRef ( state );
@@ -40,12 +40,12 @@ int MOAIMaterialBatchHolder::_getMaterialBatch ( lua_State* L ) {
 /**	@lua	setMaterialBatch
 	@text	Sets the prop's material batch.
 	
-	@in		MOAIMaterialBatchHolder self
+	@in		MOAIHasMaterialBatch self
 	@opt	MOAIMaterialBatch materialBatch
 	@out	nil
 */
-int MOAIMaterialBatchHolder::_setMaterialBatch ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialBatchHolder, "U" )
+int MOAIHasMaterialBatch::_setMaterialBatch ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHasMaterialBatch, "U" )
 	
 	self->mMaterialBatch.Set ( *self, state.GetLuaObject < MOAIMaterialBatch >( 2, true ));
 	
@@ -53,11 +53,11 @@ int MOAIMaterialBatchHolder::_setMaterialBatch ( lua_State* L ) {
 }
 
 //================================================================//
-// MOAIMaterialBatchHolder
+// MOAIHasMaterialBatch
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIMaterialBatchHolder::MOAIMaterialBatchHolder () {
+MOAIHasMaterialBatch::MOAIHasMaterialBatch () {
 
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIAbstractMaterialBatchInterface )
@@ -65,7 +65,7 @@ MOAIMaterialBatchHolder::MOAIMaterialBatchHolder () {
 }
 
 //----------------------------------------------------------------//
-MOAIMaterialBatchHolder::~MOAIMaterialBatchHolder () {
+MOAIHasMaterialBatch::~MOAIHasMaterialBatch () {
 
 	this->mMaterialBatch.Set ( *this, 0 );
 }
@@ -75,12 +75,12 @@ MOAIMaterialBatchHolder::~MOAIMaterialBatchHolder () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatchHolder::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIHasMaterialBatch::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAIAbstractMaterialBatchInterface::MOAILuaObject_RegisterLuaClass ( composer, state );
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatchHolder::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIHasMaterialBatch::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAIAbstractMaterialBatchInterface::MOAILuaObject_RegisterLuaFuncs ( composer, state );
 
 	luaL_Reg regTable [] = {
@@ -94,25 +94,25 @@ void MOAIMaterialBatchHolder::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& com
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatchHolder::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIHasMaterialBatch::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatchHolder::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIHasMaterialBatch::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
 }
 
 //----------------------------------------------------------------//
-MOAIMaterial& MOAIMaterialBatchHolder::MOAIAbstractMaterialBatchInterface_AffirmMaterial ( ZLIndex index ) {
+MOAIMaterial& MOAIHasMaterialBatch::MOAIAbstractMaterialBatchInterface_AffirmMaterial ( ZLIndex index ) {
 
 	return this->AffirmMaterialBatch ().AffirmMaterial ( index );
 }
 
 //----------------------------------------------------------------//
-MOAIMaterialBatch& MOAIMaterialBatchHolder::MOAIAbstractMaterialBatchInterface_AffirmMaterialBatch () {
+MOAIMaterialBatch& MOAIHasMaterialBatch::MOAIAbstractMaterialBatchInterface_AffirmMaterialBatch () {
 
 	if ( !this->mMaterialBatch ) {
 		this->mMaterialBatch.Set ( *this, new MOAIMaterialBatch ());
@@ -121,13 +121,13 @@ MOAIMaterialBatch& MOAIMaterialBatchHolder::MOAIAbstractMaterialBatchInterface_A
 }
 
 //----------------------------------------------------------------//
-MOAIMaterial* MOAIMaterialBatchHolder::MOAIAbstractMaterialBatchInterface_GetMaterial ( ZLIndex index ) {
+MOAIMaterial* MOAIHasMaterialBatch::MOAIAbstractMaterialBatchInterface_GetMaterial ( ZLIndex index ) {
 
 	return this->mMaterialBatch ? this->mMaterialBatch->GetMaterial ( index ) : NULL;
 }
 
 //----------------------------------------------------------------//
-MOAIMaterialBatch* MOAIMaterialBatchHolder::MOAIAbstractMaterialBatchInterface_GetMaterialBatch () {
+MOAIMaterialBatch* MOAIHasMaterialBatch::MOAIAbstractMaterialBatchInterface_GetMaterialBatch () {
 
 	return this->mMaterialBatch;
 }

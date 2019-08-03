@@ -90,7 +90,7 @@ public:
 */
 class MOAIMesh :
 	public MOAIDeck,
-	public MOAIMaterialBatchHolder {
+	public MOAIHasMaterialBatch {
 protected:
 
 	friend class MOAIMeshPrimReader;

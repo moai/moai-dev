@@ -1,11 +1,11 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIDECKHOLDERWITHGRID_H
-#define	MOAIDECKHOLDERWITHGRID_H
+#ifndef	MOAIHASDECKANDGRID_H
+#define	MOAIHASDECKANDGRID_H
 
 #include <moai-sim/MOAIColor.h>
-#include <moai-sim/MOAIDeckHolder.h>
+#include <moai-sim/MOAIHasDeck.h>
 #include <moai-sim/MOAIPartitionHull.h>
 #include <moai-sim/MOAITransform.h>
 #include <moai-core/MOAILuaSharedPtr.h>
@@ -23,20 +23,20 @@ class MOAIPartitionResultBuffer;
 class MOAISurfaceSampler2D;
 
 //================================================================//
-// MOAIDeckHolderWithGrid
+// MOAIHasDeckAndGrid
 //================================================================//
 // TODO: doxygen
-class MOAIDeckHolderWithGrid :
-	public virtual MOAIDeckHolder {
+class MOAIHasDeckAndGrid :
+	public virtual MOAIHasDeck {
 protected:
 	
 	MOAILuaSharedPtr < MOAIGrid >			mGrid;
 	ZLVec2D									mGridScale;
 	
 	//----------------------------------------------------------------//
-	static int			_getGrid					( lua_State* L );
-	static int			_setGrid					( lua_State* L );
-	static int			_setGridScale				( lua_State* L );
+	static int			_getGrid				( lua_State* L );
+	static int			_setGrid				( lua_State* L );
+	static int			_setGridScale			( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
@@ -47,8 +47,8 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-						MOAIDeckHolderWithGrid		();
-	virtual				~MOAIDeckHolderWithGrid		();
+						MOAIHasDeckAndGrid		();
+	virtual				~MOAIHasDeckAndGrid		();
 };
 
 #endif

@@ -30,7 +30,7 @@
 #include <moai-gfx/MOAILightFormat.h>
 #include <moai-gfx/MOAIMaterial.h>
 #include <moai-gfx/MOAIMaterialBatch.h>
-#include <moai-gfx/MOAIMaterialBatchHolder.h>
+#include <moai-gfx/MOAIHasMaterialBatch.h>
 #include <moai-gfx/MOAIMaterialMgr.h>
 #include <moai-gfx/MOAIShader.h>
 #include <moai-gfx/MOAITexture.h>

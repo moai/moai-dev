@@ -141,7 +141,7 @@ int MOAIAbstractMaterialInterface::_setBlendMode ( lua_State* L ) {
 	@text	Sets and enables face culling.
  
 	@in		MOAIAbstractMaterialInterface self
-	@opt	number cullMode			Default value is MOAIMaterialBatchHolder.CULL_NONE.
+	@opt	number cullMode			Default value is MOAIHasMaterialBatch.CULL_NONE.
 	@out	nil
 */
 int MOAIAbstractMaterialInterface::_setCullMode ( lua_State* L ) {
@@ -171,7 +171,7 @@ int MOAIAbstractMaterialInterface::_setDepthMask ( lua_State* L ) {
 	@text	Sets and enables depth testing (assuming depth buffer is present).
  
 	@in		MOAIAbstractMaterialInterface self
-	@opt	number depthFunc		Default value is MOAIMaterialBatchHolder.DEPTH_TEST_DISABLE.
+	@opt	number depthFunc		Default value is MOAIHasMaterialBatch.DEPTH_TEST_DISABLE.
 	@out	nil
 */
 int MOAIAbstractMaterialInterface::_setDepthTest ( lua_State* L ) {

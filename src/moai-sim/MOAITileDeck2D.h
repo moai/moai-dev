@@ -16,7 +16,7 @@
 */
 class MOAITileDeck2D :
 	public MOAIDeck,
-	public MOAIMaterialBatchHolder,
+	public MOAIHasMaterialBatch,
 	public MOAIGridSpace {
 private:
 	

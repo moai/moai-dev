@@ -43,7 +43,7 @@ private:
 */
 class MOAISpriteDeck2D :
 	public MOAIDeck,
-	public MOAIMaterialBatchHolder {
+	public MOAIHasMaterialBatch {
 private:
 	
 	ZLLeanArray < ZLQuad >				mUVQuads;

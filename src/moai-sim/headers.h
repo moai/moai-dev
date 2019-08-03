@@ -40,9 +40,9 @@
 #include <moai-sim/MOAICoroutine.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIDeck.h>
-#include <moai-sim/MOAIDeckHolder.h>
-#include <moai-sim/MOAIDeckHolderWithGrid.h>
-#include <moai-sim/MOAIDeckHolderWithIndex.h>
+#include <moai-sim/MOAIHasDeck.h>
+#include <moai-sim/MOAIHasDeckAndGrid.h>
+#include <moai-sim/MOAIHasDeckAndIndex.h>
 #include <moai-sim/MOAIDeckProxy.h>
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIDraw.h>

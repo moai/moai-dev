@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIMATERIALBATCHHOLDER_H
-#define	MOAIMATERIALBATCHHOLDER_H
+#ifndef	MOAIHASMATERIALBATCH_H
+#define	MOAIHASMATERIALBATCH_H
 
 #include <moai-gfx/MOAIMaterialBatch.h>
 
@@ -11,10 +11,10 @@ class MOAIShaderGL;
 class MOAITextureBaseGL;
 
 //================================================================//
-// MOAIMaterialBatchHolder
+// MOAIHasMaterialBatch
 //================================================================//
 // TODO: doxygen
-class MOAIMaterialBatchHolder :
+class MOAIHasMaterialBatch :
 	public virtual MOAIAbstractMaterialBatchInterface {
 protected:
 
@@ -37,11 +37,11 @@ protected:
 
 public:
 
-	DECL_LUA_FACTORY ( MOAIMaterialBatchHolder )
+	DECL_LUA_FACTORY ( MOAIHasMaterialBatch )
 
 	//----------------------------------------------------------------//
-							MOAIMaterialBatchHolder		();
-							~MOAIMaterialBatchHolder	();
+							MOAIHasMaterialBatch		();
+							~MOAIHasMaterialBatch		();
 };
 
 #endif

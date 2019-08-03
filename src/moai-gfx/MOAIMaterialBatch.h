@@ -26,7 +26,7 @@ class MOAIMaterialBatch :
 	public virtual MOAIAbstractMaterialBatchInterface {
 private:
 
-	friend class MOAIMaterialBatchHolder;
+	friend class MOAIHasMaterialBatch;
 	friend class MOAIAbstractMaterialBatchInterface;
 
 	ZLSize											mIndexBatchSize;

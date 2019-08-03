@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIDeck.h>
-#include <moai-sim/MOAIDeckHolder.h>
+#include <moai-sim/MOAIHasDeck.h>
 #include <moai-sim/MOAISpriteDeck2D.h>
 
 //================================================================//
@@ -14,11 +14,11 @@
 /**	@lua	getDeck
 	@text	Get the deck.
                
-	@in		MOAIDeckHolder self
+	@in		MOAIHasDeck self
 	@out	MOAIDeck deck
 */
-int MOAIDeckHolder::_getDeck ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeckHolder, "U" )
+int MOAIHasDeck::_getDeck ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHasDeck, "U" )
 
 	if ( self->mDeck ) {
 		self->mDeck->PushLuaUserdata ( state );
@@ -31,12 +31,12 @@ int MOAIDeckHolder::_getDeck ( lua_State* L ) {
 /**	@lua	setDeck
 	@text	Sets or clears the deck to be indexed by the prop.
 	
-	@in		MOAIDeckHolder self
+	@in		MOAIHasDeck self
 	@opt	MOAIDeck deck		Default value is nil.
 	@out	nil
 */
-int MOAIDeckHolder::_setDeck ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeckHolder, "U" )
+int MOAIHasDeck::_setDeck ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHasDeck, "U" )
 
 	MOAIDeck* deck = MOAISpriteDeck2D::AffirmDeck ( state, 2 );
 
@@ -51,11 +51,11 @@ int MOAIDeckHolder::_setDeck ( lua_State* L ) {
 }
 
 //================================================================//
-// MOAIDeckHolder
+// MOAIHasDeck
 //================================================================//
 
 //----------------------------------------------------------------//
-//void MOAIDeckHolder::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
+//void MOAIHasDeck::GatherSurfaces ( MOAISurfaceSampler2D& sampler ) {
 //	UNUSED ( sampler );
 
 	//if ( !this->mDeck ) return;
@@ -80,7 +80,7 @@ int MOAIDeckHolder::_setDeck ( lua_State* L ) {
 //}
 
 //----------------------------------------------------------------//
-MOAIDeckHolder::MOAIDeckHolder () {
+MOAIHasDeck::MOAIHasDeck () {
 	
 //	RTTI_BEGIN
 //		RTTI_EXTEND ( MOAIPartitionHull )
@@ -88,7 +88,7 @@ MOAIDeckHolder::MOAIDeckHolder () {
 }
 
 //----------------------------------------------------------------//
-MOAIDeckHolder::~MOAIDeckHolder () {
+MOAIHasDeck::~MOAIHasDeck () {
 	
 	this->mDeck.Set ( *this, 0 );
 }
@@ -98,12 +98,12 @@ MOAIDeckHolder::~MOAIDeckHolder () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDeckHolder::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIHasDeck::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckHolder::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIHasDeck::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
 		{ "getDeck",				_getDeck },
@@ -115,13 +115,13 @@ void MOAIDeckHolder::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MO
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckHolder::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIHasDeck::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
 	this->mDeck.Set ( *this, serializer.MemberIDToObject < MOAIDeck >( state.GetFieldValue < cc8*, MOAISerializerBase::ObjID >( -1, "mDeck", 0 )));
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckHolder::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIHasDeck::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 	
 	state.SetField ( -1, "mDeck", serializer.AffirmMemberID ( this->mDeck ));
 }

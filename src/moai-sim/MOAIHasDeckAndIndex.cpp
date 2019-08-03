@@ -5,7 +5,7 @@
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIPartition.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
-#include <moai-sim/MOAIDeckHolderWithIndex.h>
+#include <moai-sim/MOAIHasDeckAndIndex.h>
 
 //================================================================//
 // lua
@@ -15,11 +15,11 @@
 /**	@lua	getIndex
 	@text	Gets the value of the deck indexer.
 	
-	@in		MOAIDeckHolderWithIndex self
+	@in		MOAIHasDeckAndIndex self
 	@out	number index
 */
-int MOAIDeckHolderWithIndex::_getIndex ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeckHolderWithIndex, "U" )
+int MOAIHasDeckAndIndex::_getIndex ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHasDeckAndIndex, "U" )
 
 	state.Push ( MOAILuaIndex ( self->mIndex ));
 
@@ -30,12 +30,12 @@ int MOAIDeckHolderWithIndex::_getIndex ( lua_State* L ) {
 /**	@lua	setIndex
 	@text	Set the prop's index into its deck.
 	
-	@in		MOAIDeckHolderWithIndex self
+	@in		MOAIHasDeckAndIndex self
 	@opt	number index		Default value is 1.
 	@out	nil
 */
-int MOAIDeckHolderWithIndex::_setIndex ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDeckHolderWithIndex, "U" )
+int MOAIHasDeckAndIndex::_setIndex ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHasDeckAndIndex, "U" )
 
 	self->mIndex = state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	self->ScheduleUpdate ();
@@ -44,20 +44,20 @@ int MOAIDeckHolderWithIndex::_setIndex ( lua_State* L ) {
 }
 
 //================================================================//
-// MOAIDeckHolderWithIndex
+// MOAIHasDeckAndIndex
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIDeckHolderWithIndex::MOAIDeckHolderWithIndex () :
+MOAIHasDeckAndIndex::MOAIHasDeckAndIndex () :
 	mIndex ( ZLIndexOp::ZERO ) {
 	
 	RTTI_BEGIN
-		RTTI_EXTEND ( MOAIDeckHolder )
+		RTTI_EXTEND ( MOAIHasDeck )
 	RTTI_END
 }
 
 //----------------------------------------------------------------//
-MOAIDeckHolderWithIndex::~MOAIDeckHolderWithIndex () {
+MOAIHasDeckAndIndex::~MOAIHasDeckAndIndex () {
 }
 
 //================================================================//
@@ -65,7 +65,7 @@ MOAIDeckHolderWithIndex::~MOAIDeckHolderWithIndex () {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIDeckHolderWithIndex::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
+bool MOAIHasDeckAndIndex::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 
 	if ( AttrID::Check ( attrID )) {
 		
@@ -79,17 +79,17 @@ bool MOAIDeckHolderWithIndex::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribut
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckHolderWithIndex::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIHasDeckAndIndex::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckHolder, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasDeck, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	
 	state.SetField ( -1, "ATTR_INDEX", AttrID::Pack ( ATTR_INDEX ).ToRaw ());
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckHolderWithIndex::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIHasDeckAndIndex::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckHolder, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasDeck, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "getIndex",				_getIndex },
@@ -101,13 +101,13 @@ void MOAIDeckHolderWithIndex::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& com
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckHolderWithIndex::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIHasDeckAndIndex::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckHolder, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasDeck, MOAILuaObject_SerializeIn ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckHolderWithIndex::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIHasDeckAndIndex::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
 
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckHolder, MOAILuaObject_SerializeOut ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasDeck, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }

@@ -224,7 +224,7 @@ MOAIGraphicsPropBase::MOAIGraphicsPropBase () :
 		RTTI_EXTEND ( MOAIColor )
 		RTTI_EXTEND ( MOAIDrawable )
 		RTTI_EXTEND ( MOAIDrawable )
-		RTTI_EXTEND ( MOAIMaterialBatchHolder )
+		RTTI_EXTEND ( MOAIHasMaterialBatch )
 	RTTI_END
 	
 	this->mDisplayFlags = DEFAULT_FLAGS;
@@ -548,7 +548,7 @@ void MOAIGraphicsPropBase::MOAILuaObject_RegisterLuaClass ( MOAIComposer& compos
 	
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractProp, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIColor, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIMaterialBatchHolder, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasMaterialBatch, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	
 	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAIGraphicsPropBase >( TOTAL_DEBUG_LINE_STYLES );
 	
@@ -613,7 +613,7 @@ void MOAIGraphicsPropBase::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& compos
 	
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractProp, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIColor, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIMaterialBatchHolder, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasMaterialBatch, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "draw",					_draw },
@@ -636,7 +636,7 @@ void MOAIGraphicsPropBase::MOAILuaObject_SerializeIn ( MOAIComposer& composer, M
 	
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIColor, MOAILuaObject_SerializeIn ( composer, state, serializer ));
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractProp, MOAILuaObject_SerializeIn ( composer, state, serializer ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIMaterialBatchHolder, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasMaterialBatch, MOAILuaObject_SerializeIn ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//
@@ -644,7 +644,7 @@ void MOAIGraphicsPropBase::MOAILuaObject_SerializeOut ( MOAIComposer& composer, 
 	
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIColor, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractProp, MOAILuaObject_SerializeOut ( composer, state, serializer ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIMaterialBatchHolder, MOAILuaObject_SerializeOut ( composer, state, serializer ));
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasMaterialBatch, MOAILuaObject_SerializeOut ( composer, state, serializer ));
 }
 
 //----------------------------------------------------------------//
