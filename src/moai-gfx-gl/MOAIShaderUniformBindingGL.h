@@ -1,14 +1,13 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAISHADERUNIFORMGL_H
-#define	MOAISHADERUNIFORMGL_H
+#ifndef	MOAISHADERUNIFORMBINDINGGL_H
+#define	MOAISHADERUNIFORMBINDINGGL_H
 
 //================================================================//
-// MOAIShaderUniformGL
+// MOAIShaderUniformBindingGL
 //================================================================//
-class MOAIShaderUniformGL :
-	public MOAIShaderUniformDescriptor {
+class MOAIShaderUniformBindingGL {
 protected:
 
 	friend class MOAIShaderGL;
@@ -24,11 +23,11 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-	void			Bind						( ZLGfx&gfx, const void* buffer ) const;
-	size_t			GetSize						() const;
-	void			Init						( u32 type, u32 width = 1, u32 count = 1 );
-					MOAIShaderUniformGL			();
-					~MOAIShaderUniformGL		();
+	void			Bind							( ZLGfx&gfx, const MOAIShaderUniformDescriptor& descriptor, const void* buffer ) const;
+	size_t			GetSize							( const MOAIShaderUniformDescriptor& descriptor ) const;
+	void			Init							( u32 count = 1 );
+					MOAIShaderUniformBindingGL		();
+					~MOAIShaderUniformBindingGL		();
 	
 	//----------------------------------------------------------------//
 	inline bool IsValid () {

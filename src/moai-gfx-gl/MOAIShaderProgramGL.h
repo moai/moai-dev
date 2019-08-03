@@ -5,7 +5,7 @@
 #define	MOAISHADERPROGRAMGL_H
 
 #include <moai-gfx-gl/MOAIGfxResourceGL.h>
-#include <moai-gfx-gl/MOAIShaderUniformGL.h>
+#include <moai-gfx-gl/MOAIShaderUniformBindingGL.h>
 
 #define		OPENGL_PREPROC		"#define LOWP\n #define MEDP\n #define HIGHP\n"
 #define		OPENGL_ES_PREPROC	"#define LOWP lowp\n #define MEDP mediump\n #define HIGHP highp\n"
@@ -79,7 +79,8 @@ protected:
 	typedef STLMap < u32, STLString >::iterator AttributeMapIt;
 	STLMap < u32, STLString > mAttributeMap;
 
-	ZLLeanArray < MOAIShaderUniformGL >			mUniforms;
+	ZLLeanArray < MOAIShaderUniformDescriptor >	mUniformDescriptors;
+	ZLLeanArray < MOAIShaderUniformBindingGL >	mUniformBindings;
 	ZLLeanArray < MOAIShaderProgramGlobalGL >	mGlobals;
 	ZLLeanArray < MOAIShaderProgramTextureGL >	mTextures;
 
@@ -103,7 +104,7 @@ protected:
 	void						ApplyUniforms				( ZLLeanArray < u8 >& buffer );
 	void						BindUniforms				();
 	ZLGfxHandle					CompileShader				( u32 type, cc8* source );
-	MOAIShaderUniformGL*		GetUniform					( ZLIndex uniformID );
+//	MOAIShaderUniformBindingGL*	GetUniform					( ZLIndex uniformID );
 	void						InitUniformBuffer			( ZLLeanArray < u8 >& buffer );
 	int							ReserveGlobals 				( lua_State* L, int idx );
 	void						SelectTextures				();

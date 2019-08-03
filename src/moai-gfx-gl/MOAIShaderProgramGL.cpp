@@ -49,7 +49,7 @@ int MOAIShaderProgramGL::_declareUniform ( lua_State* L ) {
 
 	ZLIndex idx			= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
 	STLString name		= state.GetValue < cc8* >( 3, "" );
-	u32 type			= state.GetValue < u32 >( 4, MOAIShaderUniformGL::UNIFORM_TYPE_FLOAT );
+	u32 type			= state.GetValue < u32 >( 4, MOAIShaderUniformDescriptor::UNIFORM_TYPE_FLOAT );
 	u32 width			= state.GetValue < u32 >( 5, 1 );
 	u32 count			= state.GetValue < u32 >( 6, 1 );
 
@@ -186,13 +186,13 @@ void MOAIShaderProgramGL::AffirmUniforms () {
 	if ( this->mUniformBufferSize ) return;
 	
 	this->mUniformBufferSize = 0;
-	size_t nUniforms = this->mUniforms.Size ();
+	size_t nUniforms = this->mUniformDescriptors.Size ();
 	
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < nUniforms; ++i ) {
 		
-		MOAIShaderUniformGL& uniform = this->mUniforms [ i ];
+		MOAIShaderUniformBindingGL& uniform = this->mUniformBindings [ i ];
 		uniform.mCPUOffset = this->mUniformBufferSize;
-		this->mUniformBufferSize += uniform.GetSize ();
+		this->mUniformBufferSize += uniform.GetSize ( this->mUniformDescriptors [ i ]);
 		
 		this->mMaxCount = this->mMaxCount < uniform.mCount ? uniform.mCount : this->mMaxCount;
 	}
@@ -213,14 +213,14 @@ void MOAIShaderProgramGL::BindUniforms () {
 	
 	ZLGfx& gfx = this->mGfxMgr->GetDrawingAPI ();
 	
-	size_t nUniforms = this->mUniforms.Size ();
+	size_t nUniforms = this->mUniformBindings.Size ();
 	
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < nUniforms; ++i ) {
 	
-		MOAIShaderUniformHandle uniform = this->GetUniformHandle ( this->mUniformBuffer.GetBuffer (), i );
+		MOAIShaderUniformHandle handle = this->GetUniformHandle ( this->mUniformBuffer.GetBuffer (), i );
 		
-		if ( uniform.IsValid ()) {
-			this->mUniforms [ i ].Bind ( gfx, uniform.mBuffer );
+		if ( handle.IsValid ()) {
+			this->mUniformBindings [ i ].Bind ( gfx, this->mUniformDescriptors [ i ], handle.mBuffer );
 		}
 	}
 }
@@ -232,7 +232,8 @@ void MOAIShaderProgramGL::Clear () {
 	this->mFragmentShaderSource.clear ();
 
 	this->mAttributeMap.clear ();
-	this->mUniforms.Clear ();
+	this->mUniformDescriptors.Clear ();
+	this->mUniformBindings.Clear ();
 	this->mGlobals.Clear ();
 	
 	this->Destroy ();
@@ -272,19 +273,21 @@ ZLGfxHandle MOAIShaderProgramGL::CompileShader ( u32 type, cc8* source ) {
 //----------------------------------------------------------------//
 void MOAIShaderProgramGL::DeclareUniform ( ZLIndex idx, cc8* name, u32 type, u32 width, u32 count ) {
 
-	if ( idx < this->mUniforms.Size ()) {
+	if ( idx < this->mUniformDescriptors.Size ()) {
 
-		MOAIShaderUniformGL& uniform = this->mUniforms [ idx ];
-		uniform.mName = name;
-		uniform.Init ( type, width, count );
+		this->mUniformDescriptors [ idx ].Init ( type, width );
+		
+		MOAIShaderUniformBindingGL& binding = this->mUniformBindings [ idx ];
+		binding.mName = name;
+		binding.Init ( count );
 	}
 }
 
-//----------------------------------------------------------------//
-MOAIShaderUniformGL* MOAIShaderProgramGL::GetUniform ( ZLIndex uniformID ) {
-
-	return uniformID < this->mUniforms.Size () ? &this->mUniforms [ uniformID ] : 0;
-}
+////----------------------------------------------------------------//
+//MOAIShaderUniformBindingGL* MOAIShaderProgramGL::GetUniform ( ZLIndex uniformID ) {
+//
+//	return uniformID < this->mUniforms.Size () ? &this->mUniforms [ uniformID ] : 0;
+//}
 
 //----------------------------------------------------------------//
 void MOAIShaderProgramGL::InitUniformBuffer ( ZLLeanArray < u8 >& buffer ) {
@@ -293,12 +296,12 @@ void MOAIShaderProgramGL::InitUniformBuffer ( ZLLeanArray < u8 >& buffer ) {
 
 	buffer.Clear ();
 	
-	size_t nUniforms = this->mUniforms.Size ();
+	size_t nUniforms = this->mUniformDescriptors.Size ();
 	buffer.Init ( this->mUniformBufferSize );
 	
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < nUniforms; ++i ) {
-		MOAIShaderUniformHandle uniform = this->GetUniformHandle ( buffer.GetBuffer (), i );
-		uniform.Default ( this->mUniforms [ i ].mCount );
+		MOAIShaderUniformHandle handle = this->GetUniformHandle ( buffer.GetBuffer (), i );
+		handle.Default ( this->mUniformBindings [ i ].mCount );
 	}
 }
 
@@ -356,7 +359,8 @@ void MOAIShaderProgramGL::ReserveTextures ( ZLSize nTextures ) {
 //----------------------------------------------------------------//
 void MOAIShaderProgramGL::ReserveUniforms ( ZLSize nUniforms ) {
 
-	this->mUniforms.Init ( nUniforms );
+	this->mUniformDescriptors.Init ( nUniforms );
+	this->mUniformBindings.Init ( nUniforms );
 }
 
 //----------------------------------------------------------------//
@@ -547,8 +551,8 @@ bool MOAIShaderProgramGL::MOAIGfxResourceGL_OnGPUCreate () {
 	gfx.LinkProgram ( this->mProgram, true );
 
 	// get the uniform locations
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mUniforms.Size (); ++i ) {
-		MOAIShaderUniformGL& uniform = this->mUniforms [ i ];
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mUniformBindings.Size (); ++i ) {
+		MOAIShaderUniformBindingGL& uniform = this->mUniformBindings [ i ];
 		gfx.GetUniformLocation ( this->mProgram, uniform.mName, this, ( void* )(( size_t )i )); // TODO: cast?
 	}
 
@@ -586,14 +590,14 @@ void MOAIShaderProgramGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& compose
 
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxResourceGL, MOAILuaObject_RegisterLuaClass ( composer, state ));
 
-	state.SetField ( -1, "UNIFORM_TYPE_FLOAT",						( u32 )MOAIShaderUniformGL::UNIFORM_TYPE_FLOAT );
-	state.SetField ( -1, "UNIFORM_TYPE_INT",						( u32 )MOAIShaderUniformGL::UNIFORM_TYPE_INT );
+	state.SetField ( -1, "UNIFORM_TYPE_FLOAT",						( u32 )MOAIShaderUniformDescriptor::UNIFORM_TYPE_FLOAT );
+	state.SetField ( -1, "UNIFORM_TYPE_INT",						( u32 )MOAIShaderUniformDescriptor::UNIFORM_TYPE_INT );
 	
-	state.SetField ( -1, "UNIFORM_WIDTH_VEC_2",						( u32 )MOAIShaderUniformGL::UNIFORM_WIDTH_VEC_2 );
-	state.SetField ( -1, "UNIFORM_WIDTH_VEC_3",						( u32 )MOAIShaderUniformGL::UNIFORM_WIDTH_VEC_3 );
-	state.SetField ( -1, "UNIFORM_WIDTH_VEC_4",						( u32 )MOAIShaderUniformGL::UNIFORM_WIDTH_VEC_4 );
-	state.SetField ( -1, "UNIFORM_WIDTH_MATRIX_3X3",				( u32 )MOAIShaderUniformGL::UNIFORM_WIDTH_MATRIX_3X3 );
-	state.SetField ( -1, "UNIFORM_WIDTH_MATRIX_4X4",				( u32 )MOAIShaderUniformGL::UNIFORM_WIDTH_MATRIX_4X4 );
+	state.SetField ( -1, "UNIFORM_WIDTH_VEC_2",						( u32 )MOAIShaderUniformDescriptor::UNIFORM_WIDTH_VEC_2 );
+	state.SetField ( -1, "UNIFORM_WIDTH_VEC_3",						( u32 )MOAIShaderUniformDescriptor::UNIFORM_WIDTH_VEC_3 );
+	state.SetField ( -1, "UNIFORM_WIDTH_VEC_4",						( u32 )MOAIShaderUniformDescriptor::UNIFORM_WIDTH_VEC_4 );
+	state.SetField ( -1, "UNIFORM_WIDTH_MATRIX_3X3",				( u32 )MOAIShaderUniformDescriptor::UNIFORM_WIDTH_MATRIX_3X3 );
+	state.SetField ( -1, "UNIFORM_WIDTH_MATRIX_4X4",				( u32 )MOAIShaderUniformDescriptor::UNIFORM_WIDTH_MATRIX_4X4 );
 	
 	state.SetField ( -1, "GLOBAL_CLIP_TO_DISPLAY_MTX",				( u32 )MOAIGfxMgrGL::CLIP_TO_DISPLAY_MTX );
 	state.SetField ( -1, "GLOBAL_CLIP_TO_MODEL_MTX",				( u32 )MOAIGfxMgrGL::CLIP_TO_MODEL_MTX );
@@ -691,11 +695,12 @@ MOAIShaderUniformHandle MOAIShaderProgramGL::MOAIAbstractShaderUniformSchema_Get
 	MOAIShaderUniformHandle uniform;
 	uniform.mBuffer = 0;
 
-	if ( uniformID < this->mUniforms.Size ()) {
-		const MOAIShaderUniformGL& programUniform = this->mUniforms [ uniformID ];
-		uniform.mType		= programUniform.mType;
-		uniform.mWidth		= programUniform.mWidth;
-		uniform.mBuffer		= ( void* )(( size_t )buffer + this->mUniforms [ uniformID ].mCPUOffset );
+	if ( uniformID < this->mUniformDescriptors.Size ()) {
+		const MOAIShaderUniformDescriptor& descriptor = this->mUniformDescriptors [ uniformID ];
+		const MOAIShaderUniformBindingGL& binding = this->mUniformBindings [ uniformID ];
+		uniform.mType		= descriptor.mType;
+		uniform.mWidth		= descriptor.mWidth;
+		uniform.mBuffer		= ( void* )(( size_t )buffer + binding.mCPUOffset );
 	}
 	return uniform;
 }
@@ -705,7 +710,7 @@ void MOAIShaderProgramGL::ZLGfxListener_OnUniformLocation ( u32 addr, void* user
 
 	ZLSize i = ( size_t )userdata;
 	
-	if ( i < this->mUniforms.Size ()) {
-		this->mUniforms [ ZLIndexCast ( i )].mGPUBase = addr;
+	if ( i < this->mUniformBindings.Size ()) {
+		this->mUniformBindings [ ZLIndexCast ( i )].mGPUBase = addr;
 	}
 }

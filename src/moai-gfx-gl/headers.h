@@ -23,7 +23,7 @@
 #include <moai-gfx-gl/MOAIShaderGL.h>
 #include <moai-gfx-gl/MOAIShaderMgrGL.h>
 #include <moai-gfx-gl/MOAIShaderProgramGL.h>
-#include <moai-gfx-gl/MOAIShaderUniformGL.h>
+#include <moai-gfx-gl/MOAIShaderUniformBindingGL.h>
 #include <moai-gfx-gl/MOAITexture2DGL.h>
 #include <moai-gfx-gl/MOAITextureGL.h>
 #include <moai-gfx-gl/MOAIVertexArrayGL.h>
