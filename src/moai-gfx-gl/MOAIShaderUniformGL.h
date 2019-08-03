@@ -8,7 +8,7 @@
 // MOAIShaderUniformGL
 //================================================================//
 class MOAIShaderUniformGL :
-	public MOAIShaderUniform {
+	public MOAIShaderUniformDescriptor {
 protected:
 
 	friend class MOAIShaderGL;

@@ -1,13 +1,13 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAISHADERUNIFORM_H
-#define	MOAISHADERUNIFORM_H
+#ifndef	MOAISHADERUNIFORMDESCRIPTOR_H
+#define	MOAISHADERUNIFORMDESCRIPTOR_H
 
 //================================================================//
-// MOAIShaderUniform
+// MOAIShaderUniformDescriptor
 //================================================================//
-class MOAIShaderUniform {
+class MOAIShaderUniformDescriptor {
 protected:
 
 	static const size_t MAX_BUFFER_WIDTH = 16; // 4x4 matrix
@@ -32,10 +32,10 @@ public:
 	u32				mWidth;				// number of elements (ELEMENT_SIZE bytes each)
 
 	//----------------------------------------------------------------//
-	size_t			GetSize						() const;
-	bool			Init						( u32 type, u32 width = 1 );
-					MOAIShaderUniform			();
-					~MOAIShaderUniform			();
+	size_t			GetSize							() const;
+	bool			Init							( u32 type, u32 width = 1 );
+					MOAIShaderUniformDescriptor		();
+					~MOAIShaderUniformDescriptor	();
 };
 
 #endif

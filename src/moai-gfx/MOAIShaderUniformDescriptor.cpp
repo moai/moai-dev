@@ -2,20 +2,20 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx/MOAIShaderUniform.h>
+#include <moai-gfx/MOAIShaderUniformDescriptor.h>
 
 //================================================================//
-// MOAIShaderUniform
+// MOAIShaderUniformDescriptor
 //================================================================//
 
 //----------------------------------------------------------------//
-size_t MOAIShaderUniform::GetSize () const {
+size_t MOAIShaderUniformDescriptor::GetSize () const {
 
 	return this->mWidth * ELEMENT_SIZE;
 }
 
 //----------------------------------------------------------------//
-bool MOAIShaderUniform::Init ( u32 type, u32 width ) {
+bool MOAIShaderUniformDescriptor::Init ( u32 type, u32 width ) {
 	
 	this->mType		= type;
 	this->mWidth	= width;
@@ -24,11 +24,11 @@ bool MOAIShaderUniform::Init ( u32 type, u32 width ) {
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniform::MOAIShaderUniform () :
+MOAIShaderUniformDescriptor::MOAIShaderUniformDescriptor () :
 	mType ( UNIFORM_TYPE_FLOAT ),
 	mWidth ( 1 ) {
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniform::~MOAIShaderUniform () {
+MOAIShaderUniformDescriptor::~MOAIShaderUniformDescriptor () {
 }

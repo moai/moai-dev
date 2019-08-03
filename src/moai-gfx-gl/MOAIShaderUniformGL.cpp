@@ -26,13 +26,13 @@ void MOAIShaderUniformGL::Bind ( ZLGfx&gfx, const void* buffer ) const {
 //----------------------------------------------------------------//
 size_t MOAIShaderUniformGL::GetSize () const {
 
-	return this->MOAIShaderUniform::GetSize () * this->mCount;
+	return this->MOAIShaderUniformDescriptor::GetSize () * this->mCount;
 }
 
 //----------------------------------------------------------------//
 void MOAIShaderUniformGL::Init ( u32 type, u32 width, u32 count ) {
 	
-	this->MOAIShaderUniform::Init ( type, width );
+	this->MOAIShaderUniformDescriptor::Init ( type, width );
 	this->mCount = count;
 	this->mCPUOffset = 0;
 }

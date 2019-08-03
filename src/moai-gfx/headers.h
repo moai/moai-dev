@@ -34,7 +34,7 @@
 #include <moai-gfx/MOAIMaterialGlobalsContext.h>
 #include <moai-gfx/MOAIMaterialMgr.h>
 #include <moai-gfx/MOAIShader.h>
-#include <moai-gfx/MOAIShaderUniform.h>
+#include <moai-gfx/MOAIShaderUniformDescriptor.h>
 #include <moai-gfx/MOAIShaderUniformHandle.h>
 #include <moai-gfx/MOAIShaderUniformSchema.h>
 #include <moai-gfx/MOAITexture.h>

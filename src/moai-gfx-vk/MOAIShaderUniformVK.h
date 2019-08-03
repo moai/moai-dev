@@ -8,7 +8,7 @@
 // MOAIShaderUniformVK
 //================================================================//
 class MOAIShaderUniformVK :
-	public MOAIShaderUniform {
+	public MOAIShaderUniformDescriptor {
 protected:
 
 //	friend class MOAIShaderVK;

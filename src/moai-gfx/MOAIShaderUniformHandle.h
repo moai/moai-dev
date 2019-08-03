@@ -4,13 +4,13 @@
 #ifndef	MOAISHADERUNIFORMHANDLE_H
 #define	MOAISHADERUNIFORMHANDLE_H
 
-#include <moai-gfx/MOAIShaderUniform.h>
+#include <moai-gfx/MOAIShaderUniformDescriptor.h>
 
 //================================================================//
 // MOAIShaderUniformHandle
 //================================================================//
 class MOAIShaderUniformHandle :
-	public MOAIShaderUniform {
+	public MOAIShaderUniformDescriptor {
 private:
 
 	//----------------------------------------------------------------//
