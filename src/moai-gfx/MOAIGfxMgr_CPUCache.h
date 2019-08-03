@@ -7,7 +7,7 @@
 #include <moai-gfx/MOAIGfxMgrComponents.h>
 #include <moai-gfx/MOAIGfxStateCPUCacheFrame.h>
 
-class MOAIShaderUniformSchema;
+class MOAIAbstractShaderUniformSchema;
 class ZLCamera;
 class ZLViewport;
 

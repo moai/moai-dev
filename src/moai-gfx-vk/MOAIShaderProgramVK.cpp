@@ -695,7 +695,7 @@ void MOAIShaderProgramVK::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& compose
 }
 
 //----------------------------------------------------------------//
-MOAIShaderUniformHandle MOAIShaderProgramVK::MOAIShaderUniformSchema_GetUniformHandle ( void* buffer, ZLIndex uniformID ) const {
+MOAIShaderUniformHandle MOAIShaderProgramVK::MOAIAbstractShaderUniformSchema_GetUniformHandle ( void* buffer, ZLIndex uniformID ) const {
 
 	MOAIShaderUniformHandle uniform;
 //	uniform.mBuffer = 0;

@@ -64,7 +64,7 @@ public:
 */
 class MOAIShaderProgramGL :
 	public virtual MOAIGfxResourceGL,
-	public virtual MOAIShaderUniformSchemaBase {
+	public virtual MOAIShaderUniformSchema {
 protected:
 
 	friend class MOAIShaderGL;
@@ -119,7 +119,7 @@ protected:
 	bool						MOAIGfxResourceGL_OnGPUUpdate						();
 	void						MOAILuaObject_RegisterLuaClass						( MOAIComposer& composer, MOAILuaState& state );
 	void						MOAILuaObject_RegisterLuaFuncs						( MOAIComposer& composer, MOAILuaState& state );
-	MOAIShaderUniformHandle		MOAIShaderUniformSchema_GetUniformHandle			( void* buffer, ZLIndex uniformID ) const;
+	MOAIShaderUniformHandle		MOAIAbstractShaderUniformSchema_GetUniformHandle			( void* buffer, ZLIndex uniformID ) const;
 	void						ZLGfxListener_OnUniformLocation						( u32 addr, void* userdata );
 	
 public:

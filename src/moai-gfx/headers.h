@@ -9,6 +9,7 @@
 #include <moai-gfx/MOAIAbstractMaterialBatchInterface.h>
 #include <moai-gfx/MOAIAbstractMaterialGlobalsContext.h>
 #include <moai-gfx/MOAIAbstractMaterialInterface.h>
+#include <moai-gfx/MOAIAbstractShaderUniformSchema.h>
 #include <moai-gfx/MOAIBlendMode.h>
 #include <moai-gfx/MOAIDrawable.h>
 #include <moai-gfx/MOAIFrameBuffer.h>
@@ -36,7 +37,6 @@
 #include <moai-gfx/MOAIShaderUniform.h>
 #include <moai-gfx/MOAIShaderUniformHandle.h>
 #include <moai-gfx/MOAIShaderUniformSchema.h>
-#include <moai-gfx/MOAIShaderUniformSchemaBase.h>
 #include <moai-gfx/MOAITexture.h>
 #include <moai-gfx/MOAITexture2D.h>
 #include <moai-gfx/MOAIVertexArray.h>
