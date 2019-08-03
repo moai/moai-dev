@@ -11,14 +11,16 @@
 //----------------------------------------------------------------//
 size_t MOAIShaderUniformDescriptor::GetSize () const {
 
-	return this->mWidth * ELEMENT_SIZE;
+	return this->mCount * this->mWidth * ELEMENT_SIZE;
 }
 
 //----------------------------------------------------------------//
-bool MOAIShaderUniformDescriptor::Init ( u32 type, u32 width ) {
+bool MOAIShaderUniformDescriptor::Init ( u32 type, u32 width, u32 count ) {
 	
-	this->mType		= type;
-	this->mWidth	= width;
+	this->mType			= type;
+	this->mWidth		= width;
+	this->mCount		= count;
+	this->mCPUOffset	= 0;
 	
 	return true;
 }
@@ -26,7 +28,9 @@ bool MOAIShaderUniformDescriptor::Init ( u32 type, u32 width ) {
 //----------------------------------------------------------------//
 MOAIShaderUniformDescriptor::MOAIShaderUniformDescriptor () :
 	mType ( UNIFORM_TYPE_FLOAT ),
-	mWidth ( 1 ) {
+	mWidth ( 1 ),
+	mCount ( 0 ),
+	mCPUOffset ( 0 ) {
 }
 
 //----------------------------------------------------------------//

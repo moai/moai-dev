@@ -42,8 +42,8 @@ private:
 
 	friend class MOAIShaderProgramGL;
 
-	u32							mName;
-	ZLIndex						mUnit;
+	u32								mName;
+	ZLIndex							mUnit;
 	ZLStrongPtr < MOAITextureGL >	mTexture;
 
 public:
@@ -84,9 +84,7 @@ protected:
 	ZLLeanArray < MOAIShaderProgramGlobalGL >	mGlobals;
 	ZLLeanArray < MOAIShaderProgramTextureGL >	mTextures;
 
-	size_t										mMaxCount;
 	size_t										mUniformBufferSize;
-
 	ZLLeanArray < u8 >							mUniformBuffer;
 
 	//----------------------------------------------------------------//
@@ -104,7 +102,6 @@ protected:
 	void						ApplyUniforms				( ZLLeanArray < u8 >& buffer );
 	void						BindUniforms				();
 	ZLGfxHandle					CompileShader				( u32 type, cc8* source );
-//	MOAIShaderUniformBindingGL*	GetUniform					( ZLIndex uniformID );
 	void						InitUniformBuffer			( ZLLeanArray < u8 >& buffer );
 	int							ReserveGlobals 				( lua_State* L, int idx );
 	void						SelectTextures				();

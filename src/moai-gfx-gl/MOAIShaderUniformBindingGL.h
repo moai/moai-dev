@@ -16,16 +16,13 @@ protected:
 	friend class ZLShaderProgramGL;
 
 	STLString		mName;
-	u32				mCount;				// (default) size of array
 	u32				mGPUBase;			// this is resolved when linking the shader
-	size_t			mCPUOffset;			// offset in CPU buffer
-
+	
 public:
 
 	//----------------------------------------------------------------//
 	void			Bind							( ZLGfx&gfx, const MOAIShaderUniformDescriptor& descriptor, const void* buffer ) const;
 	size_t			GetSize							( const MOAIShaderUniformDescriptor& descriptor ) const;
-	void			Init							( u32 count = 1 );
 					MOAIShaderUniformBindingGL		();
 					~MOAIShaderUniformBindingGL		();
 	

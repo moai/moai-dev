@@ -190,11 +190,9 @@ void MOAIShaderProgramGL::AffirmUniforms () {
 	
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < nUniforms; ++i ) {
 		
-		MOAIShaderUniformBindingGL& uniform = this->mUniformBindings [ i ];
-		uniform.mCPUOffset = this->mUniformBufferSize;
-		this->mUniformBufferSize += uniform.GetSize ( this->mUniformDescriptors [ i ]);
-		
-		this->mMaxCount = this->mMaxCount < uniform.mCount ? uniform.mCount : this->mMaxCount;
+		MOAIShaderUniformDescriptor& descriptor = this->mUniformDescriptors [ i ];
+		descriptor.mCPUOffset = this->mUniformBufferSize;
+		this->mUniformBufferSize += descriptor.GetSize ();
 	}
 	
 	this->mUniformBuffer.Clear ();
@@ -274,20 +272,10 @@ ZLGfxHandle MOAIShaderProgramGL::CompileShader ( u32 type, cc8* source ) {
 void MOAIShaderProgramGL::DeclareUniform ( ZLIndex idx, cc8* name, u32 type, u32 width, u32 count ) {
 
 	if ( idx < this->mUniformDescriptors.Size ()) {
-
-		this->mUniformDescriptors [ idx ].Init ( type, width );
-		
-		MOAIShaderUniformBindingGL& binding = this->mUniformBindings [ idx ];
-		binding.mName = name;
-		binding.Init ( count );
+		this->mUniformDescriptors [ idx ].Init ( type, width, count );
+		this->mUniformBindings [ idx ].mName = name;
 	}
 }
-
-////----------------------------------------------------------------//
-//MOAIShaderUniformBindingGL* MOAIShaderProgramGL::GetUniform ( ZLIndex uniformID ) {
-//
-//	return uniformID < this->mUniforms.Size () ? &this->mUniforms [ uniformID ] : 0;
-//}
 
 //----------------------------------------------------------------//
 void MOAIShaderProgramGL::InitUniformBuffer ( ZLLeanArray < u8 >& buffer ) {
@@ -301,7 +289,7 @@ void MOAIShaderProgramGL::InitUniformBuffer ( ZLLeanArray < u8 >& buffer ) {
 	
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < nUniforms; ++i ) {
 		MOAIShaderUniformHandle handle = this->GetUniformHandle ( buffer.GetBuffer (), i );
-		handle.Default ( this->mUniformBindings [ i ].mCount );
+		handle.Default ( this->mUniformDescriptors [ i ].mCount );
 	}
 }
 
@@ -319,7 +307,6 @@ void MOAIShaderProgramGL::Load ( cc8* vshSource, cc8* fshSource ) {
 
 //----------------------------------------------------------------//
 MOAIShaderProgramGL::MOAIShaderProgramGL () :
-	mMaxCount ( 0 ),
 	mUniformBufferSize ( 0 ) {
 	
 	RTTI_BEGIN
@@ -697,10 +684,9 @@ MOAIShaderUniformHandle MOAIShaderProgramGL::MOAIAbstractShaderUniformSchema_Get
 
 	if ( uniformID < this->mUniformDescriptors.Size ()) {
 		const MOAIShaderUniformDescriptor& descriptor = this->mUniformDescriptors [ uniformID ];
-		const MOAIShaderUniformBindingGL& binding = this->mUniformBindings [ uniformID ];
 		uniform.mType		= descriptor.mType;
 		uniform.mWidth		= descriptor.mWidth;
-		uniform.mBuffer		= ( void* )(( size_t )buffer + binding.mCPUOffset );
+		uniform.mBuffer		= ( void* )(( size_t )buffer + descriptor.mCPUOffset );
 	}
 	return uniform;
 }

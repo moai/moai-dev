@@ -30,10 +30,12 @@ public:
 
 	u32				mType;				// type of buffer
 	u32				mWidth;				// number of elements (ELEMENT_SIZE bytes each)
+	u32				mCount;				// (default) size of array
+	size_t			mCPUOffset;			// offset in CPU buffer
 
 	//----------------------------------------------------------------//
 	size_t			GetSize							() const;
-	bool			Init							( u32 type, u32 width = 1 );
+	bool			Init							( u32 type, u32 width = 1, u32 count = 1 );
 					MOAIShaderUniformDescriptor		();
 					~MOAIShaderUniformDescriptor	();
 };
