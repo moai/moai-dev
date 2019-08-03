@@ -11,8 +11,6 @@
 #include <moai-gfx-gl/shaders/MOAIDeck2DShaderGL-vsh.h>
 #include <moai-gfx-gl/shaders/MOAIDeck2DSnappingShaderGL-fsh.h>
 #include <moai-gfx-gl/shaders/MOAIDeck2DSnappingShaderGL-vsh.h>
-#include <moai-gfx-gl/shaders/MOAIDeck2DTexOnlyShaderGL-fsh.h>
-#include <moai-gfx-gl/shaders/MOAIDeck2DTexOnlyShaderGL-vsh.h>
 #include <moai-gfx-gl/shaders/MOAIFontShaderGL-fsh.h>
 #include <moai-gfx-gl/shaders/MOAIFontShaderGL-vsh.h>
 #include <moai-gfx-gl/shaders/MOAIFontSnappingShaderGL-fsh.h>
@@ -118,15 +116,6 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					program->SetGlobal ( ZLIndexCast ( 1 ), MOAIGfxMgrGL::VIEW_HALF_HEIGHT, ZLIndexCast ( 1 ), ZLIndexCast ( 0 ));
 					
 					program->Load ( _deck2DSnappingShaderVSH, _deck2DSnappingShaderFSH );
-					break;
-				
-				case MOAIShaderPresetEnum::DECK2D_TEX_ONLY_SHADER:
-					
-					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
-					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
-					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
-					
-					program->Load ( _deck2DTexOnlyShaderVSH, _deck2DTexOnlyShaderFSH );
 					break;
 				
 				case MOAIShaderPresetEnum::FONT_SHADER:
@@ -282,7 +271,6 @@ void MOAIShaderMgrGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, M
 
 	state.SetField ( -1, "DECK2D_SHADER",			( u32 )MOAIShaderPresetEnum::DECK2D_SHADER );
 	state.SetField ( -1, "DECK2D_SNAPPING_SHADER",	( u32 )MOAIShaderPresetEnum::DECK2D_SNAPPING_SHADER );
-	state.SetField ( -1, "DECK2D_TEX_ONLY_SHADER",	( u32 )MOAIShaderPresetEnum::DECK2D_TEX_ONLY_SHADER );
 	state.SetField ( -1, "FONT_SHADER",				( u32 )MOAIShaderPresetEnum::FONT_SHADER );
 	state.SetField ( -1, "FONT_SNAPPING_SHADER",	( u32 )MOAIShaderPresetEnum::FONT_SNAPPING_SHADER );
 	state.SetField ( -1, "FONT_EFFECTS_SHADER",	    ( u32 )MOAIShaderPresetEnum::FONT_EFFECTS_SHADER );

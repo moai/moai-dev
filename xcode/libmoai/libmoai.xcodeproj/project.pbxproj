@@ -2131,8 +2131,6 @@
 		CD4A9524229DE48C00F9E400 /* MOAIDeck2DShaderGL-vsh.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A9514229DE48C00F9E400 /* MOAIDeck2DShaderGL-vsh.h */; };
 		CD4A9525229DE48C00F9E400 /* MOAIDeck2DSnappingShaderGL-fsh.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A9515229DE48C00F9E400 /* MOAIDeck2DSnappingShaderGL-fsh.h */; };
 		CD4A9526229DE48C00F9E400 /* MOAIDeck2DSnappingShaderGL-vsh.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A9516229DE48C00F9E400 /* MOAIDeck2DSnappingShaderGL-vsh.h */; };
-		CD4A9527229DE48C00F9E400 /* MOAIDeck2DTexOnlyShaderGL-fsh.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A9517229DE48C00F9E400 /* MOAIDeck2DTexOnlyShaderGL-fsh.h */; };
-		CD4A9528229DE48C00F9E400 /* MOAIDeck2DTexOnlyShaderGL-vsh.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A9518229DE48C00F9E400 /* MOAIDeck2DTexOnlyShaderGL-vsh.h */; };
 		CD4A9529229DE48C00F9E400 /* MOAIFontShaderGL-fsh.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A9519229DE48C00F9E400 /* MOAIFontShaderGL-fsh.h */; };
 		CD4A952A229DE48C00F9E400 /* MOAIFontShaderGL-vsh.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A951A229DE48C00F9E400 /* MOAIFontShaderGL-vsh.h */; };
 		CD4A952B229DE48C00F9E400 /* MOAIFontSnappingShaderGL-fsh.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A951B229DE48C00F9E400 /* MOAIFontSnappingShaderGL-fsh.h */; };
@@ -6564,8 +6562,6 @@
 		CD4A9514229DE48C00F9E400 /* MOAIDeck2DShaderGL-vsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIDeck2DShaderGL-vsh.h"; path = "moai-gfx-gl/shaders/MOAIDeck2DShaderGL-vsh.h"; sourceTree = "<group>"; };
 		CD4A9515229DE48C00F9E400 /* MOAIDeck2DSnappingShaderGL-fsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIDeck2DSnappingShaderGL-fsh.h"; path = "moai-gfx-gl/shaders/MOAIDeck2DSnappingShaderGL-fsh.h"; sourceTree = "<group>"; };
 		CD4A9516229DE48C00F9E400 /* MOAIDeck2DSnappingShaderGL-vsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIDeck2DSnappingShaderGL-vsh.h"; path = "moai-gfx-gl/shaders/MOAIDeck2DSnappingShaderGL-vsh.h"; sourceTree = "<group>"; };
-		CD4A9517229DE48C00F9E400 /* MOAIDeck2DTexOnlyShaderGL-fsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIDeck2DTexOnlyShaderGL-fsh.h"; path = "moai-gfx-gl/shaders/MOAIDeck2DTexOnlyShaderGL-fsh.h"; sourceTree = "<group>"; };
-		CD4A9518229DE48C00F9E400 /* MOAIDeck2DTexOnlyShaderGL-vsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIDeck2DTexOnlyShaderGL-vsh.h"; path = "moai-gfx-gl/shaders/MOAIDeck2DTexOnlyShaderGL-vsh.h"; sourceTree = "<group>"; };
 		CD4A9519229DE48C00F9E400 /* MOAIFontShaderGL-fsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIFontShaderGL-fsh.h"; path = "moai-gfx-gl/shaders/MOAIFontShaderGL-fsh.h"; sourceTree = "<group>"; };
 		CD4A951A229DE48C00F9E400 /* MOAIFontShaderGL-vsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIFontShaderGL-vsh.h"; path = "moai-gfx-gl/shaders/MOAIFontShaderGL-vsh.h"; sourceTree = "<group>"; };
 		CD4A951B229DE48C00F9E400 /* MOAIFontSnappingShaderGL-fsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIFontSnappingShaderGL-fsh.h"; path = "moai-gfx-gl/shaders/MOAIFontSnappingShaderGL-fsh.h"; sourceTree = "<group>"; };
@@ -10424,8 +10420,6 @@
 				CD4A9514229DE48C00F9E400 /* MOAIDeck2DShaderGL-vsh.h */,
 				CD4A9515229DE48C00F9E400 /* MOAIDeck2DSnappingShaderGL-fsh.h */,
 				CD4A9516229DE48C00F9E400 /* MOAIDeck2DSnappingShaderGL-vsh.h */,
-				CD4A9517229DE48C00F9E400 /* MOAIDeck2DTexOnlyShaderGL-fsh.h */,
-				CD4A9518229DE48C00F9E400 /* MOAIDeck2DTexOnlyShaderGL-vsh.h */,
 				CD4A9519229DE48C00F9E400 /* MOAIFontShaderGL-fsh.h */,
 				CD4A951A229DE48C00F9E400 /* MOAIFontShaderGL-vsh.h */,
 				CD4A951B229DE48C00F9E400 /* MOAIFontSnappingShaderGL-fsh.h */,
@@ -15417,14 +15411,12 @@
 				CD4A956F229DF8F300F9E400 /* ZLViewProj.h in Headers */,
 				CD4A95E6229DFD7200F9E400 /* MOAIVertexArrayGL.h in Headers */,
 				CD4A95DE229DFD7200F9E400 /* MOAIShaderGL.h in Headers */,
-				CD4A9528229DE48C00F9E400 /* MOAIDeck2DTexOnlyShaderGL-vsh.h in Headers */,
 				CD4A952E229DE48C00F9E400 /* MOAILineShader3DGL-vsh.h in Headers */,
 				CD4A95D4229DFD7200F9E400 /* MOAIGfxMgrGL.h in Headers */,
 				CD4A9644229E91E900F9E400 /* MOAIGfxMgrGL_RenderTreeGL.h in Headers */,
 				CD4A950D229DE47300F9E400 /* MOAIVertexFormatGL.h in Headers */,
 				CD4A9532229DE48C00F9E400 /* MOAIMeshShaderGL-vsh.h in Headers */,
 				CD4A95DA229DFD7200F9E400 /* MOAIGfxMgrGL_GPUCacheGL.h in Headers */,
-				CD4A9527229DE48C00F9E400 /* MOAIDeck2DTexOnlyShaderGL-fsh.h in Headers */,
 				CD4A95E0229DFD7200F9E400 /* MOAIShaderProgramGL.h in Headers */,
 				CD4A95CE229DFD7200F9E400 /* MOAIGfxBufferGL.h in Headers */,
 				CD4A9524229DE48C00F9E400 /* MOAIDeck2DShaderGL-vsh.h in Headers */,
