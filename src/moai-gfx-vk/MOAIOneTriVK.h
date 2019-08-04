@@ -5,6 +5,8 @@
 #define MOAIONETRIVK_H
 
 class MOAIGfxBufferVK;
+class MOAIShaderProgramVK;
+class MOAIShaderVK;
 
 //================================================================//
 // MOAIOneTriVK
@@ -26,6 +28,9 @@ private:
 	ZLStrongPtr < MOAIVertexBufferVK >		mVertices;
 	ZLStrongPtr < MOAIIndexBufferVK >		mIndices;
 	ZLStrongPtr < MOAIUniformBufferVK >		mUniforms;
+	
+	ZLStrongPtr < MOAIShaderProgramVK >		mShaderProgram;
+	ZLStrongPtr < MOAIShaderVK >			mShader;
 	
 	uint32_t				mTotalIndices;
 	VkDescriptorBufferInfo	mUniformsDescriptor;

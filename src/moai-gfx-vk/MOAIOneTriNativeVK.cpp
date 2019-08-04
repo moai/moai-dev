@@ -6,7 +6,8 @@
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAIGfxUtilVK.h>
 #include <moai-gfx-vk/MOAIOneTriNativeVK.h>
-#include <moai-gfx-vk/MOAIOneTriNativeVK_spirv.h>
+#include <moai-gfx-vk/shaders/MOAIOneTriShaderVK.frag.spv.h>
+#include <moai-gfx-vk/shaders/MOAIOneTriShaderVK.vert.spv.h>
 
 //================================================================//
 // MOAINativeBufferVK
@@ -106,12 +107,12 @@ void MOAIOneTriNativeVK::PreparePipeline () {
 	VkPipelineShaderStageCreateInfo shaderStages [] = {
 		MOAIGfxStructVK::pipelineShaderStageCreateInfo (
 			VK_SHADER_STAGE_VERTEX_BIT,
-			MOAIGfxUtilVK::LoadShaderSPIRV ( triangleVertSPIRV, sizeof ( triangleVertSPIRV ), logicalDevice ),
+			MOAIGfxUtilVK::LoadShaderSPIRV ( _oneTriShaderVSH, sizeof ( _oneTriShaderVSH ), logicalDevice ),
 			"main"
 		),
 		MOAIGfxStructVK::pipelineShaderStageCreateInfo (
 			VK_SHADER_STAGE_FRAGMENT_BIT,
-			MOAIGfxUtilVK::LoadShaderSPIRV ( triangleFragSPIRV, sizeof ( triangleFragSPIRV ), logicalDevice ),
+			MOAIGfxUtilVK::LoadShaderSPIRV ( _oneTriShaderFSH, sizeof ( _oneTriShaderFSH ), logicalDevice ),
 			"main"
 		),
 	};

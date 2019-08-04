@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
+#include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
 #include <moai-gfx-vk/MOAITextureVK.h>
 
@@ -224,10 +225,14 @@
 //		}
 //	}
 //}
-//
-////----------------------------------------------------------------//
-//void MOAIShaderProgramVK::Clear () {
-//
+
+//----------------------------------------------------------------//
+void MOAIShaderProgramVK::Clear () {
+
+	for ( size_t i = 0; i < TOTAL_MODULES; ++i ) {
+		this->Clear (( ModuleID )i );
+	}
+
 //	this->mVertexShaderSource.clear ();
 //	this->mFragmentShaderSource.clear ();
 //
@@ -236,8 +241,27 @@
 //	this->mGlobals.Clear ();
 //
 //	this->Destroy ();
-//}
-//
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderProgramVK::Clear ( ModuleID moduleID ) {
+
+	if ( this->mModules [ moduleID ]) {
+		vkDestroyShaderModule ( MOAIGfxMgrVK::Get ().GetLogicalDevice (), this->mModules [ moduleID ], NULL );
+		this->mModules [ moduleID ] = NULL;
+	}
+}
+
+//----------------------------------------------------------------//
+VkShaderStageFlagBits MOAIShaderProgramVK::GetShaderStageBit ( ModuleID moduleID ) {
+
+	switch ( moduleID ) {
+		case FRAGMENT_MODULE:	return VK_SHADER_STAGE_FRAGMENT_BIT;
+		case VERTEX_MODULE:		return VK_SHADER_STAGE_VERTEX_BIT;
+	}
+	return ( VkShaderStageFlagBits )0;
+}
+
 ////----------------------------------------------------------------//
 //ZLGfxHandle MOAIShaderProgramVK::CompileShader ( u32 type, cc8* source ) {
 //
@@ -313,7 +337,20 @@
 //		this->ScheduleForGPUUpdate ();
 //	}
 //}
-//
+
+//----------------------------------------------------------------//
+void MOAIShaderProgramVK::LoadModule ( ModuleID moduleID, const void* shaderCode, size_t shaderSize ) {
+
+	MOAILogicalDeviceVK& logicalDevice = MOAIGfxMgrVK::Get ().GetLogicalDevice ();
+
+	// Create a new shader module that will be used for pipeline creation
+	VkShaderModuleCreateInfo moduleCreateInfo = MOAIGfxStructVK::shaderModuleCreateInfo (( uint32_t* )shaderCode, shaderSize );
+
+	VkShaderModule module;
+	VK_CHECK_RESULT ( vkCreateShaderModule ( logicalDevice, &moduleCreateInfo, NULL, &module ));
+	this->mModules [ moduleID ] = module;
+}
+
 ////----------------------------------------------------------------//
 //MOAIShaderProgramVK::MOAIShaderProgramVK () :
 //	mMaxCount ( 0 ),
@@ -330,13 +367,15 @@ MOAIShaderProgramVK::MOAIShaderProgramVK () {
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIGfxResourceVK )
 	RTTI_END
+	
+	memset ( this->mModules, NULL, sizeof ( this->mModules ));
 }
 
 
 //----------------------------------------------------------------//
 MOAIShaderProgramVK::~MOAIShaderProgramVK () {
 
-//	this->Clear ();
+	this->Clear ();
 }
 
 ////----------------------------------------------------------------//
@@ -449,6 +488,37 @@ MOAIShaderProgramVK::~MOAIShaderProgramVK () {
 //	}
 //}
 
+//----------------------------------------------------------------//
+void MOAIShaderProgramVK::UpdatePipelineCreateInfo ( VkGraphicsPipelineCreateInfo& info ) {
+
+	if ( this->mStageInfos.Size () == 0 ) {
+	
+		size_t moduleCount = 0;
+		for ( size_t i = 0; i < TOTAL_MODULES; ++i ) {
+			if ( this->mModules [( ModuleID )i ]) moduleCount++;
+		}
+		this->mStageInfos.Init ( moduleCount );
+		
+		size_t cursor = 0;
+		for ( size_t i = 0; i < TOTAL_MODULES; ++i ) {
+		
+			ModuleID moduleID = ( ModuleID )i;
+			VkShaderModule module = this->mModules [ i ];
+			if ( module ) {
+			
+				this->mStageInfos [ ZLIndexCast ( cursor++ )] = MOAIGfxStructVK::pipelineShaderStageCreateInfo (
+					this->GetShaderStageBit ( moduleID ),
+					module,
+					"main"
+				);
+			}
+		}
+	}
+	
+	info.pStages = this->mStageInfos.GetBuffer ();
+	info.stageCount = ( u32 )this->mStageInfos.Size ();
+}
+
 //================================================================//
 // virtual
 //================================================================//
@@ -536,85 +606,6 @@ bool MOAIShaderProgramVK::MOAIGfxResourceVK_OnGPUUpdate () {
 void MOAIShaderProgramVK::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxResourceVK, MOAILuaObject_RegisterLuaClass ( composer, state ));
-
-//	state.SetField ( -1, "UNIFORM_TYPE_FLOAT",						( u32 )MOAIShaderUniformVK::UNIFORM_TYPE_FLOAT );
-//	state.SetField ( -1, "UNIFORM_TYPE_INT",						( u32 )MOAIShaderUniformVK::UNIFORM_TYPE_INT );
-//
-//	state.SetField ( -1, "UNIFORM_WIDTH_VEC_2",						( u32 )MOAIShaderUniformVK::UNIFORM_WIDTH_VEC_2 );
-//	state.SetField ( -1, "UNIFORM_WIDTH_VEC_3",						( u32 )MOAIShaderUniformVK::UNIFORM_WIDTH_VEC_3 );
-//	state.SetField ( -1, "UNIFORM_WIDTH_VEC_4",						( u32 )MOAIShaderUniformVK::UNIFORM_WIDTH_VEC_4 );
-//	state.SetField ( -1, "UNIFORM_WIDTH_MATRIX_3X3",				( u32 )MOAIShaderUniformVK::UNIFORM_WIDTH_MATRIX_3X3 );
-//	state.SetField ( -1, "UNIFORM_WIDTH_MATRIX_4X4",				( u32 )MOAIShaderUniformVK::UNIFORM_WIDTH_MATRIX_4X4 );
-//
-//	state.SetField ( -1, "GLOBAL_CLIP_TO_DISPLAY_MTX",				( u32 )MOAIGfxMgrVK::CLIP_TO_DISPLAY_MTX );
-//	state.SetField ( -1, "GLOBAL_CLIP_TO_MODEL_MTX",				( u32 )MOAIGfxMgrVK::CLIP_TO_MODEL_MTX );
-//	state.SetField ( -1, "GLOBAL_CLIP_TO_VIEW_MTX",					( u32 )MOAIGfxMgrVK::CLIP_TO_VIEW_MTX );
-//	state.SetField ( -1, "GLOBAL_CLIP_TO_WINDOW_MTX",				( u32 )MOAIGfxMgrVK::CLIP_TO_WINDOW_MTX );
-//	state.SetField ( -1, "GLOBAL_CLIP_TO_WORLD_MTX",				( u32 )MOAIGfxMgrVK::CLIP_TO_WORLD_MTX );
-//
-//	state.SetField ( -1, "GLOBAL_DISPLAY_TO_CLIP_MTX",				( u32 )MOAIGfxMgrVK::DISPLAY_TO_CLIP_MTX );
-//	state.SetField ( -1, "GLOBAL_DISPLAY_TO_MODEL_MTX",				( u32 )MOAIGfxMgrVK::DISPLAY_TO_MODEL_MTX );
-//	state.SetField ( -1, "GLOBAL_DISPLAY_TO_VIEW_MTX",				( u32 )MOAIGfxMgrVK::DISPLAY_TO_VIEW_MTX );
-//	state.SetField ( -1, "GLOBAL_DISPLAY_TO_WORLD_MTX",				( u32 )MOAIGfxMgrVK::DISPLAY_TO_WORLD_MTX );
-//
-//	state.SetField ( -1, "GLOBAL_MODEL_TO_CLIP_MTX",				( u32 )MOAIGfxMgrVK::MODEL_TO_CLIP_MTX );
-//	state.SetField ( -1, "GLOBAL_MODEL_TO_DISPLAY_MTX",				( u32 )MOAIGfxMgrVK::MODEL_TO_DISPLAY_MTX );
-//	state.SetField ( -1, "GLOBAL_MODEL_TO_UV_MTX",					( u32 )MOAIGfxMgrVK::MODEL_TO_UV_MTX );
-//	state.SetField ( -1, "GLOBAL_MODEL_TO_VIEW_MTX",				( u32 )MOAIGfxMgrVK::MODEL_TO_VIEW_MTX );
-//	state.SetField ( -1, "GLOBAL_MODEL_TO_WORLD_MTX",				( u32 )MOAIGfxMgrVK::MODEL_TO_WORLD_MTX );
-//
-//	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_DISPLAY_MTX",		( u32 )MOAIGfxMgrVK::NORMAL_CLIP_TO_DISPLAY_MTX );
-//	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_MODEL_MTX",			( u32 )MOAIGfxMgrVK::NORMAL_CLIP_TO_MODEL_MTX );
-//	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_VIEW_MTX",			( u32 )MOAIGfxMgrVK::NORMAL_CLIP_TO_VIEW_MTX );
-//	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_WINDOW_MTX",		( u32 )MOAIGfxMgrVK::NORMAL_CLIP_TO_WINDOW_MTX );
-//	state.SetField ( -1, "GLOBAL_NORMAL_CLIP_TO_WORLD_MTX",			( u32 )MOAIGfxMgrVK::NORMAL_CLIP_TO_WORLD_MTX );
-//
-//	state.SetField ( -1, "GLOBAL_NORMAL_DISPLAY_TO_CLIP_MTX",		( u32 )MOAIGfxMgrVK::NORMAL_DISPLAY_TO_CLIP_MTX );
-//	state.SetField ( -1, "GLOBAL_NORMAL_DISPLAY_TO_MODEL_MTX",		( u32 )MOAIGfxMgrVK::NORMAL_DISPLAY_TO_MODEL_MTX );
-//	state.SetField ( -1, "GLOBAL_NORMAL_DISPLAY_TO_VIEW_MTX",		( u32 )MOAIGfxMgrVK::NORMAL_DISPLAY_TO_VIEW_MTX );
-//	state.SetField ( -1, "GLOBAL_NORMAL_DISPLAY_TO_WORLD_MTX",		( u32 )MOAIGfxMgrVK::NORMAL_DISPLAY_TO_WORLD_MTX );
-//
-//	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_CLIP_MTX",			( u32 )MOAIGfxMgrVK::NORMAL_MODEL_TO_CLIP_MTX );
-//	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_DISPLAY_MTX",		( u32 )MOAIGfxMgrVK::NORMAL_MODEL_TO_DISPLAY_MTX );
-//	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_UV_MTX",			( u32 )MOAIGfxMgrVK::NORMAL_MODEL_TO_UV_MTX );
-//	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_VIEW_MTX",			( u32 )MOAIGfxMgrVK::NORMAL_MODEL_TO_VIEW_MTX );
-//	state.SetField ( -1, "GLOBAL_NORMAL_MODEL_TO_WORLD_MTX",		( u32 )MOAIGfxMgrVK::NORMAL_MODEL_TO_WORLD_MTX );
-//
-//	state.SetField ( -1, "GLOBAL_NORMAL_WORLD_TO_DISPLAY_MTX",		( u32 )MOAIGfxMgrVK::NORMAL_WORLD_TO_DISPLAY_MTX );
-//	state.SetField ( -1, "GLOBAL_NORMAL_WORLD_TO_VIEW_MTX",			( u32 )MOAIGfxMgrVK::NORMAL_WORLD_TO_VIEW_MTX );
-//
-//	state.SetField ( -1, "GLOBAL_NORMAL_UV_TO_MODEL_MTX",			( u32 )MOAIGfxMgrVK::NORMAL_UV_TO_MODEL_MTX );
-//
-//	state.SetField ( -1, "GLOBAL_NORMAL_VIEW_TO_CLIP_MTX",			( u32 )MOAIGfxMgrVK::NORMAL_VIEW_TO_CLIP_MTX );
-//	state.SetField ( -1, "GLOBAL_NORMAL_VIEW_TO_DISPLAY_MTX",		( u32 )MOAIGfxMgrVK::NORMAL_VIEW_TO_DISPLAY_MTX );
-//	state.SetField ( -1, "GLOBAL_NORMAL_VIEW_TO_MODEL_MTX",			( u32 )MOAIGfxMgrVK::NORMAL_VIEW_TO_MODEL_MTX );
-//	state.SetField ( -1, "GLOBAL_NORMAL_VIEW_TO_WORLD_MTX",			( u32 )MOAIGfxMgrVK::NORMAL_VIEW_TO_WORLD_MTX );
-//
-//	state.SetField ( -1, "GLOBAL_NORMAL_WINDOW_TO_CLIP_MTX",		( u32 )MOAIGfxMgrVK::NORMAL_WINDOW_TO_CLIP_MTX );
-//	state.SetField ( -1, "GLOBAL_NORMAL_WORLD_TO_CLIP_MTX",			( u32 )MOAIGfxMgrVK::NORMAL_WORLD_TO_CLIP_MTX );
-//	state.SetField ( -1, "GLOBAL_NORMAL_WORLD_TO_MODEL_MTX",		( u32 )MOAIGfxMgrVK::NORMAL_WORLD_TO_MODEL_MTX );
-//
-//	state.SetField ( -1, "GLOBAL_PEN_COLOR",						( u32 )MOAIGfxMgrVK::PEN_COLOR );
-//
-//	state.SetField ( -1, "GLOBAL_UV_TO_MODEL_MTX",					( u32 )MOAIGfxMgrVK::UV_TO_MODEL_MTX );
-//
-//	state.SetField ( -1, "GLOBAL_VIEW_TO_CLIP_MTX",					( u32 )MOAIGfxMgrVK::VIEW_TO_CLIP_MTX );
-//	state.SetField ( -1, "GLOBAL_VIEW_TO_DISPLAY_MTX",				( u32 )MOAIGfxMgrVK::VIEW_TO_DISPLAY_MTX );
-//	state.SetField ( -1, "GLOBAL_VIEW_TO_MODEL_MTX",				( u32 )MOAIGfxMgrVK::VIEW_TO_MODEL_MTX );
-//	state.SetField ( -1, "GLOBAL_VIEW_TO_WORLD_MTX",				( u32 )MOAIGfxMgrVK::VIEW_TO_WORLD_MTX );
-//
-//	state.SetField ( -1, "GLOBAL_WINDOW_TO_CLIP_MTX",				( u32 )MOAIGfxMgrVK::WINDOW_TO_CLIP_MTX );
-//
-//	state.SetField ( -1, "GLOBAL_WORLD_TO_CLIP_MTX",				( u32 )MOAIGfxMgrVK::WORLD_TO_CLIP_MTX );
-//	state.SetField ( -1, "GLOBAL_WORLD_TO_DISPLAY_MTX",				( u32 )MOAIGfxMgrVK::WORLD_TO_DISPLAY_MTX );
-//	state.SetField ( -1, "GLOBAL_WORLD_TO_MODEL_MTX",				( u32 )MOAIGfxMgrVK::WORLD_TO_MODEL_MTX );
-//	state.SetField ( -1, "GLOBAL_WORLD_TO_VIEW_MTX",				( u32 )MOAIGfxMgrVK::WORLD_TO_VIEW_MTX );
-//
-//	state.SetField ( -1, "GLOBAL_VIEW_HEIGHT",						( u32 )MOAIGfxMgrVK::VIEW_HEIGHT );
-//	state.SetField ( -1, "GLOBAL_VIEW_WIDTH",						( u32 )MOAIGfxMgrVK::VIEW_WIDTH );
-//
-//	state.SetField ( -1, "GLOBAL_VIEW_HALF_HEIGHT",					( u32 )MOAIGfxMgrVK::VIEW_HALF_HEIGHT );
-//	state.SetField ( -1, "GLOBAL_VIEW_HALF_WIDTH",					( u32 )MOAIGfxMgrVK::VIEW_HALF_WIDTH );
 }
 
 //----------------------------------------------------------------//
@@ -635,28 +626,3 @@ void MOAIShaderProgramVK::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& compose
 //	};
 //	luaL_register ( state, 0, regTable );
 }
-
-//----------------------------------------------------------------//
-MOAIUniformHandle MOAIShaderProgramVK::MOAIAbstractShaderUniformSchema_GetUniformHandle ( void* buffer, ZLIndex uniformID ) const {
-
-	MOAIUniformHandle uniform;
-//	uniform.mBuffer = 0;
-//
-//	if ( uniformID < this->mUniforms.Size ()) {
-//		const MOAIShaderUniformVK& programUniform = this->mUniforms [ uniformID ];
-//		uniform.mType		= programUniform.mType;
-//		uniform.mWidth		= programUniform.mWidth;
-//		uniform.mBuffer		= ( void* )(( size_t )buffer + this->mUniforms [ uniformID ].mCPUOffset );
-//	}
-	return uniform;
-}
-
-////----------------------------------------------------------------//
-//void MOAIShaderProgramVK::ZLGfxListener_OnUniformLocation ( u32 addr, void* userdata ) {
-//
-//	ZLSize i = ( size_t )userdata;
-//	
-//	if ( i < this->mUniforms.Size ()) {
-//		this->mUniforms [ ZLIndexCast ( i )].mGPUBase = addr;
-//	}
-//}

@@ -8,6 +8,8 @@
 #include <moai-gfx-vk/MOAIGfxUtilVK.h>
 #include <moai-gfx-vk/MOAIOneTriVK.h>
 #include <moai-gfx-vk/MOAIOneTriNativeVK_spirv.h>
+#include <moai-gfx-vk/MOAIShaderVK.h>
+#include <moai-gfx-vk/MOAIShaderProgramVK.h>
 #include <moai-gfx-vk/MOAIVertexFormatVK.h>
 
 //================================================================//
@@ -40,22 +42,6 @@ void MOAIOneTriVK::PreparePipeline () {
 		VK_DYNAMIC_STATE_SCISSOR,
 	};
 
-	VkPipelineShaderStageCreateInfo shaderStages [] = {
-		MOAIGfxStructVK::pipelineShaderStageCreateInfo (
-			VK_SHADER_STAGE_VERTEX_BIT,
-			MOAIGfxUtilVK::LoadShaderSPIRV ( triangleVertSPIRV, sizeof ( triangleVertSPIRV ), logicalDevice ),
-			"main"
-		),
-		MOAIGfxStructVK::pipelineShaderStageCreateInfo (
-			VK_SHADER_STAGE_FRAGMENT_BIT,
-			MOAIGfxUtilVK::LoadShaderSPIRV ( triangleFragSPIRV, sizeof ( triangleFragSPIRV ), logicalDevice ),
-			"main"
-		),
-	};
-
-	assert ( shaderStages [ 0 ].module != VK_NULL_HANDLE );
-	assert ( shaderStages [ 1 ].module != VK_NULL_HANDLE );
-
 	VkPipelineInputAssemblyStateCreateInfo inputAssemblyState 	= MOAIGfxStructVK::pipelineInputAssemblyStateCreateInfo ( VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_FALSE, 0 );
 	VkPipelineRasterizationStateCreateInfo rasterizationState 	= MOAIGfxStructVK::pipelineRasterizationStateCreateInfo ();
 	VkPipelineColorBlendAttachmentState blendAttachmentState 	= MOAIGfxStructVK::pipelineColorBlendAttachmentState ();
@@ -66,8 +52,8 @@ void MOAIOneTriVK::PreparePipeline () {
 	VkPipelineDynamicStateCreateInfo dynamicState				= MOAIGfxStructVK::pipelineDynamicStateCreateInfo ( dynamicStateEnables, 2 );
 
 	VkGraphicsPipelineCreateInfo pipelineCreateInfo = MOAIGfxStructVK::graphicsPipelineCreateInfo (
-		shaderStages,
-		2,
+		NULL,
+		0,
 		NULL,
 		&inputAssemblyState,
 		NULL,
@@ -84,12 +70,13 @@ void MOAIOneTriVK::PreparePipeline () {
 	MOAIVertexFormatVK* vertexFormat = MOAICast < MOAIVertexFormatVK >( gfxMgr.GetVertexFormatPreset ( MOAIVertexFormatPresetEnum::XYZC ));
 	vertexFormat->UpdatePipelineCreateInfo ( pipelineCreateInfo );
 
+	this->mShaderProgram = new MOAIShaderProgramVK ();
+	this->mShaderProgram->LoadModule ( MOAIShaderProgramVK::VERTEX_MODULE, triangleVertSPIRV, sizeof ( triangleVertSPIRV ));
+	this->mShaderProgram->LoadModule ( MOAIShaderProgramVK::FRAGMENT_MODULE, triangleFragSPIRV, sizeof ( triangleFragSPIRV ));
+	this->mShaderProgram->UpdatePipelineCreateInfo ( pipelineCreateInfo );
+
 	// Create rendering pipeline using the specified states
 	VK_CHECK_RESULT ( vkCreateGraphicsPipelines ( logicalDevice, VK_NULL_HANDLE, 1, &pipelineCreateInfo, nullptr, &this->mPipeline ));
-
-	// Shader modules are no longer needed once the graphics pipeline has been created
-	vkDestroyShaderModule ( logicalDevice, shaderStages [ 0 ].module, nullptr );
-	vkDestroyShaderModule ( logicalDevice, shaderStages [ 1 ].module, nullptr );
 }
 
 //----------------------------------------------------------------//

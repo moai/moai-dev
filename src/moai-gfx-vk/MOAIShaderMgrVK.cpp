@@ -70,30 +70,30 @@
 // MOAIShaderMgrVK
 //================================================================//
 
-////----------------------------------------------------------------//
-//void MOAIShaderMgrVK::AffirmAll () {
-//
-//	for ( u32 i = 0; i < ( u32 )MOAIShaderPresetEnum::TOTAL_SHADERS; ++i ) {
-//		this->GetShader (( MOAIShaderPresetEnum )i );
-//	}
-//}
-//
-////----------------------------------------------------------------//
-//MOAIShaderProgramVK* MOAIShaderMgrVK::GetProgram ( MOAIShaderPresetEnum shaderID ) {
-//
-//	MOAIShaderProgramVK* program = 0;
-//
-//	if ( shaderID < MOAIShaderPresetEnum::TOTAL_SHADERS ) {
-//
-//		program = this->mPrograms [ shaderID ];
-//
-//		if ( !program ) {
-//
-//			program = new MOAIShaderProgramVK ();
-//			this->LuaRetain ( program );
-//
-//			switch ( shaderID ) {
-//
+//----------------------------------------------------------------//
+void MOAIShaderMgrVK::AffirmAll () {
+
+	for ( u32 i = 0; i < ( u32 )MOAIShaderPresetEnum::TOTAL_SHADERS; ++i ) {
+		this->GetShader (( MOAIShaderPresetEnum )i );
+	}
+}
+
+//----------------------------------------------------------------//
+MOAIShaderProgramVK* MOAIShaderMgrVK::GetProgram ( MOAIShaderPresetEnum shaderID ) {
+
+	MOAIShaderProgramVK* program = 0;
+
+	if ( shaderID < MOAIShaderPresetEnum::TOTAL_SHADERS ) {
+
+		program = this->mPrograms [ shaderID ];
+
+		if ( !program ) {
+
+			program = new MOAIShaderProgramVK ();
+			this->LuaRetain ( program );
+
+			switch ( shaderID ) {
+
 //				case MOAIShaderPresetEnum::DECK2D_SHADER:
 //
 //					program->SetVertexAttribute ( MOAIVertexFormatMgrVK::XYZWUVC_POSITION, "position" );
@@ -102,7 +102,7 @@
 //
 //					program->Load ( _deck2DShaderVSH, _deck2DShaderFSH );
 //					break;
-//
+
 //				case MOAIShaderPresetEnum::DECK2D_SNAPPING_SHADER:
 //
 //					program->SetVertexAttribute ( MOAIVertexFormatMgrVK::XYZWUVC_POSITION, "position" );
@@ -196,13 +196,13 @@
 //					program->Load ( _meshShaderVSH, _meshShaderFSH );
 //
 //					break;
-//			}
-//
-//			this->mPrograms [ shaderID ] = program;
-//		}
-//	}
-//	return program;
-//}
+			}
+
+			this->mPrograms [ shaderID ] = program;
+		}
+	}
+	return program;
+}
 
 //----------------------------------------------------------------//
 MOAIShaderVK* MOAIShaderMgrVK::GetShader ( MOAIShaderPresetEnum shaderID ) {
@@ -252,13 +252,13 @@ MOAIShaderMgrVK::MOAIShaderMgrVK () {
 
 	this->mShader = new MOAIShaderVK ();
 
-//	for ( u32 i = 0; i < MOAIShaderPresetEnum::TOTAL_SHADERS; ++i ) {
-//		this->mPrograms [ i ] = 0;
-//	}
-//
-//	for ( u32 i = 0; i < MOAIShaderPresetEnum::TOTAL_SHADERS; ++i ) {
-//		this->mShaders [ i ] = 0;
-//	}
+	for ( u32 i = 0; i < MOAIShaderPresetEnum::TOTAL_SHADERS; ++i ) {
+		this->mPrograms [ i ] = 0;
+	}
+
+	for ( u32 i = 0; i < MOAIShaderPresetEnum::TOTAL_SHADERS; ++i ) {
+		this->mShaders [ i ] = 0;
+	}
 }
 
 //----------------------------------------------------------------//
@@ -266,17 +266,17 @@ MOAIShaderMgrVK::~MOAIShaderMgrVK () {
 
 	delete ( this->mShader );
 
-//	for ( u32 i = 0; i < MOAIShaderPresetEnum::TOTAL_SHADERS; ++i ) {
-//		if ( this->mPrograms [ i ]) {
-//			this->LuaRelease ( this->mPrograms [ i ]);
-//		}
-//	}
-//
-//	for ( u32 i = 0; i < MOAIShaderPresetEnum::TOTAL_SHADERS; ++i ) {
-//		if ( this->mShaders [ i ]) {
-//			this->LuaRelease ( this->mShaders [ i ]);
-//		}
-//	}
+	for ( u32 i = 0; i < MOAIShaderPresetEnum::TOTAL_SHADERS; ++i ) {
+		if ( this->mPrograms [ i ]) {
+			this->LuaRelease ( this->mPrograms [ i ]);
+		}
+	}
+
+	for ( u32 i = 0; i < MOAIShaderPresetEnum::TOTAL_SHADERS; ++i ) {
+		if ( this->mShaders [ i ]) {
+			this->LuaRelease ( this->mShaders [ i ]);
+		}
+	}
 }
 
 //================================================================//

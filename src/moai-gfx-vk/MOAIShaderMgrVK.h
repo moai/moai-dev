@@ -27,14 +27,17 @@ class MOAIShaderMgrVK :
 	public virtual MOAILuaObject {
 private:
 	
-//	MOAIShaderProgramVK*	mPrograms [ TOTAL_SHADERS ];
-//	MOAIShaderVK*			mShaders [ TOTAL_SHADERS ];
+	MOAIShaderProgramVK*	mPrograms [ TOTAL_SHADERS ];
+	MOAIShaderVK*			mShaders [ TOTAL_SHADERS ];
 	
 	MOAIShaderVK*			mShader;
 	
 	//----------------------------------------------------------------//
 //	static int				_getProgram				( lua_State* L );
 //	static int				_getShader				( lua_State* L );
+	
+	//----------------------------------------------------------------//
+	void					AffirmAll				();
 	
 	//----------------------------------------------------------------//
 	void					MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
@@ -45,8 +48,7 @@ public:
 	DECL_LUA_SINGLETON ( MOAIShaderMgrVK )
 	
 	//----------------------------------------------------------------//
-//	void					AffirmAll				();
-//	MOAIShaderProgramVK*	GetProgram				( MOAIShaderPresetEnum shaderID );
+	MOAIShaderProgramVK*	GetProgram				( MOAIShaderPresetEnum shaderID );
 	MOAIShaderVK*			GetShader				( MOAIShaderPresetEnum shaderID );
 //	MOAIShaderVK*			GetShader				( lua_State* L, int idx );
 							MOAIShaderMgrVK			();

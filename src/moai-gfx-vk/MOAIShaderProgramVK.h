@@ -65,6 +65,14 @@ class MOAITextureVK;
 class MOAIShaderProgramVK :
 	public virtual MOAIGfxResourceVK,
 	public virtual MOAIUniformSchema {
+public:
+
+	enum ModuleID {
+		FRAGMENT_MODULE,
+		VERTEX_MODULE,
+		TOTAL_MODULES,
+	};
+
 protected:
 
 //	friend class MOAIShaderVK;
@@ -75,7 +83,11 @@ protected:
 //	ZLGfxHandle		mProgram;
 //	ZLGfxHandle		mVertexShader;
 //	ZLGfxHandle		mFragmentShader;
-//
+
+	VkShaderModule	mModules [ TOTAL_MODULES ];
+
+	ZLLeanArray < VkPipelineShaderStageCreateInfo >	mStageInfos;
+
 //	typedef STLMap < u32, STLString >::iterator AttributeMapIt;
 //	STLMap < u32, STLString > mAttributeMap;
 //
@@ -108,27 +120,30 @@ protected:
 //	int							ReserveGlobals 				( lua_State* L, int idx );
 	
 	//----------------------------------------------------------------//
-	bool						MOAIGfxResource_OnCPUCreate							();
-	void						MOAIGfxResource_OnCPUPurgeRecoverable						();
-	void						MOAIGfxResourceVK_OnGPUBind							();
-	bool						MOAIGfxResourceVK_OnGPUCreate						();
-	void						MOAIGfxResourceVK_OnGPUDeleteOrDiscard				( bool shouldDelete );
-	void						MOAIGfxResourceVK_OnGPUUnbind						();
-	bool						MOAIGfxResourceVK_OnGPUUpdate						();
-	void						MOAILuaObject_RegisterLuaClass						( MOAIComposer& composer, MOAILuaState& state );
-	void						MOAILuaObject_RegisterLuaFuncs						( MOAIComposer& composer, MOAILuaState& state );
-	MOAIUniformHandle		MOAIAbstractShaderUniformSchema_GetUniformHandle		( void* buffer, ZLIndex uniformID ) const;
-//	void						ZLGfxListener_OnUniformLocation						( u32 addr, void* userdata );
+	void						Clear						( ModuleID moduleID );
+	VkShaderStageFlagBits		GetShaderStageBit			( ModuleID moduleID );
+	
+	//----------------------------------------------------------------//
+	bool				MOAIGfxResource_OnCPUCreate							();
+	void				MOAIGfxResource_OnCPUPurgeRecoverable				();
+	void				MOAIGfxResourceVK_OnGPUBind							();
+	bool				MOAIGfxResourceVK_OnGPUCreate						();
+	void				MOAIGfxResourceVK_OnGPUDeleteOrDiscard				( bool shouldDelete );
+	void				MOAIGfxResourceVK_OnGPUUnbind						();
+	bool				MOAIGfxResourceVK_OnGPUUpdate						();
+	void				MOAILuaObject_RegisterLuaClass						( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs						( MOAIComposer& composer, MOAILuaState& state );
 	
 public:
 
 	DECL_LUA_FACTORY ( MOAIShaderProgramVK )
 
 	//----------------------------------------------------------------//
-//	void				Clear						();
+	void				Clear						();
 //	void				DeleteShaders				();
 //	void				DeclareUniform				( ZLIndex idx, cc8* name, u32 type, u32 width = 1, u32 count = 1 );
 //	void				Load						( cc8* vshSource, cc8* fshSource );
+	void				LoadModule					( ModuleID moduleID, const void* shaderCode, size_t shaderSize );
 //	void				ReserveAttributes			( ZLSize nAttributes );
 //	void				ReserveGlobals				( ZLSize nGlobals );
 //	void				ReserveTextures				( ZLSize nTextures );
@@ -139,6 +154,7 @@ public:
 //	void				SetVertexAttribute			( u32 idx, cc8* attribute );
 						MOAIShaderProgramVK			();
 						~MOAIShaderProgramVK		();
+	void				UpdatePipelineCreateInfo	( VkGraphicsPipelineCreateInfo& info );
 };
 
 #endif
