@@ -97,7 +97,7 @@ public:
 	void					ClearBitmap						();
 	void					ClearRect						( ZLIntRect rect );
 	bool					Compare							( const ZLImage& image );
-	bool					Convert							( const ZLImage& image, ZLColor::ColorFormat colorFmt, PixelFormat pixelFmt );
+	bool					Convert							( const ZLImage& image, ZLColor::ColorFormat colorFmt = ZLColor::RGBA_8888, PixelFormat pixelFmt = TRUECOLOR );
 	void					Convolve						( const ZLImage& image, const float* kernel, size_t kernelWidth );
 	void					Convolve						( const ZLImage& image, const float* kernel, size_t kernelWidth, size_t kernelHeight );
 	void					Convolve1D						( const ZLImage& image, const float* kernel, size_t kernelSize, bool horizontal );

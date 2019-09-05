@@ -72,7 +72,9 @@ void MOAIGfxBufferVK::Cleanup () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBufferVK::GenericInit ( VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags memPropFlags ) {
+void MOAIGfxBufferVK::Init ( VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags memPropFlags ) {
+
+	usage = usage & ( VK_BUFFER_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT );
 
 	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
 	MOAIPhysicalDeviceVK& physicalDevice = gfxMgr.GetPhysicalDevice ();

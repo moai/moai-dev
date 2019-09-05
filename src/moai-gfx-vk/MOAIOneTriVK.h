@@ -7,6 +7,7 @@
 class MOAIGfxBufferVK;
 class MOAIShaderProgramVK;
 class MOAIShaderVK;
+class MOAITexture2DVK;
 
 //================================================================//
 // MOAIOneTriVK
@@ -18,19 +19,28 @@ private:
 	struct Vertex {
 		ZLVec3D32	mPosition;
 		u32			mRGBA32;
+		ZLVec2D32 	mUV;
 		
-		Vertex ( float x, float y, float z, float r, float g, float b ) {
+		Vertex ( float x, float y, float z, float r, float g, float b, float u, float v ) {
 			this->mPosition.Init ( x, y, z );
 			this->mRGBA32 = ZLColor::PackRGBA ( r, g, b, 1.0 );
+			this->mUV.Init ( u, v );
 		}
 	};
+
+	ZLStrongPtr < MOAIVertexFormatVK >		mVertexFormat;
 
 	ZLStrongPtr < MOAIVertexBufferVK >		mVertices;
 	ZLStrongPtr < MOAIIndexBufferVK >		mIndices;
 	ZLStrongPtr < MOAIUniformBufferVK >		mUniforms;
 	
 	ZLStrongPtr < MOAIShaderProgramVK >		mShaderProgram;
-	ZLStrongPtr < MOAIShaderVK >			mShader;
+	
+	VkImage					mTextureImage;
+	VkDeviceMemory			mTextureImageMemory;
+	VkImageView				mTextureImageView;
+	VkSampler				mTextureSampler;
+	VkDescriptorImageInfo	mTextureDescriptor;
 	
 	uint32_t				mTotalIndices;
 	VkDescriptorBufferInfo	mUniformsDescriptor;
@@ -49,6 +59,7 @@ private:
 
 	//----------------------------------------------------------------//
 	void			PreparePipeline				();
+	void			PrepareTexture				();
 	void			PrepareUniformBuffers		();
 	void			PrepareVertices				( bool useStagingBuffers = true );
 	void			SetupDescriptorPool			();

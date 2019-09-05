@@ -482,7 +482,7 @@ public:
             VkImageType imageType,
             VkFormat format,
             VkExtent3D extent,
-            VkImageUsageFlags usage,
+            VkImageUsageFlags usage					= VK_IMAGE_USAGE_TRANSFER_DST_BIT | VK_IMAGE_USAGE_SAMPLED_BIT,
             uint32_t mipLevels                      = 1,
             uint32_t arrayLayers                    = 1,
             VkSampleCountFlagBits samples           = VK_SAMPLE_COUNT_1_BIT,
