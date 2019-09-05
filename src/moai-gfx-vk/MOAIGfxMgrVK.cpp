@@ -276,8 +276,8 @@ void MOAIGfxMgrVK::InitDepthStencil () {
 	this->mDepthStencil.mImage = this->mLogicalDevice.CreateImage ( imageCreateInfo );
 
 	VkImageViewCreateInfo depthStencilImageViewCreateInfo = MOAIGfxStructVK::imageViewCreateInfo (
-		VK_IMAGE_VIEW_TYPE_2D,
 		NULL,
+		VK_IMAGE_VIEW_TYPE_2D,
 		this->mPhysicalDevice.mDepthFormat,
 		MOAIGfxStructVK::componentMapping (),
 		MOAIGfxStructVK::imageSubresourceRange ( VK_IMAGE_ASPECT_DEPTH_BIT | VK_IMAGE_ASPECT_STENCIL_BIT )

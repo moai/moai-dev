@@ -89,6 +89,26 @@ public:
         return bufCreateInfo;
     }
 
+	//----------------------------------------------------------------//
+    static VkBufferImageCopy bufferImageCopy (
+		VkOffset3D imageOffset,
+		VkExtent3D imageExtent,
+		VkImageSubresourceLayers imageSubresource	= imageSubresourceLayers ( VK_IMAGE_ASPECT_COLOR_BIT, 0, 0, 1 ),
+		VkDeviceSize bufferOffset					= 0,
+		uint32_t bufferRowLength					= 0,
+		uint32_t bufferImageHeight					= 0
+    ) {
+        DECL_VK_STRUCT ( VkBufferImageCopy, bufferImageCopy );
+		bufferImageCopy.bufferOffset			= bufferOffset;
+		bufferImageCopy.bufferRowLength			= bufferRowLength;
+		bufferImageCopy.bufferImageHeight		= bufferImageHeight;
+		bufferImageCopy.imageSubresource		= imageSubresource;
+		bufferImageCopy.imageOffset				= imageOffset;
+		bufferImageCopy.imageExtent				= imageExtent;
+
+        return bufferImageCopy;
+    }
+
     //----------------------------------------------------------------//
     static VkBufferMemoryBarrier bufferMemoryBarrier () {
         DECL_VK_STRUCT ( VkBufferMemoryBarrier, bufferMemoryBarrier );
@@ -514,18 +534,107 @@ public:
 
     //----------------------------------------------------------------//
     /** @brief Initialize an image memory barrier with no image transfer ownership */
-    static VkImageMemoryBarrier imageMemoryBarrier () {
+    static VkImageMemoryBarrier imageMemoryBarrier (
+		VkImage image,
+		VkImageLayout oldLayout,
+		VkImageLayout newLayout,
+		uint32_t srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED,
+		uint32_t dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED,
+		VkImageSubresourceRange subresourceRange = imageSubresourceRange ( VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1 )
+    ) {
         DECL_VK_STRUCT ( VkImageMemoryBarrier, imageMemoryBarrier );
-        imageMemoryBarrier.sType                = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
-        imageMemoryBarrier.pNext                = NULL;
-        imageMemoryBarrier.srcQueueFamilyIndex  = VK_QUEUE_FAMILY_IGNORED;
-        imageMemoryBarrier.dstQueueFamilyIndex  = VK_QUEUE_FAMILY_IGNORED;
+        imageMemoryBarrier.sType                	= VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
+        imageMemoryBarrier.pNext                	= NULL;
+        imageMemoryBarrier.srcAccessMask			= 0;
+		imageMemoryBarrier.srcAccessMask			= 0;
+		imageMemoryBarrier.oldLayout				= oldLayout;
+		imageMemoryBarrier.newLayout				= newLayout;
+		imageMemoryBarrier.srcQueueFamilyIndex		= srcQueueFamilyIndex;
+		imageMemoryBarrier.dstQueueFamilyIndex		= dstQueueFamilyIndex;
+		imageMemoryBarrier.image					= image;
+		imageMemoryBarrier.subresourceRange			= subresourceRange;
+		
+		switch ( oldLayout ) {
+			case VK_IMAGE_LAYOUT_UNDEFINED:
+				imageMemoryBarrier.srcAccessMask = 0;
+				break;
+
+			case VK_IMAGE_LAYOUT_PREINITIALIZED:
+				imageMemoryBarrier.srcAccessMask = VK_ACCESS_HOST_WRITE_BIT;
+				break;
+
+			case VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL:
+				imageMemoryBarrier.srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+				break;
+
+			case VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL:
+				imageMemoryBarrier.srcAccessMask = VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
+				break;
+
+			case VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL:
+				imageMemoryBarrier.srcAccessMask = VK_ACCESS_TRANSFER_READ_BIT;
+				break;
+
+			case VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL:
+				imageMemoryBarrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
+				break;
+
+			case VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL:
+				imageMemoryBarrier.srcAccessMask = VK_ACCESS_SHADER_READ_BIT;
+				break;
+			
+			default:
+				break;
+		}
+
+		switch ( newLayout ) {
+			case VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL:
+				imageMemoryBarrier.dstAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
+				break;
+
+			case VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL:
+				imageMemoryBarrier.dstAccessMask = VK_ACCESS_TRANSFER_READ_BIT;
+				break;
+
+			case VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL:
+				imageMemoryBarrier.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
+				break;
+
+			case VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL:
+				imageMemoryBarrier.dstAccessMask = VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
+				break;
+
+			case VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL:
+				if ( imageMemoryBarrier.srcAccessMask == 0 ) {
+					imageMemoryBarrier.srcAccessMask = VK_ACCESS_HOST_WRITE_BIT | VK_ACCESS_TRANSFER_WRITE_BIT;
+				}
+				imageMemoryBarrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
+				break;
+			default:
+				break;
+		}
+		
         return imageMemoryBarrier;
     }
-    
+	
+	//----------------------------------------------------------------//
+    static VkImageSubresourceLayers imageSubresourceLayers (
+		VkImageAspectFlags aspectMask			= VK_IMAGE_ASPECT_COLOR_BIT,
+		uint32_t mipLevel						= 0,
+		uint32_t baseArrayLayer					= 0,
+		uint32_t layerCount						= 1
+    ) {
+		DECL_VK_STRUCT ( VkImageSubresourceLayers, imageSubresourceLayers );
+		imageSubresourceLayers.aspectMask		= aspectMask;
+		imageSubresourceLayers.mipLevel			= mipLevel;
+		imageSubresourceLayers.baseArrayLayer	= baseArrayLayer;
+		imageSubresourceLayers.layerCount		= layerCount;
+		return imageSubresourceLayers;
+    }
+	
     //----------------------------------------------------------------//
     static VkImageSubresourceRange imageSubresourceRange (
-        VkImageAspectFlags aspectMask,
+        VkImageAspectFlags aspectMask	= VK_IMAGE_ASPECT_COLOR_BIT,
         uint32_t baseMipLevel           = 0,
         uint32_t levelCount             = 1,
         uint32_t baseArrayLayer         = 0,
@@ -542,11 +651,16 @@ public:
     
     //----------------------------------------------------------------//
     static VkImageViewCreateInfo imageViewCreateInfo (
-            VkImageViewType viewType,
             VkImage image,
+            VkImageViewType viewType,
             VkFormat format,
-            VkComponentMapping components,
-            VkImageSubresourceRange subresourceRange,
+            VkComponentMapping components = componentMapping (
+            	VK_COMPONENT_SWIZZLE_IDENTITY,
+            	VK_COMPONENT_SWIZZLE_IDENTITY,
+            	VK_COMPONENT_SWIZZLE_IDENTITY,
+            	VK_COMPONENT_SWIZZLE_IDENTITY
+			),
+            VkImageSubresourceRange subresourceRange = imageSubresourceRange ( VK_IMAGE_ASPECT_COLOR_BIT, 0, 1, 0, 1 ),
             VkImageViewCreateFlags flags = 0
         ) {
         DECL_VK_STRUCT ( VkImageViewCreateInfo, imageViewCreateInfo );
@@ -964,11 +1078,43 @@ public:
     }
 
     //----------------------------------------------------------------//
-    static VkSamplerCreateInfo samplerCreateInfo () {
+    static VkSamplerCreateInfo samplerCreateInfo (
+		VkFilter magFilter					= VK_FILTER_LINEAR,
+		VkFilter minFilter					= VK_FILTER_LINEAR,
+		VkSamplerAddressMode addressModeU	= VK_SAMPLER_ADDRESS_MODE_REPEAT,
+		VkSamplerAddressMode addressModeV	= VK_SAMPLER_ADDRESS_MODE_REPEAT,
+		VkSamplerAddressMode addressModeW	= VK_SAMPLER_ADDRESS_MODE_REPEAT,
+		VkSamplerMipmapMode mipmapMode		= VK_SAMPLER_MIPMAP_MODE_LINEAR,
+		float mipLodBias					= 0.0,
+		float minLod						= 0.0,
+		float maxLod						= 0.0,
+		VkBool32 anisotropyEnable			= VK_FALSE,
+		float maxAnisotropy					= 1.0,
+		VkBool32 compareEnable				= VK_FALSE,
+		VkCompareOp compareOp				= VK_COMPARE_OP_ALWAYS,
+		VkBorderColor borderColor 			= VK_BORDER_COLOR_INT_OPAQUE_BLACK,
+		VkBool32 unnormalizedCoordinates	= VK_FALSE,
+		VkSamplerCreateFlags flags			= 0
+    ) {
         DECL_VK_STRUCT ( VkSamplerCreateInfo, samplerCreateInfo );
         samplerCreateInfo.sType             = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
         samplerCreateInfo.pNext             = NULL;
-        samplerCreateInfo.maxAnisotropy     = 1.0f;
+		samplerCreateInfo.flags				= flags;
+		samplerCreateInfo.magFilter			= magFilter;
+		samplerCreateInfo.minFilter			= minFilter;
+		samplerCreateInfo.mipmapMode		= mipmapMode;
+		samplerCreateInfo.addressModeU		= addressModeU;
+		samplerCreateInfo.addressModeV		= addressModeV;
+		samplerCreateInfo.addressModeW		= addressModeW;
+		samplerCreateInfo.mipLodBias		= mipLodBias;
+		samplerCreateInfo.anisotropyEnable	= anisotropyEnable;
+		samplerCreateInfo.maxAnisotropy		= maxAnisotropy;
+		samplerCreateInfo.compareEnable		= compareEnable;
+		samplerCreateInfo.compareOp			= compareOp;
+		samplerCreateInfo.minLod			= minLod;
+		samplerCreateInfo.maxLod			= maxLod;
+		samplerCreateInfo.borderColor		= borderColor;
+		samplerCreateInfo.unnormalizedCoordinates = flags;
         return samplerCreateInfo;
     }
 

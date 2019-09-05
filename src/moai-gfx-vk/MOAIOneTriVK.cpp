@@ -16,104 +16,25 @@
 
 void transitionImageLayout ( VkCommandBuffer& commandBuffer, VkImage image, VkImageLayout oldLayout, VkImageLayout newLayout ) {
 
-	VkImageMemoryBarrier barrier = {};
-	barrier.sType = VK_STRUCTURE_TYPE_IMAGE_MEMORY_BARRIER;
-	barrier.oldLayout = oldLayout;
-	barrier.newLayout = newLayout;
-	barrier.srcQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-	barrier.dstQueueFamilyIndex = VK_QUEUE_FAMILY_IGNORED;
-	barrier.image = image;
-	barrier.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-	barrier.subresourceRange.baseMipLevel = 0;
-	barrier.subresourceRange.levelCount = 1;
-	barrier.subresourceRange.baseArrayLayer = 0;
-	barrier.subresourceRange.layerCount = 1;
-	barrier.srcAccessMask = 0; // TODO
-	barrier.dstAccessMask = 0; // TODO
-	
-	switch ( oldLayout ) {
-		case VK_IMAGE_LAYOUT_UNDEFINED:
-			barrier.srcAccessMask = 0;
-			break;
-
-		case VK_IMAGE_LAYOUT_PREINITIALIZED:
-			barrier.srcAccessMask = VK_ACCESS_HOST_WRITE_BIT;
-			break;
-
-		case VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL:
-			barrier.srcAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
-			break;
-
-		case VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL:
-			barrier.srcAccessMask = VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
-			break;
-
-		case VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL:
-			barrier.srcAccessMask = VK_ACCESS_TRANSFER_READ_BIT;
-			break;
-
-		case VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL:
-			barrier.srcAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
-			break;
-
-		case VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL:
-			barrier.srcAccessMask = VK_ACCESS_SHADER_READ_BIT;
-			break;
-		
-		default:
-			break;
-	}
-
-	switch ( newLayout ) {
-		case VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL:
-			barrier.dstAccessMask = VK_ACCESS_TRANSFER_WRITE_BIT;
-			break;
-
-		case VK_IMAGE_LAYOUT_TRANSFER_SRC_OPTIMAL:
-			barrier.dstAccessMask = VK_ACCESS_TRANSFER_READ_BIT;
-			break;
-
-		case VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL:
-			barrier.dstAccessMask = VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT;
-			break;
-
-		case VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL:
-			barrier.dstAccessMask = barrier.dstAccessMask | VK_ACCESS_DEPTH_STENCIL_ATTACHMENT_WRITE_BIT;
-			break;
-
-		case VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL:
-			if ( barrier.srcAccessMask == 0 ) {
-				barrier.srcAccessMask = VK_ACCESS_HOST_WRITE_BIT | VK_ACCESS_TRANSFER_WRITE_BIT;
-			}
-			barrier.dstAccessMask = VK_ACCESS_SHADER_READ_BIT;
-			break;
-		default:
-			break;
-	}
+	VkImageMemoryBarrier barrier =MOAIGfxStructVK::imageMemoryBarrier ( image, oldLayout, newLayout );
 	
 	vkCmdPipelineBarrier (
 		commandBuffer,
 		0, // TODO
 		0, // TODO
 		0,
-		0, nullptr,
-		0, nullptr,
+		0, NULL,
+		0, NULL,
 		1, &barrier
 	);
 }
 
 void copyBufferToImage ( VkCommandBuffer& commandBuffer, VkBuffer buffer, VkImage image, uint32_t width, uint32_t height ) {
 
-	VkBufferImageCopy region = {};
-	region.bufferOffset = 0;
-	region.bufferRowLength = 0;
-	region.bufferImageHeight = 0;
-	region.imageSubresource.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-	region.imageSubresource.mipLevel = 0;
-	region.imageSubresource.baseArrayLayer = 0;
-	region.imageSubresource.layerCount = 1;
-	region.imageOffset = MOAIGfxStructVK::offset3D ( 0, 0, 0 );
-	region.imageExtent = MOAIGfxStructVK::extent3D ( width, height, 1 );
+	VkBufferImageCopy bufferImageCopy = MOAIGfxStructVK::bufferImageCopy (
+		MOAIGfxStructVK::offset3D ( 0, 0, 0 ),
+		MOAIGfxStructVK::extent3D ( width, height, 1 )
+	);
 
 	vkCmdCopyBufferToImage (
 		commandBuffer,
@@ -121,7 +42,7 @@ void copyBufferToImage ( VkCommandBuffer& commandBuffer, VkBuffer buffer, VkImag
 		image,
 		VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
 		1,
-		&region
+		&bufferImageCopy
 	);
 }
 
@@ -253,37 +174,14 @@ void MOAIOneTriVK::PrepareTexture () {
 	// Flushing the command buffer will also submit it to the queue and uses a fence to ensure that all commands have been executed before returning
 	graphicsQueue.FlushAndFreeCommandBuffer ( logicalDevice, commandBuffer );
 	
-	VkSamplerCreateInfo samplerInfo = {};
-	samplerInfo.sType = VK_STRUCTURE_TYPE_SAMPLER_CREATE_INFO;
-	samplerInfo.magFilter = VK_FILTER_LINEAR;
-	samplerInfo.minFilter = VK_FILTER_LINEAR;
-	samplerInfo.addressModeU = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-	samplerInfo.addressModeV = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-	samplerInfo.addressModeW = VK_SAMPLER_ADDRESS_MODE_REPEAT;
-	samplerInfo.anisotropyEnable = VK_FALSE;
-	samplerInfo.maxAnisotropy = 16;
-	samplerInfo.borderColor = VK_BORDER_COLOR_INT_OPAQUE_BLACK;
-	samplerInfo.unnormalizedCoordinates = VK_FALSE;
-	samplerInfo.compareEnable = VK_FALSE;
-	samplerInfo.compareOp = VK_COMPARE_OP_ALWAYS;
-	samplerInfo.mipmapMode = VK_SAMPLER_MIPMAP_MODE_LINEAR;
-	samplerInfo.mipLodBias = 0.0f;
-	samplerInfo.minLod = 0.0f;
-	samplerInfo.maxLod = 0.0f;
-	
+	VkSamplerCreateInfo samplerInfo = MOAIGfxStructVK::samplerCreateInfo ();
 	VK_CHECK_RESULT ( vkCreateSampler ( logicalDevice, &samplerInfo, nullptr, &this->mTextureSampler ));
 	
-	VkImageViewCreateInfo viewInfo = {};
-	viewInfo.sType = VK_STRUCTURE_TYPE_IMAGE_VIEW_CREATE_INFO;
-	viewInfo.image = this->mTextureImage;
-	viewInfo.viewType = VK_IMAGE_VIEW_TYPE_2D;
-	viewInfo.format = VK_FORMAT_R8G8B8A8_UNORM;
-	viewInfo.subresourceRange.aspectMask = VK_IMAGE_ASPECT_COLOR_BIT;
-	viewInfo.subresourceRange.baseMipLevel = 0;
-	viewInfo.subresourceRange.levelCount = 1;
-	viewInfo.subresourceRange.baseArrayLayer = 0;
-	viewInfo.subresourceRange.layerCount = 1;
-	
+	VkImageViewCreateInfo viewInfo = MOAIGfxStructVK::imageViewCreateInfo (
+		this->mTextureImage,
+		VK_IMAGE_VIEW_TYPE_2D,
+		VK_FORMAT_R8G8B8A8_UNORM
+	);
 	VK_CHECK_RESULT ( vkCreateImageView ( logicalDevice, &viewInfo, nullptr, &this->mTextureImageView ));
 	
 	this->mTextureDescriptor = MOAIGfxStructVK::descriptorImageInfo ( this->mTextureSampler, this->mTextureImageView, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL );

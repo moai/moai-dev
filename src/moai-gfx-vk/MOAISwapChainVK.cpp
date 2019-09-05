@@ -113,8 +113,8 @@ void MOAISwapChainVK::Init ( MOAIGfxInstanceVK& instance, MOAIPhysicalDeviceVK& 
 		this->mBuffers [ i ].image = this->mImages [ i ];
 	
 		VkImageViewCreateInfo colorAttachmentView = MOAIGfxStructVK::imageViewCreateInfo (
-			VK_IMAGE_VIEW_TYPE_2D,
 			this->mBuffers [ i ].image,
+			VK_IMAGE_VIEW_TYPE_2D,
 			this->mSurfaceFormat.format,
 			MOAIGfxStructVK::componentMapping (
 				VK_COMPONENT_SWIZZLE_R,
