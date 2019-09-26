@@ -4,6 +4,7 @@
 #ifndef	MOAIGFXMGRVK_H
 #define	MOAIGFXMGRVK_H
 
+#include <moai-gfx-vk/MOAICommandBufferVK.h>
 #include <moai-gfx-vk/MOAIGfxInstanceVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVKComponents.h>
 //#include <moai-gfx-vk/MOAIGfxMgrVK_PipelineClerkVK.h>
@@ -66,10 +67,10 @@ protected:
         VkImageView                     mView;
     } mDepthStencil;
 
-	VkRenderPass                        mRenderPass; // Global render pass for frame buffer writes
-	ZLLeanArray < VkCommandBuffer >		mDrawCommandBuffers;
-	ZLLeanArray < VkFramebuffer >		mFrameBuffers; // Allocate as needed? Bind to command buffer?
-	ZLLeanArray < VkFence >				mWaitFences;
+	VkRenderPass                        	mRenderPass; // Global render pass for frame buffer writes
+	ZLLeanArray < MOAICommandBufferVK >		mDrawCommandBuffers;
+	ZLLeanArray < VkFramebuffer >			mFrameBuffers; // Allocate as needed? Bind to command buffer?
+	ZLLeanArray < VkFence >					mWaitFences;
 
 	VkSemaphore     					mPresentCompleteSemaphore;
 	VkSemaphore     					mRenderCompleteSemaphore;
@@ -144,7 +145,7 @@ public:
 //
 //	GET ( u32, RenderCounter, mRenderCounter );
 
-	GET ( VkCommandBuffer&, CommandBuffer, this->mDrawCommandBuffers [ this->mCurrentBufferIndex ]);
+	GET ( MOAICommandBufferVK&, CommandBuffer, this->mDrawCommandBuffers [ this->mCurrentBufferIndex ]);
 	GET ( VkFence&, Fence, this->mWaitFences [ this->mCurrentBufferIndex ]);
 	GET ( VkFramebuffer&, FrameBuffer, this->mFrameBuffers [ this->mCurrentBufferIndex ]);
 	GET ( MOAILogicalDeviceVK&, LogicalDevice, this->mLogicalDevice );

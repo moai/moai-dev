@@ -18,11 +18,11 @@ VkResult MOAILogicalDeviceVK::AcquireNextImageKHR ( VkSwapchainKHR swapchain, ui
 	return result;
 }
 
-//----------------------------------------------------------------//
-void MOAILogicalDeviceVK::AllocateCommandBuffers ( const VkCommandBufferAllocateInfo& allocateInfo, VkCommandBuffer* commandBuffers ) {
-
-	VK_CHECK_RESULT ( vkAllocateCommandBuffers ( this->mDevice, &allocateInfo, commandBuffers ));
-}
+////----------------------------------------------------------------//
+//void MOAILogicalDeviceVK::AllocateCommandBuffers ( const VkCommandBufferAllocateInfo& allocateInfo, VkCommandBuffer* commandBuffers ) {
+//
+//	VK_CHECK_RESULT ( vkAllocateCommandBuffers ( this->mDevice, &allocateInfo, commandBuffers ));
+//}
 
 //----------------------------------------------------------------//
 VkDeviceMemory MOAILogicalDeviceVK::AllocateMemory ( const VkMemoryAllocateInfo& allocateInfo, const VkAllocationCallbacks* pAllocator ) {

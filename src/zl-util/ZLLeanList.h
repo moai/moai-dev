@@ -47,6 +47,16 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	bool InList () const {
+		return ( this->mList != NULL );
+	}
+	
+	//----------------------------------------------------------------//
+	bool InList ( const ZLLeanList < TYPE >& list ) const {
+		return ( this->mList == &list );
+	}
+
+	//----------------------------------------------------------------//
 	inline ZLLeanList < TYPE >* List () {
 		return this->mList;
 	}

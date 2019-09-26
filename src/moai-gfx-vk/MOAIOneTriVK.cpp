@@ -54,19 +54,19 @@ void copyBufferToImage ( VkCommandBuffer& commandBuffer, VkBuffer buffer, VkImag
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIOneTriVK::Draw ( VkCommandBuffer& commandBuffer, u32 width, u32 height ) {
+void MOAIOneTriVK::Draw ( MOAICommandBufferVK& commandBuffer, u32 width, u32 height ) {
 
 	this->UpdateUniformBuffers ( width, height );
 
 	// create and initialize the descriptor set
-	if ( !this->mDescriptorSet ) {
-		this->mDescriptorSet = this->mDescriptorSetLayout->ProcureDescriptorSet ();
-		this->mDescriptorSet->SetDescriptor ( 0, 0, &this->mUniformsDescriptor );
-		this->mDescriptorSet->SetDescriptor ( 1, 0, &this->mTextureDescriptor );
-		this->mDescriptorSet->Update ();
-	}
+	MOAIDescriptorSetVK* descriptorSet = this->mDescriptorSetLayout->ProcureDescriptorSet ();
+	descriptorSet->SetDescriptor ( 0, 0, &this->mUniformsDescriptor );
+	descriptorSet->SetDescriptor ( 1, 0, &this->mTextureDescriptor );
+	descriptorSet->Update ();
+	
+	commandBuffer.PinResource ( *descriptorSet );
 
-	vkCmdBindDescriptorSets ( commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, this->mPipelineLayout, 0, 1, *this->mDescriptorSet, 0, nullptr );
+	vkCmdBindDescriptorSets ( commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, this->mPipelineLayout, 0, 1, *descriptorSet, 0, nullptr );
 	vkCmdBindPipeline ( commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, this->mPipeline );
 
 	VkDeviceSize offsets [] = { 0 };
@@ -76,8 +76,7 @@ void MOAIOneTriVK::Draw ( VkCommandBuffer& commandBuffer, u32 width, u32 height 
 }
 
 //----------------------------------------------------------------//
-MOAIOneTriVK::MOAIOneTriVK () :
-	mDescriptorSet ( NULL ) {
+MOAIOneTriVK::MOAIOneTriVK () {
 
 	this->PreparePipeline ();
 
@@ -95,7 +94,6 @@ MOAIOneTriVK::~MOAIOneTriVK () {
 	vkDestroyPipeline ( logicalDevice, this->mPipeline, NULL );
 	vkDestroyPipelineLayout ( logicalDevice, this->mPipelineLayout, NULL );
 
-	this->mDescriptorSetLayout->ReleaseDescriptorSet ( this->mDescriptorSet );
 	this->mDescriptorSetLayout = NULL;
 
 	vkDestroyImageView ( logicalDevice, this->mTextureImageView, NULL );
@@ -225,7 +223,7 @@ void MOAIOneTriVK::PrepareTexture () {
 	MOAIQueueVK& graphicsQueue = logicalDevice.GetGraphicsQueue ();
 	
 	MOAICommandBufferVK commandBuffer;
-	graphicsQueue.CreateCommandBuffer ( logicalDevice, commandBuffer );
+	graphicsQueue.CreateCommandBuffer ( logicalDevice, commandBuffer, VK_COMMAND_BUFFER_LEVEL_PRIMARY, true );
 
 	transitionImageLayout ( commandBuffer, this->mTextureImage, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL );
 	copyBufferToImage ( commandBuffer, stageImage, this->mTextureImage, width, height );
@@ -314,7 +312,7 @@ void MOAIOneTriVK::PrepareVertices ( bool useStagingBuffers ) {
 		MOAIQueueVK& graphicsQueue = logicalDevice.GetGraphicsQueue ();
 		
 		MOAICommandBufferVK commandBuffer;
-		graphicsQueue.CreateCommandBuffer ( logicalDevice, commandBuffer );
+		graphicsQueue.CreateCommandBuffer ( logicalDevice, commandBuffer, VK_COMMAND_BUFFER_LEVEL_PRIMARY, true );
 
 		// Put buffer region copies into command buffer
 		VkBufferCopy copyRegion = {};

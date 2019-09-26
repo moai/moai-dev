@@ -64,7 +64,7 @@ public:
 
 	//----------------------------------------------------------------//
 	VkResult				AcquireNextImageKHR				( VkSwapchainKHR swapchain, uint64_t timeout, VkSemaphore semaphore, VkFence fence, ZLIndex& index );
-	void					AllocateCommandBuffers			( const VkCommandBufferAllocateInfo& allocateInfo, VkCommandBuffer* commandBuffers );
+//	void					AllocateCommandBuffers			( const VkCommandBufferAllocateInfo& allocateInfo, VkCommandBuffer* commandBuffers );
 	VkDeviceMemory 			AllocateMemory					( const VkMemoryAllocateInfo& allocateInfo, const VkAllocationCallbacks* pAllocator = NULL );
 	void					BindImageMemory					( VkImage image, VkDeviceMemory memory, VkDeviceSize memoryOffset = 0 );
 	VkImage					CreateImage						( const VkImageCreateInfo& createInfo, const VkAllocationCallbacks* pAllocator = NULL );

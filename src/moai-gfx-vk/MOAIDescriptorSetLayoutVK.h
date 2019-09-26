@@ -24,7 +24,8 @@ private:
 	VkDescriptorSetLayout					mLayout;
 	MOAIDescriptorSetLayoutNameVK			mName;
 
-	STLSet < MOAIDescriptorSetVK* >			mActiveSets;
+	STLSet < MOAIDescriptorSetVK* >			mPinnedSets;
+	STLSet < MOAIDescriptorSetVK* >			mUnpinnedSets;
 
 public:
 
@@ -49,22 +50,11 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
+	void						DiscardDescriptorSet				( MOAIDescriptorSetVK& descriptorSet );
 	void						Init								( MOAILogicalDeviceVK& logicalDevice, const MOAIDescriptorSetLayoutNameVK& name );
 								MOAIDescriptorSetLayoutVK			();
 								~MOAIDescriptorSetLayoutVK			();
 	MOAIDescriptorSetVK*		ProcureDescriptorSet				();
-	void						ReleaseDescriptorSet				( MOAIDescriptorSetVK*& descriptorSet );
 };
-
-//VkStructureType                  sType;
-//const void*                      pNext;
-//VkDescriptorSet                  dstSet;
-//uint32_t                         dstBinding;
-//uint32_t                         dstArrayElement;
-//uint32_t                         descriptorCount;
-//VkDescriptorType                 descriptorType;
-//const VkDescriptorImageInfo*     pImageInfo;
-//const VkDescriptorBufferInfo*    pBufferInfo;
-//const VkBufferView*              pTexelBufferView;
 
 #endif

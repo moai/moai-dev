@@ -28,7 +28,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void				CreateCommandBuffer			( MOAILogicalDeviceVK& logicalDevice, MOAICommandBufferVK& commandBuffer, bool begin = true, VkCommandBufferLevel level = VK_COMMAND_BUFFER_LEVEL_PRIMARY );
+	void				CreateCommandBuffer			( MOAILogicalDeviceVK& logicalDevice, MOAICommandBufferVK& commandBuffer, VkCommandBufferLevel level = VK_COMMAND_BUFFER_LEVEL_PRIMARY, bool begin = false );
 	void				FlushAndFreeCommandBuffer	( MOAILogicalDeviceVK& logicalDevice, MOAICommandBufferVK& commandBuffer, u64 timeout = VK_DEFAULT_FENCE_TIMEOUT );
 						MOAIQueueVK 				();
 						~MOAIQueueVK				();

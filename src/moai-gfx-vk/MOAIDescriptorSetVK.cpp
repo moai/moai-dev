@@ -105,3 +105,14 @@ void MOAIDescriptorSetVK::Update () {
 
 	vkUpdateDescriptorSets ( logicalDevice, ( u32 )this->mWriteArray.Size (), this->mWriteArray.GetBuffer (), 0, NULL );
 }
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIDescriptorSetVK::MOAIAbstractCommandBufferResourceVK_Unpin () {
+
+	assert ( this->mLayout );
+	this->mLayout->DiscardDescriptorSet ( *this );
+}

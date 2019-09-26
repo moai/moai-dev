@@ -4,13 +4,24 @@
 #ifndef MOAICOMMANDBUFFERVK_H
 #define MOAICOMMANDBUFFERVK_H
 
+class MOAIAbstractCommandBufferResourceVK;
+
 //================================================================//
 // MOAICommandBufferVK
 //================================================================//
 class MOAICommandBufferVK {
-public:
+private:
 
-	VkCommandBuffer		mCommandBuffer;
+	friend class MOAIAbstractCommandBufferResourceVK;
+
+	VkCommandBuffer											mCommandBuffer;
+	ZLLeanList < MOAIAbstractCommandBufferResourceVK* >		mResources;
+	bool													mIsValid;
+
+	//----------------------------------------------------------------//
+	void			Invalidate					();
+
+public:
 
 	//----------------------------------------------------------------//
 	operator bool () const {
@@ -31,8 +42,10 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-				MOAICommandBufferVK			();
-				~MOAICommandBufferVK		();
+					MOAICommandBufferVK			();
+					~MOAICommandBufferVK		();
+	void			PinResource					( MOAIAbstractCommandBufferResourceVK& resource );
+	void			UnpinResources				();
 };
 
 #endif

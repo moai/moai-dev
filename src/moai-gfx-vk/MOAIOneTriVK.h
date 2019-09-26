@@ -4,6 +4,7 @@
 #ifndef MOAIONETRIVK_H
 #define MOAIONETRIVK_H
 
+class MOAICommandBufferVK;
 class MOAIDescriptorSetLayoutVK;
 class MOAIDescriptorSetVK;
 class MOAIGfxBufferVK;
@@ -56,7 +57,6 @@ private:
 	VkPipelineLayout							mPipelineLayout;
 	VkPipeline									mPipeline;
 	ZLStrongPtr < MOAIDescriptorSetLayoutVK >	mDescriptorSetLayout;
-	MOAIDescriptorSetVK*						mDescriptorSet;
 
 	//----------------------------------------------------------------//
 	void			PreparePipeline				();
@@ -68,7 +68,7 @@ private:
 public:
 
 	//----------------------------------------------------------------//
-	void			Draw						( VkCommandBuffer& commandBuffer, u32 width, u32 height );
+	void			Draw						( MOAICommandBufferVK& commandBuffer, u32 width, u32 height );
 					MOAIOneTriVK				();
 					~MOAIOneTriVK				();
 };

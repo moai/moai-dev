@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <moai-gfx-vk/MOAICommandBufferVK.h>
 #include <moai-gfx-vk/MOAIFrameBufferVK.h>
 #include <moai-gfx-vk/MOAIPhysicalDeviceVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
@@ -138,6 +139,10 @@ void MOAIGfxMgrVK::BeginFrame () {
     else {
         VK_CHECK_RESULT ( result );
     }
+
+	MOAICommandBufferVK& cmdBuffer = this->GetCommandBuffer ();
+	VkCommandBufferBeginInfo cmdBufInfo = MOAIGfxStructVK::commandBufferBeginInfo ();
+	VK_CHECK_RESULT ( vkBeginCommandBuffer ( cmdBuffer, &cmdBufInfo ));
 }
 
 ////----------------------------------------------------------------//
@@ -209,7 +214,9 @@ void MOAIGfxMgrVK::DetectContext ( u32 width, u32 height, bool enableValidation 
 //----------------------------------------------------------------//
 void MOAIGfxMgrVK::FinishFrame () {
 	
-	VkCommandBuffer& cmdBuffer = this->GetCommandBuffer ();
+	MOAICommandBufferVK& cmdBuffer = this->GetCommandBuffer ();
+	VK_CHECK_RESULT ( vkEndCommandBuffer ( cmdBuffer ));
+	
 	VkFence& fence = this->GetFence ();
 	
 	// Use a fence to wait until the command buffer has finished execution before using it again
@@ -220,7 +227,7 @@ void MOAIGfxMgrVK::FinishFrame () {
 	VkPipelineStageFlags waitStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
 	// The submit info structure specifices a command buffer queue submission batch
 	VkSubmitInfo submitInfo = MOAIGfxStructVK::submitInfo (
-		&cmdBuffer, 						// Command buffers to submit in this batch
+		cmdBuffer, 							// Command buffers to submit in this batch
 		1,									// One command buffer
 		&this->mRenderCompleteSemaphore,	// Semaphore(s) to be signaled when command buffers have completed
 		1,									// One signal semaphore
@@ -230,8 +237,9 @@ void MOAIGfxMgrVK::FinishFrame () {
 	);
 
 	MOAIQueueVK& graphicsQueue = this->mLogicalDevice.GetGraphicsQueue ();
-
 	VK_CHECK_RESULT ( graphicsQueue.Submit ( &submitInfo, 1, fence ));
+
+	cmdBuffer.UnpinResources ();
 
     VkResult result = this->mSwapChain.QueuePresent ( this->mLogicalDevice, graphicsQueue, this->mCurrentBufferIndex, this->mRenderCompleteSemaphore );
     if (!((result == VK_SUCCESS) || (result == VK_SUBOPTIMAL_KHR))) {
@@ -256,12 +264,10 @@ void MOAIGfxMgrVK::InitCommandBuffers () {
 
 	this->mDrawCommandBuffers.Init ( this->mSwapChain.mImages.Size ());
 	
-    VkCommandBufferAllocateInfo cmdBufAllocateInfo = MOAIGfxStructVK::commandBufferAllocateInfo (
-    	this->mLogicalDevice.GetGraphicsQueue ().mPool,
-    	VK_COMMAND_BUFFER_LEVEL_PRIMARY,
-    	( u32 )imageCount
-	);
-    this->mLogicalDevice.AllocateCommandBuffers ( cmdBufAllocateInfo, this->mDrawCommandBuffers.GetBuffer ());
+	MOAIQueueVK& queue = this->mLogicalDevice.GetGraphicsQueue ();
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < imageCount; ++i ) {
+		queue.CreateCommandBuffer ( this->mLogicalDevice, this->mDrawCommandBuffers [ i ]);
+	}
 }
 
 //----------------------------------------------------------------//

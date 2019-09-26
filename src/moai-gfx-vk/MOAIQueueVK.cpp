@@ -12,16 +12,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIQueueVK::CreateCommandBuffer ( MOAILogicalDeviceVK& logicalDevice, MOAICommandBufferVK& commandBuffer, bool begin, VkCommandBufferLevel level ) {
+void MOAIQueueVK::CreateCommandBuffer ( MOAILogicalDeviceVK& logicalDevice, MOAICommandBufferVK& commandBuffer, VkCommandBufferLevel level, bool begin ) {
 
 	assert ( commandBuffer == false );
 
-	VkCommandBufferAllocateInfo cmdBufAllocateInfo = MOAIGfxStructVK::commandBufferAllocateInfo (
-    	this->mPool,
-    	VK_COMMAND_BUFFER_LEVEL_PRIMARY,
-    	1
-	);
-    logicalDevice.AllocateCommandBuffers ( cmdBufAllocateInfo, commandBuffer );
+	VkCommandBufferAllocateInfo cmdBufAllocateInfo = MOAIGfxStructVK::commandBufferAllocateInfo ( this->mPool, level );	
+	VK_CHECK_RESULT ( vkAllocateCommandBuffers ( logicalDevice, &cmdBufAllocateInfo, commandBuffer ));
 	
 	assert ( commandBuffer != false );
 	
@@ -53,6 +49,8 @@ void MOAIQueueVK::FlushAndFreeCommandBuffer	( MOAILogicalDeviceVK& logicalDevice
 	VK_CHECK_RESULT ( vkWaitForFences ( logicalDevice, 1, &fence, VK_TRUE, timeout ));
 
 	vkDestroyFence ( logicalDevice, fence, nullptr );
+	
+	commandBuffer.UnpinResources (); // unpin any resources
 
 	vkFreeCommandBuffers ( logicalDevice, this->mPool, 1, commandBuffer );
 }

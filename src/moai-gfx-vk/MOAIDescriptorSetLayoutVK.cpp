@@ -45,6 +45,16 @@ public:
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIDescriptorSetLayoutVK::DiscardDescriptorSet ( MOAIDescriptorSetVK& descriptorSet ) {
+
+	if ( descriptorSet == NULL ) return;
+	if ( !this->mPinnedSets.contains ( &descriptorSet )) return;
+	
+	this->mPinnedSets.erase ( &descriptorSet );
+	this->mUnpinnedSets.insert ( &descriptorSet );
+}
+
+//----------------------------------------------------------------//
 void MOAIDescriptorSetLayoutVK::Init ( MOAILogicalDeviceVK& logicalDevice, const MOAIDescriptorSetLayoutNameVK& name ) {
 
 	this->SetLogicalDevice ( logicalDevice );
@@ -94,25 +104,22 @@ MOAIDescriptorSetLayoutVK::~MOAIDescriptorSetLayoutVK () {
 //----------------------------------------------------------------//
 MOAIDescriptorSetVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSet () {
 
-	if ( this->mActiveSets.size () >= MAX_DESCRIPTOR_SETS ) return NULL;
+	if (( this->mPinnedSets.size () + this->mUnpinnedSets.size ()) >= MAX_DESCRIPTOR_SETS ) return NULL;
 	
-	MOAIDescriptorSetVK* descriptorSet = new MOAIDescriptorSetVK ();
-	descriptorSet->mLayout = this;
+	MOAIDescriptorSetVK* descriptorSet = NULL;
+	if ( this->mUnpinnedSets.size ()) {
+		descriptorSet = *this->mUnpinnedSets.begin ();
+		this->mUnpinnedSets.erase ( descriptorSet );
+	}
+	else {
+	
+		descriptorSet = new MOAIDescriptorSetVK ();
+		descriptorSet->mLayout = this;
 
-	VkDescriptorSetAllocateInfo allocInfo = MOAIGfxStructVK::descriptorSetAllocateInfo ( this->mPool, &this->mLayout );
-	VK_CHECK_RESULT ( vkAllocateDescriptorSets ( this->GetLogicalDevice (), &allocInfo, &descriptorSet->mDescriptorSet ));
-	this->mActiveSets.insert ( descriptorSet );
-	
-	descriptorSet->InitWriteArray ( this->mName );
-	
+		VkDescriptorSetAllocateInfo allocInfo = MOAIGfxStructVK::descriptorSetAllocateInfo ( this->mPool, &this->mLayout );
+		VK_CHECK_RESULT ( vkAllocateDescriptorSets ( this->GetLogicalDevice (), &allocInfo, &descriptorSet->mDescriptorSet ));
+		descriptorSet->InitWriteArray ( this->mName );
+	}
+	this->mPinnedSets.insert ( descriptorSet );
 	return descriptorSet;
-}
-
-//----------------------------------------------------------------//
-void MOAIDescriptorSetLayoutVK::ReleaseDescriptorSet ( MOAIDescriptorSetVK*& descriptorSet ) {
-
-	if ( descriptorSet == NULL ) return;
-	if ( !this->mActiveSets.contains ( descriptorSet )) return;
-	
-	this->mActiveSets.erase ( descriptorSet );
 }

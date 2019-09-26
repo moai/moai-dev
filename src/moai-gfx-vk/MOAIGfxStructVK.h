@@ -146,7 +146,11 @@ public:
 	}
 
     //----------------------------------------------------------------//
-    static VkCommandBufferAllocateInfo commandBufferAllocateInfo ( VkCommandPool commandPool, VkCommandBufferLevel level, uint32_t bufferCount ) {
+    static VkCommandBufferAllocateInfo commandBufferAllocateInfo (
+		VkCommandPool commandPool,
+		VkCommandBufferLevel level = VK_COMMAND_BUFFER_LEVEL_PRIMARY,
+		uint32_t bufferCount = 1
+	) {
         DECL_VK_STRUCT ( VkCommandBufferAllocateInfo, commandBufferAllocateInfo );
         commandBufferAllocateInfo.sType                 = VK_STRUCTURE_TYPE_COMMAND_BUFFER_ALLOCATE_INFO;
         commandBufferAllocateInfo.pNext                 = NULL;
