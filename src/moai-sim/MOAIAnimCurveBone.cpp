@@ -131,7 +131,7 @@ ZLAffine3D MOAIAnimCurveBone::GetValue ( const MOAIAnimKeySpan& span ) const {
 //----------------------------------------------------------------//
 void MOAIAnimCurveBone::GetValue ( const MOAIAnimKeySpan& span, ZLVec3D& pos, ZLQuaternion& rot, ZLVec3D& scl ) const {
 
-	MOAIAnimKey& key = this->mKeys [ span.mKeyID ];
+	const MOAIAnimKey& key = this->mKeys [ span.mKeyID ];
 	
 	ZLVec3D p0			= this->mPositionSamples [ span.mKeyID ];
 	ZLQuaternion q0		= this->mRotationSamples [ span.mKeyID ];

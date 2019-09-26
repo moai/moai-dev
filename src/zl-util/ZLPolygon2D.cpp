@@ -280,8 +280,8 @@ bool ZLPolygon2D::GetDistance ( const ZLVec2D& point, ZLReal& d, ZLVec2D& p ) co
 	
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalVerts; ++i ) {
 	
-		ZLVec2D& e0 = this->mVertices [ i ];
-		ZLVec2D& e1 = this->mVertices [  ZLIndexOp::AddAndWrap ( i, 1, totalVerts )];
+		const ZLVec2D& e0 = this->mVertices [ i ];
+		const ZLVec2D& e1 = this->mVertices [  ZLIndexOp::AddAndWrap ( i, 1, totalVerts )];
 	
 		// get the edge vector
 		ZLVec2D n = e1 - e0;
@@ -469,8 +469,8 @@ u32 ZLPolygon2D::PointInside ( const ZLVec2D& p, ZLReal pad ) const {
 		ZLSize totalVerts = this->mVertices.Size ();
 		for ( ZLIndex i = ZLIndexOp::ZERO; i < totalVerts; i++ ) {
 
-			ZLVec2D& p1 = this->mVertices [ i ];
-			ZLVec2D& p2 = this->mVertices [  ZLIndexOp::AddAndWrap ( i, 1, totalVerts )];
+			const ZLVec2D& p1 = this->mVertices [ i ];
+			const ZLVec2D& p2 = this->mVertices [  ZLIndexOp::AddAndWrap ( i, 1, totalVerts )];
 			
 			// Components of points
 			ZLReal p1X = p1.mX;

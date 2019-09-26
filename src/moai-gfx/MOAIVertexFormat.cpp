@@ -204,7 +204,7 @@ int MOAIVertexFormat::Compare ( const void* v0, const void* v1, float componentE
 
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mTotalAttributes; ++i ) {
 
-		MOAIVertexAttribute& attribute = this->mAttributes [ i ];
+		const MOAIVertexAttribute& attribute = this->mAttributes [ i ];
 		
 		float tolerance = attribute.mType == ZGL_TYPE_FLOAT ? componentEpsilon : 0.0f;
 		
@@ -521,7 +521,7 @@ void MOAIVertexFormat::PrintVertices ( ZLStream& stream, size_t size ) const {
 		printf ( "vertex %d:\n", ( int )ZLSize ( i ));
 		
 		for ( ZLIndex j = ZLIndexOp::ZERO; j < this->mTotalAttributes; ++j ) {
-			MOAIVertexAttribute& attribute = this->mAttributes [ j ];
+			const MOAIVertexAttribute& attribute = this->mAttributes [ j ];
 			
 			printf ( "  %d: ", ( int )ZLSize ( j ));
 			

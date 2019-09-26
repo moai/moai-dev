@@ -104,7 +104,7 @@ MOAIUniformComposer::~MOAIUniformComposer () {
 }
 
 //----------------------------------------------------------------//
-void MOAIUniformComposer::SelectTextures () const {
+void MOAIUniformComposer::SelectTextures () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	MOAIMaterialMgr& materialMgr = MOAIMaterialMgr::Get ();

@@ -75,7 +75,7 @@ public:
 	void			ComposeUniforms				( const MOAIUniformSchema& schema, MOAIAbstractUniformBuffer& buffer ) const;
 					MOAIUniformComposer			();
 					~MOAIUniformComposer		();
-	void			SelectTextures				() const;
+	void			SelectTextures				();
 };
 
 #endif

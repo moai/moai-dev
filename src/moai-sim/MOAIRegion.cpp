@@ -544,7 +544,7 @@ int MOAIRegion::AddFillContours ( SafeTesselator& tess, float precision, u32 mas
 	ZLSize size = this->mPolygons.Size ();
 	
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
-		ZLPolygon2D& polygon = this->mPolygons [ i ];
+		const ZLPolygon2D& polygon = this->mPolygons [ i ];
 		if ( polygon.GetInfo () & mask ) {
 			const ZLPolygon2D& polygon = this->mPolygons [ i ];
 			tess.AddContour2D ( polygon.GetVertices (), polygon.GetSize (), precision );
@@ -649,7 +649,7 @@ void MOAIRegion::Clip ( const MOAIRegion& region, ZLPlane2D plane ) {
 
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < region.mPolygons.Size (); ++i ) {
 	
-		ZLPolygon2D& poly = region.mPolygons [ i ];
+		const ZLPolygon2D& poly = region.mPolygons [ i ];
 		poly.Clip ( plane, clippedPolyVerts, clippedPolySizes );
 	}
 	
@@ -666,7 +666,7 @@ void MOAIRegion::Clip ( const MOAIRegion& region, const MOAIRegion& clip, const 
 
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < region.mPolygons.Size (); ++i ) {
 	
-		ZLPolygon2D& poly = region.mPolygons [ i ];
+		const ZLPolygon2D& poly = region.mPolygons [ i ];
 		poly.Clip ( clipPoly, mtx, clippedPolyVerts, clippedPolySizes );
 	}
 	
@@ -753,7 +753,7 @@ void MOAIRegion::Cull ( const MOAIRegion& region, u32 flag, bool checkArea, floa
 	ZLSize size		= region.mPolygons.Size ();
 	
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
-		ZLPolygon2D& poly = region.mPolygons [ i ];
+		const ZLPolygon2D& poly = region.mPolygons [ i ];
 		if ( !this->ShouldCull ( poly, flag, checkArea, minArea )) {
 			count++;
 		}
@@ -777,7 +777,7 @@ void MOAIRegion::Cull ( const MOAIRegion& region, u32 flag, bool checkArea, floa
 	count = 0;
 	
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
-		ZLPolygon2D& poly = srcRegion->mPolygons [ i ];
+		const ZLPolygon2D& poly = srcRegion->mPolygons [ i ];
 		if ( !this->ShouldCull ( poly, flag, checkArea, minArea )) {
 			this->mPolygons [ ZLIndexCast ( count++ )].Copy ( poly );
 		}
@@ -863,7 +863,7 @@ void MOAIRegion::Edge ( const MOAIRegion& region, const ZLVec2D& offset ) {
 	ZLSize size = region.mPolygons.Size ();
 
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
-		ZLPolygon2D& polygon = region.mPolygons [ i ];
+		const ZLPolygon2D& polygon = region.mPolygons [ i ];
 		
 		ZLSize nVerts = polygon.GetSize ();
 		
@@ -959,7 +959,7 @@ bool MOAIRegion::GetDistance ( const ZLVec2D& point, float& d, ZLVec2D& p ) cons
 
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mPolygons.Size (); ++i ) {
 	
-		ZLPolygon2D& poly = this->mPolygons [ i ];
+		const ZLPolygon2D& poly = this->mPolygons [ i ];
 		
 		float		candidateD;
 		ZLVec2D		candidateP;
@@ -1070,7 +1070,7 @@ void MOAIRegion::Pad ( const MOAIRegion& region, float pad ) {
 
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
 	
-		ZLPolygon2D& polygon = region.mPolygons [ i ];
+		const ZLPolygon2D& polygon = region.mPolygons [ i ];
 		
 		int nVerts = ( int )polygon.GetSize ();
 		
@@ -1281,7 +1281,7 @@ void MOAIRegion::Stroke ( const MOAIRegion& region, float exterior, bool strokeE
 	style.Default ();
 
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
-		ZLPolygon2D& polygon = region.mPolygons [ i ];
+		const ZLPolygon2D& polygon = region.mPolygons [ i ];
 		
 		int nVerts = ( int )polygon.GetSize ();
 		

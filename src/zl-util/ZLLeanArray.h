@@ -36,7 +36,14 @@ public:
 	};
 
 	//----------------------------------------------------------------//
-	inline TYPE& operator [] ( const ZLIndex& idx ) const {
+	inline TYPE& operator [] ( const ZLIndex& idx ) {
+		
+		assert ( idx < this->mSize );
+		return this->mData [( ZLSize )idx ];
+	}
+	
+	//----------------------------------------------------------------//
+	inline const TYPE& operator [] ( const ZLIndex& idx ) const {
 		
 		assert ( idx < this->mSize );
 		return this->mData [( ZLSize )idx ];

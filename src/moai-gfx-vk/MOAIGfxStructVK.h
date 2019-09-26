@@ -1268,31 +1268,67 @@ public:
         return swapchainCreateInfoKHR;
     }
 
-    //----------------------------------------------------------------//
-    static VkWriteDescriptorSet writeDescriptorSet ( VkDescriptorSet dstSet, uint32_t binding, VkDescriptorType type, VkDescriptorBufferInfo* bufferInfo, uint32_t descriptorCount = 1 ) {
+	//----------------------------------------------------------------//
+    static VkWriteDescriptorSet writeDescriptorSet ( VkDescriptorSet dstSet, uint32_t binding, uint32_t dstArrayElement, VkDescriptorType type, uint32_t descriptorCount = 1 ) {
         DECL_VK_STRUCT ( VkWriteDescriptorSet, writeDescriptorSet );
         writeDescriptorSet.sType                    = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
         writeDescriptorSet.pNext                    = NULL;
         writeDescriptorSet.dstSet                   = dstSet;
         writeDescriptorSet.descriptorType           = type;
         writeDescriptorSet.dstBinding               = binding;
+        writeDescriptorSet.dstArrayElement			= dstArrayElement;
         writeDescriptorSet.pImageInfo 				= NULL;
-        writeDescriptorSet.pBufferInfo              = bufferInfo;
+        writeDescriptorSet.pBufferInfo              = NULL;
+        writeDescriptorSet.pTexelBufferView			= NULL;
         writeDescriptorSet.descriptorCount          = descriptorCount;
         return writeDescriptorSet;
     }
 
     //----------------------------------------------------------------//
-    static VkWriteDescriptorSet writeDescriptorSet ( VkDescriptorSet dstSet, uint32_t binding, VkDescriptorType type, VkDescriptorImageInfo *imageInfo, uint32_t descriptorCount = 1 ) {
+    static VkWriteDescriptorSet writeDescriptorSet ( VkDescriptorSet dstSet, uint32_t binding, uint32_t dstArrayElement, VkDescriptorType type, VkDescriptorBufferInfo* bufferInfo, uint32_t descriptorCount = 1 ) {
         DECL_VK_STRUCT ( VkWriteDescriptorSet, writeDescriptorSet );
-        writeDescriptorSet.sType                = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
-        writeDescriptorSet.pNext                = NULL;
-        writeDescriptorSet.dstSet               = dstSet;
-        writeDescriptorSet.descriptorType       = type;
-        writeDescriptorSet.dstBinding           = binding;
-        writeDescriptorSet.pImageInfo           = imageInfo;
-        writeDescriptorSet.pBufferInfo			= NULL;
-        writeDescriptorSet.descriptorCount      = descriptorCount;
+        writeDescriptorSet.sType                    = VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+        writeDescriptorSet.pNext                    = NULL;
+        writeDescriptorSet.dstSet                   = dstSet;
+        writeDescriptorSet.descriptorType           = type;
+        writeDescriptorSet.dstBinding               = binding;
+        writeDescriptorSet.dstArrayElement			= dstArrayElement;
+        writeDescriptorSet.pImageInfo 				= NULL;
+        writeDescriptorSet.pBufferInfo              = bufferInfo;
+        writeDescriptorSet.pTexelBufferView			= NULL;
+        writeDescriptorSet.descriptorCount          = descriptorCount;
+        return writeDescriptorSet;
+    }
+
+    //----------------------------------------------------------------//
+    static VkWriteDescriptorSet writeDescriptorSet ( VkDescriptorSet dstSet, uint32_t binding, uint32_t dstArrayElement, VkDescriptorType type, VkDescriptorImageInfo* imageInfo, uint32_t descriptorCount = 1 ) {
+        DECL_VK_STRUCT ( VkWriteDescriptorSet, writeDescriptorSet );
+        writeDescriptorSet.sType					= VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+        writeDescriptorSet.pNext					= NULL;
+        writeDescriptorSet.dstSet					= dstSet;
+        writeDescriptorSet.descriptorType			= type;
+        writeDescriptorSet.dstBinding				= binding;
+        writeDescriptorSet.dstArrayElement			= dstArrayElement;
+        writeDescriptorSet.pImageInfo				= imageInfo;
+        writeDescriptorSet.pBufferInfo				= NULL;
+        writeDescriptorSet.pTexelBufferView			= NULL;
+        writeDescriptorSet.descriptorCount			= descriptorCount;
+        return writeDescriptorSet;
+    }
+    
+    //----------------------------------------------------------------//
+    static VkWriteDescriptorSet writeDescriptorSet ( VkDescriptorSet dstSet, uint32_t binding, uint32_t dstArrayElement, VkDescriptorType type, VkBufferView* texelBufferView, uint32_t descriptorCount = 1 ) {
+        DECL_VK_STRUCT ( VkWriteDescriptorSet, writeDescriptorSet );
+        writeDescriptorSet.sType					= VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
+        writeDescriptorSet.pNext					= NULL;
+        writeDescriptorSet.dstSet					= dstSet;
+        writeDescriptorSet.descriptorType			= type;
+        writeDescriptorSet.dstBinding				= binding;
+        writeDescriptorSet.dstArrayElement			= dstArrayElement;
+        writeDescriptorSet.pImageInfo				= NULL;
+        writeDescriptorSet.pBufferInfo				= NULL;
+        writeDescriptorSet.pTexelBufferView			= texelBufferView;
+        writeDescriptorSet.descriptorCount			= descriptorCount;
         return writeDescriptorSet;
     }
 

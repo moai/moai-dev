@@ -58,7 +58,7 @@ MOAIKernVec MOAIGlyph::GetKerning ( u32 name ) const {
 
 	ZLSize total = this->mKernTable.Size ();
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < total; ++i ) {
-		MOAIKernVec& kernVec = this->mKernTable [ i ];
+		const MOAIKernVec& kernVec = this->mKernTable [ i ];
 		
 		if ( kernVec.mName == name ) {
 			return kernVec;

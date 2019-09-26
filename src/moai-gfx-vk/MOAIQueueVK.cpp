@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-gfx-vk/MOAICommandBufferVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAIQueueVK.h>
@@ -11,32 +12,33 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-VkCommandBuffer MOAIQueueVK::CreateCommandBuffer ( MOAILogicalDeviceVK& logicalDevice, bool begin, VkCommandBufferLevel level ) {
+void MOAIQueueVK::CreateCommandBuffer ( MOAILogicalDeviceVK& logicalDevice, MOAICommandBufferVK& commandBuffer, bool begin, VkCommandBufferLevel level ) {
+
+	assert ( commandBuffer == false );
 
 	VkCommandBufferAllocateInfo cmdBufAllocateInfo = MOAIGfxStructVK::commandBufferAllocateInfo (
     	this->mPool,
     	VK_COMMAND_BUFFER_LEVEL_PRIMARY,
     	1
 	);
-	VkCommandBuffer commandBuffer;
-    logicalDevice.AllocateCommandBuffers ( cmdBufAllocateInfo, &commandBuffer );
+    logicalDevice.AllocateCommandBuffers ( cmdBufAllocateInfo, commandBuffer );
 	
-	assert ( commandBuffer );
+	assert ( commandBuffer != false );
+	
 	if ( begin ) {
 		VkCommandBufferBeginInfo cmdBufInfo = MOAIGfxStructVK::commandBufferBeginInfo ();
 		VK_CHECK_RESULT ( vkBeginCommandBuffer ( commandBuffer, &cmdBufInfo ));
 	}
-    return commandBuffer;
 }
 
 //----------------------------------------------------------------//
-void MOAIQueueVK::FlushAndFreeCommandBuffer	( MOAILogicalDeviceVK& logicalDevice, VkCommandBuffer commandBuffer, u64 timeout ) {
+void MOAIQueueVK::FlushAndFreeCommandBuffer	( MOAILogicalDeviceVK& logicalDevice, MOAICommandBufferVK& commandBuffer, u64 timeout ) {
 
 	if ( commandBuffer == VK_NULL_HANDLE ) return;
 
 	VK_CHECK_RESULT ( vkEndCommandBuffer ( commandBuffer ));
 
-	VkSubmitInfo submitInfo = MOAIGfxStructVK::submitInfo ( &commandBuffer, 1 );
+	VkSubmitInfo submitInfo = MOAIGfxStructVK::submitInfo ( commandBuffer, 1 );
 
 	// Create fence to ensure that the command buffer has finished executing
 	VkFenceCreateInfo fenceInfo = MOAIGfxStructVK::fenceCreateInfo ( 0 );
@@ -52,7 +54,7 @@ void MOAIQueueVK::FlushAndFreeCommandBuffer	( MOAILogicalDeviceVK& logicalDevice
 
 	vkDestroyFence ( logicalDevice, fence, nullptr );
 
-	vkFreeCommandBuffers ( logicalDevice, this->mPool, 1, &commandBuffer );
+	vkFreeCommandBuffers ( logicalDevice, this->mPool, 1, commandBuffer );
 }
 
 //----------------------------------------------------------------//

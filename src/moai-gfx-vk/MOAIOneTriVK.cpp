@@ -2,6 +2,9 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-gfx-vk/MOAICommandBufferVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetVK.h>
 #include <moai-gfx-vk/MOAIGfxBufferVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
@@ -55,8 +58,16 @@ void MOAIOneTriVK::Draw ( VkCommandBuffer& commandBuffer, u32 width, u32 height 
 
 	this->UpdateUniformBuffers ( width, height );
 
-	vkCmdBindDescriptorSets ( commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, mPipelineLayout, 0, 1, &this->mDescriptorSet, 0, nullptr );
-	vkCmdBindPipeline ( commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, mPipeline );
+	// create and initialize the descriptor set
+	if ( !this->mDescriptorSet ) {
+		this->mDescriptorSet = this->mDescriptorSetLayout->ProcureDescriptorSet ();
+		this->mDescriptorSet->SetDescriptor ( 0, 0, &this->mUniformsDescriptor );
+		this->mDescriptorSet->SetDescriptor ( 1, 0, &this->mTextureDescriptor );
+		this->mDescriptorSet->Update ();
+	}
+
+	vkCmdBindDescriptorSets ( commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, this->mPipelineLayout, 0, 1, *this->mDescriptorSet, 0, nullptr );
+	vkCmdBindPipeline ( commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, this->mPipeline );
 
 	VkDeviceSize offsets [] = { 0 };
 	vkCmdBindVertexBuffers ( commandBuffer, 0, 1, &this->mVertices->GetBuffer (), offsets );
@@ -65,11 +76,56 @@ void MOAIOneTriVK::Draw ( VkCommandBuffer& commandBuffer, u32 width, u32 height 
 }
 
 //----------------------------------------------------------------//
+MOAIOneTriVK::MOAIOneTriVK () :
+	mDescriptorSet ( NULL ) {
+
+	this->PreparePipeline ();
+
+	this->PrepareVertices ();
+	this->PrepareTexture ();
+	this->PrepareUniformBuffers ();
+}
+
+//----------------------------------------------------------------//
+MOAIOneTriVK::~MOAIOneTriVK () {
+
+	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
+	MOAILogicalDeviceVK& logicalDevice = gfxMgr.GetLogicalDevice ();
+
+	vkDestroyPipeline ( logicalDevice, this->mPipeline, NULL );
+	vkDestroyPipelineLayout ( logicalDevice, this->mPipelineLayout, NULL );
+
+	this->mDescriptorSetLayout->ReleaseDescriptorSet ( this->mDescriptorSet );
+	this->mDescriptorSetLayout = NULL;
+
+	vkDestroyImageView ( logicalDevice, this->mTextureImageView, NULL );
+    vkDestroyImage ( logicalDevice, this->mTextureImage, NULL) ;
+    vkFreeMemory ( logicalDevice, this->mTextureImageMemory, NULL );
+
+	this->mVertices->Cleanup ();
+	this->mIndices->Cleanup ();
+	this->mUniforms->Cleanup ();
+}
+
+//----------------------------------------------------------------//
 void MOAIOneTriVK::PreparePipeline () {
 
 	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
 	MOAILogicalDeviceVK& logicalDevice = gfxMgr.GetLogicalDevice ();
-	VkRenderPass& renderPass = gfxMgr.GetRenderPass ();
+
+	// describe the layout
+	MOAIDescriptorSetLayoutNameVK name;
+	name.Init ( 2 );
+	name.SetBinding ( 0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT );
+	name.SetBinding ( 1, VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT );
+	
+	// create and initialize the layout
+	this->mDescriptorSetLayout = new MOAIDescriptorSetLayoutVK ();
+	this->mDescriptorSetLayout->Init ( logicalDevice, name );
+	
+	// create the pipeline layout
+    VkPipelineLayoutCreateInfo pPipelineLayoutCreateInfo = MOAIGfxStructVK::pipelineLayoutCreateInfo ( *this->mDescriptorSetLayout );
+	VK_CHECK_RESULT ( vkCreatePipelineLayout ( logicalDevice, &pPipelineLayoutCreateInfo, NULL, &this->mPipelineLayout ));
 
 	VkDynamicState dynamicStateEnables [] = {
 		VK_DYNAMIC_STATE_VIEWPORT,
@@ -84,6 +140,8 @@ void MOAIOneTriVK::PreparePipeline () {
 	VkPipelineDepthStencilStateCreateInfo depthStencilState 	= MOAIGfxStructVK::pipelineDepthStencilStateCreateInfo ();
 	VkPipelineMultisampleStateCreateInfo multisampleState 		= MOAIGfxStructVK::pipelineMultisampleStateCreateInfo ();
 	VkPipelineDynamicStateCreateInfo dynamicState				= MOAIGfxStructVK::pipelineDynamicStateCreateInfo ( dynamicStateEnables, 2 );
+
+	VkRenderPass& renderPass = gfxMgr.GetRenderPass ();
 
 	VkGraphicsPipelineCreateInfo pipelineCreateInfo = MOAIGfxStructVK::graphicsPipelineCreateInfo (
 		NULL,
@@ -165,7 +223,9 @@ void MOAIOneTriVK::PrepareTexture () {
 	// Buffer copies have to be submitted to a queue, so we need a command buffer for them
 	// Note: Some devices offer a dedicated transfer queue (with only the transfer bit set) that may be faster when doing lots of copies
 	MOAIQueueVK& graphicsQueue = logicalDevice.GetGraphicsQueue ();
-	VkCommandBuffer commandBuffer = graphicsQueue.CreateCommandBuffer ( logicalDevice );
+	
+	MOAICommandBufferVK commandBuffer;
+	graphicsQueue.CreateCommandBuffer ( logicalDevice, commandBuffer );
 
 	transitionImageLayout ( commandBuffer, this->mTextureImage, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL );
 	copyBufferToImage ( commandBuffer, stageImage, this->mTextureImage, width, height );
@@ -252,7 +312,9 @@ void MOAIOneTriVK::PrepareVertices ( bool useStagingBuffers ) {
 		// Buffer copies have to be submitted to a queue, so we need a command buffer for them
 		// Note: Some devices offer a dedicated transfer queue (with only the transfer bit set) that may be faster when doing lots of copies
 		MOAIQueueVK& graphicsQueue = logicalDevice.GetGraphicsQueue ();
-		VkCommandBuffer commandBuffer = graphicsQueue.CreateCommandBuffer ( logicalDevice );
+		
+		MOAICommandBufferVK commandBuffer;
+		graphicsQueue.CreateCommandBuffer ( logicalDevice, commandBuffer );
 
 		// Put buffer region copies into command buffer
 		VkBufferCopy copyRegion = {};
@@ -290,76 +352,6 @@ void MOAIOneTriVK::PrepareVertices ( bool useStagingBuffers ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIOneTriVK::SetupDescriptorPool () {
-
-	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
-	MOAILogicalDeviceVK& logicalDevice = gfxMgr.GetLogicalDevice ();
-
-	// We need to tell the API the number of max. requested descriptors per type
-	VkDescriptorPoolSize typeCounts [ 2 ];
-	
-	typeCounts [ 0 ].type = VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER;
-	typeCounts [ 0 ].descriptorCount = 1;
-
-	typeCounts [ 1 ].type = VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER;
-	typeCounts [ 1 ].descriptorCount = 1;
-
-	// Create the global descriptor pool
-	// All descriptors used in this example are allocated from this pool
-	VkDescriptorPoolCreateInfo descriptorPoolInfo = MOAIGfxStructVK::descriptorPoolCreateInfo ( typeCounts, 2, 1 );
-	VK_CHECK_RESULT ( vkCreateDescriptorPool ( logicalDevice, &descriptorPoolInfo, NULL, &this->mDescriptorPool ));
-}
-
-//----------------------------------------------------------------//
-void MOAIOneTriVK::SetupDescriptorSet () {
-
-	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
-	MOAILogicalDeviceVK& logicalDevice = gfxMgr.GetLogicalDevice ();
-
-	// Allocate a new descriptor set from the global descriptor pool
-	VkDescriptorSetAllocateInfo allocInfo = MOAIGfxStructVK::descriptorSetAllocateInfo ( this->mDescriptorPool, &this->mDescriptorSetLayout );
-	VK_CHECK_RESULT ( vkAllocateDescriptorSets ( logicalDevice, &allocInfo, &this->mDescriptorSet ));
-
-	// Update the descriptor set determining the shader binding points
-	// For every binding point used in a shader there needs to be one
-	// descriptor set matching that binding point
-
-	VkWriteDescriptorSet writeDescriptorSets [] = {
-		MOAIGfxStructVK::writeDescriptorSet ( this->mDescriptorSet, 0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, &this->mUniformsDescriptor ),
-		MOAIGfxStructVK::writeDescriptorSet ( this->mDescriptorSet, 1, VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, &this->mTextureDescriptor ),
-	};
-
-	vkUpdateDescriptorSets ( logicalDevice, 2, writeDescriptorSets, 0, NULL );
-}
-
-//----------------------------------------------------------------//
-void MOAIOneTriVK::SetupDescriptorSetLayout () {
-
-	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
-	MOAILogicalDeviceVK& logicalDevice = gfxMgr.GetLogicalDevice ();
-
-	// Setup layout of descriptors used in this example
-	// Basically connects the different shader stages to descriptors for binding uniform buffers, image samplers, etc.
-	// So every shader binding should map to one descriptor set layout binding
-
-	VkDescriptorSetLayoutBinding vertexUniformBinding = MOAIGfxStructVK::descriptorSetLayoutBinding ( 0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT );
-	VkDescriptorSetLayoutBinding fragmentTextureBinding = MOAIGfxStructVK::descriptorSetLayoutBinding ( 1, VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT );
-
-	VkDescriptorSetLayoutBinding layoutBindings [] = {
-		vertexUniformBinding,
-		fragmentTextureBinding,
-	};
-
-	VkDescriptorSetLayoutCreateInfo descriptorLayout = MOAIGfxStructVK::descriptorSetLayoutCreateInfo ( layoutBindings, 2 );
-	VK_CHECK_RESULT ( vkCreateDescriptorSetLayout ( logicalDevice, &descriptorLayout, NULL, &this->mDescriptorSetLayout ));
-
-	// Create the pipeline layout that is used to generate the rendering pipelines that are based on this descriptor set layout
-	// In a more complex scenario you would have different pipeline layouts for different descriptor set layouts that could be reused
-    VkPipelineLayoutCreateInfo pPipelineLayoutCreateInfo = MOAIGfxStructVK::pipelineLayoutCreateInfo ( &this->mDescriptorSetLayout );
-	VK_CHECK_RESULT ( vkCreatePipelineLayout ( logicalDevice, &pPipelineLayoutCreateInfo, NULL, &this->mPipelineLayout ));
-}
-
-//----------------------------------------------------------------//
 void MOAIOneTriVK::UpdateUniformBuffers ( u32 width, u32 height ) {
 
 	float aspect		= ( float )width / ( float )height;
@@ -385,36 +377,4 @@ void MOAIOneTriVK::UpdateUniformBuffers ( u32 width, u32 height ) {
 	memcpy ( mMatrixUniforms.modelMatrix, &modelMatrix, sizeof ( modelMatrix ));
 
 	this->mUniforms->MapAndCopy ( &this->mMatrixUniforms, sizeof ( this->mMatrixUniforms ));
-}
-
-//----------------------------------------------------------------//
-MOAIOneTriVK::MOAIOneTriVK () {
-
-	this->PrepareVertices ();
-	this->PrepareTexture ();
-	this->PrepareUniformBuffers ();
-	this->SetupDescriptorSetLayout ();
-	this->PreparePipeline ();
-	this->SetupDescriptorPool ();
-	this->SetupDescriptorSet ();
-}
-
-//----------------------------------------------------------------//
-MOAIOneTriVK::~MOAIOneTriVK () {
-
-	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
-	MOAILogicalDeviceVK& logicalDevice = gfxMgr.GetLogicalDevice ();
-
-	vkDestroyPipeline ( logicalDevice, this->mPipeline, NULL );
-	vkDestroyPipelineLayout ( logicalDevice, this->mPipelineLayout, NULL );
-	vkDestroyDescriptorSetLayout ( logicalDevice, this->mDescriptorSetLayout, NULL );
-	vkDestroyDescriptorPool ( logicalDevice, mDescriptorPool, NULL );
-
-	vkDestroyImageView ( logicalDevice, this->mTextureImageView, NULL );
-    vkDestroyImage ( logicalDevice, this->mTextureImage, NULL) ;
-    vkFreeMemory ( logicalDevice, this->mTextureImageMemory, NULL );
-
-	this->mVertices->Cleanup ();
-	this->mIndices->Cleanup ();
-	this->mUniforms->Cleanup ();
 }

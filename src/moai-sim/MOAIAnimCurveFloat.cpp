@@ -124,7 +124,7 @@ float MOAIAnimCurveFloat::GetValue ( float time ) const {
 //----------------------------------------------------------------//
 float MOAIAnimCurveFloat::GetValue ( const MOAIAnimKeySpan& span ) const {
 
-	MOAIAnimKey& key = this->mKeys [ span.mKeyID ];
+	const MOAIAnimKey& key = this->mKeys [ span.mKeyID ];
 	float v0 = this->mSamples [ span.mKeyID ];
 	
 	if ( span.mTime > 0.0f ) {

@@ -98,10 +98,10 @@ public:
 	size_t					Bless					();
 	bool					Check					( u32 check ) const;
 	void					Clear					();
-	size_t					Clip					( const ZLPlane2D& plane, ZLStream& clippedPolyVerts, ZLStream& clippedPolySizes );
-	size_t					Clip					( const ZLPlane2D& plane, ZLStream& clippedPolyVerts, ZLStream& clippedPolySizes, void* buffer, size_t bufferSize );
-	size_t					Clip					( const ZLPolygon2D& poly, const ZLAffine3D* mtx, ZLStream& clippedPolyVerts, ZLStream& clippedPolySizes );
-	size_t					Clip					( const ZLPolygon2D& poly, const ZLAffine3D* mtx, ZLStream& clippedPolyVerts, ZLStream& clippedPolySizes, void* buffer, size_t bufferSize );
+	size_t					Clip					( const ZLPlane2D& plane, ZLStream& clippedPolyVerts, ZLStream& clippedPolySizes ) const;
+	size_t					Clip					( const ZLPlane2D& plane, ZLStream& clippedPolyVerts, ZLStream& clippedPolySizes, void* buffer, size_t bufferSize ) const;
+	size_t					Clip					( const ZLPolygon2D& poly, const ZLAffine3D* mtx, ZLStream& clippedPolyVerts, ZLStream& clippedPolySizes ) const;
+	size_t					Clip					( const ZLPolygon2D& poly, const ZLAffine3D* mtx, ZLStream& clippedPolyVerts, ZLStream& clippedPolySizes, void* buffer, size_t bufferSize ) const;
 	//ZLSizeResult			ConcaveHull				( ZLStream& input, size_t nPoints, int maxEdges, int maxPasses, ZLReal minIndent );
 	ZLSizeResult			ConvexHull				( ZLStream& input, size_t nPoints, u32 sort = SORT_CSTDLIB );
 	void					Copy					( const ZLPolygon2D& src );

@@ -101,7 +101,7 @@ ZLVec3D MOAIAnimCurveVec::GetValue ( float time ) const {
 //----------------------------------------------------------------//
 ZLVec3D MOAIAnimCurveVec::GetValue ( const MOAIAnimKeySpan& span ) const {
 
-	MOAIAnimKey& key = this->mKeys [ span.mKeyID ];
+	const MOAIAnimKey& key = this->mKeys [ span.mKeyID ];
 	ZLVec3D v0 = this->mSamples [ span.mKeyID ];
 	
 	if ( span.mTime > 0.0f ) {

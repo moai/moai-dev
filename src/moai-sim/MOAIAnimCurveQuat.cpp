@@ -101,7 +101,7 @@ ZLQuaternion MOAIAnimCurveQuat::GetValue ( float time ) const {
 //----------------------------------------------------------------//
 ZLQuaternion MOAIAnimCurveQuat::GetValue ( const MOAIAnimKeySpan& span ) const {
 
-	MOAIAnimKey& key = this->mKeys [ span.mKeyID ];
+	const MOAIAnimKey& key = this->mKeys [ span.mKeyID ];
 	ZLQuaternion v0 = this->mSamples [ span.mKeyID ];
 	
 	if ( span.mTime > 0.0f ) {

@@ -644,7 +644,7 @@ public:
 //================================================================//
 
 //----------------------------------------------------------------//
-size_t ZLPolygon2D::Clip ( const ZLPlane2D& plane, ZLStream& clippedPolyVerts, ZLStream& clippedPolySizes ) {
+size_t ZLPolygon2D::Clip ( const ZLPlane2D& plane, ZLStream& clippedPolyVerts, ZLStream& clippedPolySizes ) const {
 
 	size_t bufferSize = this->GetSize () * sizeof ( GHVertex ) * 3;
 	void* buffer = alloca ( bufferSize );
@@ -653,7 +653,7 @@ size_t ZLPolygon2D::Clip ( const ZLPlane2D& plane, ZLStream& clippedPolyVerts, Z
 }
 
 //----------------------------------------------------------------//
-size_t ZLPolygon2D::Clip ( const ZLPlane2D& plane, ZLStream& clippedPolyVerts, ZLStream& clippedPolySizes, void* buffer, size_t bufferSize ) {
+size_t ZLPolygon2D::Clip ( const ZLPlane2D& plane, ZLStream& clippedPolyVerts, ZLStream& clippedPolySizes, void* buffer, size_t bufferSize ) const {
 
 	DEBUG_LOG ( "CLIP!\n" );
 	
@@ -719,7 +719,7 @@ size_t ZLPolygon2D::Clip ( const ZLPlane2D& plane, ZLStream& clippedPolyVerts, Z
 }
 
 //----------------------------------------------------------------//
-size_t ZLPolygon2D::Clip ( const ZLPolygon2D& poly, const ZLAffine3D* mtx, ZLStream& clippedPolyVerts, ZLStream& clippedPolySizes ) {
+size_t ZLPolygon2D::Clip ( const ZLPolygon2D& poly, const ZLAffine3D* mtx, ZLStream& clippedPolyVerts, ZLStream& clippedPolySizes ) const {
 
 	size_t bufferSize = this->GetSize () * sizeof ( GHVertex ) * 3;
 	void* buffer = alloca ( bufferSize );
@@ -728,7 +728,7 @@ size_t ZLPolygon2D::Clip ( const ZLPolygon2D& poly, const ZLAffine3D* mtx, ZLStr
 }
 
 //----------------------------------------------------------------//
-size_t ZLPolygon2D::Clip ( const ZLPolygon2D& poly, const ZLAffine3D* mtx, ZLStream& clippedPolyVerts, ZLStream& clippedPolySizes, void* buffer, size_t bufferSize ) {
+size_t ZLPolygon2D::Clip ( const ZLPolygon2D& poly, const ZLAffine3D* mtx, ZLStream& clippedPolyVerts, ZLStream& clippedPolySizes, void* buffer, size_t bufferSize ) const {
 
 	DEBUG_LOG ( "CLIP!\n" );
 	

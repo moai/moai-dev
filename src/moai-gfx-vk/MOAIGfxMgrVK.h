@@ -68,7 +68,7 @@ protected:
 
 	VkRenderPass                        mRenderPass; // Global render pass for frame buffer writes
 	ZLLeanArray < VkCommandBuffer >		mDrawCommandBuffers;
-	ZLLeanArray < VkFramebuffer >		mFrameBuffers;
+	ZLLeanArray < VkFramebuffer >		mFrameBuffers; // Allocate as needed? Bind to command buffer?
 	ZLLeanArray < VkFence >				mWaitFences;
 
 	VkSemaphore     					mPresentCompleteSemaphore;

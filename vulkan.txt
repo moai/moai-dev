@@ -1,0 +1,42 @@
+all resources - bound to command buffer resource set
+    track and free once buffer is submitted
+
+descriptor sets
+    pools for each layout
+    pools are fixed size (i.e. 8 or 16 per pool)
+    allocate more pools as needed
+
+SHADERS/MATERIALS specify LAYOUTS (descriptor and pipeline)
+    this makes sense, since shaders ultimately consume bound resources
+
+LAYOUTS determing pipeline creation
+    this makes sense, since pipelines are specified based on layouts
+    pipelines don't need to be re-created based on bindings
+
+MOAI GFX STATE MGR can specify global address slots for resources
+
+when MOAI GFX STATE MGR resources change, a new DESCRIPTOR SET is required
+    state manager grabs new DESCRIPTOR SETs on the fly
+    DESCRIPTOR SETs don't specify global source addresses
+
+UNIFORM BUFFERs need to be cached and bound with command buffers
+    reallocate if changed
+
+individual DESCRIPTORS live with resources
+
+possible to cache DESCRIPTOR SETS (and bindings) across multiple frames
+    i.e. don't reuse DESCRIPTOR SETS if their bindings haven't changed
+    so for a couple of frames, there will be as many DESCRIPTOR SETS as there
+        are combinations of bindings
+
+any operations not recorded in a command buffer need a copy of the object in question
+    such as DESCRIPTOR SETS
+
+per thread POOLS?
+
+DESCRIPTOR SET LAYOUT
+    specifies resource type per index
+    easy to hash
+
+PIPELINE LAYOUT
+    specified descriptor set layour per index

@@ -4,6 +4,7 @@
 #ifndef MOAIQUEUEVK_H
 #define MOAIQUEUEVK_H
 
+class MOAICommandBufferVK;
 class MOAILogicalDeviceVK;
 
 //================================================================//
@@ -27,8 +28,8 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	VkCommandBuffer		CreateCommandBuffer			( MOAILogicalDeviceVK& logicalDevice, bool begin = true, VkCommandBufferLevel level = VK_COMMAND_BUFFER_LEVEL_PRIMARY );
-	void				FlushAndFreeCommandBuffer	( MOAILogicalDeviceVK& logicalDevice, VkCommandBuffer commandBuffer, u64 timeout = VK_DEFAULT_FENCE_TIMEOUT );
+	void				CreateCommandBuffer			( MOAILogicalDeviceVK& logicalDevice, MOAICommandBufferVK& commandBuffer, bool begin = true, VkCommandBufferLevel level = VK_COMMAND_BUFFER_LEVEL_PRIMARY );
+	void				FlushAndFreeCommandBuffer	( MOAILogicalDeviceVK& logicalDevice, MOAICommandBufferVK& commandBuffer, u64 timeout = VK_DEFAULT_FENCE_TIMEOUT );
 						MOAIQueueVK 				();
 						~MOAIQueueVK				();
 	VkResult			PresentKHR					( MOAILogicalDeviceVK& logicalDevice, const VkPresentInfoKHR& presentInfo );

@@ -750,6 +750,17 @@
 		89E9D7871743F7EE00033CDD /* MOAIVersion.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89E9D7841743F7EE00033CDD /* MOAIVersion.cpp */; };
 		89E9D7881743F7EE00033CDD /* MOAIVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 89E9D7851743F7EE00033CDD /* MOAIVersion.h */; };
 		89E9D7891743F7EE00033CDD /* MOAIVersion.h in Headers */ = {isa = PBXBuildFile; fileRef = 89E9D7851743F7EE00033CDD /* MOAIVersion.h */; };
+		CD06252C233C328F0039EC8F /* MOAICommandBufferVK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD06252A233C328F0039EC8F /* MOAICommandBufferVK.cpp */; };
+		CD06252D233C328F0039EC8F /* MOAICommandBufferVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CD06252B233C328F0039EC8F /* MOAICommandBufferVK.h */; };
+		CD062530233C7DEC0039EC8F /* MOAIPipelineLayoutVK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD06252E233C7DEC0039EC8F /* MOAIPipelineLayoutVK.cpp */; };
+		CD062531233C7DEC0039EC8F /* MOAIPipelineLayoutVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CD06252F233C7DEC0039EC8F /* MOAIPipelineLayoutVK.h */; };
+		CD062536233C7DFB0039EC8F /* MOAIDescriptorSetLayoutVK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD062532233C7DFB0039EC8F /* MOAIDescriptorSetLayoutVK.cpp */; };
+		CD062537233C7DFB0039EC8F /* MOAIDescriptorSetLayoutVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CD062533233C7DFB0039EC8F /* MOAIDescriptorSetLayoutVK.h */; };
+		CD062538233C7DFB0039EC8F /* MOAIDescriptorSetVK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD062534233C7DFB0039EC8F /* MOAIDescriptorSetVK.cpp */; };
+		CD062539233C7DFB0039EC8F /* MOAIDescriptorSetVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CD062535233C7DFB0039EC8F /* MOAIDescriptorSetVK.h */; };
+		CD06253C233C80FF0039EC8F /* MOAIDescriptorSetLayoutNameVK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD06253A233C80FF0039EC8F /* MOAIDescriptorSetLayoutNameVK.cpp */; };
+		CD06253D233C80FF0039EC8F /* MOAIDescriptorSetLayoutNameVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CD06253B233C80FF0039EC8F /* MOAIDescriptorSetLayoutNameVK.h */; };
+		CD06253F233C8E280039EC8F /* MOAILogicalDeviceClientVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CD06253E233C8E280039EC8F /* MOAILogicalDeviceClientVK.h */; };
 		CD08DBD71E690B9D00443255 /* MOAIFreeTypeFontReader_apple.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD08DBD61E690B9D00443255 /* MOAIFreeTypeFontReader_apple.mm */; };
 		CD08DBD81E690B9D00443255 /* MOAIFreeTypeFontReader_apple.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD08DBD61E690B9D00443255 /* MOAIFreeTypeFontReader_apple.mm */; };
 		CD0BB63E1B0D22AC00399FCB /* MOAILuaUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD0BB63C1B0D22AC00399FCB /* MOAILuaUtil.cpp */; };
@@ -5566,6 +5577,17 @@
 		C555156317D6216B00AA324C /* MOAIVecPathGraph.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVecPathGraph.h; sourceTree = "<group>"; };
 		CD04ACB414725568009C20E5 /* libmoai-ios-zl-core.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-zl-core.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD04AE7F1472557F009C20E5 /* libzl-osx-core.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libzl-osx-core.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		CD06252A233C328F0039EC8F /* MOAICommandBufferVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAICommandBufferVK.cpp; path = "moai-gfx-vk/MOAICommandBufferVK.cpp"; sourceTree = "<group>"; };
+		CD06252B233C328F0039EC8F /* MOAICommandBufferVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAICommandBufferVK.h; path = "moai-gfx-vk/MOAICommandBufferVK.h"; sourceTree = "<group>"; };
+		CD06252E233C7DEC0039EC8F /* MOAIPipelineLayoutVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIPipelineLayoutVK.cpp; path = "moai-gfx-vk/MOAIPipelineLayoutVK.cpp"; sourceTree = "<group>"; };
+		CD06252F233C7DEC0039EC8F /* MOAIPipelineLayoutVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIPipelineLayoutVK.h; path = "moai-gfx-vk/MOAIPipelineLayoutVK.h"; sourceTree = "<group>"; };
+		CD062532233C7DFB0039EC8F /* MOAIDescriptorSetLayoutVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIDescriptorSetLayoutVK.cpp; path = "moai-gfx-vk/MOAIDescriptorSetLayoutVK.cpp"; sourceTree = "<group>"; };
+		CD062533233C7DFB0039EC8F /* MOAIDescriptorSetLayoutVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIDescriptorSetLayoutVK.h; path = "moai-gfx-vk/MOAIDescriptorSetLayoutVK.h"; sourceTree = "<group>"; };
+		CD062534233C7DFB0039EC8F /* MOAIDescriptorSetVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIDescriptorSetVK.cpp; path = "moai-gfx-vk/MOAIDescriptorSetVK.cpp"; sourceTree = "<group>"; };
+		CD062535233C7DFB0039EC8F /* MOAIDescriptorSetVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIDescriptorSetVK.h; path = "moai-gfx-vk/MOAIDescriptorSetVK.h"; sourceTree = "<group>"; };
+		CD06253A233C80FF0039EC8F /* MOAIDescriptorSetLayoutNameVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIDescriptorSetLayoutNameVK.cpp; path = "moai-gfx-vk/MOAIDescriptorSetLayoutNameVK.cpp"; sourceTree = "<group>"; };
+		CD06253B233C80FF0039EC8F /* MOAIDescriptorSetLayoutNameVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIDescriptorSetLayoutNameVK.h; path = "moai-gfx-vk/MOAIDescriptorSetLayoutNameVK.h"; sourceTree = "<group>"; };
+		CD06253E233C8E280039EC8F /* MOAILogicalDeviceClientVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAILogicalDeviceClientVK.h; path = "moai-gfx-vk/MOAILogicalDeviceClientVK.h"; sourceTree = "<group>"; };
 		CD07C10113A14BC400C9386C /* bitwise.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = bitwise.c; path = "../../3rdparty/libogg-1.2.2/src/bitwise.c"; sourceTree = SOURCE_ROOT; };
 		CD07C10213A14BC400C9386C /* framing.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = framing.c; path = "../../3rdparty/libogg-1.2.2/src/framing.c"; sourceTree = SOURCE_ROOT; };
 		CD07C10713A14DAE00C9386C /* ogg.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ogg.h; path = "../../3rdparty/libogg-1.2.2/include/ogg/ogg.h"; sourceTree = SOURCE_ROOT; };
@@ -13207,17 +13229,28 @@
 		CDD8554C22C5ABC200F78DF0 /* vulkan */ = {
 			isa = PBXGroup;
 			children = (
+				CD06252A233C328F0039EC8F /* MOAICommandBufferVK.cpp */,
+				CD06252B233C328F0039EC8F /* MOAICommandBufferVK.h */,
+				CD06253A233C80FF0039EC8F /* MOAIDescriptorSetLayoutNameVK.cpp */,
+				CD06253B233C80FF0039EC8F /* MOAIDescriptorSetLayoutNameVK.h */,
+				CD062532233C7DFB0039EC8F /* MOAIDescriptorSetLayoutVK.cpp */,
+				CD062533233C7DFB0039EC8F /* MOAIDescriptorSetLayoutVK.h */,
+				CD062534233C7DFB0039EC8F /* MOAIDescriptorSetVK.cpp */,
+				CD062535233C7DFB0039EC8F /* MOAIDescriptorSetVK.h */,
 				CDD8556822CAC5FB00F78DF0 /* MOAIGfxInstanceVK.cpp */,
 				CDD8556022C94F7900F78DF0 /* MOAIGfxInstanceVK.h */,
 				CDD8554D22C5ABDD00F78DF0 /* MOAIGfxStructVK.h */,
 				CDD8555922C7E4D100F78DF0 /* MOAIGfxUtilVK.cpp */,
 				CDD8555122C67FF500F78DF0 /* MOAIGfxUtilVK.h */,
+				CD06253E233C8E280039EC8F /* MOAILogicalDeviceClientVK.h */,
 				CDD8556422CAA28300F78DF0 /* MOAILogicalDeviceVK.cpp */,
 				CDD8556522CAA28300F78DF0 /* MOAILogicalDeviceVK.h */,
 				CD1711D122F41DAC00381882 /* MOAIOneTriVK.cpp */,
 				CD1711D222F41DAC00381882 /* MOAIOneTriVK.h */,
 				CDD8556222C992CD00F78DF0 /* MOAIPhysicalDeviceVK.cpp */,
 				CDD8555E22C9439000F78DF0 /* MOAIPhysicalDeviceVK.h */,
+				CD06252E233C7DEC0039EC8F /* MOAIPipelineLayoutVK.cpp */,
+				CD06252F233C7DEC0039EC8F /* MOAIPipelineLayoutVK.h */,
 				CD1711C722F3893F00381882 /* MOAIQueueVK.cpp */,
 				CD1711C822F3893F00381882 /* MOAIQueueVK.h */,
 				CDD8555522C7E44700F78DF0 /* MOAISurfaceVK.cpp */,
@@ -15692,12 +15725,15 @@
 				CD9AB5A422C41C7C0061A87F /* MOAIVertexBufferVK.h in Headers */,
 				CD9AB59222C41C7C0061A87F /* MOAIImageTextureVK.h in Headers */,
 				CD9AB58122C41C7C0061A87F /* MOAIGfxBufferVK.h in Headers */,
+				CD062539233C7DFB0039EC8F /* MOAIDescriptorSetVK.h in Headers */,
 				CD9AB59A22C41C7C0061A87F /* MOAIShaderProgramVK.h in Headers */,
 				CD1712C422F64C9300381882 /* MOAIOneTriShaderVK.vert.spv.h in Headers */,
 				CD9AB59622C41C7C0061A87F /* MOAIShaderVK.h in Headers */,
 				CDD8556722CAA28300F78DF0 /* MOAILogicalDeviceVK.h in Headers */,
+				CD062531233C7DEC0039EC8F /* MOAIPipelineLayoutVK.h in Headers */,
 				CD9AB59822C41C7C0061A87F /* MOAIShaderMgrVK.h in Headers */,
 				CD9AB58D22C41C7C0061A87F /* MOAIGfxMgrVK.h in Headers */,
+				CD062537233C7DFB0039EC8F /* MOAIDescriptorSetLayoutVK.h in Headers */,
 				CD9AB5AA22C41C7C0061A87F /* pch.h in Headers */,
 				CD9AB58B22C41C7C0061A87F /* MOAIGfxMgrVK_VertexCacheVK.h in Headers */,
 				CDD8555F22C9439000F78DF0 /* MOAIPhysicalDeviceVK.h in Headers */,
@@ -15714,14 +15750,17 @@
 				CD9AB5A022C41C7C0061A87F /* MOAITextureVK.h in Headers */,
 				CD1711CA22F3893F00381882 /* MOAIQueueVK.h in Headers */,
 				CD1711D422F41DAC00381882 /* MOAIOneTriVK.h in Headers */,
+				CD06253F233C8E280039EC8F /* MOAILogicalDeviceClientVK.h in Headers */,
 				CD9AB58322C41C7C0061A87F /* MOAIGfxMgrVK_GPUCacheVK.h in Headers */,
 				CD9AB5A622C41C7C0061A87F /* MOAIVertexFormatVK.h in Headers */,
 				CD9AB57922C41C7C0061A87F /* headers.h in Headers */,
 				CD9AB57F22C41C7C0061A87F /* MOAIFrameBufferTextureVK.h in Headers */,
 				CD9AB58722C41C7C0061A87F /* MOAIGfxMgrVK_RenderTreeVK.h in Headers */,
 				CD1712C222F64C9300381882 /* MOAIDeck2DShaderVK.vert.spv.h in Headers */,
+				CD06253D233C80FF0039EC8F /* MOAIDescriptorSetLayoutNameVK.h in Headers */,
 				CD9AB59E22C41C7C0061A87F /* MOAITexture2DVK.h in Headers */,
 				CDD8554F22C5ABDD00F78DF0 /* MOAIGfxStructVK.h in Headers */,
+				CD06252D233C328F0039EC8F /* MOAICommandBufferVK.h in Headers */,
 				CDD8555222C67FF500F78DF0 /* MOAIGfxUtilVK.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -19644,8 +19683,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD06252C233C328F0039EC8F /* MOAICommandBufferVK.cpp in Sources */,
 				CD9AB59D22C41C7C0061A87F /* MOAITexture2DVK.cpp in Sources */,
 				CD9AB59922C41C7C0061A87F /* MOAIShaderProgramVK.cpp in Sources */,
+				CD06253C233C80FF0039EC8F /* MOAIDescriptorSetLayoutNameVK.cpp in Sources */,
 				CDD8556922CAC5FB00F78DF0 /* MOAIGfxInstanceVK.cpp in Sources */,
 				CD9AB5A922C41C7C0061A87F /* pch.cpp in Sources */,
 				CD1711D322F41DAC00381882 /* MOAIOneTriVK.cpp in Sources */,
@@ -19657,6 +19698,8 @@
 				CDD8555822C7E45C00F78DF0 /* MOAISwapChainVK.cpp in Sources */,
 				CD9AB58022C41C7C0061A87F /* MOAIGfxBufferVK.cpp in Sources */,
 				CD9AB57E22C41C7C0061A87F /* MOAIFrameBufferTextureVK.cpp in Sources */,
+				CD062530233C7DEC0039EC8F /* MOAIPipelineLayoutVK.cpp in Sources */,
+				CD062538233C7DFB0039EC8F /* MOAIDescriptorSetVK.cpp in Sources */,
 				CD9AB59B22C41C7C0061A87F /* MOAIShaderUniformVK.cpp in Sources */,
 				CD9AB58A22C41C7C0061A87F /* MOAIGfxMgrVK_VertexCacheVK.cpp in Sources */,
 				CD9AB57C22C41C7C0061A87F /* MOAIFrameBufferVK.cpp in Sources */,
@@ -19672,6 +19715,7 @@
 				CD9AB59722C41C7C0061A87F /* MOAIShaderMgrVK.cpp in Sources */,
 				CD9AB59522C41C7C0061A87F /* MOAIShaderVK.cpp in Sources */,
 				CD9AB58622C41C7C0061A87F /* MOAIGfxMgrVK_RenderTreeVK.cpp in Sources */,
+				CD062536233C7DFB0039EC8F /* MOAIDescriptorSetLayoutVK.cpp in Sources */,
 				CD9AB59322C41C7C0061A87F /* MOAIIndexBufferVK.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

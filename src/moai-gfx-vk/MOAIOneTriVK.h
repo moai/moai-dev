@@ -4,6 +4,8 @@
 #ifndef MOAIONETRIVK_H
 #define MOAIONETRIVK_H
 
+class MOAIDescriptorSetLayoutVK;
+class MOAIDescriptorSetVK;
 class MOAIGfxBufferVK;
 class MOAIShaderProgramVK;
 class MOAIShaderVK;
@@ -51,20 +53,16 @@ private:
 		float viewMatrix [ 16 ];
 	} mMatrixUniforms;
 
-	VkPipelineLayout		mPipelineLayout;
-	VkPipeline				mPipeline;
-	VkDescriptorPool		mDescriptorPool;
-	VkDescriptorSetLayout	mDescriptorSetLayout;
-	VkDescriptorSet			mDescriptorSet;
+	VkPipelineLayout							mPipelineLayout;
+	VkPipeline									mPipeline;
+	ZLStrongPtr < MOAIDescriptorSetLayoutVK >	mDescriptorSetLayout;
+	MOAIDescriptorSetVK*						mDescriptorSet;
 
 	//----------------------------------------------------------------//
 	void			PreparePipeline				();
 	void			PrepareTexture				();
 	void			PrepareUniformBuffers		();
 	void			PrepareVertices				( bool useStagingBuffers = true );
-	void			SetupDescriptorPool			();
-	void			SetupDescriptorSet			();
-	void			SetupDescriptorSetLayout	();
 	void			UpdateUniformBuffers		( u32 width, u32 height );
 
 public:
