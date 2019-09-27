@@ -15,7 +15,7 @@
 //================================================================//
 class MOAILogicalDeviceVK :
 	public MOAIPhysicalDeviceClientVK,
-	public MOAIInitializerVK < MOAILogicalDeviceVK > {
+	public MOAILifecycleProviderVK < MOAILogicalDeviceVK > {
 private:
 
 	friend class MOAIPhysicalDeviceVK;
@@ -45,7 +45,7 @@ private:
 	void			InitQueue										( MOAIQueueVK& queueAndPool, u32 index );
 
 	//----------------------------------------------------------------//
-	void			MOAIAbstractInitializerClientVK_Finalize		();
+	void			MOAIAbstractLifecycleClientVK_Finalize		();
 
 public:
 	

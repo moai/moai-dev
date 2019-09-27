@@ -25,7 +25,7 @@ private:
 	void			Invalidate										();
 
 	//----------------------------------------------------------------//
-	void			MOAIAbstractInitializerClientVK_Finalize		();
+	void			MOAIAbstractLifecycleClientVK_Finalize		();
 
 public:
 

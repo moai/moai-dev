@@ -4,7 +4,7 @@
 #ifndef MOAIDESCRIPTORSETLAYOUTVK_H
 #define MOAIDESCRIPTORSETLAYOUTVK_H
 
-#include <moai-gfx-vk/MOAIInitializerVK.h>
+#include <moai-gfx-vk/MOAILifecycleProviderVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutNameVK.h>
 #include <moai-gfx-vk/MOAILogicalDeviceVK.h>
 
@@ -16,7 +16,7 @@ class MOAIDescriptorSetVK;
 class MOAIDescriptorSetLayoutVK :
 	public ZLRefCountedObject,
 	public MOAILogicalDeviceClientVK,
-	public MOAIInitializerVK < MOAIDescriptorSetLayoutVK > {
+	public MOAILifecycleProviderVK < MOAIDescriptorSetLayoutVK > {
 private:
 
 	static const ZLSize MAX_DESCRIPTOR_SETS = 16;
@@ -29,7 +29,7 @@ private:
 	STLSet < MOAIDescriptorSetVK* >			mUnpinnedSets;
 
 	//----------------------------------------------------------------//
-	void						MOAIAbstractInitializerClientVK_Finalize		();
+	void						MOAIAbstractLifecycleClientVK_Finalize		();
 
 public:
 
@@ -63,13 +63,13 @@ public:
 // MOAIDescriptorSetLayoutClientVK
 //================================================================//
 class MOAIDescriptorSetLayoutClientVK :
-	public MOAIAbstractInitializerClientVK < MOAIDescriptorSetLayoutVK > {
+	public MOAIAbstractLifecycleClientVK < MOAIDescriptorSetLayoutVK > {
 public:
 
 	//----------------------------------------------------------------//
 	MOAIDescriptorSetLayoutVK& GetLayout () {
 	
-		MOAIDescriptorSetLayoutVK* layout = this->GetInitializer ();
+		MOAIDescriptorSetLayoutVK* layout = this->GetLifecycleProvider ();
 		assert ( layout );
 		return *layout;
 	}

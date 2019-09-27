@@ -1,102 +1,102 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MOAIINITIALIZERVK_H
-#define MOAIINITIALIZERVK_H
+#ifndef MOAILIFECYCLEPROVIDERVK_H
+#define MOAILIFECYCLEPROVIDERVK_H
 
-template < typename INITIALIZER_TYPE > class MOAIInitializerVK;
+template < typename PROVIDER_TYPE > class MOAILifecycleProviderVK;
 
 //================================================================//
-// MOAIAbstractInitializerClientVK
+// MOAIAbstractLifecycleClientVK
 //================================================================//
-template < typename INITIALIZER_TYPE >
-class MOAIAbstractInitializerClientVK {
+template < typename PROVIDER_TYPE >
+class MOAIAbstractLifecycleClientVK {
 private:
 
-	friend class MOAIInitializerVK < INITIALIZER_TYPE >;
+	friend class MOAILifecycleProviderVK < PROVIDER_TYPE >;
 
-	ZLLeanLink < MOAIAbstractInitializerClientVK* > mClientListLink;
-	INITIALIZER_TYPE* mInitializer;
-
-	//----------------------------------------------------------------//
-	virtual void	MOAIAbstractInitializerClientVK_Finalize		() = 0;
+	ZLLeanLink < MOAIAbstractLifecycleClientVK* > mClientListLink;
+	PROVIDER_TYPE* mProvider;
 
 	//----------------------------------------------------------------//
-	void SetInitializer ( INITIALIZER_TYPE& initializer ) {
-		MOAIInitializerVK < INITIALIZER_TYPE >* check = &initializer; // trigger an error if wrong type
+	virtual void	MOAIAbstractLifecycleClientVK_Finalize		() = 0;
+
+	//----------------------------------------------------------------//
+	void SetInitializer ( PROVIDER_TYPE& provider ) {
+		MOAILifecycleProviderVK < PROVIDER_TYPE >* check = &provider; // trigger an error if wrong type
 		
 		// not strictly needed; just here to do something with 'check'
 		if ( check ) {
-			this->mInitializer = initializer;
+			this->mProvider = provider;
 		}
 	}
 
 protected:
 
 	//----------------------------------------------------------------//
-	MOAIAbstractInitializerClientVK () :
+	MOAIAbstractLifecycleClientVK () :
 		mClientListLink ( this ),
-		mInitializer ( NULL ) {
+		mProvider ( NULL ) {
 	}
 
 public:
 
-	GET ( INITIALIZER_TYPE*, Initializer, mInitializer )
+	GET ( PROVIDER_TYPE*, LifecycleProvider, mProvider )
 
 	//----------------------------------------------------------------//
-	MOAIAbstractInitializerClientVK < INITIALIZER_TYPE >& operator = ( const MOAIAbstractInitializerClientVK < INITIALIZER_TYPE >& other ) {
-		assert ( other.mInitializer == NULL );
+	MOAIAbstractLifecycleClientVK < PROVIDER_TYPE >& operator = ( const MOAIAbstractLifecycleClientVK < PROVIDER_TYPE >& other ) {
+		assert ( other.mProvider == NULL );
 		return *this;
 	}
 
 	//----------------------------------------------------------------//
-	MOAIAbstractInitializerClientVK ( const MOAIAbstractInitializerClientVK < INITIALIZER_TYPE >& other ) :
+	MOAIAbstractLifecycleClientVK ( const MOAIAbstractLifecycleClientVK < PROVIDER_TYPE >& other ) :
 		mClientListLink ( this ),
-		mInitializer ( NULL ) {
-		assert ( other.mInitializer == NULL );
+		mProvider ( NULL ) {
+		assert ( other.mProvider == NULL );
 	}
 
 	//----------------------------------------------------------------//
-	~MOAIAbstractInitializerClientVK () {
-		assert ( this->mInitializer == NULL );
+	~MOAIAbstractLifecycleClientVK () {
+		assert ( this->mProvider == NULL );
 	}
 	
 	//----------------------------------------------------------------//
 	void Finalize () {
-		if ( this->mInitializer ) {
-			this->mInitializer->FinalizeClient ( *this );
+		if ( this->mProvider ) {
+			this->mProvider->FinalizeClient ( *this );
 		}
 	}
 };
 
 //================================================================//
-// MOAIInitializerVK
+// MOAILifecycleProviderVK
 //================================================================//
-template < typename INITIALIZER_TYPE >
-class MOAIInitializerVK {
+template < typename PROVIDER_TYPE >
+class MOAILifecycleProviderVK {
 protected:
 
-	ZLLeanList < MOAIAbstractInitializerClientVK < INITIALIZER_TYPE >* >	mClients;
+	ZLLeanList < MOAIAbstractLifecycleClientVK < PROVIDER_TYPE >* >	mClients;
 	
 public:
 
 	//----------------------------------------------------------------//
-	void AddClient ( INITIALIZER_TYPE& self, MOAIAbstractInitializerClientVK < INITIALIZER_TYPE >& client ) {
+	void AddClient ( PROVIDER_TYPE& self, MOAIAbstractLifecycleClientVK < PROVIDER_TYPE >& client ) {
 	
-		assert ( client.mInitializer == NULL );
+		assert ( client.mProvider == NULL );
 		this->mClients.PushBack ( client.mClientListLink );
-		client.mInitializer = &self;
+		client.mProvider = &self;
 	}
 
 	//----------------------------------------------------------------//
-	void FinalizeClient ( MOAIAbstractInitializerClientVK < INITIALIZER_TYPE >& client ) {
+	void FinalizeClient ( MOAIAbstractLifecycleClientVK < PROVIDER_TYPE >& client ) {
 	
-		assert ( client.mInitializer != NULL );
+		assert ( client.mProvider != NULL );
 		assert ( client.mClientListLink.InList ( this->mClients ));
 	
 		ZLSize count = this->mClients.Count ();
 		assert ( count > 0 );
-		client.MOAIAbstractInitializerClientVK_Finalize ();
+		client.MOAIAbstractLifecycleClientVK_Finalize ();
 		assert ( this->mClients.Count () < count ); // make sure client was actually removed from list
 	}
 	
@@ -108,22 +108,22 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	MOAIInitializerVK () {
+	MOAILifecycleProviderVK () {
 	}
 	
 	//----------------------------------------------------------------//
-	~MOAIInitializerVK () {
+	~MOAILifecycleProviderVK () {
 		assert ( this->mClients.Count () == 0 );
 	}
 	
 	//----------------------------------------------------------------//
-	void RemoveClient ( MOAIAbstractInitializerClientVK < INITIALIZER_TYPE >& client ) {
+	void RemoveClient ( MOAIAbstractLifecycleClientVK < PROVIDER_TYPE >& client ) {
 		
-		assert ( client.mInitializer != NULL );
+		assert ( client.mProvider != NULL );
 		assert ( client.mClientListLink.InList ( this->mClients ));
 		
 		this->mClients.Remove ( client.mClientListLink );
-		client.mInitializer = NULL;
+		client.mProvider = NULL;
 	}
 };
 

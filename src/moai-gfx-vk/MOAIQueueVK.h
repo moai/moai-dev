@@ -14,13 +14,13 @@ class MOAILogicalDeviceVK;
 //================================================================//
 class MOAIQueueVK :
 	public MOAILogicalDeviceClientVK,
-	public MOAIInitializerVK < MOAIQueueVK > {
+	public MOAILifecycleProviderVK < MOAIQueueVK > {
 private:
 
 	friend class MOAILogicalDeviceVK;
 	
 	//----------------------------------------------------------------//
-	void			MOAIAbstractInitializerClientVK_Finalize		();
+	void			MOAIAbstractLifecycleClientVK_Finalize		();
 	
 public:
 
@@ -48,13 +48,13 @@ public:
 // MOAIQueueClientVK
 //================================================================//
 class MOAIQueueClientVK :
-	public MOAIAbstractInitializerClientVK < MOAIQueueVK > {
+	public MOAIAbstractLifecycleClientVK < MOAIQueueVK > {
 public:
 
 	//----------------------------------------------------------------//
 	MOAIQueueVK& GetQueue () {
 	
-		MOAIQueueVK* queue = this->GetInitializer ();
+		MOAIQueueVK* queue = this->GetLifecycleProvider ();
 		assert ( queue );
 		return *queue;
 	}

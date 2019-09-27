@@ -96,7 +96,7 @@ VkResult MOAIQueueVK::WaitIdle () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIQueueVK::MOAIAbstractInitializerClientVK_Finalize () {
+void MOAIQueueVK::MOAIAbstractLifecycleClientVK_Finalize () {
 
 	this->FinalizeClients ();
 	

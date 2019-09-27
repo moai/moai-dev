@@ -140,7 +140,7 @@ MOAIDescriptorSetVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSet () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetLayoutVK::MOAIAbstractInitializerClientVK_Finalize () {
+void MOAIDescriptorSetLayoutVK::MOAIAbstractLifecycleClientVK_Finalize () {
 
 	this->FinalizeClients ();
 	

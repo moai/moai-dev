@@ -5,7 +5,7 @@
 #define MOAIPHYSICALDEVICEVK_H
 
 #include <vector>
-#include <moai-gfx-vk/MOAIInitializerVK.h>
+#include <moai-gfx-vk/MOAILifecycleProviderVK.h>
 #include <moai-gfx-vk/MOAIGfxInstanceVK.h>
 #include <moai-gfx-vk/MOAISurfaceVK.h>
 
@@ -43,7 +43,7 @@ public:
 // MOAIPhysicalDeviceVK
 //================================================================//
 class MOAIPhysicalDeviceVK :
-	public MOAIInitializerVK < MOAIPhysicalDeviceVK > {
+	public MOAILifecycleProviderVK < MOAIPhysicalDeviceVK > {
 private:
 
 	typedef const VkCompositeAlphaFlagBitsKHR* AlphaRank;
@@ -136,13 +136,13 @@ public:
 // MOAIPhysicalDeviceClientVK
 //================================================================//
 class MOAIPhysicalDeviceClientVK :
-	public MOAIAbstractInitializerClientVK < MOAIPhysicalDeviceVK > {
+	public MOAIAbstractLifecycleClientVK < MOAIPhysicalDeviceVK > {
 public:
 
 	//----------------------------------------------------------------//
 	MOAIPhysicalDeviceVK& GetPhysicalDevice () {
 	
-		MOAIPhysicalDeviceVK* physicalDevice = this->GetInitializer ();
+		MOAIPhysicalDeviceVK* physicalDevice = this->GetLifecycleProvider ();
 		assert ( physicalDevice );
 		return *physicalDevice;
 	}

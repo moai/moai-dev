@@ -188,7 +188,7 @@ MOAILogicalDeviceVK::~MOAILogicalDeviceVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAILogicalDeviceVK::MOAIAbstractInitializerClientVK_Finalize () {
+void MOAILogicalDeviceVK::MOAIAbstractLifecycleClientVK_Finalize () {
 
 	this->FinalizeClients ();
 	vkDestroyDevice ( this->mDevice, NULL );

@@ -49,7 +49,7 @@ void MOAICommandBufferVK::UnpinResources () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAICommandBufferVK::MOAIAbstractInitializerClientVK_Finalize () {
+void MOAICommandBufferVK::MOAIAbstractLifecycleClientVK_Finalize () {
 
 	MOAIQueueVK& queue = this->GetQueue ();
 	vkFreeCommandBuffers ( queue.GetLogicalDevice (), queue.mPool, 1, &this->mCommandBuffer );

@@ -115,7 +115,7 @@ void MOAIDescriptorSetVK::MOAIAbstractCommandBufferResourceVK_Unpin () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetVK::MOAIAbstractInitializerClientVK_Finalize () {
+void MOAIDescriptorSetVK::MOAIAbstractLifecycleClientVK_Finalize () {
 
 	this->GetLayout ().InvalidateDescriptorSet ( *this );
 }

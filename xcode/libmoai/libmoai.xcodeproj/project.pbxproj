@@ -4483,7 +4483,7 @@
 		CDEEC77E1C7BCEDC0014CC3F /* ZLResult.h in Headers */ = {isa = PBXBuildFile; fileRef = CDEEC77C1C7BCEDC0014CC3F /* ZLResult.h */; };
 		CDEF5065233D57E20079D8AC /* MOAIAbstractCommandBufferResourceVK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDEF5063233D57E20079D8AC /* MOAIAbstractCommandBufferResourceVK.cpp */; };
 		CDEF5066233D57E20079D8AC /* MOAIAbstractCommandBufferResourceVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CDEF5064233D57E20079D8AC /* MOAIAbstractCommandBufferResourceVK.h */; };
-		CDEF5068233D90DA0079D8AC /* MOAIInitializerVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CDEF5067233D90DA0079D8AC /* MOAIInitializerVK.h */; };
+		CDEF5068233D90DA0079D8AC /* MOAILifecycleProviderVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CDEF5067233D90DA0079D8AC /* MOAILifecycleProviderVK.h */; };
 		CDEFD56A181ECB3E0058D772 /* MOAITextLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDEFD55C181ECB3E0058D772 /* MOAITextLabel.cpp */; };
 		CDEFD56B181ECB3E0058D772 /* MOAITextLabel.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDEFD55C181ECB3E0058D772 /* MOAITextLabel.cpp */; };
 		CDEFD56C181ECB3E0058D772 /* MOAITextLabel.h in Headers */ = {isa = PBXBuildFile; fileRef = CDEFD55D181ECB3E0058D772 /* MOAITextLabel.h */; };
@@ -7962,7 +7962,7 @@
 		CDEEC77C1C7BCEDC0014CC3F /* ZLResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLResult.h; sourceTree = "<group>"; };
 		CDEF5063233D57E20079D8AC /* MOAIAbstractCommandBufferResourceVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIAbstractCommandBufferResourceVK.cpp; path = "moai-gfx-vk/MOAIAbstractCommandBufferResourceVK.cpp"; sourceTree = "<group>"; };
 		CDEF5064233D57E20079D8AC /* MOAIAbstractCommandBufferResourceVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIAbstractCommandBufferResourceVK.h; path = "moai-gfx-vk/MOAIAbstractCommandBufferResourceVK.h"; sourceTree = "<group>"; };
-		CDEF5067233D90DA0079D8AC /* MOAIInitializerVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIInitializerVK.h; path = "moai-gfx-vk/MOAIInitializerVK.h"; sourceTree = "<group>"; };
+		CDEF5067233D90DA0079D8AC /* MOAILifecycleProviderVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAILifecycleProviderVK.h; path = "moai-gfx-vk/MOAILifecycleProviderVK.h"; sourceTree = "<group>"; };
 		CDEFD55C181ECB3E0058D772 /* MOAITextLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITextLabel.cpp; sourceTree = "<group>"; };
 		CDEFD55D181ECB3E0058D772 /* MOAITextLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITextLabel.h; sourceTree = "<group>"; };
 		CDEFD55E181ECB3E0058D772 /* MOAITextLayout.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITextLayout.cpp; sourceTree = "<group>"; };
@@ -13250,7 +13250,7 @@
 				CDD8554D22C5ABDD00F78DF0 /* MOAIGfxStructVK.h */,
 				CDD8555922C7E4D100F78DF0 /* MOAIGfxUtilVK.cpp */,
 				CDD8555122C67FF500F78DF0 /* MOAIGfxUtilVK.h */,
-				CDEF5067233D90DA0079D8AC /* MOAIInitializerVK.h */,
+				CDEF5067233D90DA0079D8AC /* MOAILifecycleProviderVK.h */,
 				CDBF98E8233E1F33003F430D /* MOAILogicalDeviceClientVK.h */,
 				CDD8556422CAA28300F78DF0 /* MOAILogicalDeviceVK.cpp */,
 				CDD8556522CAA28300F78DF0 /* MOAILogicalDeviceVK.h */,
@@ -15761,7 +15761,7 @@
 				CD9AB5A022C41C7C0061A87F /* MOAITextureVK.h in Headers */,
 				CD1711CA22F3893F00381882 /* MOAIQueueVK.h in Headers */,
 				CD1711D422F41DAC00381882 /* MOAIOneTriVK.h in Headers */,
-				CDEF5068233D90DA0079D8AC /* MOAIInitializerVK.h in Headers */,
+				CDEF5068233D90DA0079D8AC /* MOAILifecycleProviderVK.h in Headers */,
 				CD9AB58322C41C7C0061A87F /* MOAIGfxMgrVK_GPUCacheVK.h in Headers */,
 				CD9AB5A622C41C7C0061A87F /* MOAIVertexFormatVK.h in Headers */,
 				CD9AB57922C41C7C0061A87F /* headers.h in Headers */,

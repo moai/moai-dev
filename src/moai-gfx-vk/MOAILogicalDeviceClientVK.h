@@ -4,7 +4,7 @@
 #ifndef MOAILOGICALDEVICEVKCLIENT_H
 #define MOAILOGICALDEVICEVKCLIENT_H
 
-#include <moai-gfx-vk/MOAIInitializerVK.h>
+#include <moai-gfx-vk/MOAILifecycleProviderVK.h>
 
 class MOAILogicalDeviceVK;
 
@@ -12,13 +12,13 @@ class MOAILogicalDeviceVK;
 // MOAILogicalDeviceClientVK
 //================================================================//
 class MOAILogicalDeviceClientVK :
-	public MOAIAbstractInitializerClientVK < MOAILogicalDeviceVK > {
+	public MOAIAbstractLifecycleClientVK < MOAILogicalDeviceVK > {
 public:
 
 	//----------------------------------------------------------------//
 	MOAILogicalDeviceVK& GetLogicalDevice () {
 	
-		MOAILogicalDeviceVK* logicalDevice = this->GetInitializer ();
+		MOAILogicalDeviceVK* logicalDevice = this->GetLifecycleProvider ();
 		assert ( logicalDevice );
 		return *logicalDevice;
 	}
