@@ -223,14 +223,14 @@ void MOAIOneTriVK::PrepareTexture () {
 	MOAIQueueVK& graphicsQueue = logicalDevice.GetGraphicsQueue ();
 	
 	MOAICommandBufferVK commandBuffer;
-	graphicsQueue.CreateCommandBuffer ( logicalDevice, commandBuffer, VK_COMMAND_BUFFER_LEVEL_PRIMARY, true );
+	graphicsQueue.CreateCommandBuffer ( commandBuffer, VK_COMMAND_BUFFER_LEVEL_PRIMARY, true );
 
 	transitionImageLayout ( commandBuffer, this->mTextureImage, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL );
 	copyBufferToImage ( commandBuffer, stageImage, this->mTextureImage, width, height );
 	transitionImageLayout ( commandBuffer, this->mTextureImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
 
 	// Flushing the command buffer will also submit it to the queue and uses a fence to ensure that all commands have been executed before returning
-	graphicsQueue.FlushAndFreeCommandBuffer ( logicalDevice, commandBuffer );
+	graphicsQueue.FlushAndFreeCommandBuffer ( commandBuffer );
 	
 	VkSamplerCreateInfo samplerInfo = MOAIGfxStructVK::samplerCreateInfo ();
 	VK_CHECK_RESULT ( vkCreateSampler ( logicalDevice, &samplerInfo, nullptr, &this->mTextureSampler ));
@@ -312,7 +312,7 @@ void MOAIOneTriVK::PrepareVertices ( bool useStagingBuffers ) {
 		MOAIQueueVK& graphicsQueue = logicalDevice.GetGraphicsQueue ();
 		
 		MOAICommandBufferVK commandBuffer;
-		graphicsQueue.CreateCommandBuffer ( logicalDevice, commandBuffer, VK_COMMAND_BUFFER_LEVEL_PRIMARY, true );
+		graphicsQueue.CreateCommandBuffer ( commandBuffer, VK_COMMAND_BUFFER_LEVEL_PRIMARY, true );
 
 		// Put buffer region copies into command buffer
 		VkBufferCopy copyRegion = {};
@@ -326,7 +326,7 @@ void MOAIOneTriVK::PrepareVertices ( bool useStagingBuffers ) {
 		vkCmdCopyBuffer ( commandBuffer, stageIndices, *this->mIndices, 1, &copyRegion );
 
 		// Flushing the command buffer will also submit it to the queue and uses a fence to ensure that all commands have been executed before returning
-		graphicsQueue.FlushAndFreeCommandBuffer ( logicalDevice, commandBuffer );
+		graphicsQueue.FlushAndFreeCommandBuffer ( commandBuffer );
 
 		// Destroy staging buffers
 		// Note: Staging buffer must not be deleted before the copies have been submitted and executed

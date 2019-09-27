@@ -367,6 +367,12 @@ MOAIPhysicalDeviceVK::MOAIPhysicalDeviceVK () :
 }
 
 //----------------------------------------------------------------//
+MOAIPhysicalDeviceVK::~MOAIPhysicalDeviceVK () {
+
+	this->FinalizeClients ();
+}
+
+//----------------------------------------------------------------//
 const VkCompositeAlphaFlagBitsKHR* MOAIPhysicalDeviceVK::RankCompositeAlphaBits () const {
 
 	static const VkCompositeAlphaFlagBitsKHR rankedBits [] = {

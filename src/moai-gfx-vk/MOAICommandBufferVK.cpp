@@ -24,6 +24,8 @@ MOAICommandBufferVK::MOAICommandBufferVK () :
 
 //----------------------------------------------------------------//
 MOAICommandBufferVK::~MOAICommandBufferVK () {
+
+	this->Finalize ();
 }
 
 //----------------------------------------------------------------//
@@ -42,3 +44,14 @@ void MOAICommandBufferVK::UnpinResources () {
 	}
 }
 
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAICommandBufferVK::MOAIAbstractInitializerClientVK_Finalize () {
+
+	MOAIQueueVK& queue = this->GetQueue ();
+	vkFreeCommandBuffers ( queue.GetLogicalDevice (), queue.mPool, 1, &this->mCommandBuffer );
+	queue.RemoveClient ( *this );
+}

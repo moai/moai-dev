@@ -57,7 +57,7 @@ void MOAIDescriptorSetLayoutVK::DiscardDescriptorSet ( MOAIDescriptorSetVK& desc
 //----------------------------------------------------------------//
 void MOAIDescriptorSetLayoutVK::Init ( MOAILogicalDeviceVK& logicalDevice, const MOAIDescriptorSetLayoutNameVK& name ) {
 
-	this->SetLogicalDevice ( logicalDevice );
+	logicalDevice.AddClient ( logicalDevice, *this );
 
 	this->mName = name;
 	ZLSize nameSize = name.Size ();
@@ -89,6 +89,18 @@ void MOAIDescriptorSetLayoutVK::Init ( MOAILogicalDeviceVK& logicalDevice, const
 }
 
 //----------------------------------------------------------------//
+void MOAIDescriptorSetLayoutVK::InvalidateDescriptorSet ( MOAIDescriptorSetVK& descriptorSet ) {
+
+	// TODO: free client from pool
+	// TODO: track which pool allocated descriptorSet
+
+	this->mPinnedSets.erase ( &descriptorSet );
+	this->mUnpinnedSets.erase ( &descriptorSet );
+	
+	this->RemoveClient ( descriptorSet );
+}
+
+//----------------------------------------------------------------//
 MOAIDescriptorSetLayoutVK::MOAIDescriptorSetLayoutVK () :
 	mPool ( VK_NULL_HANDLE ),
 	mLayout ( VK_NULL_HANDLE ) {
@@ -97,8 +109,7 @@ MOAIDescriptorSetLayoutVK::MOAIDescriptorSetLayoutVK () :
 //----------------------------------------------------------------//
 MOAIDescriptorSetLayoutVK::~MOAIDescriptorSetLayoutVK () {
 
-	vkDestroyDescriptorSetLayout ( this->GetLogicalDevice (), this->mLayout, NULL );
-	vkDestroyDescriptorPool ( this->GetLogicalDevice (), this->mPool, NULL );
+	this->Finalize ();
 }
 
 //----------------------------------------------------------------//
@@ -114,7 +125,7 @@ MOAIDescriptorSetVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSet () {
 	else {
 	
 		descriptorSet = new MOAIDescriptorSetVK ();
-		descriptorSet->mLayout = this;
+		this->AddClient ( *this, *descriptorSet );
 
 		VkDescriptorSetAllocateInfo allocInfo = MOAIGfxStructVK::descriptorSetAllocateInfo ( this->mPool, &this->mLayout );
 		VK_CHECK_RESULT ( vkAllocateDescriptorSets ( this->GetLogicalDevice (), &allocInfo, &descriptorSet->mDescriptorSet ));
@@ -122,4 +133,19 @@ MOAIDescriptorSetVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSet () {
 	}
 	this->mPinnedSets.insert ( descriptorSet );
 	return descriptorSet;
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIDescriptorSetLayoutVK::MOAIAbstractInitializerClientVK_Finalize () {
+
+	this->FinalizeClients ();
+	
+	MOAILogicalDeviceVK& logicalDevice = this->GetLogicalDevice ();
+	vkDestroyDescriptorSetLayout ( logicalDevice, this->mLayout, NULL );
+	vkDestroyDescriptorPool ( logicalDevice, this->mPool, NULL );
+	logicalDevice.RemoveClient ( *this );
 }

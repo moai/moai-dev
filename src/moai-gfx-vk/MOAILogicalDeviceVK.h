@@ -13,9 +13,12 @@
 //================================================================//
 // MOAILogicalDeviceVK
 //================================================================//
-class MOAILogicalDeviceVK {
+class MOAILogicalDeviceVK :
+	public MOAIPhysicalDeviceClientVK,
+	public MOAIInitializerVK < MOAILogicalDeviceVK > {
 private:
 
+	friend class MOAIPhysicalDeviceVK;
 	friend class MOAIQueueVK;
 
 	enum QueueID {
@@ -32,8 +35,6 @@ private:
 	PFN_vkGetSwapchainImagesKHR		mGetSwapchainImagesKHR;
 	PFN_vkQueuePresentKHR			mQueuePresentKHR;
 
-	MOAIPhysicalDeviceVK*			mPhysicalDevice;
-
 	STLMap < u32, VkCommandPool >	mCommandPools;
 
 	MOAIQueueVK						mQueues [ TOTAL_QUEUES ];
@@ -41,7 +42,10 @@ private:
 	VkDevice						mDevice;
 
 	//----------------------------------------------------------------//
-	void					InitQueue						( MOAIQueueVK& queueAndPool, u32 index );
+	void			InitQueue										( MOAIQueueVK& queueAndPool, u32 index );
+
+	//----------------------------------------------------------------//
+	void			MOAIAbstractInitializerClientVK_Finalize		();
 
 public:
 	
@@ -49,9 +53,7 @@ public:
 	GET ( MOAIQueueVK&, GraphicsQueue, this->mQueues [ GRAPHICS_QUEUE ]);
 	GET ( MOAIQueueVK&, PresentQueue, this->mQueues [ PRESENT_QUEUE ]);
 	GET ( MOAIQueueVK&, TransferQueue, this->mQueues [ TRANSFER_QUEUE ]);
-	
-	GET ( MOAIPhysicalDeviceVK*, PhysicalDevice, this->mPhysicalDevice );
-	
+		
 	//----------------------------------------------------------------//
 	operator bool () const {
 		return ( this->mDevice != VK_NULL_HANDLE );
@@ -64,7 +66,6 @@ public:
 
 	//----------------------------------------------------------------//
 	VkResult				AcquireNextImageKHR				( VkSwapchainKHR swapchain, uint64_t timeout, VkSemaphore semaphore, VkFence fence, ZLIndex& index );
-//	void					AllocateCommandBuffers			( const VkCommandBufferAllocateInfo& allocateInfo, VkCommandBuffer* commandBuffers );
 	VkDeviceMemory 			AllocateMemory					( const VkMemoryAllocateInfo& allocateInfo, const VkAllocationCallbacks* pAllocator = NULL );
 	void					BindImageMemory					( VkImage image, VkDeviceMemory memory, VkDeviceSize memoryOffset = 0 );
 	VkImage					CreateImage						( const VkImageCreateInfo& createInfo, const VkAllocationCallbacks* pAllocator = NULL );
@@ -78,6 +79,7 @@ public:
 	void					GetSwapchainImagesKHR			( VkSwapchainKHR swapchain, uint32_t& swapchainImageCount, VkImage* images = NULL );
 	void					Init							( MOAIPhysicalDeviceVK& physicalDevice, VkQueueFlags requestedQueueTypes = VK_QUEUE_GRAPHICS_BIT, bool requestPresent = true );
 							MOAILogicalDeviceVK				();
+							~MOAILogicalDeviceVK			();
 };
 
 #endif

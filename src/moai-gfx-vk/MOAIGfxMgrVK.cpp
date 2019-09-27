@@ -266,7 +266,7 @@ void MOAIGfxMgrVK::InitCommandBuffers () {
 	
 	MOAIQueueVK& queue = this->mLogicalDevice.GetGraphicsQueue ();
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < imageCount; ++i ) {
-		queue.CreateCommandBuffer ( this->mLogicalDevice, this->mDrawCommandBuffers [ i ]);
+		queue.CreateCommandBuffer ( this->mDrawCommandBuffers [ i ]);
 	}
 }
 

@@ -4,16 +4,23 @@
 #ifndef MOAIQUEUEVK_H
 #define MOAIQUEUEVK_H
 
+#include <moai-gfx-vk/MOAILogicalDeviceClientVK.h>
+
 class MOAICommandBufferVK;
 class MOAILogicalDeviceVK;
 
 //================================================================//
 // MOAIQueueVK
 //================================================================//
-class MOAIQueueVK {
+class MOAIQueueVK :
+	public MOAILogicalDeviceClientVK,
+	public MOAIInitializerVK < MOAIQueueVK > {
 private:
 
 	friend class MOAILogicalDeviceVK;
+	
+	//----------------------------------------------------------------//
+	void			MOAIAbstractInitializerClientVK_Finalize		();
 	
 public:
 
@@ -28,13 +35,29 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void				CreateCommandBuffer			( MOAILogicalDeviceVK& logicalDevice, MOAICommandBufferVK& commandBuffer, VkCommandBufferLevel level = VK_COMMAND_BUFFER_LEVEL_PRIMARY, bool begin = false );
-	void				FlushAndFreeCommandBuffer	( MOAILogicalDeviceVK& logicalDevice, MOAICommandBufferVK& commandBuffer, u64 timeout = VK_DEFAULT_FENCE_TIMEOUT );
+	void				CreateCommandBuffer			( MOAICommandBufferVK& commandBuffer, VkCommandBufferLevel level = VK_COMMAND_BUFFER_LEVEL_PRIMARY, bool begin = false );
+	void				FlushAndFreeCommandBuffer	( MOAICommandBufferVK& commandBuffer, u64 timeout = VK_DEFAULT_FENCE_TIMEOUT );
 						MOAIQueueVK 				();
 						~MOAIQueueVK				();
-	VkResult			PresentKHR					( MOAILogicalDeviceVK& logicalDevice, const VkPresentInfoKHR& presentInfo );
+	VkResult			PresentKHR					( const VkPresentInfoKHR& presentInfo );
 	VkResult			Submit						( const VkSubmitInfo* submits, u32 submitCount, VkFence fence );
 	VkResult			WaitIdle					();
+};
+
+//================================================================//
+// MOAIQueueClientVK
+//================================================================//
+class MOAIQueueClientVK :
+	public MOAIAbstractInitializerClientVK < MOAIQueueVK > {
+public:
+
+	//----------------------------------------------------------------//
+	MOAIQueueVK& GetQueue () {
+	
+		MOAIQueueVK* queue = this->GetInitializer ();
+		assert ( queue );
+		return *queue;
+	}
 };
 
 #endif

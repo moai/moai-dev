@@ -18,12 +18,6 @@ VkResult MOAILogicalDeviceVK::AcquireNextImageKHR ( VkSwapchainKHR swapchain, ui
 	return result;
 }
 
-////----------------------------------------------------------------//
-//void MOAILogicalDeviceVK::AllocateCommandBuffers ( const VkCommandBufferAllocateInfo& allocateInfo, VkCommandBuffer* commandBuffers ) {
-//
-//	VK_CHECK_RESULT ( vkAllocateCommandBuffers ( this->mDevice, &allocateInfo, commandBuffers ));
-//}
-
 //----------------------------------------------------------------//
 VkDeviceMemory MOAILogicalDeviceVK::AllocateMemory ( const VkMemoryAllocateInfo& allocateInfo, const VkAllocationCallbacks* pAllocator ) {
 
@@ -106,7 +100,7 @@ void MOAILogicalDeviceVK::GetSwapchainImagesKHR ( VkSwapchainKHR swapchain, uint
 void MOAILogicalDeviceVK::Init ( MOAIPhysicalDeviceVK& physicalDevice, VkQueueFlags requestedQueueTypes, bool requestPresent ) {
 
 	assert ( physicalDevice );
-	this->mPhysicalDevice = &physicalDevice;
+	physicalDevice.AddClient ( physicalDevice, *this );
 
     // Desired queues need to be requested upon logical device creation
     // Due to differing queue family configurations of Vulkan implementations this can be a bit tricky, especially if the application
@@ -175,10 +169,28 @@ void MOAILogicalDeviceVK::InitQueue ( MOAIQueueVK& queue, u32 index ) {
 		VK_CHECK_RESULT ( vkCreateCommandPool ( this->mDevice, &commandPoolCreateInfo, NULL, &this->mCommandPools [ index ]));
 	}
 	queue.mPool = this->mCommandPools [ index ];
+	this->AddClient ( *this, queue );
 }
 
 //----------------------------------------------------------------//
 MOAILogicalDeviceVK::MOAILogicalDeviceVK () :
-	mPhysicalDevice ( NULL ),
 	mDevice ( VK_NULL_HANDLE ) {
+}
+
+//----------------------------------------------------------------//
+MOAILogicalDeviceVK::~MOAILogicalDeviceVK () {
+
+	this->Finalize ();
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAILogicalDeviceVK::MOAIAbstractInitializerClientVK_Finalize () {
+
+	this->FinalizeClients ();
+	vkDestroyDevice ( this->mDevice, NULL );
+	this->GetPhysicalDevice ().RemoveClient ( *this );
 }

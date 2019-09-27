@@ -5,6 +5,7 @@
 #define MOAIPHYSICALDEVICEVK_H
 
 #include <vector>
+#include <moai-gfx-vk/MOAIInitializerVK.h>
 #include <moai-gfx-vk/MOAIGfxInstanceVK.h>
 #include <moai-gfx-vk/MOAISurfaceVK.h>
 
@@ -41,7 +42,8 @@ public:
 //================================================================//
 // MOAIPhysicalDeviceVK
 //================================================================//
-class MOAIPhysicalDeviceVK {
+class MOAIPhysicalDeviceVK :
+	public MOAIInitializerVK < MOAIPhysicalDeviceVK > {
 private:
 
 	typedef const VkCompositeAlphaFlagBitsKHR* AlphaRank;
@@ -124,9 +126,26 @@ public:
 	VkExtent2D						GetExtent						( u32 preferredWidth, u32 preferredHeight );
 	void							Init							( MOAIGfxInstanceVK& instance, MOAISurfaceVK& surface );
 									MOAIPhysicalDeviceVK			();
+									~MOAIPhysicalDeviceVK			();
 	u32								SuggestSwapChainImageCount		( VkPresentModeKHR presentMode );
 	bool							SupportsExtension				( cc8* extensionName ) const;
 	bool							SupportsRenderAndPresent		() const;
+};
+
+//================================================================//
+// MOAIPhysicalDeviceClientVK
+//================================================================//
+class MOAIPhysicalDeviceClientVK :
+	public MOAIAbstractInitializerClientVK < MOAIPhysicalDeviceVK > {
+public:
+
+	//----------------------------------------------------------------//
+	MOAIPhysicalDeviceVK& GetPhysicalDevice () {
+	
+		MOAIPhysicalDeviceVK* physicalDevice = this->GetInitializer ();
+		assert ( physicalDevice );
+		return *physicalDevice;
+	}
 };
 
 #endif

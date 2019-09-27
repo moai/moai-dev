@@ -4,12 +4,15 @@
 #ifndef MOAICOMMANDBUFFERVK_H
 #define MOAICOMMANDBUFFERVK_H
 
+#include <moai-gfx-vk/MOAIQueueVK.h>
+
 class MOAIAbstractCommandBufferResourceVK;
 
 //================================================================//
 // MOAICommandBufferVK
 //================================================================//
-class MOAICommandBufferVK {
+class MOAICommandBufferVK :
+	public MOAIQueueClientVK {
 private:
 
 	friend class MOAIAbstractCommandBufferResourceVK;
@@ -19,7 +22,10 @@ private:
 	bool													mIsValid;
 
 	//----------------------------------------------------------------//
-	void			Invalidate					();
+	void			Invalidate										();
+
+	//----------------------------------------------------------------//
+	void			MOAIAbstractInitializerClientVK_Finalize		();
 
 public:
 

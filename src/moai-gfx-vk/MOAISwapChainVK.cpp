@@ -47,8 +47,8 @@ void MOAISwapChainVK::Init ( MOAIGfxInstanceVK& instance, MOAIPhysicalDeviceVK& 
 	u32 queueFamilyIndexCount = 0;
 	uint32_t queueFamilyIndices [ 2 ];
 	
-	MOAIQueueVK graphicsQueue	= logicalDevice.GetGraphicsQueue ();
-	MOAIQueueVK presentQueue	= logicalDevice.GetPresentQueue ();
+	MOAIQueueVK& graphicsQueue	= logicalDevice.GetGraphicsQueue ();
+	MOAIQueueVK& presentQueue	= logicalDevice.GetPresentQueue ();
 	
 	if ( graphicsQueue && presentQueue ) {
 	
@@ -151,5 +151,5 @@ VkResult MOAISwapChainVK::QueuePresent ( MOAILogicalDeviceVK& logicalDevice, MOA
 		presentInfo.pWaitSemaphores = &waitSemaphore;
 		presentInfo.waitSemaphoreCount = 1;
 	}
-	return queue.PresentKHR ( logicalDevice, presentInfo );
+	return queue.PresentKHR ( presentInfo );
 }

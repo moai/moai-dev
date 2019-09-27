@@ -1,39 +1,26 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MOAILOGICALDEVICECLIENTVK_H
-#define MOAILOGICALDEVICECLIENTVK_H
+#ifndef MOAILOGICALDEVICEVKCLIENT_H
+#define MOAILOGICALDEVICEVKCLIENT_H
 
-#include <moai-gfx-vk/MOAILogicalDeviceVK.h>
+#include <moai-gfx-vk/MOAIInitializerVK.h>
+
+class MOAILogicalDeviceVK;
 
 //================================================================//
 // MOAILogicalDeviceClientVK
 //================================================================//
-class MOAILogicalDeviceClientVK {
-private:
-
-	MOAILogicalDeviceVK*		mLogicalDevice;
-
+class MOAILogicalDeviceClientVK :
+	public MOAIAbstractInitializerClientVK < MOAILogicalDeviceVK > {
 public:
-	
+
 	//----------------------------------------------------------------//
 	MOAILogicalDeviceVK& GetLogicalDevice () {
-		assert ( this->mLogicalDevice );
-		return *this->mLogicalDevice;
-	}
 	
-	//----------------------------------------------------------------//
-	MOAILogicalDeviceClientVK () :
-		mLogicalDevice ( NULL ) {
-	}
-	
-	//----------------------------------------------------------------//
-	~MOAILogicalDeviceClientVK () {
-	}
-	
-	//----------------------------------------------------------------//
-	void SetLogicalDevice ( MOAILogicalDeviceVK& logicalDevice ) {
-		this->mLogicalDevice = &logicalDevice;
+		MOAILogicalDeviceVK* logicalDevice = this->GetInitializer ();
+		assert ( logicalDevice );
+		return *logicalDevice;
 	}
 };
 

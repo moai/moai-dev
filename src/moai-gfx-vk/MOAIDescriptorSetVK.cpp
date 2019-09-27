@@ -15,8 +15,7 @@
 //----------------------------------------------------------------//
 VkWriteDescriptorSet* MOAIDescriptorSetVK::GetWriteDescriptorSet ( u32 binding, u32 arrayElement ) {
 
-	assert ( this->mLayout );
-	const MOAIDescriptorSetLayoutNameVK& name = this->mLayout->GetName ();
+	const MOAIDescriptorSetLayoutNameVK& name = this->GetLayout ().GetName ();
 	
 	if ( binding >= name.Size () ) return NULL;
 	
@@ -65,12 +64,13 @@ void MOAIDescriptorSetVK::InitWriteArray ( const MOAIDescriptorSetLayoutNameVK& 
 
 //----------------------------------------------------------------//
 MOAIDescriptorSetVK::MOAIDescriptorSetVK () :
-	mLayout ( NULL ),
 	mDescriptorSet ( VK_NULL_HANDLE ) {
 }
 
 //----------------------------------------------------------------//
 MOAIDescriptorSetVK::~MOAIDescriptorSetVK () {
+
+	this->Finalize ();
 }
 
 //----------------------------------------------------------------//
@@ -100,9 +100,7 @@ void MOAIDescriptorSetVK::SetDescriptor ( u32 binding, u32 arrayElement, VkDescr
 //----------------------------------------------------------------//
 void MOAIDescriptorSetVK::Update () {
 
-	assert ( this->mLayout );
-	MOAILogicalDeviceVK& logicalDevice = this->mLayout->GetLogicalDevice ();
-
+	MOAILogicalDeviceVK& logicalDevice = this->GetLayout ().GetLogicalDevice ();
 	vkUpdateDescriptorSets ( logicalDevice, ( u32 )this->mWriteArray.Size (), this->mWriteArray.GetBuffer (), 0, NULL );
 }
 
@@ -113,6 +111,11 @@ void MOAIDescriptorSetVK::Update () {
 //----------------------------------------------------------------//
 void MOAIDescriptorSetVK::MOAIAbstractCommandBufferResourceVK_Unpin () {
 
-	assert ( this->mLayout );
-	this->mLayout->DiscardDescriptorSet ( *this );
+	this->GetLayout ().DiscardDescriptorSet ( *this );
+}
+
+//----------------------------------------------------------------//
+void MOAIDescriptorSetVK::MOAIAbstractInitializerClientVK_Finalize () {
+
+	this->GetLayout ().InvalidateDescriptorSet ( *this );
 }

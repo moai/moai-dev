@@ -12,12 +12,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIQueueVK::CreateCommandBuffer ( MOAILogicalDeviceVK& logicalDevice, MOAICommandBufferVK& commandBuffer, VkCommandBufferLevel level, bool begin ) {
+void MOAIQueueVK::CreateCommandBuffer ( MOAICommandBufferVK& commandBuffer, VkCommandBufferLevel level, bool begin ) {
 
 	assert ( commandBuffer == false );
 
 	VkCommandBufferAllocateInfo cmdBufAllocateInfo = MOAIGfxStructVK::commandBufferAllocateInfo ( this->mPool, level );	
-	VK_CHECK_RESULT ( vkAllocateCommandBuffers ( logicalDevice, &cmdBufAllocateInfo, commandBuffer ));
+	VK_CHECK_RESULT ( vkAllocateCommandBuffers ( this->GetLogicalDevice (), &cmdBufAllocateInfo, commandBuffer ));
 	
 	assert ( commandBuffer != false );
 	
@@ -25,12 +25,15 @@ void MOAIQueueVK::CreateCommandBuffer ( MOAILogicalDeviceVK& logicalDevice, MOAI
 		VkCommandBufferBeginInfo cmdBufInfo = MOAIGfxStructVK::commandBufferBeginInfo ();
 		VK_CHECK_RESULT ( vkBeginCommandBuffer ( commandBuffer, &cmdBufInfo ));
 	}
+	this->AddClient ( *this, commandBuffer );
 }
 
 //----------------------------------------------------------------//
-void MOAIQueueVK::FlushAndFreeCommandBuffer	( MOAILogicalDeviceVK& logicalDevice, MOAICommandBufferVK& commandBuffer, u64 timeout ) {
+void MOAIQueueVK::FlushAndFreeCommandBuffer	( MOAICommandBufferVK& commandBuffer, u64 timeout ) {
 
 	if ( commandBuffer == VK_NULL_HANDLE ) return;
+
+	MOAILogicalDeviceVK& logicalDevice = this->GetLogicalDevice ();
 
 	VK_CHECK_RESULT ( vkEndCommandBuffer ( commandBuffer ));
 
@@ -51,8 +54,7 @@ void MOAIQueueVK::FlushAndFreeCommandBuffer	( MOAILogicalDeviceVK& logicalDevice
 	vkDestroyFence ( logicalDevice, fence, nullptr );
 	
 	commandBuffer.UnpinResources (); // unpin any resources
-
-	vkFreeCommandBuffers ( logicalDevice, this->mPool, 1, commandBuffer );
+	this->FinalizeClient ( commandBuffer );
 }
 
 //----------------------------------------------------------------//
@@ -64,11 +66,14 @@ MOAIQueueVK::MOAIQueueVK () :
 
 //----------------------------------------------------------------//
 MOAIQueueVK::~MOAIQueueVK () {
+
+	this->Finalize ();
 }
 
 //----------------------------------------------------------------//
-VkResult MOAIQueueVK::PresentKHR ( MOAILogicalDeviceVK& logicalDevice, const VkPresentInfoKHR& presentInfo ) {
+VkResult MOAIQueueVK::PresentKHR ( const VkPresentInfoKHR& presentInfo ) {
 
+	MOAILogicalDeviceVK& logicalDevice = this->GetLogicalDevice ();
 	if ( logicalDevice.mQueuePresentKHR ) {
 		logicalDevice.mQueuePresentKHR ( this->mQueue, &presentInfo );
 	}
@@ -84,4 +89,17 @@ VkResult MOAIQueueVK::Submit ( const VkSubmitInfo* submits, u32 submitCount, VkF
 VkResult MOAIQueueVK::WaitIdle () {
 
 	return vkQueueWaitIdle ( this->mQueue );
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIQueueVK::MOAIAbstractInitializerClientVK_Finalize () {
+
+	this->FinalizeClients ();
+	
+	MOAILogicalDeviceVK& logicalDevice = this->GetLogicalDevice ();
+	logicalDevice.RemoveClient ( *this );
 }
