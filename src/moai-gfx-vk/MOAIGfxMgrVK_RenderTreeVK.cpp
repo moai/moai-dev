@@ -14,12 +14,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrVK_RenderTreeVK::DrawOneTri ( MOAICommandBufferVK& commandBuffer, u32 width, u32 height ) {
+void MOAIGfxMgrVK_RenderTreeVK::DrawOneTri ( MOAICommandBufferVK& commandBuffer, VkRect2D rect ) {
 
 	if ( !this->mOneTri ) {
 		this->mOneTri = new MOAIOneTriVK ();
 	}
-	this->mOneTri->Draw ( commandBuffer, width, height );
+	this->mOneTri->Draw ( commandBuffer, rect );
 }
 
 //----------------------------------------------------------------//
@@ -39,6 +39,7 @@ MOAIGfxMgrVK_RenderTreeVK::~MOAIGfxMgrVK_RenderTreeVK () {
 void MOAIGfxMgrVK_RenderTreeVK::MOAIGfxMgr_RenderTree_Render () {
 
 	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
+	MOAICommandBufferVK& commandBuffer = gfxMgr.GetCommandBuffer ();
 
 //	gfxMgr.Update ();
 
@@ -62,34 +63,25 @@ void MOAIGfxMgrVK_RenderTreeVK::MOAIGfxMgr_RenderTree_Render () {
 //	// flush any stragglers
 //	gfxMgr.FlushToGPU ();
 	
-	MOAICommandBufferVK& commandBuffer	= gfxMgr.GetCommandBuffer ();
-	VkRenderPass renderPass				= gfxMgr.GetRenderPass ();
-	VkFramebuffer frameBuffer			= gfxMgr.GetFrameBuffer ();
-	MOAISwapChainVK& swapChain			= gfxMgr.GetSwapChain ();
-	
-	u32 width = swapChain.GetWidth ();
-	u32 height = swapChain.GetHeight ();
+	VkRenderPass renderPass = gfxMgr.GetRenderPass ();
+	VkFramebuffer frameBuffer = gfxMgr.GetFrameBuffer ();
+	MOAISwapChainVK& swapChain = gfxMgr.GetSwapChain ();
 
 	// Set clear values for all framebuffer attachments with loadOp set to clear
 	// We use two attachments (color and depth) that are cleared at the start of the subpass and as such we need to set clear values for both
 	VkClearValue clearValues [] = {
-		MOAIGfxStructVK::clearValue ( MOAIGfxStructVK::clearColorValueF ( 0.0, 0.0, 0.2, 1.0 ), MOAIGfxStructVK::clearDepthStencilValue ( 0.0, 0 )),
-		MOAIGfxStructVK::clearValue ( MOAIGfxStructVK::clearColorValueF ( 0.0, 0.0, 0.0, 0.0 ), MOAIGfxStructVK::clearDepthStencilValue ( 1.0, 0 )),
+		MOAIGfxStructVK::clearValue ( MOAIGfxStructVK::clearColorValueF ( 1.0, 1.0, 1.0, 1.0 )),
+		MOAIGfxStructVK::clearValue ( MOAIGfxStructVK::clearDepthStencilValue ( 1.0, 0 )),
 	};
-	VkRenderPassBeginInfo renderPassBeginInfo = MOAIGfxStructVK::renderPassBeginInfo ( renderPass, frameBuffer, MOAIGfxStructVK::rect2D ( width, height ), clearValues, 2 );
+	VkRenderPassBeginInfo renderPassBeginInfo = MOAIGfxStructVK::renderPassBeginInfo ( renderPass, frameBuffer, swapChain.GetRect (), clearValues, 2 );
+	
+	commandBuffer.Begin ();
 	vkCmdBeginRenderPass ( commandBuffer, &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE );
-
-	this->DrawOneTri ( commandBuffer, width, height );
-
+	this->DrawOneTri ( commandBuffer, swapChain.GetRect ());
 	vkCmdEndRenderPass ( commandBuffer );
+	commandBuffer.End ();
 
-	// Update dynamic state
-	VkViewport viewport 	= MOAIGfxStructVK::viewport (( float )width, ( float )height, 0.0, 1.0 );
-	VkRect2D scissor 		= MOAIGfxStructVK::rect2D ( width, height );
-
-	// TODO: why is this being set here? should be part of graphics state, right?
-	vkCmdSetViewport ( commandBuffer, 0, 1, &viewport );
-	vkCmdSetScissor ( commandBuffer, 0, 1, &scissor );
+	commandBuffer.Submit ( gfxMgr.GetPresentSemaphore (), gfxMgr.GetRenderSemaphore ());
 	
 	gfxMgr.FinishFrame ();
 	this->mRenderCounter++;

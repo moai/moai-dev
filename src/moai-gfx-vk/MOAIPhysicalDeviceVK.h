@@ -43,6 +43,7 @@ public:
 // MOAIPhysicalDeviceVK
 //================================================================//
 class MOAIPhysicalDeviceVK :
+	public MOAIGfxInstanceClientVK,
 	public MOAILifecycleProviderVK < MOAIPhysicalDeviceVK > {
 private:
 
@@ -72,6 +73,9 @@ private:
 	FormatRank			RankDepthFormats				() const;
 	size_t				ScoreDeviceType					() const; // TODO: make user configurable
 	static size_t		ScorePresentMode				( VkPresentModeKHR presentMode ); // TODO: make user configurable
+
+	//----------------------------------------------------------------//
+	void				MOAIAbstractLifecycleClientVK_Finalize			();
 
 public:
 
@@ -124,7 +128,7 @@ public:
 	VkSurfaceFormatKHR				FindSurfaceFormat				( VkFormat colorFormat, VkColorSpaceKHR colorSpace );
 	VkSurfaceTransformFlagBitsKHR	FindSurfaceTransform			( VkSurfaceTransformFlagBitsKHR preferredTransform );
 	VkExtent2D						GetExtent						( u32 preferredWidth, u32 preferredHeight );
-	void							Init							( MOAIGfxInstanceVK& instance, MOAISurfaceVK& surface );
+	void							Initialize						( MOAIGfxInstanceVK& instance, MOAISurfaceVK& surface );
 									MOAIPhysicalDeviceVK			();
 									~MOAIPhysicalDeviceVK			();
 	u32								SuggestSwapChainImageCount		( VkPresentModeKHR presentMode );

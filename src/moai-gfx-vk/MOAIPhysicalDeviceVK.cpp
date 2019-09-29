@@ -223,7 +223,7 @@ u32 MOAIPhysicalDeviceVK::GetQueueFlags ( ZLIndex queueIndex ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIPhysicalDeviceVK::Init ( MOAIGfxInstanceVK& instance, MOAISurfaceVK& surface ) {
+void MOAIPhysicalDeviceVK::Initialize ( MOAIGfxInstanceVK& instance, MOAISurfaceVK& surface ) {
 
 	u32 deviceCount = 0;
     VK_CHECK_RESULT ( vkEnumeratePhysicalDevices ( instance, &deviceCount, nullptr ));
@@ -251,6 +251,8 @@ void MOAIPhysicalDeviceVK::Init ( MOAIGfxInstanceVK& instance, MOAISurfaceVK& su
 		}
 	}
 	assert ( this->mDevice );
+	
+	instance.AddClient ( instance, *this );
 }
 
 //----------------------------------------------------------------//
@@ -369,7 +371,7 @@ MOAIPhysicalDeviceVK::MOAIPhysicalDeviceVK () :
 //----------------------------------------------------------------//
 MOAIPhysicalDeviceVK::~MOAIPhysicalDeviceVK () {
 
-	this->FinalizeClients ();
+	this->Finalize ();
 }
 
 //----------------------------------------------------------------//
@@ -469,4 +471,25 @@ bool MOAIPhysicalDeviceVK::SupportsExtension ( cc8* extensionName ) const {
 bool MOAIPhysicalDeviceVK::SupportsRenderAndPresent () const {
 
 	return (( this->mQueueFlags | VK_QUEUE_GRAPHICS_BIT ) && this->mSupportsPresent );
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIPhysicalDeviceVK::MOAIAbstractLifecycleClientVK_Finalize () {
+
+	this->FinalizeClients ();
+
+	MOAIGfxInstanceVK& instance = this->GetVulkanInstance ();
+
+//	if ( this->mSwapChain != VK_NULL_HANDLE ) {
+//		for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mImages.Size (); ++i ) {
+//			vkDestroyImageView ( logicalDevice, this->mBuffers [ i ].view, NULL );
+//		}
+//		logicalDevice.DestroySwapchainKHR ( this->mSwapChain, NULL );
+//		this->mSwapChain = VK_NULL_HANDLE;
+//	}
+	instance.RemoveClient ( *this );
 }

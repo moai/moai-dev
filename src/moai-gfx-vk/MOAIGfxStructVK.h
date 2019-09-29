@@ -138,9 +138,15 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	static VkClearValue clearValue ( VkClearColorValue color, VkClearDepthStencilValue depthStencil ) {
+	static VkClearValue clearValue ( VkClearColorValue color ) {
 		VkClearValue clearValue;
 		clearValue.color			= color;
+		return clearValue;
+	}
+	
+	//----------------------------------------------------------------//
+	static VkClearValue clearValue ( VkClearDepthStencilValue depthStencil ) {
+		VkClearValue clearValue;
 		clearValue.depthStencil		= depthStencil;
 		return clearValue;
 	}
@@ -1165,11 +1171,11 @@ public:
     //----------------------------------------------------------------//
     static VkSubmitInfo submitInfo (
         const VkCommandBuffer* pCommandBuffers,
-        uint32_t commandBufferCount,
-        const VkSemaphore* pSignalSemaphores            = NULL,
-        uint32_t signalSemaphoreCount                   = 0,
+        uint32_t commandBufferCount						= 1,
         const VkSemaphore* pWaitSemaphores              = NULL,
         uint32_t waitSemaphoreCount                     = 0,
+        const VkSemaphore* pSignalSemaphores            = NULL,
+        uint32_t signalSemaphoreCount                   = 0,
         const VkPipelineStageFlags* pWaitDstStageMask   = NULL
     ) {
         DECL_VK_STRUCT ( VkSubmitInfo, submitInfo );

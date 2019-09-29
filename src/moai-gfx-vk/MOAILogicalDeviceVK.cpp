@@ -65,14 +65,6 @@ VkRenderPass MOAILogicalDeviceVK::CreateRenderPass ( const VkRenderPassCreateInf
 }
 
 //----------------------------------------------------------------//
-VkSemaphore MOAILogicalDeviceVK::CreateSemaphore ( const VkSemaphoreCreateInfo& createInfo, const VkAllocationCallbacks* pAllocator ) {
-
-	VkSemaphore semaphore;
-	VK_CHECK_RESULT ( vkCreateSemaphore ( this->mDevice, &createInfo, pAllocator, &semaphore ));
-	return semaphore;
-}
-
-//----------------------------------------------------------------//
 VkSwapchainKHR MOAILogicalDeviceVK::CreateSwapchainKHR ( const VkSwapchainCreateInfoKHR& createInfo, const VkAllocationCallbacks* pAllocator ) {
 
 	VkSwapchainKHR swapChain;
@@ -91,13 +83,14 @@ VkMemoryRequirements MOAILogicalDeviceVK::GetImageMemoryRequirements ( VkImage i
 }
 
 //----------------------------------------------------------------//
-void MOAILogicalDeviceVK::GetSwapchainImagesKHR ( VkSwapchainKHR swapchain, uint32_t& swapchainImageCount, VkImage* images ) {
+void MOAILogicalDeviceVK::GetSwapchainImagesKHR ( VkSwapchainKHR swapchain, ZLSize imageCount, VkImage* images ) {
 
+	u32 swapchainImageCount = ( u32 )imageCount;
 	VK_CHECK_RESULT ( this->mGetSwapchainImagesKHR ( this->mDevice, swapchain, &swapchainImageCount, images ));
 }
 
 //----------------------------------------------------------------//
-void MOAILogicalDeviceVK::Init ( MOAIPhysicalDeviceVK& physicalDevice, VkQueueFlags requestedQueueTypes, bool requestPresent ) {
+void MOAILogicalDeviceVK::Initialize ( MOAIPhysicalDeviceVK& physicalDevice, VkQueueFlags requestedQueueTypes, bool requestPresent ) {
 
 	assert ( physicalDevice );
 	physicalDevice.AddClient ( physicalDevice, *this );

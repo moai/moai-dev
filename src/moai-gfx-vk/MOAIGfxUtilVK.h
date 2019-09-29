@@ -35,7 +35,6 @@ public:
 //	static VkShaderModule		LoadShaderSPIRV				( cc8* fileName, VkDevice device );
 	static VkShaderModule		LoadShaderSPIRV				( const void* shaderCode, size_t shaderSize, VkDevice device );
 
-
 	//----------------------------------------------------------------//
 	template < typename TYPE >
 	static TYPE GetDeviceProcAddr ( VkDevice device, cc8* entrypoint ) {

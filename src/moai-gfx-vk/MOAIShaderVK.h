@@ -22,7 +22,7 @@ protected:
 //	friend class MOAIGfxMgrVK_GPUCacheVK;
 //	friend class MOAIShaderProgramVK;
 //
-//	ZLStrongPtr < MOAIShaderProgramVK >	mProgram;
+	ZLStrongPtr < MOAIShaderProgramVK >	mProgram;
 //	ZLLeanArray < u8 >					mPendingUniformBuffer;
 
 	//----------------------------------------------------------------//
@@ -44,7 +44,7 @@ protected:
 
 public:
 
-//	GET ( MOAIShaderProgramVK*, Program, mProgram )
+	GET ( MOAIShaderProgramVK*, Program, mProgram )
 
 	DECL_LUA_FACTORY ( MOAIShaderVK )
 
@@ -57,7 +57,7 @@ public:
 							~MOAIShaderVK				();
 //	void					ResizeUniformArray			( u32 uniformID, u32 count );
 //	void					ScheduleTextures			();
-//	void					SetProgram					( MOAIShaderProgramVK* program );
+	void					SetProgram					( MOAIShaderProgramVK* program );
 };
 
 #endif

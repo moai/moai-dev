@@ -4,6 +4,7 @@
 #ifndef MOAIQUEUEVK_H
 #define MOAIQUEUEVK_H
 
+#include <moai-gfx-vk/MOAIFenceVK.h>
 #include <moai-gfx-vk/MOAILogicalDeviceClientVK.h>
 
 class MOAICommandBufferVK;
@@ -17,16 +18,21 @@ class MOAIQueueVK :
 	public MOAILifecycleProviderVK < MOAIQueueVK > {
 private:
 
+	friend class MOAICommandBufferVK;
 	friend class MOAILogicalDeviceVK;
 	
 	//----------------------------------------------------------------//
-	void			MOAIAbstractLifecycleClientVK_Finalize		();
+	VkResult			Submit						( const VkSubmitInfo& submitInfo );
+	
+	//----------------------------------------------------------------//
+	void				MOAIAbstractLifecycleClientVK_Finalize		();
 	
 public:
 
 	u32				mIndex;
 	VkCommandPool	mPool;
 	VkQueue			mQueue;
+	MOAIFenceVK		mFence;
 
 	//----------------------------------------------------------------//
 	operator bool () const {
@@ -40,7 +46,6 @@ public:
 						MOAIQueueVK 				();
 						~MOAIQueueVK				();
 	VkResult			PresentKHR					( const VkPresentInfoKHR& presentInfo );
-	VkResult			Submit						( const VkSubmitInfo* submits, u32 submitCount, VkFence fence );
 	VkResult			WaitIdle					();
 };
 

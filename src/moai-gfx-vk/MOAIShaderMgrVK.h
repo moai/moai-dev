@@ -29,9 +29,7 @@ private:
 	
 	MOAIShaderProgramVK*	mPrograms [ TOTAL_SHADERS ];
 	MOAIShaderVK*			mShaders [ TOTAL_SHADERS ];
-	
-	MOAIShaderVK*			mShader;
-	
+
 	//----------------------------------------------------------------//
 //	static int				_getProgram				( lua_State* L );
 //	static int				_getShader				( lua_State* L );

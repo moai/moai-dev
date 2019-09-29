@@ -131,7 +131,7 @@
 //----------------------------------------------------------------//
 void MOAIGfxMgrVK::BeginFrame () {
 
-	VkResult result = this->mSwapChain.AcquireNextImage ( this->mLogicalDevice, this->mPresentCompleteSemaphore, this->mCurrentBufferIndex );
+	VkResult result = this->mSwapChain.AcquireNextImage ( this->mPresentSemaphore );
 	
     if (( result == VK_ERROR_OUT_OF_DATE_KHR ) || ( result == VK_SUBOPTIMAL_KHR )) {
 //        windowResize ();
@@ -139,10 +139,6 @@ void MOAIGfxMgrVK::BeginFrame () {
     else {
         VK_CHECK_RESULT ( result );
     }
-
-	MOAICommandBufferVK& cmdBuffer = this->GetCommandBuffer ();
-	VkCommandBufferBeginInfo cmdBufInfo = MOAIGfxStructVK::commandBufferBeginInfo ();
-	VK_CHECK_RESULT ( vkBeginCommandBuffer ( cmdBuffer, &cmdBufInfo ));
 }
 
 ////----------------------------------------------------------------//
@@ -172,15 +168,17 @@ void MOAIGfxMgrVK::DetectContext ( u32 width, u32 height, bool enableValidation 
 
 	this->mInstance.Init ( "MOAI VK", VK_API_VERSION_1_0, hostInstanceExtensions, enableValidation );
 	this->mSurface.Init ( this->mHostCreateSurfaceFunc.mFunc ( this->mInstance, this->mHostCreateSurfaceFunc.mUserdata ));
-	this->mPhysicalDevice.Init ( this->mInstance, this->mSurface );
-	this->mLogicalDevice.Init ( this->mPhysicalDevice );
-	this->mSwapChain.Init ( this->mInstance, this->mPhysicalDevice, this->mLogicalDevice, this->mSurface, width, height );
+	this->mPhysicalDevice.Initialize ( this->mInstance, this->mSurface );
+	this->mLogicalDevice.Initialize ( this->mPhysicalDevice );
+	this->mSwapChain.Initialize ( this->mLogicalDevice, this->mSurface, width, height );
 
 	this->InitRenderPass ();
 	this->InitDepthStencil ();
 	this->InitFrameBuffers ();
 	this->InitCommandBuffers ();
-	this->InitSemaphores ();
+
+	this->mRenderSemaphore.Initialize ( this->mLogicalDevice );
+	this->mPresentSemaphore.Initialize ( this->mLogicalDevice );
 
 	// create pipeline cache
 //	VkPipelineCacheCreateInfo pipelineCacheCreateInfo = MOAIGfxStructVK::pipelineCacheCreateInfo ();
@@ -213,37 +211,12 @@ void MOAIGfxMgrVK::DetectContext ( u32 width, u32 height, bool enableValidation 
 
 //----------------------------------------------------------------//
 void MOAIGfxMgrVK::FinishFrame () {
-	
-	MOAICommandBufferVK& cmdBuffer = this->GetCommandBuffer ();
-	VK_CHECK_RESULT ( vkEndCommandBuffer ( cmdBuffer ));
-	
-	VkFence& fence = this->GetFence ();
-	
-	// Use a fence to wait until the command buffer has finished execution before using it again
-	VK_CHECK_RESULT ( vkWaitForFences ( this->mLogicalDevice, 1, &fence, VK_TRUE, UINT64_MAX ));
-	VK_CHECK_RESULT ( vkResetFences ( this->mLogicalDevice, 1, &fence ));
 
-	// Pipeline stage at which the queue submission will wait (via pWaitSemaphores)
-	VkPipelineStageFlags waitStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT;
-	// The submit info structure specifices a command buffer queue submission batch
-	VkSubmitInfo submitInfo = MOAIGfxStructVK::submitInfo (
-		cmdBuffer, 							// Command buffers to submit in this batch
-		1,									// One command buffer
-		&this->mRenderCompleteSemaphore,	// Semaphore(s) to be signaled when command buffers have completed
-		1,									// One signal semaphore
-		&this->mPresentCompleteSemaphore,	// Semaphore(s) to wait upon before the submitted command buffer starts executing
-		1,									// One wait semaphore
-		&waitStageMask						// Pointer to the list of pipeline stages that the semaphore waits will occur at
-	);
-
-	MOAIQueueVK& graphicsQueue = this->mLogicalDevice.GetGraphicsQueue ();
-	VK_CHECK_RESULT ( graphicsQueue.Submit ( &submitInfo, 1, fence ));
-
-	cmdBuffer.UnpinResources ();
-
-    VkResult result = this->mSwapChain.QueuePresent ( this->mLogicalDevice, graphicsQueue, this->mCurrentBufferIndex, this->mRenderCompleteSemaphore );
-    if (!((result == VK_SUCCESS) || (result == VK_SUBOPTIMAL_KHR))) {
-        if (result == VK_ERROR_OUT_OF_DATE_KHR) {
+	MOAIQueueVK& queue = this->GetCommandBuffer ().GetQueue ();
+    VkResult result = this->mSwapChain.QueuePresent ( queue, this->mRenderSemaphore );
+    
+    if ( !(( result == VK_SUCCESS ) || ( result == VK_SUBOPTIMAL_KHR ))) {
+        if ( result == VK_ERROR_OUT_OF_DATE_KHR ) {
             // Swap chain is no longer compatible with the surface and needs to be recreated
 //            windowResize();
             return;
@@ -251,18 +224,29 @@ void MOAIGfxMgrVK::FinishFrame () {
             VK_CHECK_RESULT ( result );
         }
     }
-    VK_CHECK_RESULT ( graphicsQueue.WaitIdle ());
+    VK_CHECK_RESULT ( queue.WaitIdle ());
 	
 //	this->UnbindAll ();
 	this->Reset ();
 }
 
 //----------------------------------------------------------------//
+MOAIShaderVK* MOAIGfxMgrVK::GetShaderPresetVK ( MOAIShaderPresetEnum preset ) const {
+
+	return MOAICast < MOAIShaderVK >( this->GetShaderPreset ( preset ));
+}
+
+//----------------------------------------------------------------//
+MOAIVertexFormatVK* MOAIGfxMgrVK::GetVertexFormatPresetVK ( MOAIVertexFormatPresetEnum preset ) const {
+
+	return MOAICast < MOAIVertexFormatVK >( this->GetVertexFormatPreset ( preset ));
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxMgrVK::InitCommandBuffers () {
 
-	ZLSize imageCount = this->mSwapChain.mImages.Size ();
-
-	this->mDrawCommandBuffers.Init ( this->mSwapChain.mImages.Size ());
+	ZLSize imageCount = this->mSwapChain.Size ();
+	this->mDrawCommandBuffers.Init ( imageCount );
 	
 	MOAIQueueVK& queue = this->mLogicalDevice.GetGraphicsQueue ();
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < imageCount; ++i ) {
@@ -276,7 +260,7 @@ void MOAIGfxMgrVK::InitDepthStencil () {
 	VkImageCreateInfo imageCreateInfo = MOAIGfxStructVK::imageCreateInfo (
 		VK_IMAGE_TYPE_2D,
 		this->mPhysicalDevice.mDepthFormat,
-		MOAIGfxStructVK::extent3D ( this->mSwapChain.mExtent.width, this->mSwapChain.mExtent.height, 1 ),
+		MOAIGfxStructVK::extent3D ( this->mSwapChain.GetWidth (), this->mSwapChain.GetHeight (), 1 ),
 		VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT
 	);
 	this->mDepthStencil.mImage = this->mLogicalDevice.CreateImage ( imageCreateInfo );
@@ -316,16 +300,16 @@ void MOAIGfxMgrVK::InitFrameBuffers () {
     	this->mRenderPass,
     	attachments,
     	2,
-    	this->mSwapChain.mExtent.width,
-    	this->mSwapChain.mExtent.height
+    	this->mSwapChain.GetWidth (),
+    	this->mSwapChain.GetHeight ()
 	);
 
-	ZLSize imageCount = this->mSwapChain.mImages.Size ();
+	ZLSize imageCount = this->mSwapChain.Size ();
 
     // Create frame buffers for every swap chain image
     this->mFrameBuffers.Init ( imageCount );
     for ( ZLIndex i = ZLIndexOp::ZERO; i < imageCount; ++i ) {
-        attachments [ 0 ] = this->mSwapChain.mBuffers [ i ].view;
+        attachments [ 0 ] = this->mSwapChain.GetImageView ( i );
         this->mFrameBuffers [ i ] = this->mLogicalDevice.CreateFramebuffer ( framebufferCreateInfo );
     }
 }
@@ -337,7 +321,7 @@ void MOAIGfxMgrVK::InitRenderPass () {
 	
     // Color attachment
     attachments [ 0 ] = MOAIGfxStructVK::attachmentDescription (
-        this->mSwapChain.mSurfaceFormat.format,
+        this->mSwapChain.GetFormat (),
         VK_SAMPLE_COUNT_1_BIT,
         VK_ATTACHMENT_LOAD_OP_CLEAR,
         VK_ATTACHMENT_STORE_OP_STORE,
@@ -398,23 +382,6 @@ void MOAIGfxMgrVK::InitRenderPass () {
  	this->mRenderPass = this->mLogicalDevice.CreateRenderPass ( renderPassInfo );
 }
 
-//----------------------------------------------------------------//
-void MOAIGfxMgrVK::InitSemaphores () {
-
-	VkFenceCreateInfo fenceCreateInfo = MOAIGfxStructVK::fenceCreateInfo ( VK_FENCE_CREATE_SIGNALED_BIT );
-	
-	ZLSize cmdBufferCount = this->mDrawCommandBuffers.Size ();
-	this->mWaitFences.Init ( cmdBufferCount );
-    for ( ZLIndex i = ZLIndexOp::ZERO; i < cmdBufferCount; ++i ) {
-        VK_CHECK_RESULT ( vkCreateFence ( this->mLogicalDevice, &fenceCreateInfo, NULL, &this->mWaitFences [ i ]));
-    }
-
-    VkSemaphoreCreateInfo semaphoreCreateInfo = MOAIGfxStructVK::semaphoreCreateInfo ();
-
-	this->mPresentCompleteSemaphore	= this->mLogicalDevice.CreateSemaphore ( semaphoreCreateInfo ); // Create a semaphore used to synchronize image presentation
-	this->mRenderCompleteSemaphore	= this->mLogicalDevice.CreateSemaphore ( semaphoreCreateInfo ); // Create a semaphore used to synchronize command submission
-}
-
 ////----------------------------------------------------------------//
 //u32 MOAIGfxMgrVK::LogErrors () {
 //
@@ -456,8 +423,7 @@ void MOAIGfxMgrVK::InitSemaphores () {
 
 //----------------------------------------------------------------//
 MOAIGfxMgrVK::MOAIGfxMgrVK () :
-	mHostCreateSurfaceFunc ( NULL, NULL ),
-	mCurrentBufferIndex ( ZLIndexOp::ZERO ) {
+	mHostCreateSurfaceFunc ( NULL, NULL ) {
 	
 	RTTI_BEGIN
 		RTTI_SINGLE ( MOAIGfxMgr )

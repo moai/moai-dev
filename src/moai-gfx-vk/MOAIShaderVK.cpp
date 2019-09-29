@@ -110,17 +110,17 @@ MOAIShaderVK::~MOAIShaderVK () {
 //		this->mProgram->ScheduleTextures ();
 //	}
 //}
-//
-////----------------------------------------------------------------//
-//void MOAIShaderVK::SetProgram ( MOAIShaderProgramVK* program ) {
-//
-//	this->mProgram = program;
-//
+
+//----------------------------------------------------------------//
+void MOAIShaderVK::SetProgram ( MOAIShaderProgramVK* program ) {
+
+	this->mProgram = program;
+
 //	if ( program ) {
 //		program->InitUniformBuffer ( this->mPendingUniformBuffer );
 //	}
-//}
-//
+}
+
 ////----------------------------------------------------------------//
 //void MOAIShaderVK::UpdateUniforms () {
 //

@@ -23,7 +23,7 @@ private:
 	ZLStrongPtr < MOAIOneTriVK >	mOneTri;
 
 	//----------------------------------------------------------------//
-	void				DrawOneTri							( MOAICommandBufferVK& commandBuffer, u32 width, u32 height );
+	void				DrawOneTri							( MOAICommandBufferVK& commandBuffer, VkRect2D rect );
 
 	//----------------------------------------------------------------//
 	void				MOAIGfxMgr_RenderTree_Render		();

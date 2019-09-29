@@ -14,8 +14,6 @@
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
 #include <moai-gfx-vk/MOAITexture2DVK.h>
 #include <moai-gfx-vk/MOAIVertexFormatVK.h>
-#include <moai-gfx-vk/shaders/MOAIOneTriShaderVK.frag.spv.h>
-#include <moai-gfx-vk/shaders/MOAIOneTriShaderVK.vert.spv.h>
 
 void transitionImageLayout ( VkCommandBuffer& commandBuffer, VkImage image, VkImageLayout oldLayout, VkImageLayout newLayout ) {
 
@@ -54,7 +52,16 @@ void copyBufferToImage ( VkCommandBuffer& commandBuffer, VkBuffer buffer, VkImag
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIOneTriVK::Draw ( MOAICommandBufferVK& commandBuffer, u32 width, u32 height ) {
+void MOAIOneTriVK::Draw ( MOAICommandBufferVK& commandBuffer, VkRect2D rect ) {
+
+	u32 width = ( u32 )rect.extent.width;
+	u32 height = ( u32 )rect.extent.height;
+
+	VkViewport viewport = MOAIGfxStructVK::viewport (( float )width, ( float )height, 0.0, 1.0 );
+	VkRect2D scissor = MOAIGfxStructVK::rect2D ( width, height );
+
+	vkCmdSetViewport ( commandBuffer, 0, 1, &viewport );
+	vkCmdSetScissor ( commandBuffer, 0, 1, &scissor );
 
 	this->UpdateUniformBuffers ( width, height );
 
@@ -157,19 +164,8 @@ void MOAIOneTriVK::PreparePipeline () {
 		renderPass
 	);
 
-	this->mVertexFormat = MOAICast < MOAIVertexFormatVK >( gfxMgr.CreateVertexFormat ());
-	assert ( this->mVertexFormat );
-
-	this->mVertexFormat->DeclareAttribute ( ZLIndexCast ( 0 ), ZGL_TYPE_FLOAT, 3, MOAIVertexFormat::ATTRIBUTE_COORD, false );
-	this->mVertexFormat->DeclareAttribute ( ZLIndexCast ( 1 ), ZGL_TYPE_UNSIGNED_BYTE, 4, MOAIVertexFormat::ATTRIBUTE_COLOR, true );
-	this->mVertexFormat->DeclareAttribute ( ZLIndexCast ( 2 ), ZGL_TYPE_FLOAT, 2, MOAIVertexFormat::ATTRIBUTE_TEX_COORD, false );
-
-	this->mVertexFormat->UpdatePipelineCreateInfo ( pipelineCreateInfo );
-
-	this->mShaderProgram = new MOAIShaderProgramVK ();
-	this->mShaderProgram->LoadModule ( MOAIShaderProgramVK::VERTEX_MODULE, _oneTriShaderVSH, sizeof ( _oneTriShaderVSH ));
-	this->mShaderProgram->LoadModule ( MOAIShaderProgramVK::FRAGMENT_MODULE, _oneTriShaderFSH, sizeof ( _oneTriShaderFSH ));
-	this->mShaderProgram->UpdatePipelineCreateInfo ( pipelineCreateInfo );
+	gfxMgr.GetVertexFormatPresetVK ( XYZWUVC )->UpdatePipelineCreateInfo ( pipelineCreateInfo );
+	gfxMgr.GetShaderPresetVK ( ONETRI_SHADER )->GetProgram ()->UpdatePipelineCreateInfo ( pipelineCreateInfo );
 
 	// Create rendering pipeline using the specified states
 	VK_CHECK_RESULT ( vkCreateGraphicsPipelines ( logicalDevice, VK_NULL_HANDLE, 1, &pipelineCreateInfo, nullptr, &this->mPipeline ));

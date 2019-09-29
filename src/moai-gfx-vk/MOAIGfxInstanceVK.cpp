@@ -105,3 +105,9 @@ MOAIGfxInstanceVK::MOAIGfxInstanceVK () :
 	mInstance ( VK_NULL_HANDLE ),
 	mEnableValidation ( false ) {
 }
+
+//----------------------------------------------------------------//
+MOAIGfxInstanceVK::~MOAIGfxInstanceVK () {
+
+	this->FinalizeClients ();
+}

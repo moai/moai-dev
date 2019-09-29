@@ -20,25 +20,21 @@ class MOAIOneTriVK :
 private:
 
 	struct Vertex {
-		ZLVec3D32	mPosition;
-		u32			mRGBA32;
+		ZLVec4D32	mPosition;
 		ZLVec2D32 	mUV;
+		u32			mRGBA32;
 		
 		Vertex ( float x, float y, float z, float r, float g, float b, float u, float v ) {
-			this->mPosition.Init ( x, y, z );
-			this->mRGBA32 = ZLColor::PackRGBA ( r, g, b, 1.0 );
+			this->mPosition.Init ( x, y, z, 1.0 );
 			this->mUV.Init ( u, v );
+			this->mRGBA32 = ZLColor::PackRGBA ( r, g, b, 1.0 );
 		}
 	};
-
-	ZLStrongPtr < MOAIVertexFormatVK >		mVertexFormat;
 
 	ZLStrongPtr < MOAIVertexBufferVK >		mVertices;
 	ZLStrongPtr < MOAIIndexBufferVK >		mIndices;
 	ZLStrongPtr < MOAIUniformBufferVK >		mUniforms;
-	
-	ZLStrongPtr < MOAIShaderProgramVK >		mShaderProgram;
-	
+		
 	VkImage					mTextureImage;
 	VkDeviceMemory			mTextureImageMemory;
 	VkImageView				mTextureImageView;
@@ -68,7 +64,7 @@ private:
 public:
 
 	//----------------------------------------------------------------//
-	void			Draw						( MOAICommandBufferVK& commandBuffer, u32 width, u32 height );
+	void			Draw						( MOAICommandBufferVK& commandBuffer, VkRect2D rect );
 					MOAIOneTriVK				();
 					~MOAIOneTriVK				();
 };

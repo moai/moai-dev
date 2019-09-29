@@ -5,6 +5,7 @@
 #define	MOAIGFXMGRVK_H
 
 #include <moai-gfx-vk/MOAICommandBufferVK.h>
+#include <moai-gfx-vk/MOAIFenceVK.h>
 #include <moai-gfx-vk/MOAIGfxInstanceVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVKComponents.h>
 //#include <moai-gfx-vk/MOAIGfxMgrVK_PipelineClerkVK.h>
@@ -14,6 +15,7 @@
 #include <moai-gfx-vk/MOAIGfxMgrVK_VertexCacheVK.h>
 #include <moai-gfx-vk/MOAILogicalDeviceVK.h>
 #include <moai-gfx-vk/MOAIPhysicalDeviceVK.h>
+#include <moai-gfx-vk/MOAISemaphoreVK.h>
 #include <moai-gfx-vk/MOAISwapChainVK.h>
 
 ////================================================================//
@@ -70,22 +72,15 @@ protected:
 	VkRenderPass                        	mRenderPass; // Global render pass for frame buffer writes
 	ZLLeanArray < MOAICommandBufferVK >		mDrawCommandBuffers;
 	ZLLeanArray < VkFramebuffer >			mFrameBuffers; // Allocate as needed? Bind to command buffer?
-	ZLLeanArray < VkFence >					mWaitFences;
 
-	VkSemaphore     					mPresentCompleteSemaphore;
-	VkSemaphore     					mRenderCompleteSemaphore;
+	MOAISemaphoreVK						mRenderSemaphore;
+	MOAISemaphoreVK						mPresentSemaphore;
 
-	ZLIndex								mCurrentBufferIndex; // updated in BeginFrame ()
-
-//    uint32_t                            mCurrentBuffer = 0; // Active frame buffer index
 //    VkDescriptorPool                    mDescriptorPool = VK_NULL_HANDLE; // Descriptor set pool
-//    std::vector<VkShaderModule>         mShaderModules; // List of shader modules created (stored for cleanup)
 //    VkPipelineCache                     mPipelineCache; // Pipeline cache object
 
 //	bool									mHasContext;
-//
-//	bool									mIsFramebufferSupported;
-//
+
 //	size_t									mTextureMemoryUsage;
 //	u32										mMaxTextureSize;
 //
@@ -108,7 +103,6 @@ protected:
 	void							InitDepthStencil			();
 	void							InitFrameBuffers			();
 	void							InitRenderPass				();
-	void							InitSemaphores				();
 
 	//----------------------------------------------------------------//
 	MOAIShader*						MOAIGfxMgr_AffirmShader						( MOAILuaState& state, int idx ) const;
@@ -139,19 +133,17 @@ public:
 
 //	GET ( u32, MaxTextureSize, mMaxTextureSize )
 //	GET ( bool, HasContext, mHasContext )
-//
-//	GET_BOOL ( IsOpenGLES, mIsOpenGLES )
-//	GET_BOOL ( IsFramebufferSupported, mIsFramebufferSupported )
-//
 //	GET ( u32, RenderCounter, mRenderCounter );
 
-	GET ( MOAICommandBufferVK&, CommandBuffer, this->mDrawCommandBuffers [ this->mCurrentBufferIndex ]);
-	GET ( VkFence&, Fence, this->mWaitFences [ this->mCurrentBufferIndex ]);
-	GET ( VkFramebuffer&, FrameBuffer, this->mFrameBuffers [ this->mCurrentBufferIndex ]);
+	GET ( MOAICommandBufferVK&, CommandBuffer, this->mDrawCommandBuffers [ this->mSwapChain.GetImageIndex ()]);
+	GET ( VkFramebuffer&, FrameBuffer, this->mFrameBuffers [ this->mSwapChain.GetImageIndex ()]);
 	GET ( MOAILogicalDeviceVK&, LogicalDevice, this->mLogicalDevice );
 	GET ( MOAIPhysicalDeviceVK&, PhysicalDevice, this->mPhysicalDevice );
 	GET ( VkRenderPass&, RenderPass, this->mRenderPass );
 	GET ( MOAISwapChainVK&, SwapChain, this->mSwapChain );
+	
+	GET ( MOAISemaphoreVK&, RenderSemaphore, this->mRenderSemaphore );
+	GET ( MOAISemaphoreVK&, PresentSemaphore, this->mPresentSemaphore );
 
 	GET_SET ( HostCreateSurfaceFunc, HostCreateSurfaceFunc, mHostCreateSurfaceFunc );
 	GET_SET ( HostGetInstanceExtensionsFunc, HostGetInstanceExtensionsFunc, mHostGetInstanceExtensionsFunc );
@@ -163,6 +155,8 @@ public:
 	void					DetectContext				( u32 width, u32 height, bool enableValidation );
 //	void					DetectFramebuffer			();
 	void					FinishFrame					();
+	MOAIShaderVK*			GetShaderPresetVK			( MOAIShaderPresetEnum preset ) const;
+	MOAIVertexFormatVK*		GetVertexFormatPresetVK		( MOAIVertexFormatPresetEnum preset ) const;
 //	u32						LogErrors					();
 							MOAIGfxMgrVK				();
 							~MOAIGfxMgrVK				();

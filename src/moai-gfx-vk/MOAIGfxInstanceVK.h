@@ -6,11 +6,13 @@
 
 #include <vector>
 #include <moai-gfx-vk/MOAIGfxUtilVK.h>
+#include <moai-gfx-vk/MOAILifecycleProviderVK.h>
 
 //================================================================//
 // MOAIGfxInstanceVK
 //================================================================//
-class MOAIGfxInstanceVK {
+class MOAIGfxInstanceVK :
+	public MOAILifecycleProviderVK < MOAIGfxInstanceVK > {
 private:
 
 	PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR	mGetPhysicalDeviceSurfaceCapabilitiesKHR;
@@ -40,6 +42,24 @@ public:
 	VkResult	GetPhysicalDeviceSurfaceSupportKHR			( VkPhysicalDevice physicalDevice, uint32_t queueFamilyIndex, VkSurfaceKHR surface, VkBool32* pSupported );
 	void		Init										( cc8* name, uint32_t apiVersion, cc8** hostInstanceExtensions, bool enableValidation );
 				MOAIGfxInstanceVK							();
+				~MOAIGfxInstanceVK							();
 };
+
+//================================================================//
+// MOAIGfxInstanceClientVK
+//================================================================//
+class MOAIGfxInstanceClientVK :
+	public MOAIAbstractLifecycleClientVK < MOAIGfxInstanceVK > {
+public:
+
+	//----------------------------------------------------------------//
+	MOAIGfxInstanceVK& GetVulkanInstance () {
+	
+		MOAIGfxInstanceVK* gfxInstance = this->GetLifecycleProvider ();
+		assert ( gfxInstance );
+		return *gfxInstance;
+	}
+};
+
 
 #endif

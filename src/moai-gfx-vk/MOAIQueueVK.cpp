@@ -80,9 +80,19 @@ VkResult MOAIQueueVK::PresentKHR ( const VkPresentInfoKHR& presentInfo ) {
 }
 
 //----------------------------------------------------------------//
-VkResult MOAIQueueVK::Submit ( const VkSubmitInfo* submits, u32 submitCount, VkFence fence ) {
+VkResult MOAIQueueVK::Submit ( const VkSubmitInfo& submitInfo ) {
 
-	return vkQueueSubmit ( this->mQueue, submitCount, submits, fence );
+	if ( submitInfo.signalSemaphoreCount == 0 ) {
+	
+		MOAILogicalDeviceVK& logicalDevice = this->GetLogicalDevice ();
+		if ( !this->mFence ) {
+			this->mFence.Initialize ( logicalDevice );
+		}
+		VkResult result = vkQueueSubmit ( this->mQueue, 1, &submitInfo, this->mFence );
+		this->mFence.Wait ();
+		return result;
+	}
+	return vkQueueSubmit ( this->mQueue, 1, &submitInfo, VK_NULL_HANDLE );
 }
 
 //----------------------------------------------------------------//

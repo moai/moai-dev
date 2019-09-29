@@ -72,12 +72,11 @@ public:
 	VkImageView				CreateImageView					( const VkImageViewCreateInfo& createInfo, const VkAllocationCallbacks* pAllocator = NULL );
 	VkFramebuffer			CreateFramebuffer				( const VkFramebufferCreateInfo& createInfo, const VkAllocationCallbacks* pAllocator = NULL );
 	VkRenderPass			CreateRenderPass				( const VkRenderPassCreateInfo& createInfo, const VkAllocationCallbacks* pAllocator = NULL );
-	VkSemaphore				CreateSemaphore					( const VkSemaphoreCreateInfo& createInfo, const VkAllocationCallbacks* pAllocator = NULL );
 	VkSwapchainKHR			CreateSwapchainKHR				( const VkSwapchainCreateInfoKHR& createInfo, const VkAllocationCallbacks* pAllocator = NULL );
 	void					DestroySwapchainKHR				( VkSwapchainKHR swapchain, const VkAllocationCallbacks* pAllocator = NULL );
 	VkMemoryRequirements	GetImageMemoryRequirements		( VkImage image );
-	void					GetSwapchainImagesKHR			( VkSwapchainKHR swapchain, uint32_t& swapchainImageCount, VkImage* images = NULL );
-	void					Init							( MOAIPhysicalDeviceVK& physicalDevice, VkQueueFlags requestedQueueTypes = VK_QUEUE_GRAPHICS_BIT, bool requestPresent = true );
+	void					GetSwapchainImagesKHR			( VkSwapchainKHR swapchain, ZLSize imageCount, VkImage* images = NULL );
+	void					Initialize						( MOAIPhysicalDeviceVK& physicalDevice, VkQueueFlags requestedQueueTypes = VK_QUEUE_GRAPHICS_BIT, bool requestPresent = true );
 							MOAILogicalDeviceVK				();
 							~MOAILogicalDeviceVK			();
 };

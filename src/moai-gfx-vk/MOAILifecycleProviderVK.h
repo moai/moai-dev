@@ -83,6 +83,7 @@ public:
 	//----------------------------------------------------------------//
 	void AddClient ( PROVIDER_TYPE& self, MOAIAbstractLifecycleClientVK < PROVIDER_TYPE >& client ) {
 	
+		if ( client.mProvider == &self ) return;
 		assert ( client.mProvider == NULL );
 		this->mClients.PushBack ( client.mClientListLink );
 		client.mProvider = &self;

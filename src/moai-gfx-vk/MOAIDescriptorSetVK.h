@@ -29,7 +29,7 @@ private:
 
 	//----------------------------------------------------------------//
 	void		MOAIAbstractCommandBufferResourceVK_Unpin		();
-	void		MOAIAbstractLifecycleClientVK_Finalize		();
+	void		MOAIAbstractLifecycleClientVK_Finalize			();
 
 public:
 
