@@ -10,6 +10,7 @@
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAIGfxUtilVK.h>
 #include <moai-gfx-vk/MOAIOneTriVK.h>
+#include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
 #include <moai-gfx-vk/MOAITexture2DVK.h>
@@ -63,23 +64,40 @@ void MOAIOneTriVK::Draw ( MOAICommandBufferVK& commandBuffer, VkRect2D rect ) {
 	vkCmdSetViewport ( commandBuffer, 0, 1, &viewport );
 	vkCmdSetScissor ( commandBuffer, 0, 1, &scissor );
 
-	this->UpdateUniformBuffers ( width, height );
+	this->UpdateMatrices ( width, height );
+	this->mUniforms->MapAndCopy ( &this->mMatrixUniforms, sizeof ( this->mMatrixUniforms ));
 
 	// create and initialize the descriptor set
-	MOAIDescriptorSetVK* descriptorSet = this->mDescriptorSetLayout->ProcureDescriptorSet ();
+	MOAIDescriptorSetVK* descriptorSet = this->mPipelineLayout->ProcureDescriptorSet ( ZLIndexCast ( 0 ));
 	descriptorSet->SetDescriptor ( 0, 0, &this->mUniformsDescriptor );
 	descriptorSet->SetDescriptor ( 1, 0, &this->mTextureDescriptor );
 	descriptorSet->Update ();
 	
 	commandBuffer.PinResource ( *descriptorSet );
 
-	vkCmdBindDescriptorSets ( commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, this->mPipelineLayout, 0, 1, *descriptorSet, 0, nullptr );
+	vkCmdBindDescriptorSets ( commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, *this->mPipelineLayout, 0, 1, *descriptorSet, 0, nullptr );
 	vkCmdBindPipeline ( commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, this->mPipeline );
 
 	VkDeviceSize offsets [] = { 0 };
 	vkCmdBindVertexBuffers ( commandBuffer, 0, 1, &this->mVertices->GetBuffer (), offsets );
 	vkCmdBindIndexBuffer ( commandBuffer, this->mIndices->GetBuffer (), 0, VK_INDEX_TYPE_UINT32 );
 	vkCmdDrawIndexed ( commandBuffer, this->mTotalIndices, 1, 0, 0, 1 );
+	
+	// snapshot:
+	// - uniform buffers
+	// - descriptor sets
+	// - index buffers
+	// - vertex buffers
+	// - pipeline layouts
+	// - pipelines
+	// basically: everything
+	// seems like if a resource *can* be mutated, it needs to be copy-on-write
+	// moai gfx state changes uniform and shader bindings on draw
+	// not all uniform buffers are compose-on-draw
+	
+	// snapshots should be cached and re-used, even if they need their data updated
+	// snapshots contain the actual VK resource
+	// snapshots may keep a mem copy for comparison (to check if dirty)
 }
 
 //----------------------------------------------------------------//
@@ -99,9 +117,8 @@ MOAIOneTriVK::~MOAIOneTriVK () {
 	MOAILogicalDeviceVK& logicalDevice = gfxMgr.GetLogicalDevice ();
 
 	vkDestroyPipeline ( logicalDevice, this->mPipeline, NULL );
-	vkDestroyPipelineLayout ( logicalDevice, this->mPipelineLayout, NULL );
 
-	this->mDescriptorSetLayout = NULL;
+	this->mPipelineLayout = NULL;
 
 	vkDestroyImageView ( logicalDevice, this->mTextureImageView, NULL );
     vkDestroyImage ( logicalDevice, this->mTextureImage, NULL) ;
@@ -124,24 +141,22 @@ void MOAIOneTriVK::PreparePipeline () {
 	name.SetBinding ( 0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT );
 	name.SetBinding ( 1, VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT );
 	
-	// create and initialize the layout
-	this->mDescriptorSetLayout = new MOAIDescriptorSetLayoutVK ();
-	this->mDescriptorSetLayout->Init ( logicalDevice, name );
-	
 	// create the pipeline layout
-    VkPipelineLayoutCreateInfo pPipelineLayoutCreateInfo = MOAIGfxStructVK::pipelineLayoutCreateInfo ( *this->mDescriptorSetLayout );
-	VK_CHECK_RESULT ( vkCreatePipelineLayout ( logicalDevice, &pPipelineLayoutCreateInfo, NULL, &this->mPipelineLayout ));
+	this->mPipelineLayout = new MOAIPipelineLayoutVK ();
+	this->mPipelineLayout->Initialize ( logicalDevice, 1 );
+	this->mPipelineLayout->SetDescriptorSetLayout ( ZLIndexCast ( 0 ), name );
+	this->mPipelineLayout->AffirmPipelineLayout ();
 
 	VkDynamicState dynamicStateEnables [] = {
 		VK_DYNAMIC_STATE_VIEWPORT,
 		VK_DYNAMIC_STATE_SCISSOR,
 	};
 
-	VkPipelineInputAssemblyStateCreateInfo inputAssemblyState 	= MOAIGfxStructVK::pipelineInputAssemblyStateCreateInfo ( VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST, VK_FALSE, 0 );
+	VkPipelineInputAssemblyStateCreateInfo inputAssemblyState 	= MOAIGfxStructVK::pipelineInputAssemblyStateCreateInfo ();
 	VkPipelineRasterizationStateCreateInfo rasterizationState 	= MOAIGfxStructVK::pipelineRasterizationStateCreateInfo ();
 	VkPipelineColorBlendAttachmentState blendAttachmentState 	= MOAIGfxStructVK::pipelineColorBlendAttachmentState ();
-	VkPipelineColorBlendStateCreateInfo colorBlendState 		= MOAIGfxStructVK::pipelineColorBlendStateCreateInfo ( &blendAttachmentState, 1 ); // one blend attachment state per color attachment (even if blending is not used
-	VkPipelineViewportStateCreateInfo viewportState 			= MOAIGfxStructVK::pipelineViewportStateCreateInfo ( NULL, 1, NULL, 1 ); // overridden by dynamic state
+	VkPipelineColorBlendStateCreateInfo colorBlendState 		= MOAIGfxStructVK::pipelineColorBlendStateCreateInfo ( &blendAttachmentState, 1 ); // one blend attachment state per color attachment (even if blending is not used)
+	VkPipelineViewportStateCreateInfo viewportState 			= MOAIGfxStructVK::pipelineViewportStateCreateInfo (); // overridden by dynamic state
 	VkPipelineDepthStencilStateCreateInfo depthStencilState 	= MOAIGfxStructVK::pipelineDepthStencilStateCreateInfo ();
 	VkPipelineMultisampleStateCreateInfo multisampleState 		= MOAIGfxStructVK::pipelineMultisampleStateCreateInfo ();
 	VkPipelineDynamicStateCreateInfo dynamicState				= MOAIGfxStructVK::pipelineDynamicStateCreateInfo ( dynamicStateEnables, 2 );
@@ -160,7 +175,7 @@ void MOAIOneTriVK::PreparePipeline () {
 		&depthStencilState,
 		&colorBlendState,
 		&dynamicState,
-		this->mPipelineLayout,
+		*this->mPipelineLayout,
 		renderPass
 	);
 
@@ -252,7 +267,7 @@ void MOAIOneTriVK::PrepareUniformBuffers () {
 	// Store information in the uniform's descriptor that is used by the descriptor set
 	this->mUniformsDescriptor.buffer = *this->mUniforms;
 	this->mUniformsDescriptor.offset = 0;
-	this->mUniformsDescriptor.range = sizeof ( mMatrixUniforms );
+	this->mUniformsDescriptor.range = sizeof ( this->mMatrixUniforms );
 }
 
 //----------------------------------------------------------------//
@@ -346,7 +361,7 @@ void MOAIOneTriVK::PrepareVertices ( bool useStagingBuffers ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIOneTriVK::UpdateUniformBuffers ( u32 width, u32 height ) {
+void MOAIOneTriVK::UpdateMatrices ( u32 width, u32 height ) {
 
 	float aspect		= ( float )width / ( float )height;
 	float fovy			= 60.0 * 0.01745329251994329576923690768489; // D2R
@@ -369,6 +384,4 @@ void MOAIOneTriVK::UpdateUniformBuffers ( u32 width, u32 height ) {
 	memcpy ( mMatrixUniforms.projectionMatrix, &projectionMatrix, sizeof ( projectionMatrix ));
 	memcpy ( mMatrixUniforms.viewMatrix, &viewMatrix, sizeof ( viewMatrix ));
 	memcpy ( mMatrixUniforms.modelMatrix, &modelMatrix, sizeof ( modelMatrix ));
-
-	this->mUniforms->MapAndCopy ( &this->mMatrixUniforms, sizeof ( this->mMatrixUniforms ));
 }

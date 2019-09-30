@@ -6,7 +6,7 @@
 
 #include <moai-gfx-vk/MOAIQueueVK.h>
 
-class MOAIAbstractCommandBufferResourceVK;
+class MOAIAbstractCommandBufferMemberVK;
 
 //================================================================//
 // MOAICommandBufferVK
@@ -15,11 +15,11 @@ class MOAICommandBufferVK :
 	public MOAIQueueClientVK {
 private:
 
-	friend class MOAIAbstractCommandBufferResourceVK;
+	friend class MOAIAbstractCommandBufferMemberVK;
 
-	VkCommandBuffer											mCommandBuffer;
-	ZLLeanList < MOAIAbstractCommandBufferResourceVK* >		mResources;
-	bool													mIsValid;
+	VkCommandBuffer										mCommandBuffer;
+	ZLLeanList < MOAIAbstractCommandBufferMemberVK* >	mResources;
+	bool												mIsValid;
 
 	//----------------------------------------------------------------//
 	void			Invalidate									();
@@ -52,7 +52,7 @@ public:
 	void				End							();
 						MOAICommandBufferVK			();
 						~MOAICommandBufferVK		();
-	void				PinResource					( MOAIAbstractCommandBufferResourceVK& resource );
+	void				PinResource					( MOAIAbstractCommandBufferMemberVK& resource );
 	void				Submit						();
 	void				Submit						(VkSemaphore waitSemaphore, VkSemaphore signalSemaphore, VkPipelineStageFlags waitStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT );
 	void				UnpinResources				();

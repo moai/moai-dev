@@ -8,6 +8,7 @@ class MOAICommandBufferVK;
 class MOAIDescriptorSetLayoutVK;
 class MOAIDescriptorSetVK;
 class MOAIGfxBufferVK;
+class MOAIPipelineLayoutVK;
 class MOAIShaderProgramVK;
 class MOAIShaderVK;
 class MOAITexture2DVK;
@@ -50,16 +51,15 @@ private:
 		float viewMatrix [ 16 ];
 	} mMatrixUniforms;
 
-	VkPipelineLayout							mPipelineLayout;
+	ZLStrongPtr < MOAIPipelineLayoutVK >		mPipelineLayout;
 	VkPipeline									mPipeline;
-	ZLStrongPtr < MOAIDescriptorSetLayoutVK >	mDescriptorSetLayout;
 
 	//----------------------------------------------------------------//
 	void			PreparePipeline				();
 	void			PrepareTexture				();
 	void			PrepareUniformBuffers		();
 	void			PrepareVertices				( bool useStagingBuffers = true );
-	void			UpdateUniformBuffers		( u32 width, u32 height );
+	void			UpdateMatrices				( u32 width, u32 height );
 
 public:
 

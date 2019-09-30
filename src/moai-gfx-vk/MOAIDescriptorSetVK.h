@@ -4,8 +4,8 @@
 #ifndef MOAIDESCRIPTORSETVK_H
 #define MOAIDESCRIPTORSETVK_H
 
-#include <moai-gfx-vk/MOAIAbstractCommandBufferResourceVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
+#include <moai-gfx-vk/MOAISnapshotVK.h>
 
 class MOAIDescriptorSetLayoutNameVK;
 class MOAIDescriptorSetLayoutVK;
@@ -14,7 +14,7 @@ class MOAIDescriptorSetLayoutVK;
 // MOAIDescriptorSetVK
 //================================================================//
 class MOAIDescriptorSetVK :
-	public MOAIAbstractCommandBufferResourceVK,
+	public MOAIAbstractCommandBufferMemberVK,
 	public MOAIDescriptorSetLayoutClientVK {
 private:
 
@@ -28,7 +28,7 @@ private:
 	VkWriteDescriptorSet*			GetWriteDescriptorSet 		( u32 binding, u32 arrayElement );
 
 	//----------------------------------------------------------------//
-	void		MOAIAbstractCommandBufferResourceVK_Unpin		();
+	void		MOAIAbstractCommandBufferMemberVK_Discard		();
 	void		MOAIAbstractLifecycleClientVK_Finalize			();
 
 public:

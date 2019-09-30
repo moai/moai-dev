@@ -55,7 +55,7 @@ void MOAIDescriptorSetLayoutVK::DiscardDescriptorSet ( MOAIDescriptorSetVK& desc
 }
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetLayoutVK::Init ( MOAILogicalDeviceVK& logicalDevice, const MOAIDescriptorSetLayoutNameVK& name ) {
+void MOAIDescriptorSetLayoutVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, const MOAIDescriptorSetLayoutNameVK& name ) {
 
 	logicalDevice.AddClient ( logicalDevice, *this );
 

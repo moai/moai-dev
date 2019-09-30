@@ -2,10 +2,10 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx-vk/MOAIAbstractCommandBufferResourceVK.h>
+#include <moai-gfx-vk/MOAICommandBufferVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
-#include <moai-gfx-vk/MOAICommandBufferVK.h>
+#include <moai-gfx-vk/MOAISnapshotVK.h>
 
 //================================================================//
 // MOAICommandBufferVK
@@ -42,7 +42,7 @@ MOAICommandBufferVK::~MOAICommandBufferVK () {
 }
 
 //----------------------------------------------------------------//
-void MOAICommandBufferVK::PinResource ( MOAIAbstractCommandBufferResourceVK& resource ) {
+void MOAICommandBufferVK::PinResource ( MOAIAbstractCommandBufferMemberVK& resource ) {
 
 	resource.ForceUnpin ();
 	this->mResources.PushBack ( resource.mLink );

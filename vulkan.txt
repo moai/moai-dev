@@ -40,3 +40,25 @@ DESCRIPTOR SET LAYOUT
 
 PIPELINE LAYOUT
     specified descriptor set layour per index
+
+vk buffers - uniform, texture, vertex, etc.
+    factory and instance - auto buffer
+        copy only contents to instance
+        single copy held in factory
+        factory snapshots new copies only if instance changes (since last draw)
+        flag if possible change (may not guarantee change)
+        many instances may share same factory
+    manual
+        one factory to one instance
+        factory may be configured without cache - manual update required
+        must always snapshot if dirty possible
+
+SnapshotSignature - unique identifier of subject; raw memory or resource descritor
+SnapshotSubject - contains buffer; a thing that is snapshotted
+SnapshotCache - caches snapshots for command list
+Snapshot - vk resource cached in command list
+
+Dependency DAG implementation (needed yet?)
+DependencyProvider
+DependencyClient - GetProvider< TYPE>();
+Dependency - force cleanup

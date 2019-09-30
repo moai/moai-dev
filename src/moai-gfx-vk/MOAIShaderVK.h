@@ -19,11 +19,7 @@ class MOAIShaderVK :
 	public virtual MOAINode {
 protected:
 
-//	friend class MOAIGfxMgrVK_GPUCacheVK;
-//	friend class MOAIShaderProgramVK;
-//
 	ZLStrongPtr < MOAIShaderProgramVK >	mProgram;
-//	ZLLeanArray < u8 >					mPendingUniformBuffer;
 
 	//----------------------------------------------------------------//
 //	static int				_getAttributeID				( lua_State* L );

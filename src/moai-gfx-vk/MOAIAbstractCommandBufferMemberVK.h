@@ -1,37 +1,38 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MOAIABSTRACTCOMMANDBUFFERRESOURCEVK_H
-#define MOAIABSTRACTCOMMANDBUFFERRESOURCEVK_H
+#ifndef MOAIABSTRACTCOMMANDBUFFERMEMBERVK_H
+#define MOAIABSTRACTCOMMANDBUFFERMEMBERVK_H
 
 class MOAICommandBufferVK;
 
 //================================================================//
-// MOAIAbstractCommandBufferResourceVK
+// MOAIAbstractCommandBufferMemberVK
 //================================================================//
-class MOAIAbstractCommandBufferResourceVK {
+class MOAIAbstractCommandBufferMemberVK :
+	public virtual ZLRefCountedObject {
 private:
 
 	friend class MOAICommandBufferVK;
 
-	ZLLeanLink < MOAIAbstractCommandBufferResourceVK* > mLink;
+	ZLLeanLink < MOAIAbstractCommandBufferMemberVK* > mLink;
 	MOAICommandBufferVK* mCommandBuffer;
 
 protected:
 
 	//----------------------------------------------------------------//
-	void				ForceRemove											();
+	void				ForceRemove									();
 
 	//----------------------------------------------------------------//
-	virtual void		MOAIAbstractCommandBufferResourceVK_Unpin			() = 0;
+	virtual void		MOAIAbstractCommandBufferMemberVK_Discard	() = 0;
 
 public:
 	
 	//----------------------------------------------------------------//
-	void				ForceUnpin											();
-	bool				IsPinned											();
-						MOAIAbstractCommandBufferResourceVK					();
-						~MOAIAbstractCommandBufferResourceVK				();
+	void				ForceUnpin									();
+	bool				IsPinned									();
+						MOAIAbstractCommandBufferMemberVK			();
+						~MOAIAbstractCommandBufferMemberVK			();
 };
 
 #endif

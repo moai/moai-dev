@@ -4,11 +4,13 @@
 #ifndef MOAIDESCRIPTORSETLAYOUTVK_H
 #define MOAIDESCRIPTORSETLAYOUTVK_H
 
+#include <moai-gfx-vk/MOAIAbstractSnapshotSubjectVK.h>
 #include <moai-gfx-vk/MOAILifecycleProviderVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutNameVK.h>
-#include <moai-gfx-vk/MOAILogicalDeviceVK.h>
+#include <moai-gfx-vk/MOAILogicalDeviceClientVK.h>
 
 class MOAIDescriptorSetVK;
+class MOAILogicalDeviceVK;
 
 //================================================================//
 // MOAIDescriptorSetLayoutVK
@@ -52,7 +54,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void						DiscardDescriptorSet				( MOAIDescriptorSetVK& descriptorSet );
-	void						Init								( MOAILogicalDeviceVK& logicalDevice, const MOAIDescriptorSetLayoutNameVK& name );
+	void						Initialize							( MOAILogicalDeviceVK& logicalDevice, const MOAIDescriptorSetLayoutNameVK& name );
 	void						InvalidateDescriptorSet				( MOAIDescriptorSetVK& descriptorSet );
 								MOAIDescriptorSetLayoutVK			();
 								~MOAIDescriptorSetLayoutVK			();

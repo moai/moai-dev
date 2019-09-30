@@ -897,7 +897,11 @@ public:
     }
 
     //----------------------------------------------------------------//
-    static VkPipelineInputAssemblyStateCreateInfo pipelineInputAssemblyStateCreateInfo ( VkPrimitiveTopology topology, VkBool32 primitiveRestartEnable, VkPipelineInputAssemblyStateCreateFlags flags ) {
+    static VkPipelineInputAssemblyStateCreateInfo pipelineInputAssemblyStateCreateInfo (
+		VkPrimitiveTopology topology					= VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST,
+		VkBool32 primitiveRestartEnable					= VK_FALSE,
+		VkPipelineInputAssemblyStateCreateFlags flags	= 0
+	) {
         DECL_VK_STRUCT ( VkPipelineInputAssemblyStateCreateInfo, pipelineInputAssemblyStateCreateInfo );
         pipelineInputAssemblyStateCreateInfo.sType                      = VK_STRUCTURE_TYPE_PIPELINE_INPUT_ASSEMBLY_STATE_CREATE_INFO;
         pipelineInputAssemblyStateCreateInfo.pNext                      = NULL;

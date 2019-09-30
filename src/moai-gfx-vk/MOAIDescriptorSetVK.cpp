@@ -109,7 +109,7 @@ void MOAIDescriptorSetVK::Update () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetVK::MOAIAbstractCommandBufferResourceVK_Unpin () {
+void MOAIDescriptorSetVK::MOAIAbstractCommandBufferMemberVK_Discard () {
 
 	this->GetLayout ().DiscardDescriptorSet ( *this );
 }

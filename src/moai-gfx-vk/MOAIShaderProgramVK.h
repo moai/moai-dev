@@ -23,8 +23,7 @@ class MOAITextureVK;
 */
 class MOAIShaderProgramVK :
 	public MOAILogicalDeviceClientVK,
-	public virtual MOAIGfxResourceVK,
-	public virtual MOAIUniformSchema {
+	public virtual MOAIGfxResourceVK {
 public:
 
 	enum ModuleID {

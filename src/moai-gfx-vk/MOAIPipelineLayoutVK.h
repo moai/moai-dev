@@ -4,13 +4,25 @@
 #ifndef MOAIPIPELINELAYOUTVK_H
 #define MOAIPIPELINELAYOUTVK_H
 
+#include <moai-gfx-vk/MOAIDescriptorSetLayoutNameVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
+#include <moai-gfx-vk/MOAILogicalDeviceClientVK.h>
+
 //================================================================//
 // MOAIPipelineLayoutVK
 //================================================================//
-class MOAIPipelineLayoutVK {
-public:
+class MOAIPipelineLayoutVK :
+	public ZLRefCountedObject,
+	public MOAILogicalDeviceClientVK {
+protected:
 
-	VkPipelineLayout	mPipelineLayout;
+	VkPipelineLayout							mPipelineLayout;
+	ZLLeanArray < MOAIDescriptorSetLayoutVK > 	mDescriptorSetLayouts;
+
+	//----------------------------------------------------------------//
+	void			MOAIAbstractLifecycleClientVK_Finalize		();
+
+public:
 
 	//----------------------------------------------------------------//
 	operator bool () const {
@@ -21,18 +33,24 @@ public:
 	//----------------------------------------------------------------//
 	operator VkPipelineLayout* () {
 	
+		this->AffirmPipelineLayout ();
 		return &this->mPipelineLayout;
 	}
 	
 	//----------------------------------------------------------------//
 	operator VkPipelineLayout& () {
 	
+		this->AffirmPipelineLayout ();
 		return this->mPipelineLayout;
 	}
 	
 	//----------------------------------------------------------------//
-						MOAIPipelineLayoutVK			();
-						~MOAIPipelineLayoutVK			();
+	void					AffirmPipelineLayout			();
+	void					Initialize						( MOAILogicalDeviceVK& logicalDevice, ZLSize size );
+							MOAIPipelineLayoutVK			();
+							~MOAIPipelineLayoutVK			();
+	MOAIDescriptorSetVK*	ProcureDescriptorSet			( ZLIndex index );
+	void					SetDescriptorSetLayout			( ZLIndex index, MOAIDescriptorSetLayoutNameVK& name );
 };
 
 #endif

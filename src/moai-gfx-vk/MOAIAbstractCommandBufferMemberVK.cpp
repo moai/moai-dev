@@ -2,17 +2,17 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx-vk/MOAIAbstractCommandBufferResourceVK.h>
+#include <moai-gfx-vk/MOAIAbstractCommandBufferMemberVK.h>
 #include <moai-gfx-vk/MOAICommandBufferVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 
 //================================================================//
-// MOAIAbstractCommandBufferResourceVK
+// MOAIAbstractCommandBufferMemberVK
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAbstractCommandBufferResourceVK::ForceRemove () {
+void MOAIAbstractCommandBufferMemberVK::ForceRemove () {
 
 	if ( this->mCommandBuffer ) {
 		this->mCommandBuffer->Invalidate ();
@@ -22,26 +22,26 @@ void MOAIAbstractCommandBufferResourceVK::ForceRemove () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractCommandBufferResourceVK::ForceUnpin () {
+void MOAIAbstractCommandBufferMemberVK::ForceUnpin () {
 
 	if ( this->mCommandBuffer ) {
 		this->ForceRemove ();
-		this->MOAIAbstractCommandBufferResourceVK_Unpin ();
+		this->MOAIAbstractCommandBufferMemberVK_Discard ();
 	}
 }
 
 //----------------------------------------------------------------//
-bool MOAIAbstractCommandBufferResourceVK::IsPinned () {
+bool MOAIAbstractCommandBufferMemberVK::IsPinned () {
 	return ( this->mCommandBuffer != NULL );
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractCommandBufferResourceVK::MOAIAbstractCommandBufferResourceVK () :
+MOAIAbstractCommandBufferMemberVK::MOAIAbstractCommandBufferMemberVK () :
 	mLink ( this ),
 	mCommandBuffer ( NULL ) {
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractCommandBufferResourceVK::~MOAIAbstractCommandBufferResourceVK () {
+MOAIAbstractCommandBufferMemberVK::~MOAIAbstractCommandBufferMemberVK () {
 	this->ForceRemove ();
 }
