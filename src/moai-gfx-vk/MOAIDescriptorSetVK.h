@@ -4,58 +4,42 @@
 #ifndef MOAIDESCRIPTORSETVK_H
 #define MOAIDESCRIPTORSETVK_H
 
+#include <moai-gfx-vk/MOAIAbstractSnapshotSubjectVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
-#include <moai-gfx-vk/MOAISnapshotVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetSignatureVK.h>
 
-class MOAIDescriptorSetLayoutNameVK;
-class MOAIDescriptorSetLayoutVK;
+class MOAIDescriptorSetSnapshotVK;
 
 //================================================================//
 // MOAIDescriptorSetVK
 //================================================================//
 class MOAIDescriptorSetVK :
-	public MOAIAbstractCommandBufferMemberVK,
-	public MOAIDescriptorSetLayoutClientVK {
+	public ZLRefCountedObject,
+	public MOAIDescriptorSetLayoutClientVK,
+	public MOAIAbstractSnapshotSubjectVK < MOAIDescriptorSetSnapshotVK, MOAIDescriptorSetSignatureVK >,
+	public MOAIDescriptorSetSignatureVK {
 private:
 
 	friend class MOAIDescriptorSetLayoutVK;
 
-	ZLLeanArray < VkWriteDescriptorSet >	mWriteArray;
-	ZLLeanArray < VkWriteDescriptorSet* >	mWriteArrayBindings;
-	VkDescriptorSet							mDescriptorSet;
+	//----------------------------------------------------------------//
+	VkWriteDescriptorSet*		GetWriteDescriptorSet 		( ZLIndex binding, ZLIndex arrayElement );
 
 	//----------------------------------------------------------------//
-	VkWriteDescriptorSet*			GetWriteDescriptorSet 		( u32 binding, u32 arrayElement );
-
-	//----------------------------------------------------------------//
-	void		MOAIAbstractCommandBufferMemberVK_Discard		();
-	void		MOAIAbstractLifecycleClientVK_Finalize			();
-
+	void											MOAIAbstractLifecycleClientVK_Finalize				();
+	SnapshotCache*									MOAIAbstractSnapshotSubjectVK_GetCache				();
+	const MOAIDescriptorSetSignatureVK&				MOAIAbstractSnapshotSubjectVK_GetSignature			() const;
+	MOAIDescriptorSetSnapshotVK*					MOAIAbstractSnapshotSubjectVK_MakeSnapshot			();
+	
 public:
-
-	//----------------------------------------------------------------//
-	operator bool () const {
-		return ( this->mDescriptorSet != VK_NULL_HANDLE );
-	}
 	
 	//----------------------------------------------------------------//
-	operator VkDescriptorSet* () {
-		return &this->mDescriptorSet;
-	}
-	
-	//----------------------------------------------------------------//
-	operator VkDescriptorSet& () {
-		return this->mDescriptorSet;
-	}
-	
-	//----------------------------------------------------------------//
-	void		InitWriteArray				( const MOAIDescriptorSetLayoutNameVK& name );
-				MOAIDescriptorSetVK			();
-				~MOAIDescriptorSetVK		();
-	void		SetDescriptor				( u32 binding, u32 arrayElement, VkBufferView* texelBufferView );
-	void		SetDescriptor				( u32 binding, u32 arrayElement, VkDescriptorBufferInfo* bufferInfo );
-	void		SetDescriptor				( u32 binding, u32 arrayElement, VkDescriptorImageInfo* imageInfo );
-	void		Update						();
+	void			Initialize						( MOAIDescriptorSetLayoutVK& descriptorSetLayout );
+					MOAIDescriptorSetVK				();
+					~MOAIDescriptorSetVK			();
+	void			SetDescriptor					( ZLIndex binding, ZLIndex arrayElement, VkBufferView* texelBufferView );
+	void			SetDescriptor					( ZLIndex binding, ZLIndex arrayElement, VkDescriptorBufferInfo* bufferInfo );
+	void			SetDescriptor					( ZLIndex binding, ZLIndex arrayElement, VkDescriptorImageInfo* imageInfo );
 };
 
 #endif

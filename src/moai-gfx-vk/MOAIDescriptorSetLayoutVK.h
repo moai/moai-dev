@@ -4,13 +4,14 @@
 #ifndef MOAIDESCRIPTORSETLAYOUTVK_H
 #define MOAIDESCRIPTORSETLAYOUTVK_H
 
-#include <moai-gfx-vk/MOAIAbstractSnapshotSubjectVK.h>
+#include <moai-gfx-vk/MOAIAbstractSnapshotCacheVK.h>
 #include <moai-gfx-vk/MOAILifecycleProviderVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetLayoutNameVK.h>
 #include <moai-gfx-vk/MOAILogicalDeviceClientVK.h>
 
-class MOAIDescriptorSetVK;
 class MOAILogicalDeviceVK;
+class MOAIDescriptorSetVK;
+class MOAIDescriptorSetSignatureVK;
+class MOAIDescriptorSetSnapshotVK;
 
 //================================================================//
 // MOAIDescriptorSetLayoutVK
@@ -18,24 +19,34 @@ class MOAILogicalDeviceVK;
 class MOAIDescriptorSetLayoutVK :
 	public ZLRefCountedObject,
 	public MOAILogicalDeviceClientVK,
-	public MOAILifecycleProviderVK < MOAIDescriptorSetLayoutVK > {
+	public MOAILifecycleProviderVK < MOAIDescriptorSetLayoutVK >,
+	public MOAIAbstractSnapshotCacheVK < MOAIDescriptorSetSnapshotVK, MOAIDescriptorSetSignatureVK > {
 private:
+
+	friend class MOAIDescriptorSetSignatureVK;
+	friend class MOAIDescriptorSetSnapshotVK;
+	friend class MOAIDescriptorSetVK;
 
 	static const ZLSize MAX_DESCRIPTOR_SETS = 16;
 
-	VkDescriptorPool						mPool; // TODO: need to create more pools on the fly
-	VkDescriptorSetLayout					mLayout;
-	MOAIDescriptorSetLayoutNameVK			mName;
+	ZLLeanArray < VkDescriptorSetLayoutBinding >	mLayoutBindings;
+	ZLLeanArray < ZLIndex >							mSignatureOffsets;
+	ZLSize											mSignatureSize;
 
-	STLSet < MOAIDescriptorSetVK* >			mPinnedSets;
-	STLSet < MOAIDescriptorSetVK* >			mUnpinnedSets;
+	VkDescriptorPool								mPool; // TODO: need to create more pools on the fly
+	VkDescriptorSetLayout							mLayout;
+
+	STLSet < MOAIDescriptorSetSnapshotVK* >			mPinnedSets;
+	STLSet < MOAIDescriptorSetSnapshotVK* >			mUnpinnedSets;
 
 	//----------------------------------------------------------------//
-	void						MOAIAbstractLifecycleClientVK_Finalize		();
+	void								MOAIAbstractLifecycleClientVK_Finalize			();
+	MOAIDescriptorSetSnapshotVK*		MOAIAbstractSnapshotCacheVK_GetSnapshot			( const MOAIDescriptorSetSignatureVK& signature );
 
 public:
 
-	GET_CONST ( MOAIDescriptorSetLayoutNameVK&, Name, mName );
+	GET_CONST ( ZLSize, Size, mLayoutBindings.Size ())
+	GET_CONST ( ZLSize, SignatureSize, mSignatureSize )
 
 	//----------------------------------------------------------------//
 	operator bool () const {
@@ -44,21 +55,24 @@ public:
 	
 	//----------------------------------------------------------------//
 	operator VkDescriptorSetLayout* () {
+		this->AffirmDescritorSetLayout ();
 		return &this->mLayout;
 	}
 	
 	//----------------------------------------------------------------//
 	operator VkDescriptorSetLayout& () {
+		this->AffirmDescritorSetLayout ();
 		return this->mLayout;
 	}
 	
 	//----------------------------------------------------------------//
-	void						DiscardDescriptorSet				( MOAIDescriptorSetVK& descriptorSet );
-	void						Initialize							( MOAILogicalDeviceVK& logicalDevice, const MOAIDescriptorSetLayoutNameVK& name );
-	void						InvalidateDescriptorSet				( MOAIDescriptorSetVK& descriptorSet );
-								MOAIDescriptorSetLayoutVK			();
-								~MOAIDescriptorSetLayoutVK			();
-	MOAIDescriptorSetVK*		ProcureDescriptorSet				();
+	void								AffirmDescritorSetLayout			();
+	void								Initialize							( MOAILogicalDeviceVK& logicalDevice, ZLSize totalBindings );
+										MOAIDescriptorSetLayoutVK			();
+										~MOAIDescriptorSetLayoutVK			();
+	MOAIDescriptorSetSnapshotVK*		ProcureDescriptorSetSnapshot		( const MOAIDescriptorSetSignatureVK& signature );
+	void								RetireDescriptorSetSnapshot			( MOAIDescriptorSetSnapshotVK& snapshot );
+	void								SetBinding							( ZLIndex index, VkDescriptorType descriptorType, VkShaderStageFlags stageFlags, ZLSize descriptorCount = 1 );
 };
 
 //================================================================//

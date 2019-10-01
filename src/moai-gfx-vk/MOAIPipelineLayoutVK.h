@@ -4,7 +4,6 @@
 #ifndef MOAIPIPELINELAYOUTVK_H
 #define MOAIPIPELINELAYOUTVK_H
 
-#include <moai-gfx-vk/MOAIDescriptorSetLayoutNameVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
 #include <moai-gfx-vk/MOAILogicalDeviceClientVK.h>
 
@@ -45,12 +44,14 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void					AffirmPipelineLayout			();
-	void					Initialize						( MOAILogicalDeviceVK& logicalDevice, ZLSize size );
-							MOAIPipelineLayoutVK			();
-							~MOAIPipelineLayoutVK			();
-	MOAIDescriptorSetVK*	ProcureDescriptorSet			( ZLIndex index );
-	void					SetDescriptorSetLayout			( ZLIndex index, MOAIDescriptorSetLayoutNameVK& name );
+	void							AffirmPipelineLayout			();
+	void							Initialize						( MOAILogicalDeviceVK& logicalDevice, ZLSize size );
+	MOAIDescriptorSetLayoutVK&		GetDescriptorSetLayout			( ZLIndex index );
+	MOAIDescriptorSetLayoutVK&		InitializeDescriptorSetLayout	( ZLIndex index, ZLSize size );
+									MOAIPipelineLayoutVK			();
+									~MOAIPipelineLayoutVK			();
+//	MOAIDescriptorSetVK*			ProcureDescriptorSet			( ZLIndex index );
+//	void							SetDescriptorSetLayout			( ZLIndex index, MOAIDescriptorSetLayoutNameVK& name );
 };
 
 #endif

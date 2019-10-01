@@ -3,9 +3,12 @@
 
 #include "pch.h"
 #include <moai-gfx-vk/MOAICommandBufferVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
-#include <moai-gfx-vk/MOAISnapshotVK.h>
+#include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
+#include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
 
 //================================================================//
 // MOAICommandBufferVK
@@ -17,6 +20,14 @@ void MOAICommandBufferVK::Begin () {
 	this->UnpinResources ();
 	VkCommandBufferBeginInfo cmdBufInfo = MOAIGfxStructVK::commandBufferBeginInfo ();
 	VK_CHECK_RESULT ( vkBeginCommandBuffer ( this->mCommandBuffer, &cmdBufInfo ));
+}
+
+//----------------------------------------------------------------//
+void MOAICommandBufferVK::BindDescriptorSet ( VkPipelineBindPoint pipelineBindPoint, MOAIDescriptorSetVK& descriptorSet, MOAIPipelineLayoutVK& pipelineLayout, u32 firstSet ) {
+
+	MOAIDescriptorSetSnapshotVK* descriptorSetSnapshot = descriptorSet.MakeSnapshot ();
+	this->PinResource ( *descriptorSetSnapshot );
+	vkCmdBindDescriptorSets ( this->mCommandBuffer, pipelineBindPoint, pipelineLayout, 0, 1, *descriptorSetSnapshot, 0, NULL );
 }
 
 //----------------------------------------------------------------//
@@ -42,7 +53,7 @@ MOAICommandBufferVK::~MOAICommandBufferVK () {
 }
 
 //----------------------------------------------------------------//
-void MOAICommandBufferVK::PinResource ( MOAIAbstractCommandBufferMemberVK& resource ) {
+void MOAICommandBufferVK::PinResource ( MOAIAbstractSnapshotVK& resource ) {
 
 	resource.ForceUnpin ();
 	this->mResources.PushBack ( resource.mLink );

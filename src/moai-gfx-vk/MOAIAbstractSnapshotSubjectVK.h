@@ -6,7 +6,7 @@
 
 #include <moai-gfx-vk/MOAIAbstractSnapshotCacheVK.h>
 #include <moai-gfx-vk/MOAIAbstractSnapshotSignatureVK.h>
-#include <moai-gfx-vk/MOAISnapshotVK.h>
+#include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
 
 //================================================================//
 // MOAIAbstractSnapshotSubjectVK
@@ -19,11 +19,10 @@ public:
 
 protected:
 
-	ZLStrongPtr < SnapshotCache > mSnapshotCache;
-
 	//----------------------------------------------------------------//
+	virtual SnapshotCache*						MOAIAbstractSnapshotSubjectVK_GetCache				() { return NULL; }
 	virtual const SIGNATURE_TYPE&				MOAIAbstractSnapshotSubjectVK_GetSignature			() const = 0;
-	virtual ZLStrongPtr < SNAPSHOT_TYPE >		MOAIAbstractSnapshotSubjectVK_MakeSnapshot			() const = 0;
+	virtual SNAPSHOT_TYPE*						MOAIAbstractSnapshotSubjectVK_MakeSnapshot			() = 0;
 
 public:
 	
@@ -33,23 +32,21 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	ZLStrongPtr < SNAPSHOT_TYPE > MakeSnapshot () {
+	SnapshotCache* GetSnapshotCache () {
+		return this->MOAIAbstractSnapshotSubjectVK_GetCache ();
+	}
 	
-		const SIGNATURE_TYPE& signature = this->GetSignature ();
-		ZLStrongPtr < SNAPSHOT_TYPE > snapshot = this->mSnapshotCache ? this->mSnapshotCache->GetSnapshot ( signature ) : NULL;
+	//----------------------------------------------------------------//
+	SNAPSHOT_TYPE* MakeSnapshot () {
 
-		if ( !snapshot ) {
-			snapshot = this->MOAIAbstractSnapshotSubjectVK_MakeSnapshot ();
-			if ( this->mSnapshotCache ) {
-				this->mSnapshotCache->StoreSnapshot ( signature, snapshot );
-			}
-		}
-		return snapshot;
+		SnapshotCache* snapshotCache = this->GetSnapshotCache ();
+		SNAPSHOT_TYPE* snapshot = snapshotCache ? snapshotCache->GetSnapshot ( this->GetSignature ()) : NULL;
+		return snapshot ? snapshot : this->MOAIAbstractSnapshotSubjectVK_MakeSnapshot ();
 	}
 	
 	//----------------------------------------------------------------//
 	MOAIAbstractSnapshotSubjectVK () {
-		static_cast < MOAISnapshotVK < SNAPSHOT_TYPE >* >(( SNAPSHOT_TYPE* )NULL );
+		static_cast < MOAIAbstractSnapshotVK* >(( SNAPSHOT_TYPE* )NULL );
 		static_cast < MOAIAbstractSnapshotSignatureVK < SIGNATURE_TYPE >* >(( SIGNATURE_TYPE* )NULL );
 	}
 	

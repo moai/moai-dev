@@ -144,7 +144,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	bool IsIdentical ( const ZLLeanArray < TYPE >& array ) {
+	bool IsIdentical ( const ZLLeanArray < TYPE >& array ) const {
 	
 		if ( this->mSize == array.mSize ) {
 			return ( memcmp ( this->mData, array.mData, this->mSize ) == 0 );

@@ -52,6 +52,7 @@ private:
 	} mMatrixUniforms;
 
 	ZLStrongPtr < MOAIPipelineLayoutVK >		mPipelineLayout;
+	ZLStrongPtr < MOAIDescriptorSetVK >			mDescriptorSet;
 	VkPipeline									mPipeline;
 
 	//----------------------------------------------------------------//

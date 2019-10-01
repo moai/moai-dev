@@ -2,69 +2,44 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetSignatureVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetLayoutNameVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
 
 //================================================================//
 // MOAIDescriptorSetVK
 //================================================================//
 
 //----------------------------------------------------------------//
-VkWriteDescriptorSet* MOAIDescriptorSetVK::GetWriteDescriptorSet ( u32 binding, u32 arrayElement ) {
+VkWriteDescriptorSet* MOAIDescriptorSetVK::GetWriteDescriptorSet ( ZLIndex binding, ZLIndex arrayElement ) {
 
-	const MOAIDescriptorSetLayoutNameVK& name = this->GetLayout ().GetName ();
-	
-	if ( binding >= name.Size () ) return NULL;
-	
-	const VkDescriptorSetLayoutBinding& layoutBinding = name [ ZLIndexCast ( binding )];
-	
+	MOAIDescriptorSetLayoutVK& layout = this->GetLayout ();
+
+	if ( binding >= layout.GetSize ()) return NULL;
+
+	const VkDescriptorSetLayoutBinding& layoutBinding = layout.mLayoutBindings [ ZLIndexCast ( binding )];
+
 	if ( arrayElement >= layoutBinding.descriptorCount ) return NULL;
+
+	// TODO: add type check as well?
 	
-	// TODO: add type check?
-	
-	return &this->mWriteArrayBindings [ ZLIndexCast ( binding )][ arrayElement ];
+	ZLIndex index = layout.mSignatureOffsets [ binding ];
+
+	return &( *this )[ index + arrayElement ];
 }
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetVK::InitWriteArray ( const MOAIDescriptorSetLayoutNameVK& name ) {
+void MOAIDescriptorSetVK::Initialize ( MOAIDescriptorSetLayoutVK& descriptorSetLayout ) {
 
-	// set up the pool
-	ZLSize nBindings = name.Size ();
-	ZLSize writeArraySize = 0;
-	
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < nBindings; ++i ) {
-		const VkDescriptorSetLayoutBinding& binding = name [ i ];
-		writeArraySize += binding.descriptorCount;
-	}
-	
-	// set up the write array
-	this->mWriteArray.Init ( writeArraySize );
-	this->mWriteArrayBindings.Init ( nBindings );
-
-	ZLIndex writeIndex = ZLIndexOp::ZERO;
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < nBindings; ++i ) {
-	
-		const VkDescriptorSetLayoutBinding& binding = name [ i ];
-		this->mWriteArrayBindings [ i ] = &this->mWriteArray [ writeIndex ];
-		
-		for ( u32 dstArrayElement = ZLIndexOp::ZERO; dstArrayElement < binding.descriptorCount; ++dstArrayElement, ++writeIndex ) {
-			
-			this->mWriteArray [ writeIndex ] = MOAIGfxStructVK::writeDescriptorSet (
-				this->mDescriptorSet,
-				binding.binding,
-				dstArrayElement,
-				binding.descriptorType
-			);
-		}
-	}
+	descriptorSetLayout.AddClient ( descriptorSetLayout, *this );
+	this->MOAIDescriptorSetSignatureVK::Initialize ( descriptorSetLayout );
 }
 
 //----------------------------------------------------------------//
-MOAIDescriptorSetVK::MOAIDescriptorSetVK () :
-	mDescriptorSet ( VK_NULL_HANDLE ) {
+MOAIDescriptorSetVK::MOAIDescriptorSetVK () {
 }
 
 //----------------------------------------------------------------//
@@ -74,7 +49,7 @@ MOAIDescriptorSetVK::~MOAIDescriptorSetVK () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetVK::SetDescriptor ( u32 binding, u32 arrayElement, VkBufferView* texelBufferView ) {
+void MOAIDescriptorSetVK::SetDescriptor ( ZLIndex binding, ZLIndex arrayElement, VkBufferView* texelBufferView ) {
 
 	VkWriteDescriptorSet* writeDescriptorSet = this->GetWriteDescriptorSet ( binding, arrayElement );
 	assert ( writeDescriptorSet );
@@ -82,7 +57,7 @@ void MOAIDescriptorSetVK::SetDescriptor ( u32 binding, u32 arrayElement, VkBuffe
 }
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetVK::SetDescriptor ( u32 binding, u32 arrayElement, VkDescriptorBufferInfo* bufferInfo ) {
+void MOAIDescriptorSetVK::SetDescriptor ( ZLIndex binding, ZLIndex arrayElement, VkDescriptorBufferInfo* bufferInfo ) {
 
 	VkWriteDescriptorSet* writeDescriptorSet = this->GetWriteDescriptorSet ( binding, arrayElement );
 	assert ( writeDescriptorSet );
@@ -90,18 +65,11 @@ void MOAIDescriptorSetVK::SetDescriptor ( u32 binding, u32 arrayElement, VkDescr
 }
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetVK::SetDescriptor ( u32 binding, u32 arrayElement, VkDescriptorImageInfo* imageInfo ) {
+void MOAIDescriptorSetVK::SetDescriptor ( ZLIndex binding, ZLIndex arrayElement, VkDescriptorImageInfo* imageInfo ) {
 
 	VkWriteDescriptorSet* writeDescriptorSet = this->GetWriteDescriptorSet ( binding, arrayElement );
 	assert ( writeDescriptorSet );
 	writeDescriptorSet->pImageInfo = imageInfo;
-}
-
-//----------------------------------------------------------------//
-void MOAIDescriptorSetVK::Update () {
-
-	MOAILogicalDeviceVK& logicalDevice = this->GetLayout ().GetLogicalDevice ();
-	vkUpdateDescriptorSets ( logicalDevice, ( u32 )this->mWriteArray.Size (), this->mWriteArray.GetBuffer (), 0, NULL );
 }
 
 //================================================================//
@@ -109,13 +77,25 @@ void MOAIDescriptorSetVK::Update () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetVK::MOAIAbstractCommandBufferMemberVK_Discard () {
+void MOAIDescriptorSetVK::MOAIAbstractLifecycleClientVK_Finalize () {
 
-	this->GetLayout ().DiscardDescriptorSet ( *this );
+	this->GetLayout ().RemoveClient ( *this );
 }
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetVK::MOAIAbstractLifecycleClientVK_Finalize () {
+MOAIDescriptorSetVK::SnapshotCache* MOAIDescriptorSetVK::MOAIAbstractSnapshotSubjectVK_GetCache () {
 
-	this->GetLayout ().InvalidateDescriptorSet ( *this );
+	return &this->GetLayout ();
+}
+
+//----------------------------------------------------------------//
+const MOAIDescriptorSetSignatureVK& MOAIDescriptorSetVK::MOAIAbstractSnapshotSubjectVK_GetSignature () const {
+
+	return *this;
+}
+
+//----------------------------------------------------------------//
+MOAIDescriptorSetSnapshotVK* MOAIDescriptorSetVK::MOAIAbstractSnapshotSubjectVK_MakeSnapshot () {
+
+	return this->GetLayout ().ProcureDescriptorSetSnapshot ( *this );
 }

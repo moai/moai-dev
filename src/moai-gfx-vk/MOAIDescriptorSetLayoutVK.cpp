@@ -3,6 +3,8 @@
 
 #include "pch.h"
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetSignatureVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetVK.h>
 #include <moai-gfx-vk/MOAILogicalDeviceVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
@@ -45,41 +47,35 @@ public:
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetLayoutVK::DiscardDescriptorSet ( MOAIDescriptorSetVK& descriptorSet ) {
+void MOAIDescriptorSetLayoutVK::AffirmDescritorSetLayout () {
 
-	if ( descriptorSet == NULL ) return;
-	if ( !this->mPinnedSets.contains ( &descriptorSet )) return;
+	if ( this->mLayout ) return;
 	
-	this->mPinnedSets.erase ( &descriptorSet );
-	this->mUnpinnedSets.insert ( &descriptorSet );
-}
-
-//----------------------------------------------------------------//
-void MOAIDescriptorSetLayoutVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, const MOAIDescriptorSetLayoutNameVK& name ) {
-
-	logicalDevice.AddClient ( logicalDevice, *this );
-
-	this->mName = name;
-	ZLSize nameSize = name.Size ();
+	MOAILogicalDeviceVK& logicalDevice = this->GetLogicalDevice ();
+	
+	ZLSize totalBindings = this->mLayoutBindings.Size ();
 	
 	// set up the layout
-	VkDescriptorSetLayoutCreateInfo descriptorLayout = MOAIGfxStructVK::descriptorSetLayoutCreateInfo ( this->mName.GetBuffer (), nameSize );
+	VkDescriptorSetLayoutCreateInfo descriptorLayout = MOAIGfxStructVK::descriptorSetLayoutCreateInfo ( this->mLayoutBindings.GetBuffer (), ( u32 )totalBindings );
 	VK_CHECK_RESULT ( vkCreateDescriptorSetLayout ( logicalDevice, &descriptorLayout, NULL, &this->mLayout ));
-	
-	// set up the pool
+
+	// do some analysis - build histogram (for pool), find offsets (for write array)
+	this->mSignatureOffsets.Init ( totalBindings );
 	STLMap < VkDescriptorType, ZLPrimitiveWithDefault < u32, 0 > > histogram;
-	
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < nameSize; ++i ) {
-		const VkDescriptorSetLayoutBinding& binding = this->mName [ i ];
+
+	this->mSignatureSize = 0;
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalBindings; ++i ) {
+		const VkDescriptorSetLayoutBinding& binding = this->mLayoutBindings [ i ];
 		histogram [ binding.descriptorType ] += binding.descriptorCount;
+		this->mSignatureOffsets [ i ] = ZLIndexCast ( this->mSignatureSize );
+		this->mSignatureSize += binding.descriptorCount;
 	}
-	
+
 	ZLSize nTypes = histogram.size ();
 	VkDescriptorPoolSize* typeCounts = ( VkDescriptorPoolSize* )alloca ( nTypes * sizeof ( VkDescriptorPoolSize ));
 
 	STLMap < VkDescriptorType, ZLPrimitiveWithDefault < u32, 0 > >::const_iterator histogramIt = histogram.cbegin ();
 	for ( ZLIndex i = ZLIndexOp::ZERO; histogramIt != histogram.cend (); ++histogramIt, ++i ) {
-	
 		typeCounts [ i ].type = histogramIt->first;
 		typeCounts [ i ].descriptorCount = histogramIt->second;
 	}
@@ -89,50 +85,68 @@ void MOAIDescriptorSetLayoutVK::Initialize ( MOAILogicalDeviceVK& logicalDevice,
 }
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetLayoutVK::InvalidateDescriptorSet ( MOAIDescriptorSetVK& descriptorSet ) {
+void MOAIDescriptorSetLayoutVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, ZLSize totalBindings ) {
 
-	// TODO: free client from pool
-	// TODO: track which pool allocated descriptorSet
-
-	this->mPinnedSets.erase ( &descriptorSet );
-	this->mUnpinnedSets.erase ( &descriptorSet );
-	
-	this->RemoveClient ( descriptorSet );
+	logicalDevice.AddClient ( logicalDevice, *this );
+	this->mLayoutBindings.Init ( totalBindings );
 }
 
 //----------------------------------------------------------------//
 MOAIDescriptorSetLayoutVK::MOAIDescriptorSetLayoutVK () :
 	mPool ( VK_NULL_HANDLE ),
-	mLayout ( VK_NULL_HANDLE ) {
+	mLayout ( VK_NULL_HANDLE ),
+	mSignatureSize ( 0 ) {
 }
 
 //----------------------------------------------------------------//
 MOAIDescriptorSetLayoutVK::~MOAIDescriptorSetLayoutVK () {
 
+	// TODO: clean up snapshots
 	this->Finalize ();
 }
 
 //----------------------------------------------------------------//
-MOAIDescriptorSetVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSet () {
+MOAIDescriptorSetSnapshotVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSetSnapshot ( const MOAIDescriptorSetSignatureVK& signature ) {
 
 	if (( this->mPinnedSets.size () + this->mUnpinnedSets.size ()) >= MAX_DESCRIPTOR_SETS ) return NULL;
 	
-	MOAIDescriptorSetVK* descriptorSet = NULL;
+	MOAIDescriptorSetSnapshotVK* snapshot = NULL;
 	if ( this->mUnpinnedSets.size ()) {
-		descriptorSet = *this->mUnpinnedSets.begin ();
-		this->mUnpinnedSets.erase ( descriptorSet );
+		snapshot = *this->mUnpinnedSets.begin ();
+		this->mUnpinnedSets.erase ( snapshot );
 	}
 	else {
-	
-		descriptorSet = new MOAIDescriptorSetVK ();
-		this->AddClient ( *this, *descriptorSet );
-
+		snapshot = new MOAIDescriptorSetSnapshotVK ();
+		this->AddClient ( *this, *snapshot );
 		VkDescriptorSetAllocateInfo allocInfo = MOAIGfxStructVK::descriptorSetAllocateInfo ( this->mPool, &this->mLayout );
-		VK_CHECK_RESULT ( vkAllocateDescriptorSets ( this->GetLogicalDevice (), &allocInfo, &descriptorSet->mDescriptorSet ));
-		descriptorSet->InitWriteArray ( this->mName );
+		VK_CHECK_RESULT ( vkAllocateDescriptorSets ( this->GetLogicalDevice (), &allocInfo, &snapshot->mDescriptorSet ));
 	}
-	this->mPinnedSets.insert ( descriptorSet );
-	return descriptorSet;
+	snapshot->Update ( signature );
+	this->mPinnedSets.insert ( snapshot );
+	return snapshot;
+}
+
+//----------------------------------------------------------------//
+void MOAIDescriptorSetLayoutVK::RetireDescriptorSetSnapshot ( MOAIDescriptorSetSnapshotVK& snapshot ) {
+
+	if ( snapshot == NULL ) return;
+	if ( !this->mPinnedSets.contains ( &snapshot )) return;
+
+	this->mPinnedSets.erase ( &snapshot );
+	this->mUnpinnedSets.insert ( &snapshot );
+}
+
+//----------------------------------------------------------------//
+void MOAIDescriptorSetLayoutVK::SetBinding ( ZLIndex index, VkDescriptorType descriptorType, VkShaderStageFlags stageFlags, ZLSize descriptorCount ) {
+
+	assert ( index < this->mLayoutBindings.Size ());
+	this->mLayoutBindings [ index ] = MOAIGfxStructVK::descriptorSetLayoutBinding (
+		( u32 )index,
+		descriptorType,
+		stageFlags,
+		( u32 )descriptorCount,
+		NULL
+	);
 }
 
 //================================================================//
@@ -148,4 +162,10 @@ void MOAIDescriptorSetLayoutVK::MOAIAbstractLifecycleClientVK_Finalize () {
 	vkDestroyDescriptorSetLayout ( logicalDevice, this->mLayout, NULL );
 	vkDestroyDescriptorPool ( logicalDevice, this->mPool, NULL );
 	logicalDevice.RemoveClient ( *this );
+}
+
+//----------------------------------------------------------------//
+MOAIDescriptorSetSnapshotVK* MOAIDescriptorSetLayoutVK::MOAIAbstractSnapshotCacheVK_GetSnapshot ( const MOAIDescriptorSetSignatureVK& signature ) {
+
+	return NULL; // never match a snapshot
 }
