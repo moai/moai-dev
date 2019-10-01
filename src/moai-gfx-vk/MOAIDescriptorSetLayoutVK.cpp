@@ -165,7 +165,7 @@ void MOAIDescriptorSetLayoutVK::MOAIAbstractLifecycleClientVK_Finalize () {
 }
 
 //----------------------------------------------------------------//
-MOAIDescriptorSetSnapshotVK* MOAIDescriptorSetLayoutVK::MOAIAbstractSnapshotCacheVK_GetSnapshot ( const MOAIDescriptorSetSignatureVK& signature ) {
+MOAIDescriptorSetSnapshotVK* MOAIDescriptorSetLayoutVK::MOAIAbstractSnapshotCacheVK_GetSnapshot ( const MOAIDescriptorSetSignatureVK* signature ) {
 
 	return NULL; // never match a snapshot
 }

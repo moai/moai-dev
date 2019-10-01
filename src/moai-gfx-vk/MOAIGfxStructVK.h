@@ -72,15 +72,7 @@ public:
     }
 
     //----------------------------------------------------------------//
-    static VkBufferCreateInfo bufferCreateInfo () {
-        DECL_VK_STRUCT ( VkBufferCreateInfo, bufCreateInfo );
-        bufCreateInfo.sType                 = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-        bufCreateInfo.pNext                 = NULL;
-        return bufCreateInfo;
-    }
-
-    //----------------------------------------------------------------//
-    static VkBufferCreateInfo bufferCreateInfo ( VkBufferUsageFlags usage, VkDeviceSize size ) {
+    static VkBufferCreateInfo bufferCreateInfo ( VkDeviceSize size = 0, VkBufferUsageFlags usage = 0 ) {
         DECL_VK_STRUCT ( VkBufferCreateInfo, bufCreateInfo );
         bufCreateInfo.sType                 = VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
         bufCreateInfo.pNext                 = NULL;

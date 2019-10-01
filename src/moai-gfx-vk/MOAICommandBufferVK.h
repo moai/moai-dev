@@ -4,9 +4,9 @@
 #ifndef MOAICOMMANDBUFFERVK_H
 #define MOAICOMMANDBUFFERVK_H
 
+#include <moai-gfx-vk/MOAIAbstractSnapshotSubjectVK.h>
 #include <moai-gfx-vk/MOAIQueueVK.h>
 
-class MOAIAbstractSnapshotVK;
 class MOAIDescriptorSetVK;
 class MOAIPipelineLayoutVK;
 
@@ -59,6 +59,16 @@ public:
 	void				Submit						();
 	void				Submit						(VkSemaphore waitSemaphore, VkSemaphore signalSemaphore, VkPipelineStageFlags waitStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT );
 	void				UnpinResources				();
+
+	//----------------------------------------------------------------//
+	template < typename SNAPSHOT_TYPE >
+	SNAPSHOT_TYPE* MakeSnapshot ( MOAIAbstractSnapshotFactoryVK < SNAPSHOT_TYPE >& subject ) {
+		SNAPSHOT_TYPE* snapshot = subject.MakeSnapshot ();
+		if ( snapshot ) {
+			this->PinResource ( *snapshot );
+		}
+		return snapshot;
+	}
 };
 
 #endif

@@ -15,7 +15,7 @@
 class MOAIIndexBufferVK :
 	public virtual MOAIIndexBuffer,
 	public virtual MOAIGfxBufferVK,
-	public virtual MOAIGfxBufferUsageVK < VK_BUFFER_USAGE_INDEX_BUFFER_BIT > {
+	public virtual MOAIGfxBufferWithUsageVK < VK_BUFFER_USAGE_INDEX_BUFFER_BIT > {
 protected:
 
 	//----------------------------------------------------------------//

@@ -4,14 +4,16 @@
 #ifndef MOAIONETRIVK_H
 #define MOAIONETRIVK_H
 
+#include <moai-gfx-vk/MOAIGfxBufferVK.h>
+
 class MOAICommandBufferVK;
 class MOAIDescriptorSetLayoutVK;
 class MOAIDescriptorSetVK;
-class MOAIGfxBufferVK;
 class MOAIPipelineLayoutVK;
 class MOAIShaderProgramVK;
 class MOAIShaderVK;
 class MOAITexture2DVK;
+class MOAIUtilityBufferVK;
 
 //================================================================//
 // MOAIOneTriVK
@@ -32,10 +34,10 @@ private:
 		}
 	};
 
-	ZLStrongPtr < MOAIVertexBufferVK >		mVertices;
-	ZLStrongPtr < MOAIIndexBufferVK >		mIndices;
+	ZLStrongPtr < MOAIUtilityBufferVK >		mVertices;
+	ZLStrongPtr < MOAIUtilityBufferVK >		mIndices;
 	ZLStrongPtr < MOAIUniformBufferVK >		mUniforms;
-		
+	
 	VkImage					mTextureImage;
 	VkDeviceMemory			mTextureImageMemory;
 	VkImageView				mTextureImageView;
@@ -43,7 +45,6 @@ private:
 	VkDescriptorImageInfo	mTextureDescriptor;
 	
 	uint32_t				mTotalIndices;
-	VkDescriptorBufferInfo	mUniformsDescriptor;
 
 	struct {
 		float projectionMatrix [ 16 ];

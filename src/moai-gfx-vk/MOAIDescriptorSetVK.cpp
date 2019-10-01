@@ -89,9 +89,9 @@ MOAIDescriptorSetVK::SnapshotCache* MOAIDescriptorSetVK::MOAIAbstractSnapshotSub
 }
 
 //----------------------------------------------------------------//
-const MOAIDescriptorSetSignatureVK& MOAIDescriptorSetVK::MOAIAbstractSnapshotSubjectVK_GetSignature () const {
+const MOAIDescriptorSetSignatureVK* MOAIDescriptorSetVK::MOAIAbstractSnapshotSubjectVK_GetSignature () const {
 
-	return *this;
+	return this;
 }
 
 //----------------------------------------------------------------//

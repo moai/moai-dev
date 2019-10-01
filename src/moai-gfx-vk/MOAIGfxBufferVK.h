@@ -4,8 +4,12 @@
 #ifndef	MOAIGFXBUFFERVK_H
 #define	MOAIGFXBUFFERVK_H
 
+#include <moai-gfx-vk/MOAIAbstractSnapshotSubjectVK.h>
+#include <moai-gfx-vk/MOAIGfxBufferSnapshotVK.h>
 #include <moai-gfx-vk/MOAIGfxResourceVK.h>
+#include <moai-gfx-vk/MOAILogicalDeviceClientVK.h>
 
+class MOAILogicalDeviceVK;
 class MOAIVertexFormatVK;
 
 //================================================================//
@@ -13,64 +17,55 @@ class MOAIVertexFormatVK;
 //================================================================//
 // TODO: doxygen
 class MOAIGfxBufferVK :
+	public MOAILogicalDeviceClientVK,
 	public virtual MOAIGfxResourceVK,
-	public virtual MOAIGfxBuffer {
+	public virtual MOAIGfxBuffer,
+	public MOAIAbstractSnapshotSubjectVK < MOAIGfxBufferSnapshotVK > {
 protected:
 
-	VkBuffer		mBuffer;
-	VkDeviceMemory	mMemory;
-	VkDeviceSize	mAllocationSize;
+	friend class MOAIGfxBufferSnapshotVK;
+
+	VkBufferUsageFlags		mUsage;
 	
 	//----------------------------------------------------------------//
-	bool					MOAIGfxResource_OnCPUCreate					();
-	void 					MOAIGfxResource_OnCPUDestroy				();
-	void					MOAIGfxResource_OnCPUPurgeRecoverable		();
-	void					MOAIGfxResourceVK_OnGPUBind					();
-	bool					MOAIGfxResourceVK_OnGPUCreate				();
-	void					MOAIGfxResourceVK_OnGPUDeleteOrDiscard		( bool shouldDelete );
-	void					MOAIGfxResourceVK_OnGPUUnbind				();
-	bool					MOAIGfxResourceVK_OnGPUUpdate				();
-	void					MOAILuaObject_RegisterLuaClass				( MOAIComposer& composer, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs				( MOAIComposer& composer, MOAILuaState& state );
-	void					MOAILuaObject_SerializeIn					( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	void					MOAILuaObject_SerializeOut					( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
+	void						MOAIAbstractLifecycleClientVK_Finalize			();
+	MOAIGfxBufferSnapshotVK*	MOAIAbstractSnapshotSubjectVK_MakeSnapshot		();
+	bool						MOAIGfxResource_OnCPUCreate						();
+	void 						MOAIGfxResource_OnCPUDestroy					();
+	void						MOAIGfxResource_OnCPUPurgeRecoverable			();
+	void						MOAIGfxResourceVK_OnGPUBind						();
+	bool						MOAIGfxResourceVK_OnGPUCreate					();
+	void						MOAIGfxResourceVK_OnGPUDeleteOrDiscard			( bool shouldDelete );
+	void						MOAIGfxResourceVK_OnGPUUnbind					();
+	bool						MOAIGfxResourceVK_OnGPUUpdate					();
+	void						MOAILuaObject_RegisterLuaClass					( MOAIComposer& composer, MOAILuaState& state );
+	void						MOAILuaObject_RegisterLuaFuncs					( MOAIComposer& composer, MOAILuaState& state );
+	void						MOAILuaObject_SerializeIn						( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
+	void						MOAILuaObject_SerializeOut						( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
 
 public:
 	
-	static const VkMemoryPropertyFlags HOST_BUFFER_PROPS = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
-	static const VkMemoryPropertyFlags DEVICE_BUFFER_PROPS = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
-	
-	GET ( VkBuffer&, Buffer, this->mBuffer );
-	
 	//----------------------------------------------------------------//
-	operator VkBuffer () {
-		return this->mBuffer;
-	}
-	
-	//----------------------------------------------------------------//
-	void					Bind						();
-	void					Cleanup						();
-	void					Init						( VkDeviceSize size, VkBufferUsageFlags usage = 0, VkMemoryPropertyFlags memPropFlags = HOST_BUFFER_PROPS );
-	void					MapAndCopy					( const void* data, size_t size );
-							MOAIGfxBufferVK				();
-							~MOAIGfxBufferVK			();
+	void					Initialize				( MOAILogicalDeviceVK& logicalDevice, ZLSize size, VkBufferUsageFlags usage = 0 );
+							MOAIGfxBufferVK			();
+							~MOAIGfxBufferVK		();
 };
 
 //================================================================//
-// MOAIBufferVK
+// MOAIGfxBufferWithUsageVK
 //================================================================//
 template < VkBufferUsageFlags USAGE >
-class MOAIGfxBufferUsageVK :
+class MOAIGfxBufferWithUsageVK :
 	public virtual MOAIGfxBufferVK {
 public:
 
 	//----------------------------------------------------------------//
-	void Init ( VkDeviceSize size, VkBufferUsageFlags usage = 0, VkMemoryPropertyFlags memPropFlags = HOST_BUFFER_PROPS ) {
+	void Initialize ( MOAILogicalDeviceVK& logicalDevice, VkDeviceSize size, VkBufferUsageFlags usage = 0 ) {
 
-		this->MOAIGfxBufferVK::Init ( size, USAGE | usage, memPropFlags );
+		this->MOAIGfxBufferVK::Initialize ( logicalDevice, size, USAGE | usage );
 	}
 };
 
-typedef MOAIGfxBufferUsageVK < VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT > MOAIUniformBufferVK;
+typedef MOAIGfxBufferWithUsageVK < VK_BUFFER_USAGE_UNIFORM_BUFFER_BIT > MOAIUniformBufferVK;
 
 #endif

@@ -17,12 +17,12 @@ class MOAIAbstractSnapshotCacheVK {
 protected:
 
 	//----------------------------------------------------------------//
-	virtual SNAPSHOT_TYPE*			MOAIAbstractSnapshotCacheVK_GetSnapshot			( const SIGNATURE_TYPE& signature ) = 0;
+	virtual SNAPSHOT_TYPE*			MOAIAbstractSnapshotCacheVK_GetSnapshot			( const SIGNATURE_TYPE* signature ) = 0;
 
 public:
 	
 	//----------------------------------------------------------------//
-	SNAPSHOT_TYPE* GetSnapshot ( const SIGNATURE_TYPE& signature ) {
+	SNAPSHOT_TYPE* GetSnapshot ( const SIGNATURE_TYPE* signature ) {
 		return this->MOAIAbstractSnapshotCacheVK_GetSnapshot ( signature );
 	}
 	
@@ -33,7 +33,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	~MOAIAbstractSnapshotCacheVK () {
+	virtual ~MOAIAbstractSnapshotCacheVK () {
 	}
 };
 

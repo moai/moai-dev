@@ -33,7 +33,36 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	~MOAIAbstractSnapshotSignatureVK () {
+	virtual ~MOAIAbstractSnapshotSignatureVK () {
+	}
+};
+
+//================================================================//
+// MOAIDummySnapshotSignatureVK
+//================================================================//
+class MOAIDummySnapshotSignatureVK :
+	public MOAIAbstractSnapshotSignatureVK < MOAIDummySnapshotSignatureVK > {
+protected:
+
+	//----------------------------------------------------------------//
+	void MOAIAbstractSnapshotSignatureVK_CloneFrom ( const MOAIDummySnapshotSignatureVK& other ) {
+		UNUSED ( other );
+	}
+	
+	//----------------------------------------------------------------//
+	bool MOAIAbstractSnapshotSignatureVK_IsSame ( const MOAIDummySnapshotSignatureVK& other ) const {
+		UNUSED ( other );
+		return false;
+	}
+
+public:
+	
+	//----------------------------------------------------------------//
+	MOAIDummySnapshotSignatureVK () {
+	}
+	
+	//----------------------------------------------------------------//
+	~MOAIDummySnapshotSignatureVK () {
 	}
 };
 

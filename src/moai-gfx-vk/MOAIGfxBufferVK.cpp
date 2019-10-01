@@ -3,8 +3,11 @@
 
 #include "pch.h"
 #include <moai-gfx-vk/MOAIGfxBufferVK.h>
+#include <moai-gfx-vk/MOAIGfxBufferSnapshotVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
+#include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAIGfxUtilVK.h>
+#include <moai-gfx-vk/MOAILogicalDeviceVK.h>
 
 //================================================================//
 // lua
@@ -31,87 +34,17 @@
 // MOAIGfxBufferVK
 //================================================================//
 
-////----------------------------------------------------------------//
-//ZLSharedConstBuffer* MOAIGfxBufferVK::GetBufferForBind ( ZLGfx& gfx ) {
-//	UNUSED(gfx);
-//	return this->mUseVBOs ? 0 : this->ZLCopyOnWrite::GetSharedConstBuffer ();
-//
-////	if ( this->mUseVBOs ) return 0;
-////
-////	ZLSharedConstBuffer* buffer = this->ZLCopyOnWrite::GetSharedConstBuffer ();
-////	return this->mCopyOnBind ? gfx.CopyBuffer ( buffer ) : buffer;
-//}
-//
-////----------------------------------------------------------------//
-//MOAIGfxBufferVK::MOAIGfxBufferVK () :
-//	mCurrentVBO ( ZLIndexOp::ZERO ),
-//	mTarget ( ZGL_BUFFER_TARGET_ARRAY ),
-//	mUseVBOs ( false ),
-//	mCopyOnUpdate ( false ) {
-//
-//	RTTI_BEGIN
-//		RTTI_EXTEND ( MOAIGfxResourceVK )
-//		RTTI_EXTEND ( MOAIGfxBuffer )
-//	RTTI_END
-//}
-
 //----------------------------------------------------------------//
-void MOAIGfxBufferVK::Bind () {
+void MOAIGfxBufferVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, ZLSize size, VkBufferUsageFlags usage ) {
 
-	VK_CHECK_RESULT ( vkBindBufferMemory ( MOAIGfxMgrVK::Get ().GetLogicalDevice (), this->mBuffer, this->mMemory, 0 ));
+	logicalDevice.AddClient ( logicalDevice, *this );
+	this->Alloc ( size );
+	this->mUsage = usage;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBufferVK::Cleanup () {
-
-	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
-	MOAILogicalDeviceVK& logicalDevice = gfxMgr.GetLogicalDevice ();
-
-	vkDestroyBuffer ( logicalDevice, this->mBuffer, NULL );
-	vkFreeMemory ( logicalDevice, this->mMemory, NULL );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxBufferVK::Init ( VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags memPropFlags ) {
-
-	usage = usage & ( VK_BUFFER_USAGE_TRANSFER_SRC_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT );
-
-	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
-	MOAIPhysicalDeviceVK& physicalDevice = gfxMgr.GetPhysicalDevice ();
-	MOAILogicalDeviceVK& logicalDevice = gfxMgr.GetLogicalDevice ();
-
-	VkBufferCreateInfo vertexBufferInfo = {};
-	vertexBufferInfo.sType	= VK_STRUCTURE_TYPE_BUFFER_CREATE_INFO;
-	vertexBufferInfo.size	= size;
-	vertexBufferInfo.usage	= usage;
-	VK_CHECK_RESULT ( vkCreateBuffer ( logicalDevice, &vertexBufferInfo, NULL, &this->mBuffer ));
-	
-	VkMemoryRequirements memReqs;
-	vkGetBufferMemoryRequirements ( logicalDevice, this->mBuffer, &memReqs );
-	
-	this->mAllocationSize = memReqs.size;
-	
-	VkMemoryAllocateInfo memAlloc = {};
-	memAlloc.sType = VK_STRUCTURE_TYPE_MEMORY_ALLOCATE_INFO;
-	memAlloc.allocationSize = memReqs.size;
-	memAlloc.memoryTypeIndex = MOAIGfxUtilVK::GetMemoryTypeIndex ( memReqs.memoryTypeBits, physicalDevice.mMemoryProperties, memPropFlags );
-	VK_CHECK_RESULT ( vkAllocateMemory ( logicalDevice, &memAlloc, NULL, &this->mMemory ));
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxBufferVK::MapAndCopy ( const void* data, size_t size ) {
-
-	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
-	MOAILogicalDeviceVK& logicalDevice = gfxMgr.GetLogicalDevice ();
-
-	void* mappedAddr;
-	VK_CHECK_RESULT ( vkMapMemory ( logicalDevice, this->mMemory, 0, this->mAllocationSize, 0, &mappedAddr ));
-	memcpy ( mappedAddr, data, size );
-	vkUnmapMemory ( logicalDevice, this->mMemory );
-}
-
-//----------------------------------------------------------------//
-MOAIGfxBufferVK::MOAIGfxBufferVK () {
+MOAIGfxBufferVK::MOAIGfxBufferVK () :
+	mUsage ( 0 ) {
 		
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIGfxResourceVK )
@@ -121,11 +54,27 @@ MOAIGfxBufferVK::MOAIGfxBufferVK () {
 
 //----------------------------------------------------------------//
 MOAIGfxBufferVK::~MOAIGfxBufferVK () {
+
+	this->Finalize ();
 }
 
 //================================================================//
 // virtual
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAIGfxBufferVK::MOAIAbstractLifecycleClientVK_Finalize () {
+
+	this->GetLogicalDevice ().RemoveClient ( *this );
+}
+
+//----------------------------------------------------------------//
+MOAIGfxBufferSnapshotVK* MOAIGfxBufferVK::MOAIAbstractSnapshotSubjectVK_MakeSnapshot () {
+
+	MOAIGfxBufferSnapshotVK* snapshot = new MOAIGfxBufferSnapshotVK ();
+	snapshot->Initialize ( *this );
+	return snapshot;
+}
 
 //----------------------------------------------------------------//
 bool MOAIGfxBufferVK::MOAIGfxResource_OnCPUCreate () {
@@ -135,9 +84,6 @@ bool MOAIGfxBufferVK::MOAIGfxResource_OnCPUCreate () {
 //----------------------------------------------------------------//
 void MOAIGfxBufferVK::MOAIGfxResource_OnCPUDestroy () {
 	MOAIGfxBuffer::MOAIGfxResource_OnCPUDestroy ();
-
-//	this->mVBOs.Clear ();
-//	this->mCurrentVBO = ZLIndexOp::ZERO;
 }
 
 //----------------------------------------------------------------//
@@ -146,107 +92,23 @@ void MOAIGfxBufferVK::MOAIGfxResource_OnCPUPurgeRecoverable () {
 
 //----------------------------------------------------------------//
 void MOAIGfxBufferVK::MOAIGfxResourceVK_OnGPUBind () {
-	
-//	if ( !this->mUseVBOs ) return;
-//
-//	const ZLGfxHandle& vbo = this->mVBOs [ this->mCurrentVBO ];
-//
-//	if ( vbo.CanBind ()) {
-//		this->mGfxMgr->GetDrawingAPI ().BindBuffer ( this->mTarget, vbo );
-//	}
 }
 
 //----------------------------------------------------------------//
 bool MOAIGfxBufferVK::MOAIGfxResourceVK_OnGPUCreate () {
-
-//	u32 count = 0;
-//
-//	this->mUseVBOs = ( this->mVBOs.Size () > 0 );
-//
-//	if ( this->mUseVBOs ) {
-//
-//		ZLGfx& gfx = this->mGfxMgr->GetDrawingAPI ();
-//		u32 hint = this->mVBOs.Size () > 1 ? ZGL_BUFFER_USAGE_STREAM_DRAW : ZGL_BUFFER_USAGE_STATIC_DRAW;
-//
-//		for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVBOs.Size (); ++i ) {
-//
-//			ZLGfxHandle vbo = gfx.CreateBuffer ();
-//
-//			// TODO: error handling
-//			//if ( vbo ) {
-//
-//				ZLSharedConstBuffer* buffer = this->GetCursor () ? this->GetSharedConstBuffer () : 0;
-//
-////				if ( this->mCopyOnUpdate ) {
-////					buffer = gfx.CopyBuffer ( buffer );
-////				}
-//
-//				gfx.BindBuffer ( this->mTarget, vbo );
-//				gfx.BufferData ( this->mTarget, this->GetLength (), buffer, 0, hint );
-//				gfx.BindBuffer ( this->mTarget, ZLGfxResource::UNBIND );
-//
-//				count++;
-//			//}
-//			this->mVBOs [ i ] = vbo;
-//		}
-//	}
-//
-//	return count == this->mVBOs.Size ();
 	return true;
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxBufferVK::MOAIGfxResourceVK_OnGPUDeleteOrDiscard ( bool shouldDelete ) {
-
-//	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVBOs.Size (); ++i ) {
-//		this->mGfxMgr->DeleteOrDiscard ( this->mVBOs [ i ], shouldDelete );
-//	}
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxBufferVK::MOAIGfxResourceVK_OnGPUUnbind () {
-
-//	this->mGfxMgr->GetDrawingAPI ().BindBuffer ( this->mTarget, ZLGfxResource::UNBIND ); // OK?
 }
 
 //----------------------------------------------------------------//
 bool MOAIGfxBufferVK::MOAIGfxResourceVK_OnGPUUpdate () {
-
-//	if ( !this->mUseVBOs ) return true;
-//
-//	bool dirty = this->GetCursor () > 0;
-//
-//	if ( dirty ) {
-//		this->mCurrentVBO =  ZLIndexOp::AddAndWrap ( this->mCurrentVBO, 1, this->mVBOs.Size ());
-//	}
-//
-//	const ZLGfxHandle& vbo = this->mVBOs [ this->mCurrentVBO ];
-//
-//	if ( dirty && vbo.CanBind ()) {
-//
-//		ZLGfx& gfx = this->mGfxMgr->GetDrawingAPI ();
-//
-//		// TODO: There are a few different ways to approach updating buffers with varying performance
-//		// on different platforms. The approach here is just to multi-buffer the VBO and replace its
-//		// contents via zglBufferSubData when they change. The TODO here is to do performance tests
-//		// on multiple devices, evaluate other approaches and possible expose the configuration of
-//		// those to the end user via Lua.
-//
-//		ZLSharedConstBuffer* buffer = this->GetSharedConstBuffer ();
-//
-////		if ( this->mCopyOnUpdate ) {
-////			buffer = gfx.CopyBuffer ( buffer );
-////		}
-//
-//		ZLGfxHandle vbo = gfx.CreateBuffer ();
-//		gfx.BindBuffer ( this->mTarget, vbo );
-//		gfx.BufferSubData ( this->mTarget, 0, this->GetCursor (), buffer, 0 );
-//		gfx.BindBuffer ( this->mTarget, ZLGfxResource::UNBIND );
-//
-//		//u32 hint = this->mVBOs.Size () > 1 ? ZGL_BUFFER_USAGE_DYNAMIC_DRAW : ZGL_BUFFER_USAGE_STATIC_DRAW;
-//		//zglBufferData ( this->mTarget, this->GetLength (), 0, hint );
-//	}
-	
 	return true;
 }
 

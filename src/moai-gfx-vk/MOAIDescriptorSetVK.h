@@ -28,7 +28,7 @@ private:
 	//----------------------------------------------------------------//
 	void											MOAIAbstractLifecycleClientVK_Finalize				();
 	SnapshotCache*									MOAIAbstractSnapshotSubjectVK_GetCache				();
-	const MOAIDescriptorSetSignatureVK&				MOAIAbstractSnapshotSubjectVK_GetSignature			() const;
+	const MOAIDescriptorSetSignatureVK*				MOAIAbstractSnapshotSubjectVK_GetSignature			() const;
 	MOAIDescriptorSetSnapshotVK*					MOAIAbstractSnapshotSubjectVK_MakeSnapshot			();
 	
 public:

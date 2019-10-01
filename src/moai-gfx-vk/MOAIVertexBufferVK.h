@@ -17,7 +17,7 @@ class MOAIVertexFormatVK;
 class MOAIVertexBufferVK :
 	public virtual MOAIVertexBuffer,
 	public virtual MOAIGfxBufferVK,
-	public virtual MOAIGfxBufferUsageVK < VK_BUFFER_USAGE_VERTEX_BUFFER_BIT > {
+	public virtual MOAIGfxBufferWithUsageVK < VK_BUFFER_USAGE_VERTEX_BUFFER_BIT > {
 private:
 	
 	//----------------------------------------------------------------//

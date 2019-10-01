@@ -32,7 +32,7 @@ public:
 	void				ForceUnpin							();
 	bool				IsPinned							();
 						MOAIAbstractSnapshotVK				();
-						~MOAIAbstractSnapshotVK				();
+	virtual				~MOAIAbstractSnapshotVK				();
 };
 
 #endif
