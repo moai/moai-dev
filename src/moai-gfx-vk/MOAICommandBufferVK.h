@@ -62,7 +62,7 @@ public:
 
 	//----------------------------------------------------------------//
 	template < typename SNAPSHOT_TYPE >
-	SNAPSHOT_TYPE* MakeSnapshot ( MOAIAbstractSnapshotFactoryVK < SNAPSHOT_TYPE >& subject ) {
+	SNAPSHOT_TYPE* MakeSnapshot ( MOAIAbstractSnapshotSubjectVK < SNAPSHOT_TYPE >& subject ) {
 		SNAPSHOT_TYPE* snapshot = subject.MakeSnapshot ();
 		if ( snapshot ) {
 			this->PinSnapshot ( *snapshot );

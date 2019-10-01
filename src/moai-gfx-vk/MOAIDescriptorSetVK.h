@@ -16,7 +16,7 @@ class MOAIDescriptorSetSnapshotVK;
 class MOAIDescriptorSetVK :
 	public ZLRefCountedObject,
 	public MOAIDescriptorSetLayoutClientVK,
-	public MOAIAbstractSnapshotSubjectVK < MOAIDescriptorSetSnapshotVK, MOAIDescriptorSetSignatureVK >,
+	public MOAIAbstractSnapshotSubjectVK < MOAIDescriptorSetSnapshotVK >,
 	public MOAIDescriptorSetSignatureVK {
 private:
 
@@ -27,8 +27,6 @@ private:
 
 	//----------------------------------------------------------------//
 	void											MOAIAbstractLifecycleClientVK_Finalize				();
-	SnapshotCache*									MOAIAbstractSnapshotSubjectVK_GetCache				();
-	const MOAIDescriptorSetSignatureVK*				MOAIAbstractSnapshotSubjectVK_GetSignature			() const;
 	MOAIDescriptorSetSnapshotVK*					MOAIAbstractSnapshotSubjectVK_MakeSnapshot			();
 	
 public:

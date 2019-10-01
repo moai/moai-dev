@@ -4,22 +4,13 @@
 #ifndef MOAIDESCRIPTORSETSIGNATUREVK_H
 #define MOAIDESCRIPTORSETSIGNATUREVK_H
 
-#include <moai-gfx-vk/MOAIAbstractSnapshotSignatureVK.h>
-
 class MOAIDescriptorSetLayoutVK;
 
 //================================================================//
 // MOAIDescriptorSetSignatureVK
 //================================================================//
 class MOAIDescriptorSetSignatureVK :
-	public MOAIAbstractSnapshotSignatureVK < MOAIDescriptorSetSignatureVK >,
 	public ZLLeanArray < VkWriteDescriptorSet > {
-protected:
-
-	//----------------------------------------------------------------//
-	void		MOAIAbstractSnapshotSignatureVK_CloneFrom		( const MOAIDescriptorSetSignatureVK& other );
-	bool		MOAIAbstractSnapshotSignatureVK_IsSame			( const MOAIDescriptorSetSignatureVK& other ) const;
-
 public:
 	
 	//----------------------------------------------------------------//

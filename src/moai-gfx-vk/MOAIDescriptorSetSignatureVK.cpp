@@ -44,19 +44,3 @@ MOAIDescriptorSetSignatureVK::MOAIDescriptorSetSignatureVK () {
 //----------------------------------------------------------------//
 MOAIDescriptorSetSignatureVK::~MOAIDescriptorSetSignatureVK () {
 }
-
-//================================================================//
-// virtual
-//================================================================//
-
-//----------------------------------------------------------------//
-void MOAIDescriptorSetSignatureVK::MOAIAbstractSnapshotSignatureVK_CloneFrom ( const MOAIDescriptorSetSignatureVK& other ) {
-
-	this->ZLLeanArray < VkWriteDescriptorSet >::CloneFrom ( other );
-}
-
-//----------------------------------------------------------------//
-bool MOAIDescriptorSetSignatureVK::MOAIAbstractSnapshotSignatureVK_IsSame ( const MOAIDescriptorSetSignatureVK& other ) const {
-
-	return this->IsIdentical ( other );
-}

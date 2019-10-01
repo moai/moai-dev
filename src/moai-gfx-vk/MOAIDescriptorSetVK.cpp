@@ -83,18 +83,6 @@ void MOAIDescriptorSetVK::MOAIAbstractLifecycleClientVK_Finalize () {
 }
 
 //----------------------------------------------------------------//
-MOAIDescriptorSetVK::SnapshotCache* MOAIDescriptorSetVK::MOAIAbstractSnapshotSubjectVK_GetCache () {
-
-	return &this->GetLayout ();
-}
-
-//----------------------------------------------------------------//
-const MOAIDescriptorSetSignatureVK* MOAIDescriptorSetVK::MOAIAbstractSnapshotSubjectVK_GetSignature () const {
-
-	return this;
-}
-
-//----------------------------------------------------------------//
 MOAIDescriptorSetSnapshotVK* MOAIDescriptorSetVK::MOAIAbstractSnapshotSubjectVK_MakeSnapshot () {
 
 	return this->GetLayout ().ProcureDescriptorSetSnapshot ( *this );

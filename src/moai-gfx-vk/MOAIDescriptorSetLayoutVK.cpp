@@ -163,9 +163,3 @@ void MOAIDescriptorSetLayoutVK::MOAIAbstractLifecycleClientVK_Finalize () {
 	vkDestroyDescriptorPool ( logicalDevice, this->mPool, NULL );
 	logicalDevice.RemoveClient ( *this );
 }
-
-//----------------------------------------------------------------//
-MOAIDescriptorSetSnapshotVK* MOAIDescriptorSetLayoutVK::MOAIAbstractSnapshotCacheVK_GetSnapshot ( const MOAIDescriptorSetSignatureVK* signature ) {
-
-	return NULL; // never match a snapshot
-}

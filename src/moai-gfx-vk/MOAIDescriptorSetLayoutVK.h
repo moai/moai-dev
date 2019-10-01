@@ -4,7 +4,6 @@
 #ifndef MOAIDESCRIPTORSETLAYOUTVK_H
 #define MOAIDESCRIPTORSETLAYOUTVK_H
 
-#include <moai-gfx-vk/MOAIAbstractSnapshotCacheVK.h>
 #include <moai-gfx-vk/MOAILifecycleProviderVK.h>
 #include <moai-gfx-vk/MOAILogicalDeviceClientVK.h>
 
@@ -19,8 +18,7 @@ class MOAIDescriptorSetSnapshotVK;
 class MOAIDescriptorSetLayoutVK :
 	public ZLRefCountedObject,
 	public MOAILogicalDeviceClientVK,
-	public MOAILifecycleProviderVK < MOAIDescriptorSetLayoutVK >,
-	public MOAIAbstractSnapshotCacheVK < MOAIDescriptorSetSnapshotVK, MOAIDescriptorSetSignatureVK > {
+	public MOAILifecycleProviderVK < MOAIDescriptorSetLayoutVK > {
 private:
 
 	friend class MOAIDescriptorSetSignatureVK;
@@ -41,7 +39,6 @@ private:
 
 	//----------------------------------------------------------------//
 	void								MOAIAbstractLifecycleClientVK_Finalize			();
-	MOAIDescriptorSetSnapshotVK*		MOAIAbstractSnapshotCacheVK_GetSnapshot			( const MOAIDescriptorSetSignatureVK* signature );
 
 public:
 
