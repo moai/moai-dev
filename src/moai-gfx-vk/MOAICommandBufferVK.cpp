@@ -17,7 +17,7 @@
 //----------------------------------------------------------------//
 void MOAICommandBufferVK::Begin () {
 
-	this->UnpinResources ();
+	this->UnpinSnapshots ();
 	VkCommandBufferBeginInfo cmdBufInfo = MOAIGfxStructVK::commandBufferBeginInfo ();
 	VK_CHECK_RESULT ( vkBeginCommandBuffer ( this->mCommandBuffer, &cmdBufInfo ));
 }
@@ -25,8 +25,7 @@ void MOAICommandBufferVK::Begin () {
 //----------------------------------------------------------------//
 void MOAICommandBufferVK::BindDescriptorSet ( VkPipelineBindPoint pipelineBindPoint, MOAIDescriptorSetVK& descriptorSet, MOAIPipelineLayoutVK& pipelineLayout, u32 firstSet ) {
 
-	MOAIDescriptorSetSnapshotVK* descriptorSetSnapshot = descriptorSet.MakeSnapshot ();
-	this->PinResource ( *descriptorSetSnapshot );
+	MOAIDescriptorSetSnapshotVK* descriptorSetSnapshot = this->MakeSnapshot < MOAIDescriptorSetSnapshotVK >( descriptorSet );
 	vkCmdBindDescriptorSets ( this->mCommandBuffer, pipelineBindPoint, pipelineLayout, 0, 1, *descriptorSetSnapshot, 0, NULL );
 }
 
@@ -53,10 +52,10 @@ MOAICommandBufferVK::~MOAICommandBufferVK () {
 }
 
 //----------------------------------------------------------------//
-void MOAICommandBufferVK::PinResource ( MOAIAbstractSnapshotVK& resource ) {
+void MOAICommandBufferVK::PinSnapshot ( MOAIAbstractSnapshotVK& resource ) {
 
 	resource.ForceUnpin ();
-	this->mResources.PushBack ( resource.mLink );
+	this->mSnapshots.PushBack ( resource.mLink );
 	resource.mCommandBuffer = this;
 }
 
@@ -86,10 +85,10 @@ void MOAICommandBufferVK::Submit ( VkSemaphore waitSemaphore, VkSemaphore signal
 }
 
 //----------------------------------------------------------------//
-void MOAICommandBufferVK::UnpinResources () {
+void MOAICommandBufferVK::UnpinSnapshots () {
 
-	while ( this->mResources.Count ()) {
-		this->mResources.Front ()->ForceUnpin ();
+	while ( this->mSnapshots.Count ()) {
+		this->mSnapshots.Front ()->ForceUnpin ();
 	}
 }
 

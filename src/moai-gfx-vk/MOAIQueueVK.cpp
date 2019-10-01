@@ -53,7 +53,7 @@ void MOAIQueueVK::FlushAndFreeCommandBuffer	( MOAICommandBufferVK& commandBuffer
 
 	vkDestroyFence ( logicalDevice, fence, nullptr );
 	
-	commandBuffer.UnpinResources (); // unpin any resources
+	commandBuffer.UnpinSnapshots (); // unpin any resources
 	this->FinalizeClient ( commandBuffer );
 }
 

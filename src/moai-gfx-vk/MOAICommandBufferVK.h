@@ -20,14 +20,15 @@ private:
 	friend class MOAIAbstractSnapshotVK;
 
 	VkCommandBuffer								mCommandBuffer;
-	ZLLeanList < MOAIAbstractSnapshotVK* >		mResources;
+	ZLLeanList < MOAIAbstractSnapshotVK* >		mSnapshots;
 	bool										mIsValid;
 
 	//----------------------------------------------------------------//
-	void			Invalidate									();
+	void				Invalidate					();
+	void				PinSnapshot					( MOAIAbstractSnapshotVK& snapshot );
 
 	//----------------------------------------------------------------//
-	void			MOAIAbstractLifecycleClientVK_Finalize		();
+	void				MOAIAbstractLifecycleClientVK_Finalize		();
 
 public:
 
@@ -55,17 +56,16 @@ public:
 	void				End							();
 						MOAICommandBufferVK			();
 						~MOAICommandBufferVK		();
-	void				PinResource					( MOAIAbstractSnapshotVK& resource );
 	void				Submit						();
 	void				Submit						(VkSemaphore waitSemaphore, VkSemaphore signalSemaphore, VkPipelineStageFlags waitStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT );
-	void				UnpinResources				();
+	void				UnpinSnapshots				();
 
 	//----------------------------------------------------------------//
 	template < typename SNAPSHOT_TYPE >
 	SNAPSHOT_TYPE* MakeSnapshot ( MOAIAbstractSnapshotFactoryVK < SNAPSHOT_TYPE >& subject ) {
 		SNAPSHOT_TYPE* snapshot = subject.MakeSnapshot ();
 		if ( snapshot ) {
-			this->PinResource ( *snapshot );
+			this->PinSnapshot ( *snapshot );
 		}
 		return snapshot;
 	}
