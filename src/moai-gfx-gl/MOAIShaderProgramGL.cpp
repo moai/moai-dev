@@ -134,19 +134,6 @@ void MOAIShaderProgramGL::BindUniforms () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderProgramGL::Clear () {
-
-	this->mVertexShaderSource.clear ();
-	this->mFragmentShaderSource.clear ();
-
-	this->mAttributeMap.clear ();
-	this->mUniformDescriptors.Clear ();
-	this->mUniformBindings.Clear ();
-	
-	this->Destroy ();
-}
-
-//----------------------------------------------------------------//
 ZLGfxHandle MOAIShaderProgramGL::CompileShader ( u32 type, cc8* source ) {
 
 	MOAIGfxMgrGL& gfxMgr = *this->mGfxMgr;
@@ -250,7 +237,16 @@ void MOAIShaderProgramGL::SetVertexAttribute ( u32 idx, cc8* attribute ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIShaderProgramGL::MOAIGfxResource_OnCPUPurgeRecoverable () {
+void MOAIShaderProgramGL::MOAIGfxResource_Clear () {
+
+	this->mVertexShaderSource.clear ();
+	this->mFragmentShaderSource.clear ();
+
+	this->mAttributeMap.clear ();
+	this->mUniformDescriptors.Clear ();
+	this->mUniformBindings.Clear ();
+
+	this->MOAIGfxResourceGL::MOAIGfxResource_Clear ();
 }
 
 //----------------------------------------------------------------//

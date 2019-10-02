@@ -527,7 +527,7 @@ void MOAIMesh::DrawIndex ( ZLIndex idx, MOAIMeshSpan* span ) {
 	// TODO: make use of offset and scale
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	if ( this->mVertexArray->IsReady ()) {
+	if ( this->mVertexArray->IsReadyForUse ()) {
 	
 		gfxMgr.SetVertexArray ( this->mVertexArray );
 
@@ -545,7 +545,7 @@ void MOAIMesh::DrawIndex ( ZLIndex idx, MOAIMeshSpan* span ) {
 		if ( this->mIndexBuffer ) {
 			
 			// TODO: turns out we can bind this inside the VAO as well. so there.
-			if ( this->mIndexBuffer->IsReady ()) {
+			if ( this->mIndexBuffer->IsReadyForUse ()) {
 			
 				gfxMgr.SetIndexBuffer ( this->mIndexBuffer );
 			

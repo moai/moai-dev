@@ -9,32 +9,19 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-/**	@lua	destroy
-	@text	Releases any CPU memory associated with buffer and schedules
-			the GPU resource (if any) for destruction.
+/**	@lua	setReloader
+	@text	The reloaded is called prior to recreating the resource. It should
+			in turn call the resources regular load or init methods.
  
-	@in		MOAIGfxBuffer self
+	@in		MOAIAbstractRecoverableGL self
+	@opt	function reloader
 	@out	nil
 */
-int	MOAIGfxResource::_destroy ( lua_State* L ) {
+int MOAIGfxResource::_setReloader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxResource, "U" )
-	
-	self->Destroy ();
-	return 0;
-}
 
-//----------------------------------------------------------------//
-/**	@lua	scheduleForGPUUpdate
-	@text	Trigger an update of the GPU-side buffer. Call this when
-			the backing buffer has been altered.
- 
-	@in		MOAIGfxResource self
-	@out	nil
-*/
-int MOAIGfxResource::_scheduleForGPUUpdate ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxResource, "U" )
-	
-	self->ScheduleForGPUUpdate ();
+	self->mReloader.SetRef ( *self, state, 2 );
+	self->Reload ();
 	return 0;
 }
 
@@ -43,21 +30,34 @@ int MOAIGfxResource::_scheduleForGPUUpdate ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxResource::Destroy () {
-	this->MOAIGfxResource_OnCPUPurgeRecoverable ();
-	this->MOAIGfxResource_OnCPUDestroy ();
-	this->MOAIGfxResource_ScheduleForGPUDestroy ();
+void MOAIGfxResource::Clear () {
+	this->mReloader.Clear ();
+	this->MOAIGfxResource_Clear ();
+	this->ClearReloadable ();
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxResource::DoCPUCreate () {
-	return this->MOAIGfxResource_DoCPUCreate ();
+bool MOAIGfxResource::ClearReloadable () {
+	this->MOAIGfxResource_ClearReloadable ();
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxResource::IsReady () const {
+bool MOAIGfxResource::FinishLoading () {
+	if ( this->MOAIGfxResource_FinishLoading ()) {
+		this->ScheduleForGPUUpdate ();
+		return true;
+	}
+	return false;
+}
 
-	return this->MOAIGfxResource_IsReady ();
+//----------------------------------------------------------------//
+bool MOAIGfxResource::HasReloader () const {
+	return ( bool )this->mReloader;
+}
+
+//----------------------------------------------------------------//
+bool MOAIGfxResource::IsReadyForUse () const {
+	return this->MOAIGfxResource_IsReadyForUse ();
 }
 
 //----------------------------------------------------------------//
@@ -71,8 +71,28 @@ MOAIGfxResource::~MOAIGfxResource () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxResource::ScheduleForGPUUpdate ( PipelineHint hint ) {
-	return this->MOAIGfxResource_ScheduleForGPUUpdate ( hint );
+bool MOAIGfxResource::Reload () {
+
+	this->ClearReloadable ();
+
+	if ( this->mReloader ) {
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		if ( this->mReloader.PushRef ( state )) {
+			state.DebugCall ( 0, 0 );
+			return true;
+		}
+	}
+	return this->MOAIGfxResource_FinishLoading ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxResource::ScheduleForGPUDestroy () {
+	this->MOAIGfxResource_ScheduleForGPUDestroy ();
+}
+
+//----------------------------------------------------------------//
+bool MOAIGfxResource::ScheduleForGPUUpdate () {
+	return this->MOAIGfxResource_ScheduleForGPUUpdate ();
 }
 
 //================================================================//
@@ -80,34 +100,45 @@ bool MOAIGfxResource::ScheduleForGPUUpdate ( PipelineHint hint ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIGfxResource::MOAIGfxResource_OnCPUCreate () {
+void MOAIGfxResource::MOAIGfxResource_Clear () {
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxResource::MOAIGfxResource_ClearReloadable () {
+}
+
+//----------------------------------------------------------------//
+bool MOAIGfxResource::MOAIGfxResource_FinishLoading () {
 	return true;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResource::MOAIGfxResource_OnCPUDestroy () {
+bool MOAIGfxResource::MOAIGfxResource_IsReadyForUse () const {
+	return false;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResource::MOAIGfxResource_OnCPUPurgeRecoverable () {
-	this->ClearReloadable ();
+void MOAIGfxResource::MOAIGfxResource_ScheduleForGPUDestroy () {
+}
+
+//----------------------------------------------------------------//
+bool MOAIGfxResource::MOAIGfxResource_ScheduleForGPUUpdate () {
+	return false;
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxResource::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIReloadable, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	UNUSED ( composer );
+	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxResource::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIReloadable, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	UNUSED ( composer );
+	UNUSED ( state );
 
 	luaL_Reg regTable [] = {
-		{ "clear",						_destroy }, // TODO: deprecate
-		{ "destroy",					_destroy },
-		{ "release",					_destroy }, // TODO: deprecate
-		{ "scheduleFlush",				_scheduleForGPUUpdate },
-		{ "scheduleForGPUUpdate",		_scheduleForGPUUpdate },
+		{ "setReloader",				_setReloader },
 		{ NULL, NULL }
 	};
 	

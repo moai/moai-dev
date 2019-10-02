@@ -37,7 +37,7 @@ protected:
 	void						MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
 	void						MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 	void						MOAIShader_ComposeUniforms				();
-	bool						MOAIShader_IsReady						() const;
+	bool						MOAIShader_IsReadyForUse				() const;
 	void						MOAIShader_SelectTextures				();
 
 public:

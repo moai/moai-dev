@@ -22,9 +22,8 @@ int MOAIGfxBuffer::_copyFromStream ( lua_State* L ) {
 	
 	MOAIStream* stream = state.GetLuaObject < MOAIStream >( 2, true );
 	if ( stream ) {
-	
 		size_t size = state.GetValue < u32 >( 3, ( u32 )( stream->GetLength () - stream->GetCursor () ));
-		self->CopyFromStream ( *stream, size );
+		self->Initialize ( *stream, size );
 	}
 	return 0;
 }
@@ -41,7 +40,7 @@ int	MOAIGfxBuffer::_reserve ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxBuffer, "UN" )
 	
 	u32 size = state.GetValue < u32 >( 2, 0 );
-	self->Reserve ( size );
+	self->Initialize ( size );
 	return 0;
 }
 
@@ -50,29 +49,7 @@ int	MOAIGfxBuffer::_reserve ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxBuffer::CopyFromStream ( ZLStream& stream, size_t size ) {
-
-	this->Reserve (( u32 )size );
-	this->WriteStream ( stream );
-	
-	this->ScheduleForGPUUpdate ();
-}
-
-//----------------------------------------------------------------//
-MOAIGfxBuffer::MOAIGfxBuffer () {
-		
-	RTTI_BEGIN
-		RTTI_EXTEND ( MOAILuaObject )
-		RTTI_EXTEND ( MOAIStream )
-	RTTI_END
-}
-
-//----------------------------------------------------------------//
-MOAIGfxBuffer::~MOAIGfxBuffer () {
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxBuffer::Reserve ( ZLSize size ) {
+void MOAIGfxBuffer::Initialize ( ZLSize size ) {
 	
 	this->ZLCopyOnWrite::Free ();
 	
@@ -82,12 +59,34 @@ void MOAIGfxBuffer::Reserve ( ZLSize size ) {
 	}
 }
 
+//----------------------------------------------------------------//
+void MOAIGfxBuffer::Initialize ( ZLStream& stream, size_t size ) {
+
+	this->Reserve (( u32 )size );
+	this->WriteStream ( stream );
+	
+	this->ScheduleForGPUUpdate ();
+}
+
+//----------------------------------------------------------------//
+MOAIGfxBuffer::MOAIGfxBuffer () {
+	
+	RTTI_BEGIN
+		RTTI_EXTEND ( MOAIGfxResource )
+		RTTI_EXTEND ( MOAIStream )
+	RTTI_END
+}
+
+//----------------------------------------------------------------//
+MOAIGfxBuffer::~MOAIGfxBuffer () {
+}
+
 //================================================================//
 // virtual
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxBuffer::MOAIGfxResource_OnCPUDestroy () {
+void MOAIGfxBuffer::MOAIGfxResource_Clear () {
 
 	this->ZLCopyOnWrite::Free ();
 }

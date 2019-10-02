@@ -22,7 +22,7 @@ class MOAIShader :
 	
 	//----------------------------------------------------------------//
 	virtual void	MOAIShader_ComposeUniforms		() = 0;
-	virtual bool	MOAIShader_IsReady				() const = 0;
+	virtual bool	MOAIShader_IsReadyForUse		() const = 0;
 	virtual void	MOAIShader_SelectTextures		() = 0;
 	
 public:
@@ -30,7 +30,7 @@ public:
 	//----------------------------------------------------------------//
 	void			ComposeUniforms			();
 	bool			HasProgram				() const;
-	bool			IsReady					() const;
+	bool			IsReadyForUse			() const;
 					MOAIShader				();
 					~MOAIShader				();
 	void			SelectTextures			();

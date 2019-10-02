@@ -42,7 +42,7 @@ int MOAITextureGL::_getSize ( lua_State* L ) {
 int MOAITextureGL::_release ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextureGL, "U" )
 	
-	self->Destroy ();
+	self->Clear ();
 	
 	return 0;
 }
@@ -383,10 +383,6 @@ bool MOAITextureGL::UpdateTextureFromImage ( ZLImage& image, ZLIntRect rect ) {
 //================================================================//
 // virtual
 //================================================================//
-
-//----------------------------------------------------------------//
-void MOAITextureGL::MOAIGfxResource_OnCPUPurgeRecoverable () {
-}
 
 //----------------------------------------------------------------//
 void MOAITextureGL::MOAIGfxResourceGL_OnGPUBind () {

@@ -35,7 +35,7 @@ protected:
 	void					MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	bool					MOAINode_ApplyAttrOp				( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	void					MOAIShader_ComposeUniforms			();
-	bool					MOAIShader_IsReady					() const;
+	bool					MOAIShader_IsReadyForUse			() const;
 	void					MOAIShader_SelectTextures			();
 
 public:

@@ -84,15 +84,12 @@ void MOAIGfxBufferGL::ReserveVBOs ( ZLSize gpuBuffers ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxBufferGL::MOAIGfxResource_OnCPUDestroy () {
-	MOAIGfxBuffer::MOAIGfxResource_OnCPUDestroy ();
+void MOAIGfxBufferGL::MOAIGfxResource_Clear () {
 
 	this->mVBOs.Clear ();
 	this->mCurrentVBO = ZLIndexOp::ZERO;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxBufferGL::MOAIGfxResource_OnCPUPurgeRecoverable () {
+	this->MOAIGfxResourceGL::MOAIGfxResource_Clear ();
+	this->MOAIGfxBuffer::MOAIGfxResource_Clear ();
 }
 
 //----------------------------------------------------------------//

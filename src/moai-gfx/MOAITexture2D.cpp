@@ -53,22 +53,6 @@ int MOAITexture2D::_load ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITexture2D::Clear () {
-
-	this->mFilename.clear ();
-	this->mDebugName.clear ();
-	
-	this->ClearImage ();
-
-	if ( this->mTextureData ) {
-		free ( this->mTextureData );
-		this->mTextureData = 0;
-	}
-	this->mTextureDataSize = 0;
-	this->mTextureDataFormat = 0;
-}
-
-//----------------------------------------------------------------//
 void MOAITexture2D::ClearImage () {
 
 	if ( this->mImage ) {
@@ -89,7 +73,7 @@ void MOAITexture2D::CopyImage ( const ZLImage& image ) {
 //----------------------------------------------------------------//
 void MOAITexture2D::Init ( const ZLImage& image, cc8* debugname ) {
 
-	this->Destroy ();
+	this->Clear ();
 	
 	if ( image.IsOK ()) {
 		this->CopyImage ( image );
@@ -102,7 +86,7 @@ void MOAITexture2D::Init ( const ZLImage& image, cc8* debugname ) {
 //----------------------------------------------------------------//
 void MOAITexture2D::Init ( const ZLImage& image, int srcX, int srcY, int width, int height, cc8* debugname ) {
 
-	this->Destroy ();
+	this->Clear ();
 	
 	if ( image.IsOK ()) {
 	
@@ -119,7 +103,7 @@ void MOAITexture2D::Init ( const ZLImage& image, int srcX, int srcY, int width, 
 //----------------------------------------------------------------//
 void MOAITexture2D::Init ( cc8* filename, u32 transform, cc8* debugname ) {
 
-	this->Destroy ();
+	this->Clear ();
 	
 	if ( ZLFileSys::CheckFileExists ( filename )) {
 		
@@ -138,7 +122,7 @@ void MOAITexture2D::Init ( cc8* filename, u32 transform, cc8* debugname ) {
 //----------------------------------------------------------------//
 void MOAITexture2D::Init ( ZLStream& stream, u32 transform, cc8* debugname ) {
 
-	this->Destroy ();
+	this->Clear ();
 	this->LoadFromStream ( stream, transform );
 	
 	// if we're OK, store the debugname and load
@@ -284,7 +268,9 @@ MOAITexture2D::MOAITexture2D () :
 	mTextureDataFormat ( 0 ),
 	mImage ( NULL ) {
 
-	RTTI_SINGLE ( MOAITexture )
+	RTTI_BEGIN
+		RTTI_EXTEND ( MOAITexture )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//
@@ -294,6 +280,48 @@ MOAITexture2D::~MOAITexture2D () {
 //================================================================//
 // virtual
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAITexture2D::MOAIGfxResource_Clear () {
+
+	this->mFilename.clear ();
+	this->mDebugName.clear ();
+}
+
+//----------------------------------------------------------------//
+void MOAITexture2D::MOAIGfxResource_ClearReloadable () {
+
+	// if we know the filename it is safe to clear out
+	// the image and/or buffer
+	if ( this->HasReloader () || this->mFilename.size ()) {
+		
+		// force cleanup right away - the image is now in OpenGL, why keep it around until the next GC?
+		this->ClearImage ();
+		
+		if ( this->mTextureData ) {
+			free ( this->mTextureData );
+			this->mTextureData = 0;
+		}
+		this->mTextureDataSize = 0;
+		this->mTextureDataFormat = 0;
+	}
+	
+	if ( this->HasReloader ()) {
+		this->mFilename.clear ();
+	}
+}
+
+//----------------------------------------------------------------//
+bool MOAITexture2D::MOAIGfxResource_FinishLoading () {
+
+	if ( this->mFilename.size ()) {
+		ZLFileStream stream;
+		stream.OpenRead ( this->mFilename );
+		this->LoadFromStream ( stream, this->mTransform );
+		stream.Close ();
+	}
+	return (( this->mImage && this->mImage->IsOK ()) || this->mTextureData );
+}
 
 //----------------------------------------------------------------//
 void MOAITexture2D::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
@@ -327,39 +355,4 @@ void MOAITexture2D::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILua
 	
 	STLString path = ZLFileSys::GetRelativePath ( this->mFilename );
 	state.SetField ( -1, "mPath", path.str ());
-}
-
-//----------------------------------------------------------------//
-void MOAITexture2D::MOAIReloadable_ClearRecoverable () {
-
-	// if we know the filename it is safe to clear out
-	// the image and/or buffer
-	if ( this->HasReloader () || this->mFilename.size ()) {
-		
-		// force cleanup right away - the image is now in OpenGL, why keep it around until the next GC?
-		this->ClearImage ();
-		
-		if ( this->mTextureData ) {
-			free ( this->mTextureData );
-			this->mTextureData = 0;
-		}
-		this->mTextureDataSize = 0;
-		this->mTextureDataFormat = 0;
-	}
-	
-	if ( this->HasReloader ()) {
-		this->mFilename.clear ();
-	}
-}
-
-//----------------------------------------------------------------//
-bool MOAITexture2D::MOAIReloadable_FinishLoading () {
-
-	if ( this->mFilename.size ()) {
-		ZLFileStream stream;
-		stream.OpenRead ( this->mFilename );
-		this->LoadFromStream ( stream, this->mTransform );
-		stream.Close ();
-	}
-	return (( this->mImage && this->mImage->IsOK ()) || this->mTextureData );
 }

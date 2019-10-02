@@ -32,6 +32,7 @@
 #include <moai-gfx/MOAIMaterialBatch.h>
 #include <moai-gfx/MOAIHasMaterialBatch.h>
 #include <moai-gfx/MOAIMaterialMgr.h>
+#include <moai-gfx/MOAIGfxResource.h>
 #include <moai-gfx/MOAIShader.h>
 #include <moai-gfx/MOAITexture.h>
 #include <moai-gfx/MOAITexture2D.h>

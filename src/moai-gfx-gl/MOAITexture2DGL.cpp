@@ -27,15 +27,10 @@ MOAITexture2DGL::~MOAITexture2DGL () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITexture2DGL::MOAIGfxResource_OnCPUDestroy () {
+void MOAITexture2DGL::MOAIGfxResource_Clear () {
 
-	this->Clear ();
-}
-
-//----------------------------------------------------------------//
-void MOAITexture2DGL::MOAIGfxResource_OnCPUPurgeRecoverable () {
-
-	MOAITexture2D::MOAIGfxResource_OnCPUPurgeRecoverable ();
+	this->MOAITextureGL::MOAIGfxResource_Clear ();
+	this->MOAITexture2D::MOAIGfxResource_Clear ();
 }
 
 //----------------------------------------------------------------//
@@ -51,7 +46,7 @@ bool MOAITexture2DGL::MOAIGfxResourceGL_OnGPUCreate () {
 	}
 	
 	if ( !success ) {
-		this->Destroy ();
+		this->Clear ();
 		return false;
 	}
 	
@@ -68,14 +63,4 @@ void MOAITexture2DGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, M
 void MOAITexture2DGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAITexture2D, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	MOAI_CALL_SUPER_ONCE ( composer, MOAITextureGL, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-}
-
-//----------------------------------------------------------------//
-bool MOAITexture2DGL::MOAIReloadable_FinishLoading () {
-
-	if ( this->MOAITexture2D::MOAIReloadable_FinishLoading ()) {
-		this->ScheduleForGPUUpdate ();
-		return true;
-	}
-	return false;
 }

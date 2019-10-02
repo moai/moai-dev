@@ -21,9 +21,9 @@ bool MOAIShader::HasProgram () const {
 }
 
 //----------------------------------------------------------------//
-bool MOAIShader::IsReady () const {
+bool MOAIShader::IsReadyForUse () const {
 
-	return this->MOAIShader_IsReady ();
+	return this->MOAIShader_IsReadyForUse ();
 }
 
 //----------------------------------------------------------------//

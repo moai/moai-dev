@@ -114,9 +114,9 @@ void MOAIShaderGL::MOAIShader_ComposeUniforms () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIShaderGL::MOAIShader_IsReady () const {
+bool MOAIShaderGL::MOAIShader_IsReadyForUse () const {
 
-	return ( this->mProgram && this->mProgram->IsReady ());
+	return ( this->mProgram && this->mProgram->IsReadyForUse ());
 }
 
 //----------------------------------------------------------------//

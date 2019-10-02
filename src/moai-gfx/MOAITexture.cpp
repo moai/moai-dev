@@ -17,7 +17,7 @@ MOAITexture::MOAITexture () :
 	mWrap ( ZGL_WRAP_MODE_CLAMP ),
 	mTextureSize ( 0 ) {
 
-	RTTI_SINGLE ( RTTIBase )
+	RTTI_SINGLE ( MOAIGfxResource )
 }
 
 //----------------------------------------------------------------//

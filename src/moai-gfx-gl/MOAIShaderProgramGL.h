@@ -61,7 +61,7 @@ protected:
 	void						InitUniformBuffer			( ZLLeanArray < u8 >& buffer );
 	
 	//----------------------------------------------------------------//
-	void						MOAIGfxResource_OnCPUPurgeRecoverable				();
+	void						MOAIGfxResource_Clear								();
 	void						MOAIGfxResourceGL_OnGPUBind							();
 	bool						MOAIGfxResourceGL_OnGPUCreate						();
 	void						MOAIGfxResourceGL_OnGPUDeleteOrDiscard				( bool shouldDelete );
@@ -76,7 +76,6 @@ public:
 	DECL_LUA_FACTORY ( MOAIShaderProgramGL )
 
 	//----------------------------------------------------------------//
-	void				Clear						();
 	void				DeleteShaders				();
 	void				DeclareUniform				( ZLIndex idx, cc8* name, u32 type, u32 width = 1, u32 count = 1 );
 	void				Load						( cc8* vshSource, cc8* fshSource );

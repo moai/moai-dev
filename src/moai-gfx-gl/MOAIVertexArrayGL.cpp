@@ -161,10 +161,6 @@ void MOAIVertexArrayGL::UnbindVertexArrayItems () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIVertexArrayGL::MOAIGfxResource_OnCPUPurgeRecoverable () {
-}
-
-//----------------------------------------------------------------//
 void MOAIVertexArrayGL::MOAIGfxResourceGL_OnGPUBind () {
 
 	if ( this->mUseVAOs && this->mVAOs.Size ()) {

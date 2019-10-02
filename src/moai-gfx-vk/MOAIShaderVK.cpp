@@ -169,7 +169,7 @@ void MOAIShaderVK::MOAIShader_ComposeUniforms () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIShaderVK::MOAIShader_IsReady () const {
+bool MOAIShaderVK::MOAIShader_IsReadyForUse () const {
 
 	return true;
 }

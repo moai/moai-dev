@@ -634,7 +634,7 @@ u32 MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream& vtxS
 //		idxBuffer.ReserveVBOs ( 1 );
 //	}
 	
-	vtxBuffer.CopyFromStream ( vtxStream, vtxStreamLength );
+	vtxBuffer.Initialize ( vtxStream, vtxStreamLength );
 	
 	idxBuffer.SetIndexSize ( idxSizeInBytes );
 	

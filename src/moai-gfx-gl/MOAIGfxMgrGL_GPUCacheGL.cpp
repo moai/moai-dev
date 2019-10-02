@@ -470,7 +470,7 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushTexture ( ZLIndex textureUnit ) {
 	MOAITextureGL* prevTexture = MOAICast < MOAITextureGL >( this->mActiveState->mTextureUnits [ textureUnit ]);
 	MOAITextureGL* nextTexture = MOAICast < MOAITextureGL >( this->mPendingState->mTextureUnits [ textureUnit ]);
 	
-	nextTexture = nextTexture && nextTexture->IsReady () ? nextTexture : MOAICast < MOAITextureGL >( this->mDefaultTexture );
+	nextTexture = nextTexture && nextTexture->IsReadyForUse () ? nextTexture : MOAICast < MOAITextureGL >( this->mDefaultTexture );
 
 	if ( prevTexture != nextTexture ) {
 

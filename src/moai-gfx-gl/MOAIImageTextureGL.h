@@ -21,6 +21,7 @@ class MOAIImageTextureGL :
 private:
 
 	//----------------------------------------------------------------//
+	void			MOAIGfxResource_Clear				();
 	bool			MOAIGfxResourceGL_OnGPUCreate		();
 	bool			MOAIGfxResourceGL_OnGPUUpdate		();
 	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );

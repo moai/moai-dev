@@ -29,6 +29,13 @@ MOAIImageTextureGL::~MOAIImageTextureGL () {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIImageTextureGL::MOAIGfxResource_Clear () {
+
+	this->MOAITextureGL::MOAIGfxResource_Clear ();
+	this->MOAIImageTexture::MOAIGfxResource_Clear ();
+}
+
+//----------------------------------------------------------------//
 bool MOAIImageTextureGL::MOAIGfxResourceGL_OnGPUCreate () {
 
 	if ( !this->IsOK ()) return false;

@@ -1446,7 +1446,7 @@ void MOAIDraw::DrawTexture ( float left, float top, float right, float bottom, M
 	
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
-	if ( texture && texture->IsReady ()) {
+	if ( texture && texture->IsReadyForUse ()) {
 
 //		gfxMgr.SetBlendMode ( ZGL_BLEND_FACTOR_ONE, ZGL_BLEND_FACTOR_ZERO );
 		gfxMgr.SetTexture ( texture );
