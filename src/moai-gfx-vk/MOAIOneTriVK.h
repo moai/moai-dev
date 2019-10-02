@@ -59,7 +59,6 @@ private:
 	//----------------------------------------------------------------//
 	void			PreparePipeline				();
 	void			PrepareTexture				();
-	void			PrepareUniformBuffers		();
 	void			PrepareVertices				( bool useStagingBuffers = true );
 	void			UpdateMatrices				( u32 width, u32 height );
 

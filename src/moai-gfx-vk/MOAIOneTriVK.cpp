@@ -106,7 +106,6 @@ MOAIOneTriVK::MOAIOneTriVK () {
 
 	this->PrepareVertices ();
 	this->PrepareTexture ();
-	this->PrepareUniformBuffers ();
 }
 
 //----------------------------------------------------------------//
@@ -250,12 +249,6 @@ void MOAIOneTriVK::PrepareTexture () {
 	VK_CHECK_RESULT ( vkCreateImageView ( logicalDevice, &viewInfo, nullptr, &this->mTextureImageView ));
 	
 	this->mTextureDescriptor = MOAIGfxStructVK::descriptorImageInfo ( this->mTextureSampler, this->mTextureImageView, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL );
-}
-
-//----------------------------------------------------------------//
-void MOAIOneTriVK::PrepareUniformBuffers () {
-
-	
 }
 
 //----------------------------------------------------------------//
