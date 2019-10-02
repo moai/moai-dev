@@ -7,6 +7,8 @@
 #include <moai-sim/headers.h>
 #include "moai_gtest.h"
 
+namespace moai_gtest_virtual_inheritance {
+
 // build an inheritance tree from hell
 
 // 	  E
@@ -114,3 +116,5 @@ TEST_F ( GTESTMoaiContext, virtual_inheritance ) {
 	
 	delete graphicsProp;
 }
+
+}; // namespace moai_gtest_virtual_inheritance
