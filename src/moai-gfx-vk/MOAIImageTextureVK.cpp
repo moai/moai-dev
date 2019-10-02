@@ -16,8 +16,6 @@ MOAIImageTextureVK::MOAIImageTextureVK () {
 		RTTI_EXTEND ( MOAIImageTexture )
 		RTTI_EXTEND ( MOAITextureVK )
 	RTTI_END
-	
-//	this->mDebugName = "(stacktrace from MOAIImageTextureVK)";
 }
 
 //----------------------------------------------------------------//
@@ -29,29 +27,10 @@ MOAIImageTextureVK::~MOAIImageTextureVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIImageTextureVK::MOAIGfxResourceVK_OnGPUCreate () {
+void MOAIImageTextureVK::MOAIGfxResource_Clear () {
 
-//	if ( !this->IsOK ()) return false;
-//
-//	this->mRegion.Clear ();
-//	if ( this->CreateTextureFromImage ( *this )) {
-//		return this->MOAIGfxResourceVK_OnGPUUpdate ();
-//	}
-//	return false;
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool MOAIImageTextureVK::MOAIGfxResourceVK_OnGPUUpdate () {
-
-//	bool result = true;
-//
-//	if ( this->mRegion.Area () > 0 ) {
-//		result = this->UpdateTextureFromImage ( *this, this->mRegion );
-//		this->mRegion.Clear ();
-//	}
-//	return result && MOAITextureVK::MOAIGfxResourceVK_OnGPUUpdate ();
-	return true;
+	this->MOAIImageTexture::MOAIGfxResource_Clear ();
+	this->MOAITextureVK::MOAIGfxResource_Clear ();
 }
 
 //----------------------------------------------------------------//

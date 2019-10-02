@@ -27,36 +27,10 @@ MOAITexture2DVK::~MOAITexture2DVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAITexture2DVK::MOAIGfxResource_OnCPUCreate () {
+void MOAITexture2DVK::MOAIGfxResource_Clear () {
 
-	return MOAITexture2D::MOAIGfxResource_OnCPUCreate ();
-}
-
-//----------------------------------------------------------------//
-void MOAITexture2DVK::MOAIGfxResource_OnCPUPurgeRecoverable () {
-
-	MOAITexture2D::MOAIGfxResource_OnCPUPurgeRecoverable ();
-}
-
-//----------------------------------------------------------------//
-bool MOAITexture2DVK::MOAIGfxResourceVK_OnGPUCreate () {
-	
-//	bool success = false;
-//
-//	if ( this->mImage && this->mImage->IsOK ()) {
-//		success =  this->CreateTextureFromImage ( *this->mImage );
-//	}
-//	else if ( this->mTextureDataFormat && this->mTextureData ) {
-//		success = this->mTextureDataFormat->CreateTexture ( *this, this->mTextureData, this->mTextureDataSize );
-//	}
-//
-//	if ( !success ) {
-//		this->Destroy ();
-//		return false;
-//	}
-//
-//	return this->MOAIGfxResourceVK_OnGPUUpdate ();
-	return true;
+	this->MOAITextureVK::MOAIGfxResource_Clear ();
+	this->MOAITexture2D::MOAIGfxResource_Clear ();
 }
 
 //----------------------------------------------------------------//

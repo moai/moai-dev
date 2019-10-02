@@ -30,14 +30,7 @@ protected:
 	//----------------------------------------------------------------//
 	void						MOAIAbstractLifecycleClientVK_Finalize			();
 	MOAIGfxBufferSnapshotVK*	MOAIAbstractSnapshotSubjectVK_MakeSnapshot		();
-	bool						MOAIGfxResource_OnCPUCreate						();
-	void 						MOAIGfxResource_OnCPUDestroy					();
-	void						MOAIGfxResource_OnCPUPurgeRecoverable			();
-	void						MOAIGfxResourceVK_OnGPUBind						();
-	bool						MOAIGfxResourceVK_OnGPUCreate					();
-	void						MOAIGfxResourceVK_OnGPUDeleteOrDiscard			( bool shouldDelete );
-	void						MOAIGfxResourceVK_OnGPUUnbind					();
-	bool						MOAIGfxResourceVK_OnGPUUpdate					();
+	void 						MOAIGfxResource_Clear							();
 	void						MOAILuaObject_RegisterLuaClass					( MOAIComposer& composer, MOAILuaState& state );
 	void						MOAILuaObject_RegisterLuaFuncs					( MOAIComposer& composer, MOAILuaState& state );
 	void						MOAILuaObject_SerializeIn						( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );

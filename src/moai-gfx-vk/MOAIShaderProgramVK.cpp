@@ -132,45 +132,6 @@ void MOAIShaderProgramVK::MOAIAbstractLifecycleClientVK_Finalize () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIShaderProgramVK::MOAIGfxResource_OnCPUCreate () {
-
-	return true;
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderProgramVK::MOAIGfxResource_OnCPUPurgeRecoverable () {
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderProgramVK::MOAIGfxResourceVK_OnGPUBind () {
-
-	// use shader program.
-//	this->mGfxMgr->GetDrawingAPI ().UseProgram ( this->mProgram );
-}
-
-//----------------------------------------------------------------//
-bool MOAIShaderProgramVK::MOAIGfxResourceVK_OnGPUCreate () {
-	
-	return true;
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderProgramVK::MOAIGfxResourceVK_OnGPUDeleteOrDiscard ( bool shouldDelete ) {
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderProgramVK::MOAIGfxResourceVK_OnGPUUnbind () {
-
-//	this->mGfxMgr->GetDrawingAPI ().UseProgram ( ZLGfxResource::UNBIND );
-}
-
-//----------------------------------------------------------------//
-bool MOAIShaderProgramVK::MOAIGfxResourceVK_OnGPUUpdate () {
-
-	return true;
-}
-
-//----------------------------------------------------------------//
 void MOAIShaderProgramVK::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxResourceVK, MOAILuaObject_RegisterLuaClass ( composer, state ));

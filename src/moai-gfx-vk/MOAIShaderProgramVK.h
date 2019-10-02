@@ -6,7 +6,6 @@
 
 #include <moai-gfx-vk/MOAIGfxResourceVK.h>
 #include <moai-gfx-vk/MOAILogicalDeviceClientVK.h>
-#include <moai-gfx-vk/MOAIShaderUniformVK.h>
 
 class MOAIShaderVK;
 class MOAITextureVK;
@@ -45,16 +44,9 @@ protected:
 	VkShaderStageFlagBits		GetShaderStageBit			( ModuleID moduleID );
 	
 	//----------------------------------------------------------------//
-	void				MOAIAbstractLifecycleClientVK_Finalize				();
-	bool				MOAIGfxResource_OnCPUCreate							();
-	void				MOAIGfxResource_OnCPUPurgeRecoverable				();
-	void				MOAIGfxResourceVK_OnGPUBind							();
-	bool				MOAIGfxResourceVK_OnGPUCreate						();
-	void				MOAIGfxResourceVK_OnGPUDeleteOrDiscard				( bool shouldDelete );
-	void				MOAIGfxResourceVK_OnGPUUnbind						();
-	bool				MOAIGfxResourceVK_OnGPUUpdate						();
-	void				MOAILuaObject_RegisterLuaClass						( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs						( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAIAbstractLifecycleClientVK_Finalize			();
+	void				MOAILuaObject_RegisterLuaClass					( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs					( MOAIComposer& composer, MOAILuaState& state );
 	
 public:
 

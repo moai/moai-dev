@@ -23,7 +23,6 @@
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAIShaderMgrVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
-#include <moai-gfx-vk/MOAIShaderUniformVK.h>
 #include <moai-gfx-vk/MOAISwapChainVK.h>
 #include <moai-gfx-vk/MOAITexture2DVK.h>
 #include <moai-gfx-vk/MOAITextureVK.h>

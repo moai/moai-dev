@@ -21,8 +21,7 @@ class MOAIImageTextureVK :
 private:
 
 	//----------------------------------------------------------------//
-	bool			MOAIGfxResourceVK_OnGPUCreate		();
-	bool			MOAIGfxResourceVK_OnGPUUpdate		();
+	void			MOAIGfxResource_Clear				();
 	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
 	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 

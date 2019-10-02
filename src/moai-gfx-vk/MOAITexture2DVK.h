@@ -20,9 +20,7 @@ class MOAITexture2DVK :
 protected:
 
 	//----------------------------------------------------------------//
-	bool				MOAIGfxResource_OnCPUCreate 			();
-	void				MOAIGfxResource_OnCPUPurgeRecoverable 	();
-	bool				MOAIGfxResourceVK_OnGPUCreate			();
+	void				MOAIGfxResource_Clear					();
 	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
 	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
 
