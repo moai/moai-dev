@@ -385,12 +385,6 @@ bool MOAITextureGL::UpdateTextureFromImage ( ZLImage& image, ZLIntRect rect ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAITextureGL::MOAIGfxResource_OnCPUCreate () {
-
-	return true;
-}
-
-//----------------------------------------------------------------//
 void MOAITextureGL::MOAIGfxResource_OnCPUPurgeRecoverable () {
 }
 

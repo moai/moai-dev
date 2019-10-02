@@ -77,7 +77,6 @@ bool MOAIGfxResourceGL::Affirm () {
 		this->DoGPUUpdate ();
 	}
 	else {
-		this->InvokeLoader ();
 		this->DoGPUCreate ();
 	}
 	return this->IsReady ();
@@ -197,7 +196,7 @@ void MOAIGfxResourceGL::Renew () {
 	
 		this->MOAIGfxResourceGL_OnGPUDeleteOrDiscard ( false ); // clear out the resource id (if any)
 		this->mState = STATE_READY_FOR_CPU_CREATE;
-		this->InvokeLoader ();
+		this->Reload ();
 		this->DoGPUCreate ();
 	}
 }

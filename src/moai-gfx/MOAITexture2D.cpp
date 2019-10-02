@@ -53,6 +53,22 @@ int MOAITexture2D::_load ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAITexture2D::Clear () {
+
+	this->mFilename.clear ();
+	this->mDebugName.clear ();
+	
+	this->ClearImage ();
+
+	if ( this->mTextureData ) {
+		free ( this->mTextureData );
+		this->mTextureData = 0;
+	}
+	this->mTextureDataSize = 0;
+	this->mTextureDataFormat = 0;
+}
+
+//----------------------------------------------------------------//
 void MOAITexture2D::ClearImage () {
 
 	if ( this->mImage ) {
@@ -79,8 +95,7 @@ void MOAITexture2D::Init ( const ZLImage& image, cc8* debugname ) {
 		this->CopyImage ( image );
 		
 		this->mDebugName = debugname;
-		this->ScheduleForGPUUpdate ();
-		this->DoCPUCreate (); // If you do not calculate here, it is impossible to get the texture size.
+		this->FinishLoading (); // If you do not calculate here, it is impossible to get the texture size.
 	}
 }
 
@@ -97,8 +112,7 @@ void MOAITexture2D::Init ( const ZLImage& image, int srcX, int srcY, int width, 
 		this->mImage->Blit ( image, srcX, srcY, 0, 0, width, height );
 		
 		this->mDebugName = debugname;
-		this->ScheduleForGPUUpdate ();
-		this->DoCPUCreate (); // Force CPU create here to get the texture size.
+		this->FinishLoading (); // Force CPU create here to get the texture size.
 	}
 }
 
@@ -117,8 +131,7 @@ void MOAITexture2D::Init ( cc8* filename, u32 transform, cc8* debugname ) {
 			this->mDebugName = this->mFilename;
 		}
 		this->mTransform = transform;
-		this->ScheduleForGPUUpdate ();
-		this->DoCPUCreate (); // Force CPU create here to get the texture size.
+		this->FinishLoading (); // Force CPU create here to get the texture size.
 	}
 }
 
@@ -132,8 +145,7 @@ void MOAITexture2D::Init ( ZLStream& stream, u32 transform, cc8* debugname ) {
 	if ( this->mTextureData || ( this->mImage && this->mImage->IsOK ())) {
 	
 		this->mDebugName = debugname;
-		this->ScheduleForGPUUpdate ();
-		this->DoCPUCreate (); // Force CPU create here to get the texture size.
+		this->FinishLoading (); // Force CPU create here to get the texture size.
 	}
 }
 
@@ -318,39 +330,11 @@ void MOAITexture2D::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILua
 }
 
 //----------------------------------------------------------------//
-bool MOAITexture2D::MOAIGfxResource_OnCPUCreate () {
-
-	if ( this->mFilename.size ()) {
-		ZLFileStream stream;
-		stream.OpenRead ( this->mFilename );
-		this->LoadFromStream ( stream, this->mTransform );
-		stream.Close ();
-	}
-	return (( this->mImage && this->mImage->IsOK ()) || this->mTextureData );
-}
-
-//----------------------------------------------------------------//
-void MOAITexture2D::MOAIGfxResource_OnCPUDestroy () {
-
-	this->mFilename.clear ();
-	this->mDebugName.clear ();
-	
-	this->ClearImage ();
-
-	if ( this->mTextureData ) {
-		free ( this->mTextureData );
-		this->mTextureData = 0;
-	}
-	this->mTextureDataSize = 0;
-	this->mTextureDataFormat = 0;
-}
-
-//----------------------------------------------------------------//
-void MOAITexture2D::MOAIGfxResource_OnCPUPurgeRecoverable () {
+void MOAITexture2D::MOAIReloadable_ClearRecoverable () {
 
 	// if we know the filename it is safe to clear out
 	// the image and/or buffer
-	if ( this->HasLoader () || this->mFilename.size ()) {
+	if ( this->HasReloader () || this->mFilename.size ()) {
 		
 		// force cleanup right away - the image is now in OpenGL, why keep it around until the next GC?
 		this->ClearImage ();
@@ -363,7 +347,19 @@ void MOAITexture2D::MOAIGfxResource_OnCPUPurgeRecoverable () {
 		this->mTextureDataFormat = 0;
 	}
 	
-	if ( this->HasLoader ()) {
+	if ( this->HasReloader ()) {
 		this->mFilename.clear ();
 	}
+}
+
+//----------------------------------------------------------------//
+bool MOAITexture2D::MOAIReloadable_FinishLoading () {
+
+	if ( this->mFilename.size ()) {
+		ZLFileStream stream;
+		stream.OpenRead ( this->mFilename );
+		this->LoadFromStream ( stream, this->mTransform );
+		stream.Close ();
+	}
+	return (( this->mImage && this->mImage->IsOK ()) || this->mTextureData );
 }

@@ -37,7 +37,7 @@ void MOAIVertexFormatGL::Unbind ( ZLGfx& gfx ) const {
 
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mTotalAttributes; ++i ) {
 		
-		MOAIVertexAttribute& attr = this->mAttributes [ i ];
+		const MOAIVertexAttribute& attr = this->mAttributes [ i ];
 		gfx.DisableVertexAttribArray ( attr.mIndex );
 	}
 }

@@ -61,7 +61,6 @@ protected:
 	void						InitUniformBuffer			( ZLLeanArray < u8 >& buffer );
 	
 	//----------------------------------------------------------------//
-	bool						MOAIGfxResource_OnCPUCreate							();
 	void						MOAIGfxResource_OnCPUPurgeRecoverable				();
 	void						MOAIGfxResourceGL_OnGPUBind							();
 	bool						MOAIGfxResourceGL_OnGPUCreate						();

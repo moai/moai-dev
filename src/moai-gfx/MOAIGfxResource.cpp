@@ -38,23 +38,6 @@ int MOAIGfxResource::_scheduleForGPUUpdate ( lua_State* L ) {
 	return 0;
 }
 
-//----------------------------------------------------------------//
-/**	@lua	setReloader
-	@text	The reloaded is called prior to recreating the resource. It should
-			in turn call the resources regular load or init methods.
- 
-	@in		MOAIGfxResourceGL self
-	@opt	function reloader
-	@out	nil
-*/
-int MOAIGfxResource::_setReloader ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGfxResource, "U" )
-
-	self->mReloader.SetRef ( *self, state, 2 );
-	self->InvokeLoader ();
-	return 0;
-}
-
 //================================================================//
 // MOAIGfxResource
 //================================================================//
@@ -69,25 +52,6 @@ void MOAIGfxResource::Destroy () {
 //----------------------------------------------------------------//
 bool MOAIGfxResource::DoCPUCreate () {
 	return this->MOAIGfxResource_DoCPUCreate ();
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxResource::HasLoader () {
-
-	return ( bool )this->mReloader;
-}
-
-//----------------------------------------------------------------//
-bool MOAIGfxResource::InvokeLoader () {
-
-	if ( this->mReloader ) {
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		if ( this->mReloader.PushRef ( state )) {
-			state.DebugCall ( 0, 0 );
-			return true;
-		}
-	}
-	return false;
 }
 
 //----------------------------------------------------------------//
@@ -116,19 +80,27 @@ bool MOAIGfxResource::ScheduleForGPUUpdate ( PipelineHint hint ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+bool MOAIGfxResource::MOAIGfxResource_OnCPUCreate () {
+	return true;
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxResource::MOAIGfxResource_OnCPUDestroy () {
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxResource::MOAIGfxResource_OnCPUPurgeRecoverable () {
+	this->ClearReloadable ();
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxResource::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIReloadable, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxResource::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+	MOAI_CALL_SUPER_ONCE ( composer, MOAIReloadable, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 
 	luaL_Reg regTable [] = {
 		{ "clear",						_destroy }, // TODO: deprecate
@@ -136,7 +108,6 @@ void MOAIGfxResource::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, M
 		{ "release",					_destroy }, // TODO: deprecate
 		{ "scheduleFlush",				_scheduleForGPUUpdate },
 		{ "scheduleForGPUUpdate",		_scheduleForGPUUpdate },
-		{ "setReloader",				_setReloader },
 		{ NULL, NULL }
 	};
 	

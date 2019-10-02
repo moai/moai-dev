@@ -84,11 +84,6 @@ void MOAIGfxBufferGL::ReserveVBOs ( ZLSize gpuBuffers ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIGfxBufferGL::MOAIGfxResource_OnCPUCreate () {
-	return true;
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxBufferGL::MOAIGfxResource_OnCPUDestroy () {
 	MOAIGfxBuffer::MOAIGfxResource_OnCPUDestroy ();
 

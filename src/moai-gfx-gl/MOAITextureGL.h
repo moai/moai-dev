@@ -50,7 +50,6 @@ protected:
 	bool				UpdateTextureFromImage		( ZLImage& image, ZLIntRect rect );
 	
 	//----------------------------------------------------------------//
-	bool				MOAIGfxResource_OnCPUCreate				();
 	void				MOAIGfxResource_OnCPUPurgeRecoverable	();
 	void				MOAIGfxResourceGL_OnGPUBind				();
 	void				MOAIGfxResourceGL_OnGPUDeleteOrDiscard	( bool shouldDelete );

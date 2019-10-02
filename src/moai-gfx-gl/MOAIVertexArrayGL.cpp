@@ -161,12 +161,6 @@ void MOAIVertexArrayGL::UnbindVertexArrayItems () {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIVertexArrayGL::MOAIGfxResource_OnCPUCreate () {
-
-	return true;
-}
-
-//----------------------------------------------------------------//
 void MOAIVertexArrayGL::MOAIGfxResource_OnCPUPurgeRecoverable () {
 }
 

@@ -20,11 +20,12 @@ class MOAITexture2DGL :
 protected:
 
 	//----------------------------------------------------------------//
-	bool				MOAIGfxResource_OnCPUCreate 			();
+	void				MOAIGfxResource_OnCPUDestroy			();
 	void				MOAIGfxResource_OnCPUPurgeRecoverable 	();
 	bool				MOAIGfxResourceGL_OnGPUCreate			();
 	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
 	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
+	bool				MOAIReloadable_FinishLoading			();
 
 public:
 		

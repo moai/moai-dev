@@ -52,7 +52,6 @@ protected:
 	void					UnbindVertexArrayItems		();
 	
 	//----------------------------------------------------------------//
-	bool					MOAIGfxResource_OnCPUCreate					(); // load or initialize any CPU-side resources required to create the GPU-side resource
 	void					MOAIGfxResource_OnCPUPurgeRecoverable		(); // clear any recoverable CPU-side memory used by class
 	void					MOAIGfxResourceGL_OnGPUBind					(); // select GPU-side resource on device for use
 	bool					MOAIGfxResourceGL_OnGPUCreate				(); // create GPU-side resource

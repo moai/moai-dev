@@ -4,11 +4,13 @@
 #ifndef	MOAIGFXRESOURCE_H
 #define	MOAIGFXRESOURCE_H
 
+#include <moai-gfx/MOAIReloadable.h>
+
 //================================================================//
 // MOAIGfxResource
 //================================================================//
 class MOAIGfxResource :
-	public virtual MOAILuaObject {
+	public virtual MOAIReloadable {
 public:
 
 	enum PipelineHint {
@@ -18,18 +20,14 @@ public:
 
 protected:
 
-	// for custom loading function
-	MOAILuaMemberRef	mReloader;
-
 	//----------------------------------------------------------------//
 	static int			_destroy					( lua_State* L );
 	static int			_scheduleForGPUUpdate		( lua_State* L );
-	static int			_setReloader				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	virtual bool		MOAIGfxResource_DoCPUCreate					() = 0;
 	virtual bool		MOAIGfxResource_IsReady						() const = 0;
-	virtual bool		MOAIGfxResource_OnCPUCreate					() = 0; // load or initialize any CPU-side resources required to create the GPU-side resource
+	virtual bool		MOAIGfxResource_OnCPUCreate					(); // load or initialize any CPU-side resources required to create the GPU-side resource
 	virtual void		MOAIGfxResource_OnCPUDestroy				();
 	virtual void		MOAIGfxResource_OnCPUPurgeRecoverable		(); // clear any recoverable CPU-side memory used by class
 	virtual void		MOAIGfxResource_ScheduleForGPUDestroy		() = 0;
@@ -42,8 +40,6 @@ public:
 	//----------------------------------------------------------------//
 	void				Destroy						();
 	bool				DoCPUCreate					();
-	bool				HasLoader					();
-	bool				InvokeLoader				();
 	bool				IsReady						() const;
 						MOAIGfxResource				();
 						~MOAIGfxResource			();

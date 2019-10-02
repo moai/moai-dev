@@ -44,7 +44,6 @@ protected:
 	ZLSharedConstBuffer*	GetBufferForBind		( ZLGfx& gfx );
 	
 	//----------------------------------------------------------------//
-	bool					MOAIGfxResource_OnCPUCreate					();
 	void 					MOAIGfxResource_OnCPUDestroy				();
 	void					MOAIGfxResource_OnCPUPurgeRecoverable		();
 	void					MOAIGfxResourceGL_OnGPUBind					();

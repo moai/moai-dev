@@ -3783,6 +3783,8 @@
 		CDBF991A23433C65003F430D /* MOAIGfxBufferSnapshotVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBF991823433C65003F430D /* MOAIGfxBufferSnapshotVK.h */; };
 		CDBF991D23434B39003F430D /* MOAIUtilityBufferVK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBF991B23434B39003F430D /* MOAIUtilityBufferVK.cpp */; };
 		CDBF991E23434B39003F430D /* MOAIUtilityBufferVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBF991C23434B39003F430D /* MOAIUtilityBufferVK.h */; };
+		CDBF9925234490DF003F430D /* MOAIReloadable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBF9923234490DF003F430D /* MOAIReloadable.cpp */; };
+		CDBF9926234490DF003F430D /* MOAIReloadable.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBF9924234490DF003F430D /* MOAIReloadable.h */; };
 		CDC02C811E380CDC007A02FB /* MOAIDeckRemapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6F4C173AD0CA00DFE837 /* MOAIDeckRemapper.cpp */; };
 		CDC02C821E380CDC007A02FB /* MOAIDeckRemapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6F4D173AD0CA00DFE837 /* MOAIDeckRemapper.h */; };
 		CDC02C831E380CDE007A02FB /* MOAIDeckRemapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6F4C173AD0CA00DFE837 /* MOAIDeckRemapper.cpp */; };
@@ -7416,6 +7418,8 @@
 		CDBF991823433C65003F430D /* MOAIGfxBufferSnapshotVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxBufferSnapshotVK.h; path = "moai-gfx-vk/MOAIGfxBufferSnapshotVK.h"; sourceTree = "<group>"; };
 		CDBF991B23434B39003F430D /* MOAIUtilityBufferVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIUtilityBufferVK.cpp; path = "moai-gfx-vk/MOAIUtilityBufferVK.cpp"; sourceTree = "<group>"; };
 		CDBF991C23434B39003F430D /* MOAIUtilityBufferVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIUtilityBufferVK.h; path = "moai-gfx-vk/MOAIUtilityBufferVK.h"; sourceTree = "<group>"; };
+		CDBF9923234490DF003F430D /* MOAIReloadable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIReloadable.cpp; path = "moai-gfx/MOAIReloadable.cpp"; sourceTree = "<group>"; };
+		CDBF9924234490DF003F430D /* MOAIReloadable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIReloadable.h; path = "moai-gfx/MOAIReloadable.h"; sourceTree = "<group>"; };
 		CDC02C891E381DD2007A02FB /* MOAIPartitionHolder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPartitionHolder.cpp; sourceTree = "<group>"; };
 		CDC02C8A1E381DD2007A02FB /* MOAIPartitionHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPartitionHolder.h; sourceTree = "<group>"; };
 		CDC02C8F1E38444D007A02FB /* MOAIAbstractViewLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIAbstractViewLayer.cpp; sourceTree = "<group>"; };
@@ -10680,6 +10684,8 @@
 			children = (
 				CD4A966D22A2129E00F9E400 /* MOAIGfxResource.cpp */,
 				CD4A966E22A2129E00F9E400 /* MOAIGfxResource.h */,
+				CDBF9923234490DF003F430D /* MOAIReloadable.cpp */,
+				CDBF9924234490DF003F430D /* MOAIReloadable.h */,
 			);
 			name = resource;
 			sourceTree = "<group>";
@@ -15183,6 +15189,7 @@
 				CD4A947D229DE21A00F9E400 /* MOAIMaterialMgr.h in Headers */,
 				CD4A963F229E787500F9E400 /* MOAIVertexBuffer.h in Headers */,
 				CD4A9481229DE21A00F9E400 /* MOAIMaterial.h in Headers */,
+				CDBF9926234490DF003F430D /* MOAIReloadable.h in Headers */,
 				CD4A9482229DE21A00F9E400 /* pch.h in Headers */,
 				CD17119E22F0364F00381882 /* MOAIAbstractMaterialBatchInterface.h in Headers */,
 				CD4A9488229DE21A00F9E400 /* headers.h in Headers */,
@@ -18614,6 +18621,7 @@
 				CD17129D22F56C1F00381882 /* MOAIAbstractUniformBuffer.cpp in Sources */,
 				CD1712BA22F59A4600381882 /* MOAIAbstractMaterial.cpp in Sources */,
 				CD4A94A2229DE21A00F9E400 /* MOAIMaterialBatch.cpp in Sources */,
+				CDBF9925234490DF003F430D /* MOAIReloadable.cpp in Sources */,
 				CD4A94A4229DE21A00F9E400 /* MOAIMaterial.cpp in Sources */,
 				CD4A9610229E0E4100F9E400 /* MOAIUniformSchema.cpp in Sources */,
 				CD1712B222F57E6000381882 /* MOAIHasUniformComposer.cpp in Sources */,

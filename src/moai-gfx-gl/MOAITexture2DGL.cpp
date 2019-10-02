@@ -27,9 +27,9 @@ MOAITexture2DGL::~MOAITexture2DGL () {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAITexture2DGL::MOAIGfxResource_OnCPUCreate () {
+void MOAITexture2DGL::MOAIGfxResource_OnCPUDestroy () {
 
-	return MOAITexture2D::MOAIGfxResource_OnCPUCreate ();
+	this->Clear ();
 }
 
 //----------------------------------------------------------------//
@@ -68,4 +68,14 @@ void MOAITexture2DGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, M
 void MOAITexture2DGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAITexture2D, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	MOAI_CALL_SUPER_ONCE ( composer, MOAITextureGL, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+}
+
+//----------------------------------------------------------------//
+bool MOAITexture2DGL::MOAIReloadable_FinishLoading () {
+
+	if ( this->MOAITexture2D::MOAIReloadable_FinishLoading ()) {
+		this->ScheduleForGPUUpdate ();
+		return true;
+	}
+	return false;
 }

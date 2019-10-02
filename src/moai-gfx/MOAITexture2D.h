@@ -36,17 +36,17 @@ protected:
 	bool				LoadFromStream				( ZLStream& stream, u32 transform );
 	
 	//----------------------------------------------------------------//
-	bool				MOAIGfxResource_OnCPUCreate					();
-	void				MOAIGfxResource_OnCPUDestroy				();
-	void				MOAIGfxResource_OnCPUPurgeRecoverable		();
 	void				MOAILuaObject_RegisterLuaClass				( MOAIComposer& composer, MOAILuaState& state );
 	void				MOAILuaObject_RegisterLuaFuncs				( MOAIComposer& composer, MOAILuaState& state );
 	void				MOAILuaObject_SerializeIn					( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
 	void				MOAILuaObject_SerializeOut					( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
+	void				MOAIReloadable_ClearRecoverable				();
+	bool				MOAIReloadable_FinishLoading				();
 
 public:
 
 	//----------------------------------------------------------------//
+	void				Clear						();
 	void				Init						( const ZLImage& image, cc8* debugname );
 	void				Init						( const ZLImage& image, int srcX, int srcY, int width, int height, cc8* debugname );
 	void				Init						( cc8* filename, u32 transform, cc8* debugname = NULL );

@@ -250,12 +250,6 @@ void MOAIShaderProgramGL::SetVertexAttribute ( u32 idx, cc8* attribute ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIShaderProgramGL::MOAIGfxResource_OnCPUCreate () {
-
-	return true;
-}
-
-//----------------------------------------------------------------//
 void MOAIShaderProgramGL::MOAIGfxResource_OnCPUPurgeRecoverable () {
 }
 
