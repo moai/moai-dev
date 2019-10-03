@@ -124,9 +124,8 @@
 		CDBF99542345550C003F430D /* libmoai-osx-gfx-gl.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD582B1422718DA8009CD0B6 /* libmoai-osx-gfx-gl.a */; };
 		CDBF99552345550C003F430D /* libmoai-osx-gfx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD4A955B229DE63200F9E400 /* libmoai-osx-gfx.a */; };
 		CDBF995723455549003F430D /* moai_gtest_finalizable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBF995623455549003F430D /* moai_gtest_finalizable.cpp */; };
-		CDBF995A2345800B003F430D /* ZLAbstractFinalizable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBF99582345800B003F430D /* ZLAbstractFinalizable.cpp */; };
-		CDBF99602345B181003F430D /* ZLLinkedFinalizableMembership.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBF995D2345B181003F430D /* ZLLinkedFinalizableMembership.cpp */; };
-		CDBF99632345B500003F430D /* ZLAbstractLinkedFinalizable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBF99612345B500003F430D /* ZLAbstractLinkedFinalizable.cpp */; };
+		CDBF99602345B181003F430D /* ZLAbstractFinalizable_Internal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBF995D2345B181003F430D /* ZLAbstractFinalizable_Internal.cpp */; };
+		CDBF99632345B500003F430D /* ZLAbstractFinalizable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBF99612345B500003F430D /* ZLAbstractFinalizable.cpp */; };
 		CDBF99662345C392003F430D /* moai_gtest_linked_finalizable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBF99652345C392003F430D /* moai_gtest_linked_finalizable.cpp */; };
 		CDD813A31E16FFA900996311 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B319C9901DBFF96600A6C621 /* JavaScriptCore.framework */; };
 		CDD813A41E16FFA900996311 /* libmoai-osx.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDFD8FB01AD8653C0003F415 /* libmoai-osx.a */; };
@@ -1699,15 +1698,12 @@
 		CDA6331A1A390CFB00F3995F /* aku_modules.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = aku_modules.cpp; path = "../../src/host-modules/aku_modules.cpp"; sourceTree = "<group>"; };
 		CDA6331B1A390CFB00F3995F /* aku_modules.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = aku_modules.h; path = "../../src/host-modules/aku_modules.h"; sourceTree = "<group>"; };
 		CDBF995623455549003F430D /* moai_gtest_finalizable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = moai_gtest_finalizable.cpp; path = "../../src/host-google-test/moai_gtest_finalizable.cpp"; sourceTree = "<group>"; };
-		CDBF99582345800B003F430D /* ZLAbstractFinalizable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZLAbstractFinalizable.cpp; path = "../../src/host-google-test/ZLAbstractFinalizable.cpp"; sourceTree = "<group>"; };
-		CDBF99592345800B003F430D /* ZLAbstractFinalizable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZLAbstractFinalizable.h; path = "../../src/host-google-test/ZLAbstractFinalizable.h"; sourceTree = "<group>"; };
-		CDBF995C2345B181003F430D /* ZLAbstractHasLinkedFinalizableMembership.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZLAbstractHasLinkedFinalizableMembership.h; path = "../../src/host-google-test/ZLAbstractHasLinkedFinalizableMembership.h"; sourceTree = "<group>"; };
-		CDBF995D2345B181003F430D /* ZLLinkedFinalizableMembership.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZLLinkedFinalizableMembership.cpp; path = "../../src/host-google-test/ZLLinkedFinalizableMembership.cpp"; sourceTree = "<group>"; };
-		CDBF995E2345B181003F430D /* ZLLinkedFinalizableMembership.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZLLinkedFinalizableMembership.h; path = "../../src/host-google-test/ZLLinkedFinalizableMembership.h"; sourceTree = "<group>"; };
-		CDBF99612345B500003F430D /* ZLAbstractLinkedFinalizable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZLAbstractLinkedFinalizable.cpp; path = "../../src/host-google-test/ZLAbstractLinkedFinalizable.cpp"; sourceTree = "<group>"; };
-		CDBF99622345B500003F430D /* ZLAbstractLinkedFinalizable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZLAbstractLinkedFinalizable.h; path = "../../src/host-google-test/ZLAbstractLinkedFinalizable.h"; sourceTree = "<group>"; };
-		CDBF99642345B57F003F430D /* ZLLinkedFinalizableWithDependency.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZLLinkedFinalizableWithDependency.h; path = "../../src/host-google-test/ZLLinkedFinalizableWithDependency.h"; sourceTree = "<group>"; };
+		CDBF995D2345B181003F430D /* ZLAbstractFinalizable_Internal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZLAbstractFinalizable_Internal.cpp; path = "../../src/host-google-test/ZLAbstractFinalizable_Internal.cpp"; sourceTree = "<group>"; };
+		CDBF995E2345B181003F430D /* ZLAbstractFinalizable_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZLAbstractFinalizable_Internal.h; path = "../../src/host-google-test/ZLAbstractFinalizable_Internal.h"; sourceTree = "<group>"; };
+		CDBF99612345B500003F430D /* ZLAbstractFinalizable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = ZLAbstractFinalizable.cpp; path = "../../src/host-google-test/ZLAbstractFinalizable.cpp"; sourceTree = "<group>"; };
+		CDBF99622345B500003F430D /* ZLAbstractFinalizable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = ZLAbstractFinalizable.h; path = "../../src/host-google-test/ZLAbstractFinalizable.h"; sourceTree = "<group>"; };
 		CDBF99652345C392003F430D /* moai_gtest_linked_finalizable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = moai_gtest_linked_finalizable.cpp; path = "../../src/host-google-test/moai_gtest_linked_finalizable.cpp"; sourceTree = "<group>"; };
+		CDBF99672345ED7F003F430D /* ZLAbstractFinalizable_HasInternal.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = ZLAbstractFinalizable_HasInternal.h; path = "../../src/host-google-test/ZLAbstractFinalizable_HasInternal.h"; sourceTree = "<group>"; };
 		CDD813D01E16FFA900996311 /* moai-test */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moai-test"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CDD813F91E1700D900996311 /* moai_gtest_main.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = moai_gtest_main.cpp; path = "../../src/host-google-test/moai_gtest_main.cpp"; sourceTree = "<group>"; };
 		CDD813FB1E1732D300996311 /* moai_gtest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = moai_gtest.h; path = "../../src/host-google-test/moai_gtest.h"; sourceTree = "<group>"; };
@@ -2130,14 +2126,11 @@
 		CDD813F81E17007C00996311 /* host-google-test */ = {
 			isa = PBXGroup;
 			children = (
-				CDBF99582345800B003F430D /* ZLAbstractFinalizable.cpp */,
-				CDBF99592345800B003F430D /* ZLAbstractFinalizable.h */,
-				CDBF99612345B500003F430D /* ZLAbstractLinkedFinalizable.cpp */,
-				CDBF99622345B500003F430D /* ZLAbstractLinkedFinalizable.h */,
-				CDBF995C2345B181003F430D /* ZLAbstractHasLinkedFinalizableMembership.h */,
-				CDBF995D2345B181003F430D /* ZLLinkedFinalizableMembership.cpp */,
-				CDBF995E2345B181003F430D /* ZLLinkedFinalizableMembership.h */,
-				CDBF99642345B57F003F430D /* ZLLinkedFinalizableWithDependency.h */,
+				CDBF99612345B500003F430D /* ZLAbstractFinalizable.cpp */,
+				CDBF99622345B500003F430D /* ZLAbstractFinalizable.h */,
+				CDBF99672345ED7F003F430D /* ZLAbstractFinalizable_HasInternal.h */,
+				CDBF995D2345B181003F430D /* ZLAbstractFinalizable_Internal.cpp */,
+				CDBF995E2345B181003F430D /* ZLAbstractFinalizable_Internal.h */,
 				CDD813FB1E1732D300996311 /* moai_gtest.h */,
 				CD7038CC21CB145D00DB4A9D /* moai_gtest_composition.cpp */,
 				CDBF995623455549003F430D /* moai_gtest_finalizable.cpp */,
@@ -3050,11 +3043,10 @@
 				CDD813FF1E190DDD00996311 /* moai_gtest_ZLQuaternion.cpp in Sources */,
 				CD5C9FCA21C894630092C949 /* moai_gtest_virtual_inheritance.cpp in Sources */,
 				CD5C9FD021C8EA400092C949 /* moai_gtest_libtess2.cpp in Sources */,
-				CDBF99602345B181003F430D /* ZLLinkedFinalizableMembership.cpp in Sources */,
+				CDBF99602345B181003F430D /* ZLAbstractFinalizable_Internal.cpp in Sources */,
 				CD7038CD21CB145D00DB4A9D /* moai_gtest_composition.cpp in Sources */,
-				CDBF99632345B500003F430D /* ZLAbstractLinkedFinalizable.cpp in Sources */,
+				CDBF99632345B500003F430D /* ZLAbstractFinalizable.cpp in Sources */,
 				CDD813FA1E1700D900996311 /* moai_gtest_main.cpp in Sources */,
-				CDBF995A2345800B003F430D /* ZLAbstractFinalizable.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

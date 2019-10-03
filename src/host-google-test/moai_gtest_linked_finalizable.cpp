@@ -6,8 +6,7 @@
 
 #include <moai-sim/headers.h>
 #include "moai_gtest.h"
-#include "ZLAbstractLinkedFinalizable.h"
-#include "ZLLinkedFinalizableWithDependency.h"
+#include "ZLAbstractFinalizable.h"
 
 using namespace std;
 
@@ -25,9 +24,9 @@ static GTESTLifecycleTracker sLifecycle;
 
 //----------------------------------------------------------------//
 class Provider0 :
-	public ZLAbstractLinkedFinalizable {
+	public ZLAbstractFinalizable {
 public:
-	IMPLEMENT_LINKED_FINALIZEABLE ( Provider0 )
+	IMPLEMENT_FINALIZABLE ( Provider0 )
 	
 	//----------------------------------------------------------------//
 	~Provider0 () {
@@ -37,9 +36,9 @@ public:
 
 //----------------------------------------------------------------//
 class Provider1 :
-	public ZLAbstractLinkedFinalizable {
+	public ZLAbstractFinalizable {
 public:
-	IMPLEMENT_LINKED_FINALIZEABLE ( Provider1 )
+	IMPLEMENT_FINALIZABLE ( Provider1 )
 	
 	//----------------------------------------------------------------//
 	~Provider1 () {
@@ -49,9 +48,9 @@ public:
 
 //----------------------------------------------------------------//
 class Provider2 :
-	public ZLAbstractLinkedFinalizable {
+	public ZLAbstractFinalizable {
 public:
-	IMPLEMENT_LINKED_FINALIZEABLE ( Provider2 )
+	IMPLEMENT_FINALIZABLE ( Provider2 )
 	
 	//----------------------------------------------------------------//
 	~Provider2 () {
@@ -61,11 +60,11 @@ public:
 
 //----------------------------------------------------------------//
 class Client0 :
-	public ZLAbstractLinkedFinalizable,
-	public ZLLinkedFinalizableWithDependency < Provider0 >,
-	public ZLLinkedFinalizableWithDependency < Provider1 > {
+	public ZLAbstractFinalizable,
+	public ZLAbstractFinalizable_HasDependency < Provider0 >,
+	public ZLAbstractFinalizable_HasDependency < Provider1 > {
 public:
-	IMPLEMENT_LINKED_FINALIZEABLE ( Client0 )
+	IMPLEMENT_FINALIZABLE ( Client0 )
 	
 	//----------------------------------------------------------------//
 	~Client0 () {
@@ -75,11 +74,11 @@ public:
 
 //----------------------------------------------------------------//
 class Client1 :
-	public ZLAbstractLinkedFinalizable,
-	 public ZLLinkedFinalizableWithDependency < Provider1 >,
-	 public ZLLinkedFinalizableWithDependency < Provider2 > {
+	public ZLAbstractFinalizable,
+	 public ZLAbstractFinalizable_HasDependency < Provider1 >,
+	 public ZLAbstractFinalizable_HasDependency < Provider2 > {
 public:
-	IMPLEMENT_LINKED_FINALIZEABLE ( Client1 )
+	IMPLEMENT_FINALIZABLE ( Client1 )
 	
 	//----------------------------------------------------------------//
 	~Client1 () {
@@ -89,9 +88,9 @@ public:
 
 //----------------------------------------------------------------//
 class Client2 :
-	public ZLAbstractLinkedFinalizable {
+	public ZLAbstractFinalizable {
 public:
-	IMPLEMENT_LINKED_FINALIZEABLE ( Client2 )
+	IMPLEMENT_FINALIZABLE ( Client2 )
 	
 	//----------------------------------------------------------------//
 	~Client2 () {
@@ -110,11 +109,11 @@ TEST_F ( GTESTMoaiContext, linked_finalizable ) {
 		Client0 client0;
 		Client1 client1;
 		
-		client0.ZLLinkedFinalizableWithDependency < Provider0 >::SetProvider ( provider0 );
-		client0.ZLLinkedFinalizableWithDependency < Provider1 >::SetProvider ( provider1 );
+		client0.ZLAbstractFinalizable_HasDependency < Provider0 >::SetProvider ( provider0 );
+		client0.ZLAbstractFinalizable_HasDependency < Provider1 >::SetProvider ( provider1 );
 		
-		client1.ZLLinkedFinalizableWithDependency < Provider1 >::SetProvider ( provider1 );
-		client1.ZLLinkedFinalizableWithDependency < Provider2 >::SetProvider ( provider2 );
+		client1.ZLAbstractFinalizable_HasDependency < Provider1 >::SetProvider ( provider1 );
+		client1.ZLAbstractFinalizable_HasDependency < Provider2 >::SetProvider ( provider2 );
 		
 		ASSERT_TRUE ( &client0.GetProvider < Provider0 >() == &provider0 );
 		ASSERT_TRUE ( &client0.GetProvider < Provider1 >() == &provider1 );

@@ -1,51 +1,51 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include "ZLAbstractLinkedFinalizable.h"
-#include "ZLLinkedFinalizableMembership.h"
+#include "ZLAbstractFinalizable.h"
+#include "ZLAbstractFinalizable_Internal.h"
 
 //================================================================//
-// ZLLinkedFinalizableMembership
+// ZLAbstractFinalizable_Internal
 //================================================================//
 
 //----------------------------------------------------------------//
-void ZLLinkedFinalizableMembership::AddClient ( ZLAbstractFinalizable& client ) {
+void ZLAbstractFinalizable_Internal::AddClient ( ZLAbstractFinalizable& client ) {
 	this->mClients.insert ( &client );
 }
 
 //----------------------------------------------------------------//
-void ZLLinkedFinalizableMembership::AddProvider ( ZLAbstractLinkedFinalizable& provider ) {
+void ZLAbstractFinalizable_Internal::AddProvider ( ZLAbstractFinalizable& provider ) {
 	this->mProviders.insert ( &provider );
 }
 
 //----------------------------------------------------------------//
-ZLAbstractLinkedFinalizable& ZLLinkedFinalizableMembership::GetOwner () {
+ZLAbstractFinalizable& ZLAbstractFinalizable_Internal::GetOwner () {
 	assert ( this->mOwner );
 	return *this->mOwner;
 }
 
 //----------------------------------------------------------------//
-void ZLLinkedFinalizableMembership::RemoveClient ( ZLAbstractFinalizable& client ) {
+void ZLAbstractFinalizable_Internal::RemoveClient ( ZLAbstractFinalizable& client ) {
 	this->mClients.erase ( &client );
 }
 
 //----------------------------------------------------------------//
-void ZLLinkedFinalizableMembership::RemoveProvider ( ZLAbstractLinkedFinalizable& provider ) {
+void ZLAbstractFinalizable_Internal::RemoveProvider ( ZLAbstractFinalizable& provider ) {
 	this->mProviders.erase ( &provider );
 }
 
 
 //----------------------------------------------------------------//
-ZLLinkedFinalizableMembership::ZLLinkedFinalizableMembership () :
+ZLAbstractFinalizable_Internal::ZLAbstractFinalizable_Internal () :
 	mOwner ( NULL ) {
 }
 //----------------------------------------------------------------//
-ZLLinkedFinalizableMembership::ZLLinkedFinalizableMembership ( ZLAbstractLinkedFinalizable& owner ) :
+ZLAbstractFinalizable_Internal::ZLAbstractFinalizable_Internal ( ZLAbstractFinalizable& owner ) :
 	mOwner ( &owner ) {
 }
 
 //----------------------------------------------------------------//
-ZLLinkedFinalizableMembership::~ZLLinkedFinalizableMembership () {
+ZLAbstractFinalizable_Internal::~ZLAbstractFinalizable_Internal () {
 
 	// finalize all our clients; they will remove themselves fromt this membership
 	// when their own memberships are destroyed.
@@ -54,9 +54,9 @@ ZLLinkedFinalizableMembership::~ZLLinkedFinalizableMembership () {
 	}
 
 	// remove self from providers.
-	STLSet < ZLAbstractLinkedFinalizable* >::iterator providerIt = this->mProviders.begin ();
+	STLSet < ZLAbstractFinalizable* >::iterator providerIt = this->mProviders.begin ();
 	for ( ; providerIt != this->mProviders.end (); ++providerIt ) {
-		ZLAbstractLinkedFinalizable* provider = *providerIt;
+		ZLAbstractFinalizable* provider = *providerIt;
 		provider->GetMembership ()->RemoveClient ( *this->mOwner );
 	}
 }

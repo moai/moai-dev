@@ -22,7 +22,7 @@ class E :
 	public ZLAbstractFinalizable {
 public:
 
-	IMPLEMENT_FINALIZEABLE ( E )
+	IMPLEMENT_FINALIZABLE ( E )
 
 	E () {
 		sLifecycle.Construct ( CLASS_E );
@@ -38,7 +38,7 @@ class D :
 	public E {
 public:
 
-	IMPLEMENT_FINALIZEABLE ( D, ReconstructionFlag::RECONSTRUCTING )
+	IMPLEMENT_FINALIZABLE ( D, ReconstructionFlag::RECONSTRUCTING )
 
 	D () {
 		sLifecycle.Construct ( CLASS_D );
