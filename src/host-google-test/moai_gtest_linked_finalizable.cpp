@@ -61,8 +61,8 @@ public:
 //----------------------------------------------------------------//
 class Client0 :
 	public ZLAbstractFinalizable,
-	public ZLAbstractFinalizable_HasDependency < Provider0 >,
-	public ZLAbstractFinalizable_HasDependency < Provider1 > {
+	public ZLAbstractFinalizable_HasDependencyOn < Provider0 >,
+	public ZLAbstractFinalizable_HasDependencyOn < Provider1 > {
 public:
 	IMPLEMENT_FINALIZABLE ( Client0 )
 	
@@ -75,8 +75,8 @@ public:
 //----------------------------------------------------------------//
 class Client1 :
 	public ZLAbstractFinalizable,
-	 public ZLAbstractFinalizable_HasDependency < Provider1 >,
-	 public ZLAbstractFinalizable_HasDependency < Provider2 > {
+	 public ZLAbstractFinalizable_HasDependencyOn < Provider1 >,
+	 public ZLAbstractFinalizable_HasDependencyOn < Provider2 > {
 public:
 	IMPLEMENT_FINALIZABLE ( Client1 )
 	
@@ -109,11 +109,11 @@ TEST_F ( GTESTMoaiContext, linked_finalizable ) {
 		Client0 client0;
 		Client1 client1;
 		
-		client0.ZLAbstractFinalizable_HasDependency < Provider0 >::SetProvider ( provider0 );
-		client0.ZLAbstractFinalizable_HasDependency < Provider1 >::SetProvider ( provider1 );
+		client0.ZLAbstractFinalizable_HasDependencyOn < Provider0 >::SetProvider ( provider0 );
+		client0.ZLAbstractFinalizable_HasDependencyOn < Provider1 >::SetProvider ( provider1 );
 		
-		client1.ZLAbstractFinalizable_HasDependency < Provider1 >::SetProvider ( provider1 );
-		client1.ZLAbstractFinalizable_HasDependency < Provider2 >::SetProvider ( provider2 );
+		client1.ZLAbstractFinalizable_HasDependencyOn < Provider1 >::SetProvider ( provider1 );
+		client1.ZLAbstractFinalizable_HasDependencyOn < Provider2 >::SetProvider ( provider2 );
 		
 		ASSERT_TRUE ( &client0.GetProvider < Provider0 >() == &provider0 );
 		ASSERT_TRUE ( &client0.GetProvider < Provider1 >() == &provider1 );

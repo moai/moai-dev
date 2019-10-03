@@ -15,7 +15,7 @@ class ZLAbstractFinalizable_Internal {
 private:
 
 	friend class ZLAbstractFinalizable;
-	template < typename PROVIDER_TYPE > friend class ZLAbstractFinalizable_HasDependency;
+	template < typename PROVIDER_TYPE > friend class ZLAbstractFinalizable_HasDependencyOn;
 
 	ZLAbstractFinalizable*					mOwner;
 	STLSet < ZLAbstractFinalizable* >		mClients;

@@ -57,6 +57,6 @@ ZLAbstractFinalizable_Internal::~ZLAbstractFinalizable_Internal () {
 	STLSet < ZLAbstractFinalizable* >::iterator providerIt = this->mProviders.begin ();
 	for ( ; providerIt != this->mProviders.end (); ++providerIt ) {
 		ZLAbstractFinalizable* provider = *providerIt;
-		provider->GetMembership ()->RemoveClient ( *this->mOwner );
+		provider->GetInternal ()->RemoveClient ( *this->mOwner );
 	}
 }

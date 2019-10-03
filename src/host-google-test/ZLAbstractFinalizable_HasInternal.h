@@ -16,21 +16,21 @@ private:
 	
 	friend class ZLAbstractFinalizable;
 	friend class ZLAbstractFinalizable_Internal;
-	template < typename PROVIDER_TYPE > friend class ZLAbstractFinalizable_HasDependency;
+	template < typename PROVIDER_TYPE > friend class ZLAbstractFinalizable_HasDependencyOn;
 
 	//----------------------------------------------------------------//
-	ZLAbstractFinalizable_Internal& AffirmMembership () {
-		return this->ZLAbstractFinalizable_HasInternal_AffirmMembership ();
+	ZLAbstractFinalizable_Internal& AffirmInternal () {
+		return this->ZLAbstractFinalizable_HasInternal_AffirmInternal ();
 	}
 	
 	//----------------------------------------------------------------//
-	ZLAbstractFinalizable_Internal* GetMembership () {
-		return this->ZLAbstractFinalizable_HasInternal_GetMembership ();
+	ZLAbstractFinalizable_Internal* GetInternal () {
+		return this->ZLAbstractFinalizable_HasInternal_GetInternal ();
 	}
 	
 	//----------------------------------------------------------------//
-	virtual ZLAbstractFinalizable_Internal&		ZLAbstractFinalizable_HasInternal_AffirmMembership		() = 0;
-	virtual ZLAbstractFinalizable_Internal*		ZLAbstractFinalizable_HasInternal_GetMembership			() = 0;
+	virtual ZLAbstractFinalizable_Internal&		ZLAbstractFinalizable_HasInternal_AffirmInternal		() = 0;
+	virtual ZLAbstractFinalizable_Internal*		ZLAbstractFinalizable_HasInternal_GetInternal			() = 0;
 	
 public:
 

@@ -9,21 +9,20 @@
 
 //----------------------------------------------------------------//
 ZLAbstractFinalizable::ZLAbstractFinalizable () :
-	mMembership ( NULL ) {
+	mInternal ( NULL ) {
 }
 
 //----------------------------------------------------------------//
 ZLAbstractFinalizable::~ZLAbstractFinalizable () {
-	if ( this->mMembership ) {
-		delete this->mMembership;
-		this->mMembership = NULL;
+	if ( this->mInternal ) {
+		delete this->mInternal;
+		this->mInternal = NULL;
 	}
 }
 
 //----------------------------------------------------------------//
 void ZLAbstractFinalizable::Finalize () {
-	void* self = this->ZLAbstractFinalizable_GetSelf ();
-	this->ZLAbstractFinalizable_Finalize ( self );
+	this->ZLAbstractFinalizable_Finalize ();
 }
 
 //================================================================//
@@ -31,14 +30,14 @@ void ZLAbstractFinalizable::Finalize () {
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLAbstractFinalizable_Internal& ZLAbstractFinalizable::ZLAbstractFinalizable_HasInternal_AffirmMembership () {
-	if ( !this->mMembership ) {
-		this->mMembership = new ZLAbstractFinalizable_Internal ( *this );
+ZLAbstractFinalizable_Internal& ZLAbstractFinalizable::ZLAbstractFinalizable_HasInternal_AffirmInternal () {
+	if ( !this->mInternal ) {
+		this->mInternal = new ZLAbstractFinalizable_Internal ( *this );
 	}
-	return *this->mMembership;
+	return *this->mInternal;
 }
 
 //----------------------------------------------------------------//
-ZLAbstractFinalizable_Internal* ZLAbstractFinalizable::ZLAbstractFinalizable_HasInternal_GetMembership () {
-	return this->mMembership;
+ZLAbstractFinalizable_Internal* ZLAbstractFinalizable::ZLAbstractFinalizable_HasInternal_GetInternal () {
+	return this->mInternal;
 }
