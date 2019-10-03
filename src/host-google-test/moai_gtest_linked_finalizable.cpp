@@ -4,9 +4,8 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
-#include <moai-sim/headers.h>
+#include <zl-util/headers.h>
 #include "moai_gtest.h"
-#include "ZLAbstractFinalizable.h"
 
 using namespace std;
 

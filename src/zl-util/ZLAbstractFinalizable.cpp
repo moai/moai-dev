@@ -1,7 +1,8 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#include "ZLAbstractFinalizable.h"
+#include "pch.h"
+#include <zl-util/ZLAbstractFinalizable.h>
 
 //================================================================//
 // ZLAbstractFinalizable

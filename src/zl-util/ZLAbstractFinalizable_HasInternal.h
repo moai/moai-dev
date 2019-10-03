@@ -4,8 +4,6 @@
 #ifndef	ZLABSTRACTFINALIZABLE_HASINTERNAL_H
 #define	ZLABSTRACTFINALIZABLE_HASINTERNAL_H
 
-#include <moai-sim/headers.h>
-
 class ZLAbstractFinalizable_Internal;
 
 //================================================================//

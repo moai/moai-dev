@@ -43,9 +43,8 @@
 // class, and users will almost always want the DAG functionality as well, so it made sense to support
 // everything in a single abstract base class.
 
-#include <moai-sim/headers.h>
-#include "ZLAbstractFinalizable_HasInternal.h"
-#include "ZLAbstractFinalizable_Internal.h"
+#include <zl-util/ZLAbstractFinalizable_HasInternal.h>
+#include <zl-util/ZLAbstractFinalizable_Internal.h>
 
 // this is ugly, but lordy do we hate boilerplate. even more than we hate macros.
 // alas, templates introduce issues of their own, as does storing strongly typed

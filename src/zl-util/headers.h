@@ -14,6 +14,9 @@
 #include <zl-util/STLSort.h>
 #include <zl-util/STLString.h>
 
+#include <zl-util/ZLAbstractFinalizable.h>
+#include <zl-util/ZLAbstractFinalizable_HasInternal.h>
+#include <zl-util/ZLAbstractFinalizable_Internal.h>
 #include <zl-util/ZLAccessors.h>
 #include <zl-util/ZLAdapterInfo.h>
 #include <zl-util/ZLAffine2D.h>

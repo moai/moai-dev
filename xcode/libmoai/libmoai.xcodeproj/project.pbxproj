@@ -3781,6 +3781,16 @@
 		CDBF991E23434B39003F430D /* MOAIUtilityBufferVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBF991C23434B39003F430D /* MOAIUtilityBufferVK.h */; };
 		CDBF9925234490DF003F430D /* MOAIGfxResource.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBF9923234490DF003F430D /* MOAIGfxResource.cpp */; };
 		CDBF9926234490DF003F430D /* MOAIGfxResource.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBF9924234490DF003F430D /* MOAIGfxResource.h */; };
+		CDBF997023460281003F430D /* ZLAbstractFinalizable_HasInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBF996B23460281003F430D /* ZLAbstractFinalizable_HasInternal.h */; };
+		CDBF997123460281003F430D /* ZLAbstractFinalizable_HasInternal.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBF996B23460281003F430D /* ZLAbstractFinalizable_HasInternal.h */; };
+		CDBF997223460281003F430D /* ZLAbstractFinalizable_Internal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBF996C23460281003F430D /* ZLAbstractFinalizable_Internal.cpp */; };
+		CDBF997323460281003F430D /* ZLAbstractFinalizable_Internal.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBF996C23460281003F430D /* ZLAbstractFinalizable_Internal.cpp */; };
+		CDBF997423460281003F430D /* ZLAbstractFinalizable_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBF996D23460281003F430D /* ZLAbstractFinalizable_Internal.h */; };
+		CDBF997523460281003F430D /* ZLAbstractFinalizable_Internal.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBF996D23460281003F430D /* ZLAbstractFinalizable_Internal.h */; };
+		CDBF997623460281003F430D /* ZLAbstractFinalizable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBF996E23460281003F430D /* ZLAbstractFinalizable.cpp */; };
+		CDBF997723460281003F430D /* ZLAbstractFinalizable.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDBF996E23460281003F430D /* ZLAbstractFinalizable.cpp */; };
+		CDBF997823460281003F430D /* ZLAbstractFinalizable.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBF996F23460281003F430D /* ZLAbstractFinalizable.h */; };
+		CDBF997923460281003F430D /* ZLAbstractFinalizable.h in Headers */ = {isa = PBXBuildFile; fileRef = CDBF996F23460281003F430D /* ZLAbstractFinalizable.h */; };
 		CDC02C811E380CDC007A02FB /* MOAIDeckRemapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6F4C173AD0CA00DFE837 /* MOAIDeckRemapper.cpp */; };
 		CDC02C821E380CDC007A02FB /* MOAIDeckRemapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6F4D173AD0CA00DFE837 /* MOAIDeckRemapper.h */; };
 		CDC02C831E380CDE007A02FB /* MOAIDeckRemapper.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6F4C173AD0CA00DFE837 /* MOAIDeckRemapper.cpp */; };
@@ -7412,6 +7422,11 @@
 		CDBF991C23434B39003F430D /* MOAIUtilityBufferVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIUtilityBufferVK.h; path = "moai-gfx-vk/MOAIUtilityBufferVK.h"; sourceTree = "<group>"; };
 		CDBF9923234490DF003F430D /* MOAIGfxResource.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIGfxResource.cpp; path = "moai-gfx/MOAIGfxResource.cpp"; sourceTree = "<group>"; };
 		CDBF9924234490DF003F430D /* MOAIGfxResource.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxResource.h; path = "moai-gfx/MOAIGfxResource.h"; sourceTree = "<group>"; };
+		CDBF996B23460281003F430D /* ZLAbstractFinalizable_HasInternal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLAbstractFinalizable_HasInternal.h; sourceTree = "<group>"; };
+		CDBF996C23460281003F430D /* ZLAbstractFinalizable_Internal.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLAbstractFinalizable_Internal.cpp; sourceTree = "<group>"; };
+		CDBF996D23460281003F430D /* ZLAbstractFinalizable_Internal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLAbstractFinalizable_Internal.h; sourceTree = "<group>"; };
+		CDBF996E23460281003F430D /* ZLAbstractFinalizable.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLAbstractFinalizable.cpp; sourceTree = "<group>"; };
+		CDBF996F23460281003F430D /* ZLAbstractFinalizable.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLAbstractFinalizable.h; sourceTree = "<group>"; };
 		CDC02C891E381DD2007A02FB /* MOAIPartitionHolder.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPartitionHolder.cpp; sourceTree = "<group>"; };
 		CDC02C8A1E381DD2007A02FB /* MOAIPartitionHolder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPartitionHolder.h; sourceTree = "<group>"; };
 		CDC02C8F1E38444D007A02FB /* MOAIAbstractViewLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIAbstractViewLayer.cpp; sourceTree = "<group>"; };
@@ -8916,6 +8931,7 @@
 			isa = PBXGroup;
 			children = (
 				CD17563F1A199914009C430A /* containers */,
+				CDBF996A23460259003F430D /* finalizable */,
 				CDC2A1AF222C57CB002E6CA4 /* image */,
 				CD17563D1A199905009C430A /* math */,
 				CD1756411A1999E8009C430A /* os */,
@@ -13138,6 +13154,18 @@
 			name = uniform;
 			sourceTree = "<group>";
 		};
+		CDBF996A23460259003F430D /* finalizable */ = {
+			isa = PBXGroup;
+			children = (
+				CDBF996E23460281003F430D /* ZLAbstractFinalizable.cpp */,
+				CDBF996F23460281003F430D /* ZLAbstractFinalizable.h */,
+				CDBF996B23460281003F430D /* ZLAbstractFinalizable_HasInternal.h */,
+				CDBF996C23460281003F430D /* ZLAbstractFinalizable_Internal.cpp */,
+				CDBF996D23460281003F430D /* ZLAbstractFinalizable_Internal.h */,
+			);
+			name = finalizable;
+			sourceTree = "<group>";
+		};
 		CDC097E21AE9C79E002E325F /* moai-ios-movie */ = {
 			isa = PBXGroup;
 			children = (
@@ -14482,6 +14510,7 @@
 				89BE6996173974FD00DFE837 /* ZLColor.h in Headers */,
 				89BE699A173974FD00DFE837 /* ZLCurve.h in Headers */,
 				CD4A9570229DF8F300F9E400 /* ZLViewProj.h in Headers */,
+				CDBF997123460281003F430D /* ZLAbstractFinalizable_HasInternal.h in Headers */,
 				89BE699E173974FD00DFE837 /* ZLDeflateReader.h in Headers */,
 				89BE69A2173974FD00DFE837 /* ZLDeflateWriter.h in Headers */,
 				89BE69A4173974FD00DFE837 /* ZLDelegate.h in Headers */,
@@ -14511,6 +14540,7 @@
 				CDC2A1AA222C577D002E6CA4 /* ZLImage.h in Headers */,
 				89BE6A06173974FD00DFE837 /* ZLIntersect.h in Headers */,
 				89BE6A08173974FD00DFE837 /* ZLLeanArray.h in Headers */,
+				CDBF997923460281003F430D /* ZLAbstractFinalizable.h in Headers */,
 				89BE6A0A173974FD00DFE837 /* ZLLeanList.h in Headers */,
 				89BE6A0C173974FD00DFE837 /* ZLLeanPool.h in Headers */,
 				89BE6A0E173974FD00DFE837 /* ZLLeanStack.h in Headers */,
@@ -14533,6 +14563,7 @@
 				89BE6A36173974FD00DFE837 /* ZLPolygon2D.h in Headers */,
 				89BE6A38173974FD00DFE837 /* ZLPolyScanner.h in Headers */,
 				CD582DC3227415AF009CD0B6 /* ZLImageFormat.h in Headers */,
+				CDBF997523460281003F430D /* ZLAbstractFinalizable_Internal.h in Headers */,
 				89BE6A3C173974FD00DFE837 /* ZLPrism.h in Headers */,
 				CD1D85D11E1CCCE20089FFAD /* ZLSphere.h in Headers */,
 				89BE6A40173974FD00DFE837 /* ZLQuad.h in Headers */,
@@ -15178,8 +15209,10 @@
 				CD4A963F229E787500F9E400 /* MOAIVertexBuffer.h in Headers */,
 				CD4A9481229DE21A00F9E400 /* MOAIMaterial.h in Headers */,
 				CDBF9926234490DF003F430D /* MOAIGfxResource.h in Headers */,
+				CDBF997823460281003F430D /* ZLAbstractFinalizable.h in Headers */,
 				CD4A9482229DE21A00F9E400 /* pch.h in Headers */,
 				CD17119E22F0364F00381882 /* MOAIAbstractMaterialBatchInterface.h in Headers */,
+				CDBF997423460281003F430D /* ZLAbstractFinalizable_Internal.h in Headers */,
 				CD4A9488229DE21A00F9E400 /* headers.h in Headers */,
 				CD4A9609229E091F00F9E400 /* MOAIUniformHandle.h in Headers */,
 				CD4A963D229E787500F9E400 /* MOAIVertexArray.h in Headers */,
@@ -15187,6 +15220,7 @@
 				CD4A95FB229E091F00F9E400 /* MOAIShader.h in Headers */,
 				CD4A948A229DE21A00F9E400 /* MOAIGfxMgr.h in Headers */,
 				CD4A966322A1232400F9E400 /* MOAIGfxBuffer.h in Headers */,
+				CDBF997023460281003F430D /* ZLAbstractFinalizable_HasInternal.h in Headers */,
 				CD1712BB22F59A4600381882 /* MOAIAbstractMaterial.h in Headers */,
 				CD1712B722F57E6000381882 /* MOAIUniformComposerInterface.h in Headers */,
 				CD4A9601229E091F00F9E400 /* MOAIGfxMgr_VertexCache.h in Headers */,
@@ -18058,6 +18092,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CDBF997323460281003F430D /* ZLAbstractFinalizable_Internal.cpp in Sources */,
 				89BE695C173974FD00DFE837 /* pch.cpp in Sources */,
 				CDCEFAF021CCDE5D00A16B7F /* ZLBoxCorners.cpp in Sources */,
 				89BE696A173974FD00DFE837 /* STLString.cpp in Sources */,
@@ -18117,6 +18152,7 @@
 				CD6891D01DC93D690086B16B /* ZLContext.cpp in Sources */,
 				89BE6A3A173974FD00DFE837 /* ZLPrism.cpp in Sources */,
 				89BE6A3E173974FD00DFE837 /* ZLQuad.cpp in Sources */,
+				CDBF997723460281003F430D /* ZLAbstractFinalizable.cpp in Sources */,
 				CDDAF4681C2FC5AD00F10946 /* ZLSample.cpp in Sources */,
 				89BE6A46173974FD00DFE837 /* ZLQuaternion.cpp in Sources */,
 				89BE6A50173974FD00DFE837 /* ZLRhombus.cpp in Sources */,
@@ -18597,6 +18633,7 @@
 			files = (
 				CD1712B622F57E6000381882 /* MOAIUniformComposerInterface.cpp in Sources */,
 				CD4A94A0229DE21A00F9E400 /* MOAILightFormat.cpp in Sources */,
+				CDBF997223460281003F430D /* ZLAbstractFinalizable_Internal.cpp in Sources */,
 				CD4A9602229E091F00F9E400 /* MOAIBlendMode.cpp in Sources */,
 				CD1711C522F2441A00381882 /* MOAIVertexFormatMgr.cpp in Sources */,
 				CD1711A122F04C3200381882 /* MOAIAbstractMaterialInterface.cpp in Sources */,
@@ -18606,6 +18643,7 @@
 				CD4A9600229E091F00F9E400 /* MOAIGfxMgr_VertexCache.cpp in Sources */,
 				CD17129D22F56C1F00381882 /* MOAIAbstractUniformBuffer.cpp in Sources */,
 				CD1712BA22F59A4600381882 /* MOAIAbstractMaterial.cpp in Sources */,
+				CDBF997623460281003F430D /* ZLAbstractFinalizable.cpp in Sources */,
 				CD4A94A2229DE21A00F9E400 /* MOAIMaterialBatch.cpp in Sources */,
 				CDBF9925234490DF003F430D /* MOAIGfxResource.cpp in Sources */,
 				CD4A94A4229DE21A00F9E400 /* MOAIMaterial.cpp in Sources */,
