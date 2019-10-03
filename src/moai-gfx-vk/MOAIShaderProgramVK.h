@@ -5,8 +5,8 @@
 #define	MOAISHADERPROGRAMVK_H
 
 #include <moai-gfx-vk/MOAIGfxResourceVK.h>
-#include <moai-gfx-vk/MOAILogicalDeviceClientVK.h>
 
+class MOAILogicalDeviceVK;
 class MOAIShaderVK;
 class MOAITextureVK;
 
@@ -21,7 +21,8 @@ class MOAITextureVK;
 			uniform values.
 */
 class MOAIShaderProgramVK :
-	public MOAILogicalDeviceClientVK,
+	public ZLAbstractFinalizable,
+	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK >,
 	public virtual MOAIGfxResourceVK {
 public:
 
@@ -44,11 +45,12 @@ protected:
 	VkShaderStageFlagBits		GetShaderStageBit			( ModuleID moduleID );
 	
 	//----------------------------------------------------------------//
-	void				MOAIAbstractLifecycleClientVK_Finalize			();
 	void				MOAILuaObject_RegisterLuaClass					( MOAIComposer& composer, MOAILuaState& state );
 	void				MOAILuaObject_RegisterLuaFuncs					( MOAIComposer& composer, MOAILuaState& state );
 	
 public:
+
+	IMPLEMENT_FINALIZABLE ( MOAIShaderProgramVK )
 
 	DECL_LUA_FACTORY ( MOAIShaderProgramVK )
 

@@ -16,7 +16,7 @@
 //----------------------------------------------------------------//
 void MOAIGfxBufferVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, ZLSize size, VkBufferUsageFlags usage ) {
 
-	logicalDevice.AddClient ( logicalDevice, *this );
+	this->SetProvider < MOAILogicalDeviceVK >( logicalDevice );
 	this->Alloc ( size );
 	this->mUsage = usage;
 }
@@ -33,19 +33,11 @@ MOAIGfxBufferVK::MOAIGfxBufferVK () :
 
 //----------------------------------------------------------------//
 MOAIGfxBufferVK::~MOAIGfxBufferVK () {
-
-	this->Finalize ();
 }
 
 //================================================================//
 // virtual
 //================================================================//
-
-//----------------------------------------------------------------//
-void MOAIGfxBufferVK::MOAIAbstractLifecycleClientVK_Finalize () {
-
-	this->GetLogicalDevice ().RemoveClient ( *this );
-}
 
 //----------------------------------------------------------------//
 MOAIGfxBufferSnapshotVK* MOAIGfxBufferVK::MOAIAbstractSnapshotSubjectVK_MakeSnapshot () {

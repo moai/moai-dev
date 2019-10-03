@@ -108,6 +108,4 @@ MOAIGfxInstanceVK::MOAIGfxInstanceVK () :
 
 //----------------------------------------------------------------//
 MOAIGfxInstanceVK::~MOAIGfxInstanceVK () {
-
-	this->FinalizeClients ();
 }

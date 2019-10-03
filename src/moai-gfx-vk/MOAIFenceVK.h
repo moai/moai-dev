@@ -4,19 +4,17 @@
 #ifndef MOAIFENCEVK_H
 #define MOAIFENCEVK_H
 
-#include <moai-gfx-vk/MOAILogicalDeviceClientVK.h>
+class MOAILogicalDeviceVK;
 
 //================================================================//
 // MOAIFenceVK
 //================================================================//
 class MOAIFenceVK :
-	public MOAILogicalDeviceClientVK {
-private:
-	
-	//----------------------------------------------------------------//
-	void			MOAIAbstractLifecycleClientVK_Finalize		();
-	
+	public ZLAbstractFinalizable,
+	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK > {
 public:
+
+	IMPLEMENT_FINALIZABLE ( MOAIFenceVK )
 
 	VkFence			mFence;
 

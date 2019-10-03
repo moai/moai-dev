@@ -108,11 +108,11 @@ TEST_F ( GTESTMoaiContext, linked_finalizable ) {
 		Client0 client0;
 		Client1 client1;
 		
-		client0.ZLAbstractFinalizable_HasDependencyOn < Provider0 >::SetProvider ( provider0 );
-		client0.ZLAbstractFinalizable_HasDependencyOn < Provider1 >::SetProvider ( provider1 );
+		client0.SetProvider < Provider0 >( provider0 );
+		client0.SetProvider < Provider1 >( provider1 );
 		
-		client1.ZLAbstractFinalizable_HasDependencyOn < Provider1 >::SetProvider ( provider1 );
-		client1.ZLAbstractFinalizable_HasDependencyOn < Provider2 >::SetProvider ( provider2 );
+		client1.SetProvider < Provider1 >( provider1 );
+		client1.SetProvider < Provider2 >( provider2 );
 		
 		ASSERT_TRUE ( &client0.GetProvider < Provider0 >() == &provider0 );
 		ASSERT_TRUE ( &client0.GetProvider < Provider1 >() == &provider1 );

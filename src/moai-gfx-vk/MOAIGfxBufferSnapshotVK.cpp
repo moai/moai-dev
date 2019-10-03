@@ -15,8 +15,7 @@
 //----------------------------------------------------------------//
 void MOAIGfxBufferSnapshotVK::Initialize ( MOAIGfxBufferVK& buffer ) {
 
-	MOAILogicalDeviceVK& logicalDevice = buffer.GetLogicalDevice ();
-	logicalDevice.AddClient ( logicalDevice, *this );
+	MOAILogicalDeviceVK& logicalDevice = buffer.GetProvider < MOAILogicalDeviceVK >();
 
 	// TODO: support staging buffers
 

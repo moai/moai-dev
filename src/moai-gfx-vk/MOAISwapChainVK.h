@@ -13,7 +13,6 @@
 #include <moai-gfx-vk/MOAIFenceVK.h>
 #include <moai-gfx-vk/MOAIGfxInstanceVK.h>
 #include <moai-gfx-vk/MOAIGfxUtilVK.h>
-#include <moai-gfx-vk/MOAILogicalDeviceClientVK.h>
 #include <moai-gfx-vk/MOAILogicalDeviceVK.h>
 #include <moai-gfx-vk/MOAISurfaceVK.h>
 #include <moai-gfx-vk/MOAIPhysicalDeviceVK.h>
@@ -22,7 +21,8 @@
 // MOAISwapChainVK
 //================================================================//
 class MOAISwapChainVK :
-	public MOAILogicalDeviceClientVK {
+	public ZLAbstractFinalizable,
+	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK > {
 private:
 
 	VkSwapchainKHR					mSwapChain;
@@ -45,14 +45,13 @@ private:
 
 public:
 
+	IMPLEMENT_FINALIZABLE ( MOAISwapChainVK )
+
 	GET_CONST ( VkFormat, Format, this->mSurfaceFormat.format )
 	GET_CONST ( VkColorSpaceKHR, ColorSpace, this->mSurfaceFormat.colorSpace )
 	GET_CONST ( u32, Width, this->mExtent.width )
 	GET_CONST ( u32, Height, this->mExtent.height )
 	GET_CONST ( ZLIndex, ImageIndex, this->mImageIndex )
-
-	//----------------------------------------------------------------//
-	void			MOAIAbstractLifecycleClientVK_Finalize			();
 
 	//----------------------------------------------------------------//
 	VkResult		AcquireNextImage			();

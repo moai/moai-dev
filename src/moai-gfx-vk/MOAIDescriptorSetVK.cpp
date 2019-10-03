@@ -16,7 +16,7 @@
 //----------------------------------------------------------------//
 VkWriteDescriptorSet* MOAIDescriptorSetVK::GetWriteDescriptorSet ( ZLIndex binding, ZLIndex arrayElement ) {
 
-	MOAIDescriptorSetLayoutVK& layout = this->GetLayout ();
+	MOAIDescriptorSetLayoutVK& layout = this->GetProvider < MOAIDescriptorSetLayoutVK >();
 
 	if ( binding >= layout.GetSize ()) return NULL;
 
@@ -34,7 +34,7 @@ VkWriteDescriptorSet* MOAIDescriptorSetVK::GetWriteDescriptorSet ( ZLIndex bindi
 //----------------------------------------------------------------//
 void MOAIDescriptorSetVK::Initialize ( MOAIDescriptorSetLayoutVK& descriptorSetLayout ) {
 
-	descriptorSetLayout.AddClient ( descriptorSetLayout, *this );
+	this->SetProvider < MOAIDescriptorSetLayoutVK >( descriptorSetLayout );
 	this->MOAIDescriptorSetSignatureVK::Initialize ( descriptorSetLayout );
 }
 
@@ -44,8 +44,6 @@ MOAIDescriptorSetVK::MOAIDescriptorSetVK () {
 
 //----------------------------------------------------------------//
 MOAIDescriptorSetVK::~MOAIDescriptorSetVK () {
-
-	this->Finalize ();
 }
 
 //----------------------------------------------------------------//
@@ -77,13 +75,7 @@ void MOAIDescriptorSetVK::SetDescriptor ( ZLIndex binding, ZLIndex arrayElement,
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetVK::MOAIAbstractLifecycleClientVK_Finalize () {
-
-	this->GetLayout ().RemoveClient ( *this );
-}
-
-//----------------------------------------------------------------//
 MOAIDescriptorSetSnapshotVK* MOAIDescriptorSetVK::MOAIAbstractSnapshotSubjectVK_MakeSnapshot () {
 
-	return this->GetLayout ().ProcureDescriptorSetSnapshot ( *this );
+	return this->GetProvider < MOAIDescriptorSetLayoutVK >().ProcureDescriptorSetSnapshot ( *this );
 }

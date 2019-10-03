@@ -9,16 +9,22 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+void ZLAbstractFinalizable::FinalizeDependencies () {
+
+	if ( this->mInternal ) {
+		delete this->mInternal;
+		this->mInternal = NULL;
+	}
+}
+
+//----------------------------------------------------------------//
 ZLAbstractFinalizable::ZLAbstractFinalizable () :
 	mInternal ( NULL ) {
 }
 
 //----------------------------------------------------------------//
 ZLAbstractFinalizable::~ZLAbstractFinalizable () {
-	if ( this->mInternal ) {
-		delete this->mInternal;
-		this->mInternal = NULL;
-	}
+	this->FinalizeDependencies ();
 }
 
 //----------------------------------------------------------------//

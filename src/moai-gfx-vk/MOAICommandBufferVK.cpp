@@ -48,7 +48,10 @@ MOAICommandBufferVK::MOAICommandBufferVK () :
 //----------------------------------------------------------------//
 MOAICommandBufferVK::~MOAICommandBufferVK () {
 
-	this->Finalize ();
+	if ( this->HasProvider < MOAIQueueVK >()) {
+		MOAIQueueVK& queue = this->GetProvider < MOAIQueueVK >();
+		vkFreeCommandBuffers ( queue.GetProvider < MOAILogicalDeviceVK >(), queue.mPool, 1, &this->mCommandBuffer );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -64,7 +67,7 @@ void MOAICommandBufferVK::Submit () {
 
 	VkSubmitInfo submitInfo = MOAIGfxStructVK::submitInfo ( *this );
 
-	MOAIQueueVK& queue = this->GetQueue ();
+	MOAIQueueVK& queue = this->GetProvider < MOAIQueueVK >();
 	VK_CHECK_RESULT ( queue.Submit ( submitInfo ));
 }
 
@@ -80,7 +83,7 @@ void MOAICommandBufferVK::Submit ( VkSemaphore waitSemaphore, VkSemaphore signal
 		1,					// One signal semaphore
 		&waitStageMask		// Pointer to the list of pipeline stages that the semaphore waits will occur at
 	);
-	MOAIQueueVK& queue = this->GetQueue ();
+	MOAIQueueVK& queue = this->GetProvider < MOAIQueueVK >();
 	VK_CHECK_RESULT ( queue.Submit ( submitInfo ));
 }
 
@@ -97,9 +100,3 @@ void MOAICommandBufferVK::UnpinSnapshots () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAICommandBufferVK::MOAIAbstractLifecycleClientVK_Finalize () {
-
-	MOAIQueueVK& queue = this->GetQueue ();
-	vkFreeCommandBuffers ( queue.GetLogicalDevice (), queue.mPool, 1, &this->mCommandBuffer );
-	queue.RemoveClient ( *this );
-}

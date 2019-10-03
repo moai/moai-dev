@@ -93,7 +93,7 @@ void MOAILogicalDeviceVK::GetSwapchainImagesKHR ( VkSwapchainKHR swapchain, ZLSi
 void MOAILogicalDeviceVK::Initialize ( MOAIPhysicalDeviceVK& physicalDevice, VkQueueFlags requestedQueueTypes, bool requestPresent ) {
 
 	assert ( physicalDevice );
-	physicalDevice.AddClient ( physicalDevice, *this );
+	this->SetProvider < MOAIPhysicalDeviceVK >( physicalDevice );
 
     // Desired queues need to be requested upon logical device creation
     // Due to differing queue family configurations of Vulkan implementations this can be a bit tricky, especially if the application
@@ -162,7 +162,7 @@ void MOAILogicalDeviceVK::InitQueue ( MOAIQueueVK& queue, u32 index ) {
 		VK_CHECK_RESULT ( vkCreateCommandPool ( this->mDevice, &commandPoolCreateInfo, NULL, &this->mCommandPools [ index ]));
 	}
 	queue.mPool = this->mCommandPools [ index ];
-	this->AddClient ( *this, queue );
+	queue.SetProvider < MOAILogicalDeviceVK >( *this );
 }
 
 //----------------------------------------------------------------//
@@ -173,7 +173,9 @@ MOAILogicalDeviceVK::MOAILogicalDeviceVK () :
 //----------------------------------------------------------------//
 MOAILogicalDeviceVK::~MOAILogicalDeviceVK () {
 
-	this->Finalize ();
+	this->FinalizeDependencies ();
+
+	vkDestroyDevice ( this->mDevice, NULL );
 }
 
 //================================================================//
@@ -181,9 +183,4 @@ MOAILogicalDeviceVK::~MOAILogicalDeviceVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAILogicalDeviceVK::MOAIAbstractLifecycleClientVK_Finalize () {
 
-	this->FinalizeClients ();
-	vkDestroyDevice ( this->mDevice, NULL );
-	this->GetPhysicalDevice ().RemoveClient ( *this );
-}

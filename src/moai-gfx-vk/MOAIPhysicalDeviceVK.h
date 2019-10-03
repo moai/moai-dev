@@ -5,7 +5,6 @@
 #define MOAIPHYSICALDEVICEVK_H
 
 #include <vector>
-#include <moai-gfx-vk/MOAILifecycleProviderVK.h>
 #include <moai-gfx-vk/MOAIGfxInstanceVK.h>
 #include <moai-gfx-vk/MOAISurfaceVK.h>
 
@@ -43,8 +42,8 @@ public:
 // MOAIPhysicalDeviceVK
 //================================================================//
 class MOAIPhysicalDeviceVK :
-	public MOAIGfxInstanceClientVK,
-	public MOAILifecycleProviderVK < MOAIPhysicalDeviceVK > {
+	public ZLAbstractFinalizable,
+	public ZLAbstractFinalizable_HasDependencyOn < MOAIGfxInstanceVK > {
 private:
 
 	typedef const VkCompositeAlphaFlagBitsKHR* AlphaRank;
@@ -74,10 +73,9 @@ private:
 	size_t				ScoreDeviceType					() const; // TODO: make user configurable
 	static size_t		ScorePresentMode				( VkPresentModeKHR presentMode ); // TODO: make user configurable
 
-	//----------------------------------------------------------------//
-	void				MOAIAbstractLifecycleClientVK_Finalize			();
-
 public:
+
+	IMPLEMENT_FINALIZABLE ( MOAIPhysicalDeviceVK )
 
 	VkPhysicalDevice							mDevice;
 	VkPhysicalDeviceProperties					mProperties;
@@ -134,22 +132,6 @@ public:
 	u32								SuggestSwapChainImageCount		( VkPresentModeKHR presentMode );
 	bool							SupportsExtension				( cc8* extensionName ) const;
 	bool							SupportsRenderAndPresent		() const;
-};
-
-//================================================================//
-// MOAIPhysicalDeviceClientVK
-//================================================================//
-class MOAIPhysicalDeviceClientVK :
-	public MOAIAbstractLifecycleClientVK < MOAIPhysicalDeviceVK > {
-public:
-
-	//----------------------------------------------------------------//
-	MOAIPhysicalDeviceVK& GetPhysicalDevice () {
-	
-		MOAIPhysicalDeviceVK* physicalDevice = this->GetLifecycleProvider ();
-		assert ( physicalDevice );
-		return *physicalDevice;
-	}
 };
 
 #endif

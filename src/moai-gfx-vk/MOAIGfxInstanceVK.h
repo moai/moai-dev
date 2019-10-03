@@ -6,13 +6,12 @@
 
 #include <vector>
 #include <moai-gfx-vk/MOAIGfxUtilVK.h>
-#include <moai-gfx-vk/MOAILifecycleProviderVK.h>
 
 //================================================================//
 // MOAIGfxInstanceVK
 //================================================================//
 class MOAIGfxInstanceVK :
-	public MOAILifecycleProviderVK < MOAIGfxInstanceVK > {
+	public ZLAbstractFinalizable {
 private:
 
 	PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR	mGetPhysicalDeviceSurfaceCapabilitiesKHR;
@@ -21,6 +20,8 @@ private:
 	PFN_vkGetPhysicalDeviceSurfaceSupportKHR		mGetPhysicalDeviceSurfaceSupportKHR;
 	
 public:
+
+	IMPLEMENT_FINALIZABLE ( MOAIGfxInstanceVK )
 
 	VkInstance		mInstance;
 	bool			mEnableValidation;
@@ -44,22 +45,5 @@ public:
 				MOAIGfxInstanceVK							();
 				~MOAIGfxInstanceVK							();
 };
-
-//================================================================//
-// MOAIGfxInstanceClientVK
-//================================================================//
-class MOAIGfxInstanceClientVK :
-	public MOAIAbstractLifecycleClientVK < MOAIGfxInstanceVK > {
-public:
-
-	//----------------------------------------------------------------//
-	MOAIGfxInstanceVK& GetVulkanInstance () {
-	
-		MOAIGfxInstanceVK* gfxInstance = this->GetLifecycleProvider ();
-		assert ( gfxInstance );
-		return *gfxInstance;
-	}
-};
-
 
 #endif

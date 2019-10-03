@@ -14,7 +14,7 @@
 //----------------------------------------------------------------//
 void MOAIUtilityBufferVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags memPropFlags ) {
 
-	logicalDevice.AddClient ( logicalDevice, *this );
+	this->SetProvider < MOAILogicalDeviceVK >( logicalDevice );
 
 	VkBufferCreateInfo vertexBufferInfo = MOAIGfxStructVK::bufferCreateInfo ( size, usage );
 	VK_CHECK_RESULT ( vkCreateBuffer ( logicalDevice, &vertexBufferInfo, NULL, &this->mBuffer ));
@@ -30,7 +30,7 @@ void MOAIUtilityBufferVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, VkDev
 		memReqs.size,
 		MOAIGfxUtilVK::GetMemoryTypeIndex (
 			memReqs.memoryTypeBits,
-			logicalDevice.GetPhysicalDevice ().mMemoryProperties,
+			logicalDevice.GetProvider < MOAIPhysicalDeviceVK >().mMemoryProperties,
 			HOST_BUFFER_PROPS
 		)
 	);
@@ -48,7 +48,7 @@ void MOAIUtilityBufferVK::MapAndCopy ( const void* data, size_t size ) {
 
 	assert ( this->mMemPropFlags & HOST_BUFFER_PROPS );
 
-	MOAILogicalDeviceVK& logicalDevice = this->GetLogicalDevice ();
+	MOAILogicalDeviceVK& logicalDevice = this->GetProvider < MOAILogicalDeviceVK >();
 
 	void* mappedAddr;
 	VK_CHECK_RESULT ( vkMapMemory ( logicalDevice, this->mMemory, 0, this->mAllocationSize, 0, &mappedAddr ));
@@ -68,7 +68,12 @@ MOAIUtilityBufferVK::MOAIUtilityBufferVK () :
 //----------------------------------------------------------------//
 MOAIUtilityBufferVK::~MOAIUtilityBufferVK () {
 
-	this->Finalize ();
+	if ( this->HasProvider < MOAILogicalDeviceVK >()) {
+		MOAILogicalDeviceVK& logicalDevice = this->GetProvider < MOAILogicalDeviceVK >();
+
+		vkDestroyBuffer ( logicalDevice, this->mBuffer, NULL );
+		vkFreeMemory ( logicalDevice, this->mMemory, NULL );
+	}
 }
 
 //================================================================//
@@ -76,12 +81,3 @@ MOAIUtilityBufferVK::~MOAIUtilityBufferVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIUtilityBufferVK::MOAIAbstractLifecycleClientVK_Finalize () {
-
-	MOAILogicalDeviceVK& logicalDevice = this->GetLogicalDevice ();
-
-	vkDestroyBuffer ( logicalDevice, this->mBuffer, NULL );
-	vkFreeMemory ( logicalDevice, this->mMemory, NULL );
-	
-	logicalDevice.RemoveClient ( *this );
-}

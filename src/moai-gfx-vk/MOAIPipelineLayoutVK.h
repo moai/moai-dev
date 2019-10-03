@@ -5,23 +5,22 @@
 #define MOAIPIPELINELAYOUTVK_H
 
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
-#include <moai-gfx-vk/MOAILogicalDeviceClientVK.h>
 
 //================================================================//
 // MOAIPipelineLayoutVK
 //================================================================//
 class MOAIPipelineLayoutVK :
 	public ZLRefCountedObject,
-	public MOAILogicalDeviceClientVK {
+	public ZLAbstractFinalizable,
+	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK > {
 protected:
 
 	VkPipelineLayout							mPipelineLayout;
 	ZLLeanArray < MOAIDescriptorSetLayoutVK > 	mDescriptorSetLayouts;
 
-	//----------------------------------------------------------------//
-	void			MOAIAbstractLifecycleClientVK_Finalize		();
-
 public:
+
+	IMPLEMENT_FINALIZABLE ( MOAIPipelineLayoutVK )
 
 	//----------------------------------------------------------------//
 	operator bool () const {

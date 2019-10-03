@@ -15,7 +15,8 @@ class MOAIDescriptorSetSnapshotVK;
 //================================================================//
 class MOAIDescriptorSetVK :
 	public ZLRefCountedObject,
-	public MOAIDescriptorSetLayoutClientVK,
+	public ZLAbstractFinalizable,
+	public ZLAbstractFinalizable_HasDependencyOn < MOAIDescriptorSetLayoutVK >,
 	public MOAIAbstractSnapshotSubjectVK < MOAIDescriptorSetSnapshotVK >,
 	public MOAIDescriptorSetSignatureVK {
 private:
@@ -26,10 +27,11 @@ private:
 	VkWriteDescriptorSet*		GetWriteDescriptorSet 		( ZLIndex binding, ZLIndex arrayElement );
 
 	//----------------------------------------------------------------//
-	void											MOAIAbstractLifecycleClientVK_Finalize				();
 	MOAIDescriptorSetSnapshotVK*					MOAIAbstractSnapshotSubjectVK_MakeSnapshot			();
 	
 public:
+	
+	IMPLEMENT_FINALIZABLE ( MOAIDescriptorSetVK )
 	
 	//----------------------------------------------------------------//
 	void			Initialize						( MOAIDescriptorSetLayoutVK& descriptorSetLayout );

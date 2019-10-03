@@ -252,7 +252,7 @@ void MOAIPhysicalDeviceVK::Initialize ( MOAIGfxInstanceVK& instance, MOAISurface
 	}
 	assert ( this->mDevice );
 	
-	instance.AddClient ( instance, *this );
+	this->SetProvider < MOAIGfxInstanceVK >( instance );
 }
 
 //----------------------------------------------------------------//
@@ -371,7 +371,13 @@ MOAIPhysicalDeviceVK::MOAIPhysicalDeviceVK () :
 //----------------------------------------------------------------//
 MOAIPhysicalDeviceVK::~MOAIPhysicalDeviceVK () {
 
-	this->Finalize ();
+	//	if ( this->mSwapChain != VK_NULL_HANDLE ) {
+	//		for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mImages.Size (); ++i ) {
+	//			vkDestroyImageView ( logicalDevice, this->mBuffers [ i ].view, NULL );
+	//		}
+	//		logicalDevice.DestroySwapchainKHR ( this->mSwapChain, NULL );
+	//		this->mSwapChain = VK_NULL_HANDLE;
+	//	}
 }
 
 //----------------------------------------------------------------//
@@ -478,18 +484,3 @@ bool MOAIPhysicalDeviceVK::SupportsRenderAndPresent () const {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIPhysicalDeviceVK::MOAIAbstractLifecycleClientVK_Finalize () {
-
-	this->FinalizeClients ();
-
-	MOAIGfxInstanceVK& instance = this->GetVulkanInstance ();
-
-//	if ( this->mSwapChain != VK_NULL_HANDLE ) {
-//		for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mImages.Size (); ++i ) {
-//			vkDestroyImageView ( logicalDevice, this->mBuffers [ i ].view, NULL );
-//		}
-//		logicalDevice.DestroySwapchainKHR ( this->mSwapChain, NULL );
-//		this->mSwapChain = VK_NULL_HANDLE;
-//	}
-	instance.RemoveClient ( *this );
-}

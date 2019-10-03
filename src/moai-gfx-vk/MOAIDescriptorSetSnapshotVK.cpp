@@ -20,7 +20,7 @@ MOAIDescriptorSetSnapshotVK::MOAIDescriptorSetSnapshotVK () :
 //----------------------------------------------------------------//
 MOAIDescriptorSetSnapshotVK::~MOAIDescriptorSetSnapshotVK () {
 
-	this->Finalize ();
+	this->ForceUnpin ();
 }
 
 //----------------------------------------------------------------//
@@ -33,7 +33,7 @@ void MOAIDescriptorSetSnapshotVK::Update ( const MOAIDescriptorSetSignatureVK& s
 		writeDescriptors [ i ].dstSet = this->mDescriptorSet;
 	}
 
-	MOAILogicalDeviceVK& logicalDevice = this->GetLayout ().GetLogicalDevice ();
+	MOAILogicalDeviceVK& logicalDevice = this->GetProvider < MOAIDescriptorSetLayoutVK >().GetProvider < MOAILogicalDeviceVK >();
 	vkUpdateDescriptorSets ( logicalDevice, ( u32 )totalWrites, writeDescriptors, 0, NULL );
 }
 
@@ -42,14 +42,7 @@ void MOAIDescriptorSetSnapshotVK::Update ( const MOAIDescriptorSetSignatureVK& s
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetSnapshotVK::MOAIAbstractLifecycleClientVK_Finalize () {
-
-	this->ForceUnpin ();
-	this->GetLayout ().RemoveClient ( *this );
-}
-
-//----------------------------------------------------------------//
 void MOAIDescriptorSetSnapshotVK::MOAIAbstractSnapshotVK_OnUnpin () {
 
-	this->GetLayout ().RetireDescriptorSetSnapshot ( *this );
+	this->GetProvider < MOAIDescriptorSetLayoutVK >().RetireDescriptorSetSnapshot ( *this );
 }

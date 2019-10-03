@@ -59,6 +59,7 @@
 
 // the GetProvier() template method lies dormant unless called, in which case
 // there needs to be a matching _HasDependencyOn template in the inheritance tree.
+// SetProvider(), the same.
 
 #define IMPLEMENT_FINALIZABLE(TYPE,...)						\
 															\
@@ -71,7 +72,18 @@
 															\
 	template < typename PROVIDER_TYPE >						\
 	PROVIDER_TYPE& GetProvider () {							\
-		return this->ZLAbstractFinalizable_HasDependencyOn < PROVIDER_TYPE >::GetProvider ();	\
+		return this->ZLAbstractFinalizable_HasDependencyOn < PROVIDER_TYPE >::GetProvider ();		\
+	}														\
+															\
+															\
+	template < typename PROVIDER_TYPE >						\
+	bool HasProvider () {									\
+		return this->ZLAbstractFinalizable_HasDependencyOn < PROVIDER_TYPE >::HasProvider ();		\
+	}														\
+															\
+	template < typename PROVIDER_TYPE >						\
+	void SetProvider ( PROVIDER_TYPE& provider ) {			\
+		this->ZLAbstractFinalizable_HasDependencyOn < PROVIDER_TYPE >::SetProvider ( provider );	\
 	}
 
 //================================================================//
@@ -100,6 +112,9 @@ protected:
 	enum ReconstructionFlag {
 		RECONSTRUCTING,
 	};
+	
+	//----------------------------------------------------------------//
+	void				FinalizeDependencies			();
 
 public:
 
@@ -141,8 +156,11 @@ protected:
 		assert ( this->mProvider );
 		return *this->mProvider;
 	}
-
-public:
+	
+	//----------------------------------------------------------------//
+	bool HasProvider () {
+		return ( this->mProvider != NULL );
+	}
 
 	//----------------------------------------------------------------//
 	void SetProvider ( PROVIDER_TYPE& provider ) {
@@ -166,6 +184,8 @@ public:
 		
 		this->mProvider = &provider;
 	}
+
+public:
 
 	//----------------------------------------------------------------//
 	ZLAbstractFinalizable_HasDependencyOn () :

@@ -15,7 +15,7 @@ void MOAISemaphoreVK::Initialize ( MOAILogicalDeviceVK& logicalDevice) {
 
 	VkSemaphoreCreateInfo semaphoreCreateInfo = MOAIGfxStructVK::semaphoreCreateInfo ();
 	VK_CHECK_RESULT ( vkCreateSemaphore ( logicalDevice, &semaphoreCreateInfo, NULL, &this->mSemaphore ));
-    logicalDevice.AddClient ( logicalDevice, *this );
+    this->SetProvider < MOAILogicalDeviceVK >( logicalDevice );
 }
 
 //----------------------------------------------------------------//
@@ -26,7 +26,9 @@ MOAISemaphoreVK::MOAISemaphoreVK () :
 //----------------------------------------------------------------//
 MOAISemaphoreVK::~MOAISemaphoreVK () {
 
-	this->Finalize ();
+	if ( this->HasProvider < MOAILogicalDeviceVK >()) {
+		vkDestroySemaphore ( this->GetProvider < MOAILogicalDeviceVK >(), this->mSemaphore, NULL );
+	}
 }
 
 //================================================================//
@@ -34,9 +36,3 @@ MOAISemaphoreVK::~MOAISemaphoreVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAISemaphoreVK::MOAIAbstractLifecycleClientVK_Finalize () {
-
-	MOAILogicalDeviceVK& logicalDevice = this->GetLogicalDevice ();
-	vkDestroySemaphore( logicalDevice, this->mSemaphore, NULL );
-	logicalDevice.RemoveClient ( *this );
-}

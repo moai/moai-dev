@@ -5,7 +5,6 @@
 #define	MOAIGFXBUFFERSNAPSHOTVK_H
 
 #include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
-#include <moai-gfx-vk/MOAILogicalDeviceClientVK.h>
 #include <moai-gfx-vk/MOAIUtilityBufferVK.h>
 
 class MOAIGfxBufferVK;

@@ -4,8 +4,6 @@
 #ifndef	MOAIUTILITYBUFFERVK_H
 #define	MOAIUTILITYBUFFERVK_H
 
-#include <moai-gfx-vk/MOAILogicalDeviceClientVK.h>
-
 class MOAILogicalDeviceVK;
 class MOAIVertexFormatVK;
 
@@ -15,7 +13,8 @@ class MOAIVertexFormatVK;
 // TODO: doxygen
 class MOAIUtilityBufferVK :
 	public ZLRefCountedObject,
-	public MOAILogicalDeviceClientVK {
+	public ZLAbstractFinalizable,
+	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK > {
 protected:
 
 	VkBuffer				mBuffer;
@@ -25,11 +24,10 @@ protected:
 	VkMemoryPropertyFlags	mMemPropFlags;
 	
 	VkDescriptorBufferInfo	mDescriptor;
-	
-	//----------------------------------------------------------------//
-	void				MOAIAbstractLifecycleClientVK_Finalize			();
 
 public:
+	
+	IMPLEMENT_FINALIZABLE ( MOAIUtilityBufferVK )
 	
 	static const VkMemoryPropertyFlags HOST_BUFFER_PROPS = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
 	static const VkMemoryPropertyFlags DEVICE_BUFFER_PROPS = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;

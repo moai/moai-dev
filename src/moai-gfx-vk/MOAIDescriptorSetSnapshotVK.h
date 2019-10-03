@@ -13,7 +13,8 @@ class MOAIDescriptorSetSignatureVK;
 // MOAIDescriptorSetSnapshotVK
 //================================================================//
 class MOAIDescriptorSetSnapshotVK :
-	public MOAIDescriptorSetLayoutClientVK,
+	public ZLAbstractFinalizable,
+	public ZLAbstractFinalizable_HasDependencyOn < MOAIDescriptorSetLayoutVK >,
 	public MOAIAbstractSnapshotVK {
 private:
 
@@ -25,10 +26,11 @@ private:
 	void		Update								( const MOAIDescriptorSetSignatureVK& signature );
 
 	//----------------------------------------------------------------//
-	void		MOAIAbstractLifecycleClientVK_Finalize		();
 	void		MOAIAbstractSnapshotVK_OnUnpin				();
 
 public:
+
+	IMPLEMENT_FINALIZABLE ( MOAIDescriptorSetSnapshotVK )
 
 	//----------------------------------------------------------------//
 	operator bool () const {

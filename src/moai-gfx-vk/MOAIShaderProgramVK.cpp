@@ -48,7 +48,7 @@ VkShaderStageFlagBits MOAIShaderProgramVK::GetShaderStageBit ( ModuleID moduleID
 //----------------------------------------------------------------//
 void MOAIShaderProgramVK::Initialize ( MOAILogicalDeviceVK& logicalDevice ) {
 
-	logicalDevice.AddClient ( logicalDevice, *this );
+	this->SetProvider < MOAILogicalDeviceVK >( logicalDevice );
 }
 
 //----------------------------------------------------------------//
@@ -78,7 +78,17 @@ MOAIShaderProgramVK::MOAIShaderProgramVK () {
 //----------------------------------------------------------------//
 MOAIShaderProgramVK::~MOAIShaderProgramVK () {
 
-	this->Finalize ();
+	if ( this->HasProvider < MOAILogicalDeviceVK >()) {
+		MOAILogicalDeviceVK& logicalDevice = this->GetProvider < MOAILogicalDeviceVK >();
+		
+		for ( size_t i = 0; i < TOTAL_MODULES; ++i ) {
+			ModuleID moduleID = ( ModuleID )i;
+			if ( this->mModules [ moduleID ]) {
+				vkDestroyShaderModule ( logicalDevice, this->mModules [ moduleID ], NULL );
+				this->mModules [ moduleID ] = NULL;
+			}
+		}
+	}
 }
 
 //----------------------------------------------------------------//
@@ -115,21 +125,6 @@ void MOAIShaderProgramVK::UpdatePipelineCreateInfo ( VkGraphicsPipelineCreateInf
 //================================================================//
 // virtual
 //================================================================//
-
-//----------------------------------------------------------------//
-void MOAIShaderProgramVK::MOAIAbstractLifecycleClientVK_Finalize () {
-
-	MOAILogicalDeviceVK& logicalDevice = this->GetLogicalDevice ();
-	
-	for ( size_t i = 0; i < TOTAL_MODULES; ++i ) {
-		ModuleID moduleID = ( ModuleID )i;
-		if ( this->mModules [ moduleID ]) {
-			vkDestroyShaderModule ( logicalDevice, this->mModules [ moduleID ], NULL );
-			this->mModules [ moduleID ] = NULL;
-		}
-	}
-	logicalDevice.RemoveClient ( *this );
-}
 
 //----------------------------------------------------------------//
 void MOAIShaderProgramVK::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {

@@ -4,19 +4,15 @@
 #ifndef MOAISEMAPHOREVK_H
 #define MOAISEMAPHOREVK_H
 
-#include <moai-gfx-vk/MOAILogicalDeviceClientVK.h>
-
 //================================================================//
 // MOAISemaphoreVK
 //================================================================//
 class MOAISemaphoreVK :
-	public MOAILogicalDeviceClientVK {
-private:
-	
-	//----------------------------------------------------------------//
-	void			MOAIAbstractLifecycleClientVK_Finalize		();
-	
+	public ZLAbstractFinalizable,
+	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK > {
 public:
+
+	IMPLEMENT_FINALIZABLE ( MOAISemaphoreVK )
 
 	VkSemaphore		mSemaphore;
 

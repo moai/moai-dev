@@ -4,9 +4,6 @@
 #ifndef MOAIDESCRIPTORSETLAYOUTVK_H
 #define MOAIDESCRIPTORSETLAYOUTVK_H
 
-#include <moai-gfx-vk/MOAILifecycleProviderVK.h>
-#include <moai-gfx-vk/MOAILogicalDeviceClientVK.h>
-
 class MOAILogicalDeviceVK;
 class MOAIDescriptorSetVK;
 class MOAIDescriptorSetSignatureVK;
@@ -17,8 +14,8 @@ class MOAIDescriptorSetSnapshotVK;
 //================================================================//
 class MOAIDescriptorSetLayoutVK :
 	public ZLRefCountedObject,
-	public MOAILogicalDeviceClientVK,
-	public MOAILifecycleProviderVK < MOAIDescriptorSetLayoutVK > {
+	public ZLAbstractFinalizable,
+	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK > {
 private:
 
 	friend class MOAIDescriptorSetSignatureVK;
@@ -37,10 +34,9 @@ private:
 	STLSet < MOAIDescriptorSetSnapshotVK* >			mPinnedSets;
 	STLSet < MOAIDescriptorSetSnapshotVK* >			mUnpinnedSets;
 
-	//----------------------------------------------------------------//
-	void								MOAIAbstractLifecycleClientVK_Finalize			();
-
 public:
+
+	IMPLEMENT_FINALIZABLE ( MOAIDescriptorSetLayoutVK )
 
 	GET_CONST ( ZLSize, Size, mLayoutBindings.Size ())
 	GET_CONST ( ZLSize, SignatureSize, mSignatureSize )
@@ -70,22 +66,6 @@ public:
 	MOAIDescriptorSetSnapshotVK*		ProcureDescriptorSetSnapshot		( const MOAIDescriptorSetSignatureVK& signature );
 	void								RetireDescriptorSetSnapshot			( MOAIDescriptorSetSnapshotVK& snapshot );
 	void								SetBinding							( ZLIndex index, VkDescriptorType descriptorType, VkShaderStageFlags stageFlags, ZLSize descriptorCount = 1 );
-};
-
-//================================================================//
-// MOAIDescriptorSetLayoutClientVK
-//================================================================//
-class MOAIDescriptorSetLayoutClientVK :
-	public MOAIAbstractLifecycleClientVK < MOAIDescriptorSetLayoutVK > {
-public:
-
-	//----------------------------------------------------------------//
-	MOAIDescriptorSetLayoutVK& GetLayout () {
-	
-		MOAIDescriptorSetLayoutVK* layout = this->GetLifecycleProvider ();
-		assert ( layout );
-		return *layout;
-	}
 };
 
 #endif

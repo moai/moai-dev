@@ -51,7 +51,7 @@ void MOAIDescriptorSetLayoutVK::AffirmDescritorSetLayout () {
 
 	if ( this->mLayout ) return;
 	
-	MOAILogicalDeviceVK& logicalDevice = this->GetLogicalDevice ();
+	MOAILogicalDeviceVK& logicalDevice = this->GetProvider < MOAILogicalDeviceVK >();
 	
 	ZLSize totalBindings = this->mLayoutBindings.Size ();
 	
@@ -87,7 +87,7 @@ void MOAIDescriptorSetLayoutVK::AffirmDescritorSetLayout () {
 //----------------------------------------------------------------//
 void MOAIDescriptorSetLayoutVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, ZLSize totalBindings ) {
 
-	logicalDevice.AddClient ( logicalDevice, *this );
+	this->SetProvider < MOAILogicalDeviceVK >( logicalDevice );
 	this->mLayoutBindings.Init ( totalBindings );
 }
 
@@ -101,8 +101,11 @@ MOAIDescriptorSetLayoutVK::MOAIDescriptorSetLayoutVK () :
 //----------------------------------------------------------------//
 MOAIDescriptorSetLayoutVK::~MOAIDescriptorSetLayoutVK () {
 
-	// TODO: clean up snapshots
-	this->Finalize ();
+	this->FinalizeDependencies ();
+
+	MOAILogicalDeviceVK& logicalDevice = this->GetProvider < MOAILogicalDeviceVK >();
+	vkDestroyDescriptorSetLayout ( logicalDevice, this->mLayout, NULL );
+	vkDestroyDescriptorPool ( logicalDevice, this->mPool, NULL );
 }
 
 //----------------------------------------------------------------//
@@ -117,9 +120,9 @@ MOAIDescriptorSetSnapshotVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSetSnap
 	}
 	else {
 		snapshot = new MOAIDescriptorSetSnapshotVK ();
-		this->AddClient ( *this, *snapshot );
+		snapshot->SetProvider < MOAIDescriptorSetLayoutVK >( *this );
 		VkDescriptorSetAllocateInfo allocInfo = MOAIGfxStructVK::descriptorSetAllocateInfo ( this->mPool, &this->mLayout );
-		VK_CHECK_RESULT ( vkAllocateDescriptorSets ( this->GetLogicalDevice (), &allocInfo, &snapshot->mDescriptorSet ));
+		VK_CHECK_RESULT ( vkAllocateDescriptorSets ( this->GetProvider < MOAILogicalDeviceVK >(), &allocInfo, &snapshot->mDescriptorSet ));
 	}
 	snapshot->Update ( signature );
 	this->mPinnedSets.insert ( snapshot );
@@ -154,12 +157,3 @@ void MOAIDescriptorSetLayoutVK::SetBinding ( ZLIndex index, VkDescriptorType des
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetLayoutVK::MOAIAbstractLifecycleClientVK_Finalize () {
-
-	this->FinalizeClients ();
-	
-	MOAILogicalDeviceVK& logicalDevice = this->GetLogicalDevice ();
-	vkDestroyDescriptorSetLayout ( logicalDevice, this->mLayout, NULL );
-	vkDestroyDescriptorPool ( logicalDevice, this->mPool, NULL );
-	logicalDevice.RemoveClient ( *this );
-}

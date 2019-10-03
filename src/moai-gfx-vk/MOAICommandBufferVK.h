@@ -14,7 +14,8 @@ class MOAIPipelineLayoutVK;
 // MOAICommandBufferVK
 //================================================================//
 class MOAICommandBufferVK :
-	public MOAIQueueClientVK {
+	public ZLAbstractFinalizable,
+	public ZLAbstractFinalizable_HasDependencyOn < MOAIQueueVK > {
 private:
 
 	friend class MOAIAbstractSnapshotVK;
@@ -27,10 +28,9 @@ private:
 	void				Invalidate					();
 	void				PinSnapshot					( MOAIAbstractSnapshotVK& snapshot );
 
-	//----------------------------------------------------------------//
-	void				MOAIAbstractLifecycleClientVK_Finalize		();
-
 public:
+
+	IMPLEMENT_FINALIZABLE ( MOAICommandBufferVK )
 
 	//----------------------------------------------------------------//
 	operator bool () const {

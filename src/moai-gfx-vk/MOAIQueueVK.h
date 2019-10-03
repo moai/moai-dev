@@ -5,7 +5,6 @@
 #define MOAIQUEUEVK_H
 
 #include <moai-gfx-vk/MOAIFenceVK.h>
-#include <moai-gfx-vk/MOAILogicalDeviceClientVK.h>
 
 class MOAICommandBufferVK;
 class MOAILogicalDeviceVK;
@@ -14,8 +13,8 @@ class MOAILogicalDeviceVK;
 // MOAIQueueVK
 //================================================================//
 class MOAIQueueVK :
-	public MOAILogicalDeviceClientVK,
-	public MOAILifecycleProviderVK < MOAIQueueVK > {
+	public ZLAbstractFinalizable,
+	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK > {
 private:
 
 	friend class MOAICommandBufferVK;
@@ -24,10 +23,9 @@ private:
 	//----------------------------------------------------------------//
 	VkResult			Submit						( const VkSubmitInfo& submitInfo );
 	
-	//----------------------------------------------------------------//
-	void				MOAIAbstractLifecycleClientVK_Finalize		();
-	
 public:
+
+	IMPLEMENT_FINALIZABLE ( MOAIQueueVK )
 
 	u32				mIndex;
 	VkCommandPool	mPool;
@@ -47,22 +45,6 @@ public:
 						~MOAIQueueVK				();
 	VkResult			PresentKHR					( const VkPresentInfoKHR& presentInfo );
 	VkResult			WaitIdle					();
-};
-
-//================================================================//
-// MOAIQueueClientVK
-//================================================================//
-class MOAIQueueClientVK :
-	public MOAIAbstractLifecycleClientVK < MOAIQueueVK > {
-public:
-
-	//----------------------------------------------------------------//
-	MOAIQueueVK& GetQueue () {
-	
-		MOAIQueueVK* queue = this->GetLifecycleProvider ();
-		assert ( queue );
-		return *queue;
-	}
 };
 
 #endif

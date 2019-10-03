@@ -15,7 +15,7 @@ void MOAIFenceVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, bool signaled
 
 	VkFenceCreateInfo fenceCreateInfo = MOAIGfxStructVK::fenceCreateInfo ( signaled ? VK_FENCE_CREATE_SIGNALED_BIT : 0 );
 	VK_CHECK_RESULT ( vkCreateFence ( logicalDevice, &fenceCreateInfo, NULL, &this->mFence ));
-    logicalDevice.AddClient ( logicalDevice, *this );
+    this->SetProvider < MOAILogicalDeviceVK >( logicalDevice );
 }
 
 //----------------------------------------------------------------//
@@ -26,13 +26,16 @@ MOAIFenceVK::MOAIFenceVK () :
 //----------------------------------------------------------------//
 MOAIFenceVK::~MOAIFenceVK () {
 
-	this->Finalize ();
+	if ( this->HasProvider < MOAILogicalDeviceVK >()) {
+		MOAILogicalDeviceVK& logicalDevice = this->GetProvider < MOAILogicalDeviceVK >();
+		vkDestroyFence ( logicalDevice, this->mFence, NULL );
+	}
 }
 
 //----------------------------------------------------------------//
 void MOAIFenceVK::Wait () {
 
-	MOAILogicalDeviceVK& logicalDevice = this->GetLogicalDevice ();
+	MOAILogicalDeviceVK& logicalDevice = this->GetProvider < MOAILogicalDeviceVK >();
 	VK_CHECK_RESULT ( vkWaitForFences ( logicalDevice, 1, &this->mFence, VK_TRUE, UINT64_MAX ));
 	VK_CHECK_RESULT ( vkResetFences ( logicalDevice, 1, &this->mFence ));
 }
@@ -42,9 +45,3 @@ void MOAIFenceVK::Wait () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIFenceVK::MOAIAbstractLifecycleClientVK_Finalize () {
-
-	MOAILogicalDeviceVK& logicalDevice = this->GetLogicalDevice ();
-	vkDestroyFence ( logicalDevice, this->mFence, NULL );
-	logicalDevice.RemoveClient ( *this );
-}
