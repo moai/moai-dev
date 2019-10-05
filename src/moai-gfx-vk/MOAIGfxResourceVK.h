@@ -19,7 +19,6 @@ class MOAIGfxResourceVK :
 protected:
 	
 	//----------------------------------------------------------------//
-	virtual void		MOAIGfxResource_Clear						();
 	virtual bool		MOAIGfxResource_IsReadyForUse				() const;
 	virtual void		MOAIGfxResource_ScheduleForGPUDestroy		();
 	virtual bool		MOAIGfxResource_ScheduleForGPUUpdate		();

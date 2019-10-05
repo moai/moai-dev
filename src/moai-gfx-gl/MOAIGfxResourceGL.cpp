@@ -23,7 +23,7 @@
 int	MOAIGfxResourceGL::_destroy ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxResourceGL, "U" )
 	
-	self->Clear ();
+	self->Finalize ();
 	return 0;
 }
 
@@ -135,29 +135,10 @@ u32 MOAIGfxResourceGL::Bind () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxResourceGL::DoCPUCreate () {
-	
-	if ( this->mState == STATE_READY_TO_BIND ) return true;
-	if (( this->mState == STATE_ERROR ) || ( this->mState == STATE_UNINITIALIZED )) return false;
-
-	// whether or not GPU is deferred, do the CPU part
-	if ( this->mState == STATE_READY_FOR_CPU_CREATE ) {
-		this->mState = this->MOAIGfxResourceGL_OnCPUCreate () ? STATE_READY_FOR_GPU_CREATE : STATE_ERROR;
-	}
-	return this->mState != STATE_ERROR;
-}
-
-//----------------------------------------------------------------//
 bool MOAIGfxResourceGL::DoGPUCreate () {
 
 	if ( this->mState == STATE_READY_TO_BIND ) return true;
 	if (( this->mState == STATE_ERROR ) || ( this->mState == STATE_UNINITIALIZED )) return false;
-
-	// if we get here, load both CPU and GPU parts
-
-	if ( this->mState == STATE_READY_FOR_CPU_CREATE ) {
-		this->mState = this->MOAIGfxResourceGL_OnCPUCreate () ? STATE_READY_FOR_GPU_CREATE : STATE_ERROR;
-	}
 
 	if ( this->mState == STATE_READY_FOR_GPU_CREATE ) {
 	
@@ -221,7 +202,7 @@ bool MOAIGfxResourceGL::Purge ( u32 age ) {
 	if ( this->mLastRenderCount <= age ) {
 		this->ClearReloadable ();
 		this->MOAIGfxResourceGL_OnGPUDeleteOrDiscard ( true );
-		this->mState = STATE_READY_FOR_CPU_CREATE;
+		this->mState = STATE_READY_FOR_GPU_CREATE;
 		
 		this->ScheduleForGPUUpdate ( PipelineHint::RENDER_PIPELINE );
 		
@@ -237,10 +218,16 @@ void MOAIGfxResourceGL::Renew () {
 	if ( !(( this->mState == STATE_UNINITIALIZED ) || ( this->mState == STATE_ERROR ))) {
 	
 		this->MOAIGfxResourceGL_OnGPUDeleteOrDiscard ( false ); // clear out the resource id (if any)
-		this->mState = STATE_READY_FOR_CPU_CREATE;
+		this->mState = STATE_READY_FOR_GPU_CREATE;
 		this->Reload ();
 		this->DoGPUCreate ();
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxResourceGL::ScheduleForGPUDestroy () {
+
+	this->MOAIGfxResource_ScheduleForGPUDestroy ();
 }
 
 //----------------------------------------------------------------//
@@ -250,10 +237,7 @@ bool MOAIGfxResourceGL::ScheduleForGPUUpdate ( PipelineHint hint ) {
 		
 		case STATE_UNINITIALIZED:
 		case STATE_ERROR:
-			this->mState = STATE_READY_FOR_CPU_CREATE;
-			break;
-		
-		case STATE_READY_FOR_CPU_CREATE:
+			this->mState = STATE_READY_FOR_GPU_CREATE;
 			break;
 			
 		case STATE_READY_TO_BIND:
@@ -262,7 +246,7 @@ bool MOAIGfxResourceGL::ScheduleForGPUUpdate ( PipelineHint hint ) {
 		default:
 			return false;
 	}
-		
+	
 	this->mGfxMgr->ScheduleGPUAffirm ( *this, PipelineHint::RENDER_PIPELINE );
 	return true;
 }
@@ -278,22 +262,17 @@ void MOAIGfxResourceGL::Unbind () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceGL::MOAIGfxResource_Clear () {
-
-	this->MOAIGfxResourceGL_OnCPUDestroy ();
-	this->MOAIGfxResource_ScheduleForGPUDestroy ();
-}
-
-//----------------------------------------------------------------//
 bool MOAIGfxResourceGL::MOAIGfxResource_IsReadyForUse () const {
 
-	return ( this->mState == STATE_READY_TO_BIND );
+	return (( this->mState == STATE_READY_TO_BIND ) || ( this->mState == STATE_NEEDS_GPU_UPDATE ));
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxResourceGL::MOAIGfxResource_ScheduleForGPUDestroy () {
 
-	this->MOAIGfxResourceGL_OnGPUDeleteOrDiscard ( true );
+	if ( this->IsReadyForUse ()) {
+		this->MOAIGfxResourceGL_OnGPUDeleteOrDiscard ( true );
+	}
 	this->mState = STATE_UNINITIALIZED;
 }
 
@@ -304,21 +283,11 @@ bool MOAIGfxResourceGL::MOAIGfxResource_ScheduleForGPUUpdate () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxResourceGL::MOAIGfxResourceGL_OnCPUCreate () {
-	return true;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxResourceGL::MOAIGfxResourceGL_OnCPUDestroy () {
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxResourceGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	
 	state.SetField ( -1, "STATE_UNINITIALIZED",					( u32 )MOAIGfxResourceGL::STATE_UNINITIALIZED );
-	state.SetField ( -1, "STATE_READY_FOR_CPU_CREATE",			( u32 )MOAIGfxResourceGL::STATE_READY_FOR_CPU_CREATE );
 	state.SetField ( -1, "STATE_READY_FOR_GPU_CREATE",			( u32 )MOAIGfxResourceGL::STATE_READY_FOR_GPU_CREATE );
 	state.SetField ( -1, "STATE_READY_TO_BIND",					( u32 )MOAIGfxResourceGL::STATE_READY_TO_BIND );
 	state.SetField ( -1, "STATE_ERROR",							( u32 )MOAIGfxResourceGL::STATE_ERROR );

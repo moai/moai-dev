@@ -73,7 +73,7 @@ void MOAITexture2D::CopyImage ( const ZLImage& image ) {
 //----------------------------------------------------------------//
 void MOAITexture2D::Init ( const ZLImage& image, cc8* debugname ) {
 
-	this->Clear ();
+	this->Finalize ();
 	
 	if ( image.IsOK ()) {
 		this->CopyImage ( image );
@@ -86,7 +86,7 @@ void MOAITexture2D::Init ( const ZLImage& image, cc8* debugname ) {
 //----------------------------------------------------------------//
 void MOAITexture2D::Init ( const ZLImage& image, int srcX, int srcY, int width, int height, cc8* debugname ) {
 
-	this->Clear ();
+	this->Finalize ();
 	
 	if ( image.IsOK ()) {
 	
@@ -103,7 +103,7 @@ void MOAITexture2D::Init ( const ZLImage& image, int srcX, int srcY, int width, 
 //----------------------------------------------------------------//
 void MOAITexture2D::Init ( cc8* filename, u32 transform, cc8* debugname ) {
 
-	this->Clear ();
+	this->Finalize ();
 	
 	if ( ZLFileSys::CheckFileExists ( filename )) {
 		
@@ -122,7 +122,7 @@ void MOAITexture2D::Init ( cc8* filename, u32 transform, cc8* debugname ) {
 //----------------------------------------------------------------//
 void MOAITexture2D::Init ( ZLStream& stream, u32 transform, cc8* debugname ) {
 
-	this->Clear ();
+	this->Finalize ();
 	this->LoadFromStream ( stream, transform );
 	
 	// if we're OK, store the debugname and load
@@ -275,18 +275,19 @@ MOAITexture2D::MOAITexture2D () :
 
 //----------------------------------------------------------------//
 MOAITexture2D::~MOAITexture2D () {
+
+	if ( this->mImage ) {
+		delete this->mImage;
+	}
+	
+	if ( this->mTextureData ) {
+		free ( this->mTextureData );
+	}
 }
 
 //================================================================//
 // virtual
 //================================================================//
-
-//----------------------------------------------------------------//
-void MOAITexture2D::MOAIGfxResource_Clear () {
-
-	this->mFilename.clear ();
-	this->mDebugName.clear ();
-}
 
 //----------------------------------------------------------------//
 void MOAITexture2D::MOAIGfxResource_ClearReloadable () {
@@ -300,10 +301,10 @@ void MOAITexture2D::MOAIGfxResource_ClearReloadable () {
 		
 		if ( this->mTextureData ) {
 			free ( this->mTextureData );
-			this->mTextureData = 0;
+			this->mTextureData = NULL;
 		}
 		this->mTextureDataSize = 0;
-		this->mTextureDataFormat = 0;
+		this->mTextureDataFormat = NULL;
 	}
 	
 	if ( this->HasReloader ()) {

@@ -71,12 +71,6 @@ void MOAIImageTexture::UpdateRegion ( ZLIntRect rect ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIImageTexture::MOAIGfxResource_Clear () {
-
-	this->MOAIImage::Clear ();
-}
-
-//----------------------------------------------------------------//
 void MOAIImageTexture::MOAIImage_OnImageStatusChanged	( bool isOK ) {
 
 	if ( isOK ) {

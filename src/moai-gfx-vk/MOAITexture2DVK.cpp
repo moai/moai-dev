@@ -27,13 +27,6 @@ MOAITexture2DVK::~MOAITexture2DVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITexture2DVK::MOAIGfxResource_Clear () {
-
-	this->MOAITextureVK::MOAIGfxResource_Clear ();
-	this->MOAITexture2D::MOAIGfxResource_Clear ();
-}
-
-//----------------------------------------------------------------//
 void MOAITexture2DVK::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAITexture2D, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	MOAI_CALL_SUPER_ONCE ( composer, MOAITextureVK, MOAILuaObject_RegisterLuaClass ( composer, state ));

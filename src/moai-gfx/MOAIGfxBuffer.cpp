@@ -86,12 +86,6 @@ MOAIGfxBuffer::~MOAIGfxBuffer () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxBuffer::MOAIGfxResource_Clear () {
-
-	this->ZLCopyOnWrite::Free ();
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxBuffer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIStream, MOAILuaObject_RegisterLuaClass ( composer, state ));
 }

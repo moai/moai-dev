@@ -21,7 +21,6 @@ class MOAIImageTextureGL :
 private:
 
 	//----------------------------------------------------------------//
-	void			MOAIGfxResource_Clear				();
 	bool			MOAIGfxResourceGL_OnGPUCreate		();
 	bool			MOAIGfxResourceGL_OnGPUUpdate		();
 	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
@@ -29,6 +28,7 @@ private:
 
 public:
 	
+	IMPLEMENT_FINALIZABLE ( MOAIImageTextureGL )
 	DECL_LUA_FACTORY ( MOAIImageTextureGL )
 	
 	static const u32 DEFAULT_TRANSFORM = ZLImageTransform::TRUECOLOR | ZLImageTransform::PREMULTIPLY_ALPHA;

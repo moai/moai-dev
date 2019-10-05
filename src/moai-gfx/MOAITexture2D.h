@@ -36,7 +36,6 @@ protected:
 	bool				LoadFromStream				( ZLStream& stream, u32 transform );
 	
 	//----------------------------------------------------------------//
-	void				MOAIGfxResource_Clear						();
 	void				MOAIGfxResource_ClearReloadable				();
 	bool				MOAIGfxResource_FinishLoading				();
 	void				MOAILuaObject_RegisterLuaClass				( MOAIComposer& composer, MOAILuaState& state );

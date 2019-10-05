@@ -119,8 +119,7 @@ MOAIVertexArrayGL::MOAIVertexArrayGL () :
 //----------------------------------------------------------------//
 MOAIVertexArrayGL::~MOAIVertexArrayGL () {
 
-	this->ReserveVAOs ( 0 );
-	this->ReserveVertexBuffers ( 0 );
+	this->ScheduleForGPUDestroy ();
 }
 
 //----------------------------------------------------------------//

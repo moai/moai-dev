@@ -24,6 +24,7 @@ private:
 
 public:
 	
+	IMPLEMENT_FINALIZABLE ( MOAIFrameBufferTextureVK )
 	DECL_LUA_FACTORY ( MOAIFrameBufferTextureVK )
 	
 	//----------------------------------------------------------------//

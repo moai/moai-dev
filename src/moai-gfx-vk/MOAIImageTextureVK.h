@@ -21,12 +21,12 @@ class MOAIImageTextureVK :
 private:
 
 	//----------------------------------------------------------------//
-	void			MOAIGfxResource_Clear				();
 	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
 	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 
 public:
 	
+	IMPLEMENT_FINALIZABLE ( MOAIImageTextureVK )
 	DECL_LUA_FACTORY ( MOAIImageTextureVK )
 	
 //	static const u32 DEFAULT_TRANSFORM = ZLImageTransform::TRUECOLOR | ZLImageTransform::PREMULTIPLY_ALPHA;

@@ -28,6 +28,7 @@ public:
 	
 //	friend class MOAIGfxMgrVK_PipelineClerkVK;
 	
+	IMPLEMENT_FINALIZABLE ( MOAIIndexBufferVK )
 	DECL_LUA_FACTORY ( MOAIIndexBufferVK )
 	
 	//----------------------------------------------------------------//

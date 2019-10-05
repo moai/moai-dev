@@ -50,7 +50,7 @@ int MOAIFrameBufferTextureGL::_init ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIFrameBufferTextureGL::Init ( u32 width, u32 height, u32 colorFormat, u32 depthFormat, u32 stencilFormat ) {
 
-	this->Clear ();
+	this->Finalize ();
 
 	this->mWidth			= width;
 	this->mHeight			= height;
@@ -78,7 +78,7 @@ MOAIFrameBufferTextureGL::MOAIFrameBufferTextureGL () :
 //----------------------------------------------------------------//
 MOAIFrameBufferTextureGL::~MOAIFrameBufferTextureGL () {
 
-	this->MOAIGfxResourceGL_OnGPUDeleteOrDiscard ( true );
+	this->ScheduleForGPUDestroy ();
 }
 
 //================================================================//

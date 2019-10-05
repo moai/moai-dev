@@ -28,10 +28,6 @@ MOAIGfxResourceVK::~MOAIGfxResourceVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceVK::MOAIGfxResource_Clear () {
-}
-
-//----------------------------------------------------------------//
 bool MOAIGfxResourceVK::MOAIGfxResource_IsReadyForUse () const {
 	return true;
 }

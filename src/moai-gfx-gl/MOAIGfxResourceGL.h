@@ -49,20 +49,17 @@ protected:
 	static int		_scheduleForGPUUpdate		( lua_State* L );
 
 	//----------------------------------------------------------------//	
-	bool			Affirm						();
-	u32				Bind						(); // bind OR create
-	bool			DoGPUCreate					(); // gets ready to bind
-	bool			DoGPUUpdate					();
-	void			Renew						(); // lose (but not *delete*) the GPU resource
-	void			Unbind						();
+	bool				Affirm						();
+	u32					Bind						(); // bind OR create
+	bool				DoGPUCreate					(); // gets ready to bind
+	bool				DoGPUUpdate					();
+	void				Renew						(); // lose (but not *delete*) the GPU resource
+	void				Unbind						();
 	
 	//----------------------------------------------------------------//
-	void				MOAIGfxResource_Clear						();
 	bool				MOAIGfxResource_IsReadyForUse				() const;
 	void				MOAIGfxResource_ScheduleForGPUDestroy		();
 	bool				MOAIGfxResource_ScheduleForGPUUpdate		();
-	virtual bool		MOAIGfxResourceGL_OnCPUCreate				(); // load or initialize any CPU-side resources required to create the GPU-side resource
-	virtual void		MOAIGfxResourceGL_OnCPUDestroy				();
 	virtual void		MOAIGfxResourceGL_OnGPUBind					() = 0; // select GPU-side resource on device for use
 	virtual bool		MOAIGfxResourceGL_OnGPUCreate				() = 0; // create GPU-side resource
 	virtual void		MOAIGfxResourceGL_OnGPUDeleteOrDiscard		( bool shouldDelete ) = 0; // delete or discard GPU resource handles
@@ -81,7 +78,6 @@ public:
 
 	enum {
 		STATE_UNINITIALIZED,			// we use this state to ensure we call DoCPUAffirm after init
-		STATE_READY_FOR_CPU_CREATE,
 		STATE_READY_FOR_GPU_CREATE,
 		STATE_PENDING,					// waiting for GPU
 		STATE_READY_TO_BIND,
@@ -94,10 +90,10 @@ public:
 	IS ( Pending, mState, STATE_PENDING )
 
 	//----------------------------------------------------------------//
-	bool			DoCPUCreate					();
 					MOAIGfxResourceGL			();
 	virtual			~MOAIGfxResourceGL			();
 	bool			Purge						( u32 age );
+	void			ScheduleForGPUDestroy		();
 	bool			ScheduleForGPUUpdate		( PipelineHint hint = RENDER_PIPELINE );
 };
 

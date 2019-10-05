@@ -20,7 +20,6 @@ class MOAITexture2DGL :
 protected:
 
 	//----------------------------------------------------------------//
-	void				MOAIGfxResource_Clear					();
 	bool				MOAIGfxResourceGL_OnGPUCreate			();
 	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
 	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
@@ -29,6 +28,7 @@ public:
 		
 	static const u32 DEFAULT_TRANSFORM = ZLImageTransform::TRUECOLOR | ZLImageTransform::PREMULTIPLY_ALPHA;
 	
+	IMPLEMENT_FINALIZABLE ( MOAITexture2DGL )
 	DECL_LUA_FACTORY ( MOAITexture2DGL )
 	
 	//----------------------------------------------------------------//

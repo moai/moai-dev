@@ -21,7 +21,6 @@ class MOAITextureVK;
 			uniform values.
 */
 class MOAIShaderProgramVK :
-	public ZLAbstractFinalizable,
 	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK >,
 	public virtual MOAIGfxResourceVK {
 public:

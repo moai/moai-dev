@@ -61,7 +61,6 @@ protected:
 	void						InitUniformBuffer			( ZLLeanArray < u8 >& buffer );
 	
 	//----------------------------------------------------------------//
-	void						MOAIGfxResource_Clear								();
 	void						MOAIGfxResourceGL_OnGPUBind							();
 	bool						MOAIGfxResourceGL_OnGPUCreate						();
 	void						MOAIGfxResourceGL_OnGPUDeleteOrDiscard				( bool shouldDelete );
@@ -73,6 +72,7 @@ protected:
 	
 public:
 
+	IMPLEMENT_FINALIZABLE ( MOAIShaderProgramGL )
 	DECL_LUA_FACTORY ( MOAIShaderProgramGL )
 
 	//----------------------------------------------------------------//

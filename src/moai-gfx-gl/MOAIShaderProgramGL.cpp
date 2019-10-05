@@ -214,7 +214,7 @@ MOAIShaderProgramGL::MOAIShaderProgramGL () :
 //----------------------------------------------------------------//
 MOAIShaderProgramGL::~MOAIShaderProgramGL () {
 
-	this->Clear ();
+	this->ScheduleForGPUDestroy ();
 }
 
 //----------------------------------------------------------------//
@@ -235,19 +235,6 @@ void MOAIShaderProgramGL::SetVertexAttribute ( u32 idx, cc8* attribute ) {
 //================================================================//
 // virtual
 //================================================================//
-
-//----------------------------------------------------------------//
-void MOAIShaderProgramGL::MOAIGfxResource_Clear () {
-
-	this->mVertexShaderSource.clear ();
-	this->mFragmentShaderSource.clear ();
-
-	this->mAttributeMap.clear ();
-	this->mUniformDescriptors.Clear ();
-	this->mUniformBindings.Clear ();
-
-	this->MOAIGfxResourceGL::MOAIGfxResource_Clear ();
-}
 
 //----------------------------------------------------------------//
 void MOAIShaderProgramGL::MOAIGfxResourceGL_OnGPUBind () {

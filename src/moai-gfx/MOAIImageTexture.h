@@ -20,7 +20,6 @@ protected:
 	static int		_updateRegion			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			MOAIGfxResource_Clear				();
 	void			MOAIImage_OnImageStatusChanged		( bool isOK );
 	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
 	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );

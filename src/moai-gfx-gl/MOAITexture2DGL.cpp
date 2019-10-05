@@ -27,13 +27,6 @@ MOAITexture2DGL::~MOAITexture2DGL () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITexture2DGL::MOAIGfxResource_Clear () {
-
-	this->MOAITextureGL::MOAIGfxResource_Clear ();
-	this->MOAITexture2D::MOAIGfxResource_Clear ();
-}
-
-//----------------------------------------------------------------//
 bool MOAITexture2DGL::MOAIGfxResourceGL_OnGPUCreate () {
 	
 	bool success = false;
@@ -46,7 +39,7 @@ bool MOAITexture2DGL::MOAIGfxResourceGL_OnGPUCreate () {
 	}
 	
 	if ( !success ) {
-		this->Clear ();
+		this->Finalize ();
 		return false;
 	}
 	

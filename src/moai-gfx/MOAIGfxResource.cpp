@@ -30,13 +30,6 @@ int MOAIGfxResource::_setReloader ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxResource::Clear () {
-	this->mReloader.Clear ();
-	this->MOAIGfxResource_Clear ();
-	this->ClearReloadable ();
-}
-
-//----------------------------------------------------------------//
 bool MOAIGfxResource::ClearReloadable () {
 	this->MOAIGfxResource_ClearReloadable ();
 }
@@ -98,10 +91,6 @@ bool MOAIGfxResource::ScheduleForGPUUpdate () {
 //================================================================//
 // virtual
 //================================================================//
-
-//----------------------------------------------------------------//
-void MOAIGfxResource::MOAIGfxResource_Clear () {
-}
 
 //----------------------------------------------------------------//
 void MOAIGfxResource::MOAIGfxResource_ClearReloadable () {

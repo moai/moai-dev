@@ -30,6 +30,7 @@ private:
 	
 public:
 	
+	IMPLEMENT_FINALIZABLE ( MOAIVertexBufferGL )
 	DECL_LUA_FACTORY ( MOAIVertexBufferGL )
 	
 	//----------------------------------------------------------------//

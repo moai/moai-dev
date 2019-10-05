@@ -8,7 +8,8 @@
 // MOAIGfxResource
 //================================================================//
 class MOAIGfxResource :
-	public virtual MOAILuaObject {
+	public virtual MOAILuaObject,
+	public virtual ZLAbstractFinalizable {
 protected:
 
 	// for custom loading function
@@ -21,7 +22,6 @@ protected:
 	bool				FinishLoading				();
 
 	//----------------------------------------------------------------//
-	virtual void		MOAIGfxResource_Clear						();
 	virtual void		MOAIGfxResource_ClearReloadable				();
 	virtual bool		MOAIGfxResource_FinishLoading				();
 	virtual bool		MOAIGfxResource_IsReadyForUse				() const;
@@ -33,7 +33,6 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-	void				Clear						();
 	bool				ClearReloadable				();
 	bool				IsReadyForUse				() const;
 	bool				HasReloader					() const;

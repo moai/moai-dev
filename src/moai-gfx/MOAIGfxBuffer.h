@@ -20,7 +20,6 @@ protected:
 	static int			_reserve					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				MOAIGfxResource_Clear				();
 	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
 	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	void				MOAILuaObject_SerializeIn			( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );

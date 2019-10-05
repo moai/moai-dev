@@ -23,9 +23,7 @@
 */
 int MOAITextureGL::_getSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextureGL, "U" )
-	
-	self->DoCPUCreate ();
-	
+		
 	lua_pushnumber ( state, self->mWidth );
 	lua_pushnumber ( state, self->mHeight );
 	
@@ -42,7 +40,7 @@ int MOAITextureGL::_getSize ( lua_State* L ) {
 int MOAITextureGL::_release ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextureGL, "U" )
 	
-	self->Clear ();
+	self->Finalize ();
 	
 	return 0;
 }
@@ -298,7 +296,7 @@ MOAITextureGL::MOAITextureGL () {
 //----------------------------------------------------------------//
 MOAITextureGL::~MOAITextureGL () {
 
-	this->MOAIGfxResourceGL_OnGPUDeleteOrDiscard ( true );
+	this->ScheduleForGPUDestroy ();
 }
 
 //----------------------------------------------------------------//

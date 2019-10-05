@@ -27,13 +27,6 @@ MOAIImageTextureVK::~MOAIImageTextureVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIImageTextureVK::MOAIGfxResource_Clear () {
-
-	this->MOAIImageTexture::MOAIGfxResource_Clear ();
-	this->MOAITextureVK::MOAIGfxResource_Clear ();
-}
-
-//----------------------------------------------------------------//
 void MOAIImageTextureVK::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIImage, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	MOAI_CALL_SUPER_ONCE ( composer, MOAITextureVK, MOAILuaObject_RegisterLuaClass ( composer, state ));

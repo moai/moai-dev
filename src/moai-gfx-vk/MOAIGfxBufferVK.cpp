@@ -48,13 +48,6 @@ MOAIGfxBufferSnapshotVK* MOAIGfxBufferVK::MOAIAbstractSnapshotSubjectVK_MakeSnap
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBufferVK::MOAIGfxResource_Clear () {
-
-	this->MOAIGfxResourceVK::MOAIGfxResource_Clear ();
-	this->MOAIGfxBuffer::MOAIGfxResource_Clear ();
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxBufferVK::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxResourceVK, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxBuffer, MOAILuaObject_RegisterLuaClass ( composer, state ));

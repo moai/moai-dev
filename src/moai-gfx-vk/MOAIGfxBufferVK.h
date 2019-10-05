@@ -16,7 +16,6 @@ class MOAIVertexFormatVK;
 //================================================================//
 // TODO: doxygen
 class MOAIGfxBufferVK :
-	public ZLAbstractFinalizable,
 	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK >,
 	public virtual MOAIGfxResourceVK,
 	public virtual MOAIGfxBuffer,
@@ -29,7 +28,6 @@ protected:
 	
 	//----------------------------------------------------------------//
 	MOAIGfxBufferSnapshotVK*	MOAIAbstractSnapshotSubjectVK_MakeSnapshot		();
-	void 						MOAIGfxResource_Clear							();
 	void						MOAILuaObject_RegisterLuaClass					( MOAIComposer& composer, MOAILuaState& state );
 	void						MOAILuaObject_RegisterLuaFuncs					( MOAIComposer& composer, MOAILuaState& state );
 	void						MOAILuaObject_SerializeIn						( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
