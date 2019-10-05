@@ -93,7 +93,6 @@ public:
 	GET ( u32, RenderCounter, mRenderCounter );
 
 	//----------------------------------------------------------------//
-//	void					Clear						();
 	void					ClearErrors					();
 	void					DetectContext				();
 	void					DetectFramebuffer			();

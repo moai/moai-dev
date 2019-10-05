@@ -125,13 +125,6 @@ int MOAIGfxMgrGL::_renewResources ( lua_State* L ) {
 // MOAIGfxMgrGL
 //================================================================//
 
-////----------------------------------------------------------------//
-//void MOAIGfxMgrGL::Clear () {
-//
-//	this->MOAIGfxMgrGL_GPUCacheGL::Clear ();
-//	this->MOAIGfxMgr_VertexCache::Clear ();
-//}
-
 //----------------------------------------------------------------//
 void MOAIGfxMgrGL::ClearErrors () {
 
