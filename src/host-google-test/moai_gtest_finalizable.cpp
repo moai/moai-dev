@@ -18,10 +18,10 @@ static GTESTLifecycleTracker sLifecycle;
 
 //----------------------------------------------------------------//
 class E :
-	public ZLAbstractFinalizable {
+	public ZLAbstractFinalizable_Solo {
 public:
 
-	IMPLEMENT_FINALIZABLE ( E )
+	IMPLEMENT_FINALIZABLE_SOLO ( E )
 
 	E () {
 		sLifecycle.Construct ( CLASS_E );
@@ -37,7 +37,7 @@ class D :
 	public E {
 public:
 
-	IMPLEMENT_FINALIZABLE ( D, ReconstructionFlag::RECONSTRUCTING )
+	IMPLEMENT_FINALIZABLE_SOLO ( D, ReconstructionFlag::RECONSTRUCTING )
 
 	D () {
 		sLifecycle.Construct ( CLASS_D );

@@ -8,8 +8,7 @@
 // MOAIGfxResource
 //================================================================//
 class MOAIGfxResource :
-	public virtual MOAILuaObject,
-	public virtual ZLAbstractFinalizable {
+	public virtual MOAILuaObject {
 protected:
 
 	// for custom loading function

@@ -6,6 +6,28 @@
 
 #include <moai-core/MOAILuaRef.h>
 
+#define DECL_LUA_FACTORY(type)																\
+	IMPLEMENT_FINALIZABLE ( type )															\
+	MOAILuaClass* GetLuaClass () { return &MOAILuaFactoryClass < type >::Get (); }			\
+	static void RegisterLuaType () { MOAILuaFactoryClass < type >::Get ().Register (); }	\
+	cc8* TypeName () const { return #type; }
+
+#define DECL_LUA_ABSTRACT(type)																\
+IMPLEMENT_ABSTRACT_FINALIZABLE ( type )														\
+MOAILuaClass* GetLuaClass () { return 0; }													\
+cc8* TypeName () const { return #type; }
+
+#define DECL_LUA_OPAQUE(type)																\
+	IMPLEMENT_FINALIZABLE ( type )															\
+	MOAILuaClass* GetLuaClass () { return &MOAILuaFactoryClass < type >::Get (); }			\
+	cc8* TypeName () const { return #type; }
+
+#define DECL_LUA_SINGLETON(type)															\
+	IMPLEMENT_FINALIZABLE ( type )															\
+	MOAILuaClass* GetLuaClass () { return &MOAILuaSingletonClass < type >::Get (); }		\
+	static void RegisterLuaType () { MOAILuaSingletonClass < type >::Get ().Register (); }	\
+	cc8* TypeName () const { return #type; }
+
 class MOAIDeserializer;
 class MOAILuaClass;
 class MOAILuaObject;

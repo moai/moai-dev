@@ -37,11 +37,7 @@
 // that's the basic part of this implementation. the rest of it deals with maintaining a
 // directed acyclic graph (DAG) of finalizable classes, the intent being that when a finalizable
 // instance depends on one or more other finalizables, it should automatically be finalized
-// when any one of its dependencies are. originally, this was factored into two parts - a
-// lightweight, stand-alone implementation of finalizable, and a separate DAG implementation based
-// on it. in practice, the only additional (memory) overhead for the DAG is a single pointer in the base
-// class, and users will almost always want the DAG functionality as well, so it made sense to support
-// everything in a single abstract base class.
+// when any one of its dependencies are.
 
 #include <zl-util/ZLAbstractFinalizable_HasInternal.h>
 #include <zl-util/ZLAbstractFinalizable_Internal.h>
@@ -61,54 +57,82 @@
 // there needs to be a matching _HasDependencyOn template in the inheritance tree.
 // SetProvider(), the same.
 
-#define IMPLEMENT_FINALIZABLE(TYPE,...)						\
-															\
+#define IMPLEMENT_FINALIZABLE_WITH_DEPENDENCIES(TYPE,...)	\
+														\
+template < typename PROVIDER_TYPE >						\
+PROVIDER_TYPE& GetProvider () {							\
+	return this->ZLAbstractFinalizable_HasDependencyOn < PROVIDER_TYPE >::GetProvider ();		\
+}														\
+														\
+template < typename PROVIDER_TYPE >						\
+bool HasProvider () {									\
+	return this->ZLAbstractFinalizable_HasDependencyOn < PROVIDER_TYPE >::HasProvider ();		\
+}														\
+														\
+template < typename PROVIDER_TYPE >						\
+void SetProvider ( PROVIDER_TYPE& provider ) {			\
+	this->ZLAbstractFinalizable_HasDependencyOn < PROVIDER_TYPE >::SetProvider ( provider );	\
+}
+
+#define IMPLEMENT_FINALIZABLE_SOLO(TYPE,...)				\
 	void ZLAbstractFinalizable_Finalize () {				\
 		( void )static_cast < TYPE* >( this );				\
 		void* self = this;									\
 		(( TYPE* )self )->~TYPE ();							\
 		new ( this ) TYPE ( __VA_ARGS__ );					\
-	}														\
-															\
-	template < typename PROVIDER_TYPE >						\
-	PROVIDER_TYPE& GetProvider () {							\
-		return this->ZLAbstractFinalizable_HasDependencyOn < PROVIDER_TYPE >::GetProvider ();		\
-	}														\
-															\
-	template < typename PROVIDER_TYPE >						\
-	bool HasProvider () {									\
-		return this->ZLAbstractFinalizable_HasDependencyOn < PROVIDER_TYPE >::HasProvider ();		\
-	}														\
-															\
-	template < typename PROVIDER_TYPE >						\
-	void SetProvider ( PROVIDER_TYPE& provider ) {			\
-		this->ZLAbstractFinalizable_HasDependencyOn < PROVIDER_TYPE >::SetProvider ( provider );	\
 	}
 
-#define IMPLEMENT_ABSTRACT_FINALIZABLE(TYPE)				\
-															\
+#define IMPLEMENT_ABSTRACT_FINALIZABLE_SOLO(TYPE)			\
 	void ZLAbstractFinalizable_Finalize () {				\
-	}														\
-															\
-	template < typename PROVIDER_TYPE >						\
-	PROVIDER_TYPE& GetProvider () {							\
-		return this->ZLAbstractFinalizable_HasDependencyOn < PROVIDER_TYPE >::GetProvider ();		\
-	}														\
-															\
-	template < typename PROVIDER_TYPE >						\
-	bool HasProvider () {									\
-		return this->ZLAbstractFinalizable_HasDependencyOn < PROVIDER_TYPE >::HasProvider ();		\
-	}														\
-															\
-	template < typename PROVIDER_TYPE >						\
-	void SetProvider ( PROVIDER_TYPE& provider ) {			\
-		this->ZLAbstractFinalizable_HasDependencyOn < PROVIDER_TYPE >::SetProvider ( provider );	\
 	}
+
+#define IMPLEMENT_FINALIZABLE(TYPE,...)						\
+	IMPLEMENT_FINALIZABLE_SOLO ( TYPE, __VA_ARGS__ )		\
+	IMPLEMENT_FINALIZABLE_WITH_DEPENDENCIES ( TYPE )
+
+
+#define IMPLEMENT_ABSTRACT_FINALIZABLE(TYPE)				\
+	IMPLEMENT_ABSTRACT_FINALIZABLE_SOLO ( TYPE )			\
+	IMPLEMENT_FINALIZABLE_WITH_DEPENDENCIES ( TYPE )
+
+//================================================================//
+// ZLAbstractFinalizable_Solo
+//================================================================//
+class ZLAbstractFinalizable_Solo {
+private:
+
+	//----------------------------------------------------------------//
+	virtual void		ZLAbstractFinalizable_Finalize		() = 0; // breaking our naming convention here
+
+protected:
+
+	// handy flag for passing as a dummy parameter to a "reconstructor." pass it to the
+	// IMPLEMENT_FINALIZABLE() macro for a quick-and-dirty reconstructor signatrue.
+	enum ReconstructionFlag {
+		RECONSTRUCTING,
+	};
+
+public:
+
+	//----------------------------------------------------------------//
+	ZLAbstractFinalizable_Solo () {
+	}
+	
+	//----------------------------------------------------------------//
+	virtual ~ZLAbstractFinalizable_Solo () {
+	}
+	
+	//----------------------------------------------------------------//
+	void Finalize () {
+		this->ZLAbstractFinalizable_Finalize ();
+	}
+};
 
 //================================================================//
 // ZLAbstractFinalizable
 //================================================================//
 class ZLAbstractFinalizable :
+	public virtual ZLAbstractFinalizable_Solo,
 
 	// has intenral is a separate class just to enforce the use of virtual inheritance.
 	// otherwise, user would have to remember to always use virtual inheritance or
@@ -120,27 +144,19 @@ private:
 	ZLAbstractFinalizable_Internal*		mInternal;
 	
 	//----------------------------------------------------------------//
-	virtual void						ZLAbstractFinalizable_Finalize							() = 0;
 	ZLAbstractFinalizable_Internal&		ZLAbstractFinalizable_HasInternal_AffirmInternal		();
 	ZLAbstractFinalizable_Internal*		ZLAbstractFinalizable_HasInternal_GetInternal			();
 
 protected:
 
-	// handy flag for passing as a dummy parameter to a "reconstructor." pass it to the
-	// IMPLEMENT_FINALIZABLE() macro for a quick-and-dirty reconstructor signatrue.
-	enum ReconstructionFlag {
-		RECONSTRUCTING,
-	};
-	
 	//----------------------------------------------------------------//
-	void				FinalizeDependencies			();
+	void			FinalizeDependencies			();
 
 public:
 
 	//----------------------------------------------------------------//
-						ZLAbstractFinalizable			();
-	virtual				~ZLAbstractFinalizable			();
-	void				Finalize						(); // this is it! manual, explicit finalization through C++ destructors.
+					ZLAbstractFinalizable			();
+					~ZLAbstractFinalizable			();
 };
 
 // inherit a _HasDependencyOn for each DAG dependency provider you want to track. each _HasDependencyOn shares

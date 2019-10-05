@@ -10,7 +10,6 @@
 
 //----------------------------------------------------------------//
 void ZLAbstractFinalizable::FinalizeDependencies () {
-
 	if ( this->mInternal ) {
 		delete this->mInternal;
 		this->mInternal = NULL;
@@ -25,11 +24,6 @@ ZLAbstractFinalizable::ZLAbstractFinalizable () :
 //----------------------------------------------------------------//
 ZLAbstractFinalizable::~ZLAbstractFinalizable () {
 	this->FinalizeDependencies ();
-}
-
-//----------------------------------------------------------------//
-void ZLAbstractFinalizable::Finalize () {
-	this->ZLAbstractFinalizable_Finalize ();
 }
 
 //================================================================//
