@@ -27,7 +27,6 @@ public:
 		
 //	static const u32 DEFAULT_TRANSFORM = ZLImageTransform::TRUECOLOR | ZLImageTransform::PREMULTIPLY_ALPHA;
 	
-	IMPLEMENT_FINALIZABLE ( MOAITexture2DVK )
 	DECL_LUA_FACTORY ( MOAITexture2DVK )
 	
 	//----------------------------------------------------------------//

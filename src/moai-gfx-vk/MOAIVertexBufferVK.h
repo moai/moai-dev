@@ -28,7 +28,6 @@ private:
 	
 public:
 	
-	IMPLEMENT_FINALIZABLE ( MOAIVertexBufferVK )
 	DECL_LUA_FACTORY ( MOAIVertexBufferVK )
 	
 	//----------------------------------------------------------------//

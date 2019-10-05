@@ -27,7 +27,6 @@ public:
 	
 	friend class MOAIGfxMgrGL_DisplayListClerkGL;
 	
-	IMPLEMENT_FINALIZABLE ( MOAIIndexBufferGL )
 	DECL_LUA_FACTORY ( MOAIIndexBufferGL )
 	
 	//----------------------------------------------------------------//

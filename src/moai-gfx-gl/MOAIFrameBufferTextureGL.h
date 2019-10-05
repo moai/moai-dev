@@ -38,7 +38,6 @@ private:
 
 public:
 	
-	IMPLEMENT_FINALIZABLE ( MOAIFrameBufferTextureGL )
 	DECL_LUA_FACTORY ( MOAIFrameBufferTextureGL )
 	
 	//----------------------------------------------------------------//

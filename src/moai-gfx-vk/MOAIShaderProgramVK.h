@@ -49,8 +49,6 @@ protected:
 	
 public:
 
-	IMPLEMENT_FINALIZABLE ( MOAIShaderProgramVK )
-
 	DECL_LUA_FACTORY ( MOAIShaderProgramVK )
 
 	//----------------------------------------------------------------//

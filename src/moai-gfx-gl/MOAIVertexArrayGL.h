@@ -69,7 +69,6 @@ public:
 	
 	IS ( UsingVAOs, mUseVAOs, true )
 	
-	IMPLEMENT_FINALIZABLE ( MOAIVertexArrayGL )
 	DECL_LUA_FACTORY ( MOAIVertexArrayGL )
 	
 	//----------------------------------------------------------------//

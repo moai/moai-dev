@@ -72,7 +72,6 @@ protected:
 	
 public:
 
-	IMPLEMENT_FINALIZABLE ( MOAIShaderProgramGL )
 	DECL_LUA_FACTORY ( MOAIShaderProgramGL )
 
 	//----------------------------------------------------------------//

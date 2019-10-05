@@ -19,7 +19,8 @@ class MOAISerializer;
 //================================================================//
 class MOAILuaObject :
 	public virtual RTTIBase,
-	public virtual ZLRefCountedObject {
+	public virtual ZLRefCountedObject,
+	public virtual ZLAbstractFinalizable {
 private:
 
 	u32						mActiveUserdataCount;

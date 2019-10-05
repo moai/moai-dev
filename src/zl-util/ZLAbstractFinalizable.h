@@ -75,6 +75,25 @@
 		return this->ZLAbstractFinalizable_HasDependencyOn < PROVIDER_TYPE >::GetProvider ();		\
 	}														\
 															\
+	template < typename PROVIDER_TYPE >						\
+	bool HasProvider () {									\
+		return this->ZLAbstractFinalizable_HasDependencyOn < PROVIDER_TYPE >::HasProvider ();		\
+	}														\
+															\
+	template < typename PROVIDER_TYPE >						\
+	void SetProvider ( PROVIDER_TYPE& provider ) {			\
+		this->ZLAbstractFinalizable_HasDependencyOn < PROVIDER_TYPE >::SetProvider ( provider );	\
+	}
+
+#define IMPLEMENT_ABSTRACT_FINALIZABLE(TYPE)				\
+															\
+	void ZLAbstractFinalizable_Finalize () {				\
+	}														\
+															\
+	template < typename PROVIDER_TYPE >						\
+	PROVIDER_TYPE& GetProvider () {							\
+		return this->ZLAbstractFinalizable_HasDependencyOn < PROVIDER_TYPE >::GetProvider ();		\
+	}														\
 															\
 	template < typename PROVIDER_TYPE >						\
 	bool HasProvider () {									\
