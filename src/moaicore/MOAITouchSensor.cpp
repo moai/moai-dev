@@ -322,7 +322,8 @@ void MOAITouchSensor::HandleEvent ( USStream& eventStream ) {
 			}
 		}
 		else {
-			
+			if ( idx == UNKNOWN_TOUCH ) return;
+
 			MOAITouchLinger linger;
 			linger.mX = this->mTouches [ idx ].mX;
 			linger.mY = this->mTouches [ idx ].mY;
