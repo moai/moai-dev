@@ -12,11 +12,16 @@
 class MOAIPipelineLayoutVK :
 	public ZLRefCountedObject,
 	public ZLAbstractFinalizable,
-	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK > {
+	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK >,
+	public MOAIAbstractSnapshotSubjectVK < MOAIPipelineLayoutVK >,
+	public MOAIAbstractSnapshotVK {
 protected:
 
 	VkPipelineLayout							mPipelineLayout;
 	ZLLeanArray < MOAIDescriptorSetLayoutVK > 	mDescriptorSetLayouts;
+
+	//----------------------------------------------------------------//
+	MOAIPipelineLayoutVK*		MOAIAbstractSnapshotSubjectVK_MakeSnapshot		();
 
 public:
 

@@ -15,24 +15,25 @@ private:
 
 	friend class MOAICommandBufferVK;
 
-	ZLLeanLink < MOAIAbstractSnapshotVK* > mLink;
-	MOAICommandBufferVK* mCommandBuffer;
+	ZLLeanLink < MOAIAbstractSnapshotVK* > 		mLink;
+	MOAICommandBufferVK* 						mCommandBuffer;
+
+	//----------------------------------------------------------------//
+	void				Remove								();
 
 protected:
 
 	//----------------------------------------------------------------//
-	void				ForceRemove							();
-
-	//----------------------------------------------------------------//
-	virtual void		MOAIAbstractSnapshotVK_OnUnpin		() = 0;
+	void				MOAIAbstractSnapshotVK_OnUnpin		();
 
 public:
 	
 	//----------------------------------------------------------------//
-	void				ForceUnpin							();
 	bool				IsPinned							();
 						MOAIAbstractSnapshotVK				();
 	virtual				~MOAIAbstractSnapshotVK				();
+	void				Pin									( MOAICommandBufferVK& commandBuffer );
+	void				Unpin								();
 };
 
 #endif

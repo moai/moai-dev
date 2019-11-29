@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-gfx-vk/MOAICommandBufferVK.h>
+#include <moai-gfx-vk/MOAIDynamicOneTriVK.h>
 #include <moai-gfx-vk/MOAIFrameBufferVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK_RenderTreeVK.h>
@@ -12,15 +13,6 @@
 //================================================================//
 // MOAIGfxMgrVK_RenderTreeVK
 //================================================================//
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrVK_RenderTreeVK::DrawOneTri ( MOAICommandBufferVK& commandBuffer, VkRect2D rect ) {
-
-	if ( !this->mOneTri ) {
-		this->mOneTri = new MOAIOneTriVK ();
-	}
-	this->mOneTri->Draw ( commandBuffer, rect );
-}
 
 //----------------------------------------------------------------//
 MOAIGfxMgrVK_RenderTreeVK::MOAIGfxMgrVK_RenderTreeVK () :
@@ -52,16 +44,7 @@ void MOAIGfxMgrVK_RenderTreeVK::MOAIGfxMgr_RenderTree_Render () {
 	
 	gfxMgr.BeginFrame ();
 
-//	if ( this->mRenderRoot ) {
-//	
-//		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-//		state.Push ( this->mRenderRoot );
-//		
-//		MOAIDrawable::Draw ( state, -1 );
-//	}
-//	
-//	// flush any stragglers
-//	gfxMgr.FlushToGPU ();
+
 	
 	VkRenderPass renderPass = gfxMgr.GetRenderPass ();
 	VkFramebuffer frameBuffer = gfxMgr.GetFrameBuffer ();
@@ -77,7 +60,23 @@ void MOAIGfxMgrVK_RenderTreeVK::MOAIGfxMgr_RenderTree_Render () {
 	
 	commandBuffer.Begin ();
 	vkCmdBeginRenderPass ( commandBuffer, &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE );
-	this->DrawOneTri ( commandBuffer, swapChain.GetRect ());
+	
+	if ( !this->mOneTri ) {
+		this->mOneTri = new MOAIDynamicOneTriVK ();
+//		this->mOneTri = new MOAIOneTriVK ();
+	}
+	this->mOneTri->Draw ();
+	
+//	if ( this->mRenderRoot ) {
+//		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+//		state.Push ( this->mRenderRoot );
+//		MOAIDrawable::Draw ( state, -1 );
+//	}
+	
+	//	// flush any stragglers
+	//	gfxMgr.FlushToGPU ();
+	
+	
 	vkCmdEndRenderPass ( commandBuffer );
 	commandBuffer.End ();
 

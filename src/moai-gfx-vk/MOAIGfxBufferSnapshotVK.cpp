@@ -44,7 +44,7 @@ MOAIGfxBufferSnapshotVK::~MOAIGfxBufferSnapshotVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxBufferSnapshotVK::MOAIAbstractSnapshotVK_OnUnpin () {
-
-	delete ( this );
-}
+//void MOAIGfxBufferSnapshotVK::MOAIAbstractSnapshotVK_OnUnpin () {
+//
+//	delete ( this );
+//}

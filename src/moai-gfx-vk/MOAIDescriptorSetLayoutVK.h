@@ -31,8 +31,8 @@ private:
 	VkDescriptorPool								mPool; // TODO: need to create more pools on the fly
 	VkDescriptorSetLayout							mLayout;
 
-	STLSet < MOAIDescriptorSetSnapshotVK* >			mPinnedSets;
-	STLSet < MOAIDescriptorSetSnapshotVK* >			mUnpinnedSets;
+	STLSet < MOAIDescriptorSetSnapshotVK* >			mSnapshots;
+	STLSet < MOAIDescriptorSetSnapshotVK* >			mUnpinnedSpanshots;
 
 public:
 

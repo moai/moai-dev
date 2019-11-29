@@ -89,3 +89,7 @@ MOAIPipelineLayoutVK::~MOAIPipelineLayoutVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
+MOAIPipelineLayoutVK* MOAIPipelineLayoutVK::MOAIAbstractSnapshotSubjectVK_MakeSnapshot () {
+
+	return this;
+}

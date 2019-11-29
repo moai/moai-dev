@@ -7,7 +7,6 @@
 #include <moai-gfx-vk/MOAIGfxMgrVKComponents.h>
 
 class MOAICommandBufferVK;
-class MOAIOneTriVK;
 
 //================================================================//
 // MOAIGfxMgrVK_RenderTreeVK
@@ -20,10 +19,7 @@ private:
 
 	friend class MOAIGfxMgrVK;
 
-	ZLStrongPtr < MOAIOneTriVK >	mOneTri;
-
-	//----------------------------------------------------------------//
-	void				DrawOneTri							( MOAICommandBufferVK& commandBuffer, VkRect2D rect );
+	ZLStrongPtr < MOAIDrawable >	mOneTri;
 
 	//----------------------------------------------------------------//
 	void				MOAIGfxMgr_RenderTree_Render		();

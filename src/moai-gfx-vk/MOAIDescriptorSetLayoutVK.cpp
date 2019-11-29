@@ -106,26 +106,35 @@ MOAIDescriptorSetLayoutVK::~MOAIDescriptorSetLayoutVK () {
 	MOAILogicalDeviceVK& logicalDevice = this->GetProvider < MOAILogicalDeviceVK >();
 	vkDestroyDescriptorSetLayout ( logicalDevice, this->mLayout, NULL );
 	vkDestroyDescriptorPool ( logicalDevice, this->mPool, NULL );
+	
+	// TODO: clean up snapshots
+	STLSet < MOAIDescriptorSetSnapshotVK* >::iterator snapshotIt = this->mSnapshots.begin ();
+	for ( ; snapshotIt != this->mSnapshots.end (); ++snapshotIt ) {
+		( *snapshotIt )->Release ();
+	}
 }
 
 //----------------------------------------------------------------//
 MOAIDescriptorSetSnapshotVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSetSnapshot ( const MOAIDescriptorSetSignatureVK& signature ) {
 
-	if (( this->mPinnedSets.size () + this->mUnpinnedSets.size ()) >= MAX_DESCRIPTOR_SETS ) return NULL;
+	if ( this->mSnapshots.size () >= MAX_DESCRIPTOR_SETS ) return NULL;
 	
 	MOAIDescriptorSetSnapshotVK* snapshot = NULL;
-	if ( this->mUnpinnedSets.size ()) {
-		snapshot = *this->mUnpinnedSets.begin ();
-		this->mUnpinnedSets.erase ( snapshot );
+	if ( this->mUnpinnedSpanshots.size ()) {
+		snapshot = *this->mUnpinnedSpanshots.begin ();
+		this->mUnpinnedSpanshots.erase ( snapshot );
 	}
 	else {
 		snapshot = new MOAIDescriptorSetSnapshotVK ();
+		snapshot->Retain ();
+		
 		snapshot->SetProvider < MOAIDescriptorSetLayoutVK >( *this );
 		VkDescriptorSetAllocateInfo allocInfo = MOAIGfxStructVK::descriptorSetAllocateInfo ( this->mPool, &this->mLayout );
 		VK_CHECK_RESULT ( vkAllocateDescriptorSets ( this->GetProvider < MOAILogicalDeviceVK >(), &allocInfo, &snapshot->mDescriptorSet ));
+		
+		this->mSnapshots.insert ( snapshot );
 	}
 	snapshot->Update ( signature );
-	this->mPinnedSets.insert ( snapshot );
 	return snapshot;
 }
 
@@ -133,10 +142,9 @@ MOAIDescriptorSetSnapshotVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSetSnap
 void MOAIDescriptorSetLayoutVK::RetireDescriptorSetSnapshot ( MOAIDescriptorSetSnapshotVK& snapshot ) {
 
 	if ( snapshot == NULL ) return;
-	if ( !this->mPinnedSets.contains ( &snapshot )) return;
+	if ( !this->mSnapshots.contains ( &snapshot )) return;
 
-	this->mPinnedSets.erase ( &snapshot );
-	this->mUnpinnedSets.insert ( &snapshot );
+	this->mUnpinnedSpanshots.insert ( &snapshot );
 }
 
 //----------------------------------------------------------------//

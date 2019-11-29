@@ -12,25 +12,6 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAbstractSnapshotVK::ForceRemove () {
-
-	if ( this->mCommandBuffer ) {
-		this->mCommandBuffer->Invalidate ();
-		this->mLink.Remove ();
-		this->mCommandBuffer = NULL;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIAbstractSnapshotVK::ForceUnpin () {
-
-	if ( this->mCommandBuffer ) {
-		this->ForceRemove ();
-		this->MOAIAbstractSnapshotVK_OnUnpin ();
-	}
-}
-
-//----------------------------------------------------------------//
 bool MOAIAbstractSnapshotVK::IsPinned () {
 	return ( this->mCommandBuffer != NULL );
 }
@@ -43,5 +24,42 @@ MOAIAbstractSnapshotVK::MOAIAbstractSnapshotVK () :
 
 //----------------------------------------------------------------//
 MOAIAbstractSnapshotVK::~MOAIAbstractSnapshotVK () {
-	this->ForceRemove ();
+	this->Remove ();
+}
+
+//----------------------------------------------------------------//
+void MOAIAbstractSnapshotVK::Pin ( MOAICommandBufferVK& commandBuffer ) {
+
+	this->Retain ();
+	this->Unpin ();
+	commandBuffer.mSnapshots.PushBack ( this->mLink );
+	this->mCommandBuffer = &commandBuffer;
+}
+
+//----------------------------------------------------------------//
+void MOAIAbstractSnapshotVK::Remove () {
+
+	if ( this->mCommandBuffer ) {
+		this->mCommandBuffer->Invalidate ();
+		this->mLink.Remove ();
+		this->mCommandBuffer = NULL;
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIAbstractSnapshotVK::Unpin () {
+
+	if ( this->mCommandBuffer ) {
+		this->Remove ();
+		this->MOAIAbstractSnapshotVK_OnUnpin ();
+		this->Release ();
+	}
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIAbstractSnapshotVK::MOAIAbstractSnapshotVK_OnUnpin () {
 }

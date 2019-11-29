@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MOAIONETRIVK_H
-#define MOAIONETRIVK_H
+#ifndef MOAIDYNAMICONETRIVK_H
+#define MOAIDYNAMICONETRIVK_H
 
 #include <moai-gfx-vk/MOAIGfxBufferVK.h>
 
@@ -16,9 +16,9 @@ class MOAITexture2DVK;
 class MOAIUtilityBufferVK;
 
 //================================================================//
-// MOAIOneTriVK
+// MOAIDynamicOneTriVK
 //================================================================//
-class MOAIOneTriVK :
+class MOAIDynamicOneTriVK :
 	public virtual MOAIDrawable {
 private:
 
@@ -52,12 +52,12 @@ private:
 		float viewMatrix [ 16 ];
 	} mMatrixUniforms;
 
-	ZLStrongPtr < MOAIPipelineLayoutVK >		mPipelineLayout;
+//	ZLStrongPtr < MOAIPipelineLayoutVK >		mPipelineLayout;
 	ZLStrongPtr < MOAIDescriptorSetVK >			mDescriptorSet;
 	VkPipeline									mPipeline;
 
 	//----------------------------------------------------------------//
-	void			PreparePipeline				();
+	void			PreparePipeline				( MOAIPipelineLayoutVK& pipeline );
 	void			PrepareTexture				();
 	void			PrepareVertices				( bool useStagingBuffers = true );
 	void			UpdateMatrices				( u32 width, u32 height );
@@ -68,11 +68,11 @@ private:
 
 public:
 
-	DECL_LUA_FACTORY ( MOAIOneTriVK )
+	DECL_LUA_FACTORY ( MOAIDynamicOneTriVK )
 
 	//----------------------------------------------------------------//
-					MOAIOneTriVK				();
-					~MOAIOneTriVK				();
+					MOAIDynamicOneTriVK			();
+					~MOAIDynamicOneTriVK		();
 };
 
 #endif

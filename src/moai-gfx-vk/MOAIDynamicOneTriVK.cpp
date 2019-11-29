@@ -9,7 +9,7 @@
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAIGfxUtilVK.h>
-#include <moai-gfx-vk/MOAIOneTriVK.h>
+#include <moai-gfx-vk/MOAIDynamicOneTriVK.h>
 #include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
@@ -50,25 +50,25 @@ void copyBufferToImage ( VkCommandBuffer& commandBuffer, VkBuffer buffer, VkImag
 }
 
 //================================================================//
-// MOAIOneTriVK
+// MOAIDynamicOneTriVK
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIOneTriVK::MOAIOneTriVK () {
+MOAIDynamicOneTriVK::MOAIDynamicOneTriVK () {
 
 	this->PrepareVertices ();
 	this->PrepareTexture ();
 }
 
 //----------------------------------------------------------------//
-MOAIOneTriVK::~MOAIOneTriVK () {
+MOAIDynamicOneTriVK::~MOAIDynamicOneTriVK () {
 
 	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
 	MOAILogicalDeviceVK& logicalDevice = gfxMgr.GetLogicalDevice ();
 
 	vkDestroyPipeline ( logicalDevice, this->mPipeline, NULL );
 
-	this->mPipelineLayout = NULL;
+//	this->mPipelineLayout = NULL;
 
 	vkDestroyImageView ( logicalDevice, this->mTextureImageView, NULL );
     vkDestroyImage ( logicalDevice, this->mTextureImage, NULL) ;
@@ -76,21 +76,18 @@ MOAIOneTriVK::~MOAIOneTriVK () {
 }
 
 //----------------------------------------------------------------//
-void MOAIOneTriVK::PreparePipeline () {
+void MOAIDynamicOneTriVK::PreparePipeline ( MOAIPipelineLayoutVK& pipeline ) {
 
 	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
 	MOAILogicalDeviceVK& logicalDevice = gfxMgr.GetLogicalDevice ();
 	
-	// create the pipeline layout
-	this->mPipelineLayout = new MOAIPipelineLayoutVK ();
+	pipeline.Initialize ( logicalDevice, 1 );
 	
-	this->mPipelineLayout->Initialize ( logicalDevice, 1 );
-	
-	MOAIDescriptorSetLayoutVK& descriptorSetLayout = this->mPipelineLayout->InitializeDescriptorSetLayout ( ZLIndexCast ( 0 ), 2 );
+	MOAIDescriptorSetLayoutVK& descriptorSetLayout = pipeline.InitializeDescriptorSetLayout ( ZLIndexCast ( 0 ), 2 );
 	descriptorSetLayout.SetBinding ( ZLIndexCast ( 0 ), VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT );
 	descriptorSetLayout.SetBinding ( ZLIndexCast ( 1 ), VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT );
 	
-	this->mPipelineLayout->AffirmPipelineLayout ();
+	pipeline.AffirmPipelineLayout ();
 	
 	this->mDescriptorSet = new MOAIDescriptorSetVK ();
 	this->mDescriptorSet->Initialize ( descriptorSetLayout );
@@ -123,7 +120,7 @@ void MOAIOneTriVK::PreparePipeline () {
 		&depthStencilState,
 		&colorBlendState,
 		&dynamicState,
-		*this->mPipelineLayout,
+		pipeline,
 		renderPass
 	);
 
@@ -135,7 +132,7 @@ void MOAIOneTriVK::PreparePipeline () {
 }
 
 //----------------------------------------------------------------//
-void MOAIOneTriVK::PrepareTexture () {
+void MOAIDynamicOneTriVK::PrepareTexture () {
 
 	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
 	MOAILogicalDeviceVK& logicalDevice = gfxMgr.GetLogicalDevice ();
@@ -206,7 +203,7 @@ void MOAIOneTriVK::PrepareTexture () {
 //----------------------------------------------------------------//
 // Prepare vertex and index buffers for an indexed triangle
 // Also uploads them to device local memory using staging and initializes vertex input and attribute binding to match the vertex shader
-void MOAIOneTriVK::PrepareVertices ( bool useStagingBuffers ) {
+void MOAIDynamicOneTriVK::PrepareVertices ( bool useStagingBuffers ) {
 	
 	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
 	MOAIPhysicalDeviceVK& physicalDevice = gfxMgr.GetPhysicalDevice ();
@@ -283,7 +280,7 @@ void MOAIOneTriVK::PrepareVertices ( bool useStagingBuffers ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIOneTriVK::UpdateMatrices ( u32 width, u32 height ) {
+void MOAIDynamicOneTriVK::UpdateMatrices ( u32 width, u32 height ) {
 
 	if ( !this->mUniforms ) {
 		MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
@@ -324,14 +321,16 @@ void MOAIOneTriVK::UpdateMatrices ( u32 width, u32 height ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
+void MOAIDynamicOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
-
-	this->PreparePipeline ();
 
 	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
 	MOAICommandBufferVK& commandBuffer = gfxMgr.GetCommandBuffer ();
 	MOAISwapChainVK& swapChain = gfxMgr.GetSwapChain ();
+
+	ZLStrongPtr < MOAIPipelineLayoutVK > pipeline = gfxMgr.MakePipeline ();
+	this->PreparePipeline ( *pipeline );
+	commandBuffer.MakeSnapshot < MOAIPipelineLayoutVK >( *pipeline );
 
 	VkRect2D rect = swapChain.GetRect ();
 	
@@ -352,7 +351,7 @@ void MOAIOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 	this->mDescriptorSet->SetDescriptor ( ZLIndexCast ( 0 ), ZLIndexCast ( 0 ), *uniformBufferSnapshot );
 	this->mDescriptorSet->SetDescriptor ( ZLIndexCast ( 1 ), ZLIndexCast ( 0 ), &this->mTextureDescriptor );
 	
-	commandBuffer.BindDescriptorSet ( VK_PIPELINE_BIND_POINT_GRAPHICS, *this->mDescriptorSet, *this->mPipelineLayout, 0 );
+	commandBuffer.BindDescriptorSet ( VK_PIPELINE_BIND_POINT_GRAPHICS, *this->mDescriptorSet, *pipeline, 0 );
 	
 	vkCmdBindPipeline ( commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, this->mPipeline );
 
@@ -360,24 +359,8 @@ void MOAIOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 	vkCmdBindVertexBuffers ( commandBuffer, 0, 1, &this->mVertices->GetBuffer (), offsets );
 	vkCmdBindIndexBuffer ( commandBuffer, this->mIndices->GetBuffer (), 0, VK_INDEX_TYPE_UINT32 );
 	vkCmdDrawIndexed ( commandBuffer, this->mTotalIndices, 1, 0, 0, 1 );
-	
-	// snapshot:
-	// - uniform buffers
-	// - descriptor sets
-	// - index buffers
-	// - vertex buffers
-	// - pipeline layouts
-	// - pipelines
-	// basically: everything
-	// seems like if a resource *can* be mutated, it needs to be copy-on-write
-	// moai gfx state changes uniform and shader bindings on draw
-	// not all uniform buffers are compose-on-draw
-	
-	// snapshots should be cached and re-used, even if they need their data updated
-	// snapshots contain the actual VK resource
-	// snapshots may keep a mem copy for comparison (to check if dirty)
 }
 
 //----------------------------------------------------------------//
-void MOAIOneTriVK::MOAIDrawable_DrawDebug ( int subPrimID ) {
+void MOAIDynamicOneTriVK::MOAIDrawable_DrawDebug ( int subPrimID ) {
 }

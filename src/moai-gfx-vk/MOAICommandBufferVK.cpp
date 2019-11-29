@@ -55,11 +55,9 @@ MOAICommandBufferVK::~MOAICommandBufferVK () {
 }
 
 //----------------------------------------------------------------//
-void MOAICommandBufferVK::PinSnapshot ( MOAIAbstractSnapshotVK& resource ) {
+void MOAICommandBufferVK::PinSnapshot ( MOAIAbstractSnapshotVK& snapshot ) {
 
-	resource.ForceUnpin ();
-	this->mSnapshots.PushBack ( resource.mLink );
-	resource.mCommandBuffer = this;
+	snapshot.Pin ( *this );
 }
 
 //----------------------------------------------------------------//
@@ -91,7 +89,7 @@ void MOAICommandBufferVK::Submit ( VkSemaphore waitSemaphore, VkSemaphore signal
 void MOAICommandBufferVK::UnpinSnapshots () {
 
 	while ( this->mSnapshots.Count ()) {
-		this->mSnapshots.Front ()->ForceUnpin ();
+		this->mSnapshots.Front ()->Unpin ();
 	}
 }
 

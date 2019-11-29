@@ -19,7 +19,7 @@ class MOAIGfxBufferSnapshotVK :
 protected:
 	
 	//----------------------------------------------------------------//
-	void				MOAIAbstractSnapshotVK_OnUnpin				();
+//	void				MOAIAbstractSnapshotVK_OnUnpin				();
 
 public:
 	
