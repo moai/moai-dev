@@ -5,9 +5,9 @@
 #define MOAIDESCRIPTORSETLAYOUTVK_H
 
 class MOAILogicalDeviceVK;
-class MOAIDescriptorSetVK;
 class MOAIDescriptorSetSignatureVK;
-class MOAIDescriptorSetSnapshotVK;
+class MOAIDescriptorSetSignatureVK;
+class MOAIDescriptorSetVK;
 
 //================================================================//
 // MOAIDescriptorSetLayoutVK
@@ -19,8 +19,8 @@ class MOAIDescriptorSetLayoutVK :
 private:
 
 	friend class MOAIDescriptorSetSignatureVK;
-	friend class MOAIDescriptorSetSnapshotVK;
 	friend class MOAIDescriptorSetVK;
+	friend class MOAIDescriptorSetSignatureVK;
 
 	static const ZLSize MAX_DESCRIPTOR_SETS = 16;
 
@@ -31,8 +31,8 @@ private:
 	VkDescriptorPool								mPool; // TODO: need to create more pools on the fly
 	VkDescriptorSetLayout							mLayout;
 
-	STLSet < MOAIDescriptorSetSnapshotVK* >			mSnapshots;
-	STLSet < MOAIDescriptorSetSnapshotVK* >			mUnpinnedSpanshots;
+	STLSet < MOAIDescriptorSetVK* >			mSnapshots;
+	STLSet < MOAIDescriptorSetVK* >			mUnpinnedSpanshots;
 
 public:
 
@@ -59,13 +59,13 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void								AffirmDescritorSetLayout			();
-	void								Initialize							( MOAILogicalDeviceVK& logicalDevice, ZLSize totalBindings );
-										MOAIDescriptorSetLayoutVK			();
-										~MOAIDescriptorSetLayoutVK			();
-	MOAIDescriptorSetSnapshotVK*		ProcureDescriptorSetSnapshot		( const MOAIDescriptorSetVK& descriptorSet );
-	void								RetireDescriptorSetSnapshot			( MOAIDescriptorSetSnapshotVK& snapshot );
-	void								SetBinding							( ZLIndex index, VkDescriptorType descriptorType, VkShaderStageFlags stageFlags, ZLSize descriptorCount = 1 );
+	void						AffirmDescritorSetLayout			();
+	void						Initialize							( MOAILogicalDeviceVK& logicalDevice, ZLSize totalBindings );
+								MOAIDescriptorSetLayoutVK			();
+								~MOAIDescriptorSetLayoutVK			();
+	MOAIDescriptorSetVK*		ProcureDescriptorSet				( const MOAIDescriptorSetSignatureVK& descriptorSet );
+	void						RetireDescriptorSet					( MOAIDescriptorSetVK& snapshot );
+	void						SetBinding							( ZLIndex index, VkDescriptorType descriptorType, VkShaderStageFlags stageFlags, ZLSize descriptorCount = 1 );
 };
 
 #endif

@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include <moai-gfx-vk/MOAIGfxBufferVK.h>
-#include <moai-gfx-vk/MOAIGfxBufferSnapshotVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAIGfxUtilVK.h>
@@ -38,14 +37,6 @@ MOAIGfxBufferVK::~MOAIGfxBufferVK () {
 //================================================================//
 // virtual
 //================================================================//
-
-//----------------------------------------------------------------//
-MOAIGfxBufferSnapshotVK* MOAIGfxBufferVK::MOAIAbstractSnapshotSubjectVK_MakeSnapshot () {
-
-	MOAIGfxBufferSnapshotVK* snapshot = new MOAIGfxBufferSnapshotVK ();
-	snapshot->Initialize ( *this );
-	return snapshot;
-}
 
 //----------------------------------------------------------------//
 void MOAIGfxBufferVK::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {

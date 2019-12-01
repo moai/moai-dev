@@ -67,7 +67,7 @@ MOAIPipelineLayoutVK::~MOAIPipelineLayoutVK () {
 }
 
 ////----------------------------------------------------------------//
-//MOAIDescriptorSetVK* MOAIPipelineLayoutVK::ProcureDescriptorSet ( ZLIndex index ) {
+//MOAIDescriptorSetSignatureVK* MOAIPipelineLayoutVK::ProcureDescriptorSet ( ZLIndex index ) {
 //
 //	assert ( index < this->mDescriptorSetLayouts.Size ());
 //	return this->mDescriptorSetLayouts [ index ].ProcureDescriptorSet ();
@@ -89,7 +89,3 @@ MOAIPipelineLayoutVK::~MOAIPipelineLayoutVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIPipelineLayoutVK* MOAIPipelineLayoutVK::MOAIAbstractSnapshotSubjectVK_MakeSnapshot () {
-
-	return this;
-}

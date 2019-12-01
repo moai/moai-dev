@@ -20,17 +20,17 @@
 // delete, but that would lead to destructors being called twice: first for the explicit cleanup,
 // then again when the instance is deleted or goes out of scope. requiring destructors to be
 // idempotent is slightly better than making explicit superclass calls in cleanup functions, but
-// not much: theremight be less boilerplate (maybe), but we'd need to remember to add extra checks
+// not much: there might be less boilerplate (maybe), but we'd need to remember to add extra checks
 // in the destructor, which is still error-prone.
 //
 // the solution offered here is probably the least of all evils. it works by calling placement delete,
 // immediately followed by placement new. so when an instance is manually finalised, its destructor is
 // called and then its constructor, producing a "clean" instance. since the constructor was called,
-// the instance remains "valid" after explicit finalization and is this safe to destruct again normally.
+// the instance remains "valid" after explicit finalization and is thus safe to destruct again normally.
 //
 // in some cases it won't be ideal to call the constructor again. for example, if the constructor
-// allocates a resource or performs a costly allocation. (OK, this really should never happen, but
-// hey - we should still allow for it). in these cases, an alternate "reconstructor" may be
+// allocates a resource or performs a costly operation. (OK, this really should never happen, but
+// we should still allow for it). in these cases, an alternate "reconstructor" may be
 // specified simply by specifying a unique paramater list to pass to the placement new operator
 // when the instance is re-initialized.
 //

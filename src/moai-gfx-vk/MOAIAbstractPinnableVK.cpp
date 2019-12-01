@@ -2,58 +2,47 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
+#include <moai-gfx-vk/MOAIAbstractPinnableVK.h>
 #include <moai-gfx-vk/MOAICommandBufferVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 
 //================================================================//
-// MOAIAbstractSnapshotVK
+// MOAIAbstractPinnableVK
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIAbstractSnapshotVK::IsPinned () {
-	return ( this->mCommandBuffer != NULL );
+bool MOAIAbstractPinnableVK::IsPinned () {
+	return ( this->mCommandBufferRefCount > 0 );
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractSnapshotVK::MOAIAbstractSnapshotVK () :
-	mLink ( this ),
-	mCommandBuffer ( NULL ) {
+MOAIAbstractPinnableVK::MOAIAbstractPinnableVK () :
+	mCommandBufferRefCount ( 0 ) {
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractSnapshotVK::~MOAIAbstractSnapshotVK () {
-	this->Remove ();
+MOAIAbstractPinnableVK::~MOAIAbstractPinnableVK () {
+
+	assert ( !this->IsPinned ());
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractSnapshotVK::Pin ( MOAICommandBufferVK& commandBuffer ) {
+void MOAIAbstractPinnableVK::Pin () {
 
 	this->Retain ();
-	this->Unpin ();
-	commandBuffer.mSnapshots.PushBack ( this->mLink );
-	this->mCommandBuffer = &commandBuffer;
+	this->mCommandBufferRefCount++;
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractSnapshotVK::Remove () {
+void MOAIAbstractPinnableVK::Unpin () {
 
-	if ( this->mCommandBuffer ) {
-		this->mCommandBuffer->Invalidate ();
-		this->mLink.Remove ();
-		this->mCommandBuffer = NULL;
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIAbstractSnapshotVK::Unpin () {
-
-	if ( this->mCommandBuffer ) {
-		this->Remove ();
+	assert ( this->IsPinned ());
+	this->mCommandBufferRefCount--;
+	if ( this->mCommandBufferRefCount == 0 ) {
 		this->MOAIAbstractSnapshotVK_OnUnpin ();
-		this->Release ();
 	}
+	this->Release ();
 }
 
 //================================================================//
@@ -61,5 +50,3 @@ void MOAIAbstractSnapshotVK::Unpin () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAbstractSnapshotVK::MOAIAbstractSnapshotVK_OnUnpin () {
-}

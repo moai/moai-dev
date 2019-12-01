@@ -4,7 +4,7 @@
 #ifndef MOAICOMMANDBUFFERVK_H
 #define MOAICOMMANDBUFFERVK_H
 
-#include <moai-gfx-vk/MOAIAbstractSnapshotSubjectVK.h>
+#include <moai-gfx-vk/MOAIAbstractPinnableVK.h>
 #include <moai-gfx-vk/MOAIQueueVK.h>
 
 class MOAIDescriptorSetVK;
@@ -19,15 +19,14 @@ class MOAICommandBufferVK :
 	public ZLAbstractFinalizable_HasDependencyOn < MOAIQueueVK > {
 private:
 
-	friend class MOAIAbstractSnapshotVK;
+	friend class MOAIAbstractPinnableVK;
 
 	VkCommandBuffer								mCommandBuffer;
-	ZLLeanList < MOAIAbstractSnapshotVK* >		mSnapshots;
+	STLSet < MOAIAbstractPinnableVK* >			mSnapshots;
 	bool										mIsValid;
 
 	//----------------------------------------------------------------//
 	void				Invalidate					();
-	void				PinSnapshot					( MOAIAbstractSnapshotVK& snapshot );
 
 public:
 
@@ -58,19 +57,10 @@ public:
 	void				End							();
 						MOAICommandBufferVK			();
 						~MOAICommandBufferVK		();
+	void				Pin							( MOAIAbstractPinnableVK& snapshot );
 	void				Submit						();
 	void				Submit						(VkSemaphore waitSemaphore, VkSemaphore signalSemaphore, VkPipelineStageFlags waitStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT );
-	void				UnpinSnapshots				();
-
-	//----------------------------------------------------------------//
-	template < typename SNAPSHOT_TYPE >
-	SNAPSHOT_TYPE* MakeSnapshot ( MOAIAbstractSnapshotSubjectVK < SNAPSHOT_TYPE >& subject ) {
-		SNAPSHOT_TYPE* snapshot = subject.MakeSnapshot ();
-		if ( snapshot ) {
-			this->PinSnapshot ( *snapshot );
-		}
-		return snapshot;
-	}
+	void				UnpinAll					();
 };
 
 #endif

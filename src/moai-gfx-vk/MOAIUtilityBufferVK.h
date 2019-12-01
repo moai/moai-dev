@@ -4,6 +4,7 @@
 #ifndef	MOAIUTILITYBUFFERVK_H
 #define	MOAIUTILITYBUFFERVK_H
 
+class MOAIGfxBufferVK;
 class MOAILogicalDeviceVK;
 class MOAIVertexFormatVK;
 
@@ -50,6 +51,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
+	void				Initialize					( MOAIGfxBufferVK& buffer );
 	void				Initialize					( MOAILogicalDeviceVK& logicalDevice, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags memPropFlags = HOST_BUFFER_PROPS );
 	void				MapAndCopy					( const void* data, size_t size );
 						MOAIUtilityBufferVK			();

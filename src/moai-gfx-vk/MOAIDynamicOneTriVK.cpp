@@ -4,8 +4,7 @@
 #include "pch.h"
 #include <moai-gfx-vk/MOAICommandBufferVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetVK.h>
-#include <moai-gfx-vk/MOAIGfxBufferSnapshotVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetSignatureVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAIGfxUtilVK.h>
@@ -275,22 +274,28 @@ void MOAIDynamicOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 	u32 width = ( u32 )rect.extent.width;
 	u32 height = ( u32 )rect.extent.height;
 
+	this->UpdateMatrices ( width, height );
+	MOAIUtilityBufferVK* uniforms = new MOAIUtilityBufferVK ();
+	uniforms->Initialize ( *this->mUniforms );
+
 	VkViewport viewport = MOAIGfxStructVK::viewport (( float )width, ( float )height, 0.0, 1.0 );
 	VkRect2D scissor = MOAIGfxStructVK::rect2D ( width, height );
 
 	vkCmdSetViewport ( commandBuffer, 0, 1, &viewport );
 	vkCmdSetScissor ( commandBuffer, 0, 1, &scissor );
 
-	this->UpdateMatrices ( width, height );
-
 	// get the pipeline layout (should be moved to pipeline object)
 	MOAIPipelineLayoutVK* pipelineLayout = gfxMgr.GetShaderPresetVK ( ONETRI_SHADER )->GetProgram ()->GetPipelineLayout ();
 
 	// initialize the descriptor set
-	MOAIDescriptorSetVK* descriptorSet = new MOAIDescriptorSetVK ();
-	descriptorSet->Initialize ( pipelineLayout->GetDescriptorSetLayout ( ZLIndexOp::ZERO ));
-	descriptorSet->SetDescriptor ( ZLIndexCast ( 0 ), ZLIndexCast ( 0 ), *commandBuffer.MakeSnapshot < MOAIGfxBufferSnapshotVK >( *this->mUniforms ));
-	descriptorSet->SetDescriptor ( ZLIndexCast ( 1 ), ZLIndexCast ( 0 ), &this->mTextureDescriptor );
+	MOAIDescriptorSetLayoutVK& descriptorSetLayout = pipelineLayout->GetDescriptorSetLayout ( ZLIndexOp::ZERO );
+	
+	MOAIDescriptorSetSignatureVK* descriptorSetSignature = new MOAIDescriptorSetSignatureVK ();
+	descriptorSetSignature->Initialize ( descriptorSetLayout );
+	descriptorSetSignature->SetDescriptor ( ZLIndexCast ( 0 ), ZLIndexCast ( 0 ), *uniforms );
+	descriptorSetSignature->SetDescriptor ( ZLIndexCast ( 1 ), ZLIndexCast ( 0 ), &this->mTextureDescriptor );
+	
+	MOAIDescriptorSetVK* descriptorSet = descriptorSetLayout.ProcureDescriptorSet ( *descriptorSetSignature );
 	
 	commandBuffer.BindDescriptorSet ( VK_PIPELINE_BIND_POINT_GRAPHICS, *descriptorSet, *pipelineLayout, 0 );
 	

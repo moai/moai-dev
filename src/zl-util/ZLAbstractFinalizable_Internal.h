@@ -20,14 +20,14 @@ private:
 	STLSet < ZLAbstractFinalizable* >		mProviders;
 
 	//----------------------------------------------------------------//
-	void										AddClient							( ZLAbstractFinalizable& client );
-	void										AddProvider							( ZLAbstractFinalizable& provider );
+	void						AddClient							( ZLAbstractFinalizable& client );
+	void						AddProvider							( ZLAbstractFinalizable& provider );
 	ZLAbstractFinalizable&		GetOwner							();
-	void										RemoveClient						( ZLAbstractFinalizable& client );
-	void										RemoveProvider						( ZLAbstractFinalizable& provider );
-												ZLAbstractFinalizable_Internal		();
-												ZLAbstractFinalizable_Internal		( ZLAbstractFinalizable& owner );
-												~ZLAbstractFinalizable_Internal		();
+	void						RemoveClient						( ZLAbstractFinalizable& client );
+	void						RemoveProvider						( ZLAbstractFinalizable& provider );
+								ZLAbstractFinalizable_Internal		();
+								ZLAbstractFinalizable_Internal		( ZLAbstractFinalizable& owner );
+								~ZLAbstractFinalizable_Internal		();
 };
 
 #endif

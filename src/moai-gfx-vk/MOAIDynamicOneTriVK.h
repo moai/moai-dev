@@ -8,7 +8,7 @@
 
 class MOAICommandBufferVK;
 class MOAIDescriptorSetLayoutVK;
-class MOAIDescriptorSetVK;
+class MOAIDescriptorSetSignatureVK;
 class MOAIPipelineLayoutVK;
 class MOAIShaderProgramVK;
 class MOAIShaderVK;

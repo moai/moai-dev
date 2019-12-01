@@ -4,8 +4,7 @@
 #include "pch.h"
 #include <moai-gfx-vk/MOAICommandBufferVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetVK.h>
-#include <moai-gfx-vk/MOAIGfxBufferSnapshotVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetSignatureVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAIGfxUtilVK.h>
@@ -92,7 +91,7 @@ void MOAIOneTriVK::PreparePipeline () {
 	
 	this->mPipelineLayout->AffirmPipelineLayout ();
 	
-	this->mDescriptorSet = new MOAIDescriptorSetVK ();
+	this->mDescriptorSet = new MOAIDescriptorSetSignatureVK ();
 	this->mDescriptorSet->Initialize ( descriptorSetLayout );
 
 	VkDynamicState dynamicStateEnables [] = {
@@ -345,14 +344,20 @@ void MOAIOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 	vkCmdSetScissor ( commandBuffer, 0, 1, &scissor );
 
 	this->UpdateMatrices ( width, height );
-
-	MOAIGfxBufferSnapshotVK* uniformBufferSnapshot = commandBuffer.MakeSnapshot < MOAIGfxBufferSnapshotVK >( *this->mUniforms );
+	MOAIUtilityBufferVK* uniforms = new MOAIUtilityBufferVK ();
+	uniforms->Initialize ( *this->mUniforms );
 
 	// initialize the descriptor set
-	this->mDescriptorSet->SetDescriptor ( ZLIndexCast ( 0 ), ZLIndexCast ( 0 ), *uniformBufferSnapshot );
-	this->mDescriptorSet->SetDescriptor ( ZLIndexCast ( 1 ), ZLIndexCast ( 0 ), &this->mTextureDescriptor );
+	MOAIDescriptorSetLayoutVK& descriptorSetLayout = this->mPipelineLayout->GetDescriptorSetLayout ( ZLIndexOp::ZERO );
 	
-	commandBuffer.BindDescriptorSet ( VK_PIPELINE_BIND_POINT_GRAPHICS, *this->mDescriptorSet, *this->mPipelineLayout, 0 );
+	MOAIDescriptorSetSignatureVK* descriptorSetSignature = new MOAIDescriptorSetSignatureVK ();
+	descriptorSetSignature->Initialize ( descriptorSetLayout );
+	descriptorSetSignature->SetDescriptor ( ZLIndexCast ( 0 ), ZLIndexCast ( 0 ), *uniforms );
+	descriptorSetSignature->SetDescriptor ( ZLIndexCast ( 1 ), ZLIndexCast ( 0 ), &this->mTextureDescriptor );
+	
+	MOAIDescriptorSetVK* descriptorSet = descriptorSetLayout.ProcureDescriptorSet ( *descriptorSetSignature );
+	
+	commandBuffer.BindDescriptorSet ( VK_PIPELINE_BIND_POINT_GRAPHICS, *descriptorSet, *this->mPipelineLayout, 0 );
 	
 	vkCmdBindPipeline ( commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, this->mPipeline );
 

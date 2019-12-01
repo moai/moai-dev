@@ -4,7 +4,7 @@
 #ifndef MOAIPIPELINEVK_H
 #define MOAIPIPELINEVK_H
 
-#include <moai-gfx-vk/MOAIAbstractSnapshotSubjectVK.h>
+#include <moai-gfx-vk/MOAIAbstractPinnableVK.h>
 #include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
@@ -14,8 +14,7 @@
 // MOAIPipelineVK
 //================================================================//
 class MOAIPipelineVK :
-	public MOAIAbstractSnapshotSubjectVK < MOAIPipelineVK >,
-	public MOAIAbstractSnapshotVK,
+	public MOAIAbstractPinnableVK,
 	public ZLAbstractFinalizable,
 	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK > {
 protected:
@@ -23,10 +22,7 @@ protected:
 	VkPipeline		mPipeline;
 
 	//----------------------------------------------------------------//
-	MOAIPipelineVK* MOAIAbstractSnapshotSubjectVK_MakeSnapshot () {
-	
-		return this;
-	}
+	void		MOAIAbstractSnapshotVK_OnUnpin		() {}
 
 public:
 

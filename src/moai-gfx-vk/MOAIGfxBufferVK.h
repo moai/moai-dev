@@ -4,8 +4,6 @@
 #ifndef	MOAIGFXBUFFERVK_H
 #define	MOAIGFXBUFFERVK_H
 
-#include <moai-gfx-vk/MOAIAbstractSnapshotSubjectVK.h>
-#include <moai-gfx-vk/MOAIGfxBufferSnapshotVK.h>
 #include <moai-gfx-vk/MOAIGfxResourceVK.h>
 
 class MOAILogicalDeviceVK;
@@ -18,16 +16,14 @@ class MOAIVertexFormatVK;
 class MOAIGfxBufferVK :
 	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK >,
 	public virtual MOAIGfxResourceVK,
-	public virtual MOAIGfxBuffer,
-	public MOAIAbstractSnapshotSubjectVK < MOAIGfxBufferSnapshotVK > {
+	public virtual MOAIGfxBuffer {
 protected:
 
-	friend class MOAIGfxBufferSnapshotVK;
+	friend class MOAIUtilityBufferVK;
 
 	VkBufferUsageFlags		mUsage;
 	
 	//----------------------------------------------------------------//
-	MOAIGfxBufferSnapshotVK*	MOAIAbstractSnapshotSubjectVK_MakeSnapshot		();
 	void						MOAILuaObject_RegisterLuaClass					( MOAIComposer& composer, MOAILuaState& state );
 	void						MOAILuaObject_RegisterLuaFuncs					( MOAIComposer& composer, MOAILuaState& state );
 	void						MOAILuaObject_SerializeIn						( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );

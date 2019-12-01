@@ -1,39 +1,38 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MOAIABSTRACTSNAPSHOTVK_H
-#define MOAIABSTRACTSNAPSHOTVK_H
+#ifndef MOAIABSTRACTPINNABLEVK_H
+#define MOAIABSTRACTPINNABLEVK_H
 
 class MOAICommandBufferVK;
 
 //================================================================//
-// MOAIAbstractSnapshotVK
+// MOAIAbstractPinnableVK
 //================================================================//
-class MOAIAbstractSnapshotVK :
+class MOAIAbstractPinnableVK :
 	public virtual ZLRefCountedObject {
 private:
 
 	friend class MOAICommandBufferVK;
 
-	ZLLeanLink < MOAIAbstractSnapshotVK* > 		mLink;
-	MOAICommandBufferVK* 						mCommandBuffer;
+	ZLSize 				mCommandBufferRefCount;
 
 	//----------------------------------------------------------------//
-	void				Remove								();
+	void				Pin									();
+	void				Unpin								();
 
 protected:
 
 	//----------------------------------------------------------------//
-	virtual void		MOAIAbstractSnapshotVK_OnUnpin		();
+	virtual void		MOAIAbstractSnapshotVK_OnUnpin		() = 0;
 
 public:
 	
 	//----------------------------------------------------------------//
 	bool				IsPinned							();
-						MOAIAbstractSnapshotVK				();
-	virtual				~MOAIAbstractSnapshotVK				();
-	void				Pin									( MOAICommandBufferVK& commandBuffer );
-	void				Unpin								();
+						MOAIAbstractPinnableVK				();
+	virtual				~MOAIAbstractPinnableVK				();
+	
 };
 
 #endif

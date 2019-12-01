@@ -3,8 +3,8 @@
 
 #include "pch.h"
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetSignatureVK.h>
 #include <moai-gfx-vk/MOAILogicalDeviceVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
@@ -107,24 +107,24 @@ MOAIDescriptorSetLayoutVK::~MOAIDescriptorSetLayoutVK () {
 	vkDestroyDescriptorPool ( logicalDevice, this->mPool, NULL );
 	
 	// TODO: clean up snapshots
-	STLSet < MOAIDescriptorSetSnapshotVK* >::iterator snapshotIt = this->mSnapshots.begin ();
+	STLSet < MOAIDescriptorSetVK* >::iterator snapshotIt = this->mSnapshots.begin ();
 	for ( ; snapshotIt != this->mSnapshots.end (); ++snapshotIt ) {
 		( *snapshotIt )->Release ();
 	}
 }
 
 //----------------------------------------------------------------//
-MOAIDescriptorSetSnapshotVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSetSnapshot ( const MOAIDescriptorSetVK& descriptorSet ) {
+MOAIDescriptorSetVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSet ( const MOAIDescriptorSetSignatureVK& descriptorSet ) {
 
 	if ( this->mSnapshots.size () >= MAX_DESCRIPTOR_SETS ) return NULL;
 	
-	MOAIDescriptorSetSnapshotVK* snapshot = NULL;
+	MOAIDescriptorSetVK* snapshot = NULL;
 	if ( this->mUnpinnedSpanshots.size ()) {
 		snapshot = *this->mUnpinnedSpanshots.begin ();
 		this->mUnpinnedSpanshots.erase ( snapshot );
 	}
 	else {
-		snapshot = new MOAIDescriptorSetSnapshotVK ();
+		snapshot = new MOAIDescriptorSetVK ();
 		snapshot->Retain ();
 		
 		snapshot->SetProvider < MOAIDescriptorSetLayoutVK >( *this );
@@ -138,7 +138,7 @@ MOAIDescriptorSetSnapshotVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSetSnap
 }
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetLayoutVK::RetireDescriptorSetSnapshot ( MOAIDescriptorSetSnapshotVK& snapshot ) {
+void MOAIDescriptorSetLayoutVK::RetireDescriptorSet ( MOAIDescriptorSetVK& snapshot ) {
 
 	if ( snapshot == NULL ) return;
 	if ( !this->mSnapshots.contains ( &snapshot )) return;
