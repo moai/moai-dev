@@ -52,12 +52,7 @@ private:
 		float viewMatrix [ 16 ];
 	} mMatrixUniforms;
 
-//	ZLStrongPtr < MOAIPipelineLayoutVK >		mPipelineLayout;
-	ZLStrongPtr < MOAIDescriptorSetVK >			mDescriptorSet;
-	VkPipeline									mPipeline;
-
 	//----------------------------------------------------------------//
-	void			PreparePipeline				( MOAIPipelineLayoutVK& pipeline );
 	void			PrepareTexture				();
 	void			PrepareVertices				( bool useStagingBuffers = true );
 	void			UpdateMatrices				( u32 width, u32 height );

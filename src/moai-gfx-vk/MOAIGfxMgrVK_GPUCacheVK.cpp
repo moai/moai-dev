@@ -28,14 +28,6 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLStrongPtr < MOAIPipelineLayoutVK > MOAIGfxMgrVK_GPUCacheVK::MakePipeline () {
-
-	MOAIPipelineLayoutVK* pipeline = new MOAIPipelineLayoutVK ();
-	
-	return pipeline;
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxMgrVK_GPUCacheVK::ApplyStateChanges () {
 
 	if ( !this->mApplyingStateChanges ) {

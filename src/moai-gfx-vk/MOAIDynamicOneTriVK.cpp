@@ -11,6 +11,7 @@
 #include <moai-gfx-vk/MOAIGfxUtilVK.h>
 #include <moai-gfx-vk/MOAIDynamicOneTriVK.h>
 #include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
+#include <moai-gfx-vk/MOAIPipelineVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
 #include <moai-gfx-vk/MOAITexture2DVK.h>
@@ -66,69 +67,9 @@ MOAIDynamicOneTriVK::~MOAIDynamicOneTriVK () {
 	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
 	MOAILogicalDeviceVK& logicalDevice = gfxMgr.GetLogicalDevice ();
 
-	vkDestroyPipeline ( logicalDevice, this->mPipeline, NULL );
-
-//	this->mPipelineLayout = NULL;
-
 	vkDestroyImageView ( logicalDevice, this->mTextureImageView, NULL );
     vkDestroyImage ( logicalDevice, this->mTextureImage, NULL) ;
     vkFreeMemory ( logicalDevice, this->mTextureImageMemory, NULL );
-}
-
-//----------------------------------------------------------------//
-void MOAIDynamicOneTriVK::PreparePipeline ( MOAIPipelineLayoutVK& pipeline ) {
-
-	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
-	MOAILogicalDeviceVK& logicalDevice = gfxMgr.GetLogicalDevice ();
-	
-	pipeline.Initialize ( logicalDevice, 1 );
-	
-	MOAIDescriptorSetLayoutVK& descriptorSetLayout = pipeline.InitializeDescriptorSetLayout ( ZLIndexCast ( 0 ), 2 );
-	descriptorSetLayout.SetBinding ( ZLIndexCast ( 0 ), VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT );
-	descriptorSetLayout.SetBinding ( ZLIndexCast ( 1 ), VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT );
-	
-	pipeline.AffirmPipelineLayout ();
-	
-	this->mDescriptorSet = new MOAIDescriptorSetVK ();
-	this->mDescriptorSet->Initialize ( descriptorSetLayout );
-
-	VkDynamicState dynamicStateEnables [] = {
-		VK_DYNAMIC_STATE_VIEWPORT,
-		VK_DYNAMIC_STATE_SCISSOR,
-	};
-
-	VkPipelineInputAssemblyStateCreateInfo inputAssemblyState 	= MOAIGfxStructVK::pipelineInputAssemblyStateCreateInfo ();
-	VkPipelineRasterizationStateCreateInfo rasterizationState 	= MOAIGfxStructVK::pipelineRasterizationStateCreateInfo ();
-	VkPipelineColorBlendAttachmentState blendAttachmentState 	= MOAIGfxStructVK::pipelineColorBlendAttachmentState ();
-	VkPipelineColorBlendStateCreateInfo colorBlendState 		= MOAIGfxStructVK::pipelineColorBlendStateCreateInfo ( &blendAttachmentState, 1 ); // one blend attachment state per color attachment (even if blending is not used)
-	VkPipelineViewportStateCreateInfo viewportState 			= MOAIGfxStructVK::pipelineViewportStateCreateInfo (); // overridden by dynamic state
-	VkPipelineDepthStencilStateCreateInfo depthStencilState 	= MOAIGfxStructVK::pipelineDepthStencilStateCreateInfo ();
-	VkPipelineMultisampleStateCreateInfo multisampleState 		= MOAIGfxStructVK::pipelineMultisampleStateCreateInfo ();
-	VkPipelineDynamicStateCreateInfo dynamicState				= MOAIGfxStructVK::pipelineDynamicStateCreateInfo ( dynamicStateEnables, 2 );
-
-	VkRenderPass& renderPass = gfxMgr.GetRenderPass ();
-
-	VkGraphicsPipelineCreateInfo pipelineCreateInfo = MOAIGfxStructVK::graphicsPipelineCreateInfo (
-		NULL,
-		0,
-		NULL,
-		&inputAssemblyState,
-		NULL,
-		&viewportState,
-		&rasterizationState,
-		&multisampleState,
-		&depthStencilState,
-		&colorBlendState,
-		&dynamicState,
-		pipeline,
-		renderPass
-	);
-
-	gfxMgr.GetVertexFormatPresetVK ( XYZWUVC )->UpdatePipelineCreateInfo ( pipelineCreateInfo ); // gfx state
-	gfxMgr.GetShaderPresetVK ( ONETRI_SHADER )->GetProgram ()->UpdatePipelineCreateInfo ( pipelineCreateInfo ); // gfx state
-
-	// Create rendering pipeline using the specified states
-	VK_CHECK_RESULT ( vkCreateGraphicsPipelines ( logicalDevice, VK_NULL_HANDLE, 1, &pipelineCreateInfo, nullptr, &this->mPipeline ));
 }
 
 //----------------------------------------------------------------//
@@ -324,13 +265,10 @@ void MOAIDynamicOneTriVK::UpdateMatrices ( u32 width, u32 height ) {
 void MOAIDynamicOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
-	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
-	MOAICommandBufferVK& commandBuffer = gfxMgr.GetCommandBuffer ();
-	MOAISwapChainVK& swapChain = gfxMgr.GetSwapChain ();
-
-	ZLStrongPtr < MOAIPipelineLayoutVK > pipeline = gfxMgr.MakePipeline ();
-	this->PreparePipeline ( *pipeline );
-	commandBuffer.MakeSnapshot < MOAIPipelineLayoutVK >( *pipeline );
+	MOAIGfxMgrVK& gfxMgr					= MOAIGfxMgrVK::Get ();
+	MOAILogicalDeviceVK& logicalDevice		= gfxMgr.GetLogicalDevice ();
+	MOAICommandBufferVK& commandBuffer		= gfxMgr.GetCommandBuffer ();
+	MOAISwapChainVK& swapChain				= gfxMgr.GetSwapChain ();
 
 	VkRect2D rect = swapChain.GetRect ();
 	
@@ -345,15 +283,25 @@ void MOAIDynamicOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 
 	this->UpdateMatrices ( width, height );
 
-	MOAIGfxBufferSnapshotVK* uniformBufferSnapshot = commandBuffer.MakeSnapshot < MOAIGfxBufferSnapshotVK >( *this->mUniforms );
+	// get the pipeline layout (should be moved to pipeline object)
+	MOAIPipelineLayoutVK* pipelineLayout = gfxMgr.GetShaderPresetVK ( ONETRI_SHADER )->GetProgram ()->GetPipelineLayout ();
 
 	// initialize the descriptor set
-	this->mDescriptorSet->SetDescriptor ( ZLIndexCast ( 0 ), ZLIndexCast ( 0 ), *uniformBufferSnapshot );
-	this->mDescriptorSet->SetDescriptor ( ZLIndexCast ( 1 ), ZLIndexCast ( 0 ), &this->mTextureDescriptor );
+	MOAIDescriptorSetVK* descriptorSet = new MOAIDescriptorSetVK ();
+	descriptorSet->Initialize ( pipelineLayout->GetDescriptorSetLayout ( ZLIndexOp::ZERO ));
+	descriptorSet->SetDescriptor ( ZLIndexCast ( 0 ), ZLIndexCast ( 0 ), *commandBuffer.MakeSnapshot < MOAIGfxBufferSnapshotVK >( *this->mUniforms ));
+	descriptorSet->SetDescriptor ( ZLIndexCast ( 1 ), ZLIndexCast ( 0 ), &this->mTextureDescriptor );
 	
-	commandBuffer.BindDescriptorSet ( VK_PIPELINE_BIND_POINT_GRAPHICS, *this->mDescriptorSet, *pipeline, 0 );
+	commandBuffer.BindDescriptorSet ( VK_PIPELINE_BIND_POINT_GRAPHICS, *descriptorSet, *pipelineLayout, 0 );
 	
-	vkCmdBindPipeline ( commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS, this->mPipeline );
+	MOAIPipelineVK* pipeline = new MOAIPipelineVK ();
+	pipeline->Initialize (
+		logicalDevice,
+		gfxMgr.GetRenderPass (),
+		gfxMgr.GetVertexFormatPresetVK ( XYZWUVC ),
+		gfxMgr.GetShaderPresetVK ( ONETRI_SHADER )
+	);
+	commandBuffer.BindPipeline ( VK_PIPELINE_BIND_POINT_GRAPHICS, *pipeline );
 
 	VkDeviceSize offsets [] = { 0 };
 	vkCmdBindVertexBuffers ( commandBuffer, 0, 1, &this->mVertices->GetBuffer (), offsets );

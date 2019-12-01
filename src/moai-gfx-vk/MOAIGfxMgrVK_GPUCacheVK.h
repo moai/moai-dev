@@ -42,10 +42,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIGfxMgrVK_GPUCacheVK					();
 	virtual			~MOAIGfxMgrVK_GPUCacheVK				();
-
-
-	//----------------------------------------------------------------//
-	ZLStrongPtr < MOAIPipelineLayoutVK >	MakePipeline		(); // this is temporary
 };
 
 #endif

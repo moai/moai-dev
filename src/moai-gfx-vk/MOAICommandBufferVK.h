@@ -9,6 +9,7 @@
 
 class MOAIDescriptorSetVK;
 class MOAIPipelineLayoutVK;
+class MOAIPipelineVK;
 
 //================================================================//
 // MOAICommandBufferVK
@@ -53,6 +54,7 @@ public:
 	//----------------------------------------------------------------//
 	void				Begin						();
 	void				BindDescriptorSet 			( VkPipelineBindPoint pipelineBindPoint, MOAIDescriptorSetVK& descriptorSet, MOAIPipelineLayoutVK& pipelineLayout, u32 firstSet );
+	void				BindPipeline				( VkPipelineBindPoint pipelineBindPoint, MOAIPipelineVK& pipeline );
 	void				End							();
 						MOAICommandBufferVK			();
 						~MOAICommandBufferVK		();

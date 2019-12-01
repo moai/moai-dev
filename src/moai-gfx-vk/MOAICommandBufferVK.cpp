@@ -2,13 +2,14 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
 #include <moai-gfx-vk/MOAICommandBufferVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
-#include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
+#include <moai-gfx-vk/MOAIPipelineVK.h>
 
 //================================================================//
 // MOAICommandBufferVK
@@ -26,7 +27,15 @@ void MOAICommandBufferVK::Begin () {
 void MOAICommandBufferVK::BindDescriptorSet ( VkPipelineBindPoint pipelineBindPoint, MOAIDescriptorSetVK& descriptorSet, MOAIPipelineLayoutVK& pipelineLayout, u32 firstSet ) {
 
 	MOAIDescriptorSetSnapshotVK* descriptorSetSnapshot = this->MakeSnapshot < MOAIDescriptorSetSnapshotVK >( descriptorSet );
+	this->MakeSnapshot < MOAIPipelineLayoutVK >( pipelineLayout );
 	vkCmdBindDescriptorSets ( this->mCommandBuffer, pipelineBindPoint, pipelineLayout, 0, 1, *descriptorSetSnapshot, 0, NULL );
+}
+
+//----------------------------------------------------------------//
+void MOAICommandBufferVK::BindPipeline ( VkPipelineBindPoint pipelineBindPoint, MOAIPipelineVK& pipeline ) {
+
+	this->MakeSnapshot < MOAIPipelineVK >( pipeline );
+	vkCmdBindPipeline ( this->mCommandBuffer, pipelineBindPoint, pipeline );
 }
 
 //----------------------------------------------------------------//

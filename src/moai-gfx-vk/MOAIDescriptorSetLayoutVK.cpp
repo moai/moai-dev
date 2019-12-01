@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetSignatureVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetVK.h>
 #include <moai-gfx-vk/MOAILogicalDeviceVK.h>
@@ -115,7 +114,7 @@ MOAIDescriptorSetLayoutVK::~MOAIDescriptorSetLayoutVK () {
 }
 
 //----------------------------------------------------------------//
-MOAIDescriptorSetSnapshotVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSetSnapshot ( const MOAIDescriptorSetSignatureVK& signature ) {
+MOAIDescriptorSetSnapshotVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSetSnapshot ( const MOAIDescriptorSetVK& descriptorSet ) {
 
 	if ( this->mSnapshots.size () >= MAX_DESCRIPTOR_SETS ) return NULL;
 	
@@ -134,7 +133,7 @@ MOAIDescriptorSetSnapshotVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSetSnap
 		
 		this->mSnapshots.insert ( snapshot );
 	}
-	snapshot->Update ( signature );
+	snapshot->Update ( descriptorSet );
 	return snapshot;
 }
 

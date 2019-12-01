@@ -7,7 +7,7 @@
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
 #include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
 
-class MOAIDescriptorSetSignatureVK;
+class MOAIDescriptorSetVK;
 
 //================================================================//
 // MOAIDescriptorSetSnapshotVK
@@ -23,10 +23,10 @@ private:
 	VkDescriptorSet		mDescriptorSet;
 
 	//----------------------------------------------------------------//
-	void		Update								( const MOAIDescriptorSetSignatureVK& signature );
+	void		Update								( const MOAIDescriptorSetVK& signature );
 
 	//----------------------------------------------------------------//
-	void		MOAIAbstractSnapshotVK_OnUnpin				();
+	void		MOAIAbstractSnapshotVK_OnUnpin		();
 
 public:
 

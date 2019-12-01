@@ -2,8 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx-vk/MOAIDescriptorSetSignatureVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
@@ -22,14 +22,14 @@ MOAIDescriptorSetSnapshotVK::~MOAIDescriptorSetSnapshotVK () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetSnapshotVK::Update ( const MOAIDescriptorSetSignatureVK& signature ) {
+void MOAIDescriptorSetSnapshotVK::Update ( const MOAIDescriptorSetVK& descriptorSet ) {
 
 	assert ( *this != false );
 
-	ZLSize totalWrites = signature.Size ();
+	ZLSize totalWrites = descriptorSet.Size ();
 	VkWriteDescriptorSet* writeDescriptors = ( VkWriteDescriptorSet* )alloca ( totalWrites * sizeof ( VkWriteDescriptorSet ));
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalWrites; ++i ) {
-		writeDescriptors [ i ] = signature [ i ];
+		writeDescriptors [ i ] = descriptorSet [ i ];
 		writeDescriptors [ i ].dstSet = this->mDescriptorSet;
 	}
 

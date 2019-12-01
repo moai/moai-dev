@@ -6,7 +6,6 @@
 
 #include <moai-gfx-vk/MOAIAbstractSnapshotSubjectVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetSignatureVK.h>
 
 class MOAIDescriptorSetSnapshotVK;
 
@@ -18,7 +17,7 @@ class MOAIDescriptorSetVK :
 	public ZLAbstractFinalizable,
 	public ZLAbstractFinalizable_HasDependencyOn < MOAIDescriptorSetLayoutVK >,
 	public MOAIAbstractSnapshotSubjectVK < MOAIDescriptorSetSnapshotVK >,
-	public MOAIDescriptorSetSignatureVK {
+	public ZLLeanArray < VkWriteDescriptorSet > {
 private:
 
 	friend class MOAIDescriptorSetLayoutVK;

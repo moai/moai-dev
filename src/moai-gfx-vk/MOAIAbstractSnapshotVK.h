@@ -24,7 +24,7 @@ private:
 protected:
 
 	//----------------------------------------------------------------//
-	void				MOAIAbstractSnapshotVK_OnUnpin		();
+	virtual void		MOAIAbstractSnapshotVK_OnUnpin		();
 
 public:
 	

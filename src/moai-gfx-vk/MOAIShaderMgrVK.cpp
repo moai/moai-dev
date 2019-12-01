@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
+#include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAIShaderMgrVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
@@ -202,10 +203,23 @@ MOAIShaderProgramVK* MOAIShaderMgrVK::GetProgram ( MOAIShaderPresetEnum shaderID
 //
 //					break;
 
-				case MOAIShaderPresetEnum::ONETRI_SHADER:
+				case MOAIShaderPresetEnum::ONETRI_SHADER: {
+				
+					// set up the pipeline layout
+					MOAIPipelineLayoutVK* pipelineLayout = new MOAIPipelineLayoutVK ();
+					
+					pipelineLayout->Initialize ( logicalDevice, 1 );
+					
+					MOAIDescriptorSetLayoutVK& descriptorSetLayout = pipelineLayout->InitializeDescriptorSetLayout ( ZLIndexCast ( 0 ), 2 );
+					descriptorSetLayout.SetBinding ( ZLIndexCast ( 0 ), VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT );
+					descriptorSetLayout.SetBinding ( ZLIndexCast ( 1 ), VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT );
+					
+					pipelineLayout->AffirmPipelineLayout ();
 				
 					program->LoadModule ( MOAIShaderProgramVK::VERTEX_MODULE, _oneTriShaderVSH, sizeof ( _oneTriShaderVSH ));
 					program->LoadModule ( MOAIShaderProgramVK::FRAGMENT_MODULE, _oneTriShaderFSH, sizeof ( _oneTriShaderFSH ));
+					program->SetPipelineLayout ( pipelineLayout );
+				}
 			}
 
 			this->mPrograms [ shaderID ] = program;

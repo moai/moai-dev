@@ -120,6 +120,8 @@ void MOAIShaderProgramVK::UpdatePipelineCreateInfo ( VkGraphicsPipelineCreateInf
 	
 	info.pStages = this->mStageInfos.GetBuffer ();
 	info.stageCount = ( u32 )this->mStageInfos.Size ();
+	
+	info.layout = *this->mPipelineLayout;
 }
 
 //================================================================//

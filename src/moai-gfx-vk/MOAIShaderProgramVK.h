@@ -5,6 +5,7 @@
 #define	MOAISHADERPROGRAMVK_H
 
 #include <moai-gfx-vk/MOAIGfxResourceVK.h>
+#include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
 
 class MOAILogicalDeviceVK;
 class MOAIShaderVK;
@@ -35,7 +36,8 @@ protected:
 
 	VkShaderModule	mModules [ TOTAL_MODULES ];
 
-	ZLLeanArray < VkPipelineShaderStageCreateInfo >	mStageInfos;
+	ZLLeanArray < VkPipelineShaderStageCreateInfo >		mStageInfos;
+	ZLStrongPtr < MOAIPipelineLayoutVK > 				mPipelineLayout;
 
 	//----------------------------------------------------------------//
 //	static int					_load						( lua_State* L );
@@ -50,6 +52,8 @@ protected:
 public:
 
 	DECL_LUA_FACTORY ( MOAIShaderProgramVK )
+
+	GET_SET ( MOAIPipelineLayoutVK*, PipelineLayout, mPipelineLayout )
 
 	//----------------------------------------------------------------//
 	void				Initialize					( MOAILogicalDeviceVK& logicalDevice );

@@ -63,7 +63,7 @@ public:
 	void								Initialize							( MOAILogicalDeviceVK& logicalDevice, ZLSize totalBindings );
 										MOAIDescriptorSetLayoutVK			();
 										~MOAIDescriptorSetLayoutVK			();
-	MOAIDescriptorSetSnapshotVK*		ProcureDescriptorSetSnapshot		( const MOAIDescriptorSetSignatureVK& signature );
+	MOAIDescriptorSetSnapshotVK*		ProcureDescriptorSetSnapshot		( const MOAIDescriptorSetVK& descriptorSet );
 	void								RetireDescriptorSetSnapshot			( MOAIDescriptorSetSnapshotVK& snapshot );
 	void								SetBinding							( ZLIndex index, VkDescriptorType descriptorType, VkShaderStageFlags stageFlags, ZLSize descriptorCount = 1 );
 };

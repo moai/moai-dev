@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetSignatureVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
@@ -35,7 +34,29 @@ VkWriteDescriptorSet* MOAIDescriptorSetVK::GetWriteDescriptorSet ( ZLIndex bindi
 void MOAIDescriptorSetVK::Initialize ( MOAIDescriptorSetLayoutVK& descriptorSetLayout ) {
 
 	this->SetProvider < MOAIDescriptorSetLayoutVK >( descriptorSetLayout );
-	this->MOAIDescriptorSetSignatureVK::Initialize ( descriptorSetLayout );
+	
+	// set up the pool
+	ZLSize nBindings		= descriptorSetLayout.GetSize ();
+	ZLSize signatureSize	= descriptorSetLayout.GetSignatureSize ();
+
+	// set up the write array
+	this->Init ( signatureSize );
+
+	ZLIndex writeIndex = ZLIndexOp::ZERO;
+	for ( ZLIndex i = ZLIndexOp::ZERO; i < nBindings; ++i ) {
+
+		const VkDescriptorSetLayoutBinding& binding = descriptorSetLayout.mLayoutBindings [ i ];
+
+		for ( u32 dstArrayElement = ZLIndexOp::ZERO; dstArrayElement < binding.descriptorCount; ++dstArrayElement, ++writeIndex ) {
+
+			( *this )[ writeIndex ] = MOAIGfxStructVK::writeDescriptorSet (
+				VK_NULL_HANDLE, // unused by signature
+				binding.binding,
+				dstArrayElement,
+				binding.descriptorType
+			);
+		}
+	}
 }
 
 //----------------------------------------------------------------//
