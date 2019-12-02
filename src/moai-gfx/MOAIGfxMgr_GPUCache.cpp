@@ -302,7 +302,9 @@ void MOAIGfxMgr_GPUCache::SetShader ( MOAIShader* shader ) {
 	
 	this->mPendingState->mShader = shader;
 	
-	// shader dirty flag only cleared if both are null
+	// shader dirty flag only cleared if both are null.
+	// why? because incoming shader might have changes to uniforms.
+	// so we're not using broad-phase rejection for shaders.
 	this->SetFlag ( !( shader || this->mActiveState->mShader ), SHADER );
 }
 

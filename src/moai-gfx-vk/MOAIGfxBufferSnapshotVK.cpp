@@ -13,22 +13,51 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxBufferSnapshotVK::Initialize ( MOAIGfxBufferVK& buffer ) {
+void MOAIGfxBufferSnapshotVK::Initialize ( MOAIGfxBufferVK& buffer, bool useStagingBuffers ) {
 
 	MOAILogicalDeviceVK& logicalDevice = buffer.GetDependency < MOAILogicalDeviceVK >();
 
-	// TODO: support staging buffers
-
 	ZLSize size = buffer.GetSize ();
-
-	this->MOAIGfxBufferSnapshotVK::Initialize (
-		logicalDevice,
-		size,
-		buffer.mUsage,
-		HOST_BUFFER_PROPS
-	);
 	
-	this->MapAndCopy ( buffer.GetConstBuffer (), size );
+	if ( useStagingBuffers ) {
+		
+		// Static data like vertex and index buffer should be stored on the device memory
+		// for optimal (and fastest) access by the GPU
+
+		MOAIGfxBufferSnapshotVK staging;
+		staging.Initialize ( logicalDevice, size, VK_BUFFER_USAGE_TRANSFER_SRC_BIT );
+		staging.MapAndCopy ( buffer.GetConstBuffer (), size );
+
+		this->Initialize ( logicalDevice, size, buffer.mUsage | VK_BUFFER_USAGE_TRANSFER_DST_BIT, MOAIGfxBufferSnapshotVK::DEVICE_BUFFER_PROPS );
+		
+		// Buffer copies have to be submitted to a queue, so we need a command buffer for them
+		// Note: Some devices offer a dedicated transfer queue (with only the transfer bit set) that may be faster when doing lots of copies
+		MOAIQueueVK& graphicsQueue = logicalDevice.GetGraphicsQueue ();
+		
+		MOAICommandBufferVK commandBuffer;
+		graphicsQueue.CreateCommandBuffer ( commandBuffer, VK_COMMAND_BUFFER_LEVEL_PRIMARY, true );
+
+		// Put buffer region copies into command buffer
+		VkBufferCopy copyRegion = {};
+
+		// Vertex buffer
+		copyRegion.size = size;
+		vkCmdCopyBuffer ( commandBuffer, staging, *this, 1, &copyRegion );
+
+		// Flushing the command buffer will also submit it to the queue and uses a fence to ensure that all commands have been executed before returning
+		graphicsQueue.FlushAndFreeCommandBuffer ( commandBuffer );
+	}
+	else {
+	
+		this->Initialize (
+			logicalDevice,
+			size,
+			buffer.mUsage,
+			HOST_BUFFER_PROPS
+		);
+		
+		this->MapAndCopy ( buffer.GetConstBuffer (), size );
+	}
 }
 
 //----------------------------------------------------------------//

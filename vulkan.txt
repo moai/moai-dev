@@ -67,3 +67,25 @@ Dependency DAG implementation (needed yet?)
 DependencyProvider
 DependencyClient - GetProvider< TYPE>();
 Dependency - force cleanup
+
+Select Textures
+    OpenGL -> bind material mgr textures to (global) texture units
+    Vulkan -> bind material mgr textures to (local, ad hoc) descriptor sets
+
+Trigger Redraw
+    Pipeline change (shader, prim, vtx format, etc.)
+    DescriptorSet change (uniforms, textures, etc.)
+
+Uniform (Texture) Composer
+    Needs client type (OpenGL vs Vulkan)
+    Destinations are different - GfxMgr GL texture units vs VK DescriptorSet
+
+OR... Vulkan virtual texture units?
+
+Vulkan GPU cache totally different?
+    GL style cache as broad phase?
+
+UniformComposer uses global state from GfxMgr (pipeline globals and texture units)
+UniformComposer should have nothing to do with MaterialMgr
+MaterialMgr texture names should map 1:1 OpenGL texture units
+DescriptorSet can pull textures from virtual texture units

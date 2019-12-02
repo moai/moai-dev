@@ -56,7 +56,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void				Initialize						( MOAIGfxBufferVK& buffer );
+	void				Initialize						( MOAIGfxBufferVK& buffer, bool useStagingBuffers = false );
 	void				Initialize						( MOAILogicalDeviceVK& logicalDevice, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags memPropFlags = HOST_BUFFER_PROPS );
 	void				MapAndCopy						( const void* data, size_t size );
 						MOAIGfxBufferSnapshotVK			();

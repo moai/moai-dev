@@ -9,11 +9,13 @@
 class MOAICommandBufferVK;
 class MOAIDescriptorSetLayoutVK;
 class MOAIDescriptorSetVK;
+class MOAIGfxBufferSnapshotVK;
+class MOAIIndexBufferVK;
 class MOAIPipelineLayoutVK;
 class MOAIShaderProgramVK;
 class MOAIShaderVK;
 class MOAITexture2DVK;
-class MOAIGfxBufferSnapshotVK;
+class MOAIVertexBufferVK;
 
 //================================================================//
 // MOAIDynamicOneTriVK
@@ -34,10 +36,10 @@ private:
 		}
 	};
 
-	ZLStrongPtr < MOAIGfxBufferSnapshotVK >		mVertices;
-	ZLStrongPtr < MOAIGfxBufferSnapshotVK >		mIndices;
-	ZLStrongPtr < MOAIUniformBufferVK >			mUniforms;
-	ZLStrongPtr < MOAITexture2DVK >				mTexture;
+	ZLStrongPtr < MOAIVertexBufferVK >		mVertices;
+	ZLStrongPtr < MOAIIndexBufferVK >		mIndices;
+	ZLStrongPtr < MOAIUniformBufferVK >		mUniforms;
+	ZLStrongPtr < MOAITexture2DVK >			mTexture;
 	
 	uint32_t				mTotalIndices;
 
@@ -48,8 +50,6 @@ private:
 	} mMatrixUniforms;
 
 	//----------------------------------------------------------------//
-	void			PrepareTexture				();
-	void			PrepareVertices				( bool useStagingBuffers = true );
 	void			UpdateMatrices				( u32 width, u32 height );
 
 	//----------------------------------------------------------------//

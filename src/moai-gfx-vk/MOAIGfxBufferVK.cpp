@@ -17,7 +17,7 @@
 void MOAIGfxBufferVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, ZLSize size, VkBufferUsageFlags usage ) {
 
 	this->SetDependency < MOAILogicalDeviceVK >( logicalDevice );
-	this->Alloc ( size );
+	this->MOAIGfxBuffer::Initialize ( size );
 	this->mUsage = usage;
 }
 

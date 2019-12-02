@@ -106,6 +106,12 @@ MOAIUniformComposer::~MOAIUniformComposer () {
 //----------------------------------------------------------------//
 void MOAIUniformComposer::SelectTextures () {
 
+	// TODO: this needs to go away. texture (in GL) are always.
+	// No reason (right now) to remap material manager texture names to
+	// different texture units. Should be part of the material,
+	// if it exists at all. Removing this, shaders cleanly break
+	// with material manager.
+
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	MOAIMaterialMgr& materialMgr = MOAIMaterialMgr::Get ();
 

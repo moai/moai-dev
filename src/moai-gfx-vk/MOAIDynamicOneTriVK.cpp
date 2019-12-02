@@ -4,19 +4,21 @@
 #include "pch.h"
 #include <moai-gfx-vk/MOAICommandBufferVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetVK.h>
+#include <moai-gfx-vk/MOAIDynamicOneTriVK.h>
 #include <moai-gfx-vk/MOAIGfxBufferSnapshotVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAIGfxUtilVK.h>
-#include <moai-gfx-vk/MOAIDynamicOneTriVK.h>
+#include <moai-gfx-vk/MOAIIndexBufferVK.h>
 #include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
 #include <moai-gfx-vk/MOAIPipelineSnapshotVK.h>
-#include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
+#include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAITexture2DVK.h>
 #include <moai-gfx-vk/MOAITextureSnapshot2DVK.h>
+#include <moai-gfx-vk/MOAIVertexBufferVK.h>
 #include <moai-gfx-vk/MOAIVertexFormatVK.h>
 
 //================================================================//
@@ -26,6 +28,10 @@
 //----------------------------------------------------------------//
 MOAIDynamicOneTriVK::MOAIDynamicOneTriVK () {
 
+	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
+	MOAIPhysicalDeviceVK& physicalDevice = gfxMgr.GetPhysicalDevice ();
+	MOAILogicalDeviceVK& logicalDevice = gfxMgr.GetLogicalDevice ();
+
 	MOAIImage image;
 	image.Load ( "../resources/moai.png", ZLImageTransform::TRUECOLOR );
 	image.Convert ( image );
@@ -33,7 +39,20 @@ MOAIDynamicOneTriVK::MOAIDynamicOneTriVK () {
 	this->mTexture = new MOAITexture2DVK ();
 	this->mTexture->Init ( image, "" );
 
-	this->PrepareVertices ();
+	this->mVertices = new MOAIVertexBufferVK ();
+	this->mVertices->Initialize ( logicalDevice, sizeof ( Vertex ) * 3 );
+
+	this->mVertices->Write < Vertex >( Vertex (  1.0f,  1.0f, 0.0f, 	1.0f, 0.0f, 0.0f,	1.0, 0.0 ));
+	this->mVertices->Write < Vertex >( Vertex ( -1.0f,  1.0f, 0.0f, 	0.0f, 1.0f, 0.0f,	0.0, 0.0 ));
+	this->mVertices->Write < Vertex >( Vertex (  0.0f, -1.0f, 0.0f, 	0.0f, 0.0f, 1.0f,	0.5, 1.0 ));
+
+	this->mIndices = new MOAIIndexBufferVK ();
+	this->mIndices->Initialize ( logicalDevice, sizeof ( u32 ) * 3 );
+	this->mIndices->SetIndexSize ( 4 );
+
+	this->mIndices->Write < u32 >( 0 );
+	this->mIndices->Write < u32 >( 1 );
+	this->mIndices->Write < u32 >( 2 );
 }
 
 //----------------------------------------------------------------//
@@ -41,85 +60,6 @@ MOAIDynamicOneTriVK::~MOAIDynamicOneTriVK () {
 
 	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
 	MOAILogicalDeviceVK& logicalDevice = gfxMgr.GetLogicalDevice ();
-}
-
-//----------------------------------------------------------------//
-// Prepare vertex and index buffers for an indexed triangle
-// Also uploads them to device local memory using staging and initializes vertex input and attribute binding to match the vertex shader
-void MOAIDynamicOneTriVK::PrepareVertices ( bool useStagingBuffers ) {
-	
-	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
-	MOAIPhysicalDeviceVK& physicalDevice = gfxMgr.GetPhysicalDevice ();
-	MOAILogicalDeviceVK& logicalDevice = gfxMgr.GetLogicalDevice ();
-	
-	this->mVertices		= new MOAIGfxBufferSnapshotVK ();
-	this->mIndices		= new MOAIGfxBufferSnapshotVK ();
-	
-	// Setup vertices
-	std::vector < Vertex > vertexBuffer;
-	vertexBuffer.push_back ( Vertex (  1.0f,  1.0f, 0.0f, 	1.0f, 0.0f, 0.0f,	1.0, 0.0 ));
-	vertexBuffer.push_back ( Vertex ( -1.0f,  1.0f, 0.0f, 	0.0f, 1.0f, 0.0f,	0.0, 0.0 ));
-	vertexBuffer.push_back ( Vertex (  0.0f, -1.0f, 0.0f, 	0.0f, 0.0f, 1.0f,	0.5, 1.0 ));
-	uint32_t vertexBufferSize = static_cast < uint32_t >( vertexBuffer.size ()) * sizeof ( Vertex );
-
-	// Setup indices
-	std::vector < uint32_t > indexBuffer;
-	indexBuffer.push_back ( 0 );
-	indexBuffer.push_back ( 1 );
-	indexBuffer.push_back ( 2 );
-	this->mTotalIndices = static_cast < uint32_t >( indexBuffer.size ());
-	uint32_t indexBufferSize = this->mTotalIndices * sizeof ( uint32_t );
-
-	if ( useStagingBuffers ) {
-		
-		// Static data like vertex and index buffer should be stored on the device memory
-		// for optimal (and fastest) access by the GPU
-
-		MOAIGfxBufferSnapshotVK stageVerts;
-		stageVerts.Initialize ( logicalDevice, vertexBufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT );
-		stageVerts.MapAndCopy ( vertexBuffer.data (), vertexBufferSize );
-
-		this->mVertices->Initialize ( logicalDevice, vertexBufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, MOAIGfxBufferSnapshotVK::DEVICE_BUFFER_PROPS );
-		
-		MOAIGfxBufferSnapshotVK stageIndices;
-		stageIndices.Initialize ( logicalDevice, indexBufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT );
-		stageIndices.MapAndCopy ( indexBuffer.data (), indexBufferSize );
-
-		this->mIndices->Initialize ( logicalDevice, indexBufferSize, VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, MOAIGfxBufferSnapshotVK::DEVICE_BUFFER_PROPS );
-
-		// Buffer copies have to be submitted to a queue, so we need a command buffer for them
-		// Note: Some devices offer a dedicated transfer queue (with only the transfer bit set) that may be faster when doing lots of copies
-		MOAIQueueVK& graphicsQueue = logicalDevice.GetGraphicsQueue ();
-		
-		MOAICommandBufferVK commandBuffer;
-		graphicsQueue.CreateCommandBuffer ( commandBuffer, VK_COMMAND_BUFFER_LEVEL_PRIMARY, true );
-
-		// Put buffer region copies into command buffer
-		VkBufferCopy copyRegion = {};
-
-		// Vertex buffer
-		copyRegion.size = vertexBufferSize;
-		vkCmdCopyBuffer ( commandBuffer, stageVerts, *this->mVertices, 1, &copyRegion );
-		
-		// Index buffer
-		copyRegion.size = indexBufferSize;
-		vkCmdCopyBuffer ( commandBuffer, stageIndices, *this->mIndices, 1, &copyRegion );
-
-		// Flushing the command buffer will also submit it to the queue and uses a fence to ensure that all commands have been executed before returning
-		graphicsQueue.FlushAndFreeCommandBuffer ( commandBuffer );
-	}
-	else {
-		
-		// Don't use staging
-		// Create host-visible buffers only and use these for rendering. This is not advised and will usually result in lower rendering performance
-
-		// Vertex buffer
-		this->mVertices->Initialize ( logicalDevice, vertexBufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT );
-		this->mVertices->MapAndCopy ( vertexBuffer.data (), vertexBufferSize );
-		
-		this->mIndices->Initialize ( logicalDevice, indexBufferSize, VK_BUFFER_USAGE_INDEX_BUFFER_BIT );
-		this->mIndices->MapAndCopy ( indexBuffer.data (), indexBufferSize );
-	}
 }
 
 //----------------------------------------------------------------//
@@ -206,13 +146,15 @@ void MOAIDynamicOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 		gfxMgr.GetShaderPresetVK ( ONETRI_SHADER )
 	);
 	commandBuffer.BindPipeline ( VK_PIPELINE_BIND_POINT_GRAPHICS, *pipeline );
-
 	commandBuffer.Pin ( *pipeline );
 
+	MOAIGfxBufferSnapshotVK* vertexBuffer = this->mVertices->GetSnapshot ( commandBuffer );
+	MOAIGfxBufferSnapshotVK* indexBuffer = this->mIndices->GetSnapshot ( commandBuffer );
+
 	VkDeviceSize offsets [] = { 0 };
-	vkCmdBindVertexBuffers ( commandBuffer, 0, 1, &this->mVertices->GetBuffer (), offsets );
-	vkCmdBindIndexBuffer ( commandBuffer, this->mIndices->GetBuffer (), 0, VK_INDEX_TYPE_UINT32 );
-	vkCmdDrawIndexed ( commandBuffer, this->mTotalIndices, 1, 0, 0, 1 );
+	vkCmdBindVertexBuffers ( commandBuffer, 0, 1, &vertexBuffer->GetBuffer (), offsets );
+	vkCmdBindIndexBuffer ( commandBuffer, indexBuffer->GetBuffer (), 0, VK_INDEX_TYPE_UINT32 );
+	vkCmdDrawIndexed ( commandBuffer, this->mIndices->CountIndices (), 1, 0, 0, 1 );
 }
 
 //----------------------------------------------------------------//

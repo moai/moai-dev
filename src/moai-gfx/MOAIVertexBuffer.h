@@ -12,7 +12,7 @@ class MOAIVertexFormat;
 // MOAIVertexBuffer
 //================================================================//
 class MOAIVertexBuffer :
-	public virtual MOAIGfxBuffer{
+	public virtual MOAIGfxBuffer {
 protected:
 
 	//----------------------------------------------------------------//
