@@ -12,7 +12,7 @@
 //----------------------------------------------------------------//
 VkResult MOAISwapChainVK::AcquireNextImage () {
 
-	MOAILogicalDeviceVK& logicalDevice = this->GetProvider < MOAILogicalDeviceVK >();
+	MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
 	if ( !this->mAcquireImageFence ) {
 		this->mAcquireImageFence.Initialize ( logicalDevice );
 	}
@@ -28,7 +28,7 @@ VkResult MOAISwapChainVK::AcquireNextImage ( VkSemaphore presentCompleteSemaphor
 	// By setting timeout to UINT64_MAX we will always wait until the next image has been acquired or an actual error is thrown
 	// With that we don't have to handle VK_NOT_READY
 
-	MOAILogicalDeviceVK& logicalDevice = this->GetProvider < MOAILogicalDeviceVK >();
+	MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
 	return logicalDevice.AcquireNextImageKHR ( this->mSwapChain, UINT64_MAX, presentCompleteSemaphore, VK_NULL_HANDLE, this->mImageIndex );
 }
 
@@ -48,10 +48,10 @@ VkRect2D MOAISwapChainVK::GetRect () const {
 //----------------------------------------------------------------//
 void MOAISwapChainVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, MOAISurfaceVK& surface, u32 width, u32 height ) {
 
-	MOAIPhysicalDeviceVK& physicalDevice = logicalDevice.GetProvider < MOAIPhysicalDeviceVK >();
-	MOAIGfxInstanceVK& instance = physicalDevice.GetProvider < MOAIGfxInstanceVK >();
+	MOAIPhysicalDeviceVK& physicalDevice = logicalDevice.GetDependency < MOAIPhysicalDeviceVK >();
+	MOAIGfxInstanceVK& instance = physicalDevice.GetDependency < MOAIGfxInstanceVK >();
 
-	this->SetProvider < MOAILogicalDeviceVK >( logicalDevice );
+	this->SetDependency < MOAILogicalDeviceVK >( logicalDevice );
 
 	VkSwapchainKHR oldSwapchain = this->mSwapChain;
 
@@ -159,8 +159,8 @@ MOAISwapChainVK::MOAISwapChainVK () :
 //----------------------------------------------------------------//
 MOAISwapChainVK::~MOAISwapChainVK () {
 
-	if ( this->HasProvider < MOAILogicalDeviceVK >()) {
-		MOAILogicalDeviceVK& logicalDevice = this->GetProvider < MOAILogicalDeviceVK >();
+	if ( this->HasDependency < MOAILogicalDeviceVK >()) {
+		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
 
 		if ( this->mSwapChain != VK_NULL_HANDLE ) {
 			for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mImages.Size (); ++i ) {
@@ -176,7 +176,7 @@ MOAISwapChainVK::~MOAISwapChainVK () {
 // TODO: move to MOAILogicalDeviceVK
 VkResult MOAISwapChainVK::QueuePresent ( MOAIQueueVK& queue, VkSemaphore waitSemaphore ) {
 
-	MOAILogicalDeviceVK& logicalDevice = this->GetProvider < MOAILogicalDeviceVK >();
+	MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
 
 	u32 imageIndex = ( u32 )this->mImageIndex;
 

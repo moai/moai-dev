@@ -4,24 +4,20 @@
 #ifndef MOAIPIPELINELAYOUTVK_H
 #define MOAIPIPELINELAYOUTVK_H
 
-#include <moai-gfx-vk/MOAIAbstractPinnableVK.h>
+#include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
 
 //================================================================//
 // MOAIPipelineLayoutVK
 //================================================================//
 class MOAIPipelineLayoutVK :
-	public MOAIAbstractPinnableVK,
+	public ZLRefCountedObject,
 	public ZLAbstractFinalizable,
 	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK > {
 protected:
 
 	VkPipelineLayout							mPipelineLayout;
 	ZLLeanArray < MOAIDescriptorSetLayoutVK > 	mDescriptorSetLayouts;
-
-	//----------------------------------------------------------------//
-	void		MOAIAbstractSnapshotVK_OnUnpin		() {}
-
 
 public:
 
@@ -54,7 +50,7 @@ public:
 	MOAIDescriptorSetLayoutVK&		InitializeDescriptorSetLayout	( ZLIndex index, ZLSize size );
 									MOAIPipelineLayoutVK			();
 									~MOAIPipelineLayoutVK			();
-//	MOAIDescriptorSetSignatureVK*			ProcureDescriptorSet			( ZLIndex index );
+//	MOAIDescriptorSetVK*	ProcureDescriptorSet			( ZLIndex index );
 //	void							SetDescriptorSetLayout			( ZLIndex index, MOAIDescriptorSetLayoutNameVK& name );
 };
 

@@ -8,12 +8,12 @@
 
 class MOAICommandBufferVK;
 class MOAIDescriptorSetLayoutVK;
-class MOAIDescriptorSetSignatureVK;
+class MOAIDescriptorSetVK;
 class MOAIPipelineLayoutVK;
 class MOAIShaderProgramVK;
 class MOAIShaderVK;
 class MOAITexture2DVK;
-class MOAIUtilityBufferVK;
+class MOAIGfxBufferSnapshotVK;
 
 //================================================================//
 // MOAIOneTriVK
@@ -34,8 +34,8 @@ private:
 		}
 	};
 
-	ZLStrongPtr < MOAIUtilityBufferVK >		mVertices;
-	ZLStrongPtr < MOAIUtilityBufferVK >		mIndices;
+	ZLStrongPtr < MOAIGfxBufferSnapshotVK >		mVertices;
+	ZLStrongPtr < MOAIGfxBufferSnapshotVK >		mIndices;
 	ZLStrongPtr < MOAIUniformBufferVK >		mUniforms;
 	
 	VkImage					mTextureImage;
@@ -53,7 +53,7 @@ private:
 	} mMatrixUniforms;
 
 	ZLStrongPtr < MOAIPipelineLayoutVK >			mPipelineLayout;
-	ZLStrongPtr < MOAIDescriptorSetSignatureVK >	mDescriptorSet;
+	ZLStrongPtr < MOAIDescriptorSetVK >	mDescriptorSet;
 	VkPipeline										mPipeline;
 
 	//----------------------------------------------------------------//

@@ -4,8 +4,10 @@
 #ifndef	MOAIGFXBUFFERVK_H
 #define	MOAIGFXBUFFERVK_H
 
+#include <moai-gfx-vk/MOAIAbstractSnapshotFactoryVK.h>
 #include <moai-gfx-vk/MOAIGfxResourceVK.h>
 
+class MOAIGfxBufferSnapshotVK;
 class MOAILogicalDeviceVK;
 class MOAIVertexFormatVK;
 
@@ -14,16 +16,18 @@ class MOAIVertexFormatVK;
 //================================================================//
 // TODO: doxygen
 class MOAIGfxBufferVK :
+	public MOAIAbstractSnapshotFactoryVK < MOAIGfxBufferSnapshotVK >,
 	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK >,
 	public virtual MOAIGfxResourceVK,
 	public virtual MOAIGfxBuffer {
 protected:
 
-	friend class MOAIUtilityBufferVK;
+	friend class MOAIGfxBufferSnapshotVK;
 
 	VkBufferUsageFlags		mUsage;
 	
 	//----------------------------------------------------------------//
+	MOAIGfxBufferSnapshotVK*	MOAIAbstractSnapshotFactoryVK_GetSnapshot		();
 	void						MOAILuaObject_RegisterLuaClass					( MOAIComposer& composer, MOAILuaState& state );
 	void						MOAILuaObject_RegisterLuaFuncs					( MOAIComposer& composer, MOAILuaState& state );
 	void						MOAILuaObject_SerializeIn						( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
@@ -34,9 +38,9 @@ public:
 	IMPLEMENT_FINALIZABLE ( MOAIGfxBufferVK )
 	
 	//----------------------------------------------------------------//
-	void					Initialize				( MOAILogicalDeviceVK& logicalDevice, ZLSize size, VkBufferUsageFlags usage = 0 );
-							MOAIGfxBufferVK			();
-							~MOAIGfxBufferVK		();
+	void						Initialize				( MOAILogicalDeviceVK& logicalDevice, ZLSize size, VkBufferUsageFlags usage = 0 );
+								MOAIGfxBufferVK			();
+								~MOAIGfxBufferVK		();
 };
 
 //================================================================//

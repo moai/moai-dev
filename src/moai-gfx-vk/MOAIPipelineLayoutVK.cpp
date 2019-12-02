@@ -22,7 +22,7 @@ void MOAIPipelineLayoutVK::AffirmPipelineLayout () {
 		descriptorSetLayouts [ i ] = this->mDescriptorSetLayouts [ i ];
 	}
 	
-	MOAILogicalDeviceVK& logicalDevice = this->GetProvider < MOAILogicalDeviceVK >();
+	MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
 	VkPipelineLayoutCreateInfo pPipelineLayoutCreateInfo = MOAIGfxStructVK::pipelineLayoutCreateInfo ( descriptorSetLayouts, ( u32 )total );
 	VK_CHECK_RESULT ( vkCreatePipelineLayout ( logicalDevice, &pPipelineLayoutCreateInfo, NULL, &this->mPipelineLayout ));
 }
@@ -38,7 +38,7 @@ MOAIDescriptorSetLayoutVK& MOAIPipelineLayoutVK::GetDescriptorSetLayout ( ZLInde
 MOAIDescriptorSetLayoutVK& MOAIPipelineLayoutVK::InitializeDescriptorSetLayout ( ZLIndex index, ZLSize size ) {
 
 	assert ( index < this->mDescriptorSetLayouts.Size ());
-	this->mDescriptorSetLayouts [ index ].Initialize ( this->GetProvider < MOAILogicalDeviceVK >(), size );
+	this->mDescriptorSetLayouts [ index ].Initialize ( this->GetDependency < MOAILogicalDeviceVK >(), size );
 	return this->mDescriptorSetLayouts [ index ];
 }
 
@@ -46,7 +46,7 @@ MOAIDescriptorSetLayoutVK& MOAIPipelineLayoutVK::InitializeDescriptorSetLayout (
 void MOAIPipelineLayoutVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, ZLSize size ) {
 
 	assert ( this->mPipelineLayout == VK_NULL_HANDLE );
-	this->SetProvider < MOAILogicalDeviceVK >( logicalDevice );
+	this->SetDependency < MOAILogicalDeviceVK >( logicalDevice );
 	this->mDescriptorSetLayouts.Init ( size );
 }
 
@@ -58,8 +58,8 @@ MOAIPipelineLayoutVK::MOAIPipelineLayoutVK () :
 //----------------------------------------------------------------//
 MOAIPipelineLayoutVK::~MOAIPipelineLayoutVK () {
 
-	if ( this->HasProvider < MOAILogicalDeviceVK >()) {
-		MOAILogicalDeviceVK& logicalDevice = this->GetProvider < MOAILogicalDeviceVK >();
+	if ( this->HasDependency < MOAILogicalDeviceVK >()) {
+		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
 		if ( this->mPipelineLayout != VK_NULL_HANDLE ) {
 			vkDestroyPipelineLayout ( logicalDevice, this->mPipelineLayout, NULL );
 		}
@@ -67,7 +67,7 @@ MOAIPipelineLayoutVK::~MOAIPipelineLayoutVK () {
 }
 
 ////----------------------------------------------------------------//
-//MOAIDescriptorSetSignatureVK* MOAIPipelineLayoutVK::ProcureDescriptorSet ( ZLIndex index ) {
+//MOAIDescriptorSetVK* MOAIPipelineLayoutVK::ProcureDescriptorSet ( ZLIndex index ) {
 //
 //	assert ( index < this->mDescriptorSetLayouts.Size ());
 //	return this->mDescriptorSetLayouts [ index ].ProcureDescriptorSet ();
@@ -78,7 +78,7 @@ MOAIPipelineLayoutVK::~MOAIPipelineLayoutVK () {
 //
 //	assert ( this->mPipelineLayout == VK_NULL_HANDLE );
 //
-//	MOAILogicalDeviceVK& logicalDevice = this->GetProvider < MOAILogicalDeviceVK >();
+//	MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
 //
 //	assert ( index < this->mDescriptorSetLayouts.Size ());
 //	this->mDescriptorSetLayouts [ index ].Initialize ( logicalDevice, name );

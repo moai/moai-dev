@@ -1,20 +1,20 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MOAIPIPELINEVK_H
-#define MOAIPIPELINEVK_H
+#ifndef MOAIPIPELINESNAPSHOTVK_H
+#define MOAIPIPELINESNAPSHOTVK_H
 
-#include <moai-gfx-vk/MOAIAbstractPinnableVK.h>
+#include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
 #include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAIVertexFormatVK.h>
 
 //================================================================//
-// MOAIPipelineVK
+// MOAIPipelineSnapshotVK
 //================================================================//
-class MOAIPipelineVK :
-	public MOAIAbstractPinnableVK,
+class MOAIPipelineSnapshotVK :
+	public MOAIAbstractSnapshotVK,
 	public ZLAbstractFinalizable,
 	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK > {
 protected:
@@ -26,7 +26,7 @@ protected:
 
 public:
 
-	IMPLEMENT_FINALIZABLE ( MOAIPipelineVK )
+	IMPLEMENT_FINALIZABLE ( MOAIPipelineSnapshotVK )
 
 	//----------------------------------------------------------------//
 	operator bool () const {
@@ -46,7 +46,7 @@ public:
 	//----------------------------------------------------------------//
 	void Initialize ( MOAILogicalDeviceVK& logicalDevice, VkRenderPass& renderPass, MOAIVertexFormatVK* vertexFormat, MOAIShaderVK* shader ) {
 	
-		this->SetProvider < MOAILogicalDeviceVK >( logicalDevice );
+		this->SetDependency < MOAILogicalDeviceVK >( logicalDevice );
 
 		VkDynamicState dynamicStateEnables [] = {
 			VK_DYNAMIC_STATE_VIEWPORT,
@@ -86,16 +86,16 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	MOAIPipelineVK () :
+	MOAIPipelineSnapshotVK () :
 		mPipeline ( VK_NULL_HANDLE ) {
 	}
 	
 	//----------------------------------------------------------------//
-	~MOAIPipelineVK () {
+	~MOAIPipelineSnapshotVK () {
 	
 		this->FinalizeDependencies ();
 
-		MOAILogicalDeviceVK& logicalDevice = this->GetProvider < MOAILogicalDeviceVK >();
+		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
 		vkDestroyPipeline ( logicalDevice, this->mPipeline, NULL );
 	}
 };

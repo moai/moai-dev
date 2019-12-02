@@ -13,18 +13,18 @@ class ZLAbstractFinalizable_Internal {
 private:
 
 	friend class ZLAbstractFinalizable;
-	template < typename PROVIDER_TYPE > friend class ZLAbstractFinalizable_HasDependencyOn;
+	template < typename DEPENDENCY_TYPE > friend class ZLAbstractFinalizable_HasDependencyOn;
 
 	ZLAbstractFinalizable*					mOwner;
 	STLSet < ZLAbstractFinalizable* >		mClients;
-	STLSet < ZLAbstractFinalizable* >		mProviders;
+	STLSet < ZLAbstractFinalizable* >		mDependencies;
 
 	//----------------------------------------------------------------//
 	void						AddClient							( ZLAbstractFinalizable& client );
-	void						AddProvider							( ZLAbstractFinalizable& provider );
+	void						AddDependency						( ZLAbstractFinalizable& dependency );
 	ZLAbstractFinalizable&		GetOwner							();
 	void						RemoveClient						( ZLAbstractFinalizable& client );
-	void						RemoveProvider						( ZLAbstractFinalizable& provider );
+	void						RemoveDependency					( ZLAbstractFinalizable& dependency );
 								ZLAbstractFinalizable_Internal		();
 								ZLAbstractFinalizable_Internal		( ZLAbstractFinalizable& owner );
 								~ZLAbstractFinalizable_Internal		();

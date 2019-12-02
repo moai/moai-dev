@@ -8,12 +8,12 @@
 
 class MOAICommandBufferVK;
 class MOAIDescriptorSetLayoutVK;
-class MOAIDescriptorSetSignatureVK;
+class MOAIDescriptorSetVK;
 class MOAIPipelineLayoutVK;
 class MOAIShaderProgramVK;
 class MOAIShaderVK;
 class MOAITexture2DVK;
-class MOAIUtilityBufferVK;
+class MOAIGfxBufferSnapshotVK;
 
 //================================================================//
 // MOAIDynamicOneTriVK
@@ -34,15 +34,10 @@ private:
 		}
 	};
 
-	ZLStrongPtr < MOAIUtilityBufferVK >		mVertices;
-	ZLStrongPtr < MOAIUtilityBufferVK >		mIndices;
-	ZLStrongPtr < MOAIUniformBufferVK >		mUniforms;
-	
-	VkImage					mTextureImage;
-	VkDeviceMemory			mTextureImageMemory;
-	VkImageView				mTextureImageView;
-	VkSampler				mTextureSampler;
-	VkDescriptorImageInfo	mTextureDescriptor;
+	ZLStrongPtr < MOAIGfxBufferSnapshotVK >		mVertices;
+	ZLStrongPtr < MOAIGfxBufferSnapshotVK >		mIndices;
+	ZLStrongPtr < MOAIUniformBufferVK >			mUniforms;
+	ZLStrongPtr < MOAITexture2DVK >				mTexture;
 	
 	uint32_t				mTotalIndices;
 

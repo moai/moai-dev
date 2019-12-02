@@ -2,13 +2,13 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx-vk/MOAIAbstractPinnableVK.h>
+#include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
 #include <moai-gfx-vk/MOAICommandBufferVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
-#include <moai-gfx-vk/MOAIPipelineVK.h>
+#include <moai-gfx-vk/MOAIPipelineSnapshotVK.h>
 
 //================================================================//
 // MOAICommandBufferVK
@@ -23,17 +23,14 @@ void MOAICommandBufferVK::Begin () {
 }
 
 //----------------------------------------------------------------//
-void MOAICommandBufferVK::BindDescriptorSet ( VkPipelineBindPoint pipelineBindPoint, MOAIDescriptorSetVK& descriptorSet, MOAIPipelineLayoutVK& pipelineLayout, u32 firstSet ) {
+void MOAICommandBufferVK::BindDescriptorSet ( VkPipelineBindPoint pipelineBindPoint, MOAIDescriptorSetSnapshotVK& descriptorSet, MOAIPipelineLayoutVK& pipelineLayout, u32 firstSet ) {
 
-	this->Pin ( descriptorSet );
-	this->Pin ( pipelineLayout );
 	vkCmdBindDescriptorSets ( this->mCommandBuffer, pipelineBindPoint, pipelineLayout, firstSet, 1, descriptorSet, 0, NULL );
 }
 
 //----------------------------------------------------------------//
-void MOAICommandBufferVK::BindPipeline ( VkPipelineBindPoint pipelineBindPoint, MOAIPipelineVK& pipeline ) {
+void MOAICommandBufferVK::BindPipeline ( VkPipelineBindPoint pipelineBindPoint, MOAIPipelineSnapshotVK& pipeline ) {
 
-	this->Pin ( pipeline );
 	vkCmdBindPipeline ( this->mCommandBuffer, pipelineBindPoint, pipeline );
 }
 
@@ -58,18 +55,18 @@ MOAICommandBufferVK::~MOAICommandBufferVK () {
 
 	this->UnpinAll ();
 
-	if ( this->HasProvider < MOAIQueueVK >()) {
-		MOAIQueueVK& queue = this->GetProvider < MOAIQueueVK >();
-		vkFreeCommandBuffers ( queue.GetProvider < MOAILogicalDeviceVK >(), queue.mPool, 1, &this->mCommandBuffer );
+	if ( this->HasDependency < MOAIQueueVK >()) {
+		MOAIQueueVK& queue = this->GetDependency < MOAIQueueVK >();
+		vkFreeCommandBuffers ( queue.GetDependency < MOAILogicalDeviceVK >(), queue.mPool, 1, &this->mCommandBuffer );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAICommandBufferVK::Pin ( MOAIAbstractPinnableVK& snapshot ) {
+void MOAICommandBufferVK::Pin ( MOAIAbstractSnapshotVK& snapshot ) {
 
 	if ( !this->mSnapshots.contains ( &snapshot )) {
 		snapshot.Pin ();
-		this->mSnapshots.insert ( &snapshot );
+		this->mSnapshots [ &snapshot ] = &snapshot;
 	}
 }
 
@@ -78,7 +75,7 @@ void MOAICommandBufferVK::Submit () {
 
 	VkSubmitInfo submitInfo = MOAIGfxStructVK::submitInfo ( *this );
 
-	MOAIQueueVK& queue = this->GetProvider < MOAIQueueVK >();
+	MOAIQueueVK& queue = this->GetDependency < MOAIQueueVK >();
 	VK_CHECK_RESULT ( queue.Submit ( submitInfo ));
 }
 
@@ -94,16 +91,19 @@ void MOAICommandBufferVK::Submit ( VkSemaphore waitSemaphore, VkSemaphore signal
 		1,					// One signal semaphore
 		&waitStageMask		// Pointer to the list of pipeline stages that the semaphore waits will occur at
 	);
-	MOAIQueueVK& queue = this->GetProvider < MOAIQueueVK >();
+	MOAIQueueVK& queue = this->GetDependency < MOAIQueueVK >();
 	VK_CHECK_RESULT ( queue.Submit ( submitInfo ));
 }
 
 //----------------------------------------------------------------//
 void MOAICommandBufferVK::UnpinAll () {
 
-	STLSet < MOAIAbstractPinnableVK* >::iterator snapshotIt = this->mSnapshots.begin ();
+	SnapshotMapIt snapshotIt = this->mSnapshots.begin ();
 	for ( ; snapshotIt != this->mSnapshots.end (); ++snapshotIt ) {
-		( *snapshotIt )->Unpin ();
+		ZLWeakPtr < MOAIAbstractSnapshotVK >& snapshotPtr = snapshotIt->second;
+		if ( snapshotPtr ) {
+			snapshotPtr->Unpin ();
+		}
 	}
 	this->mSnapshots.clear ();
 }

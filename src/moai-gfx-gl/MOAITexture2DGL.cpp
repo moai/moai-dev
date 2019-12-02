@@ -32,7 +32,7 @@ bool MOAITexture2DGL::MOAIGfxResourceGL_OnGPUCreate () {
 	bool success = false;
 	
 	if ( this->mImage && this->mImage->IsOK ()) {
-		success =  this->CreateTextureFromImage ( *this->mImage );
+		success = this->CreateTextureFromImage ( *this->mImage );
 	}
 	else if ( this->mTextureDataFormat && this->mTextureData ) {
 		success = this->mTextureDataFormat->CreateTexture ( *this, this->mTextureData, this->mTextureDataSize );

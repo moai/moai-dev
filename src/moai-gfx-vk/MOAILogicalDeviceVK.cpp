@@ -93,7 +93,7 @@ void MOAILogicalDeviceVK::GetSwapchainImagesKHR ( VkSwapchainKHR swapchain, ZLSi
 void MOAILogicalDeviceVK::Initialize ( MOAIPhysicalDeviceVK& physicalDevice, VkQueueFlags requestedQueueTypes, bool requestPresent ) {
 
 	assert ( physicalDevice );
-	this->SetProvider < MOAIPhysicalDeviceVK >( physicalDevice );
+	this->SetDependency < MOAIPhysicalDeviceVK >( physicalDevice );
 
     // Desired queues need to be requested upon logical device creation
     // Due to differing queue family configurations of Vulkan implementations this can be a bit tricky, especially if the application
@@ -162,7 +162,7 @@ void MOAILogicalDeviceVK::InitQueue ( MOAIQueueVK& queue, u32 index ) {
 		VK_CHECK_RESULT ( vkCreateCommandPool ( this->mDevice, &commandPoolCreateInfo, NULL, &this->mCommandPools [ index ]));
 	}
 	queue.mPool = this->mCommandPools [ index ];
-	queue.SetProvider < MOAILogicalDeviceVK >( *this );
+	queue.SetDependency < MOAILogicalDeviceVK >( *this );
 }
 
 //----------------------------------------------------------------//

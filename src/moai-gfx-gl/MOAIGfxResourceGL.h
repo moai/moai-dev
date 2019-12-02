@@ -93,7 +93,6 @@ public:
 					MOAIGfxResourceGL			();
 	virtual			~MOAIGfxResourceGL			();
 	bool			Purge						( u32 age );
-	void			ScheduleForGPUDestroy		();
 	bool			ScheduleForGPUUpdate		( PipelineHint hint = RENDER_PIPELINE );
 };
 

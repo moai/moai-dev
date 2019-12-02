@@ -2,40 +2,38 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx-vk/MOAIAbstractPinnableVK.h>
+#include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
 #include <moai-gfx-vk/MOAICommandBufferVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 
 //================================================================//
-// MOAIAbstractPinnableVK
+// MOAIAbstractSnapshotVK
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIAbstractPinnableVK::IsPinned () {
+bool MOAIAbstractSnapshotVK::IsPinned () {
 	return ( this->mCommandBufferRefCount > 0 );
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractPinnableVK::MOAIAbstractPinnableVK () :
+MOAIAbstractSnapshotVK::MOAIAbstractSnapshotVK () :
 	mCommandBufferRefCount ( 0 ) {
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractPinnableVK::~MOAIAbstractPinnableVK () {
-
-	assert ( !this->IsPinned ());
+MOAIAbstractSnapshotVK::~MOAIAbstractSnapshotVK () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractPinnableVK::Pin () {
+void MOAIAbstractSnapshotVK::Pin () {
 
 	this->Retain ();
 	this->mCommandBufferRefCount++;
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractPinnableVK::Unpin () {
+void MOAIAbstractSnapshotVK::Unpin () {
 
 	assert ( this->IsPinned ());
 	this->mCommandBufferRefCount--;

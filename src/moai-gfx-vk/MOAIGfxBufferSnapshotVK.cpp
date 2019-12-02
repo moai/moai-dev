@@ -6,22 +6,22 @@
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAIGfxUtilVK.h>
 #include <moai-gfx-vk/MOAILogicalDeviceVK.h>
-#include <moai-gfx-vk/MOAIUtilityBufferVK.h>
+#include <moai-gfx-vk/MOAIGfxBufferSnapshotVK.h>
 
 //================================================================//
-// MOAIUtilityBufferVK
+// MOAIGfxBufferSnapshotVK
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIUtilityBufferVK::Initialize ( MOAIGfxBufferVK& buffer ) {
+void MOAIGfxBufferSnapshotVK::Initialize ( MOAIGfxBufferVK& buffer ) {
 
-	MOAILogicalDeviceVK& logicalDevice = buffer.GetProvider < MOAILogicalDeviceVK >();
+	MOAILogicalDeviceVK& logicalDevice = buffer.GetDependency < MOAILogicalDeviceVK >();
 
 	// TODO: support staging buffers
 
 	ZLSize size = buffer.GetSize ();
 
-	this->MOAIUtilityBufferVK::Initialize (
+	this->MOAIGfxBufferSnapshotVK::Initialize (
 		logicalDevice,
 		size,
 		buffer.mUsage,
@@ -32,9 +32,9 @@ void MOAIUtilityBufferVK::Initialize ( MOAIGfxBufferVK& buffer ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIUtilityBufferVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags memPropFlags ) {
+void MOAIGfxBufferSnapshotVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags memPropFlags ) {
 
-	this->SetProvider < MOAILogicalDeviceVK >( logicalDevice );
+	this->SetDependency < MOAILogicalDeviceVK >( logicalDevice );
 
 	VkBufferCreateInfo vertexBufferInfo = MOAIGfxStructVK::bufferCreateInfo ( size, usage );
 	VK_CHECK_RESULT ( vkCreateBuffer ( logicalDevice, &vertexBufferInfo, NULL, &this->mBuffer ));
@@ -50,7 +50,7 @@ void MOAIUtilityBufferVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, VkDev
 		memReqs.size,
 		MOAIGfxUtilVK::GetMemoryTypeIndex (
 			memReqs.memoryTypeBits,
-			logicalDevice.GetProvider < MOAIPhysicalDeviceVK >().mMemoryProperties,
+			logicalDevice.GetDependency < MOAIPhysicalDeviceVK >().mMemoryProperties,
 			HOST_BUFFER_PROPS
 		)
 	);
@@ -64,11 +64,11 @@ void MOAIUtilityBufferVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, VkDev
 }
 
 //----------------------------------------------------------------//
-void MOAIUtilityBufferVK::MapAndCopy ( const void* data, size_t size ) {
+void MOAIGfxBufferSnapshotVK::MapAndCopy ( const void* data, size_t size ) {
 
 	assert ( this->mMemPropFlags & HOST_BUFFER_PROPS );
 
-	MOAILogicalDeviceVK& logicalDevice = this->GetProvider < MOAILogicalDeviceVK >();
+	MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
 
 	void* mappedAddr;
 	VK_CHECK_RESULT ( vkMapMemory ( logicalDevice, this->mMemory, 0, this->mAllocationSize, 0, &mappedAddr ));
@@ -77,7 +77,7 @@ void MOAIUtilityBufferVK::MapAndCopy ( const void* data, size_t size ) {
 }
 
 //----------------------------------------------------------------//
-MOAIUtilityBufferVK::MOAIUtilityBufferVK () :
+MOAIGfxBufferSnapshotVK::MOAIGfxBufferSnapshotVK () :
 	mBuffer ( VK_NULL_HANDLE ),
 	mMemory ( VK_NULL_HANDLE ),
 	mAllocationSize ( 0 ),
@@ -86,10 +86,10 @@ MOAIUtilityBufferVK::MOAIUtilityBufferVK () :
 }
 
 //----------------------------------------------------------------//
-MOAIUtilityBufferVK::~MOAIUtilityBufferVK () {
+MOAIGfxBufferSnapshotVK::~MOAIGfxBufferSnapshotVK () {
 
-	if ( this->HasProvider < MOAILogicalDeviceVK >()) {
-		MOAILogicalDeviceVK& logicalDevice = this->GetProvider < MOAILogicalDeviceVK >();
+	if ( this->HasDependency < MOAILogicalDeviceVK >()) {
+		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
 
 		vkDestroyBuffer ( logicalDevice, this->mBuffer, NULL );
 		vkFreeMemory ( logicalDevice, this->mMemory, NULL );

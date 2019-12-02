@@ -4,12 +4,12 @@
 #ifndef MOAICOMMANDBUFFERVK_H
 #define MOAICOMMANDBUFFERVK_H
 
-#include <moai-gfx-vk/MOAIAbstractPinnableVK.h>
+#include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
 #include <moai-gfx-vk/MOAIQueueVK.h>
 
-class MOAIDescriptorSetVK;
+class MOAIDescriptorSetSnapshotVK;
 class MOAIPipelineLayoutVK;
-class MOAIPipelineVK;
+class MOAIPipelineSnapshotVK;
 
 //================================================================//
 // MOAICommandBufferVK
@@ -19,11 +19,14 @@ class MOAICommandBufferVK :
 	public ZLAbstractFinalizable_HasDependencyOn < MOAIQueueVK > {
 private:
 
-	friend class MOAIAbstractPinnableVK;
+	typedef STLMap < const MOAIAbstractSnapshotVK*, ZLWeakPtr < MOAIAbstractSnapshotVK > >		SnapshotMap;
+	typedef SnapshotMap::iterator																SnapshotMapIt;
 
-	VkCommandBuffer								mCommandBuffer;
-	STLSet < MOAIAbstractPinnableVK* >			mSnapshots;
-	bool										mIsValid;
+	friend class MOAIAbstractSnapshotVK;
+
+	VkCommandBuffer		mCommandBuffer;
+	SnapshotMap			mSnapshots;
+	bool				mIsValid;
 
 	//----------------------------------------------------------------//
 	void				Invalidate					();
@@ -52,12 +55,12 @@ public:
 	
 	//----------------------------------------------------------------//
 	void				Begin						();
-	void				BindDescriptorSet 			( VkPipelineBindPoint pipelineBindPoint, MOAIDescriptorSetVK& descriptorSet, MOAIPipelineLayoutVK& pipelineLayout, u32 firstSet );
-	void				BindPipeline				( VkPipelineBindPoint pipelineBindPoint, MOAIPipelineVK& pipeline );
+	void				BindDescriptorSet 			( VkPipelineBindPoint pipelineBindPoint, MOAIDescriptorSetSnapshotVK& descriptorSet, MOAIPipelineLayoutVK& pipelineLayout, u32 firstSet );
+	void				BindPipeline				( VkPipelineBindPoint pipelineBindPoint, MOAIPipelineSnapshotVK& pipeline );
 	void				End							();
 						MOAICommandBufferVK			();
 						~MOAICommandBufferVK		();
-	void				Pin							( MOAIAbstractPinnableVK& snapshot );
+	void				Pin							( MOAIAbstractSnapshotVK& snapshot );
 	void				Submit						();
 	void				Submit						(VkSemaphore waitSemaphore, VkSemaphore signalSemaphore, VkPipelineStageFlags waitStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT );
 	void				UnpinAll					();

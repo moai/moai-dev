@@ -4,50 +4,20 @@
 #include "pch.h"
 #include <moai-gfx-vk/MOAICommandBufferVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetSignatureVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
+#include <moai-gfx-vk/MOAIGfxBufferSnapshotVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAIGfxUtilVK.h>
 #include <moai-gfx-vk/MOAIDynamicOneTriVK.h>
 #include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
-#include <moai-gfx-vk/MOAIPipelineVK.h>
+#include <moai-gfx-vk/MOAIPipelineSnapshotVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
 #include <moai-gfx-vk/MOAITexture2DVK.h>
-#include <moai-gfx-vk/MOAIUtilityBufferVK.h>
+#include <moai-gfx-vk/MOAITextureSnapshot2DVK.h>
 #include <moai-gfx-vk/MOAIVertexFormatVK.h>
-
-void transitionImageLayout ( VkCommandBuffer& commandBuffer, VkImage image, VkImageLayout oldLayout, VkImageLayout newLayout ) {
-
-	VkImageMemoryBarrier barrier =MOAIGfxStructVK::imageMemoryBarrier ( image, oldLayout, newLayout );
-	
-	vkCmdPipelineBarrier (
-		commandBuffer,
-		0, // TODO
-		0, // TODO
-		0,
-		0, NULL,
-		0, NULL,
-		1, &barrier
-	);
-}
-
-void copyBufferToImage ( VkCommandBuffer& commandBuffer, VkBuffer buffer, VkImage image, uint32_t width, uint32_t height ) {
-
-	VkBufferImageCopy bufferImageCopy = MOAIGfxStructVK::bufferImageCopy (
-		MOAIGfxStructVK::offset3D ( 0, 0, 0 ),
-		MOAIGfxStructVK::extent3D ( width, height, 1 )
-	);
-
-	vkCmdCopyBufferToImage (
-		commandBuffer,
-		buffer,
-		image,
-		VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL,
-		1,
-		&bufferImageCopy
-	);
-}
 
 //================================================================//
 // MOAIDynamicOneTriVK
@@ -56,8 +26,14 @@ void copyBufferToImage ( VkCommandBuffer& commandBuffer, VkBuffer buffer, VkImag
 //----------------------------------------------------------------//
 MOAIDynamicOneTriVK::MOAIDynamicOneTriVK () {
 
+	MOAIImage image;
+	image.Load ( "../resources/moai.png", ZLImageTransform::TRUECOLOR );
+	image.Convert ( image );
+
+	this->mTexture = new MOAITexture2DVK ();
+	this->mTexture->Init ( image, "" );
+
 	this->PrepareVertices ();
-	this->PrepareTexture ();
 }
 
 //----------------------------------------------------------------//
@@ -65,79 +41,6 @@ MOAIDynamicOneTriVK::~MOAIDynamicOneTriVK () {
 
 	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
 	MOAILogicalDeviceVK& logicalDevice = gfxMgr.GetLogicalDevice ();
-
-	vkDestroyImageView ( logicalDevice, this->mTextureImageView, NULL );
-    vkDestroyImage ( logicalDevice, this->mTextureImage, NULL) ;
-    vkFreeMemory ( logicalDevice, this->mTextureImageMemory, NULL );
-}
-
-//----------------------------------------------------------------//
-void MOAIDynamicOneTriVK::PrepareTexture () {
-
-	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
-	MOAILogicalDeviceVK& logicalDevice = gfxMgr.GetLogicalDevice ();
-	MOAIPhysicalDeviceVK& physicalDevice = gfxMgr.GetPhysicalDevice ();
-
-	MOAIImage image;
-	image.Load ( "../resources/moai.png", ZLImageTransform::TRUECOLOR );
-	image.Convert ( image );
-
-	size_t bitmapSize = image.GetBitmapSize ();
-	const void* bitmap = image.GetBitmap ();
-	u32 width = image.GetWidth ();
-	u32 height = image.GetHeight ();
-
-	MOAIUtilityBufferVK stageImage;
-	stageImage.Initialize ( logicalDevice, bitmapSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT );
-	stageImage.MapAndCopy ( bitmap, bitmapSize );
-	
-	VkImageCreateInfo imageInfo = MOAIGfxStructVK::imageCreateInfo (
-		VK_IMAGE_TYPE_2D,
-		VK_FORMAT_R8G8B8A8_UNORM,
-		MOAIGfxStructVK::extent3D ( width, height, 1 )
-	);
-	
-	this->mTextureImage;
-    VK_CHECK_RESULT ( vkCreateImage ( logicalDevice, &imageInfo, NULL, &this->mTextureImage ));
-
-	VkMemoryRequirements memReqs;
-	vkGetImageMemoryRequirements ( logicalDevice, this->mTextureImage, &memReqs );
-
-	u32 memoryTypeIndex;
-	bool didFindMemoryTypeIndex = physicalDevice.FindMemoryTypeIndex ( memoryTypeIndex, memReqs.memoryTypeBits );
-	assert ( didFindMemoryTypeIndex );
-
-	VkMemoryAllocateInfo memoryAllocateInfo = MOAIGfxStructVK::memoryAllocateInfo ( memReqs.size, memoryTypeIndex );
-
-	this->mTextureImageMemory;
-	VK_CHECK_RESULT ( vkAllocateMemory ( logicalDevice, &memoryAllocateInfo, nullptr, &this->mTextureImageMemory ));
-	VK_CHECK_RESULT ( vkBindImageMemory ( logicalDevice, this->mTextureImage, this->mTextureImageMemory, 0 ));
-	
-	// Buffer copies have to be submitted to a queue, so we need a command buffer for them
-	// Note: Some devices offer a dedicated transfer queue (with only the transfer bit set) that may be faster when doing lots of copies
-	MOAIQueueVK& graphicsQueue = logicalDevice.GetGraphicsQueue ();
-	
-	MOAICommandBufferVK commandBuffer;
-	graphicsQueue.CreateCommandBuffer ( commandBuffer, VK_COMMAND_BUFFER_LEVEL_PRIMARY, true );
-
-	transitionImageLayout ( commandBuffer, this->mTextureImage, VK_IMAGE_LAYOUT_UNDEFINED, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL );
-	copyBufferToImage ( commandBuffer, stageImage, this->mTextureImage, width, height );
-	transitionImageLayout ( commandBuffer, this->mTextureImage, VK_IMAGE_LAYOUT_TRANSFER_DST_OPTIMAL, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL);
-
-	// Flushing the command buffer will also submit it to the queue and uses a fence to ensure that all commands have been executed before returning
-	graphicsQueue.FlushAndFreeCommandBuffer ( commandBuffer );
-	
-	VkSamplerCreateInfo samplerInfo = MOAIGfxStructVK::samplerCreateInfo ();
-	VK_CHECK_RESULT ( vkCreateSampler ( logicalDevice, &samplerInfo, nullptr, &this->mTextureSampler ));
-	
-	VkImageViewCreateInfo viewInfo = MOAIGfxStructVK::imageViewCreateInfo (
-		this->mTextureImage,
-		VK_IMAGE_VIEW_TYPE_2D,
-		VK_FORMAT_R8G8B8A8_UNORM
-	);
-	VK_CHECK_RESULT ( vkCreateImageView ( logicalDevice, &viewInfo, nullptr, &this->mTextureImageView ));
-	
-	this->mTextureDescriptor = MOAIGfxStructVK::descriptorImageInfo ( this->mTextureSampler, this->mTextureImageView, VK_IMAGE_LAYOUT_SHADER_READ_ONLY_OPTIMAL );
 }
 
 //----------------------------------------------------------------//
@@ -149,8 +52,8 @@ void MOAIDynamicOneTriVK::PrepareVertices ( bool useStagingBuffers ) {
 	MOAIPhysicalDeviceVK& physicalDevice = gfxMgr.GetPhysicalDevice ();
 	MOAILogicalDeviceVK& logicalDevice = gfxMgr.GetLogicalDevice ();
 	
-	this->mVertices		= new MOAIUtilityBufferVK ();
-	this->mIndices		= new MOAIUtilityBufferVK ();
+	this->mVertices		= new MOAIGfxBufferSnapshotVK ();
+	this->mIndices		= new MOAIGfxBufferSnapshotVK ();
 	
 	// Setup vertices
 	std::vector < Vertex > vertexBuffer;
@@ -172,17 +75,17 @@ void MOAIDynamicOneTriVK::PrepareVertices ( bool useStagingBuffers ) {
 		// Static data like vertex and index buffer should be stored on the device memory
 		// for optimal (and fastest) access by the GPU
 
-		MOAIUtilityBufferVK stageVerts;
+		MOAIGfxBufferSnapshotVK stageVerts;
 		stageVerts.Initialize ( logicalDevice, vertexBufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT );
 		stageVerts.MapAndCopy ( vertexBuffer.data (), vertexBufferSize );
 
-		this->mVertices->Initialize ( logicalDevice, vertexBufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, MOAIUtilityBufferVK::DEVICE_BUFFER_PROPS );
+		this->mVertices->Initialize ( logicalDevice, vertexBufferSize, VK_BUFFER_USAGE_VERTEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, MOAIGfxBufferSnapshotVK::DEVICE_BUFFER_PROPS );
 		
-		MOAIUtilityBufferVK stageIndices;
+		MOAIGfxBufferSnapshotVK stageIndices;
 		stageIndices.Initialize ( logicalDevice, indexBufferSize, VK_BUFFER_USAGE_TRANSFER_SRC_BIT );
 		stageIndices.MapAndCopy ( indexBuffer.data (), indexBufferSize );
 
-		this->mIndices->Initialize ( logicalDevice, indexBufferSize, VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, MOAIUtilityBufferVK::DEVICE_BUFFER_PROPS );
+		this->mIndices->Initialize ( logicalDevice, indexBufferSize, VK_BUFFER_USAGE_INDEX_BUFFER_BIT | VK_BUFFER_USAGE_TRANSFER_DST_BIT, MOAIGfxBufferSnapshotVK::DEVICE_BUFFER_PROPS );
 
 		// Buffer copies have to be submitted to a queue, so we need a command buffer for them
 		// Note: Some devices offer a dedicated transfer queue (with only the transfer bit set) that may be faster when doing lots of copies
@@ -275,8 +178,6 @@ void MOAIDynamicOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 	u32 height = ( u32 )rect.extent.height;
 
 	this->UpdateMatrices ( width, height );
-	MOAIUtilityBufferVK* uniforms = new MOAIUtilityBufferVK ();
-	uniforms->Initialize ( *this->mUniforms );
 
 	VkViewport viewport = MOAIGfxStructVK::viewport (( float )width, ( float )height, 0.0, 1.0 );
 	VkRect2D scissor = MOAIGfxStructVK::rect2D ( width, height );
@@ -290,16 +191,14 @@ void MOAIDynamicOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 	// initialize the descriptor set
 	MOAIDescriptorSetLayoutVK& descriptorSetLayout = pipelineLayout->GetDescriptorSetLayout ( ZLIndexOp::ZERO );
 	
-	MOAIDescriptorSetSignatureVK* descriptorSetSignature = new MOAIDescriptorSetSignatureVK ();
-	descriptorSetSignature->Initialize ( descriptorSetLayout );
-	descriptorSetSignature->SetDescriptor ( ZLIndexCast ( 0 ), ZLIndexCast ( 0 ), *uniforms );
-	descriptorSetSignature->SetDescriptor ( ZLIndexCast ( 1 ), ZLIndexCast ( 0 ), &this->mTextureDescriptor );
+	MOAIDescriptorSetVK* descriptorSet = new MOAIDescriptorSetVK ();
+	descriptorSet->Initialize ( descriptorSetLayout );
+	descriptorSet->SetDescriptor ( ZLIndexCast ( 0 ), ZLIndexCast ( 0 ), *this->mUniforms->GetSnapshot ( commandBuffer ));
+	descriptorSet->SetDescriptor ( ZLIndexCast ( 1 ), ZLIndexCast ( 0 ), *this->mTexture->GetSnapshot ( commandBuffer ));
 	
-	MOAIDescriptorSetVK* descriptorSet = descriptorSetLayout.ProcureDescriptorSet ( *descriptorSetSignature );
+	commandBuffer.BindDescriptorSet ( VK_PIPELINE_BIND_POINT_GRAPHICS, *descriptorSet->GetSnapshot ( commandBuffer ), *pipelineLayout, 0 );
 	
-	commandBuffer.BindDescriptorSet ( VK_PIPELINE_BIND_POINT_GRAPHICS, *descriptorSet, *pipelineLayout, 0 );
-	
-	MOAIPipelineVK* pipeline = new MOAIPipelineVK ();
+	MOAIPipelineSnapshotVK* pipeline = new MOAIPipelineSnapshotVK ();
 	pipeline->Initialize (
 		logicalDevice,
 		gfxMgr.GetRenderPass (),
@@ -307,6 +206,8 @@ void MOAIDynamicOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 		gfxMgr.GetShaderPresetVK ( ONETRI_SHADER )
 	);
 	commandBuffer.BindPipeline ( VK_PIPELINE_BIND_POINT_GRAPHICS, *pipeline );
+
+	commandBuffer.Pin ( *pipeline );
 
 	VkDeviceSize offsets [] = { 0 };
 	vkCmdBindVertexBuffers ( commandBuffer, 0, 1, &this->mVertices->GetBuffer (), offsets );

@@ -48,7 +48,7 @@ VkShaderStageFlagBits MOAIShaderProgramVK::GetShaderStageBit ( ModuleID moduleID
 //----------------------------------------------------------------//
 void MOAIShaderProgramVK::Initialize ( MOAILogicalDeviceVK& logicalDevice ) {
 
-	this->SetProvider < MOAILogicalDeviceVK >( logicalDevice );
+	this->SetDependency < MOAILogicalDeviceVK >( logicalDevice );
 }
 
 //----------------------------------------------------------------//
@@ -78,8 +78,8 @@ MOAIShaderProgramVK::MOAIShaderProgramVK () {
 //----------------------------------------------------------------//
 MOAIShaderProgramVK::~MOAIShaderProgramVK () {
 
-	if ( this->HasProvider < MOAILogicalDeviceVK >()) {
-		MOAILogicalDeviceVK& logicalDevice = this->GetProvider < MOAILogicalDeviceVK >();
+	if ( this->HasDependency < MOAILogicalDeviceVK >()) {
+		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
 		
 		for ( size_t i = 0; i < TOTAL_MODULES; ++i ) {
 			ModuleID moduleID = ( ModuleID )i;

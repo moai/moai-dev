@@ -3,8 +3,8 @@
 
 #include "pch.h"
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetSignatureVK.h>
 #include <moai-gfx-vk/MOAILogicalDeviceVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
@@ -50,7 +50,7 @@ void MOAIDescriptorSetLayoutVK::AffirmDescritorSetLayout () {
 
 	if ( this->mLayout ) return;
 	
-	MOAILogicalDeviceVK& logicalDevice = this->GetProvider < MOAILogicalDeviceVK >();
+	MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
 	
 	ZLSize totalBindings = this->mLayoutBindings.Size ();
 	
@@ -86,7 +86,7 @@ void MOAIDescriptorSetLayoutVK::AffirmDescritorSetLayout () {
 //----------------------------------------------------------------//
 void MOAIDescriptorSetLayoutVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, ZLSize totalBindings ) {
 
-	this->SetProvider < MOAILogicalDeviceVK >( logicalDevice );
+	this->SetDependency < MOAILogicalDeviceVK >( logicalDevice );
 	this->mLayoutBindings.Init ( totalBindings );
 }
 
@@ -102,34 +102,34 @@ MOAIDescriptorSetLayoutVK::~MOAIDescriptorSetLayoutVK () {
 
 	this->FinalizeDependencies ();
 
-	MOAILogicalDeviceVK& logicalDevice = this->GetProvider < MOAILogicalDeviceVK >();
+	MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
 	vkDestroyDescriptorSetLayout ( logicalDevice, this->mLayout, NULL );
 	vkDestroyDescriptorPool ( logicalDevice, this->mPool, NULL );
 	
 	// TODO: clean up snapshots
-	STLSet < MOAIDescriptorSetVK* >::iterator snapshotIt = this->mSnapshots.begin ();
+	STLSet < MOAIDescriptorSetSnapshotVK* >::iterator snapshotIt = this->mSnapshots.begin ();
 	for ( ; snapshotIt != this->mSnapshots.end (); ++snapshotIt ) {
 		( *snapshotIt )->Release ();
 	}
 }
 
 //----------------------------------------------------------------//
-MOAIDescriptorSetVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSet ( const MOAIDescriptorSetSignatureVK& descriptorSet ) {
+MOAIDescriptorSetSnapshotVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSet ( const MOAIDescriptorSetVK& descriptorSet ) {
 
 	if ( this->mSnapshots.size () >= MAX_DESCRIPTOR_SETS ) return NULL;
 	
-	MOAIDescriptorSetVK* snapshot = NULL;
+	MOAIDescriptorSetSnapshotVK* snapshot = NULL;
 	if ( this->mUnpinnedSpanshots.size ()) {
 		snapshot = *this->mUnpinnedSpanshots.begin ();
 		this->mUnpinnedSpanshots.erase ( snapshot );
 	}
 	else {
-		snapshot = new MOAIDescriptorSetVK ();
+		snapshot = new MOAIDescriptorSetSnapshotVK ();
 		snapshot->Retain ();
 		
-		snapshot->SetProvider < MOAIDescriptorSetLayoutVK >( *this );
+		snapshot->SetDependency < MOAIDescriptorSetLayoutVK >( *this );
 		VkDescriptorSetAllocateInfo allocInfo = MOAIGfxStructVK::descriptorSetAllocateInfo ( this->mPool, &this->mLayout );
-		VK_CHECK_RESULT ( vkAllocateDescriptorSets ( this->GetProvider < MOAILogicalDeviceVK >(), &allocInfo, &snapshot->mDescriptorSet ));
+		VK_CHECK_RESULT ( vkAllocateDescriptorSets ( this->GetDependency < MOAILogicalDeviceVK >(), &allocInfo, &snapshot->mDescriptorSet ));
 		
 		this->mSnapshots.insert ( snapshot );
 	}
@@ -138,7 +138,7 @@ MOAIDescriptorSetVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSet ( const MOA
 }
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetLayoutVK::RetireDescriptorSet ( MOAIDescriptorSetVK& snapshot ) {
+void MOAIDescriptorSetLayoutVK::RetireDescriptorSet ( MOAIDescriptorSetSnapshotVK& snapshot ) {
 
 	if ( snapshot == NULL ) return;
 	if ( !this->mSnapshots.contains ( &snapshot )) return;

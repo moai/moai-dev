@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-gfx-vk/MOAIGfxBufferVK.h>
+#include <moai-gfx-vk/MOAIGfxBufferSnapshotVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAIGfxUtilVK.h>
@@ -15,7 +16,7 @@
 //----------------------------------------------------------------//
 void MOAIGfxBufferVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, ZLSize size, VkBufferUsageFlags usage ) {
 
-	this->SetProvider < MOAILogicalDeviceVK >( logicalDevice );
+	this->SetDependency < MOAILogicalDeviceVK >( logicalDevice );
 	this->Alloc ( size );
 	this->mUsage = usage;
 }
@@ -37,6 +38,14 @@ MOAIGfxBufferVK::~MOAIGfxBufferVK () {
 //================================================================//
 // virtual
 //================================================================//
+
+//----------------------------------------------------------------//
+MOAIGfxBufferSnapshotVK* MOAIGfxBufferVK::MOAIAbstractSnapshotFactoryVK_GetSnapshot () {
+
+	MOAIGfxBufferSnapshotVK* snapshot = new MOAIGfxBufferSnapshotVK ();
+	snapshot->Initialize ( *this );
+	return snapshot;
+}
 
 //----------------------------------------------------------------//
 void MOAIGfxBufferVK::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {

@@ -1,19 +1,21 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIUTILITYBUFFERVK_H
-#define	MOAIUTILITYBUFFERVK_H
+#ifndef	MOAIGFXBUFFERSNAPSHOTVK_H
+#define	MOAIGFXBUFFERSNAPSHOTVK_H
+
+#include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
 
 class MOAIGfxBufferVK;
 class MOAILogicalDeviceVK;
 class MOAIVertexFormatVK;
 
 //================================================================//
-// MOAIUtilityBufferVK
+// MOAIGfxBufferSnapshotVK
 //================================================================//
 // TODO: doxygen
-class MOAIUtilityBufferVK :
-	public ZLRefCountedObject,
+class MOAIGfxBufferSnapshotVK :
+	public MOAIAbstractSnapshotVK,
 	public ZLAbstractFinalizable,
 	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK > {
 protected:
@@ -26,9 +28,12 @@ protected:
 	
 	VkDescriptorBufferInfo	mDescriptor;
 
+	//----------------------------------------------------------------//
+	void		MOAIAbstractSnapshotVK_OnUnpin		() {}
+
 public:
 	
-	IMPLEMENT_FINALIZABLE ( MOAIUtilityBufferVK )
+	IMPLEMENT_FINALIZABLE ( MOAIGfxBufferSnapshotVK )
 	
 	static const VkMemoryPropertyFlags HOST_BUFFER_PROPS = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
 	static const VkMemoryPropertyFlags DEVICE_BUFFER_PROPS = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;
@@ -51,11 +56,11 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void				Initialize					( MOAIGfxBufferVK& buffer );
-	void				Initialize					( MOAILogicalDeviceVK& logicalDevice, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags memPropFlags = HOST_BUFFER_PROPS );
-	void				MapAndCopy					( const void* data, size_t size );
-						MOAIUtilityBufferVK			();
-						~MOAIUtilityBufferVK		();
+	void				Initialize						( MOAIGfxBufferVK& buffer );
+	void				Initialize						( MOAILogicalDeviceVK& logicalDevice, VkDeviceSize size, VkBufferUsageFlags usage, VkMemoryPropertyFlags memPropFlags = HOST_BUFFER_PROPS );
+	void				MapAndCopy						( const void* data, size_t size );
+						MOAIGfxBufferSnapshotVK			();
+						~MOAIGfxBufferSnapshotVK		();
 };
 
 #endif

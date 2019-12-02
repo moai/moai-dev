@@ -53,25 +53,25 @@
 // that aims to produce a compilation error if the wrong TYPE is passed in. it's not
 // completely foolproof, but can't hurt.
 
-// the GetProvier() template method lies dormant unless called, in which case
+// the GetDependency() template method lies dormant unless called, in which case
 // there needs to be a matching _HasDependencyOn template in the inheritance tree.
-// SetProvider(), the same.
+// SetDependency(), the same.
 
 #define IMPLEMENT_FINALIZABLE_WITH_DEPENDENCIES(TYPE,...)	\
-														\
-template < typename PROVIDER_TYPE >						\
-PROVIDER_TYPE& GetProvider () {							\
-	return this->ZLAbstractFinalizable_HasDependencyOn < PROVIDER_TYPE >::GetProvider ();		\
-}														\
-														\
-template < typename PROVIDER_TYPE >						\
-bool HasProvider () {									\
-	return this->ZLAbstractFinalizable_HasDependencyOn < PROVIDER_TYPE >::HasProvider ();		\
-}														\
-														\
-template < typename PROVIDER_TYPE >						\
-void SetProvider ( PROVIDER_TYPE& provider ) {			\
-	this->ZLAbstractFinalizable_HasDependencyOn < PROVIDER_TYPE >::SetProvider ( provider );	\
+															\
+template < typename DEPENDENCY_TYPE >						\
+DEPENDENCY_TYPE& GetDependency () {							\
+	return this->ZLAbstractFinalizable_HasDependencyOn < DEPENDENCY_TYPE >::GetDependency ();		\
+}															\
+															\
+template < typename DEPENDENCY_TYPE >						\
+bool HasDependency () {										\
+	return this->ZLAbstractFinalizable_HasDependencyOn < DEPENDENCY_TYPE >::HasDependency ();		\
+}															\
+															\
+template < typename DEPENDENCY_TYPE >						\
+void SetDependency ( DEPENDENCY_TYPE& dependency ) {		\
+	this->ZLAbstractFinalizable_HasDependencyOn < DEPENDENCY_TYPE >::SetDependency ( dependency );	\
 }
 
 #define IMPLEMENT_FINALIZABLE_SOLO(TYPE,...)				\
@@ -159,12 +159,12 @@ public:
 					~ZLAbstractFinalizable			();
 };
 
-// inherit a _HasDependencyOn for each DAG dependency provider you want to track. each _HasDependencyOn shares
+// inherit a _HasDependencyOn for each DAG dependency you want to track. each _HasDependencyOn shares
 // a common _HasInternal (through virtual inheritance), which will match that of the ZLAbstractFinalizable's
-// own _HasInternal. if there are multiple providers, accessing the provider or its getter will require
+// own _HasInternal. if there are multiple dependencies, accessing the dependency or its getter will require
 // disambiguation, as each inherited _HasDependencyOn shares the same class member names. for this reason,
 // IMPLEMENT_FINALIZABLE provides a helper getter, implemented as a template function, parameterized
-// with the type of the provider.
+// with the type of the dependency.
 
 // it's worth noting that _HasDependencyOn could have been implemented as a "smart-pointer" like class, but
 // the downside would be that an extra pointer to either the containing class or its _HasInternal would be
@@ -175,65 +175,65 @@ public:
 //================================================================//
 // ZLAbstractFinalizable_HasDependencyOn
 //================================================================//
-template < typename PROVIDER_TYPE >
+template < typename DEPENDENCY_TYPE >
 class ZLAbstractFinalizable_HasDependencyOn :
 	public virtual ZLAbstractFinalizable_HasInternal {
 private:
 
 	friend class ZLAbstractFinalizable;
 
-	PROVIDER_TYPE*		mProvider;
+	DEPENDENCY_TYPE*		mDependency;
 
 protected:
 
 	//----------------------------------------------------------------//
-	PROVIDER_TYPE& GetProvider () {
-		assert ( this->mProvider );
-		return *this->mProvider;
+	DEPENDENCY_TYPE& GetDependency () {
+		assert ( this->mDependency );
+		return *this->mDependency;
 	}
 	
 	//----------------------------------------------------------------//
-	bool HasProvider () {
-		return ( this->mProvider != NULL );
+	bool HasDependency () {
+		return ( this->mDependency != NULL );
 	}
 
 	//----------------------------------------------------------------//
-	void SetProvider ( PROVIDER_TYPE& provider ) {
+	void SetDependency ( DEPENDENCY_TYPE& dependency ) {
 		
-		// we only allow the provider to be set once, because the *meaning* of
-		// setting a provider is that if the provider goes away for any reason,
+		// we only allow the dependency to be set once, because the *meaning* of
+		// setting a dependency is that if the dependency goes away for any reason,
 		// the client should be automatically finalized.
 		
-		// it's certainly possibly to support swapping out providers, but the
+		// it's certainly possibly to support swapping out dependencies, but the
 		// use case for tha isn't clear right now. the typical use will be to
 		// instantiate/construct, initialize, finalize, and then
 		// deallocate/destruct.
 		
-		assert ( !this->mProvider );
+		assert ( !this->mDependency );
 		
-		ZLAbstractFinalizable_Internal& clientMembership	= this->AffirmInternal ();
-		ZLAbstractFinalizable_Internal& providerMembership	= provider.AffirmInternal ();
+		ZLAbstractFinalizable_Internal& clientMembership		= this->AffirmInternal ();
+		ZLAbstractFinalizable_Internal& dependencyMembership	= dependency.AffirmInternal ();
 		
-		clientMembership.AddProvider ( provider );
-		providerMembership.AddClient ( clientMembership.GetOwner ());
+		clientMembership.AddDependency ( dependency );
+		dependencyMembership.AddClient ( clientMembership.GetOwner ());
 		
-		this->mProvider = &provider;
+		this->mDependency = &dependency;
 	}
 
 public:
 
 	//----------------------------------------------------------------//
 	ZLAbstractFinalizable_HasDependencyOn () :
-		mProvider ( NULL ) {
+		mDependency ( NULL ) {
 		
 		// make sure the provider is also a sublass of ZLAbstractFinalizable
-		( void )static_cast < ZLAbstractFinalizable* >(( PROVIDER_TYPE* )NULL );
+		( void )static_cast < ZLAbstractFinalizable* >(( DEPENDENCY_TYPE* )NULL );
 	}
 
 	//----------------------------------------------------------------//
 	~ZLAbstractFinalizable_HasDependencyOn () {
 		
-		this->mProvider = NULL;
+		this->mDependency = NULL;
 	}
 };
 

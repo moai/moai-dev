@@ -4,8 +4,12 @@
 #ifndef	MOAITEXTURE2DVK_H
 #define	MOAITEXTURE2DVK_H
 
+#include <moai-gfx-vk/MOAIAbstractSnapshotFactoryVK.h>
+#include <moai-gfx-vk/MOAILogicalDeviceVK.h>
 #include <moai-gfx-vk/MOAITextureVK.h>
 
+class MOAILogicalDeviceVK;
+class MOAITextureSnapshot2DVK;
 class ZLTextureFormat;
 
 //================================================================//
@@ -16,22 +20,26 @@ class ZLTextureFormat;
 */
 class MOAITexture2DVK :
 	public virtual MOAITexture2D,
-	public virtual MOAITextureVK {
+	public virtual MOAITextureVK,
+	public MOAIAbstractSnapshotFactoryVK < MOAITextureSnapshot2DVK > {
 protected:
 
+	ZLStrongPtr < MOAITextureSnapshot2DVK > mSnapshot;
+
 	//----------------------------------------------------------------//
-	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
+	MOAITextureSnapshot2DVK*		MOAIAbstractSnapshotFactoryVK_GetSnapshot		();
+	bool							MOAIGfxResource_FinishLoading					();
+	bool							MOAIGfxResource_IsReadyForUse					() const;
+	void							MOAILuaObject_RegisterLuaClass					( MOAIComposer& composer, MOAILuaState& state );
+	void							MOAILuaObject_RegisterLuaFuncs					( MOAIComposer& composer, MOAILuaState& state );
 
 public:
-		
-//	static const u32 DEFAULT_TRANSFORM = ZLImageTransform::TRUECOLOR | ZLImageTransform::PREMULTIPLY_ALPHA;
-	
+			
 	DECL_LUA_FACTORY ( MOAITexture2DVK )
 	
 	//----------------------------------------------------------------//
-						MOAITexture2DVK			();
-						~MOAITexture2DVK		();
+									MOAITexture2DVK			();
+									~MOAITexture2DVK		();
 };
 
 #endif

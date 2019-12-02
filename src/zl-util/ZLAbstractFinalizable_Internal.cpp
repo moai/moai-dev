@@ -15,8 +15,8 @@ void ZLAbstractFinalizable_Internal::AddClient ( ZLAbstractFinalizable& client )
 }
 
 //----------------------------------------------------------------//
-void ZLAbstractFinalizable_Internal::AddProvider ( ZLAbstractFinalizable& provider ) {
-	this->mProviders.insert ( &provider );
+void ZLAbstractFinalizable_Internal::AddDependency ( ZLAbstractFinalizable& dependency ) {
+	this->mDependencies.insert ( &dependency );
 }
 
 //----------------------------------------------------------------//
@@ -31,8 +31,8 @@ void ZLAbstractFinalizable_Internal::RemoveClient ( ZLAbstractFinalizable& clien
 }
 
 //----------------------------------------------------------------//
-void ZLAbstractFinalizable_Internal::RemoveProvider ( ZLAbstractFinalizable& provider ) {
-	this->mProviders.erase ( &provider );
+void ZLAbstractFinalizable_Internal::RemoveDependency ( ZLAbstractFinalizable& dependency ) {
+	this->mDependencies.erase ( &dependency );
 }
 
 
@@ -55,9 +55,9 @@ ZLAbstractFinalizable_Internal::~ZLAbstractFinalizable_Internal () {
 	}
 
 	// remove self from providers.
-	STLSet < ZLAbstractFinalizable* >::iterator providerIt = this->mProviders.begin ();
-	for ( ; providerIt != this->mProviders.end (); ++providerIt ) {
-		ZLAbstractFinalizable* provider = *providerIt;
-		provider->GetInternal ()->RemoveClient ( *this->mOwner );
+	STLSet < ZLAbstractFinalizable* >::iterator dependencyIt = this->mDependencies.begin ();
+	for ( ; dependencyIt != this->mDependencies.end (); ++dependencyIt ) {
+		ZLAbstractFinalizable* dependency = *dependencyIt;
+		dependency->GetInternal ()->RemoveClient ( *this->mOwner );
 	}
 }

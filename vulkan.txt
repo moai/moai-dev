@@ -58,6 +58,11 @@ SnapshotSubject - contains buffer; a thing that is snapshotted
 SnapshotCache - caches snapshots for command list
 Snapshot - vk resource cached in command list
 
+--> don't like snapshots any more
+vk drawables have lifecycle info
+may be shared by multiple command buffers
+holders can inspect lifecycle and tag to determine reuse
+
 Dependency DAG implementation (needed yet?)
 DependencyProvider
 DependencyClient - GetProvider< TYPE>();

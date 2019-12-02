@@ -108,17 +108,17 @@ TEST_F ( GTESTMoaiContext, linked_finalizable ) {
 		Client0 client0;
 		Client1 client1;
 		
-		client0.SetProvider < Provider0 >( provider0 );
-		client0.SetProvider < Provider1 >( provider1 );
+		client0.SetDependency < Provider0 >( provider0 );
+		client0.SetDependency < Provider1 >( provider1 );
 		
-		client1.SetProvider < Provider1 >( provider1 );
-		client1.SetProvider < Provider2 >( provider2 );
+		client1.SetDependency < Provider1 >( provider1 );
+		client1.SetDependency < Provider2 >( provider2 );
 		
-		ASSERT_TRUE ( &client0.GetProvider < Provider0 >() == &provider0 );
-		ASSERT_TRUE ( &client0.GetProvider < Provider1 >() == &provider1 );
+		ASSERT_TRUE ( &client0.GetDependency < Provider0 >() == &provider0 );
+		ASSERT_TRUE ( &client0.GetDependency < Provider1 >() == &provider1 );
 		
-		ASSERT_TRUE ( &client1.GetProvider < Provider1 >() == &provider1 );
-		ASSERT_TRUE ( &client1.GetProvider < Provider2 >() == &provider2 );
+		ASSERT_TRUE ( &client1.GetDependency < Provider1 >() == &provider1 );
+		ASSERT_TRUE ( &client1.GetDependency < Provider2 >() == &provider2 );
 		
 		provider1.Finalize ();
 		

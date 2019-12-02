@@ -14,7 +14,7 @@ private:
 	
 	friend class ZLAbstractFinalizable;
 	friend class ZLAbstractFinalizable_Internal;
-	template < typename PROVIDER_TYPE > friend class ZLAbstractFinalizable_HasDependencyOn;
+	template < typename DEPENDENCY_TYPE > friend class ZLAbstractFinalizable_HasDependencyOn;
 
 	//----------------------------------------------------------------//
 	ZLAbstractFinalizable_Internal& AffirmInternal () {

@@ -212,7 +212,7 @@ void MOAIGfxMgrVK::DetectContext ( u32 width, u32 height, bool enableValidation 
 //----------------------------------------------------------------//
 void MOAIGfxMgrVK::FinishFrame () {
 
-	MOAIQueueVK& queue = this->GetCommandBuffer ().GetProvider < MOAIQueueVK >();
+	MOAIQueueVK& queue = this->GetCommandBuffer ().GetDependency < MOAIQueueVK >();
     VkResult result = this->mSwapChain.QueuePresent ( queue, this->mRenderSemaphore );
     
     if ( !(( result == VK_SUCCESS ) || ( result == VK_SUBOPTIMAL_KHR ))) {

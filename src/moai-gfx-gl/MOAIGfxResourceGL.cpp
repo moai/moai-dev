@@ -225,12 +225,6 @@ void MOAIGfxResourceGL::Renew () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceGL::ScheduleForGPUDestroy () {
-
-	this->MOAIGfxResource_ScheduleForGPUDestroy ();
-}
-
-//----------------------------------------------------------------//
 bool MOAIGfxResourceGL::ScheduleForGPUUpdate ( PipelineHint hint ) {
 	
 	switch ( this->mState ) {

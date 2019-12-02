@@ -1,15 +1,15 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MOAIABSTRACTPINNABLEVK_H
-#define MOAIABSTRACTPINNABLEVK_H
+#ifndef MOAIABSTRACTSNAPSHOTVK_H
+#define MOAIABSTRACTSNAPSHOTVK_H
 
 class MOAICommandBufferVK;
 
 //================================================================//
-// MOAIAbstractPinnableVK
+// MOAIAbstractSnapshotVK
 //================================================================//
-class MOAIAbstractPinnableVK :
+class MOAIAbstractSnapshotVK :
 	public virtual ZLRefCountedObject {
 private:
 
@@ -30,8 +30,8 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool				IsPinned							();
-						MOAIAbstractPinnableVK				();
-	virtual				~MOAIAbstractPinnableVK				();
+						MOAIAbstractSnapshotVK				();
+	virtual				~MOAIAbstractSnapshotVK				();
 	
 };
 

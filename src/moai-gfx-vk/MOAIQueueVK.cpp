@@ -17,7 +17,7 @@ void MOAIQueueVK::CreateCommandBuffer ( MOAICommandBufferVK& commandBuffer, VkCo
 	assert ( commandBuffer == false );
 
 	VkCommandBufferAllocateInfo cmdBufAllocateInfo = MOAIGfxStructVK::commandBufferAllocateInfo ( this->mPool, level );	
-	VK_CHECK_RESULT ( vkAllocateCommandBuffers ( this->GetProvider < MOAILogicalDeviceVK >(), &cmdBufAllocateInfo, commandBuffer ));
+	VK_CHECK_RESULT ( vkAllocateCommandBuffers ( this->GetDependency < MOAILogicalDeviceVK >(), &cmdBufAllocateInfo, commandBuffer ));
 	
 	assert ( commandBuffer != false );
 	
@@ -25,7 +25,7 @@ void MOAIQueueVK::CreateCommandBuffer ( MOAICommandBufferVK& commandBuffer, VkCo
 		VkCommandBufferBeginInfo cmdBufInfo = MOAIGfxStructVK::commandBufferBeginInfo ();
 		VK_CHECK_RESULT ( vkBeginCommandBuffer ( commandBuffer, &cmdBufInfo ));
 	}
-	commandBuffer.SetProvider < MOAIQueueVK >( *this );
+	commandBuffer.SetDependency < MOAIQueueVK >( *this );
 }
 
 //----------------------------------------------------------------//
@@ -33,7 +33,7 @@ void MOAIQueueVK::FlushAndFreeCommandBuffer	( MOAICommandBufferVK& commandBuffer
 
 	if ( commandBuffer == VK_NULL_HANDLE ) return;
 
-	MOAILogicalDeviceVK& logicalDevice = this->GetProvider < MOAILogicalDeviceVK >();
+	MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
 
 	VK_CHECK_RESULT ( vkEndCommandBuffer ( commandBuffer ));
 
@@ -71,7 +71,7 @@ MOAIQueueVK::~MOAIQueueVK () {
 //----------------------------------------------------------------//
 VkResult MOAIQueueVK::PresentKHR ( const VkPresentInfoKHR& presentInfo ) {
 
-	MOAILogicalDeviceVK& logicalDevice = this->GetProvider < MOAILogicalDeviceVK >();
+	MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
 	if ( logicalDevice.mQueuePresentKHR ) {
 		logicalDevice.mQueuePresentKHR ( this->mQueue, &presentInfo );
 	}
@@ -82,7 +82,7 @@ VkResult MOAIQueueVK::Submit ( const VkSubmitInfo& submitInfo ) {
 
 	if ( submitInfo.signalSemaphoreCount == 0 ) {
 	
-		MOAILogicalDeviceVK& logicalDevice = this->GetProvider < MOAILogicalDeviceVK >();
+		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
 		if ( !this->mFence ) {
 			this->mFence.Initialize ( logicalDevice );
 		}

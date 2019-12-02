@@ -252,7 +252,7 @@ void MOAIPhysicalDeviceVK::Initialize ( MOAIGfxInstanceVK& instance, MOAISurface
 	}
 	assert ( this->mDevice );
 	
-	this->SetProvider < MOAIGfxInstanceVK >( instance );
+	this->SetDependency < MOAIGfxInstanceVK >( instance );
 }
 
 //----------------------------------------------------------------//
