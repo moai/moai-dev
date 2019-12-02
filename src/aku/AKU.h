@@ -68,6 +68,7 @@ AKU_API void			AKUSetUserdata					( void* user );
 AKU_API void			AKUDetectGfxContext				();
 AKU_API lua_State*		AKUGetLuaState					();
 AKU_API double			AKUGetSimStep					();
+AKU_API void			AKUSetSimStep					( double step );
 AKU_API char*			AKUGetWorkingDirectory			( char* buffer, int length );
 AKU_API int				AKUMountVirtualDirectory		( char const* virtualPath, char const* archive );
 AKU_API void			AKUPause						( bool pause );

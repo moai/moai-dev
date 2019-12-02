@@ -266,6 +266,12 @@ double AKUGetSimStep () {
 }
 
 //----------------------------------------------------------------//
+void AKUSetSimStep ( double step) {
+
+	MOAISim::Get ().SetStep(step);
+}
+
+//----------------------------------------------------------------//
 char* AKUGetWorkingDirectory ( char* buffer, int length ) {
 
 	return zl_getcwd ( buffer, length );
