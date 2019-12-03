@@ -44,7 +44,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Initialize ( MOAILogicalDeviceVK& logicalDevice, VkRenderPass& renderPass, MOAIVertexFormatVK* vertexFormat, MOAIShaderVK* shader ) {
+	void Initialize ( MOAILogicalDeviceVK& logicalDevice, VkRenderPass& renderPass, VkPrimitiveTopology topology, MOAIVertexFormatVK* vertexFormat, MOAIShaderVK* shader ) {
 	
 		this->SetDependency < MOAILogicalDeviceVK >( logicalDevice );
 
@@ -53,7 +53,7 @@ public:
 			VK_DYNAMIC_STATE_SCISSOR,
 		};
 
-		VkPipelineInputAssemblyStateCreateInfo inputAssemblyState 	= MOAIGfxStructVK::pipelineInputAssemblyStateCreateInfo ();
+		VkPipelineInputAssemblyStateCreateInfo inputAssemblyState 	= MOAIGfxStructVK::pipelineInputAssemblyStateCreateInfo ( topology );
 		VkPipelineRasterizationStateCreateInfo rasterizationState 	= MOAIGfxStructVK::pipelineRasterizationStateCreateInfo ();
 		VkPipelineColorBlendAttachmentState blendAttachmentState 	= MOAIGfxStructVK::pipelineColorBlendAttachmentState ();
 		VkPipelineColorBlendStateCreateInfo colorBlendState 		= MOAIGfxStructVK::pipelineColorBlendStateCreateInfo ( &blendAttachmentState, 1 ); // one blend attachment state per color attachment (even if blending is not used)

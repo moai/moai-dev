@@ -102,9 +102,11 @@ MOAIDescriptorSetLayoutVK::~MOAIDescriptorSetLayoutVK () {
 
 	this->FinalizeDependencies ();
 
-	MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
-	vkDestroyDescriptorSetLayout ( logicalDevice, this->mLayout, NULL );
-	vkDestroyDescriptorPool ( logicalDevice, this->mPool, NULL );
+	if ( this->HasDependency < MOAILogicalDeviceVK >()) {
+		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
+		vkDestroyDescriptorSetLayout ( logicalDevice, this->mLayout, NULL );
+		vkDestroyDescriptorPool ( logicalDevice, this->mPool, NULL );
+	}
 	
 	// TODO: clean up snapshots
 	STLSet < MOAIDescriptorSetSnapshotVK* >::iterator snapshotIt = this->mSnapshots.begin ();

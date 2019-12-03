@@ -6,6 +6,7 @@
 #include <moai-gfx-vk/MOAIDeckShaderOneTriVK.h>
 #include <moai-gfx-vk/MOAIDynamicOneTriVK.h>
 #include <moai-gfx-vk/MOAIFrameBufferVK.h>
+#include <moai-gfx-vk/MOAIGfxMgrOneTriVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK_RenderTreeVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
@@ -61,8 +62,7 @@ void MOAIGfxMgrVK_RenderTreeVK::MOAIGfxMgr_RenderTree_Render () {
 	vkCmdBeginRenderPass ( commandBuffer, &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE );
 	
 	if ( !this->mOneTri ) {
-		this->mOneTri = new MOAIDeckShaderOneTriVK ();
-//		this->mOneTri = new MOAIOneTriVK ();
+		this->mOneTri = new MOAIGfxMgrOneTriVK ();
 	}
 	this->mOneTri->Draw ();
 	

@@ -6,7 +6,7 @@
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetVK.h>
-#include <moai-gfx-vk/MOAIDeckShaderOneTriVK.h>
+#include <moai-gfx-vk/MOAIGfxMgrOneTriVK.h>
 #include <moai-gfx-vk/MOAIGfxBufferSnapshotVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
@@ -22,11 +22,11 @@
 #include <moai-gfx-vk/MOAIVertexFormatVK.h>
 
 //================================================================//
-// MOAIDeckShaderOneTriVK
+// MOAIGfxMgrOneTriVK
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIDeckShaderOneTriVK::MOAIDeckShaderOneTriVK () {
+MOAIGfxMgrOneTriVK::MOAIGfxMgrOneTriVK () {
 
 	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
 	MOAIPhysicalDeviceVK& physicalDevice = gfxMgr.GetPhysicalDevice ();
@@ -56,7 +56,7 @@ MOAIDeckShaderOneTriVK::MOAIDeckShaderOneTriVK () {
 }
 
 //----------------------------------------------------------------//
-MOAIDeckShaderOneTriVK::~MOAIDeckShaderOneTriVK () {
+MOAIGfxMgrOneTriVK::~MOAIGfxMgrOneTriVK () {
 }
 
 //================================================================//
@@ -64,7 +64,7 @@ MOAIDeckShaderOneTriVK::~MOAIDeckShaderOneTriVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDeckShaderOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
+void MOAIGfxMgrOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
 	MOAIGfxMgrVK& gfxMgr					= MOAIGfxMgrVK::Get ();
@@ -72,49 +72,21 @@ void MOAIDeckShaderOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 	MOAICommandBufferVK& commandBuffer		= gfxMgr.GetCommandBuffer ();
 	MOAISwapChainVK& swapChain				= gfxMgr.GetSwapChain ();
 
-	VkRect2D rect = swapChain.GetRect ();
+	ZLRect rect = MOAIGfxStructVK::zlRect ( swapChain.GetRect ());
+
+	gfxMgr.SetViewRect ( rect );
+	gfxMgr.SetScissorRect ( rect );
+
+	gfxMgr.SetShader ( DECK2D_SHADER );
+	gfxMgr.SetTexture ( this->mTexture );
+	gfxMgr.SetVertexFormat ( XYZWUVC );
 	
-	u32 width = ( u32 )rect.extent.width;
-	u32 height = ( u32 )rect.extent.height;
-
-	VkViewport viewport = MOAIGfxStructVK::viewport ( 0.0, 0.0, ( float )width, ( float )height, 0.0, 1.0 );
-	VkRect2D scissor = MOAIGfxStructVK::rect2D ( width, height );
-
-	vkCmdSetViewport ( commandBuffer, 0, 1, &viewport );
-	vkCmdSetScissor ( commandBuffer, 0, 1, &scissor );
-
-	// get the pipeline layout (should be moved to pipeline object)
-	MOAIPipelineLayoutVK& pipelineLayout = gfxMgr.GetShaderPresetVK ( DECK2D_SHADER )->GetProgram ()->GetPipelineLayout ();
-
-	// initialize the descriptor set
-	MOAIDescriptorSetLayoutVK& descriptorSetLayout = pipelineLayout.GetDescriptorSetLayout ( ZLIndexOp::ZERO );
+	gfxMgr.SetVertexBuffer ( this->mVertices );
+	gfxMgr.SetIndexBuffer ( this->mIndices );
 	
-	MOAIDescriptorSetVK* descriptorSet = new MOAIDescriptorSetVK ();
-	descriptorSet->Initialize ( descriptorSetLayout );
-	descriptorSet->SetDescriptor ( ZLIndexCast ( 0 ), ZLIndexCast ( 0 ), *this->mTexture->GetSnapshot ( commandBuffer ));
-	
-	commandBuffer.BindDescriptorSet ( VK_PIPELINE_BIND_POINT_GRAPHICS, *descriptorSet->GetSnapshot ( commandBuffer ), pipelineLayout, 0 );
-	
-	MOAIPipelineSnapshotVK* pipeline = new MOAIPipelineSnapshotVK ();
-	pipeline->Initialize (
-		logicalDevice,
-		gfxMgr.GetRenderPass (),
-		VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST,
-		gfxMgr.GetVertexFormatPresetVK ( XYZWUVC ),
-		gfxMgr.GetShaderPresetVK ( DECK2D_SHADER )
-	);
-	commandBuffer.BindPipeline ( VK_PIPELINE_BIND_POINT_GRAPHICS, *pipeline );
-	commandBuffer.Pin ( *pipeline );
-
-	MOAIGfxBufferSnapshotVK* vertexBuffer = this->mVertices->GetSnapshot ( commandBuffer );
-	MOAIGfxBufferSnapshotVK* indexBuffer = this->mIndices->GetSnapshot ( commandBuffer );
-
-	VkDeviceSize offsets [] = { 0 };
-	vkCmdBindVertexBuffers ( commandBuffer, 0, 1, &vertexBuffer->GetBuffer (), offsets );
-	vkCmdBindIndexBuffer ( commandBuffer, indexBuffer->GetBuffer (), 0, VK_INDEX_TYPE_UINT32 );
-	vkCmdDrawIndexed ( commandBuffer, this->mIndices->CountIndices (), 1, 0, 0, 1 );
+	gfxMgr.DrawPrims ( ZGL_PRIM_TRIANGLES, 0, this->mIndices->CountIndices ());
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckShaderOneTriVK::MOAIDrawable_DrawDebug ( int subPrimID ) {
+void MOAIGfxMgrOneTriVK::MOAIDrawable_DrawDebug ( int subPrimID ) {
 }

@@ -47,6 +47,7 @@ protected:
 
 	u32							mPrimType;
 	bool						mFlushOnPrimEnd;
+	bool						mFlushAlways;
 	bool						mUseIdxBuffer;
 	u32							mPrimCount;
 
@@ -88,6 +89,8 @@ public:
 	virtual			~MOAIGfxMgr_VertexCache			();
 
 	void			Reset							();
+
+	void			SetFlushAlways 					( bool flushAlways = true );
 
 	void			SetUVTransform					();
 	void			SetUVTransform					( u32 mtxID );

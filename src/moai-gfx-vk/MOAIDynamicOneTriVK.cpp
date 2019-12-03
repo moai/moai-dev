@@ -119,7 +119,7 @@ void MOAIDynamicOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 
 	this->UpdateMatrices ( width, height );
 
-	VkViewport viewport = MOAIGfxStructVK::viewport (( float )width, ( float )height, 0.0, 1.0 );
+	VkViewport viewport = MOAIGfxStructVK::viewport ( 0.0, 0.0, ( float )width, ( float )height, 0.0, 1.0 );
 	VkRect2D scissor = MOAIGfxStructVK::rect2D ( width, height );
 
 	vkCmdSetViewport ( commandBuffer, 0, 1, &viewport );
@@ -142,6 +142,7 @@ void MOAIDynamicOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 	pipeline->Initialize (
 		logicalDevice,
 		gfxMgr.GetRenderPass (),
+		VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST,
 		gfxMgr.GetVertexFormatPresetVK ( XYZWUVC ),
 		gfxMgr.GetShaderPresetVK ( ONETRI_SHADER )
 	);

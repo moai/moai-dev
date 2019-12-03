@@ -41,6 +41,7 @@
 
 #include <zl-util/ZLAbstractFinalizable_HasInternal.h>
 #include <zl-util/ZLAbstractFinalizable_Internal.h>
+#include <zl-util/ZLRefCountedObject.h>
 
 // this is ugly, but lordy do we hate boilerplate. even more than we hate macros.
 // alas, templates introduce issues of their own, as does storing strongly typed
@@ -98,7 +99,8 @@ void SetDependency ( DEPENDENCY_TYPE& dependency ) {		\
 //================================================================//
 // ZLAbstractFinalizable_Solo
 //================================================================//
-class ZLAbstractFinalizable_Solo {
+class ZLAbstractFinalizable_Solo :
+	public virtual ZLRefCountedObject {
 private:
 
 	//----------------------------------------------------------------//
@@ -124,7 +126,17 @@ public:
 	
 	//----------------------------------------------------------------//
 	void Finalize () {
+	
+		// back up ref count
+		u32 refCount = this->mRefCount;
+		ZLRefCountedObjectHandle* handle = this->mHandle;
+		this->mHandle = NULL;
+		
 		this->ZLAbstractFinalizable_Finalize ();
+		
+		// restore ref count
+		this->mRefCount = refCount;
+		this->mHandle = handle;
 	}
 };
 

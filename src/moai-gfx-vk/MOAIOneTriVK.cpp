@@ -99,7 +99,7 @@ void MOAIOneTriVK::PreparePipeline () {
 		VK_DYNAMIC_STATE_SCISSOR,
 	};
 
-	VkPipelineInputAssemblyStateCreateInfo inputAssemblyState 	= MOAIGfxStructVK::pipelineInputAssemblyStateCreateInfo ();
+	VkPipelineInputAssemblyStateCreateInfo inputAssemblyState 	= MOAIGfxStructVK::pipelineInputAssemblyStateCreateInfo ( VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST );
 	VkPipelineRasterizationStateCreateInfo rasterizationState 	= MOAIGfxStructVK::pipelineRasterizationStateCreateInfo ();
 	VkPipelineColorBlendAttachmentState blendAttachmentState 	= MOAIGfxStructVK::pipelineColorBlendAttachmentState ();
 	VkPipelineColorBlendStateCreateInfo colorBlendState 		= MOAIGfxStructVK::pipelineColorBlendStateCreateInfo ( &blendAttachmentState, 1 ); // one blend attachment state per color attachment (even if blending is not used)
@@ -337,7 +337,7 @@ void MOAIOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 	u32 width = ( u32 )rect.extent.width;
 	u32 height = ( u32 )rect.extent.height;
 
-	VkViewport viewport = MOAIGfxStructVK::viewport (( float )width, ( float )height, 0.0, 1.0 );
+	VkViewport viewport = MOAIGfxStructVK::viewport ( 0.0, 0.0, ( float )width, ( float )height, 0.0, 1.0 );
 	VkRect2D scissor = MOAIGfxStructVK::rect2D ( width, height );
 
 	vkCmdSetViewport ( commandBuffer, 0, 1, &viewport );

@@ -40,8 +40,10 @@ class ZLRefCountedObject :
 	public virtual ZLRefCountedObjectBase {
 private:
 
-	ZLRefCountedObjectHandle*	mHandle;			// only exists if referenced by smart pointer
-			
+	friend class ZLAbstractFinalizable_Solo;
+
+	ZLRefCountedObjectHandle*	mHandle;					// only exists if referenced by weak pointer
+
 public:
 
 	friend class ZLRefCountedObjectHandle;

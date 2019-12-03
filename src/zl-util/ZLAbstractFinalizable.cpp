@@ -10,6 +10,7 @@
 
 //----------------------------------------------------------------//
 void ZLAbstractFinalizable::FinalizeDependencies () {
+
 	if ( this->mInternal ) {
 		delete this->mInternal;
 		this->mInternal = NULL;
@@ -23,6 +24,7 @@ ZLAbstractFinalizable::ZLAbstractFinalizable () :
 
 //----------------------------------------------------------------//
 ZLAbstractFinalizable::~ZLAbstractFinalizable () {
+
 	this->FinalizeDependencies ();
 }
 
@@ -32,6 +34,7 @@ ZLAbstractFinalizable::~ZLAbstractFinalizable () {
 
 //----------------------------------------------------------------//
 ZLAbstractFinalizable_Internal& ZLAbstractFinalizable::ZLAbstractFinalizable_HasInternal_AffirmInternal () {
+
 	if ( !this->mInternal ) {
 		this->mInternal = new ZLAbstractFinalizable_Internal ( *this );
 	}
@@ -40,5 +43,6 @@ ZLAbstractFinalizable_Internal& ZLAbstractFinalizable::ZLAbstractFinalizable_Has
 
 //----------------------------------------------------------------//
 ZLAbstractFinalizable_Internal* ZLAbstractFinalizable::ZLAbstractFinalizable_HasInternal_GetInternal () {
+
 	return this->mInternal;
 }

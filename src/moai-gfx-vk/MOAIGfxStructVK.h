@@ -890,7 +890,7 @@ public:
 
     //----------------------------------------------------------------//
     static VkPipelineInputAssemblyStateCreateInfo pipelineInputAssemblyStateCreateInfo (
-		VkPrimitiveTopology topology					= VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST,
+		VkPrimitiveTopology topology,
 		VkBool32 primitiveRestartEnable					= VK_FALSE,
 		VkPipelineInputAssemblyStateCreateFlags flags	= 0
 	) {
@@ -1028,6 +1028,16 @@ public:
         pushConstantRange.offset        = offset;
         pushConstantRange.size          = size;
         return pushConstantRange;
+    }
+
+	//----------------------------------------------------------------//
+    static VkRect2D rect2D ( ZLRect rect ) {
+        DECL_VK_STRUCT ( VkRect2D, rect2D );
+        rect2D.extent.width     = ( u32 )rect.Width ();
+        rect2D.extent.height    = ( u32 )rect.Height ();
+        rect2D.offset.x         = ( s32 )rect.mXMin;
+        rect2D.offset.y         = ( s32 )rect.mYMin;
+        return rect2D;
     }
 
     //----------------------------------------------------------------//
@@ -1366,14 +1376,52 @@ public:
         return vInputBindDescription;
     }
 
-    //----------------------------------------------------------------//
-    static VkViewport viewport ( float width, float height, float minDepth, float maxDepth ) {
+	//----------------------------------------------------------------//
+    static VkViewport viewport ( VkRect2D rect, float minDepth, float maxDepth ) {
         DECL_VK_STRUCT ( VkViewport, viewport );
+        viewport.x 				= ( float )rect.offset.x;
+        viewport.y 				= ( float )rect.offset.y;
+        viewport.width          = ( float )rect.extent.width;
+        viewport.height         = ( float )rect.extent.height;
+        viewport.minDepth       = minDepth;
+        viewport.maxDepth       = maxDepth;
+        return viewport;
+    }
+
+	//----------------------------------------------------------------//
+    static VkViewport viewport ( ZLRect rect, float minDepth, float maxDepth ) {
+        DECL_VK_STRUCT ( VkViewport, viewport );
+        viewport.x 				= rect.mXMin;
+        viewport.y 				= rect.mYMin;
+        viewport.width          = rect.Width ();
+        viewport.height         = rect.Height ();
+        viewport.minDepth       = minDepth;
+        viewport.maxDepth       = maxDepth;
+        return viewport;
+    }
+
+
+    //----------------------------------------------------------------//
+    static VkViewport viewport ( float x, float y, float width, float height, float minDepth, float maxDepth ) {
+        DECL_VK_STRUCT ( VkViewport, viewport );
+        viewport.x 				= x;
+        viewport.y 				= y;
         viewport.width          = width;
         viewport.height         = height;
         viewport.minDepth       = minDepth;
         viewport.maxDepth       = maxDepth;
         return viewport;
+    }
+    
+    //----------------------------------------------------------------//
+    static ZLRect zlRect ( VkRect2D vkRect ) {
+        ZLRect rect;
+        rect.mXMin = vkRect.offset.x;
+        rect.mYMin = vkRect.offset.y;
+        rect.mXMax = vkRect.offset.x + vkRect.extent.width;
+        rect.mYMax = vkRect.offset.y + vkRect.extent.height;
+        rect.Bless ();
+        return rect;
     }
 };
 

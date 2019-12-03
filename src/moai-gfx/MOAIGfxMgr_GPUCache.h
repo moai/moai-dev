@@ -87,6 +87,7 @@ public:
 	bool					GetDepthMask				() const;
 	MOAIFrameBuffer*		GetFrameBuffer				();
 	MOAIShader*				GetShader					();
+	MOAITexture*			GetTexture					( ZLIndex textureUnit = ZLIndexOp::ZERO );
 	MOAIVertexFormat*		GetVertexFormat				();
 	float					GetViewHeight				() const;
 	ZLRect					GetViewRect					() const;

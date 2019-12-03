@@ -89,7 +89,7 @@ void MOAIGfxMgr_VertexCache::EndPrim () {
 	
 	this->mPrimCount++;
 	
-	if ( this->mFlushOnPrimEnd ) {
+	if ( this->mFlushAlways || this->mFlushOnPrimEnd ) {
 		this->FlushToGPU ();
 	}
 }
@@ -108,6 +108,7 @@ MOAIGfxMgr_VertexCache::MOAIGfxMgr_VertexCache () :
 	mVtxSize ( 0 ),
 	mPrimType ( 0 ),
 	mFlushOnPrimEnd ( false ),
+	mFlushAlways ( true ),
 	mUseIdxBuffer ( false ),
 	mPrimCount ( 0 ),
 	mApplyVertexTransform ( false ),
@@ -129,6 +130,12 @@ void MOAIGfxMgr_VertexCache::Reset () {
 	
 	this->mVtxBase = 0;
 	this->mIdxBase = 0;
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxMgr_VertexCache::SetFlushAlways ( bool flushAlways ) {
+
+	this->mFlushAlways = flushAlways;
 }
 
 //----------------------------------------------------------------//

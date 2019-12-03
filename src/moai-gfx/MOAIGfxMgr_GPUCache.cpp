@@ -86,6 +86,13 @@ MOAIShader* MOAIGfxMgr_GPUCache::GetShader () {
 }
 
 //----------------------------------------------------------------//
+MOAITexture* MOAIGfxMgr_GPUCache::GetTexture ( ZLIndex textureUnit ) {
+
+	assert ( this->mCurrentState );
+	return this->mCurrentState->mTextureUnits [ textureUnit ];
+}
+
+//----------------------------------------------------------------//
 MOAIVertexFormat* MOAIGfxMgr_GPUCache::GetVertexFormat () {
 
 	assert ( this->mCurrentState );

@@ -174,7 +174,6 @@ MOAILogicalDeviceVK::MOAILogicalDeviceVK () :
 MOAILogicalDeviceVK::~MOAILogicalDeviceVK () {
 
 	this->FinalizeDependencies ();
-
 	vkDestroyDevice ( this->mDevice, NULL );
 }
 
