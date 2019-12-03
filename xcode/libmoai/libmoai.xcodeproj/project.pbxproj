@@ -4554,6 +4554,8 @@
 		CDF51D992394BCC4003D7F71 /* MOAITextureSnapshot2DVK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDF51D972394BCC4003D7F71 /* MOAITextureSnapshot2DVK.cpp */; };
 		CDF51D9A2394BCC4003D7F71 /* MOAITextureSnapshot2DVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF51D982394BCC4003D7F71 /* MOAITextureSnapshot2DVK.h */; };
 		CDF51D9C2394C12A003D7F71 /* MOAIAbstractSnapshotFactoryVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF51D9B2394C12A003D7F71 /* MOAIAbstractSnapshotFactoryVK.h */; };
+		CDF51D9F239627DB003D7F71 /* MOAIDeckShaderOneTriVK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDF51D9D239627DB003D7F71 /* MOAIDeckShaderOneTriVK.cpp */; };
+		CDF51DA0239627DB003D7F71 /* MOAIDeckShaderOneTriVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF51D9E239627DB003D7F71 /* MOAIDeckShaderOneTriVK.h */; };
 		CDF695511D63D6F40045A020 /* MOAIAssimpAnimation.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDF6954F1D63D6F40045A020 /* MOAIAssimpAnimation.cpp */; };
 		CDF695521D63D6F40045A020 /* MOAIAssimpAnimation.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF695501D63D6F40045A020 /* MOAIAssimpAnimation.h */; };
 		CDF695551D63E7330045A020 /* MOAIAnimCurveBone.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDF695531D63E7330045A020 /* MOAIAnimCurveBone.cpp */; };
@@ -8008,6 +8010,8 @@
 		CDF51D972394BCC4003D7F71 /* MOAITextureSnapshot2DVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAITextureSnapshot2DVK.cpp; path = "moai-gfx-vk/MOAITextureSnapshot2DVK.cpp"; sourceTree = "<group>"; };
 		CDF51D982394BCC4003D7F71 /* MOAITextureSnapshot2DVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAITextureSnapshot2DVK.h; path = "moai-gfx-vk/MOAITextureSnapshot2DVK.h"; sourceTree = "<group>"; };
 		CDF51D9B2394C12A003D7F71 /* MOAIAbstractSnapshotFactoryVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIAbstractSnapshotFactoryVK.h; path = "moai-gfx-vk/MOAIAbstractSnapshotFactoryVK.h"; sourceTree = "<group>"; };
+		CDF51D9D239627DB003D7F71 /* MOAIDeckShaderOneTriVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIDeckShaderOneTriVK.cpp; path = "moai-gfx-vk/MOAIDeckShaderOneTriVK.cpp"; sourceTree = "<group>"; };
+		CDF51D9E239627DB003D7F71 /* MOAIDeckShaderOneTriVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIDeckShaderOneTriVK.h; path = "moai-gfx-vk/MOAIDeckShaderOneTriVK.h"; sourceTree = "<group>"; };
 		CDF6954F1D63D6F40045A020 /* MOAIAssimpAnimation.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIAssimpAnimation.cpp; path = "moai-assimp/MOAIAssimpAnimation.cpp"; sourceTree = "<group>"; };
 		CDF695501D63D6F40045A020 /* MOAIAssimpAnimation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIAssimpAnimation.h; path = "moai-assimp/MOAIAssimpAnimation.h"; sourceTree = "<group>"; };
 		CDF695531D63E7330045A020 /* MOAIAnimCurveBone.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIAnimCurveBone.cpp; sourceTree = "<group>"; };
@@ -12880,6 +12884,7 @@
 				CD9AB4EC22C41BCE0061A87F /* buffer */,
 				CD9AB4ED22C41BD40061A87F /* manager */,
 				CD9AB4EE22C41BE10061A87F /* mesh */,
+				CDF51DA123962A63003D7F71 /* onetri */,
 				CDF51D9323934FC6003D7F71 /* pipeline */,
 				CD9AB4F222C41C010061A87F /* resource */,
 				CD9AB4EF22C41BE80061A87F /* shader */,
@@ -13302,8 +13307,6 @@
 		CDD8554C22C5ABC200F78DF0 /* vulkan */ = {
 			isa = PBXGroup;
 			children = (
-				CDF51D8E238F929D003D7F71 /* MOAIDynamicOneTriVK.cpp */,
-				CDF51D8F238F929D003D7F71 /* MOAIDynamicOneTriVK.h */,
 				CDBF98EA23409246003F430D /* MOAIFenceVK.cpp */,
 				CDBF98EB23409246003F430D /* MOAIFenceVK.h */,
 				CDD8556822CAC5FB00F78DF0 /* MOAIGfxInstanceVK.cpp */,
@@ -13313,8 +13316,6 @@
 				CDD8555122C67FF500F78DF0 /* MOAIGfxUtilVK.h */,
 				CDD8556422CAA28300F78DF0 /* MOAILogicalDeviceVK.cpp */,
 				CDD8556522CAA28300F78DF0 /* MOAILogicalDeviceVK.h */,
-				CD1711D122F41DAC00381882 /* MOAIOneTriVK.cpp */,
-				CD1711D222F41DAC00381882 /* MOAIOneTriVK.h */,
 				CDD8556222C992CD00F78DF0 /* MOAIPhysicalDeviceVK.cpp */,
 				CDD8555E22C9439000F78DF0 /* MOAIPhysicalDeviceVK.h */,
 				CD1711C722F3893F00381882 /* MOAIQueueVK.cpp */,
@@ -13590,6 +13591,19 @@
 				CDF51D982394BCC4003D7F71 /* MOAITextureSnapshot2DVK.h */,
 			);
 			name = snapshot;
+			sourceTree = "<group>";
+		};
+		CDF51DA123962A63003D7F71 /* onetri */ = {
+			isa = PBXGroup;
+			children = (
+				CDF51D9D239627DB003D7F71 /* MOAIDeckShaderOneTriVK.cpp */,
+				CDF51D9E239627DB003D7F71 /* MOAIDeckShaderOneTriVK.h */,
+				CDF51D8E238F929D003D7F71 /* MOAIDynamicOneTriVK.cpp */,
+				CDF51D8F238F929D003D7F71 /* MOAIDynamicOneTriVK.h */,
+				CD1711D122F41DAC00381882 /* MOAIOneTriVK.cpp */,
+				CD1711D222F41DAC00381882 /* MOAIOneTriVK.h */,
+			);
+			name = onetri;
 			sourceTree = "<group>";
 		};
 		E9940D6414B7A217006465CC /* luafilesystem */ = {
@@ -15848,6 +15862,7 @@
 				CDD8555F22C9439000F78DF0 /* MOAIPhysicalDeviceVK.h in Headers */,
 				CDD8555022C5ABDD00F78DF0 /* MOAISwapChainVK.h in Headers */,
 				CD9AB57B22C41C7C0061A87F /* host.h in Headers */,
+				CDF51DA0239627DB003D7F71 /* MOAIDeckShaderOneTriVK.h in Headers */,
 				CD1712C122F64C9300381882 /* MOAIDeck2DShaderVK.frag.spv.h in Headers */,
 				CDD8555422C7E2CC00F78DF0 /* MOAISurfaceVK.h in Headers */,
 				CD9AB59422C41C7C0061A87F /* MOAIIndexBufferVK.h in Headers */,
@@ -19801,6 +19816,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				CD06252C233C328F0039EC8F /* MOAICommandBufferVK.cpp in Sources */,
+				CDF51D9F239627DB003D7F71 /* MOAIDeckShaderOneTriVK.cpp in Sources */,
 				CD9AB59D22C41C7C0061A87F /* MOAITexture2DVK.cpp in Sources */,
 				CD9AB59922C41C7C0061A87F /* MOAIShaderProgramVK.cpp in Sources */,
 				CDD8556922CAC5FB00F78DF0 /* MOAIGfxInstanceVK.cpp in Sources */,

@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-gfx-vk/MOAICommandBufferVK.h>
+#include <moai-gfx-vk/MOAIDeckShaderOneTriVK.h>
 #include <moai-gfx-vk/MOAIDynamicOneTriVK.h>
 #include <moai-gfx-vk/MOAIFrameBufferVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
@@ -44,8 +45,6 @@ void MOAIGfxMgrVK_RenderTreeVK::MOAIGfxMgr_RenderTree_Render () {
 	
 	gfxMgr.BeginFrame ();
 
-
-	
 	VkRenderPass renderPass = gfxMgr.GetRenderPass ();
 	VkFramebuffer frameBuffer = gfxMgr.GetFrameBuffer ();
 	MOAISwapChainVK& swapChain = gfxMgr.GetSwapChain ();
@@ -62,7 +61,7 @@ void MOAIGfxMgrVK_RenderTreeVK::MOAIGfxMgr_RenderTree_Render () {
 	vkCmdBeginRenderPass ( commandBuffer, &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE );
 	
 	if ( !this->mOneTri ) {
-		this->mOneTri = new MOAIDynamicOneTriVK ();
+		this->mOneTri = new MOAIDeckShaderOneTriVK ();
 //		this->mOneTri = new MOAIOneTriVK ();
 	}
 	this->mOneTri->Draw ();

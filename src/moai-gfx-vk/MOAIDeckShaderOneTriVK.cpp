@@ -6,7 +6,7 @@
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetVK.h>
-#include <moai-gfx-vk/MOAIDynamicOneTriVK.h>
+#include <moai-gfx-vk/MOAIDeckShaderOneTriVK.h>
 #include <moai-gfx-vk/MOAIGfxBufferSnapshotVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
@@ -22,11 +22,11 @@
 #include <moai-gfx-vk/MOAIVertexFormatVK.h>
 
 //================================================================//
-// MOAIDynamicOneTriVK
+// MOAIDeckShaderOneTriVK
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIDynamicOneTriVK::MOAIDynamicOneTriVK () {
+MOAIDeckShaderOneTriVK::MOAIDeckShaderOneTriVK () {
 
 	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
 	MOAIPhysicalDeviceVK& physicalDevice = gfxMgr.GetPhysicalDevice ();
@@ -56,47 +56,7 @@ MOAIDynamicOneTriVK::MOAIDynamicOneTriVK () {
 }
 
 //----------------------------------------------------------------//
-MOAIDynamicOneTriVK::~MOAIDynamicOneTriVK () {
-
-	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
-	MOAILogicalDeviceVK& logicalDevice = gfxMgr.GetLogicalDevice ();
-}
-
-//----------------------------------------------------------------//
-void MOAIDynamicOneTriVK::UpdateMatrices ( u32 width, u32 height ) {
-
-	if ( !this->mUniforms ) {
-		MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
-		MOAILogicalDeviceVK& logicalDevice = gfxMgr.GetLogicalDevice ();
-	
-		this->mUniforms = new MOAIUniformBufferVK ();
-		this->mUniforms->Initialize ( logicalDevice, sizeof ( mMatrixUniforms ));
-	}
-
-	float aspect		= ( float )width / ( float )height;
-	float fovy			= 60.0 * 0.01745329251994329576923690768489; // D2R
-	float tanHalfFovy	= tan ( fovy / 2 );
-
-	float xs = 1 / ( aspect * tanHalfFovy );
-	float ys = 1 / tanHalfFovy;
-	float zn = 0.1;
-	float zf = 256;
-
-	ZLMatrix4x4 projectionMatrix;
-	projectionMatrix.Perspective ( xs, ys, zn, zf );
-
-	ZLMatrix4x4 viewMatrix;
-	viewMatrix.Ident ();
-
-	ZLMatrix4x4 modelMatrix;
-	modelMatrix.Translate ( 0, 0, -2.5 );
-
-	memcpy ( mMatrixUniforms.projectionMatrix, &projectionMatrix, sizeof ( projectionMatrix ));
-	memcpy ( mMatrixUniforms.viewMatrix, &viewMatrix, sizeof ( viewMatrix ));
-	memcpy ( mMatrixUniforms.modelMatrix, &modelMatrix, sizeof ( modelMatrix ));
-	
-	this->mUniforms->Seek ( 0 );
-	this->mUniforms->WriteBytes ( &this->mMatrixUniforms, sizeof ( this->mMatrixUniforms ));
+MOAIDeckShaderOneTriVK::~MOAIDeckShaderOneTriVK () {
 }
 
 //================================================================//
@@ -104,7 +64,7 @@ void MOAIDynamicOneTriVK::UpdateMatrices ( u32 width, u32 height ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDynamicOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
+void MOAIDeckShaderOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
 	MOAIGfxMgrVK& gfxMgr					= MOAIGfxMgrVK::Get ();
@@ -117,8 +77,6 @@ void MOAIDynamicOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 	u32 width = ( u32 )rect.extent.width;
 	u32 height = ( u32 )rect.extent.height;
 
-	this->UpdateMatrices ( width, height );
-
 	VkViewport viewport = MOAIGfxStructVK::viewport (( float )width, ( float )height, 0.0, 1.0 );
 	VkRect2D scissor = MOAIGfxStructVK::rect2D ( width, height );
 
@@ -126,15 +84,14 @@ void MOAIDynamicOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 	vkCmdSetScissor ( commandBuffer, 0, 1, &scissor );
 
 	// get the pipeline layout (should be moved to pipeline object)
-	MOAIPipelineLayoutVK& pipelineLayout = gfxMgr.GetShaderPresetVK ( ONETRI_SHADER )->GetProgram ()->GetPipelineLayout ();
+	MOAIPipelineLayoutVK& pipelineLayout = gfxMgr.GetShaderPresetVK ( DECK2D_SHADER )->GetProgram ()->GetPipelineLayout ();
 
 	// initialize the descriptor set
 	MOAIDescriptorSetLayoutVK& descriptorSetLayout = pipelineLayout.GetDescriptorSetLayout ( ZLIndexOp::ZERO );
 	
 	MOAIDescriptorSetVK* descriptorSet = new MOAIDescriptorSetVK ();
 	descriptorSet->Initialize ( descriptorSetLayout );
-	descriptorSet->SetDescriptor ( ZLIndexCast ( 0 ), ZLIndexCast ( 0 ), *this->mUniforms->GetSnapshot ( commandBuffer ));
-	descriptorSet->SetDescriptor ( ZLIndexCast ( 1 ), ZLIndexCast ( 0 ), *this->mTexture->GetSnapshot ( commandBuffer ));
+	descriptorSet->SetDescriptor ( ZLIndexCast ( 0 ), ZLIndexCast ( 0 ), *this->mTexture->GetSnapshot ( commandBuffer ));
 	
 	commandBuffer.BindDescriptorSet ( VK_PIPELINE_BIND_POINT_GRAPHICS, *descriptorSet->GetSnapshot ( commandBuffer ), pipelineLayout, 0 );
 	
@@ -143,7 +100,7 @@ void MOAIDynamicOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 		logicalDevice,
 		gfxMgr.GetRenderPass (),
 		gfxMgr.GetVertexFormatPresetVK ( XYZWUVC ),
-		gfxMgr.GetShaderPresetVK ( ONETRI_SHADER )
+		gfxMgr.GetShaderPresetVK ( DECK2D_SHADER )
 	);
 	commandBuffer.BindPipeline ( VK_PIPELINE_BIND_POINT_GRAPHICS, *pipeline );
 	commandBuffer.Pin ( *pipeline );
@@ -158,5 +115,5 @@ void MOAIDynamicOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDynamicOneTriVK::MOAIDrawable_DrawDebug ( int subPrimID ) {
+void MOAIDeckShaderOneTriVK::MOAIDrawable_DrawDebug ( int subPrimID ) {
 }

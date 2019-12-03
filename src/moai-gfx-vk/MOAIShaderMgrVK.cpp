@@ -8,8 +8,8 @@
 #include <moai-gfx-vk/MOAIShaderMgrVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
 
-//#include <moai-gfx-vk/shaders/MOAIDeck2DShaderVK-fsh.h>
-//#include <moai-gfx-vk/shaders/MOAIDeck2DShaderVK-vsh.h>
+#include <moai-gfx-vk/shaders/MOAIDeck2DShaderVK.frag.spv.h>
+#include <moai-gfx-vk/shaders/MOAIDeck2DShaderVK.vert.spv.h>
 //#include <moai-gfx-vk/shaders/MOAIDeck2DSnappingShaderVK-fsh.h>
 //#include <moai-gfx-vk/shaders/MOAIDeck2DSnappingShaderVK-vsh.h>
 //#include <moai-gfx-vk/shaders/MOAIDeck2DTexOnlyShaderVK-fsh.h>
@@ -100,14 +100,25 @@ MOAIShaderProgramVK* MOAIShaderMgrVK::GetProgram ( MOAIShaderPresetEnum shaderID
 
 			switch ( shaderID ) {
 
-//				case MOAIShaderPresetEnum::DECK2D_SHADER:
-//
+				case MOAIShaderPresetEnum::DECK2D_SHADER: {
+
+					MOAIPipelineLayoutVK* pipelineLayout = new MOAIPipelineLayoutVK ();
+					pipelineLayout->Initialize ( logicalDevice, 1 );
+					
+					MOAIDescriptorSetLayoutVK& descriptorSetLayout = pipelineLayout->InitializeDescriptorSetLayout ( ZLIndexCast ( 0 ), 1 );
+					descriptorSetLayout.SetBinding ( ZLIndexCast ( 0 ), VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT );
+					
+					program->LoadModule ( MOAIShaderProgramVK::VERTEX_MODULE, _deck2DShaderVSH, sizeof ( _deck2DShaderVSH ));
+					program->LoadModule ( MOAIShaderProgramVK::FRAGMENT_MODULE, _deck2DShaderFSH, sizeof ( _deck2DShaderFSH ));
+					program->SetPipelineLayout ( *pipelineLayout );
+
 //					program->SetVertexAttribute ( MOAIVertexFormatMgrVK::XYZWUVC_POSITION, "position" );
 //					program->SetVertexAttribute ( MOAIVertexFormatMgrVK::XYZWUVC_TEXCOORD, "uv" );
 //					program->SetVertexAttribute ( MOAIVertexFormatMgrVK::XYZWUVC_COLOR, "color" );
 //
 //					program->Load ( _deck2DShaderVSH, _deck2DShaderFSH );
-//					break;
+					break;
+				}
 
 //				case MOAIShaderPresetEnum::DECK2D_SNAPPING_SHADER:
 //
@@ -205,20 +216,18 @@ MOAIShaderProgramVK* MOAIShaderMgrVK::GetProgram ( MOAIShaderPresetEnum shaderID
 
 				case MOAIShaderPresetEnum::ONETRI_SHADER: {
 				
-					// set up the pipeline layout
 					MOAIPipelineLayoutVK* pipelineLayout = new MOAIPipelineLayoutVK ();
-					
 					pipelineLayout->Initialize ( logicalDevice, 1 );
 					
 					MOAIDescriptorSetLayoutVK& descriptorSetLayout = pipelineLayout->InitializeDescriptorSetLayout ( ZLIndexCast ( 0 ), 2 );
 					descriptorSetLayout.SetBinding ( ZLIndexCast ( 0 ), VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT );
 					descriptorSetLayout.SetBinding ( ZLIndexCast ( 1 ), VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT );
 					
-					pipelineLayout->AffirmPipelineLayout ();
-				
 					program->LoadModule ( MOAIShaderProgramVK::VERTEX_MODULE, _oneTriShaderVSH, sizeof ( _oneTriShaderVSH ));
 					program->LoadModule ( MOAIShaderProgramVK::FRAGMENT_MODULE, _oneTriShaderFSH, sizeof ( _oneTriShaderFSH ));
-					program->SetPipelineLayout ( pipelineLayout );
+					program->SetPipelineLayout ( *pipelineLayout );
+					
+					break;
 				}
 			}
 

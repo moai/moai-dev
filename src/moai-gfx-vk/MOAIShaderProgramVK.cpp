@@ -36,6 +36,13 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+MOAIPipelineLayoutVK& MOAIShaderProgramVK::GetPipelineLayout () {
+
+	assert ( this->mPipelineLayout );
+	return *this->mPipelineLayout;
+}
+
+//----------------------------------------------------------------//
 VkShaderStageFlagBits MOAIShaderProgramVK::GetShaderStageBit ( ModuleID moduleID ) {
 
 	switch ( moduleID ) {
@@ -92,6 +99,13 @@ MOAIShaderProgramVK::~MOAIShaderProgramVK () {
 }
 
 //----------------------------------------------------------------//
+void MOAIShaderProgramVK::SetPipelineLayout ( MOAIPipelineLayoutVK& pipelineLayout ) {
+
+	pipelineLayout.AffirmPipelineLayout ();
+	this->mPipelineLayout = &pipelineLayout;
+}
+
+//----------------------------------------------------------------//
 void MOAIShaderProgramVK::UpdatePipelineCreateInfo ( VkGraphicsPipelineCreateInfo& info ) {
 
 	if ( this->mStageInfos.Size () == 0 ) {
@@ -120,7 +134,6 @@ void MOAIShaderProgramVK::UpdatePipelineCreateInfo ( VkGraphicsPipelineCreateInf
 	
 	info.pStages = this->mStageInfos.GetBuffer ();
 	info.stageCount = ( u32 )this->mStageInfos.Size ();
-	
 	info.layout = *this->mPipelineLayout;
 }
 

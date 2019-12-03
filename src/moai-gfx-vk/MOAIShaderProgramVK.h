@@ -46,21 +46,21 @@ protected:
 	VkShaderStageFlagBits		GetShaderStageBit			( ModuleID moduleID );
 	
 	//----------------------------------------------------------------//
-	void				MOAILuaObject_RegisterLuaClass					( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs					( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	
 public:
 
 	DECL_LUA_FACTORY ( MOAIShaderProgramVK )
 
-	GET_SET ( MOAIPipelineLayoutVK*, PipelineLayout, mPipelineLayout )
-
 	//----------------------------------------------------------------//
-	void				Initialize					( MOAILogicalDeviceVK& logicalDevice );
-	void				LoadModule					( ModuleID moduleID, const void* shaderCode, size_t shaderSize );
-						MOAIShaderProgramVK			();
-						~MOAIShaderProgramVK		();
-	void				UpdatePipelineCreateInfo	( VkGraphicsPipelineCreateInfo& info );
+	MOAIPipelineLayoutVK&	GetPipelineLayout				();
+	void					Initialize						( MOAILogicalDeviceVK& logicalDevice );
+	void					LoadModule						( ModuleID moduleID, const void* shaderCode, size_t shaderSize );
+							MOAIShaderProgramVK				();
+							~MOAIShaderProgramVK			();
+	void					SetPipelineLayout				( MOAIPipelineLayoutVK& pipelineLayout );
+	void					UpdatePipelineCreateInfo		( VkGraphicsPipelineCreateInfo& info );
 };
 
 #endif
