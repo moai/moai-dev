@@ -53,8 +53,8 @@ protected:
 	ZLStrongPtr < MOAITexture >	mTexture;
 	
 	MOAIBlendMode			mBlendMode;
-	MOAICullFunc::Type		mCullMode;
-	MOAIDepthFunc::Type		mDepthTest;
+	MOAICullFuncEnum::_		mCullMode;
+	MOAIDepthFuncEnum::_		mDepthTest;
 	bool					mDepthMask;
 
 	u32						mFlags;

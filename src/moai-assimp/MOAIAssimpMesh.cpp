@@ -200,13 +200,13 @@ int MOAIAssimpMesh::_getPrimitiveType ( lua_State *L ) {
 	if ( self->mScene ) {
 		switch ( primitiveType ) {
 			case aiPrimitiveType_POINT:
-				lua_pushinteger ( state, ( u32 )MOAITopology::POINT_LIST );
+				lua_pushinteger ( state, ( u32 )MOAIGfxTopologyEnum::POINT_LIST );
 				break;
 			case aiPrimitiveType_LINE:
-				lua_pushinteger ( state, ( u32 )MOAITopology::LINE_LIST );
+				lua_pushinteger ( state, ( u32 )MOAIGfxTopologyEnum::LINE_LIST );
 				break;
 			case aiPrimitiveType_TRIANGLE:
-				lua_pushinteger ( state, ( u32 )MOAITopology::TRIANGLE_LIST );
+				lua_pushinteger ( state, ( u32 )MOAIGfxTopologyEnum::TRIANGLE_LIST );
 				break;
 			case aiPrimitiveType_POLYGON:
 				lua_pushnil ( state );

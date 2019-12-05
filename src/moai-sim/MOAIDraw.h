@@ -76,8 +76,8 @@ private:
 	static int			_strokeRoundedRect		( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void			DrawLuaParams			( lua_State* L, MOAITopology::Type primType );
-	void			DrawLuaArray			( lua_State* L, MOAITopology::Type primType );
+	void			DrawLuaParams			( lua_State* L, MOAIGfxTopologyEnum::_ primType );
+	void			DrawLuaArray			( lua_State* L, MOAIGfxTopologyEnum::_ primType );
 	
 	//----------------------------------------------------------------//
 	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
@@ -98,8 +98,8 @@ public:
 	void			DrawString				( cc8* text, float x, float y, float width, float height );
 	void			DrawString				( cc8* text, float x, float y, float scale, MOAIFont& font, float fontSize, float shadowOffsetX, float shadowOffsetY, float width, float height );
 	void			DrawTexture				( float left, float top, float right, float bottom, MOAITexture* texture );
-	void			DrawVertexArray			( const ZLVec3D* verts, u32 count, u32 color, MOAITopology::Type primType );
-	void			DrawVertexArray2D		( const float* verts, u32 count, u32 color, MOAITopology::Type primType );
+	void			DrawVertexArray			( const ZLVec3D* verts, u32 count, u32 color, MOAIGfxTopologyEnum::_ primType );
+	void			DrawVertexArray2D		( const float* verts, u32 count, u32 color, MOAIGfxTopologyEnum::_ primType );
 	void			EndDrawString			();
 					MOAIDraw				();
 					~MOAIDraw				();

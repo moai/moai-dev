@@ -34,7 +34,7 @@ int	MOAIVertexFormat::_declareAttribute ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexFormat, "UNNN" )
 
 	ZLIndex index				= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-	MOAIGfxType::Type type		= ( MOAIGfxType::Type )state.GetValue < u32 >( 3, 0 );
+	MOAIGfxTypeEnum::_ type		= ( MOAIGfxTypeEnum::_ )state.GetValue < u32 >( 3, 0 );
 	u32 size					= state.GetValue < u32 >( 4, 0 );
 	bool normalized				= state.GetValue < bool >( 5, false );
 	u32 use						= state.GetValue < u32 >( 6, ATTRIBUTE_USER );
@@ -50,7 +50,7 @@ int MOAIVertexFormat::_declareBoneCount ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
 	
 	ZLIndex index				= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-	MOAIGfxType::Type type		= ( MOAIGfxType::Type )state.GetValue < u32 >( 3, MOAIGfxType::UNSIGNED_BYTE );
+	MOAIGfxTypeEnum::_ type		= ( MOAIGfxTypeEnum::_ )state.GetValue < u32 >( 3, MOAIGfxTypeEnum::UNSIGNED_BYTE );
 	
 	self->DeclareAttribute ( index, type, 1, ATTRIBUTE_BONE_COUNT, false );
 	
@@ -63,7 +63,7 @@ int MOAIVertexFormat::_declareBoneIndices ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
 	
 	ZLIndex index				= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-	MOAIGfxType::Type type		= ( MOAIGfxType::Type )state.GetValue < u32 >( 3, MOAIGfxType::UNSIGNED_BYTE );
+	MOAIGfxTypeEnum::_ type		= ( MOAIGfxTypeEnum::_ )state.GetValue < u32 >( 3, MOAIGfxTypeEnum::UNSIGNED_BYTE );
 	u32 size					= state.GetValue < u32 >( 4, 4 );
 	
 	self->DeclareAttribute ( index, type, size, ATTRIBUTE_BONE_INDICES, false );
@@ -77,7 +77,7 @@ int MOAIVertexFormat::_declareBoneWeights ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
 	
 	ZLIndex index				= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-	MOAIGfxType::Type type		= ( MOAIGfxType::Type )state.GetValue < u32 >( 3, MOAIGfxType::FLOAT );
+	MOAIGfxTypeEnum::_ type		= ( MOAIGfxTypeEnum::_ )state.GetValue < u32 >( 3, MOAIGfxTypeEnum::FLOAT );
 	u32 size					= state.GetValue < u32 >( 4, 4 );
 	
 	self->DeclareAttribute ( index, type, size, ATTRIBUTE_BONE_WEIGHTS, false );
@@ -98,7 +98,7 @@ int MOAIVertexFormat::_declareColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
 
 	ZLIndex index				= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-	MOAIGfxType::Type type		= ( MOAIGfxType::Type )state.GetValue < u32 >( 3, MOAIGfxType::UNSIGNED_BYTE );
+	MOAIGfxTypeEnum::_ type		= ( MOAIGfxTypeEnum::_ )state.GetValue < u32 >( 3, MOAIGfxTypeEnum::UNSIGNED_BYTE );
 	
 	self->DeclareAttribute ( index, type, COLOR_SIZE, ATTRIBUTE_COLOR, true );
 
@@ -119,7 +119,7 @@ int MOAIVertexFormat::_declareCoord ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
 
 	ZLIndex index				= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-	MOAIGfxType::Type type		= ( MOAIGfxType::Type )state.GetValue < u32 >( 3, MOAIGfxType::FLOAT );
+	MOAIGfxTypeEnum::_ type		= ( MOAIGfxTypeEnum::_ )state.GetValue < u32 >( 3, MOAIGfxTypeEnum::FLOAT );
 	u32 size					= state.GetValue < u32 >( 4, 3 );
 	
 	self->DeclareAttribute ( index, type, size, ATTRIBUTE_COORD, false );
@@ -140,7 +140,7 @@ int MOAIVertexFormat::_declareNormal ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
 	
 	ZLIndex index				= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-	MOAIGfxType::Type type		= ( MOAIGfxType::Type )state.GetValue < u32 >( 3, MOAIGfxType::FLOAT );
+	MOAIGfxTypeEnum::_ type		= ( MOAIGfxTypeEnum::_ )state.GetValue < u32 >( 3, MOAIGfxTypeEnum::FLOAT );
 	
 	self->DeclareAttribute ( index, type, NORMAL_SIZE, ATTRIBUTE_NORMAL, false );
 
@@ -161,7 +161,7 @@ int MOAIVertexFormat::_declareUV ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexFormat, "U" )
 
 	ZLIndex index				= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-	MOAIGfxType::Type type		= ( MOAIGfxType::Type )state.GetValue < u32 >( 3, MOAIGfxType::FLOAT );
+	MOAIGfxTypeEnum::_ type		= ( MOAIGfxTypeEnum::_ )state.GetValue < u32 >( 3, MOAIGfxTypeEnum::FLOAT );
 	u32 size					= state.GetValue < u32 >( 4, 2 );
 	
 	self->DeclareAttribute ( index, type, size, ATTRIBUTE_TEX_COORD, false );
@@ -206,7 +206,7 @@ int MOAIVertexFormat::Compare ( const void* v0, const void* v1, float componentE
 
 		const MOAIVertexAttribute& attribute = this->mAttributes [ i ];
 		
-		float tolerance = attribute.mType == MOAIGfxType::FLOAT ? componentEpsilon : 0.0f;
+		float tolerance = attribute.mType == MOAIGfxTypeEnum::FLOAT ? componentEpsilon : 0.0f;
 		
 		const void* a0 = ( const void* )(( size_t )v0 + attribute.mOffset );
 		const void* a1 = ( const void* )(( size_t )v1 + attribute.mOffset );
@@ -351,7 +351,7 @@ u32 MOAIVertexFormat::CountComponentsByUse ( u32 useID ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexFormat::DeclareAttribute ( ZLIndex index, MOAIGfxType::Type type, u32 size, u32 use, bool normalized ) {
+void MOAIVertexFormat::DeclareAttribute ( ZLIndex index, MOAIGfxTypeEnum::_ type, u32 size, u32 use, bool normalized ) {
 
 	ZLIndex attrIdx = ZLIndexCast ( this->mTotalAttributes++ );
 	this->mAttributes.Grow ( this->mTotalAttributes );
@@ -400,18 +400,18 @@ u32 MOAIVertexFormat::GetComponentSize ( u32 size, u32 type ) {
 	u32 bytes;
 	switch ( type ) {
 	
-		case MOAIGfxType::BYTE:
-		case MOAIGfxType::UNSIGNED_BYTE:
+		case MOAIGfxTypeEnum::BYTE:
+		case MOAIGfxTypeEnum::UNSIGNED_BYTE:
 			bytes = 1;
 			break;
 		
-		case MOAIGfxType::SHORT:
-		case MOAIGfxType::UNSIGNED_SHORT:
+		case MOAIGfxTypeEnum::SHORT:
+		case MOAIGfxTypeEnum::UNSIGNED_SHORT:
 			bytes = 2;
 			break;
 		
 		//case ZLGfxEnum::FIXED:
-		case MOAIGfxType::FLOAT:
+		case MOAIGfxTypeEnum::FLOAT:
 			bytes = 4;
 			break;
 		
@@ -485,19 +485,19 @@ size_t MOAIVertexFormat::PackAttribute ( void* buffer, const ZLVec4D& coord, con
 
 	switch ( attribute.mType ) {
 	
-		case MOAIGfxType::BYTE:
+		case MOAIGfxTypeEnum::BYTE:
 			return MOAIVertexFormat::PackAttribute < s8 >( buffer, coord, components, normalized ? 127.0f : 1.0f );
 		
-		case MOAIGfxType::FLOAT:
+		case MOAIGfxTypeEnum::FLOAT:
 			return MOAIVertexFormat::PackAttribute < float >( buffer, coord, components, 1.0f );
 		
-		case MOAIGfxType::SHORT:
+		case MOAIGfxTypeEnum::SHORT:
 			return MOAIVertexFormat::PackAttribute < s16 >( buffer, coord, components, normalized ? 32767.0f : 1.0f );
 		
-		case MOAIGfxType::UNSIGNED_BYTE:
+		case MOAIGfxTypeEnum::UNSIGNED_BYTE:
 			return MOAIVertexFormat::PackAttribute < u8 >( buffer, coord, components, normalized ? 255.0f : 1.0f );
 		
-		case MOAIGfxType::UNSIGNED_SHORT:
+		case MOAIGfxTypeEnum::UNSIGNED_SHORT:
 			return MOAIVertexFormat::PackAttribute < u16 >( buffer, coord, components, normalized ? 65535.0f : 1.0f );
 	}
 	
@@ -533,23 +533,23 @@ void MOAIVertexFormat::PrintVertices ( ZLStream& stream, size_t size ) const {
 			
 				switch ( attribute.mType  ) {
 				
-					case MOAIGfxType::BYTE:
+					case MOAIGfxTypeEnum::BYTE:
 						printf ( "%d", ( int )stream.Read < s8 >( 0 ));
 						break;
 					
-					case MOAIGfxType::UNSIGNED_BYTE:
+					case MOAIGfxTypeEnum::UNSIGNED_BYTE:
 						printf ( "%d", ( int )stream.Read < u8 >( 0 ));
 						break;
 					
-					case MOAIGfxType::SHORT:
+					case MOAIGfxTypeEnum::SHORT:
 						printf ( "%d", ( int )stream.Read < s16 >( 0 ));
 						break;
 					
-					case MOAIGfxType::UNSIGNED_SHORT:
+					case MOAIGfxTypeEnum::UNSIGNED_SHORT:
 						printf ( "%d", ( int )stream.Read < u16 >( 0 ));
 						break;
 					
-					case MOAIGfxType::FLOAT:
+					case MOAIGfxTypeEnum::FLOAT:
 						printf ( "%f", ( float )stream.Read < float >( 0 ));
 						break;
 				}
@@ -674,19 +674,19 @@ ZLVec4D MOAIVertexFormat::UnpackAttribute ( const void* buffer, const MOAIVertex
 
 	switch ( attribute.mType ) {
 	
-		case MOAIGfxType::BYTE:
+		case MOAIGfxTypeEnum::BYTE:
 			return MOAIVertexFormat::UnpackAttribute < s8 >( buffer, components, yFallback, zFallback, wFallback, normalized ? 127.0f : 1.0f );
 		
-		case MOAIGfxType::FLOAT:
+		case MOAIGfxTypeEnum::FLOAT:
 			return MOAIVertexFormat::UnpackAttribute < float >( buffer, components, yFallback, zFallback, wFallback, 1.0f );
 		
-		case MOAIGfxType::SHORT:
+		case MOAIGfxTypeEnum::SHORT:
 			return MOAIVertexFormat::UnpackAttribute < s16 >( buffer, components, yFallback, zFallback, wFallback, normalized ? 32767.0f : 1.0f );
 		
-		case MOAIGfxType::UNSIGNED_BYTE:
+		case MOAIGfxTypeEnum::UNSIGNED_BYTE:
 			return MOAIVertexFormat::UnpackAttribute < u8 >( buffer, components, yFallback, zFallback, wFallback, normalized ? 255.0f : 1.0f );
 		
-		case MOAIGfxType::UNSIGNED_SHORT:
+		case MOAIGfxTypeEnum::UNSIGNED_SHORT:
 			return MOAIVertexFormat::UnpackAttribute < u16 >( buffer, components, yFallback, zFallback, wFallback, normalized ? 65535.0f : 1.0f );
 	}
 
@@ -816,11 +816,11 @@ void MOAIVertexFormat::WriteUV ( ZLStream& stream, ZLIndex idx, float x, float y
 //----------------------------------------------------------------//
 void MOAIVertexFormat::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
 	
-	state.SetField ( -1, "GL_BYTE",					( u32 )MOAIGfxType::BYTE );
-	state.SetField ( -1, "GL_FLOAT",				( u32 )MOAIGfxType::FLOAT );
-	state.SetField ( -1, "GL_SHORT",				( u32 )MOAIGfxType::SHORT );
-	state.SetField ( -1, "GL_UNSIGNED_BYTE",		( u32 )MOAIGfxType::UNSIGNED_BYTE );
-	state.SetField ( -1, "GL_UNSIGNED_SHORT",		( u32 )MOAIGfxType::UNSIGNED_SHORT );
+	state.SetField ( -1, "GL_BYTE",					( u32 )MOAIGfxTypeEnum::BYTE );
+	state.SetField ( -1, "GL_FLOAT",				( u32 )MOAIGfxTypeEnum::FLOAT );
+	state.SetField ( -1, "GL_SHORT",				( u32 )MOAIGfxTypeEnum::SHORT );
+	state.SetField ( -1, "GL_UNSIGNED_BYTE",		( u32 )MOAIGfxTypeEnum::UNSIGNED_BYTE );
+	state.SetField ( -1, "GL_UNSIGNED_SHORT",		( u32 )MOAIGfxTypeEnum::UNSIGNED_SHORT );
 	
 	state.SetField ( -1, "ATTRIBUTE_BONE_INDICES",	( u32 )ATTRIBUTE_BONE_INDICES );
 	state.SetField ( -1, "ATTRIBUTE_BONE_WEIGHTS",	( u32 )ATTRIBUTE_BONE_WEIGHTS );
@@ -869,7 +869,7 @@ void MOAIVertexFormat::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAIL
 		
 		attribute.mIndex			= state.GetFieldValue < cc8*, u32 >( -1, "mIndex", 0 );
 		attribute.mSize				= state.GetFieldValue < cc8*, u32 >( -1, "mSize", 0 );
-		attribute.mType				= ( MOAIGfxType::Type )state.GetFieldValue < cc8*, u32 >( -1, "mType", 0 );
+		attribute.mType				= ( MOAIGfxTypeEnum::_ )state.GetFieldValue < cc8*, u32 >( -1, "mType", 0 );
 		attribute.mNormalized		= state.GetFieldValue < cc8*, bool >( -1, "mNormalized", false );
 		attribute.mOffset			= state.GetFieldValue < cc8*, u32 >( -1, "mOffset", 0 );
 		

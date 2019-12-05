@@ -30,13 +30,13 @@ int MOAIFrameBufferTextureGL::_init ( lua_State* L ) {
 	
 	// TODO: fix me
 	#if defined ( MOAI_OS_ANDROID ) || defined ( MOAI_OS_HTML )
-		ZLGfxEnum::Type colorFormat		= ( ZLGfxEnum::Type )state.GetValue < u32 >( 4, ZLGfxEnum::PIXEL_FORMAT_RGB565 );
+		ZLGfxEnum::_ colorFormat		= ( ZLGfxEnum::_ )state.GetValue < u32 >( 4, ZLGfxEnum::PIXEL_FORMAT_RGB565 );
 	#else
-		ZLGfxEnum::Type colorFormat		= ( ZLGfxEnum::Type )state.GetValue < u32 >( 4, ZLGfxEnum::PIXEL_FORMAT_RGBA8 );
+		ZLGfxEnum::_ colorFormat		= ( ZLGfxEnum::_ )state.GetValue < u32 >( 4, ZLGfxEnum::PIXEL_FORMAT_RGBA8 );
 	#endif
 	
-	ZLGfxEnum::Type depthFormat			= ( ZLGfxEnum::Type )state.GetValue < u32 >( 5, 0 );
-	ZLGfxEnum::Type stencilFormat		= ( ZLGfxEnum::Type ) state.GetValue < u32 >( 6, 0 );
+	ZLGfxEnum::_ depthFormat			= ( ZLGfxEnum::_ )state.GetValue < u32 >( 5, 0 );
+	ZLGfxEnum::_ stencilFormat		= ( ZLGfxEnum::_ ) state.GetValue < u32 >( 6, 0 );
 	
 	self->Init ( width, height, colorFormat, depthFormat, stencilFormat );
 	
@@ -48,7 +48,7 @@ int MOAIFrameBufferTextureGL::_init ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIFrameBufferTextureGL::Init ( u32 width, u32 height, ZLGfxEnum::Type colorFormat, ZLGfxEnum::Type depthFormat, ZLGfxEnum::Type stencilFormat ) {
+void MOAIFrameBufferTextureGL::Init ( u32 width, u32 height, ZLGfxEnum::_ colorFormat, ZLGfxEnum::_ depthFormat, ZLGfxEnum::_ stencilFormat ) {
 
 	this->Finalize ();
 
@@ -156,7 +156,7 @@ bool MOAIFrameBufferTextureGL::MOAIGfxResourceGL_OnGPUCreate () {
 		
         // clearing framebuffer because it might contain garbage
         gfx.ClearColor ( 0, 0, 0, 0 );
-        gfx.Clear ( ZGLClearColorFlags::CLEAR_COLOR_BUFFER_BIT | ZGLClearColorFlags::CLEAR_STENCIL_BUFFER_BIT | ZGLClearColorFlags::CLEAR_DEPTH_BUFFER_BIT );
+        gfx.Clear ( ZLGfxClearFlags::COLOR_BUFFER_BIT | ZLGfxClearFlags::STENCIL_BUFFER_BIT | ZLGfxClearFlags::DEPTH_BUFFER_BIT );
 		
 		this->MOAIGfxResourceGL_OnGPUUpdate ();
 		

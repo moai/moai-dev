@@ -32,7 +32,7 @@ size_t MOAIGfxMgr_GPUCache::CountTextureUnits () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgr_GPUCache::DrawPrims ( MOAITopology::Type primType, u32 base, u32 count ) {
+void MOAIGfxMgr_GPUCache::DrawPrims ( MOAIGfxTopologyEnum::_ primType, u32 base, u32 count ) {
 	return this->MOAIGfxMgr_GPUCache_DrawPrims ( primType, base, count );
 }
 
@@ -197,7 +197,7 @@ void MOAIGfxMgr_GPUCache::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgr_GPUCache::SetBlendMode ( MOAIBlendFactor::Type srcFactor, MOAIBlendFactor::Type dstFactor, MOAIBlendFunc::Type equation ) {
+void MOAIGfxMgr_GPUCache::SetBlendMode ( MOAIBlendFactorEnum::_ srcFactor, MOAIBlendFactorEnum::_ dstFactor, MOAIBlendFuncEnum::_ equation ) {
 
 	MOAIBlendMode blendMode;
 	blendMode.SetBlend ( equation, srcFactor, dstFactor );
@@ -208,11 +208,11 @@ void MOAIGfxMgr_GPUCache::SetBlendMode ( MOAIBlendFactor::Type srcFactor, MOAIBl
 //----------------------------------------------------------------//
 void MOAIGfxMgr_GPUCache::SetCullFunc () {
 
-	this->SetCullFunc ( MOAICullFunc::NONE );
+	this->SetCullFunc ( MOAICullFuncEnum::NONE );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgr_GPUCache::SetCullFunc ( MOAICullFunc::Type cullFunc ) {
+void MOAIGfxMgr_GPUCache::SetCullFunc ( MOAICullFuncEnum::_ cullFunc ) {
 
 	assert ( !this->mApplyingStateChanges );
 	
@@ -235,11 +235,11 @@ void MOAIGfxMgr_GPUCache::SetDefaultTexture ( MOAITexture* texture ) {
 //----------------------------------------------------------------//
 void MOAIGfxMgr_GPUCache::SetDepthFunc () {
 
-	this->SetDepthFunc ( MOAIDepthFunc::NONE );
+	this->SetDepthFunc ( MOAIDepthFuncEnum::NONE );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgr_GPUCache::SetDepthFunc ( MOAIDepthFunc::Type depthFunc ) {
+void MOAIGfxMgr_GPUCache::SetDepthFunc ( MOAIDepthFuncEnum::_ depthFunc ) {
 
 	assert ( !this->mApplyingStateChanges );
 	

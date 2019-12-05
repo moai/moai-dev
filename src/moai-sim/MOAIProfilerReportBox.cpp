@@ -461,7 +461,7 @@ void MOAIProfilerReportBox::Draw ( int subPrimID ) {
 //	gfxMgr.SetUVTransform ();
 //	gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_WORLD_TRANSFORM );
 //
-//	gfxMgr.SetBlendMode ( MOAIBlendFactor::SRC_ALPHA, MOAIBlendFactor::ONE_MINUS_SRC_ALPHA );
+//	gfxMgr.SetBlendMode ( MOAIBlendFactorEnum::SRC_ALPHA, MOAIBlendFactorEnum::ONE_MINUS_SRC_ALPHA );
 //
 //	// Draw the table background	
 //	gfxMgr.SetPenColor ( mBackgroundColor );
@@ -634,7 +634,7 @@ MOAIProfilerReportBox::MOAIProfilerReportBox () :
 	
 	this->mFrame.Init ( 0.0f, 0.0f, 0.0f, 0.0f ); 
 	//this->SetMask ( MOAIProp::CAN_DRAW );
-	this->mBlendMode.SetBlend ( MOAIBlendFactor::SRC_ALPHA, MOAIBlendFactor::ONE_MINUS_SRC_ALPHA );
+	this->mBlendMode.SetBlend ( MOAIBlendFactorEnum::SRC_ALPHA, MOAIBlendFactorEnum::ONE_MINUS_SRC_ALPHA );
 }
 
 //----------------------------------------------------------------//
@@ -765,7 +765,7 @@ bool MOAIProfilerReportBox::_DrawEntryVisuals ( MOAIProfilerEntry* entry ) {
 //		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 //		const ZLColorVec& penColor = gfxMgr.GetPenColor ();
 //
-//		MOAIDraw::DrawVertexArray2D ( mSampleVerts, MOAIProfilerEntry::NUM_SAMPLES, 0xff0000ff, MOAITopology::LINE_STRIP );
+//		MOAIDraw::DrawVertexArray2D ( mSampleVerts, MOAIProfilerEntry::NUM_SAMPLES, 0xff0000ff, MOAIGfxTopologyEnum::LINE_STRIP );
 //
 //		gfxMgr.SetPenColor ( penColor );
 //

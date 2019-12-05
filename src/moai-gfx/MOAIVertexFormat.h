@@ -14,7 +14,7 @@ public:
 	
 	u32						mIndex;
 	u32						mSize;
-	MOAIGfxType::Type		mType;			// type of the element
+	MOAIGfxTypeEnum::_		mType;			// type of the element
 	u32						mUse;			// index into use table
 	bool					mNormalized;
 	u32						mOffset;		// base addr in vertex
@@ -138,7 +138,7 @@ public:
 	u32								CountBones						() const;
 	u32								CountComponentsByUse			( u32 useID ) const;
 
-	void							DeclareAttribute				( ZLIndex index, MOAIGfxType::Type type, u32 size, u32 use, bool normalized );
+	void							DeclareAttribute				( ZLIndex index, MOAIGfxTypeEnum::_ type, u32 size, u32 use, bool normalized );
 	
 	const MOAIVertexAttribute&		GetAttribute					( ZLIndex attrIdx );
 	const MOAIVertexAttribute*		GetAttributeByUse				( u32 useID, ZLIndex attrIndex ) const;

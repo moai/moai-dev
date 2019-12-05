@@ -11,7 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
- ZLGfxEnum::Type ZLGfxEnum::MapNativeToZL ( u32 value ) {
+ ZLGfxEnum::_ ZLGfxEnum::MapNativeToZL ( u32 value ) {
 
 	switch ( value ) {
 		case GL_DST_ALPHA:					return BLEND_FACTOR_DST_ALPHA;
@@ -31,7 +31,7 @@
 }
 
 //----------------------------------------------------------------//
-u32  ZLGfxEnum::MapZLToNative ( Type value ) {
+u32  ZLGfxEnum::MapZLToNative ( _ value ) {
 
 	switch ( value ) {
 

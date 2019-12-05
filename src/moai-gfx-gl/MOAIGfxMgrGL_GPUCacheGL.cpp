@@ -160,7 +160,7 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushCullFunc () {
 
 	assert ( this->mApplyingStateChanges );
 	
-	MOAICullFunc::Type cullFunc = this->mPendingState->mCullFunc;
+	MOAICullFuncEnum::_ cullFunc = this->mPendingState->mCullFunc;
 	
 	MOAIGfxStateGPUCacheFrame& active = *this->mActiveState;
 	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
@@ -188,7 +188,7 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushDepthFunc () {
 
 	assert ( this->mApplyingStateChanges );
 	
-	MOAIDepthFunc::Type depthFunc = this->mPendingState->mDepthFunc;
+	MOAIDepthFuncEnum::_ depthFunc = this->mPendingState->mDepthFunc;
 	
 	MOAIGfxStateGPUCacheFrame& active = *this->mActiveState;
 	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
@@ -753,7 +753,7 @@ void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_ClearSurface () {
 		
 		this->ApplyStateChanges ();
 	
-		if ( clearFlags & ZGLClearColorFlags::CLEAR_COLOR_BUFFER_BIT ) {
+		if ( clearFlags & ZLGfxClearFlags::COLOR_BUFFER_BIT ) {
 		
 			const ZLColorVec& clearColor = cpuCache.GetClearColor ();
 		
@@ -765,7 +765,7 @@ void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_ClearSurface () {
 			);
 		}
 	
-		if (( clearFlags & ZGLClearColorFlags::CLEAR_DEPTH_BUFFER_BIT ) && !this->GetDepthMask ()) {
+		if (( clearFlags & ZLGfxClearFlags::DEPTH_BUFFER_BIT ) && !this->GetDepthMask ()) {
 			gfx.DepthMask ( true );
 			gfx.Clear ( clearFlags );
 			gfx.DepthMask ( false );
@@ -783,13 +783,13 @@ size_t MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_CountTextureUnits () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_DrawPrims ( MOAITopology::Type primType, u32 base, u32 count ) {
+void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_DrawPrims ( MOAIGfxTopologyEnum::_ primType, u32 base, u32 count ) {
 
 	DEBUG_LOG ( "DRAW PRIMS: %d %d %d\n", primType, base, count );
 	
 	this->ApplyStateChanges ();
 
-	ZLGfxEnum::Type primTypeZGL = MOAIGfxConstsGL::Remap ( primType );
+	ZLGfxEnum::_ primTypeZGL = MOAIGfxConstsGL::Remap ( primType );
 
 	MOAIShaderGL* shader = MOAICast < MOAIShaderGL >( this->mActiveState->mShader );
 
@@ -804,7 +804,7 @@ void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_DrawPrims ( MOAITopology::Type
 			DEBUG_LOG ( "drawing prims with index and vertex buffer\n" );
 			
 			size_t indexSize = idxBuffer->GetIndexSize ();
-			ZLGfxEnum::Type indexType = indexSize == 2 ? ZLGfxEnum::TYPE_UNSIGNED_SHORT : ZLGfxEnum::TYPE_UNSIGNED_INT;
+			ZLGfxEnum::_ indexType = indexSize == 2 ? ZLGfxEnum::TYPE_UNSIGNED_SHORT : ZLGfxEnum::TYPE_UNSIGNED_INT;
 			gfx.DrawElements ( primTypeZGL, count, indexType, this->mBoundIdxBuffer, base * indexSize );
 		}
 		else {
@@ -833,13 +833,13 @@ void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_ResetGPUState () {
 	
 	// disable backface culling
 	gfx.Disable ( ZLGfxEnum::PIPELINE_CULL );
-	pending.mCullFunc = MOAICullFunc::NONE;
-	active.mCullFunc = MOAICullFunc::NONE;
+	pending.mCullFunc = MOAICullFuncEnum::NONE;
+	active.mCullFunc = MOAICullFuncEnum::NONE;
 	
 	// disable depth test
 	gfx.Disable ( ZLGfxEnum::PIPELINE_DEPTH );
-	pending.mDepthFunc = MOAIDepthFunc::NONE;
-	active.mDepthFunc = MOAIDepthFunc::NONE;
+	pending.mDepthFunc = MOAIDepthFuncEnum::NONE;
+	active.mDepthFunc = MOAIDepthFuncEnum::NONE;
 	
 	// disable depth write
 	gfx.DepthMask ( false );

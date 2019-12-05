@@ -14,12 +14,11 @@
 #define ZGL_FIRST_FLAG 0x70000000
 
 //================================================================//
-// Type
+// ZLGfxEnum
 //================================================================//
-class ZLGfxEnum {
-public:
+struct ZLGfxEnum {
 
-	enum Type {
+	enum _ {
 
 		NONE 									= 0,
 
@@ -231,14 +230,19 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-	static Type			MapNativeToZL		( u32 value );
-	static u32			MapZLToNative		( Type value );
+	static _			MapNativeToZL		( u32 value );
+	static u32			MapZLToNative		( _ value );
 };
 
-enum ZGLClearColorFlags {
-	CLEAR_COLOR_BUFFER_BIT		= 0x01,
-	CLEAR_DEPTH_BUFFER_BIT		= 0x02,
-	CLEAR_STENCIL_BUFFER_BIT	= 0x04,
+//================================================================//
+// ZLGfxClearFlags
+//================================================================//
+struct ZLGfxClearFlags {
+	enum _ {
+		COLOR_BUFFER_BIT		= 0x01,
+		DEPTH_BUFFER_BIT		= 0x02,
+		STENCIL_BUFFER_BIT		= 0x04,
+	};
 };
 
 #define ZGL_INVALID_UNIFORM_ADDR (( u32 )-1 )

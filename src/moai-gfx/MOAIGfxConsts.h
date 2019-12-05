@@ -5,10 +5,10 @@
 #define	MOAIGFXCONSTS_H
 
 //================================================================//
-// MOAIBlendFactor
+// MOAIBlendFactorEnum
 //================================================================//
-namespace MOAIBlendFactor {
-	enum Type {
+struct MOAIBlendFactorEnum {
+	enum _ {
 		DST_ALPHA,
 		DST_COLOR,
 		ONE,
@@ -25,10 +25,10 @@ namespace MOAIBlendFactor {
 };
 
 //================================================================//
-// MOAIBlendFunc
+// MOAIBlendFuncEnum
 //================================================================//
-namespace MOAIBlendFunc {
-	enum Type {
+struct MOAIBlendFuncEnum {
+	enum _ {
 		ADD,
 		MAX,
 		MIN,
@@ -39,9 +39,9 @@ namespace MOAIBlendFunc {
 };
 
 //================================================================//
-// MOAIClearFlags
+// MOAIClearFlagsEnum
 //================================================================//
-namespace MOAIClearFlags {
+struct MOAIClearFlagsEnum {
 	enum {
 		COLOR_BUFFER_BIT		= 0x01,
 		DEPTH_BUFFER_BIT		= 0x02,
@@ -50,10 +50,10 @@ namespace MOAIClearFlags {
 };
 
 //================================================================//
-// MOAICullFunc
+// MOAICullFuncEnum
 //================================================================//
-namespace MOAICullFunc {
-	enum Type {
+struct MOAICullFuncEnum {
+	enum _ {
 		NONE,
 		ALL,
 		BACK,
@@ -63,10 +63,10 @@ namespace MOAICullFunc {
 };
 
 //================================================================//
-// MOAIDepthFunc
+// MOAIDepthFuncEnum
 //================================================================//
-namespace MOAIDepthFunc {
-	enum Type {
+struct MOAIDepthFuncEnum {
+	enum _ {
 		NONE,
 		ALWAYS,
 		EQUAL,
@@ -80,10 +80,26 @@ namespace MOAIDepthFunc {
 };
 
 //================================================================//
-// MOAIGfxType
+// MOAIGfxTopologyEnum
 //================================================================//
-namespace MOAIGfxType {
-	enum Type {
+struct MOAIGfxTopologyEnum {
+	enum _ {
+		LINE_LIST,
+		LINE_LOOP,
+		LINE_STRIP,
+		POINT_LIST,
+		TRIANGLE_FAN,
+		TRIANGLE_LIST,
+		TRIANGLE_STRIP,
+		UNKNOWN,
+	};
+};
+
+//================================================================//
+// MOAIGfxTypeEnum
+//================================================================//
+struct MOAIGfxTypeEnum {
+	enum _ {
 		BYTE,
 		DOUBLE,
 		FLOAT,
@@ -96,10 +112,10 @@ namespace MOAIGfxType {
 };
 
 //================================================================//
-// MOAITextureFilter
+// MOAITextureFilterEnum
 //================================================================//
-namespace MOAITextureFilter {
-	enum Type {
+struct MOAITextureFilterEnum {
+	enum _ {
 		LINEAR,
 		LINEAR_MIPMAP_LINEAR,
 		LINEAR_MIPMAP_NEAREST,
@@ -111,28 +127,12 @@ namespace MOAITextureFilter {
 };
 
 //================================================================//
-// MOAITextureWrap
+// MOAITextureWrapEnum
 //================================================================//
-namespace MOAITextureWrap {
-	enum Type {
+struct MOAITextureWrapEnum {
+	enum _ {
 		CLAMP,
 		REPEAT,
-		UNKNOWN,
-	};
-};
-
-//================================================================//
-// MOAITopology
-//================================================================//
-namespace MOAITopology {
-	enum Type {
-		LINE_LIST,
-		LINE_LOOP,
-		LINE_STRIP,
-		POINT_LIST,
-		TRIANGLE_FAN,
-		TRIANGLE_LIST,
-		TRIANGLE_STRIP,
 		UNKNOWN,
 	};
 };

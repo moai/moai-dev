@@ -30,8 +30,8 @@ void MOAIGfxStateGPUCacheFrame::Clear () {
 
 //----------------------------------------------------------------//
 MOAIGfxStateGPUCacheFrame::MOAIGfxStateGPUCacheFrame () :
-	mCullFunc ( MOAICullFunc::NONE ),
-	mDepthFunc ( MOAIDepthFunc::NONE ),
+	mCullFunc ( MOAICullFuncEnum::NONE ),
+	mDepthFunc ( MOAIDepthFuncEnum::NONE ),
 	mDepthMask ( true ),
 	mBlendEnabled ( 0 ),
 	mPenWidth ( 1.0f ),

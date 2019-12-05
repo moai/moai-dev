@@ -31,7 +31,7 @@ protected:
 	void			MOAIGfxMgr_GPUCache_ApplyStateChanges			();
 	void			MOAIGfxMgr_GPUCache_ClearSurface				(); // takes zgl clear flags
 	size_t			MOAIGfxMgr_GPUCache_CountTextureUnits			();
-	void			MOAIGfxMgr_GPUCache_DrawPrims					( MOAITopology::Type primType, u32 base, u32 count );
+	void			MOAIGfxMgr_GPUCache_DrawPrims					( MOAIGfxTopologyEnum::_ primType, u32 base, u32 count );
 	void			MOAIGfxMgr_GPUCache_ResetGPUState				();
 	void			MOAIGfxMgr_GPUCache_UnbindAll					();
 

@@ -610,7 +610,7 @@ MOAIMesh* MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream
 	mesh->GetVertexArray ().SetVertexBuffer ( ZLIndexOp::ZERO, vtxBuffer, ( MOAIVertexFormat* )&format ); // not ideal, but we're gonna do it
 	mesh->SetIndexBuffer ( idxBuffer );
 
-	mesh->SetPrimType ( MOAITopology::TRIANGLE_LIST );
+	mesh->SetPrimType ( MOAIGfxTopologyEnum::TRIANGLE_LIST );
 	mesh->SetTotalElements ( totalElements );
 	
 	ZLBox aabb;

@@ -38,7 +38,7 @@ void MOAIGfxMgr_VertexCache::AffirmBuffers () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxMgr_VertexCache::BeginPrim ( MOAITopology::Type primType, u32 vtxCount, u32 idxCount ) {
+bool MOAIGfxMgr_VertexCache::BeginPrim ( MOAIGfxTopologyEnum::_ primType, u32 vtxCount, u32 idxCount ) {
 	
 	DEBUG_LOG ( "BEGIN INDEXED PRIM: %d %d %d\n", ( int )primType, vtxCount, idxCount );
 	
@@ -54,7 +54,7 @@ bool MOAIGfxMgr_VertexCache::BeginPrim ( MOAITopology::Type primType, u32 vtxCou
 	if (( this->mPrimType != primType ) || ( this->mVtxSize != vtxSize ) || ( this->mUseIdxBuffer != useIdxBuffer )) {
 		this->FlushToGPU ();
 	}
-	this->mFlushOnPrimEnd = !(( primType == MOAITopology::POINT_LIST ) || ( primType == MOAITopology::LINE_LIST ) || ( primType == MOAITopology::TRIANGLE_LIST ));
+	this->mFlushOnPrimEnd = !(( primType == MOAIGfxTopologyEnum::POINT_LIST ) || ( primType == MOAIGfxTopologyEnum::LINE_LIST ) || ( primType == MOAIGfxTopologyEnum::TRIANGLE_LIST ));
 	
 	// these will get bound later, just before drawing; clear them for now
 	// we have to bind them later since their contents will change as the primitive is drawn
@@ -134,7 +134,7 @@ MOAIGfxMgr_VertexCache::MOAIGfxMgr_VertexCache () :
 	mVtxBase ( 0 ),
 	mIdxBase ( 0 ),
 	mVtxSize ( 0 ),
-	mPrimType ( MOAITopology::UNKNOWN ),
+	mPrimType ( MOAIGfxTopologyEnum::UNKNOWN ),
 	mFlushOnPrimEnd ( false ),
 	mFlushAlways ( true ),
 	mUseIdxBuffer ( false ),
@@ -218,7 +218,7 @@ void MOAIGfxMgr_VertexCache::TransformAndWriteQuad ( ZLVec4D* vtx, ZLVec2D* uv )
 	}
 	
 	// TODO: PrimType
-	this->BeginPrim ( MOAITopology::TRIANGLE_LIST, 4, 6 );
+	this->BeginPrim ( MOAIGfxTopologyEnum::TRIANGLE_LIST, 4, 6 );
 	
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
 	

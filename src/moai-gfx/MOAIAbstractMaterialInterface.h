@@ -67,11 +67,11 @@ public:
 	void						SetBlendMode						();
 	void						SetBlendMode						( const MOAIBlendMode& blendMode );
 	void						SetCullMode							();
-	void						SetCullMode							( MOAICullFunc::Type cullMode );
+	void						SetCullMode							( MOAICullFuncEnum::_ cullMode );
 	void						SetDepthMask						();
 	void						SetDepthMask						( bool depthMask );
 	void						SetDepthTest						();
-	void						SetDepthTest						( MOAIDepthFunc::Type depthTest );
+	void						SetDepthTest						( MOAIDepthFuncEnum::_ depthTest );
 	void						SetLight							( u32 name );
 	void						SetLight							( u32 name, MOAILight* light );
 	void						SetShader							();

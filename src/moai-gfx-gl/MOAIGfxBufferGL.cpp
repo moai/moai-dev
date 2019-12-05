@@ -107,7 +107,7 @@ bool MOAIGfxBufferGL::MOAIGfxResourceGL_OnGPUCreate () {
 	if ( this->mUseVBOs ) {
 
 		ZLGfx& gfx = this->mGfxMgr->GetDrawingAPI ();
-		ZLGfxEnum::Type hint = this->mVBOs.Size () > 1 ? ZLGfxEnum::BUFFER_USAGE_STREAM_DRAW : ZLGfxEnum::BUFFER_USAGE_STATIC_DRAW;
+		ZLGfxEnum::_ hint = this->mVBOs.Size () > 1 ? ZLGfxEnum::BUFFER_USAGE_STREAM_DRAW : ZLGfxEnum::BUFFER_USAGE_STATIC_DRAW;
 
 		for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVBOs.Size (); ++i ) {
 			

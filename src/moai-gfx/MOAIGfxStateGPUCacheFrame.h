@@ -25,9 +25,9 @@ public:
 
 	// TODO: multithread will impact caching of buffer behavior as gfx.Copy () may produce a different result each time it is called
 
-	MOAICullFunc::Type						mCullFunc;
+	MOAICullFuncEnum::_						mCullFunc;
 	
-	MOAIDepthFunc::Type						mDepthFunc;
+	MOAIDepthFuncEnum::_						mDepthFunc;
 	bool									mDepthMask;
 
 	MOAIBlendMode							mBlendMode;

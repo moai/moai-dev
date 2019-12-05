@@ -278,7 +278,7 @@ void MOAIAnimCurve::MOAIAnimCurve_Draw ( u32 resolution ) const {
 	ZLReal length = this->GetLength ();
 	ZLReal step = length / ( ZLReal )resolution;
 	
-	gfxMgr.BeginPrim ( MOAITopology::LINE_STRIP, resolution );
+	gfxMgr.BeginPrim ( MOAIGfxTopologyEnum::LINE_STRIP, resolution );
 	
 	for ( ZLSize i = 0; i < resolution; ++i ) {
 		

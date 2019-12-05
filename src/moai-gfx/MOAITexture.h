@@ -21,9 +21,9 @@ protected:
 	u32							mWidth;
 	u32							mHeight;
 
-	MOAITextureFilter::Type		mMinFilter;
-	MOAITextureFilter::Type		mMagFilter;
-	MOAITextureWrap::Type		mWrap;
+	MOAITextureFilterEnum::_		mMinFilter;
+	MOAITextureFilterEnum::_		mMagFilter;
+	MOAITextureWrapEnum::_		mWrap;
 	
 	size_t						mTextureSize;
 
@@ -41,9 +41,9 @@ public:
 	//----------------------------------------------------------------//
 					MOAITexture					();
 					~MOAITexture				();
-	void			SetFilter					( MOAITextureFilter::Type filter );
-	void			SetFilter					( MOAITextureFilter::Type min, MOAITextureFilter::Type mag );
-	void			SetWrap						( MOAITextureWrap::Type wrap );
+	void			SetFilter					( MOAITextureFilterEnum::_ filter );
+	void			SetFilter					( MOAITextureFilterEnum::_ min, MOAITextureFilterEnum::_ mag );
+	void			SetWrap						( MOAITextureWrapEnum::_ wrap );
 };
 
 #endif

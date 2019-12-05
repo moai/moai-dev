@@ -96,7 +96,7 @@ size_t MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_CountTextureUnits () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_DrawPrims ( MOAITopology::Type primType, u32 base, u32 count ) {
+void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_DrawPrims ( MOAIGfxTopologyEnum::_ primType, u32 base, u32 count ) {
 	UNUSED ( primType );
 	UNUSED ( base );
 	UNUSED ( count );

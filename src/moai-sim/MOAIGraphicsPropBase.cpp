@@ -569,36 +569,36 @@ void MOAIGraphicsPropBase::MOAILuaObject_RegisterLuaClass ( MOAIComposer& compos
 	state.SetField ( -1, "INHERIT_FRAME",				AttrID::Pack ( INHERIT_FRAME ).ToRaw ());
 	state.SetField ( -1, "FRAME_TRAIT",					AttrID::Pack ( FRAME_TRAIT ).ToRaw ());
 	
-	state.SetField ( -1, "GL_FUNC_ADD",					( u32 )MOAIBlendFunc::ADD );
-	state.SetField ( -1, "GL_FUNC_SUBTRACT",			( u32 )MOAIBlendFunc::SUBTRACT );
-	state.SetField ( -1, "GL_FUNC_REVERSE_SUBTRACT",	( u32 )MOAIBlendFunc::REVERSE_SUBTRACT );
+	state.SetField ( -1, "GL_FUNC_ADD",					( u32 )MOAIBlendFuncEnum::ADD );
+	state.SetField ( -1, "GL_FUNC_SUBTRACT",			( u32 )MOAIBlendFuncEnum::SUBTRACT );
+	state.SetField ( -1, "GL_FUNC_REVERSE_SUBTRACT",	( u32 )MOAIBlendFuncEnum::REVERSE_SUBTRACT );
 	
-	state.SetField ( -1, "GL_ONE",						( u32 )MOAIBlendFactor::ONE );
-	state.SetField ( -1, "GL_ZERO",						( u32 )MOAIBlendFactor::ZERO );
-	state.SetField ( -1, "GL_DST_ALPHA",				( u32 )MOAIBlendFactor::DST_ALPHA );
-	state.SetField ( -1, "GL_DST_COLOR",				( u32 )MOAIBlendFactor::DST_COLOR );
-	state.SetField ( -1, "GL_SRC_COLOR",				( u32 )MOAIBlendFactor::SRC_COLOR );
-	state.SetField ( -1, "GL_ONE_MINUS_DST_ALPHA",		( u32 )MOAIBlendFactor::ONE_MINUS_DST_ALPHA );
-	state.SetField ( -1, "GL_ONE_MINUS_DST_COLOR",		( u32 )MOAIBlendFactor::ONE_MINUS_DST_COLOR );
-	state.SetField ( -1, "GL_ONE_MINUS_SRC_ALPHA",		( u32 )MOAIBlendFactor::ONE_MINUS_SRC_ALPHA );
-	state.SetField ( -1, "GL_ONE_MINUS_SRC_COLOR",		( u32 )MOAIBlendFactor::ONE_MINUS_SRC_COLOR );
-	state.SetField ( -1, "GL_SRC_ALPHA",				( u32 )MOAIBlendFactor::SRC_ALPHA );
-	state.SetField ( -1, "GL_SRC_ALPHA_SATURATE",		( u32 )MOAIBlendFactor::SRC_ALPHA_SATURATE );
+	state.SetField ( -1, "GL_ONE",						( u32 )MOAIBlendFactorEnum::ONE );
+	state.SetField ( -1, "GL_ZERO",						( u32 )MOAIBlendFactorEnum::ZERO );
+	state.SetField ( -1, "GL_DST_ALPHA",				( u32 )MOAIBlendFactorEnum::DST_ALPHA );
+	state.SetField ( -1, "GL_DST_COLOR",				( u32 )MOAIBlendFactorEnum::DST_COLOR );
+	state.SetField ( -1, "GL_SRC_COLOR",				( u32 )MOAIBlendFactorEnum::SRC_COLOR );
+	state.SetField ( -1, "GL_ONE_MINUS_DST_ALPHA",		( u32 )MOAIBlendFactorEnum::ONE_MINUS_DST_ALPHA );
+	state.SetField ( -1, "GL_ONE_MINUS_DST_COLOR",		( u32 )MOAIBlendFactorEnum::ONE_MINUS_DST_COLOR );
+	state.SetField ( -1, "GL_ONE_MINUS_SRC_ALPHA",		( u32 )MOAIBlendFactorEnum::ONE_MINUS_SRC_ALPHA );
+	state.SetField ( -1, "GL_ONE_MINUS_SRC_COLOR",		( u32 )MOAIBlendFactorEnum::ONE_MINUS_SRC_COLOR );
+	state.SetField ( -1, "GL_SRC_ALPHA",				( u32 )MOAIBlendFactorEnum::SRC_ALPHA );
+	state.SetField ( -1, "GL_SRC_ALPHA_SATURATE",		( u32 )MOAIBlendFactorEnum::SRC_ALPHA_SATURATE );
 	
-	state.SetField ( -1, "DEPTH_TEST_DISABLE",			( u32 )MOAIDepthFunc::NONE );
-	state.SetField ( -1, "DEPTH_TEST_NEVER",			( u32 )MOAIDepthFunc::NEVER );
-	state.SetField ( -1, "DEPTH_TEST_LESS",				( u32 )MOAIDepthFunc::LESS );
-	state.SetField ( -1, "DEPTH_TEST_EQUAL",			( u32 )MOAIDepthFunc::EQUAL );
-	state.SetField ( -1, "DEPTH_TEST_LESS_EQUAL",		( u32 )MOAIDepthFunc::LEQUAL );
-	state.SetField ( -1, "DEPTH_TEST_GREATER",			( u32 )MOAIDepthFunc::GREATER );
-	state.SetField ( -1, "DEPTH_TEST_NOTEQUAL",			( u32 )MOAIDepthFunc::NOTEQUAL );
-	state.SetField ( -1, "DEPTH_TEST_GREATER_EQUAL",	( u32 )MOAIDepthFunc::GEQUAL );
-	state.SetField ( -1, "DEPTH_TEST_ALWAYS",			( u32 )MOAIDepthFunc::ALWAYS );
+	state.SetField ( -1, "DEPTH_TEST_DISABLE",			( u32 )MOAIDepthFuncEnum::NONE );
+	state.SetField ( -1, "DEPTH_TEST_NEVER",			( u32 )MOAIDepthFuncEnum::NEVER );
+	state.SetField ( -1, "DEPTH_TEST_LESS",				( u32 )MOAIDepthFuncEnum::LESS );
+	state.SetField ( -1, "DEPTH_TEST_EQUAL",			( u32 )MOAIDepthFuncEnum::EQUAL );
+	state.SetField ( -1, "DEPTH_TEST_LESS_EQUAL",		( u32 )MOAIDepthFuncEnum::LEQUAL );
+	state.SetField ( -1, "DEPTH_TEST_GREATER",			( u32 )MOAIDepthFuncEnum::GREATER );
+	state.SetField ( -1, "DEPTH_TEST_NOTEQUAL",			( u32 )MOAIDepthFuncEnum::NOTEQUAL );
+	state.SetField ( -1, "DEPTH_TEST_GREATER_EQUAL",	( u32 )MOAIDepthFuncEnum::GEQUAL );
+	state.SetField ( -1, "DEPTH_TEST_ALWAYS",			( u32 )MOAIDepthFuncEnum::ALWAYS );
 	
-	state.SetField ( -1, "CULL_NONE",					( u32 )MOAICullFunc::NONE );
-	state.SetField ( -1, "CULL_ALL",					( u32 )MOAICullFunc::ALL );
-	state.SetField ( -1, "CULL_BACK",					( u32 )MOAICullFunc::BACK );
-	state.SetField ( -1, "CULL_FRONT",					( u32 )MOAICullFunc::FRONT );
+	state.SetField ( -1, "CULL_NONE",					( u32 )MOAICullFuncEnum::NONE );
+	state.SetField ( -1, "CULL_ALL",					( u32 )MOAICullFuncEnum::ALL );
+	state.SetField ( -1, "CULL_BACK",					( u32 )MOAICullFuncEnum::BACK );
+	state.SetField ( -1, "CULL_FRONT",					( u32 )MOAICullFuncEnum::FRONT );
 	
 	state.SetField ( -1, "BILLBOARD_NONE",				( u32 )BILLBOARD_NONE );
 	state.SetField ( -1, "BILLBOARD_NORMAL",			( u32 )BILLBOARD_NORMAL );

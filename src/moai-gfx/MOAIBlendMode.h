@@ -14,14 +14,14 @@
 class MOAIBlendMode {
 public:
 	
-	MOAIBlendFunc::Type				mEquation;
-	MOAIBlendFactor::Type				mSourceFactor;
-	MOAIBlendFactor::Type				mDestFactor;
+	MOAIBlendFuncEnum::_				mEquation;
+	MOAIBlendFactorEnum::_				mSourceFactor;
+	MOAIBlendFactorEnum::_				mDestFactor;
 
 	//----------------------------------------------------------------//
-	void			SetBlend			( MOAIBlendFunc::Type equation, MOAIBlendFactor::Type srcFactor, MOAIBlendFactor::Type dstFactor );
+	void			SetBlend			( MOAIBlendFuncEnum::_ equation, MOAIBlendFactorEnum::_ srcFactor, MOAIBlendFactorEnum::_ dstFactor );
 					MOAIBlendMode		();
-					MOAIBlendMode		( MOAIBlendFunc::Type equation, MOAIBlendFactor::Type srcFactor, MOAIBlendFactor::Type dstFactor );
+					MOAIBlendMode		( MOAIBlendFuncEnum::_ equation, MOAIBlendFactorEnum::_ srcFactor, MOAIBlendFactorEnum::_ dstFactor );
 					~MOAIBlendMode		();
 	
 	//----------------------------------------------------------------//

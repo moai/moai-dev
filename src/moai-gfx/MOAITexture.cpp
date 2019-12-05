@@ -12,9 +12,9 @@
 MOAITexture::MOAITexture () :
 	mWidth ( 0 ),
 	mHeight ( 0 ),
-	mMinFilter ( MOAITextureFilter::LINEAR ),
-	mMagFilter ( MOAITextureFilter::NEAREST ),
-	mWrap ( MOAITextureWrap::CLAMP ),
+	mMinFilter ( MOAITextureFilterEnum::LINEAR ),
+	mMagFilter ( MOAITextureFilterEnum::NEAREST ),
+	mWrap ( MOAITextureWrapEnum::CLAMP ),
 	mTextureSize ( 0 ) {
 
 	RTTI_SINGLE ( MOAIGfxResource )
@@ -25,13 +25,13 @@ MOAITexture::~MOAITexture () {
 }
 
 //----------------------------------------------------------------//
-void MOAITexture::SetFilter ( MOAITextureFilter::Type filter ) {
+void MOAITexture::SetFilter ( MOAITextureFilterEnum::_ filter ) {
 
 	this->SetFilter ( filter, filter );
 }
 
 //----------------------------------------------------------------//
-void MOAITexture::SetFilter ( MOAITextureFilter::Type min, MOAITextureFilter::Type mag ) {
+void MOAITexture::SetFilter ( MOAITextureFilterEnum::_ min, MOAITextureFilterEnum::_ mag ) {
 
 	this->mMinFilter = min;
 	this->mMagFilter = mag;
@@ -40,7 +40,7 @@ void MOAITexture::SetFilter ( MOAITextureFilter::Type min, MOAITextureFilter::Ty
 }
 
 //----------------------------------------------------------------//
-void MOAITexture::SetWrap ( MOAITextureWrap::Type wrap ) {
+void MOAITexture::SetWrap ( MOAITextureWrapEnum::_ wrap ) {
 
 	this->mWrap = wrap;
 	

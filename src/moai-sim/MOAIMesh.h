@@ -100,7 +100,7 @@ protected:
 
 	u32								mTotalElements;
 	ZLBounds						mBounds;
-	MOAITopology::Type	mPrimType;
+	MOAIGfxTopologyEnum::_	mPrimType;
 	float							mPenWidth;
 	MOAIMeshPartition*				mPartition;
 
@@ -131,7 +131,7 @@ public:
 
 	DECL_LUA_FACTORY ( MOAIMesh )
 	
-	GET_SET ( MOAITopology::Type, PrimType, mPrimType )
+	GET_SET ( MOAIGfxTopologyEnum::_, PrimType, mPrimType )
 	GET_SET ( u32, TotalElements, mTotalElements )
 	
 	//----------------------------------------------------------------//

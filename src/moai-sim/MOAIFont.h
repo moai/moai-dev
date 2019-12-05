@@ -80,8 +80,8 @@ protected:
 
 	float mDefaultSize;
 
-	MOAITextureFilter::Type	mMinFilter;
-	MOAITextureFilter::Type	mMagFilter;
+	MOAITextureFilterEnum::_	mMinFilter;
+	MOAITextureFilterEnum::_	mMagFilter;
 
 	//----------------------------------------------------------------//
 	static int			_getCache				( lua_State* L );
@@ -125,8 +125,8 @@ public:
 	GET ( cc8*, Filename, mFilename );
 	GET ( MOAIGlyphCache*, Cache, mCache );
 
-	GET ( MOAITextureFilter::Type, MinFilter, mMinFilter );
-	GET ( MOAITextureFilter::Type, MagFilter, mMagFilter );
+	GET ( MOAITextureFilterEnum::_, MinFilter, mMinFilter );
+	GET ( MOAITextureFilterEnum::_, MagFilter, mMagFilter );
 
 	GET ( MOAIShader*, Shader, mShader );
 

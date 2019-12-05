@@ -67,14 +67,14 @@ int MOAIIndexBuffer::_countElements ( lua_State* L ) {
 	u32 totalElements = 0;
 	
 	// prim type, index size in bytes
-	MOAITopology::Type  primType = ( MOAITopology::Type )state.GetValue < u32 >( 2, ( u32 )MOAITopology::TRIANGLE_LIST );
+	MOAIGfxTopologyEnum::_  primType = ( MOAIGfxTopologyEnum::_ )state.GetValue < u32 >( 2, ( u32 )MOAIGfxTopologyEnum::TRIANGLE_LIST );
 	
 	totalElements = ( u32 )( self->GetSize () / self->mIndexSize );
 	
-	if ( primType == MOAITopology::LINE_LIST ) {
+	if ( primType == MOAIGfxTopologyEnum::LINE_LIST ) {
 		totalElements /= 2;
 	}
-	else if ( primType == MOAITopology::TRIANGLE_LIST ) {
+	else if ( primType == MOAIGfxTopologyEnum::TRIANGLE_LIST ) {
 		totalElements /= 3;
 	}
 	

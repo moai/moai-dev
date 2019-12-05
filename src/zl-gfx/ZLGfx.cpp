@@ -47,7 +47,7 @@ ZLGfxHandle ZLGfx::CreateRenderbuffer () {
 }
 
 //----------------------------------------------------------------//
-ZLGfxHandle ZLGfx::CreateShader ( ZLGfxEnum::Type shaderType ) {
+ZLGfxHandle ZLGfx::CreateShader ( ZLGfxEnum::_ shaderType ) {
 
 	ZLGfxHandle handle ( ZLGfxResource::SHADER, 0, ZLGfxResource::PENDING_ALLOCATION );
 	this->AllocateResource ( *handle.mResource, shaderType );

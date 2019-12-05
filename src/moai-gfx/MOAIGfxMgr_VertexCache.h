@@ -46,7 +46,7 @@ protected:
 	
 	u32									mVtxSize;
 
-	MOAITopology::Type			mPrimType;
+	MOAIGfxTopologyEnum::_			mPrimType;
 	bool								mFlushOnPrimEnd;
 	bool								mFlushAlways;
 	bool								mUseIdxBuffer;
@@ -78,7 +78,7 @@ public:
 	//----------------------------------------------------------------//
 	void			AffirmBuffers					();
 	
-	bool			BeginPrim						( MOAITopology::Type primType, u32 vtxCount, u32 idxCount = 0 );
+	bool			BeginPrim						( MOAIGfxTopologyEnum::_ primType, u32 vtxCount, u32 idxCount = 0 );
 	u32				ContinuePrim					( u32 vtxCount, u32 idxCount = 0 );
 	u32				CountPrims						();
 	void			EndPrim							();

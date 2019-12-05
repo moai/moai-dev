@@ -11,9 +11,9 @@
 ////----------------------------------------------------------------//
 //void MOAIBlendMode::Init ( MOAILuaState& state, int idx ) {
 //
-//	u32 equation	= state.GetValue < u32 >( idx++, MOAIBlendFunc::ADD );
-//	u32 srcFactor	= state.GetValue < u32 >( idx++, MOAIBlendFactor::ONE );
-//	u32 dstFactor	= state.GetValue < u32 >( idx, MOAIBlendFactor::ONE_MINUS_SRC_ALPHA );
+//	u32 equation	= state.GetValue < u32 >( idx++, MOAIBlendFuncEnum::ADD );
+//	u32 srcFactor	= state.GetValue < u32 >( idx++, MOAIBlendFactorEnum::ONE );
+//	u32 dstFactor	= state.GetValue < u32 >( idx, MOAIBlendFactorEnum::ONE_MINUS_SRC_ALPHA );
 //	
 //	this->SetBlend ( equation, srcFactor, dstFactor );
 //}
@@ -29,45 +29,45 @@
 //}
 
 //----------------------------------------------------------------//
-void MOAIBlendMode::SetBlend ( MOAIBlendFunc::Type equation, MOAIBlendFactor::Type srcFactor, MOAIBlendFactor::Type dstFactor ) {
+void MOAIBlendMode::SetBlend ( MOAIBlendFuncEnum::_ equation, MOAIBlendFactorEnum::_ srcFactor, MOAIBlendFactorEnum::_ dstFactor ) {
 
-	// MOAIBlendFunc::ADD
-	// MOAIBlendFunc::SUBTRACT
-	// MOAIBlendFunc::REVERSE_SUBTRACT
-	// (MOAIBlendFunc::MIN and GL_BLEND_MODE_MAX unsupported on iOS)
+	// MOAIBlendFuncEnum::ADD
+	// MOAIBlendFuncEnum::SUBTRACT
+	// MOAIBlendFuncEnum::REVERSE_SUBTRACT
+	// (MOAIBlendFuncEnum::MIN and GL_BLEND_MODE_MAX unsupported on iOS)
 	this->mEquation = equation;
 
-	// MOAIBlendFactor::ZERO
-	// MOAIBlendFactor::ONE
-	// MOAIBlendFactor::DST_COLOR
-	// MOAIBlendFactor::ONE_MINUS_DST_COLOR
-	// MOAIBlendFactor::SRC_ALPHA
-	// MOAIBlendFactor::ONE_MINUS_SRC_ALPHA
-	// MOAIBlendFactor::DST_ALPHA
-	// MOAIBlendFactor::ONE_MINUS_DST_ALPHA
-	// MOAIBlendFactor::SRC_ALPHA_SATURATE
+	// MOAIBlendFactorEnum::ZERO
+	// MOAIBlendFactorEnum::ONE
+	// MOAIBlendFactorEnum::DST_COLOR
+	// MOAIBlendFactorEnum::ONE_MINUS_DST_COLOR
+	// MOAIBlendFactorEnum::SRC_ALPHA
+	// MOAIBlendFactorEnum::ONE_MINUS_SRC_ALPHA
+	// MOAIBlendFactorEnum::DST_ALPHA
+	// MOAIBlendFactorEnum::ONE_MINUS_DST_ALPHA
+	// MOAIBlendFactorEnum::SRC_ALPHA_SATURATE
 	this->mSourceFactor = srcFactor;
 	
-	// MOAIBlendFactor::ZERO
-	// MOAIBlendFactor::ONE
-	// MOAIBlendFactor::SRC_COLOR
-	// MOAIBlendFactor::ONE_MINUS_SRC_COLOR
-	// MOAIBlendFactor::SRC_ALPHA
-	// MOAIBlendFactor::ONE_MINUS_SRC_ALPHA
-	// MOAIBlendFactor::DST_ALPHA
-	// MOAIBlendFactor::ONE_MINUS_DST_ALPHA
+	// MOAIBlendFactorEnum::ZERO
+	// MOAIBlendFactorEnum::ONE
+	// MOAIBlendFactorEnum::SRC_COLOR
+	// MOAIBlendFactorEnum::ONE_MINUS_SRC_COLOR
+	// MOAIBlendFactorEnum::SRC_ALPHA
+	// MOAIBlendFactorEnum::ONE_MINUS_SRC_ALPHA
+	// MOAIBlendFactorEnum::DST_ALPHA
+	// MOAIBlendFactorEnum::ONE_MINUS_DST_ALPHA
 	this->mDestFactor = dstFactor;
 }
 
 //----------------------------------------------------------------//
 MOAIBlendMode::MOAIBlendMode () :
-	mEquation ( MOAIBlendFunc::ADD ),
-	mSourceFactor ( MOAIBlendFactor::ONE ),
-	mDestFactor ( MOAIBlendFactor::ONE_MINUS_SRC_ALPHA ) {
+	mEquation ( MOAIBlendFuncEnum::ADD ),
+	mSourceFactor ( MOAIBlendFactorEnum::ONE ),
+	mDestFactor ( MOAIBlendFactorEnum::ONE_MINUS_SRC_ALPHA ) {
 }
 
 //----------------------------------------------------------------//
-MOAIBlendMode::MOAIBlendMode ( MOAIBlendFunc::Type equation, MOAIBlendFactor::Type srcFactor, MOAIBlendFactor::Type dstFactor ) :
+MOAIBlendMode::MOAIBlendMode ( MOAIBlendFuncEnum::_ equation, MOAIBlendFactorEnum::_ srcFactor, MOAIBlendFactorEnum::_ dstFactor ) :
 	mEquation ( equation ),
 	mSourceFactor ( srcFactor ),
 	mDestFactor ( dstFactor ) {

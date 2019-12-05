@@ -84,7 +84,7 @@ void MOAIGfxMgrOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 	gfxMgr.SetVertexBuffer ( this->mVertices );
 	gfxMgr.SetIndexBuffer ( this->mIndices );
 	
-	gfxMgr.DrawPrims ( MOAITopology::TRIANGLE_LIST, 0, this->mIndices->CountIndices ());
+	gfxMgr.DrawPrims ( MOAIGfxTopologyEnum::TRIANGLE_LIST, 0, this->mIndices->CountIndices ());
 }
 
 //----------------------------------------------------------------//

@@ -48,19 +48,19 @@ bool MOAIMeshPrimReader::GetPrimCoords ( u32 idx, MOAIMeshPrimCoords& prim ) con
 	
 	switch ( this->mMesh->mPrimType ) {
 		
-		case MOAITopology::POINT_LIST: {
+		case MOAIGfxTopologyEnum::POINT_LIST: {
 		
 			prim.mPrimSize = 1;
 			prim.mCoords [ 0 ] = this->ReadCoord ( idx );
 			return true;
 		}
 		
-		case MOAITopology::LINE_LIST:
+		case MOAIGfxTopologyEnum::LINE_LIST:
 		
 			idx = idx * 2;
 
-		case MOAITopology::LINE_LOOP:
-		case MOAITopology::LINE_STRIP: {
+		case MOAIGfxTopologyEnum::LINE_LOOP:
+		case MOAIGfxTopologyEnum::LINE_STRIP: {
 		
 			prim.mPrimSize = 2;
 			
@@ -69,7 +69,7 @@ bool MOAIMeshPrimReader::GetPrimCoords ( u32 idx, MOAIMeshPrimCoords& prim ) con
 			return true;
 		}
 		
-		case MOAITopology::TRIANGLE_LIST: {
+		case MOAIGfxTopologyEnum::TRIANGLE_LIST: {
 		
 			prim.mPrimSize = 3;
 		
@@ -81,7 +81,7 @@ bool MOAIMeshPrimReader::GetPrimCoords ( u32 idx, MOAIMeshPrimCoords& prim ) con
 			return true;
 		}
 		
-		case MOAITopology::TRIANGLE_FAN: {
+		case MOAIGfxTopologyEnum::TRIANGLE_FAN: {
 		
 			prim.mPrimSize = 3;
 		
@@ -94,7 +94,7 @@ bool MOAIMeshPrimReader::GetPrimCoords ( u32 idx, MOAIMeshPrimCoords& prim ) con
 			return true;
 		}
 		
-		case MOAITopology::TRIANGLE_STRIP: {
+		case MOAIGfxTopologyEnum::TRIANGLE_STRIP: {
 		
 			// 0   1   2   3   4   5   6
 			// 012 213 234 435 456 657 678
@@ -145,25 +145,25 @@ bool MOAIMeshPrimReader::Init ( MOAIMesh& mesh, ZLIndex vertexBufferIndex ) {
 	
 	switch ( this->mMesh->mPrimType ) {
 		
-		case MOAITopology::POINT_LIST:
-		case MOAITopology::LINE_LOOP:
+		case MOAIGfxTopologyEnum::POINT_LIST:
+		case MOAIGfxTopologyEnum::LINE_LOOP:
 			this->mTotalPrims = mesh.mTotalElements;
 			break;
 		
-		case MOAITopology::LINE_LIST:
+		case MOAIGfxTopologyEnum::LINE_LIST:
 			this->mTotalPrims = mesh.mTotalElements / 2;
 			break;
 		
-		case MOAITopology::LINE_STRIP:
+		case MOAIGfxTopologyEnum::LINE_STRIP:
 			this->mTotalPrims = mesh.mTotalElements - 1;
 			break;
 		
-		case MOAITopology::TRIANGLE_LIST:
+		case MOAIGfxTopologyEnum::TRIANGLE_LIST:
 			this->mTotalPrims = mesh.mTotalElements / 3;
 			break;
 		
-		case MOAITopology::TRIANGLE_FAN:
-		case MOAITopology::TRIANGLE_STRIP:
+		case MOAIGfxTopologyEnum::TRIANGLE_FAN:
+		case MOAIGfxTopologyEnum::TRIANGLE_STRIP:
 			this->mTotalPrims = mesh.mTotalElements - 2;
 			break;
 	}
@@ -484,7 +484,7 @@ int MOAIMesh::_setPenWidth ( lua_State* L ) {
 int MOAIMesh::_setPrimType ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMesh, "UN" )
 	
-	self->SetPrimType (( MOAITopology::Type )state.GetValue < u32 >( 2, 0 ));
+	self->SetPrimType (( MOAIGfxTopologyEnum::_ )state.GetValue < u32 >( 2, 0 ));
 	return 0;
 }
 
@@ -584,7 +584,7 @@ MOAIVertexArray& MOAIMesh::GetVertexArray () {
 //----------------------------------------------------------------//
 MOAIMesh::MOAIMesh () :
 	mTotalElements ( 0 ),
-	mPrimType ( MOAITopology::TRIANGLE_LIST ),
+	mPrimType ( MOAIGfxTopologyEnum::TRIANGLE_LIST ),
 	mPenWidth ( 1.0f ),
 	mPartition ( 0 ) {
 
@@ -665,13 +665,13 @@ void MOAIMesh::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaS
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasMaterialBatch, MOAILuaObject_RegisterLuaClass ( composer, state ));
 //	MOAI_CALL_SUPER_ONCE ( composer, MOAIVertexArray, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	
-	state.SetField ( -1, "GL_LINES",			( u32 )MOAITopology::LINE_LIST );
-	state.SetField ( -1, "GL_LINE_LOOP",		( u32 )MOAITopology::LINE_LOOP );
-	state.SetField ( -1, "GL_LINE_STRIP",		( u32 )MOAITopology::LINE_STRIP );
-	state.SetField ( -1, "GL_POINTS",			( u32 )MOAITopology::POINT_LIST );
-	state.SetField ( -1, "GL_TRIANGLE_FAN",		( u32 )MOAITopology::TRIANGLE_FAN );
-	state.SetField ( -1, "GL_TRIANGLES",		( u32 )MOAITopology::TRIANGLE_LIST );
-	state.SetField ( -1, "GL_TRIANGLE_STRIP",	( u32 )MOAITopology::TRIANGLE_STRIP );
+	state.SetField ( -1, "GL_LINES",			( u32 )MOAIGfxTopologyEnum::LINE_LIST );
+	state.SetField ( -1, "GL_LINE_LOOP",		( u32 )MOAIGfxTopologyEnum::LINE_LOOP );
+	state.SetField ( -1, "GL_LINE_STRIP",		( u32 )MOAIGfxTopologyEnum::LINE_STRIP );
+	state.SetField ( -1, "GL_POINTS",			( u32 )MOAIGfxTopologyEnum::POINT_LIST );
+	state.SetField ( -1, "GL_TRIANGLE_FAN",		( u32 )MOAIGfxTopologyEnum::TRIANGLE_FAN );
+	state.SetField ( -1, "GL_TRIANGLES",		( u32 )MOAIGfxTopologyEnum::TRIANGLE_LIST );
+	state.SetField ( -1, "GL_TRIANGLE_STRIP",	( u32 )MOAIGfxTopologyEnum::TRIANGLE_STRIP );
 	
 	state.SetField ( -1, "X_AXIS_MASK",			( u32 )MOAIMeshTernaryTree::X_AXIS_MASK );
 	state.SetField ( -1, "Y_AXIS_MASK",			( u32 )MOAIMeshTernaryTree::Y_AXIS_MASK );

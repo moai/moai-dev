@@ -284,8 +284,8 @@ int MOAIFont::_setDefaultSize ( lua_State* L ) {
 int MOAIFont::_setFilter ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "U" )
 	
-	MOAITextureFilter::Type min		= ( MOAITextureFilter::Type )state.GetValue < u32 >( 2, MOAITextureFilter::LINEAR );
-	MOAITextureFilter::Type mag		= ( MOAITextureFilter::Type )state.GetValue < u32 >( 3, ( u32 )min );
+	MOAITextureFilterEnum::_ min		= ( MOAITextureFilterEnum::_ )state.GetValue < u32 >( 2, MOAITextureFilterEnum::LINEAR );
+	MOAITextureFilterEnum::_ mag		= ( MOAITextureFilterEnum::_ )state.GetValue < u32 >( 3, ( u32 )min );
 	
 	// TODO: Gfx
 //	MOAITexture::CheckFilterModes ( min, mag );
@@ -590,8 +590,8 @@ bool MOAIFont::IsWhitespace ( u32 c ) {
 MOAIFont::MOAIFont () :
 	mFlags ( DEFAULT_FLAGS ),
 	mDefaultSize ( 0.0f ),
-	mMinFilter ( MOAITextureFilter::LINEAR ),
-	mMagFilter ( MOAITextureFilter::LINEAR ) {
+	mMinFilter ( MOAITextureFilterEnum::LINEAR ),
+	mMagFilter ( MOAITextureFilterEnum::LINEAR ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAILuaObject )

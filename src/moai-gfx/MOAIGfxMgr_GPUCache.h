@@ -72,7 +72,7 @@ protected:
 	virtual void			MOAIGfxMgr_GPUCache_ApplyStateChanges			() = 0;
 	virtual void			MOAIGfxMgr_GPUCache_ClearSurface				() = 0; // takes zgl clear flags
 	virtual size_t			MOAIGfxMgr_GPUCache_CountTextureUnits			() = 0;
-	virtual void			MOAIGfxMgr_GPUCache_DrawPrims					( MOAITopology::Type primType, u32 base, u32 count ) = 0;
+	virtual void			MOAIGfxMgr_GPUCache_DrawPrims					( MOAIGfxTopologyEnum::_ primType, u32 base, u32 count ) = 0;
 	virtual void			MOAIGfxMgr_GPUCache_ResetGPUState				() = 0;
 	virtual void			MOAIGfxMgr_GPUCache_UnbindAll					() = 0;
 
@@ -82,7 +82,7 @@ public:
 	void					ApplyStateChanges			();
 	void					ClearSurface				(); // takes zgl clear flags
 	size_t					CountTextureUnits			();
-	void					DrawPrims					( MOAITopology::Type primType, u32 base, u32 count );
+	void					DrawPrims					( MOAIGfxTopologyEnum::_ primType, u32 base, u32 count );
 	MOAIBlendMode			GetBlendMode				() const;
 	u32						GetBufferHeight				() const;
 	u32						GetBufferWidth				() const;
@@ -101,13 +101,13 @@ public:
 	void					ResetGPUState				();
 	void					SetBlendMode				();
 	void					SetBlendMode				( const MOAIBlendMode& blendMode );
-	void					SetBlendMode				( MOAIBlendFactor::Type srcFactor, MOAIBlendFactor::Type dstFactor, MOAIBlendFunc::Type equation = MOAIBlendFunc::ADD );
+	void					SetBlendMode				( MOAIBlendFactorEnum::_ srcFactor, MOAIBlendFactorEnum::_ dstFactor, MOAIBlendFuncEnum::_ equation = MOAIBlendFuncEnum::ADD );
 	void					SetCullFunc					();
-	void					SetCullFunc					( MOAICullFunc::Type cullFunc );
+	void					SetCullFunc					( MOAICullFuncEnum::_ cullFunc );
 	void					SetDefaultFrameBuffer		( MOAIFrameBuffer* frameBuffer );
 	void					SetDefaultTexture			( MOAITexture* texture );
 	void					SetDepthFunc				();
-	void					SetDepthFunc				( MOAIDepthFunc::Type depthFunc );
+	void					SetDepthFunc				( MOAIDepthFuncEnum::_ depthFunc );
 	void					SetDepthMask				( bool depthMask );
 	void					SetFlag						( bool isClean, u32 flag );
 	void					SetFrameBuffer				( MOAIFrameBuffer* frameBuffer = NULL );

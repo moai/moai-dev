@@ -134,7 +134,7 @@ void MOAIShaderProgramGL::BindUniforms () {
 }
 
 //----------------------------------------------------------------//
-ZLGfxHandle MOAIShaderProgramGL::CompileShader ( ZLGfxEnum::Type type, cc8* source ) {
+ZLGfxHandle MOAIShaderProgramGL::CompileShader ( ZLGfxEnum::_ type, cc8* source ) {
 
 	MOAIGfxMgrGL& gfxMgr = *this->mGfxMgr;
 	ZLGfx& gfx = this->mGfxMgr->GetDrawingAPI ();
