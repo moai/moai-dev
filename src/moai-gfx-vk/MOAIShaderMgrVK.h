@@ -4,8 +4,11 @@
 #ifndef	MOAISHADERMGRVK_H
 #define	MOAISHADERMGRVK_H
 
+class MOAIDescriptorSetLayoutVK;
+class MOAIGfxComposerVK;
 class MOAIShaderVK;
 class MOAIShaderProgramVK;
+class MOAIPipelineLayoutVK;
 
 //================================================================//
 // MOAIShaderMgrVK
@@ -27,15 +30,17 @@ class MOAIShaderMgrVK :
 	public virtual MOAILuaObject {
 private:
 	
+	// common layouts for simple shaders that just use a single texture
+	ZLStrongPtr < MOAIDescriptorSetLayoutVK >	mOneTexDescriptorSetLayout;
+	ZLStrongPtr < MOAIPipelineLayoutVK >		mOneTexPipelineLayout;
+	ZLStrongPtr < MOAIGfxComposerVK >			mOneTexComposer;
+	
 	MOAIShaderProgramVK*	mPrograms [ TOTAL_SHADERS ];
 	MOAIShaderVK*			mShaders [ TOTAL_SHADERS ];
 
 	//----------------------------------------------------------------//
 //	static int				_getProgram				( lua_State* L );
 //	static int				_getShader				( lua_State* L );
-	
-	//----------------------------------------------------------------//
-	void					AffirmAll				();
 	
 	//----------------------------------------------------------------//
 	void					MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
@@ -46,6 +51,7 @@ public:
 	DECL_LUA_SINGLETON ( MOAIShaderMgrVK )
 	
 	//----------------------------------------------------------------//
+	void					AffirmAll				();
 	MOAIShaderProgramVK*	GetProgram				( MOAIShaderPresetEnum shaderID );
 	MOAIShaderVK*			GetShader				( MOAIShaderPresetEnum shaderID );
 //	MOAIShaderVK*			GetShader				( lua_State* L, int idx );

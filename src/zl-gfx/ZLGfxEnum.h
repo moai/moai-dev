@@ -17,7 +17,9 @@
 // gfx
 //================================================================//
 
-enum {
+enum ZGLEnum {
+
+	ZGL_NONE 									= 0,
 
 	ZGL_BLEND_FACTOR_DST_ALPHA					= ZGL_FIRST_FLAG,
 	ZGL_BLEND_FACTOR_DST_COLOR,
@@ -226,7 +228,7 @@ enum {
 	ZGL_TOTAL_FLAGS,
 };
 
-enum {
+enum ZGLClearColorFlags {
 	ZGL_CLEAR_COLOR_BUFFER_BIT		= 0x01,
 	ZGL_CLEAR_DEPTH_BUFFER_BIT		= 0x02,
 	ZGL_CLEAR_STENCIL_BUFFER_BIT	= 0x04,
@@ -241,8 +243,8 @@ class ZLGfxEnum {
 public:
 
 	//----------------------------------------------------------------//
-	static u32		MapNativeToZL		( u32 value );
-	static u32		MapZLToNative		( u32 value );
+	static ZGLEnum		MapNativeToZL		( u32 value );
+	static u32			MapZLToNative		( ZGLEnum value );
 };
 
 #endif

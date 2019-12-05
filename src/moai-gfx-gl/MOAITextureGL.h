@@ -32,8 +32,8 @@ protected:
 	// GL texture
 	ZLGfxHandle			mGLTexture;
 	
-	int					mGLInternalFormat;
-	int					mGLPixelType;
+	ZGLEnum				mGLInternalFormat;
+	ZGLEnum				mGLPixelType;
 
 	//----------------------------------------------------------------//
 	static int			_getSize					( lua_State* L );
@@ -45,7 +45,7 @@ protected:
 	//----------------------------------------------------------------//
 	void				CleanupOnError				();
 	bool				CreateTextureFromImage		( ZLImage& srcImage );
-	void				SetGLTexture				( const ZLGfxHandle& glTexture, int internalFormat, int pixelType, size_t textureSize );
+	void				SetGLTexture				( const ZLGfxHandle& glTexture, ZGLEnum internalFormat, ZGLEnum pixelType, size_t textureSize );
 	bool				ShouldGenerateMipmaps		();
 	bool				UpdateTextureFromImage		( ZLImage& image, ZLIntRect rect );
 	

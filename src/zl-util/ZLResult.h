@@ -86,6 +86,11 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
+	inline const TYPE& operator * () const {
+		return this->mValue;
+	}
+	
+	//----------------------------------------------------------------//
 	inline TYPE Value () const {
 		return this->mValue;
 	}

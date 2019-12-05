@@ -4,6 +4,7 @@
 #ifndef	MOAISHADERVK_H
 #define	MOAISHADERVK_H
 
+class MOAIGfxComposerVK;
 class MOAIShaderProgramVK;
 
 //================================================================//
@@ -48,6 +49,7 @@ public:
 //	void					ApplyUniforms				();
 //	void					BindUniforms				();
 //	void					Bless						();
+	MOAIGfxComposerVK&		GetGfxComposer				();
 //	bool					HasDirtyUniforms			();
 							MOAIShaderVK				();
 							~MOAIShaderVK				();

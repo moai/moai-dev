@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-gfx-gl/MOAIGfxConstsGL.h>
 #include <moai-gfx-gl/MOAIVertexFormatGL.h>
 
 //================================================================//
@@ -16,7 +17,15 @@ void MOAIVertexFormatGL::Bind ( ZLGfx& gfx, ZLSharedConstBuffer* buffer ) const 
 		const MOAIVertexAttribute& attr = this->mAttributes [ i ];
 		
 		gfx.EnableVertexAttribArray ( attr.mIndex );
-		gfx.VertexAttribPointer ( attr.mIndex, attr.mSize, attr.mType, attr.mNormalized, this->mVertexSize, buffer, attr.mOffset );
+		gfx.VertexAttribPointer (
+			attr.mIndex,
+			attr.mSize,
+			MOAIGfxConstsGL::Remap ( attr.mType ),
+			attr.mNormalized,
+			this->mVertexSize,
+			buffer,
+			attr.mOffset
+		);
 	}
 }
 

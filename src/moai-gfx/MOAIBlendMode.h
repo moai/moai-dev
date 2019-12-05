@@ -4,6 +4,8 @@
 #ifndef MOAIBLENDMODE_H
 #define MOAIBLENDMODE_H
 
+#include <moai-gfx/MOAIGfxConsts.h>
+
 // TODO: replace this with ZLColorBlendFunc
 
 //================================================================//
@@ -12,16 +14,14 @@
 class MOAIBlendMode {
 public:
 	
-	int				mEquation;
-	int				mSourceFactor;
-	int				mDestFactor;
+	MOAIBlendFunc::Type				mEquation;
+	MOAIBlendFactor::Type				mSourceFactor;
+	MOAIBlendFactor::Type				mDestFactor;
 
 	//----------------------------------------------------------------//
-//	void			Init				( MOAILuaState& state, int idx );
-	void			SetBlend			( int equation, int srcFactor, int dstFactor );
-//	int				Push				( MOAILuaState& state ) const;
+	void			SetBlend			( MOAIBlendFunc::Type equation, MOAIBlendFactor::Type srcFactor, MOAIBlendFactor::Type dstFactor );
 					MOAIBlendMode		();
-					MOAIBlendMode		( int equation, int srcFactor, int dstFactor );
+					MOAIBlendMode		( MOAIBlendFunc::Type equation, MOAIBlendFactor::Type srcFactor, MOAIBlendFactor::Type dstFactor );
 					~MOAIBlendMode		();
 	
 	//----------------------------------------------------------------//

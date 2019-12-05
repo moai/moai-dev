@@ -19,7 +19,7 @@ void MOAIPipelineLayoutVK::AffirmPipelineLayout () {
 	ZLSize total = this->mDescriptorSetLayouts.Size ();
 	VkDescriptorSetLayout* descriptorSetLayouts = ( VkDescriptorSetLayout* )alloca ( total * sizeof ( VkDescriptorSetLayout ));
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < total; ++i ) {
-		descriptorSetLayouts [ i ] = this->mDescriptorSetLayouts [ i ];
+		descriptorSetLayouts [ i ] = *this->mDescriptorSetLayouts [ i ];
 	}
 	
 	MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
@@ -31,15 +31,8 @@ void MOAIPipelineLayoutVK::AffirmPipelineLayout () {
 MOAIDescriptorSetLayoutVK& MOAIPipelineLayoutVK::GetDescriptorSetLayout ( ZLIndex index ) {
 
 	assert ( index < this->mDescriptorSetLayouts.Size ());
-	return this->mDescriptorSetLayouts [ index ];
-}
-
-//----------------------------------------------------------------//
-MOAIDescriptorSetLayoutVK& MOAIPipelineLayoutVK::InitializeDescriptorSetLayout ( ZLIndex index, ZLSize size ) {
-
-	assert ( index < this->mDescriptorSetLayouts.Size ());
-	this->mDescriptorSetLayouts [ index ].Initialize ( this->GetDependency < MOAILogicalDeviceVK >(), size );
-	return this->mDescriptorSetLayouts [ index ];
+	assert ( this->mDescriptorSetLayouts [ index ]);
+	return *this->mDescriptorSetLayouts [ index ];
 }
 
 //----------------------------------------------------------------//
@@ -66,23 +59,17 @@ MOAIPipelineLayoutVK::~MOAIPipelineLayoutVK () {
 	}
 }
 
-////----------------------------------------------------------------//
-//MOAIDescriptorSetVK* MOAIPipelineLayoutVK::ProcureDescriptorSet ( ZLIndex index ) {
-//
-//	assert ( index < this->mDescriptorSetLayouts.Size ());
-//	return this->mDescriptorSetLayouts [ index ].ProcureDescriptorSet ();
-//}
-//
-////----------------------------------------------------------------//
-//void MOAIPipelineLayoutVK::SetDescriptorSetLayout ( ZLIndex index, MOAIDescriptorSetLayoutNameVK& name ) {
-//
-//	assert ( this->mPipelineLayout == VK_NULL_HANDLE );
-//
-//	MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
-//
-//	assert ( index < this->mDescriptorSetLayouts.Size ());
-//	this->mDescriptorSetLayouts [ index ].Initialize ( logicalDevice, name );
-//}
+//----------------------------------------------------------------//
+void MOAIPipelineLayoutVK::SetDescriptorSetLayout ( ZLIndex index, MOAIDescriptorSetLayoutVK& layout ) {
+
+	assert ( this->mPipelineLayout == VK_NULL_HANDLE );
+	assert ( index < this->mDescriptorSetLayouts.Size ());
+	assert ( !this->mDescriptorSetLayouts [ index ]);
+	assert (( const void* )this->GetDependency < MOAILogicalDeviceVK >() == ( const void* )layout.GetDependency < MOAILogicalDeviceVK >());
+	
+	layout.AffirmDescritorSetLayout ();
+	this->mDescriptorSetLayouts [ index ] = &layout;
+}
 
 //================================================================//
 // virtual

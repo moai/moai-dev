@@ -107,7 +107,7 @@ bool MOAIGfxBufferGL::MOAIGfxResourceGL_OnGPUCreate () {
 	if ( this->mUseVBOs ) {
 
 		ZLGfx& gfx = this->mGfxMgr->GetDrawingAPI ();
-		u32 hint = this->mVBOs.Size () > 1 ? ZGL_BUFFER_USAGE_STREAM_DRAW : ZGL_BUFFER_USAGE_STATIC_DRAW;
+		ZGLEnum hint = this->mVBOs.Size () > 1 ? ZGL_BUFFER_USAGE_STREAM_DRAW : ZGL_BUFFER_USAGE_STATIC_DRAW;
 
 		for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVBOs.Size (); ++i ) {
 			

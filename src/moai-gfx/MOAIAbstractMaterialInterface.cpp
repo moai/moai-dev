@@ -125,9 +125,9 @@ int MOAIAbstractMaterialInterface::_getTexture ( lua_State* L ) {
 int MOAIAbstractMaterialInterface::_setBlendMode ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractMaterialInterface, "U" )
 	
-	u32 equation	= state.GetValue < u32 >( 2, ZGL_BLEND_MODE_ADD );
-	u32 srcFactor	= state.GetValue < u32 >( 3, ZGL_BLEND_FACTOR_ONE );
-	u32 dstFactor	= state.GetValue < u32 >( 4, ZGL_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA );
+	MOAIBlendFunc::Type equation			= ( MOAIBlendFunc::Type )state.GetValue < u32 >( 2, MOAIBlendFunc::ADD );
+	MOAIBlendFactor::Type srcFactor		= ( MOAIBlendFactor::Type )state.GetValue < u32 >( 3, MOAIBlendFactor::ONE );
+	MOAIBlendFactor::Type dstFactor		= ( MOAIBlendFactor::Type )state.GetValue < u32 >( 4, MOAIBlendFactor::ONE_MINUS_SRC_ALPHA );
 
 	MOAIBlendMode blendMode;
 	blendMode.SetBlend ( equation, srcFactor, dstFactor );
@@ -147,7 +147,7 @@ int MOAIAbstractMaterialInterface::_setBlendMode ( lua_State* L ) {
 int MOAIAbstractMaterialInterface::_setCullMode ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractMaterialInterface, "U" )
 
-	self->AffirmMaterial ().SetCullMode ( state.GetValue < u32 >( 2, 0 ));
+	self->AffirmMaterial ().SetCullMode (( MOAICullFunc::Type )state.GetValue < u32 >( 2, 0 ));
 	return 0;
 }
 
@@ -177,7 +177,7 @@ int MOAIAbstractMaterialInterface::_setDepthMask ( lua_State* L ) {
 int MOAIAbstractMaterialInterface::_setDepthTest ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractMaterialInterface, "U" )
 
-	self->AffirmMaterial ().SetDepthTest ( state.GetValue < u32 >( 2, 0 ));
+	self->AffirmMaterial ().SetDepthTest (( MOAIDepthFunc::Type )state.GetValue < u32 >( 2, 0 ));
 	return 0;
 }
 
@@ -271,7 +271,7 @@ void MOAIAbstractMaterialInterface::Clear ( u32 flags, bool force ) {
 		}
 
 		if ( flags & MOAIMaterial::CULL_MODE_FLAG ) {
-			material->mCullMode = 0;
+			material->mCullMode = MOAICullFunc::NONE;
 		}
 		
 		if ( flags & MOAIMaterial::DEPTH_MASK_FLAG ) {
@@ -279,7 +279,7 @@ void MOAIAbstractMaterialInterface::Clear ( u32 flags, bool force ) {
 		}
 		
 		if ( flags & MOAIMaterial::DEPTH_TEST_FLAG ) {
-			material->mDepthTest = 0;
+			material->mDepthTest = MOAIDepthFunc::NONE;
 		}
 
 		if ( flags & MOAIMaterial::SHADER_FLAG ) {
@@ -424,7 +424,7 @@ void MOAIAbstractMaterialInterface::LoadGfxState () {
 		gfxMgr.SetBlendMode ( MOAIBlendMode ());
 		gfxMgr.SetCullFunc (  );
 		gfxMgr.SetDepthMask ( false );
-		gfxMgr.SetDepthFunc ( 0 );
+		gfxMgr.SetDepthFunc ( MOAIDepthFunc::NONE );
 		gfxMgr.SetTexture ();
 		
 		// load shader last!
@@ -476,7 +476,7 @@ void MOAIAbstractMaterialInterface::SetCullMode () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractMaterialInterface::SetCullMode ( int cullMode ) {
+void MOAIAbstractMaterialInterface::SetCullMode ( MOAICullFunc::Type cullMode ) {
 
 	MOAIAbstractMaterial& material = this->AffirmMaterial ();
 
@@ -518,7 +518,7 @@ void MOAIAbstractMaterialInterface::SetDepthTest () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractMaterialInterface::SetDepthTest ( int depthTest ) {
+void MOAIAbstractMaterialInterface::SetDepthTest ( MOAIDepthFunc::Type depthTest ) {
 
 	MOAIAbstractMaterial& material = this->AffirmMaterial ();
 

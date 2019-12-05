@@ -5,6 +5,7 @@
 
 #include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIGfxMgr_VertexCache.h>
+#include <moai-gfx/MOAIVertexFormat.h>
 
 //#define MOAIGFXVERTEXCACHE_DEBUG_LOG
 
@@ -37,19 +38,46 @@ void MOAIGfxMgr_VertexCache::AffirmBuffers () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIGfxMgr_VertexCache::BeginPrim ( u32 primType, u32 vtxCount, u32 idxCount ) {
+bool MOAIGfxMgr_VertexCache::BeginPrim ( MOAITopology::Type primType, u32 vtxCount, u32 idxCount ) {
 	
 	DEBUG_LOG ( "BEGIN INDEXED PRIM: %d %d %d\n", ( int )primType, vtxCount, idxCount );
 	
-	this->MOAIGfxMgr_VertexCache_BeginPrim ( primType, vtxCount, idxCount );
-}
+	MOAIGfxMgr_GPUCache& gpuCache = this->GetGPUCache ();
+	MOAIVertexFormat* format = gpuCache.GetVertexFormat ();
+	
+	u32 vtxSize = format ? format->GetVertexSize () : 0;
+	if ( !vtxSize ) return false;
+	
+	bool useIdxBuffer = ( idxCount > 0 );
 
-////----------------------------------------------------------------//
-//void MOAIGfxMgr_VertexCache::Clear () {
-//
-//	this->mVtxBuffer = NULL;
-//	this->mIdxBuffer = NULL;
-//}
+	// flush if ya gotta
+	if (( this->mPrimType != primType ) || ( this->mVtxSize != vtxSize ) || ( this->mUseIdxBuffer != useIdxBuffer )) {
+		this->FlushToGPU ();
+	}
+	this->mFlushOnPrimEnd = !(( primType == MOAITopology::POINT_LIST ) || ( primType == MOAITopology::LINE_LIST ) || ( primType == MOAITopology::TRIANGLE_LIST ));
+	
+	// these will get bound later, just before drawing; clear them for now
+	// we have to bind them later since their contents will change as the primitive is drawn
+	gpuCache.SetIndexBuffer ();
+	gpuCache.SetVertexBuffer ();
+	
+	gpuCache.ApplyStateChanges (); // must happen here in case there needs to be a flush
+	
+	this->mPrimType = primType;
+	this->mVtxSize = vtxSize;
+	this->mUseIdxBuffer = useIdxBuffer;
+
+	if ( useIdxBuffer ) {
+		u32 vtxCursor = ( u32 )this->mVtxBuffer->GetCursor ();
+		this->mVtxBase = vtxCursor / vtxSize;
+
+		// if we're on a boundary, bump on up to the next vert
+		if ( vtxCursor % this->mVtxSize ) {
+			this->mVtxBase++;
+		}
+	}
+	return this->ContinuePrim ( vtxCount, idxCount ) != CONTINUE_FAIL;
+}
 
 //----------------------------------------------------------------//
 u32 MOAIGfxMgr_VertexCache::ContinuePrim ( u32 vtxCount, u32 idxCount ) {
@@ -106,7 +134,7 @@ MOAIGfxMgr_VertexCache::MOAIGfxMgr_VertexCache () :
 	mVtxBase ( 0 ),
 	mIdxBase ( 0 ),
 	mVtxSize ( 0 ),
-	mPrimType ( 0 ),
+	mPrimType ( MOAITopology::UNKNOWN ),
 	mFlushOnPrimEnd ( false ),
 	mFlushAlways ( true ),
 	mUseIdxBuffer ( false ),
@@ -190,7 +218,7 @@ void MOAIGfxMgr_VertexCache::TransformAndWriteQuad ( ZLVec4D* vtx, ZLVec2D* uv )
 	}
 	
 	// TODO: PrimType
-	this->BeginPrim ( ZGL_PRIM_TRIANGLES, 4, 6 );
+	this->BeginPrim ( MOAITopology::TRIANGLE_LIST, 4, 6 );
 	
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
 	

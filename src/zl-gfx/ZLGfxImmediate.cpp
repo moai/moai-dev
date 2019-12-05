@@ -26,7 +26,7 @@ void ZLGfxImmediate::ActiveTexture ( u32 textureUnit ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::AllocateResource ( ZLGfxResource& resource, u32 param ) {
+void ZLGfxImmediate::AllocateResource ( ZLGfxResource& resource, ZGLEnum param ) {
 
 	resource.mGLID = 0;
 	resource.mStatus = ZLGfxResource::GPU_ALLOCATED;
@@ -91,14 +91,14 @@ void ZLGfxImmediate::BindAttribLocation ( ZLGfxResource& program, u32 index, cc8
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::BindBuffer ( u32 target, ZLGfxResource& handle ) {
+void ZLGfxImmediate::BindBuffer ( ZGLEnum target, ZLGfxResource& handle ) {
 
 	glBindBuffer ( ZLGfxEnum::MapZLToNative ( target ), handle.GLID ());
 	GL_LOG_ERRORS ( "glBindBuffer" )
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::BindFramebuffer ( u32 target, ZLGfxResource& handle ) {
+void ZLGfxImmediate::BindFramebuffer ( ZGLEnum target, ZLGfxResource& handle ) {
 
 	glBindFramebuffer ( ZLGfxEnum::MapZLToNative ( target ), handle.GLID ());
 	GL_LOG_ERRORS ( "glBindFramebuffer" )
@@ -130,21 +130,21 @@ void ZLGfxImmediate::BindVertexArray ( ZLGfxResource& handle ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::BlendFunc ( u32 sourceFactor, u32 destFactor ) {
+void ZLGfxImmediate::BlendFunc ( ZGLEnum sourceFactor, ZGLEnum destFactor ) {
 
 	glBlendFunc ( ZLGfxEnum::MapZLToNative ( sourceFactor ), ZLGfxEnum::MapZLToNative ( destFactor ));
 	GL_LOG_ERRORS ( "glBlendFunc" )
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::BlendMode ( u32 mode ) {
+void ZLGfxImmediate::BlendMode ( ZGLEnum mode ) {
 
 	glBlendEquation ( ZLGfxEnum::MapZLToNative ( mode ));
 	GL_LOG_ERRORS ( "glBlendEquation" )
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::BufferData ( u32 target, size_t size, ZLSharedConstBuffer* buffer, size_t offset, u32 usage ) {
+void ZLGfxImmediate::BufferData ( ZGLEnum target, size_t size, ZLSharedConstBuffer* buffer, size_t offset, ZGLEnum usage ) {
 
 	const GLvoid* data = ( const GLvoid* )(( size_t )ZLSharedConstBuffer::GetConstData ( buffer ) + offset ); // TODO: cast
 	glBufferData ( ZLGfxEnum::MapZLToNative ( target ), ( GLsizeiptr )size, data, ZLGfxEnum::MapZLToNative ( usage ));
@@ -152,7 +152,7 @@ void ZLGfxImmediate::BufferData ( u32 target, size_t size, ZLSharedConstBuffer* 
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::BufferSubData ( u32 target, size_t offset, size_t size, ZLSharedConstBuffer* buffer, size_t srcOffset ) {
+void ZLGfxImmediate::BufferSubData ( ZGLEnum target, size_t offset, size_t size, ZLSharedConstBuffer* buffer, size_t srcOffset ) {
 
 	const GLvoid* data = ( const GLvoid* )(( size_t )ZLSharedConstBuffer::GetConstData ( buffer ) + srcOffset );
 	glBufferSubData ( ZLGfxEnum::MapZLToNative ( target ), ( GLintptr )offset, ( GLsizeiptr )size, data );
@@ -160,7 +160,7 @@ void ZLGfxImmediate::BufferSubData ( u32 target, size_t offset, size_t size, ZLS
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::CheckFramebufferStatus ( u32 target ) {
+void ZLGfxImmediate::CheckFramebufferStatus ( ZGLEnum target ) {
 	
 	GLenum status = glCheckFramebufferStatus ( ZLGfxEnum::MapZLToNative ( target ));
 	GL_LOG_ERRORS ( "glCheckFramebufferStatus" )
@@ -246,7 +246,7 @@ void ZLGfxImmediate::CompileShader ( ZLGfxResource& shader, bool log ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::CompressedTexImage2D ( u32 level, u32 internalFormat, u32 width, u32 height, u32 imageSize, ZLSharedConstBuffer* buffer ) {
+void ZLGfxImmediate::CompressedTexImage2D ( u32 level, ZGLEnum internalFormat, u32 width, u32 height, u32 imageSize, ZLSharedConstBuffer* buffer ) {
 	
 	glCompressedTexImage2D (
 		GL_TEXTURE_2D,
@@ -263,7 +263,7 @@ void ZLGfxImmediate::CompressedTexImage2D ( u32 level, u32 internalFormat, u32 w
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::CullFace ( u32 mode ) {
+void ZLGfxImmediate::CullFace ( ZGLEnum mode ) {
 
 	glCullFace ( ZLGfxEnum::MapZLToNative ( mode ));
 	GL_LOG_ERRORS ( "glCullFace" )
@@ -336,7 +336,7 @@ void ZLGfxImmediate::DeleteResource ( ZLGfxResource& resource ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::DepthFunc ( u32 depthFunc ) {
+void ZLGfxImmediate::DepthFunc ( ZGLEnum depthFunc ) {
 
 	glDepthFunc ( ZLGfxEnum::MapZLToNative ( depthFunc ));
 	GL_LOG_ERRORS ( "glDepthFunc" )
@@ -350,14 +350,14 @@ void ZLGfxImmediate::DepthMask ( bool flag ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::Disable ( u32 cap ) {
+void ZLGfxImmediate::Disable ( ZGLEnum cap ) {
 
 	glDisable ( ZLGfxEnum::MapZLToNative ( cap ));
 	GL_LOG_ERRORS ( "glDisable" )
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::DisableClientState ( u32 cap ) {
+void ZLGfxImmediate::DisableClientState ( ZGLEnum cap ) {
 
 	#if !MOAI_OS_NACL
 		glDisableClientState ( ZLGfxEnum::MapZLToNative ( cap ));
@@ -373,14 +373,14 @@ void ZLGfxImmediate::DisableVertexAttribArray ( u32 index ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::DrawArrays ( u32 primType, u32 first, u32 count ) {
+void ZLGfxImmediate::DrawArrays ( ZGLEnum primType, u32 first, u32 count ) {
 
 	glDrawArrays ( ZLGfxEnum::MapZLToNative ( primType ), ( GLint )first, ( GLsizei )count );
 	GL_LOG_ERRORS ( "glDrawArrays" )
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::DrawElements ( u32 primType, u32 count, u32 indexType, ZLSharedConstBuffer* buffer, size_t offset ) {
+void ZLGfxImmediate::DrawElements ( ZGLEnum primType, u32 count, ZGLEnum indexType, ZLSharedConstBuffer* buffer, size_t offset ) {
 
 	glDrawElements (
 		ZLGfxEnum::MapZLToNative ( primType ),
@@ -392,14 +392,14 @@ void ZLGfxImmediate::DrawElements ( u32 primType, u32 count, u32 indexType, ZLSh
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::Enable ( u32 cap ) {
+void ZLGfxImmediate::Enable ( ZGLEnum cap ) {
 
 	glEnable ( ZLGfxEnum::MapZLToNative ( cap ));
 	GL_LOG_ERRORS ( "glEnable" )
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::EnableClientState ( u32 cap ) {
+void ZLGfxImmediate::EnableClientState ( ZGLEnum cap ) {
 
 	#if !MOAI_OS_NACL
 		glEnableClientState ( ZLGfxEnum::MapZLToNative ( cap ));
@@ -433,7 +433,7 @@ void ZLGfxImmediate::Flush ( bool finish ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::FramebufferRenderbuffer ( u32 target, u32 attachment, ZLGfxResource& renderbuffer ) {
+void ZLGfxImmediate::FramebufferRenderbuffer ( ZGLEnum target, ZGLEnum attachment, ZLGfxResource& renderbuffer ) {
 	
 	glFramebufferRenderbuffer (
 		ZLGfxEnum::MapZLToNative ( target ),
@@ -445,7 +445,7 @@ void ZLGfxImmediate::FramebufferRenderbuffer ( u32 target, u32 attachment, ZLGfx
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::FramebufferTexture2D ( u32 target, u32 attachment, ZLGfxResource& texture, s32 level ) {
+void ZLGfxImmediate::FramebufferTexture2D ( ZGLEnum target, ZGLEnum attachment, ZLGfxResource& texture, s32 level ) {
 
 	glFramebufferTexture2D (
 		ZLGfxEnum::MapZLToNative ( target ),
@@ -532,7 +532,7 @@ void ZLGfxImmediate::LogErrors ( cc8* origin ) {
 
 	bool hasErrors = false;
 
-	GLenum error = ZGL_ERROR_NONE;
+	ZGLEnum error = ZGL_ERROR_NONE;
 	while (( error = ZLGfxDevice::GetError ()) != ZGL_ERROR_NONE ) {
 	
 		ZLLog_Error ( "GL ERROR: %s - %s\n", ZLGfxDevice::GetErrorString ( error ), origin ? origin : "<unknown>" );
@@ -564,7 +564,7 @@ bool ZLGfxImmediate::PushSuccessHandler () {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::ReadPixels ( s32 x, s32 y, u32 width, u32 height, u32 format, u32 type, u32 pixelSize, ZLGfxListener* listener, void* userdata ) {
+void ZLGfxImmediate::ReadPixels ( s32 x, s32 y, u32 width, u32 height, ZGLEnum format, ZGLEnum type, u32 pixelSize, ZLGfxListener* listener, void* userdata ) {
 
 	if ( listener ) {
 
@@ -602,7 +602,7 @@ void ZLGfxImmediate::ReadPixels ( s32 x, s32 y, u32 width, u32 height, u32 forma
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::RenderbufferStorage ( u32 internalFormat, u32 width, u32 height ) {
+void ZLGfxImmediate::RenderbufferStorage ( ZGLEnum internalFormat, u32 width, u32 height ) {
 
 	glRenderbufferStorage ( GL_RENDERBUFFER, ZLGfxEnum::MapZLToNative ( internalFormat ), ( GLsizei )width, ( GLsizei )height );
 	GL_LOG_ERRORS ( "glRenderbufferStorage" )
@@ -626,16 +626,16 @@ void ZLGfxImmediate::ShaderSource ( ZLGfxResource& shader, cc8* source, size_t l
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::TexEnvi ( u32 pname, s32 param ) {
+void ZLGfxImmediate::TexEnvi ( ZGLEnum pname, ZGLEnum param ) {
 
 	#if !MOAI_OS_NACL
-		glTexEnvi ( GL_TEXTURE_ENV, ZLGfxEnum::MapZLToNative ( pname ), ( GLint )param );
+		glTexEnvi ( GL_TEXTURE_ENV, ZLGfxEnum::MapZLToNative ( pname ), ( GLint )ZLGfxEnum::MapZLToNative ( param ));
 		GL_LOG_ERRORS ( "glTexEnvi" )
 	#endif
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::TexImage2D ( u32 level, u32 internalFormat, u32 width, u32 height, u32 format, u32 type, ZLSharedConstBuffer* buffer ) {
+void ZLGfxImmediate::TexImage2D ( u32 level, ZGLEnum internalFormat, u32 width, u32 height, ZGLEnum format, ZGLEnum type, ZLSharedConstBuffer* buffer ) {
 
 	glPixelStorei ( GL_UNPACK_ALIGNMENT, 1 );
 	GL_LOG_ERRORS ( "glPixelStorei" )
@@ -655,14 +655,14 @@ void ZLGfxImmediate::TexImage2D ( u32 level, u32 internalFormat, u32 width, u32 
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::TexParameteri ( u32 pname, s32 param ) {
+void ZLGfxImmediate::TexParameteri ( ZGLEnum pname, ZGLEnum param ) {
 
 	glTexParameteri ( GL_TEXTURE_2D, ZLGfxEnum::MapZLToNative ( pname ), ( GLint )ZLGfxEnum::MapZLToNative ( param ));
 	GL_LOG_ERRORS ( "glTexParameteri" )
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::TexSubImage2D ( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 height, u32 format, u32 type, ZLSharedConstBuffer* buffer ) {
+void ZLGfxImmediate::TexSubImage2D ( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 height, ZGLEnum format, ZGLEnum type, ZLSharedConstBuffer* buffer ) {
 
 	glPixelStorei ( GL_UNPACK_ALIGNMENT, 1 );
 	GL_LOG_ERRORS ( "glPixelStorei" )
@@ -753,7 +753,7 @@ void ZLGfxImmediate::UseProgram ( ZLGfxResource& program ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::VertexAttribPointer ( u32 index, u32 size, u32 type, bool normalized, u32 stride, ZLSharedConstBuffer* buffer, size_t offset ) {
+void ZLGfxImmediate::VertexAttribPointer ( u32 index, u32 size, ZGLEnum type, bool normalized, u32 stride, ZLSharedConstBuffer* buffer, size_t offset ) {
 
 	glVertexAttribPointer (
 		( GLuint )index,

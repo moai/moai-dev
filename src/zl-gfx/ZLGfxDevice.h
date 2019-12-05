@@ -4,6 +4,8 @@
 #ifndef ZLGFXDEVICE_H
 #define ZLGFXDEVICE_H
 
+#include <zl-gfx/ZLGfxEnum.h>
+
 //================================================================//
 // ZLGfxDevice
 //================================================================//
@@ -11,10 +13,10 @@ class ZLGfxDevice {
 public:
 
 	//----------------------------------------------------------------//
-	static u32				GetCap					( u32 cap );
-	static u32				GetError				();
-	static cc8*				GetErrorString			( u32 error );
-	static cc8*				GetString				( u32 stringID );
+	static u32				GetCap					( ZGLEnum cap );
+	static ZGLEnum			GetError				();
+	static cc8*				GetErrorString			( ZGLEnum error );
+	static cc8*				GetString				( ZGLEnum stringID );
 	static void				Initialize				();
 };
 

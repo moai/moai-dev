@@ -8,6 +8,8 @@
 #include <moai-gfx-vk/MOAIDescriptorSetVK.h>
 #include <moai-gfx-vk/MOAIFrameBufferVK.h>
 #include <moai-gfx-vk/MOAIGfxBufferSnapshotVK.h>
+#include <moai-gfx-vk/MOAIGfxComposerVK.h>
+#include <moai-gfx-vk/MOAIGfxConstsVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK_GPUCacheVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK_VertexCacheVK.h>
@@ -37,7 +39,28 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrVK_GPUCacheVK::ApplyStateChanges () {
+MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgrVK_GPUCacheVK () {
+
+	this->mDefaultFrameBuffer = new MOAIFrameBufferVK ();
+	
+	this->mActiveState = new MOAIGfxStateGPUCacheFrameVK ();
+	this->mPendingState = new MOAIGfxStateGPUCacheFrameVK ();
+	
+	this->mCurrentState = this->mPendingState;
+	
+	this->InitTextureUnits ( 16 );
+}
+
+//----------------------------------------------------------------//
+MOAIGfxMgrVK_GPUCacheVK::~MOAIGfxMgrVK_GPUCacheVK () {
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_ApplyStateChanges () {
 
 	if ( !this->mApplyingStateChanges ) {
 
@@ -63,27 +86,6 @@ void MOAIGfxMgrVK_GPUCacheVK::ApplyStateChanges () {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgrVK_GPUCacheVK () {
-
-	this->mDefaultFrameBuffer = new MOAIFrameBufferVK ();
-	
-	this->mActiveState = new MOAIGfxStateGPUCacheFrameVK ();
-	this->mPendingState = new MOAIGfxStateGPUCacheFrameVK ();
-	
-	this->mCurrentState = this->mPendingState;
-	
-	this->InitTextureUnits ( 16 );
-}
-
-//----------------------------------------------------------------//
-MOAIGfxMgrVK_GPUCacheVK::~MOAIGfxMgrVK_GPUCacheVK () {
-}
-
-//================================================================//
-// virtual
-//================================================================//
-
-//----------------------------------------------------------------//
 void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_ClearSurface () {
 }
 
@@ -94,45 +96,12 @@ size_t MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_CountTextureUnits () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_DrawPrims ( u32 primType, u32 base, u32 count ) {
+void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_DrawPrims ( MOAITopology::Type primType, u32 base, u32 count ) {
 	UNUSED ( primType );
 	UNUSED ( base );
 	UNUSED ( count );
 	
-	VkPrimitiveTopology primTypeVK = VK_PRIMITIVE_TOPOLOGY_MAX_ENUM;
-	
-	// TODO: move this to a central location; change VK_ consts to MOAI_GFX_ superset of VK and GL
-	switch ( primType ) {
-
-		case ZGL_PRIM_LINE_STRIP:
-			primTypeVK = VK_PRIMITIVE_TOPOLOGY_LINE_LIST;
-			break;
-			
-		case ZGL_PRIM_LINES:
-			primTypeVK = VK_PRIMITIVE_TOPOLOGY_LINE_LIST;
-			break;
-			
-		case ZGL_PRIM_POINTS:
-			primTypeVK = VK_PRIMITIVE_TOPOLOGY_POINT_LIST;
-			break;
-			
-		case ZGL_PRIM_TRIANGLE_FAN:
-			primTypeVK = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_FAN;
-			break;
-			
-		case ZGL_PRIM_TRIANGLE_STRIP:
-			primTypeVK = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_STRIP;
-			break;
-			
-		case ZGL_PRIM_TRIANGLES:
-			primTypeVK = VK_PRIMITIVE_TOPOLOGY_TRIANGLE_LIST;
-			break;
-			
-		default:
-			return;
-	};
-	
-	assert ( primTypeVK != VK_PRIMITIVE_TOPOLOGY_MAX_ENUM );
+	VkPrimitiveTopology primTypeVK = MOAIGfxConstsVK::Remap ( primType );
 	
 	this->ApplyStateChanges ();
 	
@@ -145,21 +114,6 @@ void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_DrawPrims ( u32 primType, u32 
 	MOAIVertexFormatVK* vertexFormat 		= MOAICast < MOAIVertexFormatVK >( this->GetVertexFormat ());
 	
 	assert ( shader && texture && vertexFormat );
-
-	// get the pipeline layout
-	MOAIPipelineLayoutVK& pipelineLayout = shader->GetProgram ()->GetPipelineLayout ();
-
-	// TODO: all the descriptor set initializion needs to be done from a spec inside
-	// the layout object. the spec should bind the uniforms, textures, etc.
-
-	// initialize the descriptor set
-	MOAIDescriptorSetLayoutVK& descriptorSetLayout = pipelineLayout.GetDescriptorSetLayout ( ZLIndexOp::ZERO );
-	
-	MOAIDescriptorSetVK* descriptorSet = new MOAIDescriptorSetVK ();
-	descriptorSet->Initialize ( descriptorSetLayout );
-	descriptorSet->SetDescriptor ( ZLIndexCast ( 0 ), ZLIndexCast ( 0 ), *texture->GetSnapshot ( commandBuffer ));
-	
-	commandBuffer.BindDescriptorSet ( VK_PIPELINE_BIND_POINT_GRAPHICS, *descriptorSet->GetSnapshot ( commandBuffer ), pipelineLayout, 0 );
 	
 	MOAIPipelineSnapshotVK* pipeline = new MOAIPipelineSnapshotVK ();
 	pipeline->Initialize (
@@ -171,6 +125,11 @@ void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_DrawPrims ( u32 primType, u32 
 	);
 	commandBuffer.BindPipeline ( VK_PIPELINE_BIND_POINT_GRAPHICS, *pipeline );
 	commandBuffer.Pin ( *pipeline );
+
+	// compose
+	// TODO: need to detect changes and signal gfx state change
+	MOAIGfxComposerVK& composer = shader->GetGfxComposer ();
+	composer.ApplyAndBind ( commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS );
 
 	// set the viewport and scissor
 	VkViewport viewport			= MOAIGfxStructVK::viewport ( this->mActiveState->mViewRect, 0.0, 1.0 );

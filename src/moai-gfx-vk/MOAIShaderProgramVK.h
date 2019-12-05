@@ -5,9 +5,10 @@
 #define	MOAISHADERPROGRAMVK_H
 
 #include <moai-gfx-vk/MOAIGfxResourceVK.h>
-#include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
 
+class MOAIGfxComposerVK;
 class MOAILogicalDeviceVK;
+class MOAIPipelineLayoutVK;
 class MOAIShaderVK;
 class MOAITextureVK;
 
@@ -37,7 +38,7 @@ protected:
 	VkShaderModule	mModules [ TOTAL_MODULES ];
 
 	ZLLeanArray < VkPipelineShaderStageCreateInfo >		mStageInfos;
-	ZLStrongPtr < MOAIPipelineLayoutVK > 				mPipelineLayout;
+	ZLStrongPtr < MOAIGfxComposerVK > 					mComposer;
 
 	//----------------------------------------------------------------//
 //	static int					_load						( lua_State* L );
@@ -46,21 +47,22 @@ protected:
 	VkShaderStageFlagBits		GetShaderStageBit			( ModuleID moduleID );
 	
 	//----------------------------------------------------------------//
-	void					MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void						MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void						MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
 	
 public:
 
 	DECL_LUA_FACTORY ( MOAIShaderProgramVK )
 
 	//----------------------------------------------------------------//
-	MOAIPipelineLayoutVK&	GetPipelineLayout				();
-	void					Initialize						( MOAILogicalDeviceVK& logicalDevice );
-	void					LoadModule						( ModuleID moduleID, const void* shaderCode, size_t shaderSize );
-							MOAIShaderProgramVK				();
-							~MOAIShaderProgramVK			();
-	void					SetPipelineLayout				( MOAIPipelineLayoutVK& pipelineLayout );
-	void					UpdatePipelineCreateInfo		( VkGraphicsPipelineCreateInfo& info );
+	MOAIGfxComposerVK&			GetGfxComposer						();
+	MOAIPipelineLayoutVK&		GetPipelineLayout					();
+	void						Initialize							( MOAILogicalDeviceVK& logicalDevice );
+	void						LoadModule							( ModuleID moduleID, const void* shaderCode, size_t shaderSize );
+								MOAIShaderProgramVK					();
+								~MOAIShaderProgramVK				();
+	void						SetGfxComposer						( MOAIGfxComposerVK& composer );
+	void						UpdatePipelineCreateInfo			( VkGraphicsPipelineCreateInfo& info );
 };
 
 #endif

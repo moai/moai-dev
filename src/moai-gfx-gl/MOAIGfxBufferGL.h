@@ -32,7 +32,7 @@ protected:
 	
 	ZLLeanArray < ZLGfxHandle >		mVBOs;
 	ZLIndex							mCurrentVBO;
-	u32								mTarget;
+	ZGLEnum							mTarget;
 
 	bool							mUseVBOs;
 	bool							mCopyOnUpdate;

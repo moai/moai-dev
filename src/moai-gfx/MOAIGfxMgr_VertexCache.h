@@ -4,6 +4,7 @@
 #ifndef	MOAIGFXMGR_VERTEXCACHE_H
 #define	MOAIGFXMGR_VERTEXCACHE_H
 
+#include <moai-gfx/MOAIGfxConsts.h>
 #include <moai-gfx/MOAIGfxMgrComponents.h>
 #include <moai-gfx/MOAIGfxMgr_CPUCache.h>
 #include <moai-gfx/MOAIIndexBuffer.h>
@@ -38,24 +39,24 @@ protected:
 	static const size_t DEFAULT_INDEX_BUFFER_SIZE	= 0x1000;
 	static const size_t UNIFORM_BUFFER_CHUNK_SIZE	= 1024;
 
-	bool						mIsDrawing;
+	bool								mIsDrawing;
 	
-	u32							mVtxBase; // offsets the vertex in drawprims *or* the index when writing indexed prims
-	u32							mIdxBase; // this is the offset to the first index for the next call to draw prims
+	u32									mVtxBase; // offsets the vertex in drawprims *or* the index when writing indexed prims
+	u32									mIdxBase; // this is the offset to the first index for the next call to draw prims
 	
-	u32							mVtxSize;
+	u32									mVtxSize;
 
-	u32							mPrimType;
-	bool						mFlushOnPrimEnd;
-	bool						mFlushAlways;
-	bool						mUseIdxBuffer;
-	u32							mPrimCount;
+	MOAITopology::Type			mPrimType;
+	bool								mFlushOnPrimEnd;
+	bool								mFlushAlways;
+	bool								mUseIdxBuffer;
+	u32									mPrimCount;
 
-	bool						mApplyVertexTransform;
-	ZLMatrix4x4					mVertexTransform;
+	bool								mApplyVertexTransform;
+	ZLMatrix4x4							mVertexTransform;
 
-	bool						mApplyUVTransform;
-	ZLMatrix4x4					mUVTransform;
+	bool								mApplyUVTransform;
+	ZLMatrix4x4							mUVTransform;
 	
 	ZLStrongPtr < MOAIVertexBuffer >	mVtxBuffer;
 	ZLStrongPtr < MOAIIndexBuffer >		mIdxBuffer;
@@ -64,7 +65,6 @@ protected:
 	void			TransformAndWriteQuad			( ZLVec4D* vtx, ZLVec2D* uv );
 
 	//----------------------------------------------------------------//
-	virtual bool	MOAIGfxMgr_VertexCache_BeginPrim 		( u32 primType, u32 vtxCount, u32 idxCount ) = 0;
 	virtual void	MOAIGfxMgr_VertexCache_FlushToGPU		() = 0;
 
 public:
@@ -78,8 +78,7 @@ public:
 	//----------------------------------------------------------------//
 	void			AffirmBuffers					();
 	
-	bool			BeginPrim						( u32 primType, u32 vtxCount, u32 idxCount = 0 );
-//	void			Clear							();
+	bool			BeginPrim						( MOAITopology::Type primType, u32 vtxCount, u32 idxCount = 0 );
 	u32				ContinuePrim					( u32 vtxCount, u32 idxCount = 0 );
 	u32				CountPrims						();
 	void			EndPrim							();

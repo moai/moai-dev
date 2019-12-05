@@ -4,6 +4,7 @@
 #ifndef	MOAIABSTRACTMATERIAL_H
 #define	MOAIABSTRACTMATERIAL_H
 
+#include <moai-gfx/MOAIGfxConsts.h>
 #include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIAbstractMaterialInterface.h>
 
@@ -51,13 +52,13 @@ protected:
 	ZLStrongPtr < MOAIShader >	mShader;
 	ZLStrongPtr < MOAITexture >	mTexture;
 	
-	MOAIBlendMode		mBlendMode;
-	int					mCullMode;
-	int					mDepthTest;
-	bool				mDepthMask;
+	MOAIBlendMode			mBlendMode;
+	MOAICullFunc::Type		mCullMode;
+	MOAIDepthFunc::Type		mDepthTest;
+	bool					mDepthMask;
 
-	u32					mFlags;
-	bool				mOverwrite;
+	u32						mFlags;
+	bool					mOverwrite;
 		
 	//----------------------------------------------------------------//
 	virtual void				MOAIAbstractMaterial_ApplyGlobals					( MOAIAbstractMaterialInterface& dest ) = 0;

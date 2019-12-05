@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <moai-gfx-gl/MOAIGfxConstsGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL.h>
 #include <moai-gfx-gl/MOAITextureGL.h>
 
@@ -73,8 +74,8 @@ int MOAITextureGL::_setDebugName ( lua_State* L ) {
 int MOAITextureGL::_setFilter ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextureGL, "UN" )
 
-	int min = state.GetValue < int >( 2, ZGL_SAMPLE_LINEAR );
-	int mag = state.GetValue < int >( 3, min );
+	MOAITextureFilter::Type min = ( MOAITextureFilter::Type )state.GetValue < u32 >( 2, ZGL_SAMPLE_LINEAR );
+	MOAITextureFilter::Type mag = ( MOAITextureFilter::Type )state.GetValue < u32 >( 3, min );
 
 	MOAITextureGL::CheckFilterModes ( min, mag );
 
@@ -96,7 +97,7 @@ int MOAITextureGL::_setWrap ( lua_State* L ) {
 	
 	bool wrap = state.GetValue < bool >( 2, false );
 	
-	self->mWrap = wrap ? ZGL_WRAP_MODE_REPEAT : ZGL_WRAP_MODE_CLAMP;
+	self->mWrap = wrap ? MOAITextureWrap::REPEAT : MOAITextureWrap::CLAMP;
 
 	return 0;
 }
@@ -300,12 +301,12 @@ MOAITextureGL::~MOAITextureGL () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextureGL::SetGLTexture ( const ZLGfxHandle& glTexture, int internalFormat, int pixelType, size_t textureSize ) {
+void MOAITextureGL::SetGLTexture ( const ZLGfxHandle& glTexture, ZGLEnum internalFormat, ZGLEnum pixelType, size_t textureSize ) {
 
-	this->mGLTexture = glTexture;
-	this->mGLInternalFormat = internalFormat;
-	this->mGLPixelType = pixelType;
-	this->mTextureSize = textureSize;
+	this->mGLTexture 			= glTexture;
+	this->mGLInternalFormat		= internalFormat;
+	this->mGLPixelType			= pixelType;
+	this->mTextureSize			= textureSize;
 
 	this->ScheduleForGPUUpdate ();
 }
@@ -314,10 +315,10 @@ void MOAITextureGL::SetGLTexture ( const ZLGfxHandle& glTexture, int internalFor
 bool MOAITextureGL::ShouldGenerateMipmaps () {
 
 	return (
-		( this->mMinFilter == ZGL_SAMPLE_LINEAR_MIPMAP_LINEAR ) ||
-		( this->mMinFilter == ZGL_SAMPLE_LINEAR_MIPMAP_NEAREST ) ||
-		( this->mMinFilter == ZGL_SAMPLE_NEAREST_MIPMAP_LINEAR ) ||
-		( this->mMinFilter == ZGL_SAMPLE_NEAREST_MIPMAP_NEAREST )
+		( this->mMinFilter == MOAITextureFilter::LINEAR_MIPMAP_LINEAR ) ||
+		( this->mMinFilter == MOAITextureFilter::LINEAR_MIPMAP_NEAREST ) ||
+		( this->mMinFilter == MOAITextureFilter::NEAREST_MIPMAP_LINEAR ) ||
+		( this->mMinFilter == MOAITextureFilter::NEAREST_MIPMAP_NEAREST )
 	);
 }
 
@@ -409,11 +410,11 @@ bool MOAITextureGL::MOAIGfxResourceGL_OnGPUUpdate () {
 
 	ZLGfx& gfx = this->mGfxMgr->GetDrawingAPI ();
 
-	gfx.TexParameteri ( ZGL_TEXTURE_WRAP_S, this->mWrap );
-	gfx.TexParameteri ( ZGL_TEXTURE_WRAP_T, this->mWrap );
+	gfx.TexParameteri ( ZGL_TEXTURE_WRAP_S, MOAIGfxConstsGL::Remap ( this->mWrap ));
+	gfx.TexParameteri ( ZGL_TEXTURE_WRAP_T, MOAIGfxConstsGL::Remap ( this->mWrap ));
 	
-	gfx.TexParameteri ( ZGL_TEXTURE_MIN_FILTER, this->mMinFilter );
-	gfx.TexParameteri ( ZGL_TEXTURE_MAG_FILTER, this->mMagFilter );
+	gfx.TexParameteri ( ZGL_TEXTURE_MIN_FILTER, MOAIGfxConstsGL::Remap ( this->mMinFilter ));
+	gfx.TexParameteri ( ZGL_TEXTURE_MAG_FILTER, MOAIGfxConstsGL::Remap ( this->mMagFilter ));
 	
 	return true;
 }
@@ -423,13 +424,13 @@ void MOAITextureGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOA
 	MOAI_CALL_SUPER_ONCE ( composer, MOAITexture, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxResourceGL, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	
-	state.SetField ( -1, "GL_LINEAR",					( u32 )ZGL_SAMPLE_LINEAR );
-	state.SetField ( -1, "GL_LINEAR_MIPMAP_LINEAR",		( u32 )ZGL_SAMPLE_LINEAR_MIPMAP_LINEAR );
-	state.SetField ( -1, "GL_LINEAR_MIPMAP_NEAREST",	( u32 )ZGL_SAMPLE_LINEAR_MIPMAP_NEAREST );
+	state.SetField ( -1, "GL_LINEAR",					( u32 )MOAITextureFilter::LINEAR );
+	state.SetField ( -1, "GL_LINEAR_MIPMAP_LINEAR",		( u32 )MOAITextureFilter::LINEAR_MIPMAP_LINEAR );
+	state.SetField ( -1, "GL_LINEAR_MIPMAP_NEAREST",	( u32 )MOAITextureFilter::LINEAR_MIPMAP_NEAREST );
 	
-	state.SetField ( -1, "GL_NEAREST",					( u32 )ZGL_SAMPLE_NEAREST );
-	state.SetField ( -1, "GL_NEAREST_MIPMAP_LINEAR",	( u32 )ZGL_SAMPLE_NEAREST_MIPMAP_LINEAR );
-	state.SetField ( -1, "GL_NEAREST_MIPMAP_NEAREST",	( u32 )ZGL_SAMPLE_NEAREST_MIPMAP_NEAREST );
+	state.SetField ( -1, "GL_NEAREST",					( u32 )MOAITextureFilter::NEAREST );
+	state.SetField ( -1, "GL_NEAREST_MIPMAP_LINEAR",	( u32 )MOAITextureFilter::NEAREST_MIPMAP_LINEAR );
+	state.SetField ( -1, "GL_NEAREST_MIPMAP_NEAREST",	( u32 )MOAITextureFilter::NEAREST_MIPMAP_NEAREST );
 	
 	state.SetField ( -1, "GL_RGBA4",					( u32 )ZGL_PIXEL_FORMAT_RGBA4 );
 	state.SetField ( -1, "GL_RGB5_A1",					( u32 )ZGL_PIXEL_FORMAT_RGB5_A1 );

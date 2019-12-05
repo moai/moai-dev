@@ -4,6 +4,7 @@
 #ifndef	MOAITEXTURE_H
 #define	MOAITEXTURE_H
 
+#include <moai-gfx/MOAIGfxConsts.h>
 #include <moai-gfx/MOAIGfxResource.h>
 
 //================================================================//
@@ -14,26 +15,17 @@ class MOAITexture :
 protected:
 
 	// debug name for memory use reporting
-	STLString			mDebugName;
+	STLString					mDebugName;
 	
 	// size of the original texture
-	u32					mWidth;
-	u32					mHeight;
+	u32							mWidth;
+	u32							mHeight;
 
-	// GL_LINEAR
-	// GL_LINEAR_MIPMAP_LINEAR
-	// GL_LINEAR_MIPMAP_NEAREST
-	// GL_NEAREST
-	// GL_NEAREST_MIPMAP_LINEAR
-	// GL_NEAREST_MIPMAP_NEAREST
-	int					mMinFilter;
-	int					mMagFilter;
+	MOAITextureFilter::Type		mMinFilter;
+	MOAITextureFilter::Type		mMagFilter;
+	MOAITextureWrap::Type		mWrap;
 	
-	// GL_CLAMP_TO_EDGE
-	// GL_REPEAT
-	int					mWrap;
-	
-	size_t				mTextureSize;
+	size_t						mTextureSize;
 
 	//----------------------------------------------------------------//
 
@@ -49,9 +41,9 @@ public:
 	//----------------------------------------------------------------//
 					MOAITexture					();
 					~MOAITexture				();
-	void			SetFilter					( int filter );
-	void			SetFilter					( int min, int mag );
-	void			SetWrap						( int wrap );
+	void			SetFilter					( MOAITextureFilter::Type filter );
+	void			SetFilter					( MOAITextureFilter::Type min, MOAITextureFilter::Type mag );
+	void			SetWrap						( MOAITextureWrap::Type wrap );
 };
 
 #endif

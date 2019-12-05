@@ -14,7 +14,7 @@ VkFormat MOAIVertexFormatVK::GuessFormat ( const MOAIVertexAttribute& attribute 
 	
 	switch ( attribute.mType ) {
 	
-		case ZGL_TYPE_BYTE:
+		case MOAIGfxType::BYTE:
 			switch ( attribute.mSize ) {
 				case 1:		return VK_FORMAT_R8_SINT;
 				case 2:		return VK_FORMAT_R8G8_SINT;
@@ -23,7 +23,7 @@ VkFormat MOAIVertexFormatVK::GuessFormat ( const MOAIVertexAttribute& attribute 
 			}
 			break;
 			
-		case ZGL_TYPE_FLOAT:
+		case MOAIGfxType::FLOAT:
 			switch ( attribute.mSize ) {
 				case 1:		return VK_FORMAT_R32_SFLOAT;
 				case 2:		return VK_FORMAT_R32G32_SFLOAT;
@@ -32,7 +32,7 @@ VkFormat MOAIVertexFormatVK::GuessFormat ( const MOAIVertexAttribute& attribute 
 			}
 			break;
 		
-		case ZGL_TYPE_SHORT:
+		case MOAIGfxType::SHORT:
 			switch ( attribute.mSize ) {
 				case 1:		return VK_FORMAT_R16_SINT;
 				case 2:		return VK_FORMAT_R16G16_SINT;
@@ -41,7 +41,7 @@ VkFormat MOAIVertexFormatVK::GuessFormat ( const MOAIVertexAttribute& attribute 
 			}
 			break;
 		
-		case ZGL_TYPE_UNSIGNED_BYTE:
+		case MOAIGfxType::UNSIGNED_BYTE:
 		
 			if ( attribute.mNormalized ) {
 				switch ( attribute.mSize ) {
@@ -61,7 +61,7 @@ VkFormat MOAIVertexFormatVK::GuessFormat ( const MOAIVertexAttribute& attribute 
 			}
 			break;
 		
-		case ZGL_TYPE_UNSIGNED_SHORT:
+		case MOAIGfxType::UNSIGNED_SHORT:
 			switch ( attribute.mSize ) {
 				case 1:		return VK_FORMAT_R16_UINT;
 				case 2:		return VK_FORMAT_R16G16_UINT;

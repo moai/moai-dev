@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-gfx/MOAIGfxConsts.h>
 #include <moai-gfx/MOAIIndexBuffer.h>
 
 //================================================================//
@@ -66,14 +67,14 @@ int MOAIIndexBuffer::_countElements ( lua_State* L ) {
 	u32 totalElements = 0;
 	
 	// prim type, index size in bytes
-	u32  primType = state.GetValue < u32 >( 2, ZGL_PRIM_TRIANGLES );
+	MOAITopology::Type  primType = ( MOAITopology::Type )state.GetValue < u32 >( 2, ( u32 )MOAITopology::TRIANGLE_LIST );
 	
 	totalElements = ( u32 )( self->GetSize () / self->mIndexSize );
 	
-	if ( primType == ZGL_PRIM_LINES ) {
+	if ( primType == MOAITopology::LINE_LIST ) {
 		totalElements /= 2;
 	}
-	else if ( primType == ZGL_PRIM_TRIANGLES ) {
+	else if ( primType == MOAITopology::TRIANGLE_LIST ) {
 		totalElements /= 3;
 	}
 	

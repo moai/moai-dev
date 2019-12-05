@@ -19,7 +19,6 @@ class MOAIGfxMgrVK_VertexCacheVK :
 protected:
 
 	//----------------------------------------------------------------//
-	bool			MOAIGfxMgr_VertexCache_BeginPrim 		( u32 primType, u32 vtxCount, u32 idxCount );
 	void			MOAIGfxMgr_VertexCache_FlushToGPU		();
 
 public:

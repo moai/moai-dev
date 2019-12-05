@@ -20,7 +20,7 @@ void AKUDetectFramebuffer () {
 void AKUDetectGfxContext ( int width, int height, bool enableValidation ) {
 
 	MOAIGfxMgrVK::Get ().DetectContext ( width, height, enableValidation );
-//	MOAIShaderMgrVK::Get ().AffirmAll ();
+	MOAIShaderMgrVK::Get ().AffirmAll ();
 //	MOAIGfxMgrVK::Get ().RenewResources (); // TODO: ZLGfx
 }
 

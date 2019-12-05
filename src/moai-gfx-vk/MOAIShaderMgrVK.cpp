@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-gfx-vk/MOAIGfxComposerVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
@@ -76,6 +77,23 @@
 //----------------------------------------------------------------//
 void MOAIShaderMgrVK::AffirmAll () {
 
+	if ( this->mOneTexDescriptorSetLayout ) return;
+
+	MOAILogicalDeviceVK& logicalDevice = MOAIGfxMgrVK::Get ().GetLogicalDevice ();
+
+	this->mOneTexDescriptorSetLayout = new MOAIDescriptorSetLayoutVK ();
+	this->mOneTexDescriptorSetLayout->Initialize ( logicalDevice, 1 );
+	this->mOneTexDescriptorSetLayout->SetBinding ( ZLIndexCast ( 0 ), VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT );
+	
+	this->mOneTexPipelineLayout = new MOAIPipelineLayoutVK ();
+	this->mOneTexPipelineLayout->Initialize ( logicalDevice, 1 );
+	this->mOneTexPipelineLayout->SetDescriptorSetLayout ( ZLIndexCast ( 0 ), *this->mOneTexDescriptorSetLayout );
+
+	this->mOneTexComposer = new MOAIGfxComposerVK ();
+	this->mOneTexComposer->SetPipelineLayout ( *this->mOneTexPipelineLayout );
+	this->mOneTexComposer->Reserve ( 1 );
+	this->mOneTexComposer->PushTextureCommand ( ZLIndexOp::ZERO, ZLIndexOp::ZERO, ZLIndexOp::ZERO, ZLIndexOp::ZERO );
+
 	for ( u32 i = 0; i < ( u32 )MOAIShaderPresetEnum::TOTAL_SHADERS; ++i ) {
 		this->GetShader (( MOAIShaderPresetEnum )i );
 	}
@@ -101,16 +119,10 @@ MOAIShaderProgramVK* MOAIShaderMgrVK::GetProgram ( MOAIShaderPresetEnum shaderID
 			switch ( shaderID ) {
 
 				case MOAIShaderPresetEnum::DECK2D_SHADER: {
-
-					MOAIPipelineLayoutVK* pipelineLayout = new MOAIPipelineLayoutVK ();
-					pipelineLayout->Initialize ( logicalDevice, 1 );
-					
-					MOAIDescriptorSetLayoutVK& descriptorSetLayout = pipelineLayout->InitializeDescriptorSetLayout ( ZLIndexCast ( 0 ), 1 );
-					descriptorSetLayout.SetBinding ( ZLIndexCast ( 0 ), VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT );
 					
 					program->LoadModule ( MOAIShaderProgramVK::VERTEX_MODULE, _deck2DShaderVSH, sizeof ( _deck2DShaderVSH ));
 					program->LoadModule ( MOAIShaderProgramVK::FRAGMENT_MODULE, _deck2DShaderFSH, sizeof ( _deck2DShaderFSH ));
-					program->SetPipelineLayout ( *pipelineLayout );
+					program->SetGfxComposer ( *this->mOneTexComposer );
 
 //					program->SetVertexAttribute ( MOAIVertexFormatMgrVK::XYZWUVC_POSITION, "position" );
 //					program->SetVertexAttribute ( MOAIVertexFormatMgrVK::XYZWUVC_TEXCOORD, "uv" );
@@ -216,16 +228,23 @@ MOAIShaderProgramVK* MOAIShaderMgrVK::GetProgram ( MOAIShaderPresetEnum shaderID
 
 				case MOAIShaderPresetEnum::ONETRI_SHADER: {
 				
+					MOAIDescriptorSetLayoutVK* descriptorSetLayout = new MOAIDescriptorSetLayoutVK ();
+					descriptorSetLayout->Initialize ( logicalDevice, 2 );
+					descriptorSetLayout->SetBinding ( ZLIndexCast ( 0 ), VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT );
+					descriptorSetLayout->SetBinding ( ZLIndexCast ( 1 ), VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT );
+					
 					MOAIPipelineLayoutVK* pipelineLayout = new MOAIPipelineLayoutVK ();
 					pipelineLayout->Initialize ( logicalDevice, 1 );
+					pipelineLayout->SetDescriptorSetLayout ( ZLIndexOp::ZERO, *descriptorSetLayout );
 					
-					MOAIDescriptorSetLayoutVK& descriptorSetLayout = pipelineLayout->InitializeDescriptorSetLayout ( ZLIndexCast ( 0 ), 2 );
-					descriptorSetLayout.SetBinding ( ZLIndexCast ( 0 ), VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT );
-					descriptorSetLayout.SetBinding ( ZLIndexCast ( 1 ), VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT );
+					MOAIGfxComposerVK* composer = new MOAIGfxComposerVK ();
+					composer->SetPipelineLayout ( *this->mOneTexPipelineLayout );
+					composer->Reserve ( 1 );
+					composer->PushTextureCommand ( ZLIndexCast ( 1 ), ZLIndexOp::ZERO, ZLIndexOp::ZERO, ZLIndexOp::ZERO );
 					
 					program->LoadModule ( MOAIShaderProgramVK::VERTEX_MODULE, _oneTriShaderVSH, sizeof ( _oneTriShaderVSH ));
 					program->LoadModule ( MOAIShaderProgramVK::FRAGMENT_MODULE, _oneTriShaderFSH, sizeof ( _oneTriShaderFSH ));
-					program->SetPipelineLayout ( *pipelineLayout );
+					program->SetGfxComposer ( *composer );
 					
 					break;
 				}

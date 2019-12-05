@@ -29,7 +29,7 @@ void MOAIDrawShapeImmediate::MOAIAbstractDrawShape_DrawLine ( float x0, float y0
 	
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	gfxMgr.BeginPrim ( ZGL_PRIM_LINES, 2 );
+	gfxMgr.BeginPrim ( MOAITopology::LINE_LIST, 2 );
 	
 		gfxMgr.WriteVtx ( x0, y0, z0 );
 		gfxMgr.WritePenColor4b ();
@@ -45,7 +45,7 @@ void MOAIDrawShapeImmediate::MOAIAbstractDrawShape_DrawPoint ( float x, float y,
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	UNUSED(z);
-	gfxMgr.BeginPrim ( ZGL_PRIM_POINTS, 1 );
+	gfxMgr.BeginPrim ( MOAITopology::POINT_LIST, 1 );
 		gfxMgr.WriteVtx ( x, y, 0.0f );
 		gfxMgr.WritePenColor4b ();
 	gfxMgr.EndPrim ();
@@ -56,7 +56,7 @@ void MOAIDrawShapeImmediate::MOAIAbstractDrawShape_DrawTriangleFill ( const ZLVe
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	gfxMgr.BeginPrim ( ZGL_PRIM_TRIANGLES, 3 );
+	gfxMgr.BeginPrim ( MOAITopology::TRIANGLE_LIST, 3 );
 	
 		gfxMgr.WriteVtx ( v0.mX, v0.mY, v0.mZ );
 		gfxMgr.WritePenColor4b ();

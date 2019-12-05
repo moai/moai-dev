@@ -57,7 +57,7 @@ protected:
 	void						AffirmUniforms				();
 	void						ApplyUniforms				( ZLLeanArray < u8 >& buffer );
 	void						BindUniforms				();
-	ZLGfxHandle					CompileShader				( u32 type, cc8* source );
+	ZLGfxHandle					CompileShader				( ZGLEnum type, cc8* source );
 	void						InitUniformBuffer			( ZLLeanArray < u8 >& buffer );
 	
 	//----------------------------------------------------------------//

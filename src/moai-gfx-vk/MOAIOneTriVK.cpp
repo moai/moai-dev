@@ -80,19 +80,19 @@ void MOAIOneTriVK::PreparePipeline () {
 	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
 	MOAILogicalDeviceVK& logicalDevice = gfxMgr.GetLogicalDevice ();
 	
+	MOAIDescriptorSetLayoutVK* descriptorSetLayout = new MOAIDescriptorSetLayoutVK ();
+	descriptorSetLayout->Initialize ( logicalDevice, 2 );
+	descriptorSetLayout->SetBinding ( ZLIndexCast ( 0 ), VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT );
+	descriptorSetLayout->SetBinding ( ZLIndexCast ( 1 ), VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT );
+	
 	// create the pipeline layout
 	this->mPipelineLayout = new MOAIPipelineLayoutVK ();
-	
 	this->mPipelineLayout->Initialize ( logicalDevice, 1 );
-	
-	MOAIDescriptorSetLayoutVK& descriptorSetLayout = this->mPipelineLayout->InitializeDescriptorSetLayout ( ZLIndexCast ( 0 ), 2 );
-	descriptorSetLayout.SetBinding ( ZLIndexCast ( 0 ), VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT );
-	descriptorSetLayout.SetBinding ( ZLIndexCast ( 1 ), VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT );
-	
+	this->mPipelineLayout->SetDescriptorSetLayout ( ZLIndexOp::ZERO, *descriptorSetLayout );
 	this->mPipelineLayout->AffirmPipelineLayout ();
 	
 	this->mDescriptorSet = new MOAIDescriptorSetVK ();
-	this->mDescriptorSet->Initialize ( descriptorSetLayout );
+	this->mDescriptorSet->Initialize ( *descriptorSetLayout );
 
 	VkDynamicState dynamicStateEnables [] = {
 		VK_DYNAMIC_STATE_VIEWPORT,

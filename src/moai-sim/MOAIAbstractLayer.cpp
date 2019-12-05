@@ -71,12 +71,12 @@ int MOAIAbstractLayer::_setClearColor ( lua_State* L ) {
 	MOAIColor* color = state.GetLuaObject < MOAIColor >( 2, true );
 	if ( color ) {
 		self->SetClearColor ( color );
-		self->mClearFlags |= ZGL_CLEAR_COLOR_BUFFER_BIT;
+		self->mClearFlags |= MOAIClearFlags::COLOR_BUFFER_BIT;
 		return 0;
 	}
 	
 	// don't clear the color
-	self->mClearFlags &= ~ZGL_CLEAR_COLOR_BUFFER_BIT;
+	self->mClearFlags &= ~MOAIClearFlags::COLOR_BUFFER_BIT;
 	self->SetClearColor ( 0 );
 
 	if ( state.GetTop () > 1 ) {
@@ -87,7 +87,7 @@ int MOAIAbstractLayer::_setClearColor ( lua_State* L ) {
 		float a = state.GetValue < float >( 5, 1.0f );
 		
 		self->mClearColor = ZLColor::PackRGBA ( r, g, b, a );
-		self->mClearFlags |= ZGL_CLEAR_COLOR_BUFFER_BIT;
+		self->mClearFlags |= MOAIClearFlags::COLOR_BUFFER_BIT;
 	}
 	return 0;
 }
@@ -108,10 +108,10 @@ int MOAIAbstractLayer::_setClearDepth ( lua_State* L ) {
 	bool clearDepth = state.GetValue < bool >( 2, false );
 	
 	if ( clearDepth ) {
-		self->mClearFlags |= ZGL_CLEAR_DEPTH_BUFFER_BIT;
+		self->mClearFlags |= MOAIClearFlags::DEPTH_BUFFER_BIT;
 	}
 	else {
-		self->mClearFlags &= ~ZGL_CLEAR_DEPTH_BUFFER_BIT;
+		self->mClearFlags &= ~MOAIClearFlags::DEPTH_BUFFER_BIT;
 	}
 	return 0;
 }
@@ -148,7 +148,7 @@ void MOAIAbstractLayer::ClearSurface () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	if ( this->mClearFlags & ZGL_CLEAR_COLOR_BUFFER_BIT ) {
+	if ( this->mClearFlags & MOAIClearFlags::COLOR_BUFFER_BIT ) {
 	
 		ZLColorVec clearColor;
 		
@@ -176,7 +176,7 @@ MOAIFrameBuffer* MOAIAbstractLayer::GetFrameBuffer () {
 
 //----------------------------------------------------------------//
 MOAIAbstractLayer::MOAIAbstractLayer () :
-	mClearFlags ( ZGL_CLEAR_COLOR_BUFFER_BIT | ZGL_CLEAR_DEPTH_BUFFER_BIT ),
+	mClearFlags ( MOAIClearFlags::COLOR_BUFFER_BIT | MOAIClearFlags::DEPTH_BUFFER_BIT ),
 	mClearColor ( ZLColor::PackRGBA ( 0.0f, 0.0f, 0.0f, 1.0f )),
 	mClearMode ( CLEAR_ON_BUFFER_FLAG ) {
 	

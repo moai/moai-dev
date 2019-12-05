@@ -25,7 +25,7 @@ protected:
 
 	//----------------------------------------------------------------//
 	void				CleanupTexture				( MOAITextureGL& texture );
-	void				SetGLTexture				( MOAITextureGL& texture, const ZLGfxHandle& glTexture, int internalFormat, int pixelType, size_t textureSize );
+	void				SetGLTexture				( MOAITextureGL& texture, const ZLGfxHandle& glTexture, ZGLEnum internalFormat, ZGLEnum pixelType, size_t textureSize );
 
 public:
 

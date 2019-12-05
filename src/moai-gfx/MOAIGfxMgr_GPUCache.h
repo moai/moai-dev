@@ -5,6 +5,7 @@
 #define	MOAIGFXMGR_GPUCACHE_H
 
 #include <moai-gfx/MOAIBlendMode.h>
+#include <moai-gfx/MOAIGfxConsts.h>
 #include <moai-gfx/MOAIGfxMgrComponents.h>
 #include <moai-gfx/MOAIGfxPresetEnum.h>
 #include <moai-gfx/MOAIGfxStateGPUCacheFrame.h>
@@ -62,23 +63,26 @@ protected:
 
 	//----------------------------------------------------------------//
 	void					GfxStateWillChange			();
+	bool					HasPendingPrims				();
 	void					InitTextureUnits			( size_t nTextureUnits );
 	void					ResumeChanges				();
 	void					SuspendChanges				();
 
 	//----------------------------------------------------------------//
+	virtual void			MOAIGfxMgr_GPUCache_ApplyStateChanges			() = 0;
 	virtual void			MOAIGfxMgr_GPUCache_ClearSurface				() = 0; // takes zgl clear flags
 	virtual size_t			MOAIGfxMgr_GPUCache_CountTextureUnits			() = 0;
-	virtual void			MOAIGfxMgr_GPUCache_DrawPrims					( u32 primType, u32 base, u32 count ) = 0;
+	virtual void			MOAIGfxMgr_GPUCache_DrawPrims					( MOAITopology::Type primType, u32 base, u32 count ) = 0;
 	virtual void			MOAIGfxMgr_GPUCache_ResetGPUState				() = 0;
 	virtual void			MOAIGfxMgr_GPUCache_UnbindAll					() = 0;
 
 public:
 	
 	//----------------------------------------------------------------//
+	void					ApplyStateChanges			();
 	void					ClearSurface				(); // takes zgl clear flags
 	size_t					CountTextureUnits			();
-	void					DrawPrims					( u32 primType, u32 base, u32 count );
+	void					DrawPrims					( MOAITopology::Type primType, u32 base, u32 count );
 	MOAIBlendMode			GetBlendMode				() const;
 	u32						GetBufferHeight				() const;
 	u32						GetBufferWidth				() const;
@@ -97,13 +101,13 @@ public:
 	void					ResetGPUState				();
 	void					SetBlendMode				();
 	void					SetBlendMode				( const MOAIBlendMode& blendMode );
-	void					SetBlendMode				( int srcFactor, int dstFactor, int equation = ZGL_BLEND_MODE_ADD );
+	void					SetBlendMode				( MOAIBlendFactor::Type srcFactor, MOAIBlendFactor::Type dstFactor, MOAIBlendFunc::Type equation = MOAIBlendFunc::ADD );
 	void					SetCullFunc					();
-	void					SetCullFunc					( int cullFunc );
+	void					SetCullFunc					( MOAICullFunc::Type cullFunc );
 	void					SetDefaultFrameBuffer		( MOAIFrameBuffer* frameBuffer );
 	void					SetDefaultTexture			( MOAITexture* texture );
 	void					SetDepthFunc				();
-	void					SetDepthFunc				( int depthFunc );
+	void					SetDepthFunc				( MOAIDepthFunc::Type depthFunc );
 	void					SetDepthMask				( bool depthMask );
 	void					SetFlag						( bool isClean, u32 flag );
 	void					SetFrameBuffer				( MOAIFrameBuffer* frameBuffer = NULL );

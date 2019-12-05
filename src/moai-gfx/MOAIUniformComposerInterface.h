@@ -16,6 +16,8 @@ class MOAIUniformComposerInterface :
 	public virtual MOAILuaObject {
 protected:
 
+	// 
+
 	//----------------------------------------------------------------//
 	static int					_reserveGlobals				( lua_State* L );
 	static int					_reserveTextures			( lua_State* L );

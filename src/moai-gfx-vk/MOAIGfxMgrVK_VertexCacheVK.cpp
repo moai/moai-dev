@@ -22,46 +22,6 @@ MOAIGfxMgrVK_VertexCacheVK::~MOAIGfxMgrVK_VertexCacheVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIGfxMgrVK_VertexCacheVK::MOAIGfxMgr_VertexCache_BeginPrim ( u32 primType, u32 vtxCount, u32 idxCount ) {
-	
-	MOAIGfxMgrVK_GPUCacheVK& gpuCache = this->GetGPUCacheVK ();
-	MOAIVertexFormat* format = gpuCache.GetVertexFormat ();
-
-	u32 vtxSize = format ? format->GetVertexSize () : 0;
-	if ( !vtxSize ) return false;
-
-	bool useIdxBuffer = ( idxCount > 0 );
-
-	// flush if ya gotta
-	if (( this->mPrimType != primType ) || ( this->mVtxSize != vtxSize ) || ( this->mUseIdxBuffer != useIdxBuffer )) {
-		this->FlushToGPU ();
-	}
-	this->mFlushOnPrimEnd = !(( primType == ZGL_PRIM_POINTS ) || ( primType == ZGL_PRIM_LINES ) || ( primType == ZGL_PRIM_TRIANGLES ));
-
-	// these will get bound later, just before drawing; clear them for now
-	// we have to bind them later since their contents will change as the primitive is drawn
-	gpuCache.SetIndexBuffer ();
-	gpuCache.SetVertexBuffer ();
-
-	gpuCache.ApplyStateChanges (); // must happen here in case there needs to be a flush
-
-	this->mPrimType = primType;
-	this->mVtxSize = vtxSize;
-	this->mUseIdxBuffer = useIdxBuffer;
-
-	if ( useIdxBuffer ) {
-		u32 vtxCursor = ( u32 )this->mVtxBuffer->GetCursor ();
-		this->mVtxBase = vtxCursor / vtxSize;
-
-		// if we're on a boundary, bump on up to the next vert
-		if ( vtxCursor % this->mVtxSize ) {
-			this->mVtxBase++;
-		}
-	}
-	return this->ContinuePrim ( vtxCount, idxCount ) != CONTINUE_FAIL;
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxMgrVK_VertexCacheVK::MOAIGfxMgr_VertexCache_FlushToGPU () {
 
 	if ( this->mPrimCount == 0 ) return;

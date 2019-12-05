@@ -27,7 +27,7 @@ ZLTextureFormat::~ZLTextureFormat () {
 }
 
 //----------------------------------------------------------------//
-void ZLTextureFormat::SetGLTexture ( MOAITextureGL& texture, const ZLGfxHandle& glTexture, int internalFormat, int pixelType, size_t textureSize ) {
+void ZLTextureFormat::SetGLTexture ( MOAITextureGL& texture, const ZLGfxHandle& glTexture, ZGLEnum internalFormat, ZGLEnum pixelType, size_t textureSize ) {
 
 	texture.SetGLTexture ( glTexture, internalFormat, pixelType, textureSize );
 }

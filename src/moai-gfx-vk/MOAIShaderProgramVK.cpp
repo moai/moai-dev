@@ -2,10 +2,11 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-gfx-vk/MOAIGfxComposerVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
+#include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
-#include <moai-gfx-vk/MOAITextureVK.h>
 
 //================================================================//
 // lua
@@ -36,10 +37,16 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+MOAIGfxComposerVK& MOAIShaderProgramVK::GetGfxComposer () {
+
+	assert ( this->mComposer );
+	return *this->mComposer;
+}
+
+//----------------------------------------------------------------//
 MOAIPipelineLayoutVK& MOAIShaderProgramVK::GetPipelineLayout () {
 
-	assert ( this->mPipelineLayout );
-	return *this->mPipelineLayout;
+	return this->GetGfxComposer ().GetPipelineLayout ();
 }
 
 //----------------------------------------------------------------//
@@ -99,10 +106,9 @@ MOAIShaderProgramVK::~MOAIShaderProgramVK () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderProgramVK::SetPipelineLayout ( MOAIPipelineLayoutVK& pipelineLayout ) {
+void MOAIShaderProgramVK::SetGfxComposer ( MOAIGfxComposerVK& composer ) {
 
-	pipelineLayout.AffirmPipelineLayout ();
-	this->mPipelineLayout = &pipelineLayout;
+	this->mComposer = &composer;
 }
 
 //----------------------------------------------------------------//
@@ -134,7 +140,7 @@ void MOAIShaderProgramVK::UpdatePipelineCreateInfo ( VkGraphicsPipelineCreateInf
 	
 	info.pStages = this->mStageInfos.GetBuffer ();
 	info.stageCount = ( u32 )this->mStageInfos.Size ();
-	info.layout = *this->mPipelineLayout;
+	info.layout = this->GetPipelineLayout ();
 }
 
 //================================================================//

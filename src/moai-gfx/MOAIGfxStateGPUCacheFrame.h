@@ -4,8 +4,8 @@
 #ifndef	MOAIGFXSTATEGPUCACHEFRAME_H
 #define	MOAIGFXSTATEGPUCACHEFRAME_H
 
-#include <moai-gfx/MOAIGfxMgrComponents.h>
 #include <moai-gfx/MOAIBlendMode.h>
+#include <moai-gfx/MOAIGfxMgrComponents.h>
 
 class MOAIShader;
 class MOAITexture;
@@ -25,9 +25,9 @@ public:
 
 	// TODO: multithread will impact caching of buffer behavior as gfx.Copy () may produce a different result each time it is called
 
-	int										mCullFunc;
+	MOAICullFunc::Type						mCullFunc;
 	
-	int										mDepthFunc;
+	MOAIDepthFunc::Type						mDepthFunc;
 	bool									mDepthMask;
 
 	MOAIBlendMode							mBlendMode;

@@ -19,9 +19,9 @@ private:
 	ZLGfxHandle			mGLDepthBuffer;
 	ZLGfxHandle			mGLStencilBuffer;
 	
-	u32					mColorFormat;
-	u32					mDepthFormat;
-	u32					mStencilFormat;
+	ZGLEnum				mColorFormat;
+	ZGLEnum				mDepthFormat;
+	ZGLEnum				mStencilFormat;
 	
 	//----------------------------------------------------------------//
 	static int			_init							( lua_State* L );
@@ -41,7 +41,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIFrameBufferTextureGL )
 	
 	//----------------------------------------------------------------//
-	void				Init							( u32 width, u32 height, u32 colorFormat, u32 depthFormat, u32 stencilFormat );
+	void				Init							( u32 width, u32 height, ZGLEnum colorFormat, ZGLEnum depthFormat, ZGLEnum stencilFormat );
 						MOAIFrameBufferTextureGL		();
 						~MOAIFrameBufferTextureGL		();
 };

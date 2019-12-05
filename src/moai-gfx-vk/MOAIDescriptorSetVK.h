@@ -18,7 +18,7 @@ class MOAIDescriptorSetVK :
 	public ZLAbstractFinalizable_HasDependencyOn < MOAIDescriptorSetLayoutVK >,
 	public MOAIAbstractSnapshotFactoryVK < MOAIDescriptorSetSnapshotVK >,
 	public ZLLeanArray < VkWriteDescriptorSet > {
-private:
+protected:
 
 	friend class MOAIDescriptorSetLayoutVK;
 

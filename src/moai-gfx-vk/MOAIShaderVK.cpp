@@ -81,7 +81,14 @@
 //		this->mProgram->BindUniforms ();
 //	}
 //}
-//
+
+//----------------------------------------------------------------//
+MOAIGfxComposerVK& MOAIShaderVK::GetGfxComposer () {
+
+	assert ( this->mProgram );
+	return this->mProgram->GetGfxComposer ();
+}
+
 ////----------------------------------------------------------------//
 //bool MOAIShaderVK::HasDirtyUniforms () {
 //

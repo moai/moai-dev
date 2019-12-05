@@ -17,6 +17,11 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIGfxMgr_GPUCache::ApplyStateChanges () {
+	this->MOAIGfxMgr_GPUCache_ApplyStateChanges ();
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxMgr_GPUCache::ClearSurface () {
 	this->MOAIGfxMgr_GPUCache_ClearSurface ();
 }
@@ -27,7 +32,7 @@ size_t MOAIGfxMgr_GPUCache::CountTextureUnits () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgr_GPUCache::DrawPrims ( u32 primType, u32 base, u32 count ) {
+void MOAIGfxMgr_GPUCache::DrawPrims ( MOAITopology::Type primType, u32 base, u32 count ) {
 	return this->MOAIGfxMgr_GPUCache_DrawPrims ( primType, base, count );
 }
 
@@ -127,6 +132,12 @@ void MOAIGfxMgr_GPUCache::GfxStateWillChange () {
 }
 
 //----------------------------------------------------------------//
+bool MOAIGfxMgr_GPUCache::HasPendingPrims () {
+
+	return ( this->GetVertexCache ().CountPrims () > 0 );
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxMgr_GPUCache::InitTextureUnits ( size_t nTextureUnits ) {
 
 	if ( MAX_TEXTURE_UNITS < nTextureUnits ) {
@@ -186,7 +197,7 @@ void MOAIGfxMgr_GPUCache::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgr_GPUCache::SetBlendMode ( int srcFactor, int dstFactor, int equation ) {
+void MOAIGfxMgr_GPUCache::SetBlendMode ( MOAIBlendFactor::Type srcFactor, MOAIBlendFactor::Type dstFactor, MOAIBlendFunc::Type equation ) {
 
 	MOAIBlendMode blendMode;
 	blendMode.SetBlend ( equation, srcFactor, dstFactor );
@@ -197,11 +208,11 @@ void MOAIGfxMgr_GPUCache::SetBlendMode ( int srcFactor, int dstFactor, int equat
 //----------------------------------------------------------------//
 void MOAIGfxMgr_GPUCache::SetCullFunc () {
 
-	this->SetCullFunc ( 0 );
+	this->SetCullFunc ( MOAICullFunc::NONE );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgr_GPUCache::SetCullFunc ( int cullFunc ) {
+void MOAIGfxMgr_GPUCache::SetCullFunc ( MOAICullFunc::Type cullFunc ) {
 
 	assert ( !this->mApplyingStateChanges );
 	
@@ -224,11 +235,11 @@ void MOAIGfxMgr_GPUCache::SetDefaultTexture ( MOAITexture* texture ) {
 //----------------------------------------------------------------//
 void MOAIGfxMgr_GPUCache::SetDepthFunc () {
 
-	this->SetDepthFunc ( 0 );
+	this->SetDepthFunc ( MOAIDepthFunc::NONE );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgr_GPUCache::SetDepthFunc ( int depthFunc ) {
+void MOAIGfxMgr_GPUCache::SetDepthFunc ( MOAIDepthFunc::Type depthFunc ) {
 
 	assert ( !this->mApplyingStateChanges );
 	

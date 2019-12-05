@@ -3,4 +3,4 @@
 
 // TODO: this is a hack; using GL enum aliases for now.
 // TODO: should be local to moai-gfx.
-#include <zl-gfx/ZLGfxEnum.h>
+//#include <zl-gfx/ZLGfxEnum.h>

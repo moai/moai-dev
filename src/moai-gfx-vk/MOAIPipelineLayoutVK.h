@@ -11,14 +11,18 @@
 // MOAIPipelineLayoutVK
 //================================================================//
 class MOAIPipelineLayoutVK :
-	public ZLRefCountedObject,
+	public virtual ZLRefCountedObject,
 	public ZLAbstractFinalizable,
 	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK > {
 protected:
 
-	VkPipelineLayout							mPipelineLayout;
-	ZLLeanArray < MOAIDescriptorSetLayoutVK > 	mDescriptorSetLayouts;
+	friend class MOAIGfxComposerVK;
 
+	VkPipelineLayout											mPipelineLayout;
+	ZLLeanArray < ZLStrongPtr < MOAIDescriptorSetLayoutVK > >	mDescriptorSetLayouts;
+
+	//----------------------------------------------------------------//
+	
 public:
 
 	IMPLEMENT_FINALIZABLE ( MOAIPipelineLayoutVK )
@@ -45,13 +49,11 @@ public:
 	
 	//----------------------------------------------------------------//
 	void							AffirmPipelineLayout			();
-	void							Initialize						( MOAILogicalDeviceVK& logicalDevice, ZLSize size );
 	MOAIDescriptorSetLayoutVK&		GetDescriptorSetLayout			( ZLIndex index );
-	MOAIDescriptorSetLayoutVK&		InitializeDescriptorSetLayout	( ZLIndex index, ZLSize size );
+	void							Initialize						( MOAILogicalDeviceVK& logicalDevice, ZLSize size );
 									MOAIPipelineLayoutVK			();
 									~MOAIPipelineLayoutVK			();
-//	MOAIDescriptorSetVK*	ProcureDescriptorSet			( ZLIndex index );
-//	void							SetDescriptorSetLayout			( ZLIndex index, MOAIDescriptorSetLayoutNameVK& name );
+	void							SetDescriptorSetLayout 			( ZLIndex index, MOAIDescriptorSetLayoutVK& layout );
 };
 
 #endif

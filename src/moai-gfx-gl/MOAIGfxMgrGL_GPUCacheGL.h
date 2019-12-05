@@ -37,7 +37,6 @@ protected:
 	//----------------------------------------------------------------//
 	void			Clear							();
 	void			ApplyStateChange				( u32 stateID );
-	void			ApplyStateChanges				();
 	void			FlushBlendMode					();
 	void			FlushCullFunc					();
 	void			FlushDepthFunc					();
@@ -59,9 +58,10 @@ protected:
 	void			StoreGPUState					( MOAIGfxStateGPUCacheFrame& frame ) const;
 
 	//----------------------------------------------------------------//
+	void			MOAIGfxMgr_GPUCache_ApplyStateChanges			();
 	void			MOAIGfxMgr_GPUCache_ClearSurface				(); // takes zgl clear flags
 	size_t			MOAIGfxMgr_GPUCache_CountTextureUnits			();
-	void			MOAIGfxMgr_GPUCache_DrawPrims					( u32 primType, u32 base, u32 count );
+	void			MOAIGfxMgr_GPUCache_DrawPrims					( MOAITopology::Type primType, u32 base, u32 count );
 	void			MOAIGfxMgr_GPUCache_ResetGPUState				();
 	void			MOAIGfxMgr_GPUCache_UnbindAll					();
 

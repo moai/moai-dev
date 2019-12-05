@@ -38,7 +38,8 @@ MOAIMaterialBatch::~MOAIMaterialBatch () {
 //----------------------------------------------------------------//
 void MOAIMaterialBatch::Reserve ( ZLSize n ) {
 
-	assert ( n < ZGL_FIRST_FLAG ); // probably don't need more than 0x70000000 materials...
+	// TODO: this was ZGL_FIRST_FLAG; unclear why
+	assert ( n < 0x70000000 ); // probably don't need more than 0x70000000 materials...
 
 	this->Clear ();
 	this->mMaterials.Init ( n );

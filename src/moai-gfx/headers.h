@@ -13,6 +13,7 @@
 #include <moai-gfx/MOAIDrawable.h>
 #include <moai-gfx/MOAIFrameBuffer.h>
 #include <moai-gfx/MOAIGfxBuffer.h>
+#include <moai-gfx/MOAIGfxConsts.h>
 #include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIGfxMgr_CPUCache.h>
 #include <moai-gfx/MOAIGfxMgr_GPUCache.h>

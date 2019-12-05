@@ -24,7 +24,7 @@ static u32	sOperationDepth				= 0; // this is just the counter for tracking begi
 //================================================================//
 
 //----------------------------------------------------------------//
-u32 ZLGfxDevice::GetCap ( u32 cap ) {
+u32 ZLGfxDevice::GetCap ( ZGLEnum cap ) {
 	
 	switch ( cap ) {
 		case ZGL_CAPS_MAX_TEXTURE_SIZE:
@@ -36,7 +36,7 @@ u32 ZLGfxDevice::GetCap ( u32 cap ) {
 }
 
 //----------------------------------------------------------------//
-u32 ZLGfxDevice::GetError () {
+ZGLEnum ZLGfxDevice::GetError () {
 
 	GLenum error = glGetError ();
 
@@ -51,7 +51,7 @@ u32 ZLGfxDevice::GetError () {
 }
 
 //----------------------------------------------------------------//
-cc8* ZLGfxDevice::GetErrorString ( u32 error ) {
+cc8* ZLGfxDevice::GetErrorString ( ZGLEnum error ) {
 
 	switch ( error ) {
 		case ZGL_ERROR_NONE:				return "ZGL_ERROR_NONE";
@@ -66,7 +66,7 @@ cc8* ZLGfxDevice::GetErrorString ( u32 error ) {
 }
 
 //----------------------------------------------------------------//
-cc8* ZLGfxDevice::GetString ( u32 stringID ) {
+cc8* ZLGfxDevice::GetString ( ZGLEnum stringID ) {
 
 	return ( cc8* )glGetString ( ZLGfxEnum::MapZLToNative ( stringID ));
 }

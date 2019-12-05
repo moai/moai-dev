@@ -98,14 +98,11 @@ protected:
 	ZLStrongPtr < MOAIIndexBuffer >	mIndexBuffer;
 	ZLStrongPtr < MOAIVertexArray >	mVertexArray;
 
-	u32			mTotalElements;
-	ZLBounds	mBounds;
-
-	u32			mPrimType;
-	
-	float		mPenWidth;
-	
-	MOAIMeshPartition*	mPartition;
+	u32								mTotalElements;
+	ZLBounds						mBounds;
+	MOAITopology::Type	mPrimType;
+	float							mPenWidth;
+	MOAIMeshPartition*				mPartition;
 
 	//----------------------------------------------------------------//
 	static int			_buildQuadTree				( lua_State* L );
@@ -134,7 +131,7 @@ public:
 
 	DECL_LUA_FACTORY ( MOAIMesh )
 	
-	GET_SET ( u32, PrimType, mPrimType )
+	GET_SET ( MOAITopology::Type, PrimType, mPrimType )
 	GET_SET ( u32, TotalElements, mTotalElements )
 	
 	//----------------------------------------------------------------//

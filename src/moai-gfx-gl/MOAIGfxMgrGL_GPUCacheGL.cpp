@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <moai-gfx-gl/MOAIGfxConstsGL.h>
 #include <moai-gfx-gl/MOAIFrameBufferGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_DisplayListClerkGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_GPUCacheGL.h>
@@ -96,50 +97,6 @@ void MOAIGfxMgrGL_GPUCacheGL::ApplyStateChange ( u32 stateID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrGL_GPUCacheGL::ApplyStateChanges () {
-
-	if ( !this->mApplyingStateChanges ) {
-	
-		if ( this->mPendingState->mShader ) {
-			this->mPendingState->mShader->SelectTextures ();
-		}
-
-		if ( this->mDirtyFlags || this->mTextureDirtyFlags ) {
-			
-			this->SuspendChanges ();
-			this->mCurrentState = this->mActiveState;
-			
-			u32 dirtyFlags = this->mDirtyFlags;
-			this->mDirtyFlags = 0;
-			
-			DEBUG_LOG ( "APPLY STATE CHANGES\n" );
-
-			for ( u32 i = 0; dirtyFlags; ++i ) {
-				u32 mask = 1 << i;
-				if ( dirtyFlags & mask ) {
-					this->ApplyStateChange ( mask );
-					dirtyFlags &= ~mask;
-				}
-			}
-			
-			u32 textureDirtyFlags = this->mTextureDirtyFlags;
-			this->mTextureDirtyFlags = 0;
-			
-			for ( ZLIndex i = ZLIndexOp::ZERO; textureDirtyFlags; ++i ) {
-				u32 mask = 1 << i;
-				if ( textureDirtyFlags & mask ) {
-					this->FlushTexture ( i );
-					textureDirtyFlags &= ~mask;
-				}
-			}
-			
-			this->mCurrentState = this->mPendingState;
-			this->ResumeChanges ();
-		}
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxMgrGL_GPUCacheGL::Clear () {
 
 	this->mCurrentState = NULL;
@@ -181,8 +138,8 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushBlendMode () {
 			
 			DEBUG_LOG ( "  updating blend mode\n" );
 			active.mBlendMode = blendMode;
-			gfx.BlendMode ( active.mBlendMode.mEquation );
-			gfx.BlendFunc ( active.mBlendMode.mSourceFactor, active.mBlendMode.mDestFactor );
+			gfx.BlendMode ( MOAIGfxConstsGL::Remap ( active.mBlendMode.mEquation ));
+			gfx.BlendFunc ( MOAIGfxConstsGL::Remap ( active.mBlendMode.mSourceFactor ), MOAIGfxConstsGL::Remap ( active.mBlendMode.mDestFactor ));
 		}
 	}
 	else {
@@ -203,7 +160,7 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushCullFunc () {
 
 	assert ( this->mApplyingStateChanges );
 	
-	int cullFunc = this->mPendingState->mCullFunc;
+	MOAICullFunc::Type cullFunc = this->mPendingState->mCullFunc;
 	
 	MOAIGfxStateGPUCacheFrame& active = *this->mActiveState;
 	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
@@ -217,7 +174,7 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushCullFunc () {
 		if ( active.mCullFunc ) {
 			DEBUG_LOG ( "  enabling/setting cull func\n" );
 			gfx.Enable ( ZGL_PIPELINE_CULL );
-			gfx.CullFace ( active.mCullFunc );
+			gfx.CullFace ( MOAIGfxConstsGL::Remap ( active.mCullFunc ));
 		}
 		else {
 			DEBUG_LOG ( "  disabling cull func\n" );
@@ -231,7 +188,7 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushDepthFunc () {
 
 	assert ( this->mApplyingStateChanges );
 	
-	int depthFunc = this->mPendingState->mDepthFunc;
+	MOAIDepthFunc::Type depthFunc = this->mPendingState->mDepthFunc;
 	
 	MOAIGfxStateGPUCacheFrame& active = *this->mActiveState;
 	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
@@ -246,7 +203,7 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushDepthFunc () {
 		
 		if ( active.mDepthFunc ) {
 			gfx.Enable ( ZGL_PIPELINE_DEPTH );
-			gfx.DepthFunc ( active.mDepthFunc );
+			gfx.DepthFunc ( MOAIGfxConstsGL::Remap ( active.mDepthFunc ));
 		}
 		else {
 			gfx.Disable ( ZGL_PIPELINE_DEPTH );
@@ -736,6 +693,50 @@ void MOAIGfxMgrGL_GPUCacheGL::StoreGPUState ( MOAIGfxStateGPUCacheFrame& frame )
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_ApplyStateChanges () {
+
+	if ( !this->mApplyingStateChanges ) {
+	
+		if ( this->mPendingState->mShader ) {
+			this->mPendingState->mShader->SelectTextures ();
+		}
+
+		if ( this->mDirtyFlags || this->mTextureDirtyFlags ) {
+			
+			this->SuspendChanges ();
+			this->mCurrentState = this->mActiveState;
+			
+			u32 dirtyFlags = this->mDirtyFlags;
+			this->mDirtyFlags = 0;
+			
+			DEBUG_LOG ( "APPLY STATE CHANGES\n" );
+
+			for ( u32 i = 0; dirtyFlags; ++i ) {
+				u32 mask = 1 << i;
+				if ( dirtyFlags & mask ) {
+					this->ApplyStateChange ( mask );
+					dirtyFlags &= ~mask;
+				}
+			}
+			
+			u32 textureDirtyFlags = this->mTextureDirtyFlags;
+			this->mTextureDirtyFlags = 0;
+			
+			for ( ZLIndex i = ZLIndexOp::ZERO; textureDirtyFlags; ++i ) {
+				u32 mask = 1 << i;
+				if ( textureDirtyFlags & mask ) {
+					this->FlushTexture ( i );
+					textureDirtyFlags &= ~mask;
+				}
+			}
+			
+			this->mCurrentState = this->mPendingState;
+			this->ResumeChanges ();
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_ClearSurface () {
 	
 	MOAIGfxMgr_CPUCache& cpuCache = this->GetCPUCache ();
@@ -782,11 +783,13 @@ size_t MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_CountTextureUnits () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_DrawPrims ( u32 primType, u32 base, u32 count ) {
+void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_DrawPrims ( MOAITopology::Type primType, u32 base, u32 count ) {
 
 	DEBUG_LOG ( "DRAW PRIMS: %d %d %d\n", primType, base, count );
 	
 	this->ApplyStateChanges ();
+
+	ZGLEnum primTypeZGL = MOAIGfxConstsGL::Remap ( primType );
 
 	MOAIShaderGL* shader = MOAICast < MOAIShaderGL >( this->mActiveState->mShader );
 
@@ -801,12 +804,12 @@ void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_DrawPrims ( u32 primType, u32 
 			DEBUG_LOG ( "drawing prims with index and vertex buffer\n" );
 			
 			size_t indexSize = idxBuffer->GetIndexSize ();
-			u32 indexType = indexSize == 2 ? ZGL_TYPE_UNSIGNED_SHORT : ZGL_TYPE_UNSIGNED_INT;
-			gfx.DrawElements ( primType, count, indexType, this->mBoundIdxBuffer, base * indexSize );
+			ZGLEnum indexType = indexSize == 2 ? ZGL_TYPE_UNSIGNED_SHORT : ZGL_TYPE_UNSIGNED_INT;
+			gfx.DrawElements ( primTypeZGL, count, indexType, this->mBoundIdxBuffer, base * indexSize );
 		}
 		else {
 			DEBUG_LOG ( "drawing prims with vertex buffer\n" );
-			gfx.DrawArrays ( primType, base, count );
+			gfx.DrawArrays ( primTypeZGL, base, count );
 		}
 	}
 }
@@ -830,13 +833,13 @@ void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_ResetGPUState () {
 	
 	// disable backface culling
 	gfx.Disable ( ZGL_PIPELINE_CULL );
-	pending.mCullFunc = 0;
-	active.mCullFunc = 0;
+	pending.mCullFunc = MOAICullFunc::NONE;
+	active.mCullFunc = MOAICullFunc::NONE;
 	
 	// disable depth test
 	gfx.Disable ( ZGL_PIPELINE_DEPTH );
-	pending.mDepthFunc = 0;
-	active.mDepthFunc = 0;
+	pending.mDepthFunc = MOAIDepthFunc::NONE;
+	active.mDepthFunc = MOAIDepthFunc::NONE;
 	
 	// disable depth write
 	gfx.DepthMask ( false );

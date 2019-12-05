@@ -30,13 +30,13 @@ int MOAIFrameBufferTextureGL::_init ( lua_State* L ) {
 	
 	// TODO: fix me
 	#if defined ( MOAI_OS_ANDROID ) || defined ( MOAI_OS_HTML )
-		u32 colorFormat		= state.GetValue < u32 >( 4, ZGL_PIXEL_FORMAT_RGB565 );
+		ZGLEnum colorFormat		= ( ZGLEnum )state.GetValue < u32 >( 4, ZGL_PIXEL_FORMAT_RGB565 );
 	#else
-		u32 colorFormat		= state.GetValue < u32 >( 4, ZGL_PIXEL_FORMAT_RGBA8 );
+		ZGLEnum colorFormat		= ( ZGLEnum )state.GetValue < u32 >( 4, ZGL_PIXEL_FORMAT_RGBA8 );
 	#endif
 	
-	u32 depthFormat		= state.GetValue < u32 >( 5, 0 );
-	u32 stencilFormat	= state.GetValue < u32 >( 6, 0 );
+	ZGLEnum depthFormat			= ( ZGLEnum )state.GetValue < u32 >( 5, 0 );
+	ZGLEnum stencilFormat		= ( ZGLEnum ) state.GetValue < u32 >( 6, 0 );
 	
 	self->Init ( width, height, colorFormat, depthFormat, stencilFormat );
 	
@@ -48,7 +48,7 @@ int MOAIFrameBufferTextureGL::_init ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIFrameBufferTextureGL::Init ( u32 width, u32 height, u32 colorFormat, u32 depthFormat, u32 stencilFormat ) {
+void MOAIFrameBufferTextureGL::Init ( u32 width, u32 height, ZGLEnum colorFormat, ZGLEnum depthFormat, ZGLEnum stencilFormat ) {
 
 	this->Finalize ();
 
@@ -63,9 +63,9 @@ void MOAIFrameBufferTextureGL::Init ( u32 width, u32 height, u32 colorFormat, u3
 
 //----------------------------------------------------------------//
 MOAIFrameBufferTextureGL::MOAIFrameBufferTextureGL () :
-	mColorFormat ( 0 ),
-	mDepthFormat ( 0 ),
-	mStencilFormat ( 0 ) {
+	mColorFormat ( ZGL_NONE ),
+	mDepthFormat ( ZGL_NONE ),
+	mStencilFormat ( ZGL_NONE ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIFrameBufferGL )
