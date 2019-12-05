@@ -19,7 +19,7 @@ MOAIVertexBufferGL::MOAIVertexBufferGL () {
 		RTTI_EXTEND ( MOAIGfxBufferGL )
 	RTTI_END
 	
-	this->mTarget = ZGL_BUFFER_TARGET_ARRAY;
+	this->mTarget = ZLGfxEnum::BUFFER_TARGET_ARRAY;
 }
 
 //----------------------------------------------------------------//

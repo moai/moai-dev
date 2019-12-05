@@ -37,7 +37,7 @@ void ZLGfxRetained::ActiveTexture ( u32 textureUnit ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::AllocateResource ( ZLGfxResource& resource, ZGLEnum param ) {
+void ZLGfxRetained::AllocateResource ( ZLGfxResource& resource, ZLGfxEnum::Type param ) {
 
 	assert ( this->mStream );
 
@@ -71,7 +71,7 @@ void ZLGfxRetained::BindAttribLocation ( ZLGfxResource& program, u32 index, cc8*
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::BindBuffer ( ZGLEnum target, ZLGfxResource& handle ) {
+void ZLGfxRetained::BindBuffer ( ZLGfxEnum::Type target, ZLGfxResource& handle ) {
 
 	assert ( this->mStream );
 
@@ -81,7 +81,7 @@ void ZLGfxRetained::BindBuffer ( ZGLEnum target, ZLGfxResource& handle ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::BindFramebuffer ( ZGLEnum target, ZLGfxResource& handle ) {
+void ZLGfxRetained::BindFramebuffer ( ZLGfxEnum::Type target, ZLGfxResource& handle ) {
 
 	assert ( this->mStream );
 
@@ -118,7 +118,7 @@ void ZLGfxRetained::BindVertexArray ( ZLGfxResource& handle ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::BlendFunc ( ZGLEnum sourceFactor, ZGLEnum destFactor ) {
+void ZLGfxRetained::BlendFunc ( ZLGfxEnum::Type sourceFactor, ZLGfxEnum::Type destFactor ) {
 
 	assert ( this->mStream );
 
@@ -128,7 +128,7 @@ void ZLGfxRetained::BlendFunc ( ZGLEnum sourceFactor, ZGLEnum destFactor ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::BlendMode ( ZGLEnum mode ) {
+void ZLGfxRetained::BlendMode ( ZLGfxEnum::Type mode ) {
 
 	assert ( this->mStream );
 
@@ -137,7 +137,7 @@ void ZLGfxRetained::BlendMode ( ZGLEnum mode ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::BufferData ( ZGLEnum target, size_t size, ZLSharedConstBuffer* buffer, size_t offset, ZGLEnum usage ) {
+void ZLGfxRetained::BufferData ( ZLGfxEnum::Type target, size_t size, ZLSharedConstBuffer* buffer, size_t offset, ZLGfxEnum::Type usage ) {
 
 	this->Retain ( buffer );
 
@@ -152,7 +152,7 @@ void ZLGfxRetained::BufferData ( ZGLEnum target, size_t size, ZLSharedConstBuffe
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::BufferSubData ( ZGLEnum target, size_t offset, size_t size, ZLSharedConstBuffer* buffer, size_t srcOffset ) {
+void ZLGfxRetained::BufferSubData ( ZLGfxEnum::Type target, size_t offset, size_t size, ZLSharedConstBuffer* buffer, size_t srcOffset ) {
 
 	this->Retain ( buffer );
 
@@ -167,7 +167,7 @@ void ZLGfxRetained::BufferSubData ( ZGLEnum target, size_t offset, size_t size, 
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::CheckFramebufferStatus ( ZGLEnum target ) {
+void ZLGfxRetained::CheckFramebufferStatus ( ZLGfxEnum::Type target ) {
 
 	assert ( this->mStream );
 
@@ -231,7 +231,7 @@ void ZLGfxRetained::CompileShader ( ZLGfxResource& shader, bool log ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::CompressedTexImage2D ( u32 level, ZGLEnum internalFormat, u32 width, u32 height, u32 imageSize, ZLSharedConstBuffer* buffer ) {
+void ZLGfxRetained::CompressedTexImage2D ( u32 level, ZLGfxEnum::Type internalFormat, u32 width, u32 height, u32 imageSize, ZLSharedConstBuffer* buffer ) {
 
 	this->Retain ( buffer );
 
@@ -247,7 +247,7 @@ void ZLGfxRetained::CompressedTexImage2D ( u32 level, ZGLEnum internalFormat, u3
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::CullFace ( ZGLEnum mode ) {
+void ZLGfxRetained::CullFace ( ZLGfxEnum::Type mode ) {
 
 	assert ( this->mStream );
 
@@ -265,7 +265,7 @@ void ZLGfxRetained::DeleteResource ( ZLGfxResource& resource ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::DepthFunc ( ZGLEnum depthFunc ) {
+void ZLGfxRetained::DepthFunc ( ZLGfxEnum::Type depthFunc ) {
 
 	assert ( this->mStream );
 
@@ -283,7 +283,7 @@ void ZLGfxRetained::DepthMask ( bool flag ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::Disable ( ZGLEnum cap ) {
+void ZLGfxRetained::Disable ( ZLGfxEnum::Type cap ) {
 
 	assert ( this->mStream );
 
@@ -292,7 +292,7 @@ void ZLGfxRetained::Disable ( ZGLEnum cap ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::DisableClientState ( ZGLEnum cap ) {
+void ZLGfxRetained::DisableClientState ( ZLGfxEnum::Type cap ) {
 
 	assert ( this->mStream );
 
@@ -342,7 +342,7 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			case ZLGFX_ALLOCATE_RESOURCE: {
 			
 				ZLGfxResource* resource		= this->mStream->Read < ZLGfxResource* >( 0 );
-				ZGLEnum param				= ( ZGLEnum )*this->mStream->Read < u32 >( 0 );
+				ZLGfxEnum::Type param				= ( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 );
 				
 				draw.AllocateResource ( *resource, param );
 				
@@ -378,7 +378,7 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			}
 			case ZLGFX_BIND_BUFFER: {
 			
-				ZGLEnum target			= ( ZGLEnum )*this->mStream->Read < u32 >( 0 );
+				ZLGfxEnum::Type target			= ( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 );
 				ZLGfxResource* buffer	= this->mStream->Read < ZLGfxResource* >( 0 );
 			
 				draw.BindBuffer ( target, *buffer );
@@ -388,7 +388,7 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			}
 			case ZLGFX_BIND_FRAMEBUFFER: {
 			
-				ZGLEnum target			= ( ZGLEnum )*this->mStream->Read < u32 >( 0 );
+				ZLGfxEnum::Type target			= ( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 );
 				ZLGfxResource* buffer	= this->mStream->Read < ZLGfxResource* >( 0 );
 				
 				draw.BindFramebuffer ( target, *buffer );
@@ -420,25 +420,25 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			case ZLGFX_BLEND_FUNC: {
 			
 				draw.BlendFunc (
-					( ZGLEnum )*this->mStream->Read < u32 >( 0 ),
-					( ZGLEnum )*this->mStream->Read < u32 >( 0 )
+					( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 ),
+					( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 )
 				);
 				break;
 			}
 			case ZLGFX_BLEND_MODE: {
 			
 				draw.BlendMode (
-					( ZGLEnum )*this->mStream->Read < u32 >( 0 )
+					( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 )
 				);
 				break;
 			}
 			case ZLGFX_BUFFER_DATA: {
 			
-				ZGLEnum target					= ( ZGLEnum )*this->mStream->Read < u32 >( 0 );
+				ZLGfxEnum::Type target					= ( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 );
 				size_t size						= this->mStream->Read < size_t >( 0 );
 				ZLSharedConstBuffer* buffer		= this->mStream->Read < ZLSharedConstBuffer* >( 0 );
 				size_t offset					= this->mStream->Read < size_t >( 0 );
-				ZGLEnum usage					= ( ZGLEnum )*this->mStream->Read < u32 >( 0 );
+				ZLGfxEnum::Type usage					= ( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 );
 			
 				draw.BufferData ( target, size, buffer, offset, usage );
 				
@@ -446,7 +446,7 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			}
 			case ZLGFX_BUFFER_SUB_DATA: {
 			
-				ZGLEnum target					= ( ZGLEnum )*this->mStream->Read < u32 >( 0 );
+				ZLGfxEnum::Type target					= ( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 );
 				size_t offset					= this->mStream->Read < size_t >( 0 );
 				size_t size						= this->mStream->Read < size_t >( 0 );
 				ZLSharedConstBuffer* buffer		= this->mStream->Read < ZLSharedConstBuffer* >( 0 );
@@ -519,7 +519,7 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			case ZLGFX_COMPRESSED_TEX_IMAGE_2D: {
 			
 				u32 level						= this->mStream->Read < u32 >( 0 );
-				ZGLEnum internalFormat			= ( ZGLEnum )*this->mStream->Read < u32 >( 0 );
+				ZLGfxEnum::Type internalFormat			= ( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 );
 				u32 width						= this->mStream->Read < u32 >( 0 );
 				u32 height						= this->mStream->Read < u32 >( 0 );
 				u32 imageSize					= this->mStream->Read < u32 >( 0 );
@@ -532,7 +532,7 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			case ZLGFX_CULL_FACE: {
 			
 				draw.CullFace (
-					( ZGLEnum )*this->mStream->Read < u32 >( 0 )
+					( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 )
 				);
 				break;
 			}
@@ -546,7 +546,7 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			case ZLGFX_DEPTH_FUNC: {
 			
 				draw.DepthFunc (
-					( ZGLEnum )*this->mStream->Read < u32 >( 0 )
+					( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 )
 				);
 				break;
 			}
@@ -560,14 +560,14 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			case ZLGFX_DISABLE: {
 			
 				draw.Disable (
-					( ZGLEnum )*this->mStream->Read < u32 >( 0 )
+					( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 )
 				);
 				break;
 			}
 			case ZLGFX_DISABLE_CLIENT_STATE: {
 			
 				draw.DisableClientState (
-					( ZGLEnum )*this->mStream->Read < u32 >( 0 )
+					( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 )
 				);
 				break;
 			}
@@ -581,7 +581,7 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			case ZLGFX_DRAW_ARRAYS: {
 			
 				draw.DrawArrays (
-					( ZGLEnum )*this->mStream->Read < u32 >( 0 ),
+					( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 ),
 					this->mStream->Read < u32 >( 0 ),
 					this->mStream->Read < u32 >( 0 )
 				);
@@ -589,9 +589,9 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			}
 			case ZLGFX_DRAW_ELEMENTS: {
 			
-				ZGLEnum primType				= ( ZGLEnum )*this->mStream->Read < u32 >( 0 );
+				ZLGfxEnum::Type primType				= ( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 );
 				u32 count						= this->mStream->Read < u32 >( 0 );
-				ZGLEnum indexType				= ( ZGLEnum )*this->mStream->Read < u32 >( 0 );
+				ZLGfxEnum::Type indexType				= ( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 );
 				ZLSharedConstBuffer* buffer		= this->mStream->Read < ZLSharedConstBuffer* >( 0 );
 				size_t offset					= this->mStream->Read < size_t >( 0 );
 			
@@ -602,14 +602,14 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			case ZLGFX_ENABLE: {
 			
 				draw.Enable (
-					( ZGLEnum )*this->mStream->Read < u32 >( 0 )
+					( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 )
 				);
 				break;
 			}
 			case ZLGFX_ENABLE_CLIENT_STATE: {
 			
 				draw.EnableClientState (
-					( ZGLEnum )*this->mStream->Read < u32 >( 0 )
+					( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 )
 				);
 				break;
 			}
@@ -638,8 +638,8 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			}
 			case ZLGFX_FRAMEBUFFER_RENDERBUFFER: {
 			
-				ZGLEnum target					= ( ZGLEnum )*this->mStream->Read < u32 >( 0 );
-				ZGLEnum attachment				= ( ZGLEnum )*this->mStream->Read < u32 >( 0 );
+				ZLGfxEnum::Type target					= ( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 );
+				ZLGfxEnum::Type attachment				= ( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 );
 				ZLGfxResource* renderbuffer		= this->mStream->Read < ZLGfxResource* >( 0 );
 				
 				draw.FramebufferRenderbuffer ( target, attachment, *renderbuffer );
@@ -649,8 +649,8 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			}
 			case ZLGFX_FRAMEBUFFER_TEXTURE_2D: {
 			
-				ZGLEnum target					= ( ZGLEnum )*this->mStream->Read < u32 >( 0 );
-				ZGLEnum attachment				= ( ZGLEnum )*this->mStream->Read < u32 >( 0 );
+				ZLGfxEnum::Type target					= ( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 );
+				ZLGfxEnum::Type attachment				= ( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 );
 				ZLGfxResource* texture			= this->mStream->Read < ZLGfxResource* >( 0 );
 				s32 level						= this->mStream->Read < s32 >( 0 );
 				
@@ -707,8 +707,8 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 				u32 width			= this->mStream->Read < u32 >( 0 );
 				u32 height			= this->mStream->Read < u32 >( 0 );
 				
-				ZGLEnum format		= ( ZGLEnum )*this->mStream->Read < u32 >( 0 );
-				ZGLEnum type		= ( ZGLEnum )*this->mStream->Read < u32 >( 0 );
+				ZLGfxEnum::Type format		= ( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 );
+				ZLGfxEnum::Type type		= ( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 );
 				u32 pixelSize		= this->mStream->Read < u32 >( 0 );
 				
 				u32 listenerRecordIdx = this->mStream->Read < u32 >( 0 );
@@ -719,7 +719,7 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			}
 			case ZLGFX_RENDER_BUFFER_STORAGE: {
 				
-				ZGLEnum internalFormat		= ( ZGLEnum )*this->mStream->Read < u32 >( 0 );
+				ZLGfxEnum::Type internalFormat		= ( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 );
 				u32 width					= this->mStream->Read < u32 >( 0 );
 				u32 height					= this->mStream->Read < u32 >( 0 );
 				
@@ -754,19 +754,19 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			case ZLGFX_TEX_ENVI: {
 			
 				draw.TexEnvi (
-					( ZGLEnum )*this->mStream->Read < u32 >( 0 ),
-					( ZGLEnum )*this->mStream->Read < u32 >( 0 )
+					( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 ),
+					( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 )
 				);
 				break;
 			}
 			case ZLGFX_TEX_IMAGE_2D: {
 			
 				u32 level						= this->mStream->Read < u32 >( 0 );
-				ZGLEnum internalFormat			= ( ZGLEnum )*this->mStream->Read < u32 >( 0 );
+				ZLGfxEnum::Type internalFormat			= ( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 );
 				u32 width						= this->mStream->Read < u32 >( 0 );
 				u32 height						= this->mStream->Read < u32 >( 0 );
-				ZGLEnum format					= ( ZGLEnum )*this->mStream->Read < u32 >( 0 );
-				ZGLEnum type					= ( ZGLEnum )*this->mStream->Read < u32 >( 0 );
+				ZLGfxEnum::Type format					= ( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 );
+				ZLGfxEnum::Type type					= ( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 );
 				ZLSharedConstBuffer* buffer		= this->mStream->Read < ZLSharedConstBuffer* >( 0 );
 				
 				draw.TexImage2D ( level, internalFormat, width, height, format, type, buffer );
@@ -776,8 +776,8 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			case ZLGFX_TEX_PARAMETERI: {
 			
 				draw.TexParameteri (
-					( ZGLEnum )*this->mStream->Read < u32 >( 0 ),
-					( ZGLEnum )*this->mStream->Read < u32 >( 0 )
+					( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 ),
+					( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 )
 				);
 				break;
 			}
@@ -788,8 +788,8 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 				u32 yOffset						= this->mStream->Read < u32 >( 0 );
 				u32 width						= this->mStream->Read < u32 >( 0 );
 				u32 height						= this->mStream->Read < u32 >( 0 );
-				ZGLEnum format					= ( ZGLEnum )*this->mStream->Read < u32 >( 0 );
-				ZGLEnum type					= ( ZGLEnum )*this->mStream->Read < u32 >( 0 );
+				ZLGfxEnum::Type format					= ( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 );
+				ZLGfxEnum::Type type					= ( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 );
 				ZLSharedConstBuffer* buffer		= this->mStream->Read < ZLSharedConstBuffer* >( 0 );
 				
 				draw.TexSubImage2D ( level, xOffset, yOffset, width, height, format, type, buffer );
@@ -837,7 +837,7 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			
 				u32 index						= this->mStream->Read < u32 >( 0 );
 				u32 size						= this->mStream->Read < u32 >( 0 );
-				ZGLEnum type					= ( ZGLEnum )*this->mStream->Read < u32 >( 0 );
+				ZLGfxEnum::Type type					= ( ZLGfxEnum::Type )*this->mStream->Read < u32 >( 0 );
 				bool normalized					= this->mStream->Read < bool >( false );
 				u32 stride						= this->mStream->Read < u32 >( 0 );
 				ZLSharedConstBuffer* buffer		= this->mStream->Read < ZLSharedConstBuffer* >( 0 );
@@ -874,7 +874,7 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::DrawArrays ( ZGLEnum primType, u32 first, u32 count ) {
+void ZLGfxRetained::DrawArrays ( ZLGfxEnum::Type primType, u32 first, u32 count ) {
 
 	assert ( this->mStream );
 
@@ -885,7 +885,7 @@ void ZLGfxRetained::DrawArrays ( ZGLEnum primType, u32 first, u32 count ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::DrawElements ( ZGLEnum primType, u32 count, ZGLEnum indexType, ZLSharedConstBuffer* buffer, size_t offset ) {
+void ZLGfxRetained::DrawElements ( ZLGfxEnum::Type primType, u32 count, ZLGfxEnum::Type indexType, ZLSharedConstBuffer* buffer, size_t offset ) {
 
 	this->Retain ( buffer );
 
@@ -900,7 +900,7 @@ void ZLGfxRetained::DrawElements ( ZGLEnum primType, u32 count, ZGLEnum indexTyp
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::Enable ( ZGLEnum cap ) {
+void ZLGfxRetained::Enable ( ZLGfxEnum::Type cap ) {
 
 	assert ( this->mStream );
 
@@ -909,7 +909,7 @@ void ZLGfxRetained::Enable ( ZGLEnum cap ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::EnableClientState ( ZGLEnum cap ) {
+void ZLGfxRetained::EnableClientState ( ZLGfxEnum::Type cap ) {
 
 	assert ( this->mStream );
 
@@ -949,7 +949,7 @@ void ZLGfxRetained::Flush ( bool finish ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::FramebufferRenderbuffer ( ZGLEnum target, ZGLEnum attachment, ZLGfxResource& renderbuffer ) {
+void ZLGfxRetained::FramebufferRenderbuffer ( ZLGfxEnum::Type target, ZLGfxEnum::Type attachment, ZLGfxResource& renderbuffer ) {
 
 	assert ( this->mStream );
 
@@ -960,7 +960,7 @@ void ZLGfxRetained::FramebufferRenderbuffer ( ZGLEnum target, ZGLEnum attachment
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::FramebufferTexture2D ( ZGLEnum target, ZGLEnum attachment, ZLGfxResource& texture, s32 level ) {
+void ZLGfxRetained::FramebufferTexture2D ( ZLGfxEnum::Type target, ZLGfxEnum::Type attachment, ZLGfxResource& texture, s32 level ) {
 
 	assert ( this->mStream );
 
@@ -1088,7 +1088,7 @@ bool ZLGfxRetained::PushSuccessHandler () {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::ReadPixels ( s32 x, s32 y, u32 width, u32 height, ZGLEnum format, ZGLEnum type, u32 pixelSize, ZLGfxListener* listener, void* userdata ) {
+void ZLGfxRetained::ReadPixels ( s32 x, s32 y, u32 width, u32 height, ZLGfxEnum::Type format, ZLGfxEnum::Type type, u32 pixelSize, ZLGfxListener* listener, void* userdata ) {
 	
 	assert ( this->mStream );
 
@@ -1111,7 +1111,7 @@ void ZLGfxRetained::ReadPixels ( s32 x, s32 y, u32 width, u32 height, ZGLEnum fo
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::RenderbufferStorage ( ZGLEnum internalFormat, u32 width, u32 height ) {
+void ZLGfxRetained::RenderbufferStorage ( ZLGfxEnum::Type internalFormat, u32 width, u32 height ) {
 	
 	assert ( this->mStream );
 	
@@ -1178,7 +1178,7 @@ void ZLGfxRetained::ShaderSource ( ZLGfxResource& shader, cc8* source, size_t le
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::TexEnvi ( ZGLEnum pname, ZGLEnum param ) {
+void ZLGfxRetained::TexEnvi ( ZLGfxEnum::Type pname, ZLGfxEnum::Type param ) {
 
 	assert ( this->mStream );
 
@@ -1188,7 +1188,7 @@ void ZLGfxRetained::TexEnvi ( ZGLEnum pname, ZGLEnum param ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::TexImage2D ( u32 level, ZGLEnum internalFormat, u32 width, u32 height, ZGLEnum format, ZGLEnum type, ZLSharedConstBuffer* buffer ) {
+void ZLGfxRetained::TexImage2D ( u32 level, ZLGfxEnum::Type internalFormat, u32 width, u32 height, ZLGfxEnum::Type format, ZLGfxEnum::Type type, ZLSharedConstBuffer* buffer ) {
 	
 	this->Retain ( buffer );
 	
@@ -1205,7 +1205,7 @@ void ZLGfxRetained::TexImage2D ( u32 level, ZGLEnum internalFormat, u32 width, u
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::TexParameteri ( ZGLEnum pname, ZGLEnum param ) {
+void ZLGfxRetained::TexParameteri ( ZLGfxEnum::Type pname, ZLGfxEnum::Type param ) {
 
 	assert ( this->mStream );
 
@@ -1215,7 +1215,7 @@ void ZLGfxRetained::TexParameteri ( ZGLEnum pname, ZGLEnum param ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::TexSubImage2D ( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 height, ZGLEnum format, ZGLEnum type, ZLSharedConstBuffer* buffer ) {
+void ZLGfxRetained::TexSubImage2D ( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 height, ZLGfxEnum::Type format, ZLGfxEnum::Type type, ZLSharedConstBuffer* buffer ) {
 
 	this->Retain ( buffer );
 
@@ -1268,7 +1268,7 @@ void ZLGfxRetained::UseProgram ( ZLGfxResource& program ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::VertexAttribPointer ( u32 index, u32 size, ZGLEnum type, bool normalized, u32 stride, ZLSharedConstBuffer* buffer, size_t offset ) {
+void ZLGfxRetained::VertexAttribPointer ( u32 index, u32 size, ZLGfxEnum::Type type, bool normalized, u32 stride, ZLSharedConstBuffer* buffer, size_t offset ) {
 
 	this->Retain ( buffer );
 

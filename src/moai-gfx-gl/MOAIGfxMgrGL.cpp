@@ -130,7 +130,7 @@ void MOAIGfxMgrGL::ClearErrors () {
 
 	#ifndef MOAI_OS_NACL
 		if ( this->mHasContext ) {
-			while ( ZLGfxDevice::GetError () != ZGL_ERROR_NONE );
+			while ( ZLGfxDevice::GetError () != ZLGfxEnum::ERROR_NONE );
 		}
 	#endif
 }
@@ -142,10 +142,10 @@ void MOAIGfxMgrGL::DetectContext () {
 	
 	ZLGfxDevice::Initialize ();
 	
-	u32 maxTextureUnits = ZLGfxDevice::GetCap ( ZGL_CAPS_MAX_TEXTURE_UNITS );
+	u32 maxTextureUnits = ZLGfxDevice::GetCap ( ZLGfxEnum::CAPS_MAX_TEXTURE_UNITS );
 	this->InitTextureUnits ( maxTextureUnits );
 	
-	this->mMaxTextureSize = ZLGfxDevice::GetCap ( ZGL_CAPS_MAX_TEXTURE_SIZE );
+	this->mMaxTextureSize = ZLGfxDevice::GetCap ( ZLGfxEnum::CAPS_MAX_TEXTURE_SIZE );
 
 	// renew resources in immediate mode
 	this->SelectDrawingAPI ();
@@ -179,7 +179,7 @@ u32 MOAIGfxMgrGL::LogErrors () {
 	u32 count = 0;
 	#ifndef MOAI_OS_NACL
 		if ( this->mHasContext ) {
-			for ( u32 error = ZLGfxDevice::GetError (); error != ZGL_ERROR_NONE; error = ZLGfxDevice::GetError (), ++count ) {
+			for ( u32 error = ZLGfxDevice::GetError (); error != ZLGfxEnum::ERROR_NONE; error = ZLGfxDevice::GetError (), ++count ) {
 //				MOAILogF ( 0, ZLLog::LOG_ERROR, MOAISTRING_MOAIGfxDevice_OpenGLError_S, ZLGfxDevice::GetErrorString ( error ));
 			}
 		}

@@ -19,7 +19,7 @@ MOAIIndexBufferGL::MOAIIndexBufferGL () {
 		RTTI_EXTEND ( MOAIGfxBufferGL )
 	RTTI_END
 	
-	this->mTarget = ZGL_BUFFER_TARGET_ELEMENT_ARRAY;
+	this->mTarget = ZLGfxEnum::BUFFER_TARGET_ELEMENT_ARRAY;
 }
 
 //----------------------------------------------------------------//

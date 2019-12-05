@@ -24,49 +24,49 @@ static u32	sOperationDepth				= 0; // this is just the counter for tracking begi
 //================================================================//
 
 //----------------------------------------------------------------//
-u32 ZLGfxDevice::GetCap ( ZGLEnum cap ) {
+u32 ZLGfxDevice::GetCap ( ZLGfxEnum::Type cap ) {
 	
 	switch ( cap ) {
-		case ZGL_CAPS_MAX_TEXTURE_SIZE:
+		case ZLGfxEnum::CAPS_MAX_TEXTURE_SIZE:
 			return sMaxTextureSize;
-		case ZGL_CAPS_MAX_TEXTURE_UNITS:
+		case ZLGfxEnum::CAPS_MAX_TEXTURE_UNITS:
 			return sMaxTextureUnits;
 	}
 	return 0;
 }
 
 //----------------------------------------------------------------//
-ZGLEnum ZLGfxDevice::GetError () {
+ZLGfxEnum::Type ZLGfxDevice::GetError () {
 
 	GLenum error = glGetError ();
 
 	switch ( error ) {
-		case GL_NO_ERROR:			return ZGL_ERROR_NONE;
-		case GL_INVALID_ENUM:		return ZGL_ERROR_INVALID_ENUM;
-		case GL_INVALID_OPERATION:	return ZGL_ERROR_INVALID_OPERATION;
-		case GL_INVALID_VALUE:		return ZGL_ERROR_INVALID_VALUE;
-		case GL_OUT_OF_MEMORY:		return ZGL_ERROR_OUT_OF_MEMORY;
+		case GL_NO_ERROR:			return ZLGfxEnum::ERROR_NONE;
+		case GL_INVALID_ENUM:		return ZLGfxEnum::ERROR_INVALID_ENUM;
+		case GL_INVALID_OPERATION:	return ZLGfxEnum::ERROR_INVALID_OPERATION;
+		case GL_INVALID_VALUE:		return ZLGfxEnum::ERROR_INVALID_VALUE;
+		case GL_OUT_OF_MEMORY:		return ZLGfxEnum::ERROR_OUT_OF_MEMORY;
 	}
-	return ZGL_ERROR_UNKNOWN;
+	return ZLGfxEnum::ERROR_UNKNOWN;
 }
 
 //----------------------------------------------------------------//
-cc8* ZLGfxDevice::GetErrorString ( ZGLEnum error ) {
+cc8* ZLGfxDevice::GetErrorString ( ZLGfxEnum::Type error ) {
 
 	switch ( error ) {
-		case ZGL_ERROR_NONE:				return "ZGL_ERROR_NONE";
-		case ZGL_ERROR_INVALID_ENUM:		return "ZGL_ERROR_INVALID_ENUM";
-		case ZGL_ERROR_INVALID_OPERATION:	return "ZGL_ERROR_INVALID_OPERATION";
-		case ZGL_ERROR_INVALID_VALUE:		return "ZGL_ERROR_INVALID_VALUE";
-		case ZGL_ERROR_OUT_OF_MEMORY:		return "ZGL_ERROR_OUT_OF_MEMORY";
-		case ZGL_ERROR_STACK_OVERFLOW:		return "ZGL_ERROR_STACK_OVERFLOW";
-		case ZGL_ERROR_STACK_UNDERFLOW:		return "ZGL_ERROR_STACK_UNDERFLOW";
+		case ZLGfxEnum::ERROR_NONE:					return "ZLGfxEnum::ERROR_NONE";
+		case ZLGfxEnum::ERROR_INVALID_ENUM:			return "ZLGfxEnum::ERROR_INVALID_ENUM";
+		case ZLGfxEnum::ERROR_INVALID_OPERATION:	return "ZLGfxEnum::ERROR_INVALID_OPERATION";
+		case ZLGfxEnum::ERROR_INVALID_VALUE:		return "ZLGfxEnum::ERROR_INVALID_VALUE";
+		case ZLGfxEnum::ERROR_OUT_OF_MEMORY:		return "ZLGfxEnum::ERROR_OUT_OF_MEMORY";
+		case ZLGfxEnum::ERROR_STACK_OVERFLOW:		return "ZLGfxEnum::ERROR_STACK_OVERFLOW";
+		case ZLGfxEnum::ERROR_STACK_UNDERFLOW:		return "ZLGfxEnum::ERROR_STACK_UNDERFLOW";
 	}
 	return "";
 }
 
 //----------------------------------------------------------------//
-cc8* ZLGfxDevice::GetString ( ZGLEnum stringID ) {
+cc8* ZLGfxDevice::GetString ( ZLGfxEnum::Type stringID ) {
 
 	return ( cc8* )glGetString ( ZLGfxEnum::MapZLToNative ( stringID ));
 }
@@ -91,7 +91,7 @@ void ZLGfxDevice::Initialize () {
 		}
 	#endif
 
-	STLString version = ZLGfxDevice::GetString ( ZGL_STRING_VERSION );
+	STLString version = ZLGfxDevice::GetString ( ZLGfxEnum::STRING_VERSION );
 	std::transform ( version.begin (), version.end(), version.begin(), Lower );
 	
 	STLString gles = "opengl es";

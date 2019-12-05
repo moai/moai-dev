@@ -191,11 +191,11 @@ int MOAIGraphicsPropBase::_setBlendEquation ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGraphicsPropBase, "U" )
 
 	if ( state.IsType ( 2, LUA_TNUMBER )) {
-		u32 equation = state.GetValue < u32 >( 2, ZGL_BLEND_MODE_ADD );
+		u32 equation = state.GetValue < u32 >( 2, ZLGfxEnum::BLEND_MODE_ADD );
 		self->mBlendMode.SetBlendEquation ( equation );
 	}
 	else {
-		self->mBlendMode.SetBlendEquation ( ZGL_BLEND_MODE_ADD );
+		self->mBlendMode.SetBlendEquation ( ZLGfxEnum::BLEND_MODE_ADD );
 	}
 	
 	self->ScheduleUpdate ();

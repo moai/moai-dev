@@ -185,7 +185,7 @@ MOAIFrameBufferGL::~MOAIFrameBufferGL () {
 //
 //		// remember, if we're not in immediate mode, this schedules a pixel read for later
 //		ZLGfx& gfx = MOAIGfxMgr::GetDrawingAPI ();
-//		gfx.ReadPixels ( 0, 0, this->mBufferWidth, this->mBufferHeight, ZGL_PIXEL_FORMAT_RGBA, ZGL_PIXEL_TYPE_UNSIGNED_BYTE, 4, this, 0 );
+//		gfx.ReadPixels ( 0, 0, this->mBufferWidth, this->mBufferHeight, ZLGfxEnum::PIXEL_FORMAT_RGBA, ZLGfxEnum::PIXEL_TYPE_UNSIGNED_BYTE, 4, this, 0 );
 //	}
 //	
 //	this->mRenderCounter++;

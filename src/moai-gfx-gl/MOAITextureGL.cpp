@@ -74,7 +74,7 @@ int MOAITextureGL::_setDebugName ( lua_State* L ) {
 int MOAITextureGL::_setFilter ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextureGL, "UN" )
 
-	MOAITextureFilter::Type min = ( MOAITextureFilter::Type )state.GetValue < u32 >( 2, ZGL_SAMPLE_LINEAR );
+	MOAITextureFilter::Type min = ( MOAITextureFilter::Type )state.GetValue < u32 >( 2, ZLGfxEnum::SAMPLE_LINEAR );
 	MOAITextureFilter::Type mag = ( MOAITextureFilter::Type )state.GetValue < u32 >( 3, min );
 
 	MOAITextureGL::CheckFilterModes ( min, mag );
@@ -113,12 +113,12 @@ void MOAITextureGL::CheckFilterModes ( int min, int mag ) {
 
 	#ifdef _DEBUG
 		switch ( min ) {
-			case ZGL_SAMPLE_LINEAR_MIPMAP_LINEAR:
-			case ZGL_SAMPLE_LINEAR_MIPMAP_NEAREST:
-			case ZGL_SAMPLE_NEAREST_MIPMAP_LINEAR:
-			case ZGL_SAMPLE_NEAREST_MIPMAP_NEAREST:
+			case ZLGfxEnum::SAMPLE_LINEAR_MIPMAP_LINEAR:
+			case ZLGfxEnum::SAMPLE_LINEAR_MIPMAP_NEAREST:
+			case ZLGfxEnum::SAMPLE_NEAREST_MIPMAP_LINEAR:
+			case ZLGfxEnum::SAMPLE_NEAREST_MIPMAP_NEAREST:
 			
-				if ( !(( mag == ZGL_SAMPLE_LINEAR ) || ( mag == ZGL_SAMPLE_NEAREST ))) {
+				if ( !(( mag == ZLGfxEnum::SAMPLE_LINEAR ) || ( mag == ZLGfxEnum::SAMPLE_NEAREST ))) {
 
 					ZLLog_Warning ( "WARNING: possibly incompatible filter modes; MIPMAP not supported for mag filter\n" );
 				}
@@ -193,38 +193,38 @@ bool MOAITextureGL::CreateTextureFromImage ( ZLImage& srcImage ) {
 	switch ( colorFormat ) {
 		
 		case ZLColor::A_8:
-			this->mGLInternalFormat = ZGL_PIXEL_FORMAT_ALPHA;
-			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
+			this->mGLInternalFormat = ZLGfxEnum::PIXEL_FORMAT_ALPHA;
+			this->mGLPixelType = ZLGfxEnum::PIXEL_TYPE_UNSIGNED_BYTE;
 			break;
 		
 		case ZLColor::LA_8:
-			this->mGLInternalFormat = ZGL_PIXEL_FORMAT_LUMINANCE_ALPHA;
-			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
+			this->mGLInternalFormat = ZLGfxEnum::PIXEL_FORMAT_LUMINANCE_ALPHA;
+			this->mGLPixelType = ZLGfxEnum::PIXEL_TYPE_UNSIGNED_BYTE;
 			break;
 		
 		case ZLColor::RGB_888:
-			this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGB;
-			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
+			this->mGLInternalFormat = ZLGfxEnum::PIXEL_FORMAT_RGB;
+			this->mGLPixelType = ZLGfxEnum::PIXEL_TYPE_UNSIGNED_BYTE;
 			break;
 		
 		case ZLColor::RGB_565:
-			this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGB;
-			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_SHORT_5_6_5;
+			this->mGLInternalFormat = ZLGfxEnum::PIXEL_FORMAT_RGB;
+			this->mGLPixelType = ZLGfxEnum::PIXEL_TYPE_UNSIGNED_SHORT_5_6_5;
 			break;
 		
 		case ZLColor::RGBA_5551:
-			this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGBA;
-			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_SHORT_5_5_5_1;
+			this->mGLInternalFormat = ZLGfxEnum::PIXEL_FORMAT_RGBA;
+			this->mGLPixelType = ZLGfxEnum::PIXEL_TYPE_UNSIGNED_SHORT_5_5_5_1;
 			break;
 		
 		case ZLColor::RGBA_4444:
-			this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGBA;
-			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_SHORT_4_4_4_4;
+			this->mGLInternalFormat = ZLGfxEnum::PIXEL_FORMAT_RGBA;
+			this->mGLPixelType = ZLGfxEnum::PIXEL_TYPE_UNSIGNED_SHORT_4_4_4_4;
 			break;
 		
 		case ZLColor::RGBA_8888:
-			this->mGLInternalFormat = ZGL_PIXEL_FORMAT_RGBA;
-			this->mGLPixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
+			this->mGLInternalFormat = ZLGfxEnum::PIXEL_FORMAT_RGBA;
+			this->mGLPixelType = ZLGfxEnum::PIXEL_TYPE_UNSIGNED_BYTE;
 			break;
 			
 		default:
@@ -301,7 +301,7 @@ MOAITextureGL::~MOAITextureGL () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextureGL::SetGLTexture ( const ZLGfxHandle& glTexture, ZGLEnum internalFormat, ZGLEnum pixelType, size_t textureSize ) {
+void MOAITextureGL::SetGLTexture ( const ZLGfxHandle& glTexture, ZLGfxEnum::Type internalFormat, ZLGfxEnum::Type pixelType, size_t textureSize ) {
 
 	this->mGLTexture 			= glTexture;
 	this->mGLInternalFormat		= internalFormat;
@@ -410,11 +410,11 @@ bool MOAITextureGL::MOAIGfxResourceGL_OnGPUUpdate () {
 
 	ZLGfx& gfx = this->mGfxMgr->GetDrawingAPI ();
 
-	gfx.TexParameteri ( ZGL_TEXTURE_WRAP_S, MOAIGfxConstsGL::Remap ( this->mWrap ));
-	gfx.TexParameteri ( ZGL_TEXTURE_WRAP_T, MOAIGfxConstsGL::Remap ( this->mWrap ));
+	gfx.TexParameteri ( ZLGfxEnum::TEXTURE_WRAP_S, MOAIGfxConstsGL::Remap ( this->mWrap ));
+	gfx.TexParameteri ( ZLGfxEnum::TEXTURE_WRAP_T, MOAIGfxConstsGL::Remap ( this->mWrap ));
 	
-	gfx.TexParameteri ( ZGL_TEXTURE_MIN_FILTER, MOAIGfxConstsGL::Remap ( this->mMinFilter ));
-	gfx.TexParameteri ( ZGL_TEXTURE_MAG_FILTER, MOAIGfxConstsGL::Remap ( this->mMagFilter ));
+	gfx.TexParameteri ( ZLGfxEnum::TEXTURE_MIN_FILTER, MOAIGfxConstsGL::Remap ( this->mMinFilter ));
+	gfx.TexParameteri ( ZLGfxEnum::TEXTURE_MAG_FILTER, MOAIGfxConstsGL::Remap ( this->mMagFilter ));
 	
 	return true;
 }
@@ -432,20 +432,20 @@ void MOAITextureGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOA
 	state.SetField ( -1, "GL_NEAREST_MIPMAP_LINEAR",	( u32 )MOAITextureFilter::NEAREST_MIPMAP_LINEAR );
 	state.SetField ( -1, "GL_NEAREST_MIPMAP_NEAREST",	( u32 )MOAITextureFilter::NEAREST_MIPMAP_NEAREST );
 	
-	state.SetField ( -1, "GL_RGBA4",					( u32 )ZGL_PIXEL_FORMAT_RGBA4 );
-	state.SetField ( -1, "GL_RGB5_A1",					( u32 )ZGL_PIXEL_FORMAT_RGB5_A1 );
-	state.SetField ( -1, "GL_DEPTH_COMPONENT16",		( u32 )ZGL_PIXEL_FORMAT_DEPTH_COMPONENT16 );
+	state.SetField ( -1, "GL_RGBA4",					( u32 )ZLGfxEnum::PIXEL_FORMAT_RGBA4 );
+	state.SetField ( -1, "GL_RGB5_A1",					( u32 )ZLGfxEnum::PIXEL_FORMAT_RGB5_A1 );
+	state.SetField ( -1, "GL_DEPTH_COMPONENT16",		( u32 )ZLGfxEnum::PIXEL_FORMAT_DEPTH_COMPONENT16 );
 	//***state.SetField ( -1, "GL_DEPTH_COMPONENT24",	( u32 )GL_DEPTH_COMPONENT24 );
 	//***state.SetField ( -1, "GL_STENCIL_INDEX1",		( u32 )GL_STENCIL_INDEX1 );
 	//***state.SetField ( -1, "GL_STENCIL_INDEX4",		( u32 )GL_STENCIL_INDEX4 );
-	state.SetField ( -1, "GL_STENCIL_INDEX8",			( u32 )ZGL_PIXEL_FORMAT_STENCIL_INDEX8 );
+	state.SetField ( -1, "GL_STENCIL_INDEX8",			( u32 )ZLGfxEnum::PIXEL_FORMAT_STENCIL_INDEX8 );
 	//***state.SetField ( -1, "GL_STENCIL_INDEX16",		( u32 )GL_STENCIL_INDEX16 );
 	
 	// TODO:
 	#ifdef MOAI_OS_ANDROID
-		state.SetField ( -1, "GL_RGB565",				( u32 )ZGL_PIXEL_FORMAT_RGB565 );
+		state.SetField ( -1, "GL_RGB565",				( u32 )ZLGfxEnum::PIXEL_FORMAT_RGB565 );
 	#else
-		state.SetField ( -1, "GL_RGBA8",				( u32 )ZGL_PIXEL_FORMAT_RGBA8 );
+		state.SetField ( -1, "GL_RGBA8",				( u32 )ZLGfxEnum::PIXEL_FORMAT_RGBA8 );
 	#endif
 }
 

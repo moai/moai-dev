@@ -134,7 +134,7 @@ void MOAIShaderProgramGL::BindUniforms () {
 }
 
 //----------------------------------------------------------------//
-ZLGfxHandle MOAIShaderProgramGL::CompileShader ( ZGLEnum type, cc8* source ) {
+ZLGfxHandle MOAIShaderProgramGL::CompileShader ( ZLGfxEnum::Type type, cc8* source ) {
 
 	MOAIGfxMgrGL& gfxMgr = *this->mGfxMgr;
 	ZLGfx& gfx = this->mGfxMgr->GetDrawingAPI ();
@@ -144,7 +144,7 @@ ZLGfxHandle MOAIShaderProgramGL::CompileShader ( ZGLEnum type, cc8* source ) {
 	STLString buffer;
 
 	buffer.append ( gfxMgr.IsOpenGLES () ? OPENGL_ES_PREPROC : OPENGL_PREPROC );
-	if (( type == ZGL_SHADER_TYPE_FRAGMENT ) && gfxMgr.IsOpenGLES ()) {
+	if (( type == ZLGfxEnum::SHADER_TYPE_FRAGMENT ) && gfxMgr.IsOpenGLES ()) {
 		buffer.append ( WEBGL_PREPROC );
 	}
 
@@ -248,8 +248,8 @@ bool MOAIShaderProgramGL::MOAIGfxResourceGL_OnGPUCreate () {
 
 	ZLGfx& gfx = this->mGfxMgr->GetDrawingAPI ();
 
-	this->mVertexShader = this->CompileShader ( ZGL_SHADER_TYPE_VERTEX, this->mVertexShaderSource );
-	this->mFragmentShader = this->CompileShader ( ZGL_SHADER_TYPE_FRAGMENT, this->mFragmentShaderSource );
+	this->mVertexShader = this->CompileShader ( ZLGfxEnum::SHADER_TYPE_VERTEX, this->mVertexShaderSource );
+	this->mFragmentShader = this->CompileShader ( ZLGfxEnum::SHADER_TYPE_FRAGMENT, this->mFragmentShaderSource );
 	this->mProgram = gfx.CreateProgram ();
 
 	// TODO: error handling

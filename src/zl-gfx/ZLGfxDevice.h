@@ -13,10 +13,10 @@ class ZLGfxDevice {
 public:
 
 	//----------------------------------------------------------------//
-	static u32				GetCap					( ZGLEnum cap );
-	static ZGLEnum			GetError				();
-	static cc8*				GetErrorString			( ZGLEnum error );
-	static cc8*				GetString				( ZGLEnum stringID );
+	static u32				GetCap					( ZLGfxEnum::Type cap );
+	static ZLGfxEnum::Type			GetError				();
+	static cc8*				GetErrorString			( ZLGfxEnum::Type error );
+	static cc8*				GetString				( ZLGfxEnum::Type stringID );
 	static void				Initialize				();
 };
 

@@ -38,63 +38,63 @@ void MOAIVideoTexture::Init ( u32 videoPlane, AR_PIXEL_FORMAT format ) {
         case AR_PIXEL_FORMAT_420f:
         case AR_PIXEL_FORMAT_420v:
         case AR_PIXEL_FORMAT_NV21:
-            this->mGLInternalFormat					= ZGL_PIXEL_FORMAT_LUMINANCE;
-            this->mGLFormat							= ZGL_PIXEL_FORMAT_LUMINANCE;
-            this->mGLPixelType						= ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
+            this->mGLInternalFormat					= ZLGfxEnum::PIXEL_FORMAT_LUMINANCE;
+            this->mGLFormat							= ZLGfxEnum::PIXEL_FORMAT_LUMINANCE;
+            this->mGLPixelType						= ZLGfxEnum::PIXEL_TYPE_UNSIGNED_BYTE;
             this->mGLPixelSize						= 1;
             this->mPixelStoreUnpackAlignment		= 1;
 			biPlanar								= true;
             break;
 			
         case AR_PIXEL_FORMAT_RGBA:
-            this->mGLInternalFormat					= ZGL_PIXEL_FORMAT_RGBA;
-            this->mGLFormat							= ZGL_PIXEL_FORMAT_RGBA;
-            this->mGLPixelType						= ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
+            this->mGLInternalFormat					= ZLGfxEnum::PIXEL_FORMAT_RGBA;
+            this->mGLFormat							= ZLGfxEnum::PIXEL_FORMAT_RGBA;
+            this->mGLPixelType						= ZLGfxEnum::PIXEL_TYPE_UNSIGNED_BYTE;
             this->mGLPixelSize						= 4;
             this->mPixelStoreUnpackAlignment		= 4;
 			biPlanar								= false;
             break;
 			
         case AR_PIXEL_FORMAT_RGB:
-            this->mGLInternalFormat					= ZGL_PIXEL_FORMAT_RGB;
-            this->mGLFormat							= ZGL_PIXEL_FORMAT_RGB;
-            this->mGLPixelType						= ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
+            this->mGLInternalFormat					= ZLGfxEnum::PIXEL_FORMAT_RGB;
+            this->mGLFormat							= ZLGfxEnum::PIXEL_FORMAT_RGB;
+            this->mGLPixelType						= ZLGfxEnum::PIXEL_TYPE_UNSIGNED_BYTE;
             this->mGLPixelSize						= 3;
             this->mPixelStoreUnpackAlignment		= 1;
 			biPlanar								= false;
             break;
 			
         case AR_PIXEL_FORMAT_MONO:
-            this->mGLInternalFormat					= ZGL_PIXEL_FORMAT_LUMINANCE;
-            this->mGLFormat							= ZGL_PIXEL_FORMAT_LUMINANCE;
-            this->mGLPixelType						= ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
+            this->mGLInternalFormat					= ZLGfxEnum::PIXEL_FORMAT_LUMINANCE;
+            this->mGLFormat							= ZLGfxEnum::PIXEL_FORMAT_LUMINANCE;
+            this->mGLPixelType						= ZLGfxEnum::PIXEL_TYPE_UNSIGNED_BYTE;
             this->mGLPixelSize						= 1;
             this->mPixelStoreUnpackAlignment		= 1;
 			biPlanar								= false;
             break;
 
         case AR_PIXEL_FORMAT_RGB_565:
-            this->mGLInternalFormat					= ZGL_PIXEL_FORMAT_RGB;
-            this->mGLFormat							= ZGL_PIXEL_FORMAT_RGB;
-            this->mGLPixelType						= ZGL_PIXEL_TYPE_UNSIGNED_SHORT_5_6_5;
+            this->mGLInternalFormat					= ZLGfxEnum::PIXEL_FORMAT_RGB;
+            this->mGLFormat							= ZLGfxEnum::PIXEL_FORMAT_RGB;
+            this->mGLPixelType						= ZLGfxEnum::PIXEL_TYPE_UNSIGNED_SHORT_5_6_5;
             this->mGLPixelSize						= 2;
             this->mPixelStoreUnpackAlignment		= 2;
 			biPlanar								= false;
             break;
 
         case AR_PIXEL_FORMAT_RGBA_5551:
-            this->mGLInternalFormat					= ZGL_PIXEL_FORMAT_RGBA;
-            this->mGLFormat							= ZGL_PIXEL_FORMAT_RGBA;
-            this->mGLPixelType						= ZGL_PIXEL_TYPE_UNSIGNED_SHORT_5_5_5_1;
+            this->mGLInternalFormat					= ZLGfxEnum::PIXEL_FORMAT_RGBA;
+            this->mGLFormat							= ZLGfxEnum::PIXEL_FORMAT_RGBA;
+            this->mGLPixelType						= ZLGfxEnum::PIXEL_TYPE_UNSIGNED_SHORT_5_5_5_1;
             this->mGLPixelSize						= 2;
             this->mPixelStoreUnpackAlignment		= 2;
 			biPlanar								= false;
             break;
 
         case AR_PIXEL_FORMAT_RGBA_4444:
-            this->mGLInternalFormat					= ZGL_PIXEL_FORMAT_RGBA;
-            this->mGLFormat							= ZGL_PIXEL_FORMAT_RGBA;
-            this->mGLPixelType						= ZGL_PIXEL_TYPE_UNSIGNED_SHORT_4_4_4_4;
+            this->mGLInternalFormat					= ZLGfxEnum::PIXEL_FORMAT_RGBA;
+            this->mGLFormat							= ZLGfxEnum::PIXEL_FORMAT_RGBA;
+            this->mGLPixelType						= ZLGfxEnum::PIXEL_TYPE_UNSIGNED_SHORT_4_4_4_4;
             this->mGLPixelSize						= 2;
             this->mPixelStoreUnpackAlignment		= 2;
 			biPlanar								= false;
@@ -108,9 +108,9 @@ void MOAIVideoTexture::Init ( u32 videoPlane, AR_PIXEL_FORMAT format ) {
 		if ( biPlanar ) {
 			this->mWidth							= this->mWidth / 2;
 			this->mHeight							= this->mHeight / 2;
-			this->mGLInternalFormat					= ZGL_PIXEL_FORMAT_LUMINANCE_ALPHA;
-			this->mGLFormat							= ZGL_PIXEL_FORMAT_LUMINANCE_ALPHA;
-            this->mGLPixelType						= ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
+			this->mGLInternalFormat					= ZLGfxEnum::PIXEL_FORMAT_LUMINANCE_ALPHA;
+			this->mGLFormat							= ZLGfxEnum::PIXEL_FORMAT_LUMINANCE_ALPHA;
+            this->mGLPixelType						= ZLGfxEnum::PIXEL_TYPE_UNSIGNED_BYTE;
 			this->mGLPixelSize						= 2;
 		}
 		else {

@@ -17,7 +17,7 @@ ZLGfxHandle ZLGfx::CreateBuffer () {
 		return ZLGfxHandle ( ZLGfxResource::NONE, 0, ZLGfxResource::NOT_ALLOCATED );
 	#else
 		ZLGfxHandle handle ( ZLGfxResource::BUFFER, 0, ZLGfxResource::PENDING_ALLOCATION );
-		this->AllocateResource ( *handle.mResource, ZGL_NONE );
+		this->AllocateResource ( *handle.mResource, ZLGfxEnum::NONE );
 		return handle;
 	#endif
 }
@@ -26,7 +26,7 @@ ZLGfxHandle ZLGfx::CreateBuffer () {
 ZLGfxHandle ZLGfx::CreateFramebuffer () {
 
 	ZLGfxHandle handle ( ZLGfxResource::FRAMEBUFFER, 0, ZLGfxResource::PENDING_ALLOCATION );
-	this->AllocateResource ( *handle.mResource, ZGL_NONE );
+	this->AllocateResource ( *handle.mResource, ZLGfxEnum::NONE );
 	return handle;
 }
 
@@ -34,7 +34,7 @@ ZLGfxHandle ZLGfx::CreateFramebuffer () {
 ZLGfxHandle ZLGfx::CreateProgram () {
 
 	ZLGfxHandle handle ( ZLGfxResource::PROGRAM, 0, ZLGfxResource::PENDING_ALLOCATION );
-	this->AllocateResource ( *handle.mResource, ZGL_NONE );
+	this->AllocateResource ( *handle.mResource, ZLGfxEnum::NONE );
 	return handle;
 }
 
@@ -42,12 +42,12 @@ ZLGfxHandle ZLGfx::CreateProgram () {
 ZLGfxHandle ZLGfx::CreateRenderbuffer () {
 
 	ZLGfxHandle handle ( ZLGfxResource::RENDERBUFFER, 0, ZLGfxResource::PENDING_ALLOCATION );
-	this->AllocateResource ( *handle.mResource, ZGL_NONE );
+	this->AllocateResource ( *handle.mResource, ZLGfxEnum::NONE );
 	return handle;
 }
 
 //----------------------------------------------------------------//
-ZLGfxHandle ZLGfx::CreateShader ( ZGLEnum shaderType ) {
+ZLGfxHandle ZLGfx::CreateShader ( ZLGfxEnum::Type shaderType ) {
 
 	ZLGfxHandle handle ( ZLGfxResource::SHADER, 0, ZLGfxResource::PENDING_ALLOCATION );
 	this->AllocateResource ( *handle.mResource, shaderType );
@@ -58,7 +58,7 @@ ZLGfxHandle ZLGfx::CreateShader ( ZGLEnum shaderType ) {
 ZLGfxHandle ZLGfx::CreateTexture () {
 
 	ZLGfxHandle handle ( ZLGfxResource::TEXTURE, 0, ZLGfxResource::PENDING_ALLOCATION );
-	this->AllocateResource ( *handle.mResource, ZGL_NONE );
+	this->AllocateResource ( *handle.mResource, ZLGfxEnum::NONE );
 	return handle;
 }
 
@@ -66,7 +66,7 @@ ZLGfxHandle ZLGfx::CreateTexture () {
 ZLGfxHandle ZLGfx::CreateVertexArray () {
 
 	ZLGfxHandle handle ( ZLGfxResource::VERTEXARRAY, 0, ZLGfxResource::PENDING_ALLOCATION );
-	this->AllocateResource ( *handle.mResource, ZGL_NONE );
+	this->AllocateResource ( *handle.mResource, ZLGfxEnum::NONE );
 	return handle;
 }
 
@@ -87,5 +87,5 @@ ZLGfxHandle ZLGfx::GetCurrentFramebuffer () {
 //----------------------------------------------------------------//
 bool ZLGfx::IsFlag ( u32 flag ) {
 
-	return (( ZGL_FIRST_FLAG <= flag ) && ( flag < ZGL_TOTAL_FLAGS ));
+	return (( ZGL_FIRST_FLAG <= flag ) && ( flag < ( u32 )ZLGfxEnum::TOTAL_FLAGS ));
 }

@@ -228,68 +228,68 @@ bool MOAIImageFormatPvr::CreateTexture ( MOAITextureBaseGL& texture, const void*
 	switch ( header->mPFFlags & MOAIPvrHeader::PF_MASK ) {
 		
 		case MOAIPvrHeader::OGL_RGBA_4444:
-			internalFormat = ZGL_PIXEL_FORMAT_RGBA;
-			pixelType = ZGL_PIXEL_TYPE_UNSIGNED_SHORT_4_4_4_4;
+			internalFormat = ZLGfxEnum::PIXEL_FORMAT_RGBA;
+			pixelType = ZLGfxEnum::PIXEL_TYPE_UNSIGNED_SHORT_4_4_4_4;
 			break;
 	
 		case MOAIPvrHeader::OGL_RGBA_5551:
-			internalFormat = ZGL_PIXEL_FORMAT_RGBA;
-			pixelType = ZGL_PIXEL_TYPE_UNSIGNED_SHORT_5_5_5_1;
+			internalFormat = ZLGfxEnum::PIXEL_FORMAT_RGBA;
+			pixelType = ZLGfxEnum::PIXEL_TYPE_UNSIGNED_SHORT_5_5_5_1;
 			break;
 		
 		case MOAIPvrHeader::OGL_RGBA_8888:
-			internalFormat = ZGL_PIXEL_FORMAT_RGBA;
-			pixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
+			internalFormat = ZLGfxEnum::PIXEL_FORMAT_RGBA;
+			pixelType = ZLGfxEnum::PIXEL_TYPE_UNSIGNED_BYTE;
 			break;
 		
 		case MOAIPvrHeader::OGL_RGB_565:
-			internalFormat = ZGL_PIXEL_FORMAT_RGB;
-			pixelType = ZGL_PIXEL_TYPE_UNSIGNED_SHORT_5_6_5;
+			internalFormat = ZLGfxEnum::PIXEL_FORMAT_RGB;
+			pixelType = ZLGfxEnum::PIXEL_TYPE_UNSIGNED_SHORT_5_6_5;
 			break;
 		
 		case MOAIPvrHeader::OGL_RGB_888:
-			internalFormat = ZGL_PIXEL_FORMAT_RGB;
-			pixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
+			internalFormat = ZLGfxEnum::PIXEL_FORMAT_RGB;
+			pixelType = ZLGfxEnum::PIXEL_TYPE_UNSIGNED_BYTE;
 			break;
 		
 		case MOAIPvrHeader::OGL_I_8:
-			internalFormat = ZGL_PIXEL_FORMAT_LUMINANCE;
-			pixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
+			internalFormat = ZLGfxEnum::PIXEL_FORMAT_LUMINANCE;
+			pixelType = ZLGfxEnum::PIXEL_TYPE_UNSIGNED_BYTE;
 			break;
 		
 		case MOAIPvrHeader::OGL_AI_88:
-			internalFormat = ZGL_PIXEL_FORMAT_LUMINANCE_ALPHA;
-			pixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
+			internalFormat = ZLGfxEnum::PIXEL_FORMAT_LUMINANCE_ALPHA;
+			pixelType = ZLGfxEnum::PIXEL_TYPE_UNSIGNED_BYTE;
 			break;
 		
 		#if ZGL_DEVCAPS_PVR_TEXTURE
 		
 			case MOAIPvrHeader::OGL_PVRTC2:
-				internalFormat = header->HasAlpha () ? ZGL_PIXEL_TYPE_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG : ZGL_PIXEL_TYPE_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
+				internalFormat = header->HasAlpha () ? ZLGfxEnum::PIXEL_TYPE_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG : ZLGfxEnum::PIXEL_TYPE_COMPRESSED_RGB_PVRTC_2BPPV1_IMG;
 				break;
 			
 			case MOAIPvrHeader::OGL_PVRTC4:
-				internalFormat = header->HasAlpha () ? ZGL_PIXEL_TYPE_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG : ZGL_PIXEL_TYPE_COMPRESSED_RGB_PVRTC_4BPPV1_IMG;
+				internalFormat = header->HasAlpha () ? ZLGfxEnum::PIXEL_TYPE_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG : ZLGfxEnum::PIXEL_TYPE_COMPRESSED_RGB_PVRTC_4BPPV1_IMG;
 				break;
 		
 		#else
 		
 			case MOAIPvrHeader::OGL_PVRTC2:
 			case MOAIPvrHeader::OGL_PVRTC4:
-				internalFormat = ZGL_PIXEL_FORMAT_RGBA;
-				pixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
+				internalFormat = ZLGfxEnum::PIXEL_FORMAT_RGBA;
+				pixelType = ZLGfxEnum::PIXEL_TYPE_UNSIGNED_BYTE;
 				break;
 		
 		#endif
 		
 		case MOAIPvrHeader::OGL_BGRA_8888:
-			internalFormat = ZGL_PIXEL_FORMAT_BGRA;
-			pixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
+			internalFormat = ZLGfxEnum::PIXEL_FORMAT_BGRA;
+			pixelType = ZLGfxEnum::PIXEL_TYPE_UNSIGNED_BYTE;
 			break;
 		
 		case MOAIPvrHeader::OGL_A_8:
-			internalFormat = ZGL_PIXEL_FORMAT_ALPHA;
-			pixelType = ZGL_PIXEL_TYPE_UNSIGNED_BYTE;
+			internalFormat = ZLGfxEnum::PIXEL_FORMAT_ALPHA;
+			pixelType = ZLGfxEnum::PIXEL_TYPE_UNSIGNED_BYTE;
 			break;
 		
 		// TODO: more formats? more platforms?

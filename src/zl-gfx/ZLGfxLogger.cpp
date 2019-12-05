@@ -20,7 +20,7 @@ void ZLGfxLogger::ActiveTexture ( u32 textureUnit ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::AllocateResource ( ZLGfxResource& resource, ZGLEnum param ) {
+void ZLGfxLogger::AllocateResource ( ZLGfxResource& resource, ZLGfxEnum::Type param ) {
 	
 	switch ( resource.mType ) {
 	
@@ -69,13 +69,13 @@ void ZLGfxLogger::BindAttribLocation ( ZLGfxResource& program, u32 index, cc8* n
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::BindBuffer ( ZGLEnum target, ZLGfxResource& handle ) {
+void ZLGfxLogger::BindBuffer ( ZLGfxEnum::Type target, ZLGfxResource& handle ) {
 
 	this->PrintLine ( "glBindBuffer - target: %d handle: %d\n", target, handle.mGLID );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::BindFramebuffer ( ZGLEnum target, ZLGfxResource& handle ) {
+void ZLGfxLogger::BindFramebuffer ( ZLGfxEnum::Type target, ZLGfxResource& handle ) {
 
 	this->PrintLine ( "glBindFramebuffer - target: %d handle: %d\n", target, handle.mGLID );
 }
@@ -99,33 +99,33 @@ void ZLGfxLogger::BindVertexArray ( ZLGfxResource& handle ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::BlendFunc ( ZGLEnum sourceFactor, ZGLEnum destFactor ) {
+void ZLGfxLogger::BlendFunc ( ZLGfxEnum::Type sourceFactor, ZLGfxEnum::Type destFactor ) {
 
 	this->PrintLine ( "glBlendFunc - sourceFactor: %d destFactor: %d\n", sourceFactor, destFactor );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::BlendMode ( ZGLEnum mode ) {
+void ZLGfxLogger::BlendMode ( ZLGfxEnum::Type mode ) {
 
 	this->PrintLine ( "glBlendEquation - mode: %d\n", mode );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::BufferData ( ZGLEnum target, size_t size, ZLSharedConstBuffer* buffer, size_t offset, ZGLEnum usage ) {
+void ZLGfxLogger::BufferData ( ZLGfxEnum::Type target, size_t size, ZLSharedConstBuffer* buffer, size_t offset, ZLGfxEnum::Type usage ) {
 
 	const void* data = ( const void* )ZLSharedConstBuffer::GetConstData ( buffer );
 	this->PrintLine ( "glBufferData - target: %d size: %d buffer: %p offset: %d usage: %d\n", target, size, data, offset, usage );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::BufferSubData ( ZGLEnum target, size_t offset, size_t size, ZLSharedConstBuffer* buffer, size_t srcOffset ) {
+void ZLGfxLogger::BufferSubData ( ZLGfxEnum::Type target, size_t offset, size_t size, ZLSharedConstBuffer* buffer, size_t srcOffset ) {
 
 	const void* data = ( const void* )ZLSharedConstBuffer::GetConstData ( buffer );
 	this->PrintLine ( "glBufferSubData - target: %d offset: %d size: %d buffer: %p srcOffset: %d\n", target, offset, size, data, srcOffset );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::CheckFramebufferStatus ( ZGLEnum target ) {
+void ZLGfxLogger::CheckFramebufferStatus ( ZLGfxEnum::Type target ) {
 	
 	this->PrintLine ( "glCheckFramebufferStatus - target: %d\n", target );
 }
@@ -163,7 +163,7 @@ void ZLGfxLogger::CompileShader ( ZLGfxResource& shader, bool log ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::CompressedTexImage2D ( u32 level, ZGLEnum internalFormat, u32 width, u32 height, u32 imageSize, ZLSharedConstBuffer* buffer ) {
+void ZLGfxLogger::CompressedTexImage2D ( u32 level, ZLGfxEnum::Type internalFormat, u32 width, u32 height, u32 imageSize, ZLSharedConstBuffer* buffer ) {
 	
 	//const void* data = ( const void* )ZLSharedConstBuffer::GetConstData ( buffer );
 	
@@ -178,7 +178,7 @@ void ZLGfxLogger::CompressedTexImage2D ( u32 level, ZGLEnum internalFormat, u32 
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::CullFace ( ZGLEnum mode ) {
+void ZLGfxLogger::CullFace ( ZLGfxEnum::Type mode ) {
 
 	this->PrintLine ( "glCullFace - mode: %d\n", mode );
 }
@@ -221,7 +221,7 @@ void ZLGfxLogger::DeleteResource ( ZLGfxResource& resource ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::DepthFunc ( ZGLEnum depthFunc ) {
+void ZLGfxLogger::DepthFunc ( ZLGfxEnum::Type depthFunc ) {
 
 	this->PrintLine ( "glDepthFunc - depthFunc: %d\n", depthFunc );
 }
@@ -233,13 +233,13 @@ void ZLGfxLogger::DepthMask ( bool flag ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::Disable ( ZGLEnum cap ) {
+void ZLGfxLogger::Disable ( ZLGfxEnum::Type cap ) {
 
 	this->PrintLine ( "glDisable - cap: %d\n", cap );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::DisableClientState ( ZGLEnum cap ) {
+void ZLGfxLogger::DisableClientState ( ZLGfxEnum::Type cap ) {
 
 	#if !MOAI_OS_NACL
 		this->PrintLine ( "glDisableClientState - cap: %d\n", cap );
@@ -253,26 +253,26 @@ void ZLGfxLogger::DisableVertexAttribArray ( u32 index ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::DrawArrays ( ZGLEnum primType, u32 first, u32 count ) {
+void ZLGfxLogger::DrawArrays ( ZLGfxEnum::Type primType, u32 first, u32 count ) {
 
 	this->PrintLine ( "glDrawArrays - primType: %d first: %d count: %d\n", primType, first, count );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::DrawElements ( ZGLEnum primType, u32 count, ZGLEnum indexType, ZLSharedConstBuffer* buffer, size_t offset ) {
+void ZLGfxLogger::DrawElements ( ZLGfxEnum::Type primType, u32 count, ZLGfxEnum::Type indexType, ZLSharedConstBuffer* buffer, size_t offset ) {
 
 	const void* data = ( const void* )ZLSharedConstBuffer::GetConstData ( buffer );
 	this->PrintLine ( "glDrawElements - primType: %d count: %d indexType: %p buffer: %d offset: %d\n", primType, count, indexType, data, offset );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::Enable ( ZGLEnum cap ) {
+void ZLGfxLogger::Enable ( ZLGfxEnum::Type cap ) {
 
 	this->PrintLine ( "glEnable - cap: %d\n", cap );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::EnableClientState ( ZGLEnum cap ) {
+void ZLGfxLogger::EnableClientState ( ZLGfxEnum::Type cap ) {
 
 	#if !MOAI_OS_NACL
 		this->PrintLine ( "glEnableClientState - cap: %d\n", cap );
@@ -302,13 +302,13 @@ void ZLGfxLogger::Flush ( bool finish ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::FramebufferRenderbuffer ( ZGLEnum target, ZGLEnum attachment, ZLGfxResource& renderbuffer ) {
+void ZLGfxLogger::FramebufferRenderbuffer ( ZLGfxEnum::Type target, ZLGfxEnum::Type attachment, ZLGfxResource& renderbuffer ) {
 	
 	this->PrintLine ( "glFramebufferRenderbuffer - target: %d attachment: %d renderbuffer: %d\n", target, attachment, renderbuffer.mGLID );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::FramebufferTexture2D ( ZGLEnum target, ZGLEnum attachment, ZLGfxResource& texture, s32 level ) {
+void ZLGfxLogger::FramebufferTexture2D ( ZLGfxEnum::Type target, ZLGfxEnum::Type attachment, ZLGfxResource& texture, s32 level ) {
 
 	this->PrintLine ( "glFramebufferTexture2D - target: %d attachment: %d texture: %d level: %d\n", target, attachment, texture.mGLID, level );
 }
@@ -407,7 +407,7 @@ bool ZLGfxLogger::PushSuccessHandler () {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::ReadPixels ( s32 x, s32 y, u32 width, u32 height, ZGLEnum format, ZGLEnum type, u32 pixelSize, ZLGfxListener* listener, void* userdata ) {
+void ZLGfxLogger::ReadPixels ( s32 x, s32 y, u32 width, u32 height, ZLGfxEnum::Type format, ZLGfxEnum::Type type, u32 pixelSize, ZLGfxListener* listener, void* userdata ) {
 
 	this->PrintLine ( "glReadPixels - x: %d y: %d width: %d height: %d format: %d type: %d pixelSize: %d listener: %p userdata: %p\n",
 		x,
@@ -423,7 +423,7 @@ void ZLGfxLogger::ReadPixels ( s32 x, s32 y, u32 width, u32 height, ZGLEnum form
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::RenderbufferStorage ( ZGLEnum internalFormat, u32 width, u32 height ) {
+void ZLGfxLogger::RenderbufferStorage ( ZLGfxEnum::Type internalFormat, u32 width, u32 height ) {
 
 	this->PrintLine ( "glReadPixels - internalFormat: %d width: %d height: %d\n", internalFormat, width, height );
 }
@@ -443,7 +443,7 @@ void ZLGfxLogger::ShaderSource ( ZLGfxResource& shader, cc8* source, size_t leng
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::TexEnvi ( ZGLEnum pname, ZGLEnum param ) {
+void ZLGfxLogger::TexEnvi ( ZLGfxEnum::Type pname, ZLGfxEnum::Type param ) {
 
 	#if !MOAI_OS_NACL
 		this->PrintLine ( "glTexEnvi - pname: %d param: %d\n", pname, param );
@@ -451,7 +451,7 @@ void ZLGfxLogger::TexEnvi ( ZGLEnum pname, ZGLEnum param ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::TexImage2D ( u32 level, ZGLEnum internalFormat, u32 width, u32 height, ZGLEnum format, ZGLEnum type, ZLSharedConstBuffer* buffer ) {
+void ZLGfxLogger::TexImage2D ( u32 level, ZLGfxEnum::Type internalFormat, u32 width, u32 height, ZLGfxEnum::Type format, ZLGfxEnum::Type type, ZLSharedConstBuffer* buffer ) {
 
 	this->PrintLine ( "glPixelStorei - pname: %d param: %d\n", GL_UNPACK_ALIGNMENT, 1 );
 
@@ -469,13 +469,13 @@ void ZLGfxLogger::TexImage2D ( u32 level, ZGLEnum internalFormat, u32 width, u32
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::TexParameteri ( ZGLEnum pname, ZGLEnum param ) {
+void ZLGfxLogger::TexParameteri ( ZLGfxEnum::Type pname, ZLGfxEnum::Type param ) {
 
 	this->PrintLine ( "glTexParameteri - pname: %d param: %d\n", pname, param );
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::TexSubImage2D ( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 height, ZGLEnum format, ZGLEnum type, ZLSharedConstBuffer* buffer ) {
+void ZLGfxLogger::TexSubImage2D ( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 height, ZLGfxEnum::Type format, ZLGfxEnum::Type type, ZLSharedConstBuffer* buffer ) {
 	
 	this->PrintLine ( "glPixelStorei - pname: %d param: %d\n", GL_UNPACK_ALIGNMENT, 1 );
 
@@ -540,7 +540,7 @@ void ZLGfxLogger::UseProgram ( ZLGfxResource& program ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::VertexAttribPointer ( u32 index, u32 size, ZGLEnum type, bool normalized, u32 stride, ZLSharedConstBuffer* buffer, size_t offset ) {
+void ZLGfxLogger::VertexAttribPointer ( u32 index, u32 size, ZLGfxEnum::Type type, bool normalized, u32 stride, ZLSharedConstBuffer* buffer, size_t offset ) {
 
 	const void* data = ( const void* )ZLSharedConstBuffer::GetConstData ( buffer );
 	

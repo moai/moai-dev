@@ -410,7 +410,7 @@ u32 MOAIVertexFormat::GetComponentSize ( u32 size, u32 type ) {
 			bytes = 2;
 			break;
 		
-		//case ZGL_FIXED:
+		//case ZLGfxEnum::FIXED:
 		case MOAIGfxType::FLOAT:
 			bytes = 4;
 			break;

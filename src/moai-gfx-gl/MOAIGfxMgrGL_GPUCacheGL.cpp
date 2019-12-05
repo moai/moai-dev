@@ -127,7 +127,7 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushBlendMode () {
 			this->GfxStateWillChange ();
 		
 			DEBUG_LOG ( "  enabling blend\n" );
-			gfx.Enable ( ZGL_PIPELINE_BLEND );
+			gfx.Enable ( ZLGfxEnum::PIPELINE_BLEND );
 			active.mBlendEnabled = true;
 			updateBlend = true;
 		}
@@ -149,7 +149,7 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushBlendMode () {
 			this->GfxStateWillChange ();
 
 			DEBUG_LOG ( "  disabling blend\n" );
-			gfx.Disable ( ZGL_PIPELINE_BLEND );
+			gfx.Disable ( ZLGfxEnum::PIPELINE_BLEND );
 			active.mBlendEnabled = false;
 		}
 	}
@@ -173,12 +173,12 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushCullFunc () {
 	
 		if ( active.mCullFunc ) {
 			DEBUG_LOG ( "  enabling/setting cull func\n" );
-			gfx.Enable ( ZGL_PIPELINE_CULL );
+			gfx.Enable ( ZLGfxEnum::PIPELINE_CULL );
 			gfx.CullFace ( MOAIGfxConstsGL::Remap ( active.mCullFunc ));
 		}
 		else {
 			DEBUG_LOG ( "  disabling cull func\n" );
-			gfx.Disable ( ZGL_PIPELINE_CULL );
+			gfx.Disable ( ZLGfxEnum::PIPELINE_CULL );
 		}
 	}
 }
@@ -202,11 +202,11 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushDepthFunc () {
 		active.mDepthFunc = depthFunc;
 		
 		if ( active.mDepthFunc ) {
-			gfx.Enable ( ZGL_PIPELINE_DEPTH );
+			gfx.Enable ( ZLGfxEnum::PIPELINE_DEPTH );
 			gfx.DepthFunc ( MOAIGfxConstsGL::Remap ( active.mDepthFunc ));
 		}
 		else {
-			gfx.Disable ( ZGL_PIPELINE_DEPTH );
+			gfx.Disable ( ZLGfxEnum::PIPELINE_DEPTH );
 		}
 	}
 }
@@ -251,7 +251,7 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushFrameBuffer () {
 			nextBuffer->AffirmBuffers ();
 		}
 	
-		gfx.BindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, nextBuffer->mGLFrameBuffer );
+		gfx.BindFramebuffer ( ZLGfxEnum::FRAMEBUFFER_TARGET_DRAW_READ, nextBuffer->mGLFrameBuffer );
 		this->mActiveState->mFrameBuffer = nextBuffer;
 	}
 }
@@ -330,7 +330,7 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushScissorRect () {
 			this->GfxStateWillChange ();
 		
 			DEBUG_LOG ( "  enabling scissor rect\n" );
-			gfx.Enable ( ZGL_PIPELINE_SCISSOR );
+			gfx.Enable ( ZLGfxEnum::PIPELINE_SCISSOR );
 			active.mScissorEnabled = true;
 			updateRect = true;
 		}
@@ -364,7 +364,7 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushScissorRect () {
 			this->GfxStateWillChange ();
 
 			DEBUG_LOG ( "  disabling scissor rect\n" );
-			gfx.Disable ( ZGL_PIPELINE_SCISSOR );
+			gfx.Disable ( ZLGfxEnum::PIPELINE_SCISSOR );
 			active.mScissorEnabled = false;
 		}
 	}
@@ -753,7 +753,7 @@ void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_ClearSurface () {
 		
 		this->ApplyStateChanges ();
 	
-		if ( clearFlags & ZGL_CLEAR_COLOR_BUFFER_BIT ) {
+		if ( clearFlags & ZGLClearColorFlags::CLEAR_COLOR_BUFFER_BIT ) {
 		
 			const ZLColorVec& clearColor = cpuCache.GetClearColor ();
 		
@@ -765,7 +765,7 @@ void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_ClearSurface () {
 			);
 		}
 	
-		if (( clearFlags & ZGL_CLEAR_DEPTH_BUFFER_BIT ) && !this->GetDepthMask ()) {
+		if (( clearFlags & ZGLClearColorFlags::CLEAR_DEPTH_BUFFER_BIT ) && !this->GetDepthMask ()) {
 			gfx.DepthMask ( true );
 			gfx.Clear ( clearFlags );
 			gfx.DepthMask ( false );
@@ -789,7 +789,7 @@ void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_DrawPrims ( MOAITopology::Type
 	
 	this->ApplyStateChanges ();
 
-	ZGLEnum primTypeZGL = MOAIGfxConstsGL::Remap ( primType );
+	ZLGfxEnum::Type primTypeZGL = MOAIGfxConstsGL::Remap ( primType );
 
 	MOAIShaderGL* shader = MOAICast < MOAIShaderGL >( this->mActiveState->mShader );
 
@@ -804,7 +804,7 @@ void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_DrawPrims ( MOAITopology::Type
 			DEBUG_LOG ( "drawing prims with index and vertex buffer\n" );
 			
 			size_t indexSize = idxBuffer->GetIndexSize ();
-			ZGLEnum indexType = indexSize == 2 ? ZGL_TYPE_UNSIGNED_SHORT : ZGL_TYPE_UNSIGNED_INT;
+			ZLGfxEnum::Type indexType = indexSize == 2 ? ZLGfxEnum::TYPE_UNSIGNED_SHORT : ZLGfxEnum::TYPE_UNSIGNED_INT;
 			gfx.DrawElements ( primTypeZGL, count, indexType, this->mBoundIdxBuffer, base * indexSize );
 		}
 		else {
@@ -827,17 +827,17 @@ void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_ResetGPUState () {
 	gfx.UseProgram ( ZLGfxResource::UNBIND );
 	
 	// turn off blending
-	gfx.Disable ( ZGL_PIPELINE_BLEND );
+	gfx.Disable ( ZLGfxEnum::PIPELINE_BLEND );
 	pending.mBlendEnabled = false;
 	active.mBlendEnabled = false;
 	
 	// disable backface culling
-	gfx.Disable ( ZGL_PIPELINE_CULL );
+	gfx.Disable ( ZLGfxEnum::PIPELINE_CULL );
 	pending.mCullFunc = MOAICullFunc::NONE;
 	active.mCullFunc = MOAICullFunc::NONE;
 	
 	// disable depth test
-	gfx.Disable ( ZGL_PIPELINE_DEPTH );
+	gfx.Disable ( ZLGfxEnum::PIPELINE_DEPTH );
 	pending.mDepthFunc = MOAIDepthFunc::NONE;
 	active.mDepthFunc = MOAIDepthFunc::NONE;
 	
@@ -854,7 +854,7 @@ void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_ResetGPUState () {
 	// reset the scissor rect
 	pending.mScissorEnabled = false;
 	active.mScissorEnabled = false;
-	gfx.Disable ( ZGL_PIPELINE_SCISSOR );
+	gfx.Disable ( ZLGfxEnum::PIPELINE_SCISSOR );
 	
 	// TODO: seems like overkill
 	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mMaxTextureUnits; ++i ){
@@ -886,7 +886,7 @@ void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_ResetGPUState () {
 	active.mFrameBuffer = this->mDefaultFrameBuffer;
 	
 	MOAIFrameBufferGL* defaultFrameBuffer = MOAICast < MOAIFrameBufferGL >( this->mDefaultFrameBuffer );
-	gfx.BindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, defaultFrameBuffer->mGLFrameBuffer );
+	gfx.BindFramebuffer ( ZLGfxEnum::FRAMEBUFFER_TARGET_DRAW_READ, defaultFrameBuffer->mGLFrameBuffer );
 	
 	this->mDirtyFlags = 0;
 	this->mTextureDirtyFlags = 0;

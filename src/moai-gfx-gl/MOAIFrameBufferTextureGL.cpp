@@ -30,13 +30,13 @@ int MOAIFrameBufferTextureGL::_init ( lua_State* L ) {
 	
 	// TODO: fix me
 	#if defined ( MOAI_OS_ANDROID ) || defined ( MOAI_OS_HTML )
-		ZGLEnum colorFormat		= ( ZGLEnum )state.GetValue < u32 >( 4, ZGL_PIXEL_FORMAT_RGB565 );
+		ZLGfxEnum::Type colorFormat		= ( ZLGfxEnum::Type )state.GetValue < u32 >( 4, ZLGfxEnum::PIXEL_FORMAT_RGB565 );
 	#else
-		ZGLEnum colorFormat		= ( ZGLEnum )state.GetValue < u32 >( 4, ZGL_PIXEL_FORMAT_RGBA8 );
+		ZLGfxEnum::Type colorFormat		= ( ZLGfxEnum::Type )state.GetValue < u32 >( 4, ZLGfxEnum::PIXEL_FORMAT_RGBA8 );
 	#endif
 	
-	ZGLEnum depthFormat			= ( ZGLEnum )state.GetValue < u32 >( 5, 0 );
-	ZGLEnum stencilFormat		= ( ZGLEnum ) state.GetValue < u32 >( 6, 0 );
+	ZLGfxEnum::Type depthFormat			= ( ZLGfxEnum::Type )state.GetValue < u32 >( 5, 0 );
+	ZLGfxEnum::Type stencilFormat		= ( ZLGfxEnum::Type ) state.GetValue < u32 >( 6, 0 );
 	
 	self->Init ( width, height, colorFormat, depthFormat, stencilFormat );
 	
@@ -48,7 +48,7 @@ int MOAIFrameBufferTextureGL::_init ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIFrameBufferTextureGL::Init ( u32 width, u32 height, ZGLEnum colorFormat, ZGLEnum depthFormat, ZGLEnum stencilFormat ) {
+void MOAIFrameBufferTextureGL::Init ( u32 width, u32 height, ZLGfxEnum::Type colorFormat, ZLGfxEnum::Type depthFormat, ZLGfxEnum::Type stencilFormat ) {
 
 	this->Finalize ();
 
@@ -63,9 +63,9 @@ void MOAIFrameBufferTextureGL::Init ( u32 width, u32 height, ZGLEnum colorFormat
 
 //----------------------------------------------------------------//
 MOAIFrameBufferTextureGL::MOAIFrameBufferTextureGL () :
-	mColorFormat ( ZGL_NONE ),
-	mDepthFormat ( ZGL_NONE ),
-	mStencilFormat ( ZGL_NONE ) {
+	mColorFormat ( ZLGfxEnum::NONE ),
+	mDepthFormat ( ZLGfxEnum::NONE ),
+	mStencilFormat ( ZLGfxEnum::NONE ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIFrameBufferGL )
@@ -134,16 +134,16 @@ bool MOAIFrameBufferTextureGL::MOAIGfxResourceGL_OnGPUCreate () {
 		gfx.RenderbufferStorage ( this->mStencilFormat, this->mWidth, this->mHeight );
 	}
 	
-	gfx.BindFramebuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, this->mGLFrameBuffer );
+	gfx.BindFramebuffer ( ZLGfxEnum::FRAMEBUFFER_TARGET_DRAW_READ, this->mGLFrameBuffer );
 	
-	gfx.FramebufferRenderbuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, ZGL_FRAMEBUFFER_ATTACHMENT_COLOR, this->mGLColorBuffer );
-	gfx.FramebufferRenderbuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, ZGL_FRAMEBUFFER_ATTACHMENT_DEPTH, this->mGLDepthBuffer );
-	gfx.FramebufferRenderbuffer ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, ZGL_FRAMEBUFFER_ATTACHMENT_STENCIL, this->mGLStencilBuffer );
+	gfx.FramebufferRenderbuffer ( ZLGfxEnum::FRAMEBUFFER_TARGET_DRAW_READ, ZLGfxEnum::FRAMEBUFFER_ATTACHMENT_COLOR, this->mGLColorBuffer );
+	gfx.FramebufferRenderbuffer ( ZLGfxEnum::FRAMEBUFFER_TARGET_DRAW_READ, ZLGfxEnum::FRAMEBUFFER_ATTACHMENT_DEPTH, this->mGLDepthBuffer );
+	gfx.FramebufferRenderbuffer ( ZLGfxEnum::FRAMEBUFFER_TARGET_DRAW_READ, ZLGfxEnum::FRAMEBUFFER_ATTACHMENT_STENCIL, this->mGLStencilBuffer );
 	
 	gfx.PushSection ();
 	
 	// TODO: handle error; clear
-	gfx.CheckFramebufferStatus ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ );
+	gfx.CheckFramebufferStatus ( ZLGfxEnum::FRAMEBUFFER_TARGET_DRAW_READ );
 	
 	bool status = false;
 	
@@ -151,12 +151,12 @@ bool MOAIFrameBufferTextureGL::MOAIGfxResourceGL_OnGPUCreate () {
 	
 		this->mGLTexture = gfx.CreateTexture ();
 		gfx.BindTexture ( this->mGLTexture );
-		gfx.TexImage2D ( 0, ZGL_PIXEL_FORMAT_RGBA, this->mWidth, this->mHeight, ZGL_PIXEL_FORMAT_RGBA, ZGL_PIXEL_TYPE_UNSIGNED_BYTE, 0 );
-		gfx.FramebufferTexture2D ( ZGL_FRAMEBUFFER_TARGET_DRAW_READ, ZGL_FRAMEBUFFER_ATTACHMENT_COLOR, this->mGLTexture, 0 );
+		gfx.TexImage2D ( 0, ZLGfxEnum::PIXEL_FORMAT_RGBA, this->mWidth, this->mHeight, ZLGfxEnum::PIXEL_FORMAT_RGBA, ZLGfxEnum::PIXEL_TYPE_UNSIGNED_BYTE, 0 );
+		gfx.FramebufferTexture2D ( ZLGfxEnum::FRAMEBUFFER_TARGET_DRAW_READ, ZLGfxEnum::FRAMEBUFFER_ATTACHMENT_COLOR, this->mGLTexture, 0 );
 		
         // clearing framebuffer because it might contain garbage
         gfx.ClearColor ( 0, 0, 0, 0 );
-        gfx.Clear ( ZGL_CLEAR_COLOR_BUFFER_BIT | ZGL_CLEAR_STENCIL_BUFFER_BIT | ZGL_CLEAR_DEPTH_BUFFER_BIT );
+        gfx.Clear ( ZGLClearColorFlags::CLEAR_COLOR_BUFFER_BIT | ZGLClearColorFlags::CLEAR_STENCIL_BUFFER_BIT | ZGLClearColorFlags::CLEAR_DEPTH_BUFFER_BIT );
 		
 		this->MOAIGfxResourceGL_OnGPUUpdate ();
 		

@@ -50,7 +50,7 @@ ZLSharedConstBuffer* MOAIGfxBufferGL::GetBufferForBind ( ZLGfx& gfx ) {
 //----------------------------------------------------------------//
 MOAIGfxBufferGL::MOAIGfxBufferGL () :
 	mCurrentVBO ( ZLIndexOp::ZERO ),
-	mTarget ( ZGL_BUFFER_TARGET_ARRAY ),
+	mTarget ( ZLGfxEnum::BUFFER_TARGET_ARRAY ),
 	mUseVBOs ( false ),
 	mCopyOnUpdate ( false ) {
 		
@@ -107,7 +107,7 @@ bool MOAIGfxBufferGL::MOAIGfxResourceGL_OnGPUCreate () {
 	if ( this->mUseVBOs ) {
 
 		ZLGfx& gfx = this->mGfxMgr->GetDrawingAPI ();
-		ZGLEnum hint = this->mVBOs.Size () > 1 ? ZGL_BUFFER_USAGE_STREAM_DRAW : ZGL_BUFFER_USAGE_STATIC_DRAW;
+		ZLGfxEnum::Type hint = this->mVBOs.Size () > 1 ? ZLGfxEnum::BUFFER_USAGE_STREAM_DRAW : ZLGfxEnum::BUFFER_USAGE_STATIC_DRAW;
 
 		for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVBOs.Size (); ++i ) {
 			
@@ -183,7 +183,7 @@ bool MOAIGfxBufferGL::MOAIGfxResourceGL_OnGPUUpdate () {
 		gfx.BufferSubData ( this->mTarget, 0, this->GetCursor (), buffer, 0 );
 		gfx.BindBuffer ( this->mTarget, ZLGfxResource::UNBIND );
 	
-		//u32 hint = this->mVBOs.Size () > 1 ? ZGL_BUFFER_USAGE_DYNAMIC_DRAW : ZGL_BUFFER_USAGE_STATIC_DRAW;
+		//u32 hint = this->mVBOs.Size () > 1 ? ZLGfxEnum::BUFFER_USAGE_DYNAMIC_DRAW : ZLGfxEnum::BUFFER_USAGE_STATIC_DRAW;
 		//zglBufferData ( this->mTarget, this->GetLength (), 0, hint );
 	}
 	
@@ -195,8 +195,8 @@ void MOAIGfxBufferGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, M
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxResourceGL, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxBuffer, MOAILuaObject_RegisterLuaClass ( composer, state ));
 	
-	state.SetField ( -1, "INDEX_BUFFER",			( u32 )ZGL_BUFFER_TARGET_ELEMENT_ARRAY );
-	state.SetField ( -1, "VERTEX_BUFFER",			( u32 )ZGL_BUFFER_TARGET_ARRAY );
+	state.SetField ( -1, "INDEX_BUFFER",			( u32 )ZLGfxEnum::BUFFER_TARGET_ELEMENT_ARRAY );
+	state.SetField ( -1, "VERTEX_BUFFER",			( u32 )ZLGfxEnum::BUFFER_TARGET_ARRAY );
 }
 
 //----------------------------------------------------------------//
