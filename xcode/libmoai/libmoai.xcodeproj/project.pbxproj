@@ -881,6 +881,8 @@
 		CD1756471A199B24009C430A /* ZLBarycentric.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1756441A199B24009C430A /* ZLBarycentric.h */; };
 		CD1756481A199B24009C430A /* ZLBarycentric.h in Headers */ = {isa = PBXBuildFile; fileRef = CD1756441A199B24009C430A /* ZLBarycentric.h */; };
 		CD17C1E323990AE3008AF4BD /* MOAIGfxConstsVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CD17C1E223990AE3008AF4BD /* MOAIGfxConstsVK.h */; };
+		CD17C1E72399B912008AF4BD /* ZLTransmigrationCache.h in Headers */ = {isa = PBXBuildFile; fileRef = CD17C1E62399B912008AF4BD /* ZLTransmigrationCache.h */; };
+		CD17C1E9239A2131008AF4BD /* ZLTransmigrationCache.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD17C1E8239A2131008AF4BD /* ZLTransmigrationCache.cpp */; };
 		CD1844D41A6269AB00FCCCE0 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C9117FA573B00EBA2DB /* headers.h */; };
 		CD1844D51A6269AB00FCCCE0 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD2B7C9217FA573B00EBA2DB /* host.mm */; };
 		CD1844D61A6269AB00FCCCE0 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B7C9317FA573B00EBA2DB /* host.h */; };
@@ -5785,6 +5787,8 @@
 		CD1712C022F64C9300381882 /* MOAIOneTriShaderVK.vert.spv.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIOneTriShaderVK.vert.spv.h; path = "moai-gfx-vk/shaders/MOAIOneTriShaderVK.vert.spv.h"; sourceTree = "<group>"; };
 		CD1756441A199B24009C430A /* ZLBarycentric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLBarycentric.h; sourceTree = "<group>"; };
 		CD17C1E223990AE3008AF4BD /* MOAIGfxConstsVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxConstsVK.h; path = "moai-gfx-vk/MOAIGfxConstsVK.h"; sourceTree = "<group>"; };
+		CD17C1E62399B912008AF4BD /* ZLTransmigrationCache.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLTransmigrationCache.h; sourceTree = "<group>"; };
+		CD17C1E8239A2131008AF4BD /* ZLTransmigrationCache.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLTransmigrationCache.cpp; sourceTree = "<group>"; };
 		CD18459C1A626BD500FCCCE0 /* libmoai-osx-apple.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-apple.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD1845BE1A62751200FCCCE0 /* MOAIEnvironment.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIEnvironment.cpp; sourceTree = "<group>"; };
 		CD1845BF1A62751200FCCCE0 /* MOAIEnvironment.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIEnvironment.h; sourceTree = "<group>"; };
@@ -13169,6 +13173,8 @@
 				CDBF996B23460281003F430D /* ZLAbstractFinalizable_HasInternal.h */,
 				CDBF996C23460281003F430D /* ZLAbstractFinalizable_Internal.cpp */,
 				CDBF996D23460281003F430D /* ZLAbstractFinalizable_Internal.h */,
+				CD17C1E8239A2131008AF4BD /* ZLTransmigrationCache.cpp */,
+				CD17C1E62399B912008AF4BD /* ZLTransmigrationCache.h */,
 			);
 			name = finalizable;
 			sourceTree = "<group>";
@@ -14646,6 +14652,7 @@
 				89BE6A78173974FD00DFE837 /* ZLUnique.h in Headers */,
 				89BE6A7E173974FD00DFE837 /* ZLVec2D.h in Headers */,
 				89BE6A80173974FD00DFE837 /* ZLVec3D.h in Headers */,
+				CD17C1E72399B912008AF4BD /* ZLTransmigrationCache.h in Headers */,
 				89BE6A82173974FD00DFE837 /* ZLVec4D.h in Headers */,
 				CD3FA6C31C3D087B003CC9F8 /* ZLRingAdapter.h in Headers */,
 				89BE6A86173974FD00DFE837 /* ZLXmlReader.h in Headers */,
@@ -18223,6 +18230,7 @@
 				89BE6A58173974FD00DFE837 /* ZLStreamAdapter.cpp in Sources */,
 				89BE6A60173974FD00DFE837 /* ZLSurface2D.cpp in Sources */,
 				89BE6A64173974FD00DFE837 /* ZLSyntaxNode.cpp in Sources */,
+				CD17C1E9239A2131008AF4BD /* ZLTransmigrationCache.cpp in Sources */,
 				CD4A956E229DF8F300F9E400 /* ZLViewProj.cpp in Sources */,
 				89BE6A68173974FD00DFE837 /* ZLSyntaxScanner.cpp in Sources */,
 				89BE6A6C173974FD00DFE837 /* ZLTrig.cpp in Sources */,

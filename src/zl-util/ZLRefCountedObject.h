@@ -42,7 +42,7 @@ private:
 
 	friend class ZLAbstractFinalizable_Solo;
 
-	ZLRefCountedObjectHandle*	mHandle;					// only exists if referenced by weak pointer
+	ZLRefCountedObjectHandle*		mHandle;					// only exists if referenced by weak pointer
 
 public:
 

@@ -5,6 +5,17 @@
 #include <math.h>
 
 #include <zl-util/ZLRefCountedObject.h>
+#include <zl-util/ZLTransmigrationCache.h>
+
+//================================================================//
+// ZLRefCountedObjectSnapshot
+//================================================================//
+class ZLRefCountedObjectSnapshot {
+public:
+
+	u32								mRefCount;
+	ZLRefCountedObjectHandle*		mHandle;
+};
 
 //================================================================//
 // ZLRefCountedObjectHandle
@@ -62,11 +73,29 @@ ZLRefCountedObjectHandle* ZLRefCountedObject::GetHandle () {
 
 //----------------------------------------------------------------//
 ZLRefCountedObject::ZLRefCountedObject () :
-	mHandle ( 0 ) {
+	mHandle ( NULL ) {
+	
+	ZLTransmigrationCache& transmigrationCache = ZLTransmigrationCache::Get ();
+	if ( transmigrationCache.IsActive ()) {
+		
+		const ZLRefCountedObjectSnapshot& snapshot = transmigrationCache.Memo < ZLRefCountedObjectSnapshot >( this );
+		this->mRefCount = snapshot.mRefCount;
+		this->mHandle = snapshot.mHandle;
+	}
 }
 
 //----------------------------------------------------------------//
 ZLRefCountedObject::~ZLRefCountedObject () {
 
-	this->Abandon ();
+	ZLTransmigrationCache& transmigrationCache = ZLTransmigrationCache::Get ();
+	if ( transmigrationCache.IsActive ()) {
+	
+		ZLRefCountedObjectSnapshot snapshot;
+		snapshot.mRefCount = this->mRefCount;
+		snapshot.mHandle = this->mHandle;
+		transmigrationCache.Memo < ZLRefCountedObjectSnapshot >( this, snapshot );
+	}
+	else {
+		this->Abandon ();
+	}
 }

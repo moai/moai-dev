@@ -36,6 +36,18 @@ public:
 	void Set ( TYPE* assign ) {
 		this->SetPtr ( assign );
 	}
+	
+	//----------------------------------------------------------------//
+	static TYPE& Singleton () {
+	
+		static ZLThreadLocalPtr < TYPE > threadLocal;
+		TYPE* singleton = threadLocal.Get ();
+		if ( !singleton ) {
+			singleton = new TYPE ();
+			threadLocal.Set ( singleton );
+		}
+		return *singleton;
+	}
 };
 
 #endif

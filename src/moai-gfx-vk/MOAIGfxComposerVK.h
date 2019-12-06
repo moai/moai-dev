@@ -68,7 +68,8 @@ protected:
 // MOAIGfxComposerVK
 //================================================================//
 class MOAIGfxComposerVK :
-	public ZLAbstractFinalizable {
+	public virtual ZLRefCountedObject,
+	public virtual ZLAbstractFinalizable {
 protected:
 
 	ZLStrongPtr < MOAIPipelineLayoutVK >							mPipelineLayout;

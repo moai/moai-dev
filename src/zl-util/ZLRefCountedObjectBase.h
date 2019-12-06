@@ -12,7 +12,7 @@
 class ZLRefCountedObjectBase {
 private:
 
-	friend class ZLAbstractFinalizable_Solo;
+	friend class ZLRefCountedObject;
 
 	u32		mRefCount;
 

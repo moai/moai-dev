@@ -106,6 +106,7 @@
 #include <zl-util/ZLSurface2D.h>
 #include <zl-util/ZLSyntaxNode.h>
 #include <zl-util/ZLSyntaxScanner.h>
+#include <zl-util/ZLTransmigrationCache.h>
 #include <zl-util/ZLTrig.h>
 #include <zl-util/ZLType.h>
 #include <zl-util/ZLTypedPtr.h>
