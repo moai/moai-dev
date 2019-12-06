@@ -79,6 +79,18 @@ private:
 	STLSet < ZLAbstractTransmigrationMemoMap* >			mCleanupSet;
 	
 	//----------------------------------------------------------------//
+	template < typename MEMO_TYPE >
+	ZLTransmigrationMemoMap < MEMO_TYPE >& AffirmMemoMap () {
+	
+		ZLTransmigrationMemoMap < MEMO_TYPE >& memoMap = ZLThreadLocalPtr < ZLTransmigrationMemoMap < MEMO_TYPE > >::Singleton ();
+		if ( !memoMap.mIsActive ) {
+			this->mCleanupSet.insert ( &memoMap );
+			memoMap.mIsActive = true;
+		}
+		return memoMap;
+	}
+	
+	//----------------------------------------------------------------//
 	void			BeginTransmigration					();
 	void			EndTransmigration					();
 
@@ -91,7 +103,15 @@ public:
 	
 	//----------------------------------------------------------------//
 	template < typename MEMO_TYPE >
-	const MEMO_TYPE& Memo ( const void* addr ) const {
+	MEMO_TYPE& AffirmMemo ( const void* addr ) {
+	
+		ZLTransmigrationMemoMap < MEMO_TYPE >& memoMap = this->AffirmMemoMap < MEMO_TYPE >();
+		return memoMap [ addr ];
+	}
+	
+	//----------------------------------------------------------------//
+	template < typename MEMO_TYPE >
+	const MEMO_TYPE& GetMemo ( const void* addr ) const {
 	
 		ZLTransmigrationMemoMap < MEMO_TYPE >& memoMap = ZLThreadLocalPtr < ZLTransmigrationMemoMap < MEMO_TYPE > >::Singleton ();
 		
@@ -102,13 +122,9 @@ public:
 	
 	//----------------------------------------------------------------//
 	template < typename MEMO_TYPE >
-	void Memo ( const void* addr, const MEMO_TYPE& memo ) {
+	void SetMemo ( const void* addr, const MEMO_TYPE& memo ) {
 	
-		ZLTransmigrationMemoMap < MEMO_TYPE >& memoMap = ZLThreadLocalPtr < ZLTransmigrationMemoMap < MEMO_TYPE > >::Singleton ();
-		if ( !memoMap.mIsActive ) {
-			this->mCleanupSet.insert ( &memoMap );
-			memoMap.mIsActive = true;
-		}
+		ZLTransmigrationMemoMap < MEMO_TYPE >& memoMap = this->AffirmMemoMap < MEMO_TYPE >();
 		memoMap [ addr ] = memo;
 	}
 };

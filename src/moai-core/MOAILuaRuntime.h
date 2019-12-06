@@ -61,6 +61,8 @@ public:
 
 private:
 
+	friend class MOAILuaObjectMemo;
+
 	static const u32 WEAK_REF_BIT	= 0x80000000;
 	static const u32 REF_MASK		= 0x7fffffff;
 

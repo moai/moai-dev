@@ -45,6 +45,8 @@ class MOAILuaObject :
 	public virtual ZLAbstractFinalizable {
 private:
 
+	friend class MOAILuaObjectMemo;
+
 	u32						mActiveUserdataCount;
 	MOAILuaWeakRef			mUserdata;		// ref to userdata (weak)
 	MOAILuaStrongRef		mFinalizer;		// ref to finalizer (strong)
@@ -71,6 +73,7 @@ protected:
 	bool					PushRefTable			( MOAILuaState& state );
 	void					SetInterfaceTable		( MOAILuaState& state, int idx );
 	void					SetMemberTable			( MOAILuaState& state, int idx );
+	static void				Unbind					( MOAILuaObject* object, MOAILuaWeakRef& userdata );
 
 	//----------------------------------------------------------------//
 	virtual void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );

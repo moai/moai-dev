@@ -13,6 +13,28 @@
 #define MOAI_TAG "moai"
 
 //================================================================//
+// MOAILuaObjectMemo
+//================================================================//
+// Memo for Finalizable transmigration. I really hate this, but can't
+// think of a better way and don't want to give up the convenience
+// of finalizables. So here we are.
+class MOAILuaObjectMemo {
+public:
+
+	MOAILuaObject*			mObject;
+	u32						mActiveUserdataCount;
+	MOAILuaWeakRef			mUserdata;
+	MOAILuaStrongRef		mFinalizer;
+	
+	//----------------------------------------------------------------//
+	~MOAILuaObjectMemo () {
+		if ( this->mUserdata ) {
+			MOAILuaObject::Unbind ( this->mObject, this->mUserdata );
+		}
+	}
+};
+
+//================================================================//
 // lua
 //================================================================//
 
@@ -392,37 +414,39 @@ MOAILuaObject::MOAILuaObject () :
 	mActiveUserdataCount ( 0 ) {
 	RTTI_SINGLE ( RTTIBase )
 	
-	if ( MOAILuaRuntime::IsValid ()) {
-		MOAILuaRuntime::Get ().RegisterObject ( *this );
+	ZLTransmigrationCache& transmigrationCache = ZLTransmigrationCache::Get ();
+	if ( transmigrationCache.IsActive ()) {
+	
+		const MOAILuaObjectMemo& memo = transmigrationCache.GetMemo < MOAILuaObjectMemo >( this );
+		
+		assert ( memo.mObject == this );
+		
+		this->mActiveUserdataCount	= memo.mActiveUserdataCount;
+		this->mUserdata				= memo.mUserdata;
+		this->mFinalizer			= memo.mFinalizer;
+	}
+	else {
+		if ( MOAILuaRuntime::IsValid ()) {
+			MOAILuaRuntime::Get ().RegisterObject ( *this );
+		}
 	}
 }
 
 //----------------------------------------------------------------//
 MOAILuaObject::~MOAILuaObject () {
 
-	if ( MOAILuaRuntime::IsValid ()) {
+	ZLTransmigrationCache& transmigrationCache = ZLTransmigrationCache::Get ();
+	if ( transmigrationCache.IsActive ()) {
+	
+		MOAILuaObjectMemo& memo = transmigrationCache.AffirmMemo < MOAILuaObjectMemo >( this );
 		
-		MOAILuaRuntime::Get ().DeregisterObject ( *this );
-		
-		// TODO: change from both patrick's fork and the community branch; double check
-		if ( this->IsBound () && this->mUserdata ) {
-			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-			
-			// clear out the gc
-			this->mUserdata.PushRef ( state );
-			
-			MOAILuaRuntime::Get ().PurgeUserdata ( state, -1 );
-			
-			if ( lua_getmetatable ( state, -1 )) {
-				lua_pushnil ( state );
-				lua_setfield ( state, -2, "__gc" );
-				state.Pop ( 1 );
-			}
-						
-			// and the ref table
-			lua_pushnil ( state );
-			lua_setmetatable ( state, -2 );
-		}
+		memo.mObject				= this;
+		memo.mActiveUserdataCount	= this->mActiveUserdataCount;
+		memo.mUserdata				= this->mUserdata;
+		memo.mFinalizer				= this->mFinalizer;
+	}
+	else {
+		MOAILuaObject::Unbind ( this, this->mUserdata );
 	}
 }
 
@@ -598,6 +622,33 @@ void MOAILuaObject::SetMemberTable ( MOAILuaState& state, int idx ) {
 	
 	this->MakeLuaBinding ( state );
 	state.Pop ( 1 );
+}
+
+//----------------------------------------------------------------//
+void MOAILuaObject::Unbind ( MOAILuaObject* object, MOAILuaWeakRef& userdata ) {
+
+	if ( MOAILuaRuntime::IsValid () && userdata ) {
+		
+		MOAILuaRuntime::Get ().DeregisterObject ( *object );
+		
+		// TODO: change from both patrick's fork and the community branch; double check
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		
+		// clear out the gc
+		userdata.PushRef ( state );
+		
+		MOAILuaRuntime::Get ().PurgeUserdata ( state, -1 );
+		
+		if ( lua_getmetatable ( state, -1 )) {
+			lua_pushnil ( state );
+			lua_setfield ( state, -2, "__gc" );
+			state.Pop ( 1 );
+		}
+					
+		// and the ref table
+		lua_pushnil ( state );
+		lua_setmetatable ( state, -2 );
+	}
 }
 
 //================================================================//

@@ -8,9 +8,9 @@
 #include <zl-util/ZLTransmigrationCache.h>
 
 //================================================================//
-// ZLRefCountedObjectSnapshot
+// ZLRefCountedObjectMemo
 //================================================================//
-class ZLRefCountedObjectSnapshot {
+class ZLRefCountedObjectMemo {
 public:
 
 	u32								mRefCount;
@@ -78,9 +78,9 @@ ZLRefCountedObject::ZLRefCountedObject () :
 	ZLTransmigrationCache& transmigrationCache = ZLTransmigrationCache::Get ();
 	if ( transmigrationCache.IsActive ()) {
 		
-		const ZLRefCountedObjectSnapshot& snapshot = transmigrationCache.Memo < ZLRefCountedObjectSnapshot >( this );
-		this->mRefCount = snapshot.mRefCount;
-		this->mHandle = snapshot.mHandle;
+		const ZLRefCountedObjectMemo& memo = transmigrationCache.GetMemo < ZLRefCountedObjectMemo >( this );
+		this->mRefCount		= memo.mRefCount;
+		this->mHandle		= memo.mHandle;
 	}
 }
 
@@ -90,10 +90,9 @@ ZLRefCountedObject::~ZLRefCountedObject () {
 	ZLTransmigrationCache& transmigrationCache = ZLTransmigrationCache::Get ();
 	if ( transmigrationCache.IsActive ()) {
 	
-		ZLRefCountedObjectSnapshot snapshot;
-		snapshot.mRefCount = this->mRefCount;
-		snapshot.mHandle = this->mHandle;
-		transmigrationCache.Memo < ZLRefCountedObjectSnapshot >( this, snapshot );
+		ZLRefCountedObjectMemo& memo = transmigrationCache.AffirmMemo < ZLRefCountedObjectMemo >( this );
+		memo.mRefCount		= this->mRefCount;
+		memo.mHandle		= this->mHandle;
 	}
 	else {
 		this->Abandon ();
