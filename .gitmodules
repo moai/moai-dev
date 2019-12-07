@@ -25,3 +25,6 @@
 [submodule "3rdparty/artoolkit5"]
 	path = 3rdparty/artoolkit5
 	url = https://github.com/artoolkit/artoolkit5.git
+[submodule "3rdparty/libtess2"]
+	path = 3rdparty/libtess2
+	url = https://github.com/memononen/libtess2.git
