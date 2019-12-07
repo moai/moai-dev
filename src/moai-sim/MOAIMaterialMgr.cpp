@@ -171,7 +171,7 @@ void MOAIMaterialMgr::Pop () {
 			MOAIMaterialStackClearCmd* clearCmd = cursor;
 			cursor = cursor->mNext;
 			
-			MOAIMaterialGlobal* global = cursor->mGlobal;
+			MOAIMaterialGlobal* global = clearCmd->mGlobal;
 			
 			global->mPtr = 0;
 			global->mStackDepth = 0;
@@ -247,7 +247,7 @@ void MOAIMaterialMgr::SetGlobal ( MOAIMaterialGlobal& global, void* ptr ) {
 		
 		MOAIMaterialStackFrame& frame = this->mStack.Top ();
 		clearCmd->mNext = frame.mClearList;
-		frame.mClearList = clearCmd->mNext;
+		frame.mClearList = clearCmd;
 	}
 	
 	global.mPtr = ptr;
