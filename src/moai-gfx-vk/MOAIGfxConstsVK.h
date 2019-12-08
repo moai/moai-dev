@@ -10,40 +10,40 @@
 class MOAIGfxConstsVK {
 public:
 
-//	//----------------------------------------------------------------//
-//	static ZLGfxEnum::_ Remap ( MOAIBlendFactorEnum::_ value ) {
-//
-//		switch ( value ) {
-//			case MOAIBlendFactorEnum::DST_ALPHA:					return ZLGfxEnum::BLEND_FACTOR_DST_ALPHA;
-//			case MOAIBlendFactorEnum::DST_COLOR:					return ZLGfxEnum::BLEND_FACTOR_DST_COLOR;
-//			case MOAIBlendFactorEnum::ONE:							return ZLGfxEnum::BLEND_FACTOR_ONE;
-//			case MOAIBlendFactorEnum::ONE_MINUS_DST_ALPHA:			return ZLGfxEnum::BLEND_FACTOR_ONE_MINUS_DST_ALPHA;
-//			case MOAIBlendFactorEnum::ONE_MINUS_DST_COLOR:			return ZLGfxEnum::BLEND_FACTOR_ONE_MINUS_DST_COLOR;
-//			case MOAIBlendFactorEnum::ONE_MINUS_SRC_ALPHA:			return ZLGfxEnum::BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
-//			case MOAIBlendFactorEnum::ONE_MINUS_SRC_COLOR:			return ZLGfxEnum::BLEND_FACTOR_ONE_MINUS_SRC_COLOR;
-//			case MOAIBlendFactorEnum::SRC_ALPHA:					return ZLGfxEnum::BLEND_FACTOR_SRC_ALPHA;
-//			case MOAIBlendFactorEnum::SRC_ALPHA_SATURATE:			return ZLGfxEnum::BLEND_FACTOR_SRC_ALPHA_SATURATE;
-//			case MOAIBlendFactorEnum::SRC_COLOR:					return ZLGfxEnum::BLEND_FACTOR_SRC_COLOR;
-//			case MOAIBlendFactorEnum::ZERO:							return ZLGfxEnum::BLEND_FACTOR_ZERO;
-//		}
-//		assert ( false );
-//		return ZLGfxEnum::NONE;
-//	};
-//
-//	//----------------------------------------------------------------//
-//	static ZLGfxEnum::_ Remap ( MOAIBlendFuncEnum::_ value ) {
-//
-//		switch ( value ) {
-//			case MOAIBlendFuncEnum::ADD:								return ZLGfxEnum::BLEND_MODE_ADD;
-//			case MOAIBlendFuncEnum::MAX:								return ZLGfxEnum::BLEND_MODE_MAX;
-//			case MOAIBlendFuncEnum::MIN:								return ZLGfxEnum::BLEND_MODE_MIN;
-//			case MOAIBlendFuncEnum::REVERSE_SUBTRACT:					return ZLGfxEnum::BLEND_MODE_REVERSE_SUBTRACT;
-//			case MOAIBlendFuncEnum::SUBTRACT:							return ZLGfxEnum::BLEND_MODE_SUBTRACT;
-//		}
-//		assert ( false );
-//		return ZLGfxEnum::NONE;
-//	};
-//
+	//----------------------------------------------------------------//
+	static VkBlendFactor Remap ( MOAIBlendFactorEnum::_ value ) {
+
+		switch ( value ) {
+			case MOAIBlendFactorEnum::DST_ALPHA:					return VK_BLEND_FACTOR_DST_ALPHA;
+			case MOAIBlendFactorEnum::DST_COLOR:					return VK_BLEND_FACTOR_DST_COLOR;
+			case MOAIBlendFactorEnum::ONE:							return VK_BLEND_FACTOR_ONE;
+			case MOAIBlendFactorEnum::ONE_MINUS_DST_ALPHA:			return VK_BLEND_FACTOR_ONE_MINUS_DST_ALPHA;
+			case MOAIBlendFactorEnum::ONE_MINUS_DST_COLOR:			return VK_BLEND_FACTOR_ONE_MINUS_DST_COLOR;
+			case MOAIBlendFactorEnum::ONE_MINUS_SRC_ALPHA:			return VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA;
+			case MOAIBlendFactorEnum::ONE_MINUS_SRC_COLOR:			return VK_BLEND_FACTOR_ONE_MINUS_SRC_COLOR;
+			case MOAIBlendFactorEnum::SRC_ALPHA:					return VK_BLEND_FACTOR_SRC_ALPHA;
+			case MOAIBlendFactorEnum::SRC_ALPHA_SATURATE:			return VK_BLEND_FACTOR_SRC_ALPHA_SATURATE;
+			case MOAIBlendFactorEnum::SRC_COLOR:					return VK_BLEND_FACTOR_SRC_COLOR;
+			case MOAIBlendFactorEnum::ZERO:							return VK_BLEND_FACTOR_ZERO;
+		}
+		assert ( false );
+		return VK_BLEND_FACTOR_MAX_ENUM;
+	};
+
+	//----------------------------------------------------------------//
+	static VkBlendOp Remap ( MOAIBlendFuncEnum::_ value ) {
+
+		switch ( value ) {
+			case MOAIBlendFuncEnum::ADD:								return VK_BLEND_OP_ADD;
+			case MOAIBlendFuncEnum::MAX:								return VK_BLEND_OP_MAX;
+			case MOAIBlendFuncEnum::MIN:								return VK_BLEND_OP_MIN;
+			case MOAIBlendFuncEnum::REVERSE_SUBTRACT:					return VK_BLEND_OP_REVERSE_SUBTRACT;
+			case MOAIBlendFuncEnum::SUBTRACT:							return VK_BLEND_OP_SUBTRACT;
+		}
+		assert ( false );
+		return VK_BLEND_OP_MAX_ENUM;
+	};
+
 //	//----------------------------------------------------------------//
 //	static ZLGfxEnum::_ Remap ( MOAICullFuncEnum::_ value ) {
 //

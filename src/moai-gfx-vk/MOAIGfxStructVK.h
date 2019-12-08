@@ -747,13 +747,13 @@ public:
     //----------------------------------------------------------------//
     static VkPipelineColorBlendAttachmentState pipelineColorBlendAttachmentState (
         VkBool32 blendEnable                    = VK_FALSE,
-        VkColorComponentFlags colorWriteMask    = 0xf,
         VkBlendOp colorBlendOp                  = VK_BLEND_OP_ADD,
-        VkBlendFactor srcColorBlendFactor       = VK_BLEND_FACTOR_ZERO,
-        VkBlendFactor dstColorBlendFactor       = VK_BLEND_FACTOR_ZERO,
+        VkBlendFactor srcColorBlendFactor       = VK_BLEND_FACTOR_ONE,
+        VkBlendFactor dstColorBlendFactor       = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA,
         VkBlendOp alphaBlendOp                  = VK_BLEND_OP_ADD,
-        VkBlendFactor srcAlphaBlendFactor       = VK_BLEND_FACTOR_ZERO,
-        VkBlendFactor dstAlphaBlendFactor       = VK_BLEND_FACTOR_ZERO
+        VkBlendFactor srcAlphaBlendFactor       = VK_BLEND_FACTOR_ONE,
+        VkBlendFactor dstAlphaBlendFactor       = VK_BLEND_FACTOR_ONE_MINUS_SRC_ALPHA,
+        VkColorComponentFlags colorWriteMask    = 0xf
     ) {
         DECL_VK_STRUCT ( VkPipelineColorBlendAttachmentState, pipelineColorBlendAttachmentState );
         pipelineColorBlendAttachmentState.blendEnable           = blendEnable;

@@ -53,7 +53,7 @@ void MOAIGfxMgrVK_RenderTreeVK::MOAIGfxMgr_RenderTree_Render () {
 	// Set clear values for all framebuffer attachments with loadOp set to clear
 	// We use two attachments (color and depth) that are cleared at the start of the subpass and as such we need to set clear values for both
 	VkClearValue clearValues [] = {
-		MOAIGfxStructVK::clearValue ( MOAIGfxStructVK::clearColorValueF ( 1.0, 1.0, 1.0, 1.0 )),
+		MOAIGfxStructVK::clearValue ( MOAIGfxStructVK::clearColorValueF ( 0.0, 0.0, 0.0, 1.0 )),
 		MOAIGfxStructVK::clearValue ( MOAIGfxStructVK::clearDepthStencilValue ( 1.0, 0 )),
 	};
 	VkRenderPassBeginInfo renderPassBeginInfo = MOAIGfxStructVK::renderPassBeginInfo ( renderPass, frameBuffer, swapChain.GetRect (), clearValues, 2 );

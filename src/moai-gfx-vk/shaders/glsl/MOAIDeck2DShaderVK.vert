@@ -13,6 +13,6 @@ out gl_PerVertex {
 
 void main () {
     gl_Position = inPos;
-    outUV = inUV;
+    outUV = vec2 ( inUV.x, -inUV.y );
     outColor = inColor;
 }

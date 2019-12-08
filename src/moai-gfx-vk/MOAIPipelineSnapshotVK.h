@@ -5,6 +5,7 @@
 #define MOAIPIPELINESNAPSHOTVK_H
 
 #include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
+#include <moai-gfx-vk/MOAIGfxConstsVK.h>
 #include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
@@ -44,7 +45,14 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Initialize ( MOAILogicalDeviceVK& logicalDevice, VkRenderPass& renderPass, VkPrimitiveTopology topology, MOAIVertexFormatVK* vertexFormat, MOAIShaderVK* shader ) {
+	void Initialize (
+		MOAILogicalDeviceVK& logicalDevice,
+		VkRenderPass& renderPass,
+		VkPrimitiveTopology topology,
+		MOAIVertexFormatVK* vertexFormat,
+		MOAIShaderVK* shader,
+		MOAIBlendMode* blendMode = NULL
+	) {
 	
 		this->SetDependency < MOAILogicalDeviceVK >( logicalDevice );
 
@@ -53,9 +61,30 @@ public:
 			VK_DYNAMIC_STATE_SCISSOR,
 		};
 
+		VkPipelineColorBlendAttachmentState blendAttachmentState;
+
+		if ( blendMode ) {
+
+			VkBlendOp blendOp			= MOAIGfxConstsVK::Remap ( blendMode->mEquation );
+			VkBlendFactor srcFactor		= MOAIGfxConstsVK::Remap ( blendMode->mSourceFactor );
+			VkBlendFactor dstFactor		= MOAIGfxConstsVK::Remap ( blendMode->mDestFactor );
+
+			blendAttachmentState = MOAIGfxStructVK::pipelineColorBlendAttachmentState (
+				VK_TRUE,
+				blendOp,
+				srcFactor,
+				dstFactor,
+				blendOp,
+				srcFactor,
+				dstFactor
+			);
+		}
+		else {
+			blendAttachmentState = MOAIGfxStructVK::pipelineColorBlendAttachmentState ();
+		}
+
 		VkPipelineInputAssemblyStateCreateInfo inputAssemblyState 	= MOAIGfxStructVK::pipelineInputAssemblyStateCreateInfo ( topology );
 		VkPipelineRasterizationStateCreateInfo rasterizationState 	= MOAIGfxStructVK::pipelineRasterizationStateCreateInfo ();
-		VkPipelineColorBlendAttachmentState blendAttachmentState 	= MOAIGfxStructVK::pipelineColorBlendAttachmentState ();
 		VkPipelineColorBlendStateCreateInfo colorBlendState 		= MOAIGfxStructVK::pipelineColorBlendStateCreateInfo ( &blendAttachmentState, 1 ); // one blend attachment state per color attachment (even if blending is not used)
 		VkPipelineViewportStateCreateInfo viewportState 			= MOAIGfxStructVK::pipelineViewportStateCreateInfo (); // overridden by dynamic state
 		VkPipelineDepthStencilStateCreateInfo depthStencilState 	= MOAIGfxStructVK::pipelineDepthStencilStateCreateInfo ();

@@ -27,7 +27,7 @@ public:
 
 	MOAICullFuncEnum::_						mCullFunc;
 	
-	MOAIDepthFuncEnum::_						mDepthFunc;
+	MOAIDepthFuncEnum::_					mDepthFunc;
 	bool									mDepthMask;
 
 	MOAIBlendMode							mBlendMode;

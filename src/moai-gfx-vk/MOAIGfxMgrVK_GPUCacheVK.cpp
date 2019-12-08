@@ -87,6 +87,40 @@ void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_ApplyStateChanges () {
 
 //----------------------------------------------------------------//
 void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_ClearSurface () {
+
+//	MOAIGfxMgr_CPUCache& cpuCache = this->GetCPUCache ();
+//	
+//	u32 clearFlags = cpuCache.GetClearFlags ();
+//
+//	if ( clearFlags ) {
+//		
+//		// discard this if all buffers are to be cleared?
+//		// (may still need to draw if depth or color only)
+//		this->GetVertexCache ().FlushToGPU ();
+//		
+//		this->ApplyStateChanges ();
+//	
+//		if ( clearFlags & ZLGfxClearFlags::COLOR_BUFFER_BIT ) {
+//		
+//			const ZLColorVec& clearColor = cpuCache.GetClearColor ();
+//		
+//			gfx.ClearColor (
+//				clearColor.mR,
+//				clearColor.mG,
+//				clearColor.mB,
+//				clearColor.mA
+//			);
+//		}
+//	
+//		if (( clearFlags & ZLGfxClearFlags::DEPTH_BUFFER_BIT ) && !this->GetDepthMask ()) {
+//			gfx.DepthMask ( true );
+//			gfx.Clear ( clearFlags );
+//			gfx.DepthMask ( false );
+//		}
+//		else {
+//			gfx.Clear ( clearFlags );
+//		}
+//	}
 }
 
 //----------------------------------------------------------------//
@@ -112,8 +146,10 @@ void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_DrawPrims ( MOAIGfxTopologyEnu
 	MOAIShaderVK* shader					= MOAICast < MOAIShaderVK >( this->GetShader ());
 	MOAITexture2DVK* texture				= MOAICast < MOAITexture2DVK >( this->GetTexture ()); // TODO: obviously, fix this
 	MOAIVertexFormatVK* vertexFormat 		= MOAICast < MOAIVertexFormatVK >( this->GetVertexFormat ());
-	
+		
 	assert ( shader && texture && vertexFormat );
+	
+	MOAIGfxStateGPUCacheFrame& activeState	= *this->mActiveState;
 	
 	MOAIPipelineSnapshotVK* pipeline = new MOAIPipelineSnapshotVK ();
 	pipeline->Initialize (
@@ -121,7 +157,8 @@ void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_DrawPrims ( MOAIGfxTopologyEnu
 		gfxMgr.GetRenderPass (),
 		primTypeVK,
 		vertexFormat,
-		shader
+		shader,
+		activeState.mBlendEnabled ? &activeState.mBlendMode : NULL
 	);
 	commandBuffer.BindPipeline ( VK_PIPELINE_BIND_POINT_GRAPHICS, *pipeline );
 	commandBuffer.Pin ( *pipeline );
@@ -132,14 +169,14 @@ void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_DrawPrims ( MOAIGfxTopologyEnu
 	composer.ApplyAndBind ( gfxMgr, commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS );
 
 	// set the viewport and scissor
-	VkViewport viewport			= MOAIGfxStructVK::viewport ( this->mActiveState->mViewRect, 0.0, 1.0 );
-	VkRect2D scissor			= MOAIGfxStructVK::rect2D ( this->mActiveState->mScissorRect );
+	VkViewport viewport			= MOAIGfxStructVK::viewport ( activeState.mViewRect, 0.0, 1.0 );
+	VkRect2D scissor			= MOAIGfxStructVK::rect2D ( activeState.mScissorRect );
 
 	vkCmdSetViewport ( commandBuffer, 0, 1, &viewport );
 	vkCmdSetScissor ( commandBuffer, 0, 1, &scissor );
 
-	MOAIVertexBufferVK* vtxBuffer = MOAICast < MOAIVertexBufferVK >( this->mActiveState->mVtxBuffer );
-	MOAIIndexBufferVK* idxBuffer = MOAICast < MOAIIndexBufferVK >( this->mActiveState->mIdxBuffer );
+	MOAIVertexBufferVK* vtxBuffer = MOAICast < MOAIVertexBufferVK >( activeState.mVtxBuffer );
+	MOAIIndexBufferVK* idxBuffer = MOAICast < MOAIIndexBufferVK >( activeState.mIdxBuffer );
 
 	assert ( vtxBuffer && idxBuffer );
 
