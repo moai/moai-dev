@@ -50,12 +50,8 @@ void MOAIGfxMgrVK_VertexCacheVK::MOAIGfxMgr_VertexCache_FlushToGPU () {
 			// force the buffers into the cache; they will now be active (but pending will not match).
 			// it's OK to leave these; will get set back to zero for the next cached prim.
 			// setting back to zero won't trigger a redraw, since the vertex prim cache will be empty.
-			if ( this->mUseIdxBuffer ) {
-				MOAIIndexBufferVK* idxBuffer = MOAICastAssert < MOAIIndexBufferVK >(( MOAIIndexBuffer* )this->mIdxBuffer );
-//				gpuCache.FlushIndexBuffer ( idxBuffer );
-			}
-			MOAIVertexBufferVK* vtxBuffer = MOAICastAssert < MOAIVertexBufferVK >(( MOAIVertexBuffer* )this->mVtxBuffer );
-//			gpuCache.FlushVertexBuffer ( vtxBuffer );
+			gpuCache.mActiveState->mVtxBuffer = this->mVtxBuffer;
+			gpuCache.mActiveState->mIdxBuffer = this->mIdxBuffer;
 			
 			gpuCache.DrawPrims ( this->mPrimType, offset, count );
 		}

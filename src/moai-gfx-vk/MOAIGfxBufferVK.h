@@ -17,7 +17,6 @@ class MOAIVertexFormatVK;
 // TODO: doxygen
 class MOAIGfxBufferVK :
 	public MOAIAbstractSnapshotFactoryVK < MOAIGfxBufferSnapshotVK >,
-	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK >,
 	public virtual MOAIGfxResourceVK,
 	public virtual MOAIGfxBuffer {
 protected:
@@ -27,7 +26,7 @@ protected:
 	VkBufferUsageFlags		mUsage;
 	
 	//----------------------------------------------------------------//
-	MOAIGfxBufferSnapshotVK*	MOAIAbstractSnapshotFactoryVK_GetSnapshot		();
+	MOAIGfxBufferSnapshotVK*	MOAIAbstractSnapshotFactoryVK_GetSnapshot		( MOAICommandBufferVK& commandBuffer );
 	void						MOAILuaObject_RegisterLuaClass					( MOAIComposer& composer, MOAILuaState& state );
 	void						MOAILuaObject_RegisterLuaFuncs					( MOAIComposer& composer, MOAILuaState& state );
 	void						MOAILuaObject_SerializeIn						( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
@@ -38,7 +37,7 @@ public:
 	IMPLEMENT_FINALIZABLE ( MOAIGfxBufferVK )
 	
 	//----------------------------------------------------------------//
-	void						Initialize				( MOAILogicalDeviceVK& logicalDevice, ZLSize size, VkBufferUsageFlags usage = 0 );
+	void						Initialize				( ZLSize size, VkBufferUsageFlags usage = 0 );
 								MOAIGfxBufferVK			();
 								~MOAIGfxBufferVK		();
 };
@@ -52,9 +51,9 @@ class MOAIGfxBufferWithUsageVK :
 public:
 
 	//----------------------------------------------------------------//
-	void Initialize ( MOAILogicalDeviceVK& logicalDevice, VkDeviceSize size, VkBufferUsageFlags usage = 0 ) {
+	void Initialize ( VkDeviceSize size, VkBufferUsageFlags usage = 0 ) {
 
-		this->MOAIGfxBufferVK::Initialize ( logicalDevice, size, USAGE | usage );
+		this->MOAIGfxBufferVK::Initialize ( size, USAGE | usage );
 	}
 };
 

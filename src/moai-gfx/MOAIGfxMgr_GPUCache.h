@@ -62,7 +62,6 @@ protected:
 	ZLStrongPtr < MOAIGfxStateGPUCacheFrame >	mPendingState;
 
 	//----------------------------------------------------------------//
-	void					GfxStateWillChange			();
 	bool					HasPendingPrims				();
 	void					InitTextureUnits			( size_t nTextureUnits );
 	void					ResumeChanges				();
@@ -96,6 +95,7 @@ public:
 	float					GetViewHeight				() const;
 	ZLRect					GetViewRect					() const;
 	float					GetViewWidth				() const;
+	void					GfxStateWillChange			();
 							MOAIGfxMgr_GPUCache			();
 	virtual					~MOAIGfxMgr_GPUCache		();
 	void					ResetGPUState				();

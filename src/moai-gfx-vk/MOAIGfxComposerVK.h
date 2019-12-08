@@ -7,6 +7,7 @@
 class MOAICommandBufferVK;
 class MOAIDescriptorSetVK;
 class MOAIGfxComposerVK;
+class MOAIGfxMgrVK;
 class MOAIPipelineLayoutVK;
 
 //================================================================//
@@ -23,7 +24,7 @@ protected:
 	ZLIndex 		mArrayItem;
 
 	//----------------------------------------------------------------//
-	virtual void		MOAIGfxComposerCommandVK_Apply			( MOAIDescriptorSetVK& descriptorSet, MOAICommandBufferVK& commandBuffer ) = 0;
+	virtual void		MOAIGfxComposerCommandVK_Apply			( MOAIGfxMgrVK& gfxMgr, MOAIDescriptorSetVK& descriptorSet, MOAICommandBufferVK& commandBuffer ) = 0;
 
 	//----------------------------------------------------------------//
 	MOAIGfxComposerCommandVK ( ZLIndex descriptorSetIndex, ZLIndex bindPoint, ZLIndex arrayItem ) :
@@ -39,9 +40,9 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void Apply ( MOAIDescriptorSetVK& descriptorSet, MOAICommandBufferVK& commandBuffer ) {
+	void Apply ( MOAIGfxMgrVK& gfxMgr, MOAIDescriptorSetVK& descriptorSet, MOAICommandBufferVK& commandBuffer ) {
 	
-		this->MOAIGfxComposerCommandVK_Apply ( descriptorSet, commandBuffer );
+		this->MOAIGfxComposerCommandVK_Apply ( gfxMgr, descriptorSet, commandBuffer );
 	}
 };
 
@@ -57,7 +58,7 @@ protected:
 	ZLIndex			mTextureUnit;
 
 	//----------------------------------------------------------------//
-	void		MOAIGfxComposerCommandVK_Apply		( MOAIDescriptorSetVK& descriptorSet, MOAICommandBufferVK& commandBuffer );
+	void		MOAIGfxComposerCommandVK_Apply		( MOAIGfxMgrVK& gfxMgr, MOAIDescriptorSetVK& descriptorSet, MOAICommandBufferVK& commandBuffer );
 	
 	//----------------------------------------------------------------//
 				MOAIGfxComposerTextureCommandVK 	( ZLIndex descriptorSetIndex, ZLIndex bindPoint, ZLIndex arrayItem, ZLIndex textureUnit );
@@ -82,7 +83,7 @@ public:
 	IMPLEMENT_FINALIZABLE ( MOAIGfxComposerVK )
 	
 	//----------------------------------------------------------------//
-	void						ApplyAndBind						( MOAICommandBufferVK& commandBuffer, VkPipelineBindPoint pipelineBindPoint );
+	void						ApplyAndBind						( MOAIGfxMgrVK& gfxMgr, MOAICommandBufferVK& commandBuffer, VkPipelineBindPoint pipelineBindPoint );
 	MOAIDescriptorSetVK&		GetDescriptorSet					( ZLIndex index );
 	MOAIPipelineLayoutVK&		GetPipelineLayout					();
 								MOAIGfxComposerVK					();

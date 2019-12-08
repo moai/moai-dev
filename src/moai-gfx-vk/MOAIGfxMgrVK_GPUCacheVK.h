@@ -8,14 +8,13 @@
 
 class MOAIFrameBufferVK;
 class MOAIIndexBufferVK;
-class MOAIShaderVK;
-class MOAIShaderProgramVK;
-class MOAIVertexBufferVK;
-class MOAIVertexFormatVK;
 class MOAIGfxResourceVK;
 class MOAIPipelineLayoutVK;
-class MOAIVertexBufferWithFormatVK;
+class MOAIShaderProgramVK;
+class MOAIShaderVK;
 class MOAITextureVK;
+class MOAIVertexBufferVK;
+class MOAIVertexFormatVK;
 
 //================================================================//
 // MOAIGfxMgrVK_GPUCacheVK

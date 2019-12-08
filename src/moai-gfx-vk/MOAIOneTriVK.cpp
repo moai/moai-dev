@@ -289,7 +289,7 @@ void MOAIOneTriVK::UpdateMatrices ( u32 width, u32 height ) {
 		MOAILogicalDeviceVK& logicalDevice = gfxMgr.GetLogicalDevice ();
 	
 		this->mUniforms = new MOAIUniformBufferVK ();
-		this->mUniforms->Initialize ( logicalDevice, sizeof ( mMatrixUniforms ));
+		this->mUniforms->Initialize ( sizeof ( mMatrixUniforms ));
 	}
 
 	float aspect		= ( float )width / ( float )height;
@@ -328,9 +328,10 @@ void MOAIOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 
 	this->PreparePipeline ();
 
-	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
-	MOAICommandBufferVK& commandBuffer = gfxMgr.GetCommandBuffer ();
-	MOAISwapChainVK& swapChain = gfxMgr.GetSwapChain ();
+	MOAIGfxMgrVK& gfxMgr					= MOAIGfxMgrVK::Get ();
+	MOAICommandBufferVK& commandBuffer		= gfxMgr.GetCommandBuffer ();
+	MOAISwapChainVK& swapChain				= gfxMgr.GetSwapChain ();
+	MOAILogicalDeviceVK& logicalDevice		= gfxMgr.GetLogicalDevice ();
 
 	VkRect2D rect = swapChain.GetRect ();
 	
@@ -345,7 +346,7 @@ void MOAIOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 
 	this->UpdateMatrices ( width, height );
 	MOAIGfxBufferSnapshotVK* uniforms = new MOAIGfxBufferSnapshotVK ();
-	uniforms->Initialize ( *this->mUniforms );
+	uniforms->Initialize ( logicalDevice, *this->mUniforms );
 
 	// initialize the descriptor set
 	MOAIDescriptorSetLayoutVK& descriptorSetLayout = this->mPipelineLayout->GetDescriptorSetLayout ( ZLIndexOp::ZERO );

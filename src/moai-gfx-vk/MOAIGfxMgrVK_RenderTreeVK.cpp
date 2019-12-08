@@ -61,19 +61,19 @@ void MOAIGfxMgrVK_RenderTreeVK::MOAIGfxMgr_RenderTree_Render () {
 	commandBuffer.Begin ();
 	vkCmdBeginRenderPass ( commandBuffer, &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE );
 	
-	if ( !this->mOneTri ) {
-		this->mOneTri = new MOAIGfxMgrOneTriVK ();
-	}
-	this->mOneTri->Draw ();
-	
-//	if ( this->mRenderRoot ) {
-//		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-//		state.Push ( this->mRenderRoot );
-//		MOAIDrawable::Draw ( state, -1 );
+//	if ( !this->mOneTri ) {
+//		this->mOneTri = new MOAIGfxMgrOneTriVK ();
 //	}
+//	this->mOneTri->Draw ();
 	
-	//	// flush any stragglers
-	//	gfxMgr.FlushToGPU ();
+	if ( this->mRenderRoot ) {
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		state.Push ( this->mRenderRoot );
+		MOAIDrawable::Draw ( state, -1 );
+	}
+	
+	// flush any stragglers
+	gfxMgr.FlushToGPU ();
 	
 	
 	vkCmdEndRenderPass ( commandBuffer );

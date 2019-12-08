@@ -30,7 +30,8 @@ MOAITexture2DVK::~MOAITexture2DVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAITextureSnapshot2DVK* MOAITexture2DVK::MOAIAbstractSnapshotFactoryVK_GetSnapshot () {
+MOAITextureSnapshot2DVK* MOAITexture2DVK::MOAIAbstractSnapshotFactoryVK_GetSnapshot ( MOAICommandBufferVK& commandBuffer ) {
+	UNUSED ( commandBuffer );
 
 	if ( !this->mSnapshot && this->mImage && this->mImage->IsOK ()) {
 

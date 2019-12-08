@@ -13,9 +13,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxBufferSnapshotVK::Initialize ( MOAIGfxBufferVK& buffer, bool useStagingBuffers ) {
-
-	MOAILogicalDeviceVK& logicalDevice = buffer.GetDependency < MOAILogicalDeviceVK >();
+void MOAIGfxBufferSnapshotVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, MOAIGfxBufferVK& buffer, bool useStagingBuffers ) {
 
 	ZLSize size = buffer.GetSize ();
 	

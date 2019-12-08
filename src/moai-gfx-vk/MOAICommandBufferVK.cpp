@@ -36,7 +36,14 @@ void MOAICommandBufferVK::BindPipeline ( VkPipelineBindPoint pipelineBindPoint, 
 
 //----------------------------------------------------------------//
 void MOAICommandBufferVK::End () {
+
 	VK_CHECK_RESULT ( vkEndCommandBuffer ( this->mCommandBuffer ));
+}
+
+//----------------------------------------------------------------//
+MOAILogicalDeviceVK& MOAICommandBufferVK::GetLogicalDevice () {
+
+	return this->GetDependency < MOAIQueueVK >().GetDependency < MOAILogicalDeviceVK >();
 }
 
 //----------------------------------------------------------------//

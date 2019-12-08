@@ -27,7 +27,7 @@ protected:
 	ZLStrongPtr < MOAITextureSnapshot2DVK > mSnapshot;
 
 	//----------------------------------------------------------------//
-	MOAITextureSnapshot2DVK*		MOAIAbstractSnapshotFactoryVK_GetSnapshot		();
+	MOAITextureSnapshot2DVK*		MOAIAbstractSnapshotFactoryVK_GetSnapshot		( MOAICommandBufferVK& commandBuffer );
 	bool							MOAIGfxResource_FinishLoading					();
 	bool							MOAIGfxResource_IsReadyForUse					() const;
 	void							MOAILuaObject_RegisterLuaClass					( MOAIComposer& composer, MOAILuaState& state );

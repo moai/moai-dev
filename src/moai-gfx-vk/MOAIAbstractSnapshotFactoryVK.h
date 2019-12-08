@@ -15,18 +15,13 @@ class MOAIAbstractSnapshotFactoryVK {
 protected:
 
 	//----------------------------------------------------------------//
-	virtual SNAPSHOT_TYPE*		MOAIAbstractSnapshotFactoryVK_GetSnapshot		() = 0;
+	virtual SNAPSHOT_TYPE*		MOAIAbstractSnapshotFactoryVK_GetSnapshot		( MOAICommandBufferVK& commandBuffer ) = 0;
 
 public:
 	
 	//----------------------------------------------------------------//
-	SNAPSHOT_TYPE* GetSnapshot () {
-		return this->MOAIAbstractSnapshotFactoryVK_GetSnapshot ();
-	}
-	
-	//----------------------------------------------------------------//
 	SNAPSHOT_TYPE* GetSnapshot ( MOAICommandBufferVK& commandBuffer ) {
-		SNAPSHOT_TYPE* snapshot = this->GetSnapshot ();
+		SNAPSHOT_TYPE* snapshot = this->MOAIAbstractSnapshotFactoryVK_GetSnapshot ( commandBuffer );
 		commandBuffer.Pin ( *snapshot );
 		return snapshot;
 	}

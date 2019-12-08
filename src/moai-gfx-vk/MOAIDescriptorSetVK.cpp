@@ -96,7 +96,8 @@ void MOAIDescriptorSetVK::SetDescriptor ( ZLIndex binding, ZLIndex arrayElement,
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIDescriptorSetSnapshotVK* MOAIDescriptorSetVK::MOAIAbstractSnapshotFactoryVK_GetSnapshot () {
+MOAIDescriptorSetSnapshotVK* MOAIDescriptorSetVK::MOAIAbstractSnapshotFactoryVK_GetSnapshot ( MOAICommandBufferVK& commandBuffer ) {
+	UNUSED ( commandBuffer );
 
 	if ( this->HasDependency < MOAIDescriptorSetLayoutVK >()) {
 		return this->GetDependency < MOAIDescriptorSetLayoutVK >().ProcureDescriptorSet ( *this );

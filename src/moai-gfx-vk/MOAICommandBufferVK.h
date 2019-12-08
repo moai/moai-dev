@@ -54,16 +54,17 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void				Begin						();
-	void				BindDescriptorSet 			( VkPipelineBindPoint pipelineBindPoint, MOAIDescriptorSetSnapshotVK& descriptorSet, MOAIPipelineLayoutVK& pipelineLayout, u32 firstSet );
-	void				BindPipeline				( VkPipelineBindPoint pipelineBindPoint, MOAIPipelineSnapshotVK& pipeline );
-	void				End							();
-						MOAICommandBufferVK			();
-						~MOAICommandBufferVK		();
-	void				Pin							( MOAIAbstractSnapshotVK& snapshot );
-	void				Submit						();
-	void				Submit						(VkSemaphore waitSemaphore, VkSemaphore signalSemaphore, VkPipelineStageFlags waitStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT );
-	void				UnpinAll					();
+	void					Begin						();
+	void					BindDescriptorSet 			( VkPipelineBindPoint pipelineBindPoint, MOAIDescriptorSetSnapshotVK& descriptorSet, MOAIPipelineLayoutVK& pipelineLayout, u32 firstSet );
+	void					BindPipeline				( VkPipelineBindPoint pipelineBindPoint, MOAIPipelineSnapshotVK& pipeline );
+	void					End							();
+	MOAILogicalDeviceVK&	GetLogicalDevice			();
+							MOAICommandBufferVK			();
+							~MOAICommandBufferVK		();
+	void					Pin							( MOAIAbstractSnapshotVK& snapshot );
+	void					Submit						();
+	void					Submit						(VkSemaphore waitSemaphore, VkSemaphore signalSemaphore, VkPipelineStageFlags waitStageMask = VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT );
+	void					UnpinAll					();
 };
 
 #endif

@@ -14,9 +14,8 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxBufferVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, ZLSize size, VkBufferUsageFlags usage ) {
+void MOAIGfxBufferVK::Initialize ( ZLSize size, VkBufferUsageFlags usage ) {
 
-	this->SetDependency < MOAILogicalDeviceVK >( logicalDevice );
 	this->MOAIGfxBuffer::Initialize ( size );
 	this->mUsage = usage;
 }
@@ -40,10 +39,10 @@ MOAIGfxBufferVK::~MOAIGfxBufferVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIGfxBufferSnapshotVK* MOAIGfxBufferVK::MOAIAbstractSnapshotFactoryVK_GetSnapshot () {
+MOAIGfxBufferSnapshotVK* MOAIGfxBufferVK::MOAIAbstractSnapshotFactoryVK_GetSnapshot ( MOAICommandBufferVK& commandBuffer ) {
 
 	MOAIGfxBufferSnapshotVK* snapshot = new MOAIGfxBufferSnapshotVK ();
-	snapshot->Initialize ( *this );
+	snapshot->Initialize ( commandBuffer.GetLogicalDevice (), *this );
 	return snapshot;
 }
 

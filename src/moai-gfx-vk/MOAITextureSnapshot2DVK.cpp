@@ -63,6 +63,9 @@ bool MOAITextureSnapshot2DVK::Initialize ( ZLImage& srcImage ) {
 	if (( colorFormat == ZLColor::A_1 ) || ( colorFormat == ZLColor::A_4 )) {
 		colorFormat = ZLColor::A_8;
 	}
+	else {
+		colorFormat = ZLColor::RGBA_8888; // TODO: fix to select this more intelligently based on actually available color formats
+	}
 	
 	if (( colorFormat != srcImage.GetColorFormat ()) || ( srcImage.GetPixelFormat () != ZLImage::TRUECOLOR )) {
 		altImage.Convert ( srcImage, colorFormat, ZLImage::TRUECOLOR );

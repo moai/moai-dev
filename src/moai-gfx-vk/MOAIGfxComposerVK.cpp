@@ -34,11 +34,9 @@ MOAIGfxComposerTextureCommandVK::MOAIGfxComposerTextureCommandVK ( ZLIndex descr
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxComposerTextureCommandVK::MOAIGfxComposerCommandVK_Apply ( MOAIDescriptorSetVK& descriptorSet, MOAICommandBufferVK& commandBuffer ) {
+void MOAIGfxComposerTextureCommandVK::MOAIGfxComposerCommandVK_Apply ( MOAIGfxMgrVK& gfxMgr, MOAIDescriptorSetVK& descriptorSet, MOAICommandBufferVK& commandBuffer ) {
 
-	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
 	MOAITexture2DVK* texture = MOAICast < MOAITexture2DVK >( gfxMgr.GetTexture ( this->mTextureUnit ));
-	
 	descriptorSet.SetDescriptor ( this->mBindPoint, this->mArrayItem, *texture->GetSnapshot ( commandBuffer ));
 }
 
@@ -47,7 +45,9 @@ void MOAIGfxComposerTextureCommandVK::MOAIGfxComposerCommandVK_Apply ( MOAIDescr
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxComposerVK::ApplyAndBind ( MOAICommandBufferVK& commandBuffer, VkPipelineBindPoint pipelineBindPoint ) {
+void MOAIGfxComposerVK::ApplyAndBind (  MOAIGfxMgrVK& gfxMgr, MOAICommandBufferVK& commandBuffer, VkPipelineBindPoint pipelineBindPoint ) {
+
+	gfxMgr.GfxStateWillChange (); // TODO: need to do this only if graphics state will actually change
 
 	// TODO: pass in listener to detect changes (to invalidate graphics cache)
 
@@ -55,7 +55,7 @@ void MOAIGfxComposerVK::ApplyAndBind ( MOAICommandBufferVK& commandBuffer, VkPip
 		MOAIGfxComposerCommandVK* command = this->mCommands [ i ];
 		if ( command ) {
 			MOAIDescriptorSetVK& descriptorSet = this->mDescriptorSets [ command->mDescriptorSetIndex ];
-			command->Apply ( descriptorSet, commandBuffer );
+			command->Apply ( gfxMgr, descriptorSet, commandBuffer );
 			commandBuffer.BindDescriptorSet ( pipelineBindPoint, *descriptorSet.GetSnapshot ( commandBuffer ), *this->mPipelineLayout, 0 );
 		}
 	}
