@@ -89,3 +89,14 @@ UniformComposer uses global state from GfxMgr (pipeline globals and texture unit
 UniformComposer should have nothing to do with MaterialMgr
 MaterialMgr texture names should map 1:1 OpenGL texture units
 DescriptorSet can pull textures from virtual texture units
+
+2019-12-09:
+    left off with a minimal implementation using Moai pipeline geometry and data.
+    next steps will be to set up pools for re-use pipelines and other command buffer resources (aka "snapshots").
+    also: get the render pass and subpass architecture in place. should work with a "default pass," but need to
+    support user-defined passes with complex bindings.
+
+    may make sense to share the render pass and subpass model across api implementations (VK and GL). is a moai
+    "layer" basically a subpass? as we get into multi-pass, should we cache scene query results during drawing?
+
+    think about moving away from thread-local statics, or at least provide an opt-out.
