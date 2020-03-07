@@ -18,7 +18,7 @@
 //----------------------------------------------------------------//
 void MOAITextLayoutRules::ClearCurves () {
 
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mCurves.Size (); ++i ) {
+	for ( ZLIndex i = 0; i < this->mCurves.Size (); ++i ) {
 		this->ReleaseCurve ( this->mCurves [ i ]);
 	}
 	this->mCurves.Clear ();
@@ -107,7 +107,7 @@ void MOAITextLayoutRules::Init ( const MOAITextLayoutRules& designer ) {
 	
 	u32 totalCurves = ( u32 )designer.mCurves.Size (); // TODO: cast
 	this->ReserveCurves ( totalCurves );
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalCurves; ++i ) {
+	for ( ZLIndex i = 0; i < totalCurves; ++i ) {
 		this->SetCurve ( i, designer.mCurves [ i ]);
 	}
 }

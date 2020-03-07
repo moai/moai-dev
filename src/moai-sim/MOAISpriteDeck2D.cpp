@@ -29,11 +29,11 @@
 int MOAISpriteDeck2D::_getQuad ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAISpriteDeck2D, "U" )
 	
-	ZLIndex quadID = ZLIndexOp::ZERO;
+	ZLIndex quadID = 0;
 	u32 idx = 2;
 	
 	if ( state.GetTop () == 10 ) {
-		quadID = state.GetValue < MOAILuaIndex >( idx++, ZLIndexOp::ZERO );
+		quadID = state.GetValue < MOAILuaIndex >( idx++, 0 );
 	}
 	
 	return quadID < self->mQuads.Size () ? state.Push ( self->mQuads [ quadID ]) : 0;
@@ -53,11 +53,11 @@ int MOAISpriteDeck2D::_getQuad ( lua_State *L ) {
 int MOAISpriteDeck2D::_getRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISpriteDeck2D, "UN" )
 	
-	ZLIndex rectID = ZLIndexOp::ZERO;
+	ZLIndex rectID = 0;
 	u32 idx = 2;
 	
 	if ( state.GetTop () == 10 ) {
-		rectID = state.GetValue < MOAILuaIndex >( idx++, ZLIndexOp::ZERO );
+		rectID = state.GetValue < MOAILuaIndex >( idx++, 0 );
 	}
 	
 	return rectID < self->mQuads.Size () ? state.Push ( self->mQuads [ rectID ].GetFrame ()) : 0;
@@ -82,11 +82,11 @@ int MOAISpriteDeck2D::_getRect ( lua_State* L ) {
 int MOAISpriteDeck2D::_getUVQuad ( lua_State *L ) {
 	MOAI_LUA_SETUP ( MOAISpriteDeck2D, "UN" )
 	
-	ZLIndex quadID = ZLIndexOp::ZERO;
+	ZLIndex quadID = 0;
 	u32 idx = 2;
 	
 	if ( state.GetTop () == 10 ) {
-		quadID = state.GetValue < MOAILuaIndex >( idx++, ZLIndexOp::ZERO );
+		quadID = state.GetValue < MOAILuaIndex >( idx++, 0 );
 	}
 	
 	return quadID < self->mQuads.Size () ? state.Push ( self->mUVQuads [ quadID ]) : 0;
@@ -106,11 +106,11 @@ int MOAISpriteDeck2D::_getUVQuad ( lua_State *L ) {
 int MOAISpriteDeck2D::_getUVRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISpriteDeck2D, "U" )
 	
-	ZLIndex rectID = ZLIndexOp::ZERO;
+	ZLIndex rectID = 0;
 	u32 idx = 2;
 	
 	if ( state.GetTop () == 10 ) {
-		rectID = state.GetValue < MOAILuaIndex >( idx++, ZLIndexOp::ZERO );
+		rectID = state.GetValue < MOAILuaIndex >( idx++, 0 );
 	}
 	
 	return rectID < self->mUVQuads.Size () ? state.Push ( self->mUVQuads [ rectID ].GetFrame ()) : 0;
@@ -204,11 +204,11 @@ int MOAISpriteDeck2D::_reserveUVQuads ( lua_State* L ) {
 int MOAISpriteDeck2D::_setQuad ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISpriteDeck2D, "U" )
 
-	ZLIndex quadID = ZLIndexOp::ZERO;
+	ZLIndex quadID = 0;
 	u32 idx = 2;
 	
 	if ( state.GetTop () == 10 ) {
-		quadID = state.GetValue < MOAILuaIndex >( idx++, ZLIndexOp::ZERO );
+		quadID = state.GetValue < MOAILuaIndex >( idx++, 0 );
 	}
 	ZLQuad quad = state.GetQuad ( idx );
 
@@ -233,11 +233,11 @@ int MOAISpriteDeck2D::_setQuad ( lua_State* L ) {
 int MOAISpriteDeck2D::_setRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISpriteDeck2D, "U" )
 
-	ZLIndex rectID = ZLIndexOp::ZERO;
+	ZLIndex rectID = 0;
 	u32 idx = 2;
 	
 	if ( state.GetTop () == 6 ) {
-		rectID = state.GetValue < MOAILuaIndex >( idx++, ZLIndexOp::ZERO );
+		rectID = state.GetValue < MOAILuaIndex >( idx++, 0 );
 	}
 	ZLRect rect = state.GetRect < float >( idx );
 
@@ -261,10 +261,10 @@ int MOAISpriteDeck2D::_setRect ( lua_State* L ) {
 int MOAISpriteDeck2D::_setSprite ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISpriteDeck2D, "UNNN" )
 
-	ZLIndex idx			= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-	ZLIndex uvQuadID	= state.GetValue < MOAILuaIndex >( 3, ZLIndexOp::ZERO );
-	ZLIndex quadID		= state.GetValue < MOAILuaIndex >( 4, ZLIndexOp::ZERO );
-	ZLIndex materialID	= state.GetValue < MOAILuaIndex >( 5, ZLIndexOp::ZERO );
+	ZLIndex idx			= state.GetValue < MOAILuaIndex >( 2, 0 );
+	ZLIndex uvQuadID	= state.GetValue < MOAILuaIndex >( 3, 0 );
+	ZLIndex quadID		= state.GetValue < MOAILuaIndex >( 4, 0 );
+	ZLIndex materialID	= state.GetValue < MOAILuaIndex >( 5, 0 );
 	
 	self->SetPair ( idx, uvQuadID, quadID, materialID );
 
@@ -287,8 +287,8 @@ int MOAISpriteDeck2D::_setSprite ( lua_State* L ) {
 int MOAISpriteDeck2D::_setSpriteList ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISpriteDeck2D, "UNNN" )
 
-	ZLIndex idx			= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-	ZLIndex basePairID	= state.GetValue < MOAILuaIndex >( 3, ZLIndexOp::ZERO );
+	ZLIndex idx			= state.GetValue < MOAILuaIndex >( 2, 0 );
+	ZLIndex basePairID	= state.GetValue < MOAILuaIndex >( 3, 0 );
 	ZLSize totalPairs	= state.GetValue < MOAILuaSize >( 4, 0 );
 
 	self->SetList ( idx, basePairID, totalPairs );
@@ -316,11 +316,11 @@ int MOAISpriteDeck2D::_setSpriteList ( lua_State* L ) {
 int MOAISpriteDeck2D::_setUVQuad ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISpriteDeck2D, "U" )
 
-	ZLIndex quadID = ZLIndexOp::ZERO;
+	ZLIndex quadID = 0;
 	u32 idx = 2;
 	
 	if ( state.GetTop () == 10 ) {
-		quadID = state.GetValue < MOAILuaIndex >( idx++, ZLIndexOp::ZERO );
+		quadID = state.GetValue < MOAILuaIndex >( idx++, 0 );
 	}
 	ZLQuad quad = state.GetQuad ( idx );
 
@@ -344,11 +344,11 @@ int MOAISpriteDeck2D::_setUVQuad ( lua_State* L ) {
 int MOAISpriteDeck2D::_setUVRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISpriteDeck2D, "U" )
 
-	ZLIndex rectID = ZLIndexOp::ZERO;
+	ZLIndex rectID = 0;
 	u32 idx = 2;
 	
 	if ( state.GetTop () == 6 ) {
-		rectID = state.GetValue < MOAILuaIndex >( idx++, ZLIndexOp::ZERO );
+		rectID = state.GetValue < MOAILuaIndex >( idx++, 0 );
 	}
 	ZLRect rect = state.GetRect < float >( idx );
 
@@ -415,14 +415,14 @@ MOAIDeck* MOAISpriteDeck2D::AffirmDeck ( MOAILuaState& state, int idx ) {
 	
 		assert ( quadDeck );
 		
-		batch.AffirmMaterial ( ZLIndexOp::ZERO ).SetTexture ( texture );
+		batch.AffirmMaterial ( 0 ).SetTexture ( texture );
 		
 		int hWidth = ( int )( texture->GetWidth () / 2 );
 		int hHeight = ( int )( texture->GetHeight () / 2 );
 		
 		ZLRect rect;
 		rect.Init ( (float) -hWidth, (float) -hHeight, (float) hWidth, (float) hHeight );
-		quadDeck->SetRect ( ZLIndexOp::ZERO, rect );
+		quadDeck->SetRect ( 0, rect );
 		
 		return quadDeck;
 	}
@@ -492,8 +492,8 @@ void MOAISpriteDeck2D::ReservePairs ( ZLSize total ) {
 	this->mSprites.Init ( total );
 	
 	MOAISprite zero;
-	zero.mQuadID		= ZLIndexOp::ZERO;
-	zero.mUVQuadID		= ZLIndexOp::ZERO;
+	zero.mQuadID		= 0;
+	zero.mUVQuadID		= 0;
 	
 	this->mSprites.Fill ( zero );
 }
@@ -563,7 +563,7 @@ void MOAISpriteDeck2D::SetUVRect ( ZLIndex idx, ZLRect& rect ) {
 void MOAISpriteDeck2D::Transform ( const ZLAffine3D& mtx ) {
 
 	ZLSize total = this->mQuads.Size ();
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < total; ++i ) {
+	for ( ZLIndex i = 0; i < total; ++i ) {
 		this->mQuads [ i ].Transform ( mtx );
 	}
 }
@@ -572,7 +572,7 @@ void MOAISpriteDeck2D::Transform ( const ZLAffine3D& mtx ) {
 void MOAISpriteDeck2D::TransformUV ( const ZLAffine3D& mtx ) {
 
 	ZLSize total = this->mQuads.Size ();
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < total; ++i ) {
+	for ( ZLIndex i = 0; i < total; ++i ) {
 		this->mUVQuads [ i ].Transform ( mtx );
 	}
 }
@@ -589,8 +589,8 @@ ZLBounds MOAISpriteDeck2D::MOAIDeck_ComputeMaxAABB () {
 	if ( size ) {
 	
 		ZLRect frame;
-		for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
-			frame.Grow ( this->mQuads [ i ].GetFrame (), i > ZLIndexOp::ZERO );
+		for ( ZLIndex i = 0; i < size; ++i ) {
+			frame.Grow ( this->mQuads [ i ].GetFrame (), i > 0 );
 		}
 		
 		ZLBounds bounds;
@@ -683,7 +683,7 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 		}
 		else {
 		
-			material = this->GetMaterial ( ZLIndexOp::ZERO );
+			material = this->GetMaterial ( 0 );
 			
 			quadBrush.mModelQuad.Init ( -0.5f, -0.5f, 0.5f, 0.5f );
 			quadBrush.mUVQuad.Init ( 0.0f, 1.0f, 1.0f, 0.0f );

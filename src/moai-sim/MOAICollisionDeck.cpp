@@ -24,7 +24,7 @@ int MOAICollisionDeck::_reserveShapes ( lua_State* L ) {
 int MOAICollisionDeck::_setBox ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICollisionDeck, "U" )
 	
-	ZLIndex idx = state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex idx = state.GetValue < MOAILuaIndex >( 2, 0 );
 	ZLBox box = state.GetBox ( 3 );
 	
 	self->SetBox ( idx, box );
@@ -37,7 +37,7 @@ int MOAICollisionDeck::_setBox ( lua_State* L ) {
 int MOAICollisionDeck::_setRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICollisionDeck, "U" )
 	
-	ZLIndex idx = state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex idx = state.GetValue < MOAILuaIndex >( 2, 0 );
 	ZLRect rect = state.GetRect < float >( 3 );
 	
 	self->SetRect ( idx, rect );
@@ -50,7 +50,7 @@ int MOAICollisionDeck::_setRect ( lua_State* L ) {
 int MOAICollisionDeck::_setQuad ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICollisionDeck, "U" )
 	
-	ZLIndex idx = state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex idx = state.GetValue < MOAILuaIndex >( 2, 0 );
 	
 	ZLQuad quad;
 	
@@ -111,7 +111,7 @@ void MOAICollisionDeck::ReserveShapes ( u32 totalShapes ) {
 void MOAICollisionDeck::SetBox ( ZLIndex idx, const ZLBox& box ) {
 
 	if ( this->mShapes.CheckIndex ( idx )) {
-		this->AffirmShape ( idx ).Set ( ZLIndexOp::ZERO, box );
+		this->AffirmShape ( idx ).Set ( 0, box );
 	}
 }
 
@@ -119,7 +119,7 @@ void MOAICollisionDeck::SetBox ( ZLIndex idx, const ZLBox& box ) {
 void MOAICollisionDeck::SetRect ( ZLIndex idx, const ZLRect& rect ) {
 
 	if ( this->mShapes.CheckIndex ( idx )) {
-		this->AffirmShape ( idx ).Set ( ZLIndexOp::ZERO, rect );
+		this->AffirmShape ( idx ).Set ( 0, rect );
 	}
 }
 
@@ -127,7 +127,7 @@ void MOAICollisionDeck::SetRect ( ZLIndex idx, const ZLRect& rect ) {
 void MOAICollisionDeck::SetQuad ( ZLIndex idx, const ZLQuad& quad ) {
 
 	if ( this->mShapes.CheckIndex ( idx )) {
-		this->AffirmShape ( idx ).Set ( ZLIndexOp::ZERO, quad );
+		this->AffirmShape ( idx ).Set ( 0, quad );
 	}
 }
 
@@ -138,7 +138,7 @@ void MOAICollisionDeck::SetQuad ( ZLIndex idx, const ZLQuad& quad ) {
 //----------------------------------------------------------------//
 ZLBounds MOAICollisionDeck::MOAIDeck_ComputeMaxAABB () {
 
-	return this->MOAIDeck::GetBounds ( ZLIndexOp::ZERO );
+	return this->MOAIDeck::GetBounds ( 0 );
 }
 
 //----------------------------------------------------------------//

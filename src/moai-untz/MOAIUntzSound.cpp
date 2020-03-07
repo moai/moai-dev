@@ -193,7 +193,7 @@ int MOAIUntzSound::_moveVolume ( lua_State* L ) {
 		MOAIEaseDriver* action = new MOAIEaseDriver ();
 		action->ReserveLinks ( 1 );
 		
-		action->SetLink ( ZLIndexOp::ZERO, self, AttrID::Pack ( ATTR_VOLUME ), volume, mode );
+		action->SetLink ( 0, self, AttrID::Pack ( ATTR_VOLUME ), volume, mode );
 		
 		action->SetSpan ( delay );
 		action->Start ( 0, false );
@@ -265,7 +265,7 @@ int MOAIUntzSound::_seekVolume ( lua_State* L ) {
 		MOAIEaseDriver* action = new MOAIEaseDriver ();
 		action->ReserveLinks ( 1 );
 		
-		action->SetLink ( ZLIndexOp::ZERO, self, AttrID::Pack ( ATTR_VOLUME ), volume - self->mSound->getVolume (), mode );
+		action->SetLink ( 0, self, AttrID::Pack ( ATTR_VOLUME ), volume - self->mSound->getVolume (), mode );
 		
 		action->SetSpan ( delay );
 		action->Start ( 0, false );

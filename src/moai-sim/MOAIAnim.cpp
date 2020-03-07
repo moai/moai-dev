@@ -87,7 +87,7 @@ int	MOAIAnim::_setLink ( lua_State* L ) {
 	MOAINode* target = state.GetLuaObject < MOAINode >( 4, true );
 	if ( !target ) return 0;
 	
-	ZLIndex linkID				= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex linkID				= state.GetValue < MOAILuaIndex >( 2, 0 );
 	MOAIAnimCurve* curve		= state.GetLuaObject < MOAIAnimCurve >( 3, true );
 	ZLAttrID attrID			= ZLAttrID::FromRaw ( state.GetValue < u32 >( 5, 0 ));
 	bool relative				= state.GetValue < bool >( 6, false );
@@ -107,7 +107,7 @@ void MOAIAnim::Apply ( float t ) {
 	ZLAttribute attr;
 	
 	ZLSize total = this->mLinks.Size ();
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < total; ++i ) {
+	for ( ZLIndex i = 0; i < total; ++i ) {
 		
 		MOAIAnimLink& link = this->mLinks [ i ];
 		MOAIAnimCurve* curve = link.mCurve;
@@ -135,7 +135,7 @@ void MOAIAnim::Apply ( float t0, float t1 ) {
 	ZLAttribute attr;
 	
 	u32 total = ( u32 )this->mLinks.Size ();
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < total; ++i ) {
+	for ( ZLIndex i = 0; i < total; ++i ) {
 		
 		MOAIAnimLink& link = this->mLinks [ i ];
 		MOAIAnimCurve* curve = link.mCurve;
@@ -166,7 +166,7 @@ void MOAIAnim::Clear () {
 //----------------------------------------------------------------//
 void MOAIAnim::ClearLinks () {
 
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mLinks.Size (); ++i ) {
+	for ( ZLIndex i = 0; i < this->mLinks.Size (); ++i ) {
 		MOAIAnimLink& link = this->mLinks [ i ];
 		link.mCurve.Set ( *this, 0 );
 		link.mTarget.Set ( *this, 0 );

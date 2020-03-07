@@ -94,7 +94,7 @@ void MOAIAudioSamplerCocoa::Clear () {
 	
         AudioQueueDispose ( this->mQueue, TRUE );
 
-		for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mBuffers.Size (); i++ ) {
+		for ( ZLIndex i = 0; i < this->mBuffers.Size (); i++ ) {
 			AudioQueueFreeBuffer ( this->mQueue, this->mBuffers [ i ]);
 		}
 		this->mQueue = 0;
@@ -204,7 +204,7 @@ void MOAIAudioSamplerCocoa::Init ( u32 sampleRate, u32 channels, u32 sampleSize,
     // where
 	this->mBuffers.Init ( totalBuffers );
 	
-    for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mBuffers.Size (); ++i ){
+    for ( ZLIndex i = 0; i < this->mBuffers.Size (); ++i ){
 	
         result = AudioQueueAllocateBuffer ( this->mQueue, ( UInt32 )bufsize, &this->mBuffers [ i ]);
         if ( result ){
@@ -303,7 +303,7 @@ void MOAIAudioSamplerCocoa::Start () {
 
 	if ( !this->mIsRunning ) {
 	 
-        for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mBuffers.Size (); ++i ) {
+        for ( ZLIndex i = 0; i < this->mBuffers.Size (); ++i ) {
 		
             OSStatus result = AudioQueueEnqueueBuffer ( this->mQueue, this->mBuffers [ i ], 0, NULL );
 			

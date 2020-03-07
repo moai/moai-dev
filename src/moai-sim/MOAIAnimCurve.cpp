@@ -96,7 +96,7 @@ ZLIndex MOAIAnimCurve::FindKeyID ( float time ) const {
 	MOAIAnimKey key;
 	key.mTime = time;
 	
-	return ZLIndexCast ( ZLBinarySearchNearest < MOAIAnimKey >( this->mKeys.GetBuffer (), key, ( u32 )this->mKeys.Size ()) );
+	return ZLBinarySearchNearest < MOAIAnimKey >( this->mKeys.GetBuffer (), key, ( u32 )this->mKeys.Size ());
 }
 
 //----------------------------------------------------------------//
@@ -126,7 +126,7 @@ ZLReal MOAIAnimCurve::GetLength () const {
 
 	ZLSize total = this->mKeys.Size ();
 	if ( total == 0 ) return 0.0f;
-	return this->mKeys [ ZLIndexCast ( total - 1 )].mTime - this->mKeys [ ZLIndexOp::ZERO ].mTime;
+	return this->mKeys [ total - 1 ].mTime - this->mKeys [ 0 ].mTime;
 }
 
 //----------------------------------------------------------------//
@@ -215,7 +215,7 @@ u32 MOAIAnimCurve::Size () const {
 // in APPEND mode, 'repeat' gives the cycle (how many complete spans have elapsed)
 ZLReal MOAIAnimCurve::WrapTime ( ZLReal t, ZLReal &repeat ) const {
 
-	ZLReal startTime = this->mKeys [ ZLIndexOp::ZERO ].mTime;
+	ZLReal startTime = this->mKeys [ 0 ].mTime;
 	ZLReal length = GetLength ();
 
 	ZLReal time = ( t - startTime ) / length; // normalize time

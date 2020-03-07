@@ -21,7 +21,7 @@ ZLGfxRetained* MOAIDisplayListQueueGL::GetDisplayList () {
 		return this->mFreeDisplayLists.Pop ();
 	}
 	
-	ZLIndex idx = ZLIndexCast ( this->mDisplayLists.Size () );
+	ZLIndex idx = this->mDisplayLists.Size ();
 	this->mDisplayLists.Grow (( ZLSize )idx + 1 );
 	this->mDisplayLists [ idx ] = new ZLGfxRetained ();
 	return this->mDisplayLists [ idx ];
@@ -44,7 +44,7 @@ MOAIDisplayListQueueGL::MOAIDisplayListQueueGL () :
 //----------------------------------------------------------------//
 MOAIDisplayListQueueGL::~MOAIDisplayListQueueGL () {
 
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mDisplayLists.Size (); ++i ) {
+	for ( ZLIndex i = 0; i < this->mDisplayLists.Size (); ++i ) {
 		delete ( this->mDisplayLists [ i ]);
 	}
 }
@@ -126,7 +126,7 @@ void MOAIDisplayListQueueGL::PhaseEnd ( u32 phase ) {
 void MOAIDisplayListQueueGL::PublishAndReset () {
 
 	ZLSize top = this->mFinishedDisplayLists.GetTop ();
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < top; ++i ) {
+	for ( ZLIndex i = 0; i < top; ++i ) {
 	
 		ZLGfxRetained* list = this->mFinishedDisplayLists [ i ];
 		

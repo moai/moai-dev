@@ -21,14 +21,14 @@ int MOAIStretchPatch2D::_ninePatch ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStretchPatch2D, "U" )
 
 	self->mRows.Init ( 3 );
-	self->SetRow ( ZLIndexCast ( 0 ), 0.25, false );
-	self->SetRow ( ZLIndexCast ( 1 ), 0.50, true );
-	self->SetRow ( ZLIndexCast ( 2 ), 0.25, false );
+	self->SetRow ( 0, 0.25, false );
+	self->SetRow ( 1, 0.50, true );
+	self->SetRow ( 2, 0.25, false );
 
 	self->mCols.Init ( 3 );
-	self->SetColumn ( ZLIndexCast ( 0 ), 0.25, false );
-	self->SetColumn ( ZLIndexCast ( 1 ), 0.50, true );
-	self->SetColumn ( ZLIndexCast ( 2 ), 0.25, false );
+	self->SetColumn ( 0, 0.25, false );
+	self->SetColumn ( 1, 0.50, true );
+	self->SetColumn ( 2, 0.25, false );
 
 	return 0;
 }
@@ -84,7 +84,7 @@ int MOAIStretchPatch2D::_reserveUVRects ( lua_State* L ) {
 	u32 total = state.GetValue < u32 >( 2, 0 );
 	self->mUVRects.Init ( total );
 
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < total; ++i ) {
+	for ( ZLIndex i = 0; i < total; ++i ) {
 		self->mUVRects [ i ].Init ( 0.0f, 1.0f, 1.0f, 0.0f );
 	}
 	return 0;
@@ -103,7 +103,7 @@ int MOAIStretchPatch2D::_reserveUVRects ( lua_State* L ) {
 int MOAIStretchPatch2D::_setColumn ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStretchPatch2D, "UNNB" )
 
-	ZLIndex idx			= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex idx			= state.GetValue < MOAILuaIndex >( 2, 0 );
 	float percent		= state.GetValue < float >( 3, 0.0f );
 	bool canStretch		= state.GetValue < bool >( 4, false );
 
@@ -146,7 +146,7 @@ int MOAIStretchPatch2D::_setRect ( lua_State* L ) {
 int MOAIStretchPatch2D::_setRow ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStretchPatch2D, "UNNB" )
 
-	ZLIndex idx			= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex idx			= state.GetValue < MOAILuaIndex >( 2, 0 );
 	float percent		= state.GetValue < float >( 3, 0.0f );
 	bool canStretch		= state.GetValue < bool >( 4, false );
 
@@ -171,7 +171,7 @@ int MOAIStretchPatch2D::_setRow ( lua_State* L ) {
 int MOAIStretchPatch2D::_setUVRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStretchPatch2D, "UNNNNN" )
 	
-	ZLIndex idx = state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex idx = state.GetValue < MOAILuaIndex >( 2, 0 );
 	
 	if ( MOAILogMgr::CheckIndexPlusOne ( idx, self->mUVRects.Size (), L )) {
 		self->mUVRects [ idx ] = state.GetRect < float >( 3 );
@@ -244,7 +244,7 @@ void MOAIStretchPatch2D::DrawStretch ( ZLIndex idx, float xStretch, float yStret
 	ZLReal y = yMin;
 	ZLReal v = vMin;
 	
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalRows; ++i ) {
+	for ( ZLIndex i = 0; i < totalRows; ++i ) {
 		
 		MOAIStretchPatchSpan& row = this->mRows [ i ];
 		ZLReal vStep = row.mPercent * vSpan;
@@ -260,7 +260,7 @@ void MOAIStretchPatch2D::DrawStretch ( ZLIndex idx, float xStretch, float yStret
 		ZLReal x = xMin;
 		ZLReal u = uMin;
 		
-		for ( ZLIndex j = ZLIndexOp::ZERO; j < totalCols; ++j ) {
+		for ( ZLIndex j = 0; j < totalCols; ++j ) {
 			
 			MOAIStretchPatchSpan& col = this->mCols [ j ];
 			ZLReal uStep = col.mPercent * uSpan;
@@ -310,7 +310,7 @@ void MOAIStretchPatch2D::UpdateParams () {
 	this->mYFlex = 0.0f;
 	
 	size_t totalRows = this->mRows.Size ();
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalRows; ++i ) {
+	for ( ZLIndex i = 0; i < totalRows; ++i ) {
 		MOAIStretchPatchSpan& span = this->mRows [ i ];
 		if ( span.mCanStretch ) {
 			this->mYFlex += span.mPercent;
@@ -324,7 +324,7 @@ void MOAIStretchPatch2D::UpdateParams () {
 	this->mXFlex = 0.0f;
 	
 	size_t totalCols = this->mCols.Size ();
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalCols; ++i ) {
+	for ( ZLIndex i = 0; i < totalCols; ++i ) {
 		MOAIStretchPatchSpan& span = this->mCols [ i ];
 		if ( span.mCanStretch ) {
 			this->mXFlex += span.mPercent;
@@ -364,7 +364,7 @@ void MOAIStretchPatch2D::SetRow ( ZLIndex idx, float percent, bool canStretch ) 
 //----------------------------------------------------------------//
 ZLBounds MOAIStretchPatch2D::MOAIDeck_ComputeMaxAABB () {
 
-	return this->GetBounds ( ZLIndexOp::ZERO );
+	return this->GetBounds ( 0 );
 }
 
 //----------------------------------------------------------------//

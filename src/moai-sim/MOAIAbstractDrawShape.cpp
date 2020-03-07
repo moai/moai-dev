@@ -237,7 +237,7 @@ void MOAIAbstractDrawShape::DrawPolyOutline ( const ZLPolygon2D& poly ) {
 
 	ZLSize size = poly.GetSize ();
 
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
+	for ( ZLIndex i = 0; i < size; ++i ) {
 		const ZLVec2D& v0 = poly.GetVertex ( i );
 		const ZLVec2D& v1 = poly.GetVertex (  ZLIndexOp::AddAndWrap ( i, 1, size ));
 		this->DrawLine ( v0, v1 );

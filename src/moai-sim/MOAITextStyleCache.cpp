@@ -91,7 +91,7 @@ void MOAITextStyleCache::Clear () {
 void MOAITextStyleCache::ClearAnonymousStyles () {
 
 	size_t totalAnonymous = this->mAnonymousStyles.GetTop ();
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalAnonymous; i++ ) {
+	for ( ZLIndex i = 0; i < totalAnonymous; i++ ) {
 	
 		// TODO: replace with a pool
 		delete this->mAnonymousStyles [ i ];

@@ -5,6 +5,7 @@
 #include <zl-util/ZLByteStream.h>
 #include <zl-util/ZLDistance.h>
 #include <zl-util/ZLFloat.h>
+#include <zl-util/ZLIndexOp.h>
 #include <zl-util/ZLIntersect.h>
 #include <zl-util/ZLMemStream.h>
 #include <zl-util/ZLPolygon2D.h>
@@ -372,7 +373,7 @@ public:
 		GHVertex* head = 0;
 		GHVertex* tail = 0;
 		
-		for ( ZLIndex i = ZLIndexOp::ZERO; i < polySize; ++i ) {
+		for ( ZLIndex i = 0; i < polySize; ++i ) {
 		
 			ZLVec2D v0 = poly.GetVertex (  ZLIndexOp::SubtractAndWrap ( i, 1, polySize ));
 			ZLVec2D v1 = poly.GetVertex ( i );
@@ -386,7 +387,7 @@ public:
 			}
 			
 			// skip ahead to find the next unique vertex
-			ZLIndex j = ZLIndexOp::ONE;
+			ZLIndex j = 1;
 			for ( ; (( v1.mX == v2.mX ) && ( v1.mY == v2.mY )) && ( j < polySize ); ++j ) {
 				v2 = poly.GetVertex (  ZLIndexOp::Wrap ( i + j + ( ZLSize )1, polySize ));
 			}
@@ -707,7 +708,7 @@ size_t ZLPolygon2D::Clip ( const ZLPlane2D& plane, ZLStream& clippedPolyVerts, Z
 	
 	if (( pointsFront + pointsOn ) == polySize ) {
 				
-		for ( ZLIndex j = ZLIndexOp::ZERO; j < polySize; ++j ) {
+		for ( ZLIndex j = 0; j < polySize; ++j ) {
 			const ZLVec2D& vert = this->mVertices [ j ];
 			clippedPolyVerts.Write ( vert );
 		}

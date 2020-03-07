@@ -211,7 +211,7 @@ int MOAINode::_getNodeState ( lua_State* L ) {
 //	
 //	if ( self->CheckAttrExists ( attrID )) {
 //	
-//		action->SetLink ( ZLIndexOp::ZERO, self, attrID, value, mode );
+//		action->SetLink ( 0, self, attrID, value, mode );
 //		action->SetSpan ( length );
 //		action->Start ( 0, false );
 //		action->PushLuaUserdata ( state );
@@ -273,7 +273,7 @@ int MOAINode::_scheduleUpdate ( lua_State* L ) {
 //		float delay		= state.GetValue < float >( 4, 0.0f );
 //		u32 mode		= state.GetValue < u32 >( 5, ZLInterpolate::kSmooth );
 //
-//		action->SetLink ( ZLIndexOp::ZERO, self, attrID, value - getter.GetValue ( 0.0f ), mode );
+//		action->SetLink ( 0, self, attrID, value - getter.GetValue ( 0.0f ), mode );
 //
 //		action->SetSpan ( delay );
 //		action->Start ( 0, false );

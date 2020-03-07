@@ -16,7 +16,7 @@
 MOAIUniformComposerGlobalRef::MOAIUniformComposerGlobalRef () :
 	mGlobalID ( ZLIndexOp::INVALID ),
 	mUniformID ( ZLIndexOp::INVALID ),
-	mIndex ( ZLIndexOp::ZERO ) {
+	mIndex ( 0 ) {
 }
 
 //================================================================//
@@ -26,7 +26,7 @@ MOAIUniformComposerGlobalRef::MOAIUniformComposerGlobalRef () :
 //----------------------------------------------------------------//
 MOAIUniformComposerTextureRef::MOAIUniformComposerTextureRef () :
 	mName ( MOAIMaterialGlobals::MOAI_UNKNOWN_MATERIAL_GLOBAL ),
-	mUnit ( ZLIndexOp::ZERO ) {
+	mUnit ( 0 ) {
 }
 
 //================================================================//
@@ -45,7 +45,7 @@ void MOAIUniformComposer::ComposeUniforms ( const MOAIUniformSchema& schema, MOA
 
 	u32 nGlobals = this->mGlobals.Size ();
 
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < nGlobals; ++i ) {
+	for ( ZLIndex i = 0; i < nGlobals; ++i ) {
 	
 		const MOAIUniformComposerGlobalRef& global = this->mGlobals [ i ];
 		
@@ -116,7 +116,7 @@ void MOAIUniformComposer::SelectTextures () {
 	MOAIMaterialMgr& materialMgr = MOAIMaterialMgr::Get ();
 
 	size_t nTextures = this->mTextures.Size ();
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < nTextures; ++i ) {
+	for ( ZLIndex i = 0; i < nTextures; ++i ) {
 
 		MOAIUniformComposerTextureRef& textureRef = this->mTextures [ i ];
 

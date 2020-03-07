@@ -108,12 +108,12 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
 					
 					program->ReserveUniforms ( 2 );
-					program->DeclareUniform ( ZLIndexCast ( 0 ), "xSnap", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT );
-					program->DeclareUniform ( ZLIndexCast ( 1 ), "ySnap", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT );
+					program->DeclareUniform ( 0, "xSnap", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT );
+					program->DeclareUniform ( 1, "ySnap", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT );
 					
 					program->ReserveGlobals ( 2 );
-					program->SetGlobal ( ZLIndexCast ( 0 ), MOAIGfxMgrGL::VIEW_HALF_WIDTH, ZLIndexCast ( 0 ), ZLIndexCast ( 0 ));
-					program->SetGlobal ( ZLIndexCast ( 1 ), MOAIGfxMgrGL::VIEW_HALF_HEIGHT, ZLIndexCast ( 1 ), ZLIndexCast ( 0 ));
+					program->SetGlobal ( 0, MOAIGfxMgrGL::VIEW_HALF_WIDTH, 0, 0);
+					program->SetGlobal ( 1, MOAIGfxMgrGL::VIEW_HALF_HEIGHT, 1, 0);
 					
 					program->Load ( _deck2DSnappingShaderVSH, _deck2DSnappingShaderFSH );
 					break;
@@ -134,12 +134,12 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
 					
 					program->ReserveUniforms ( 2 );
-					program->DeclareUniform ( ZLIndexCast ( 0 ), "xSnap", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT );
-					program->DeclareUniform ( ZLIndexCast ( 1 ), "ySnap", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT );
+					program->DeclareUniform ( 0, "xSnap", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT );
+					program->DeclareUniform ( 1, "ySnap", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT );
 					
 					program->ReserveGlobals ( 2 );
-					program->SetGlobal ( ZLIndexCast ( 0 ), MOAIGfxMgrGL::VIEW_HALF_WIDTH, ZLIndexCast ( 0 ), ZLIndexCast ( 0 ));
-					program->SetGlobal ( ZLIndexCast ( 1 ), MOAIGfxMgrGL::VIEW_HALF_HEIGHT, ZLIndexCast ( 1 ), ZLIndexCast ( 0 ));
+					program->SetGlobal ( 0, MOAIGfxMgrGL::VIEW_HALF_WIDTH, 0, 0);
+					program->SetGlobal ( 1, MOAIGfxMgrGL::VIEW_HALF_HEIGHT, 1, 0);
 					
 					program->Load ( _fontSnappingShaderVSH, _fontSnappingShaderFSH );
 					break;
@@ -157,12 +157,12 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					program->SetVertexAttribute ( 1, "color" );
 					
 					program->ReserveUniforms ( 2 );
-					program->DeclareUniform ( ZLIndexCast ( 0 ), "transform", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT, MOAIUniformDescriptor::UNIFORM_WIDTH_MATRIX_4X4 );
-					program->DeclareUniform ( ZLIndexCast ( 1 ), "ucolor", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT, MOAIUniformDescriptor::UNIFORM_WIDTH_VEC_4 );
+					program->DeclareUniform ( 0, "transform", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT, MOAIUniformDescriptor::UNIFORM_WIDTH_MATRIX_4X4 );
+					program->DeclareUniform ( 1, "ucolor", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT, MOAIUniformDescriptor::UNIFORM_WIDTH_VEC_4 );
 					
 					program->ReserveGlobals ( 2 );
-					program->SetGlobal ( ZLIndexCast ( 0 ), MOAIGfxMgrGL::MODEL_TO_CLIP_MTX, ZLIndexCast ( 0 ), ZLIndexCast ( 0 ));
-					program->SetGlobal ( ZLIndexCast ( 1 ), MOAIGfxMgrGL::PEN_COLOR, ZLIndexCast ( 1 ), ZLIndexCast ( 0 ));
+					program->SetGlobal ( 0, MOAIGfxMgrGL::MODEL_TO_CLIP_MTX, 0, 0);
+					program->SetGlobal ( 1, MOAIGfxMgrGL::PEN_COLOR, 1, 0);
 					
 					program->Load ( _lineShader3DVSH, _lineShader3DFSH );
 					
@@ -175,12 +175,12 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_COLOR, "color" );
 
 					program->ReserveUniforms ( 2 );
-					program->DeclareUniform ( ZLIndexCast ( 0 ), "transform", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT, MOAIUniformDescriptor::UNIFORM_WIDTH_MATRIX_4X4 );
-					program->DeclareUniform ( ZLIndexCast ( 1 ), "ucolor", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT, MOAIUniformDescriptor::UNIFORM_WIDTH_VEC_4 );
+					program->DeclareUniform ( 0, "transform", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT, MOAIUniformDescriptor::UNIFORM_WIDTH_MATRIX_4X4 );
+					program->DeclareUniform ( 1, "ucolor", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT, MOAIUniformDescriptor::UNIFORM_WIDTH_VEC_4 );
 					
 					program->ReserveGlobals ( 2 );
-					program->SetGlobal ( ZLIndexCast ( 0 ), MOAIGfxMgrGL::MODEL_TO_CLIP_MTX, ZLIndexCast ( 0 ), ZLIndexCast ( 0 ));
-					program->SetGlobal ( ZLIndexCast ( 1 ), MOAIGfxMgrGL::PEN_COLOR, ZLIndexCast ( 1 ), ZLIndexCast ( 0 ));
+					program->SetGlobal ( 0, MOAIGfxMgrGL::MODEL_TO_CLIP_MTX, 0, 0);
+					program->SetGlobal ( 1, MOAIGfxMgrGL::PEN_COLOR, 1, 0);
 					
 					program->Load ( _meshShaderVSH, _meshShaderFSH );
 					

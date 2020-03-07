@@ -66,7 +66,7 @@ VkPresentModeKHR MOAIPhysicalDeviceVK::FindPresentMode () {
 
 	size_t bestScore = 0;
 	VkPresentModeKHR bestPresentMode;
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mPresentModes.Size (); ++i ) {
+	for ( ZLIndex i = 0; i < this->mPresentModes.Size (); ++i ) {
 	
 		VkPresentModeKHR comp = this->mPresentModes [ i ];
 		size_t score = MOAIPhysicalDeviceVK::ScorePresentMode ( comp );
@@ -86,7 +86,7 @@ bool MOAIPhysicalDeviceVK::FindQueue ( u32& queueIndex, u32 criteria, u32 exclud
 	queueIndex = ( u32 )-1;
 	bool found = false;
 	
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mQueueFamilyProperties.Size (); ++i ) {
+	for ( ZLIndex i = 0; i < this->mQueueFamilyProperties.Size (); ++i ) {
 		
 		u32 queueFlags = this->GetQueueFlags ( i );
 		
@@ -152,7 +152,7 @@ void MOAIPhysicalDeviceVK::FindQueues ( MOAIGfxQueueSetVK& queueSet, VkQueueFlag
 	queueSet.mCreateInfos.Init ( foundSet.size ());
 	
 	STLSet < u32 >::const_iterator foundSetIt = foundSet.cbegin ();
-	for ( ZLIndex i = ZLIndexOp::ZERO; foundSetIt != foundSet.cend (); ++foundSetIt, ++i ) {
+	for ( ZLIndex i = 0; foundSetIt != foundSet.cend (); ++foundSetIt, ++i ) {
 		queueSet.mCreateInfos [ i ] = MOAIGfxStructVK::deviceQueueCreateInfo ( *foundSetIt );
 		queueSet.mQueueTypes |= this->mQueueFamilyProperties [ i ].queueFlags;
 	}
@@ -166,13 +166,13 @@ VkSurfaceFormatKHR MOAIPhysicalDeviceVK::FindSurfaceFormat ( VkFormat colorForma
 
 	if ( !this->mSurfaceFormats.Size ()) return format;
 
-	if (( this->mSurfaceFormats.Size () == 1 ) && ( this->mSurfaceFormats [ ZLIndexOp::ZERO ].format == VK_FORMAT_UNDEFINED )) {
+	if (( this->mSurfaceFormats.Size () == 1 ) && ( this->mSurfaceFormats [ 0 ].format == VK_FORMAT_UNDEFINED )) {
 		format.format = VK_FORMAT_B8G8R8A8_UNORM;
-		format.colorSpace = this->mSurfaceFormats [ ZLIndexOp::ZERO ].colorSpace;
+		format.colorSpace = this->mSurfaceFormats [ 0 ].colorSpace;
 		return format;
 	}
 
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mSurfaceFormats.Size (); ++i ) {
+	for ( ZLIndex i = 0; i < this->mSurfaceFormats.Size (); ++i ) {
 		const VkSurfaceFormatKHR& comp = this->mSurfaceFormats [ i ];
 		if ( comp.format == colorFormat ){
 		
@@ -307,7 +307,7 @@ void MOAIPhysicalDeviceVK::InitQueueFamilyProperties ( MOAIGfxInstanceVK& instan
 	this->mQueueFlags = 0;
 	this->mSupportsPresent = true;
 
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < queueCount; ++i ) {
+	for ( ZLIndex i = 0; i < queueCount; ++i ) {
 	
 		VkBool32 supportsPresent = false;
 		if ( surface ) {
@@ -334,7 +334,7 @@ void MOAIPhysicalDeviceVK::InitSupportedExtensions () {
 	extensions.Init ( extCount );
 	
 	if ( vkEnumerateDeviceExtensionProperties ( this->mDevice, NULL, &extCount, extensions.GetBuffer ()) == VK_SUCCESS ) {
-		for ( ZLIndex i = ZLIndexOp::ZERO; i < extCount; ++i ) {
+		for ( ZLIndex i = 0; i < extCount; ++i ) {
 			this->mSupportedExtensions.insert ( extensions [ i ].extensionName );
 		}
 	}
@@ -372,7 +372,7 @@ MOAIPhysicalDeviceVK::MOAIPhysicalDeviceVK () :
 MOAIPhysicalDeviceVK::~MOAIPhysicalDeviceVK () {
 
 	//	if ( this->mSwapChain != VK_NULL_HANDLE ) {
-	//		for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mImages.Size (); ++i ) {
+	//		for ( ZLIndex i = 0; i < this->mImages.Size (); ++i ) {
 	//			vkDestroyImageView ( logicalDevice, this->mBuffers [ i ].view, NULL );
 	//		}
 	//		logicalDevice.DestroySwapchainKHR ( this->mSwapChain, NULL );

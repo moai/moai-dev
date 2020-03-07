@@ -42,32 +42,32 @@ MOAIVertexFormat* MOAIVertexFormatMgr::GetFormat ( MOAIVertexFormatPresetEnum fo
 			switch ( formatID ) {
 				
 				case MOAIVertexFormatPresetEnum::XYZC:
-					format->DeclareAttribute ( ZLIndexCast ( XYZC_POSITION ), MOAIGfxTypeEnum::FLOAT, 3, MOAIVertexFormat::ATTRIBUTE_COORD, false );
-					format->DeclareAttribute ( ZLIndexCast ( XYZC_COLOR ), MOAIGfxTypeEnum::UNSIGNED_BYTE, 4, MOAIVertexFormat::ATTRIBUTE_COLOR, true );
+					format->DeclareAttribute ( XYZC_POSITION, MOAIGfxTypeEnum::FLOAT, 3, MOAIVertexFormat::ATTRIBUTE_COORD, false );
+					format->DeclareAttribute ( XYZC_COLOR, MOAIGfxTypeEnum::UNSIGNED_BYTE, 4, MOAIVertexFormat::ATTRIBUTE_COLOR, true );
 					break;
 				
 				case MOAIVertexFormatPresetEnum::XYZWC:
-					format->DeclareAttribute ( ZLIndexCast ( XYZWC_POSITION ), MOAIGfxTypeEnum::FLOAT, 4, MOAIVertexFormat::ATTRIBUTE_COORD, false );
-					format->DeclareAttribute ( ZLIndexCast ( XYZWC_COLOR ), MOAIGfxTypeEnum::UNSIGNED_BYTE, 4, MOAIVertexFormat::ATTRIBUTE_COLOR, true );
+					format->DeclareAttribute ( XYZWC_POSITION, MOAIGfxTypeEnum::FLOAT, 4, MOAIVertexFormat::ATTRIBUTE_COORD, false );
+					format->DeclareAttribute ( XYZWC_COLOR, MOAIGfxTypeEnum::UNSIGNED_BYTE, 4, MOAIVertexFormat::ATTRIBUTE_COLOR, true );
 					break;
 				
 				case MOAIVertexFormatPresetEnum::XYZWUVC:
-					format->DeclareAttribute ( ZLIndexCast ( XYZWUVC_POSITION ), MOAIGfxTypeEnum::FLOAT, 4, MOAIVertexFormat::ATTRIBUTE_COORD, false );
-					format->DeclareAttribute ( ZLIndexCast ( XYZWUVC_TEXCOORD ), MOAIGfxTypeEnum::FLOAT, 2, MOAIVertexFormat::ATTRIBUTE_TEX_COORD, false );
-					format->DeclareAttribute ( ZLIndexCast ( XYZWUVC_COLOR ), MOAIGfxTypeEnum::UNSIGNED_BYTE, 4, MOAIVertexFormat::ATTRIBUTE_COLOR, true );
+					format->DeclareAttribute ( XYZWUVC_POSITION, MOAIGfxTypeEnum::FLOAT, 4, MOAIVertexFormat::ATTRIBUTE_COORD, false );
+					format->DeclareAttribute ( XYZWUVC_TEXCOORD, MOAIGfxTypeEnum::FLOAT, 2, MOAIVertexFormat::ATTRIBUTE_TEX_COORD, false );
+					format->DeclareAttribute ( XYZWUVC_COLOR, MOAIGfxTypeEnum::UNSIGNED_BYTE, 4, MOAIVertexFormat::ATTRIBUTE_COLOR, true );
 					break;
 				
 				case MOAIVertexFormatPresetEnum::XYZWNNNC:
-					format->DeclareAttribute ( ZLIndexCast ( XYZWNNNC_POSITION ), MOAIGfxTypeEnum::FLOAT, 4, MOAIVertexFormat::ATTRIBUTE_COORD, false );
-					format->DeclareAttribute ( ZLIndexCast ( XYZWNNNC_NORMAL ), MOAIGfxTypeEnum::FLOAT, 3, MOAIVertexFormat::ATTRIBUTE_NORMAL, false );
-					format->DeclareAttribute ( ZLIndexCast ( XYZWNNNC_COLOR ), MOAIGfxTypeEnum::UNSIGNED_BYTE, 4, MOAIVertexFormat::ATTRIBUTE_COLOR, true );
+					format->DeclareAttribute ( XYZWNNNC_POSITION, MOAIGfxTypeEnum::FLOAT, 4, MOAIVertexFormat::ATTRIBUTE_COORD, false );
+					format->DeclareAttribute ( XYZWNNNC_NORMAL, MOAIGfxTypeEnum::FLOAT, 3, MOAIVertexFormat::ATTRIBUTE_NORMAL, false );
+					format->DeclareAttribute ( XYZWNNNC_COLOR, MOAIGfxTypeEnum::UNSIGNED_BYTE, 4, MOAIVertexFormat::ATTRIBUTE_COLOR, true );
 					break;
 				
 				case MOAIVertexFormatPresetEnum::XYZWNNNUVC:
-					format->DeclareAttribute ( ZLIndexCast ( XYZWNNNUVC_POSITION ), MOAIGfxTypeEnum::FLOAT, 4, MOAIVertexFormat::ATTRIBUTE_COORD, false );
-					format->DeclareAttribute ( ZLIndexCast ( XYZWNNNUVC_NORMAL ), MOAIGfxTypeEnum::FLOAT, 3, MOAIVertexFormat::ATTRIBUTE_NORMAL, false );
-					format->DeclareAttribute ( ZLIndexCast ( XYZWNNNUVC_TEXCOORD ), MOAIGfxTypeEnum::FLOAT, 2, MOAIVertexFormat::ATTRIBUTE_TEX_COORD, false );
-					format->DeclareAttribute ( ZLIndexCast ( XYZWNNNUVC_COLOR ), MOAIGfxTypeEnum::UNSIGNED_BYTE, 4, MOAIVertexFormat::ATTRIBUTE_COLOR, true );
+					format->DeclareAttribute ( XYZWNNNUVC_POSITION, MOAIGfxTypeEnum::FLOAT, 4, MOAIVertexFormat::ATTRIBUTE_COORD, false );
+					format->DeclareAttribute ( XYZWNNNUVC_NORMAL, MOAIGfxTypeEnum::FLOAT, 3, MOAIVertexFormat::ATTRIBUTE_NORMAL, false );
+					format->DeclareAttribute ( XYZWNNNUVC_TEXCOORD, MOAIGfxTypeEnum::FLOAT, 2, MOAIVertexFormat::ATTRIBUTE_TEX_COORD, false );
+					format->DeclareAttribute ( XYZWNNNUVC_COLOR, MOAIGfxTypeEnum::UNSIGNED_BYTE, 4, MOAIVertexFormat::ATTRIBUTE_COLOR, true );
 					break;
 			}
 			

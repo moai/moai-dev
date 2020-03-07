@@ -14,7 +14,7 @@ VkResult MOAILogicalDeviceVK::AcquireNextImageKHR ( VkSwapchainKHR swapchain, ui
 
 	u32 index32 = 0;
 	VkResult result = this->mAcquireNextImageKHR ( this->mDevice, swapchain, timeout, semaphore, fence, &index32 );
-	index = ZLIndexCast ( index );
+	index = index;
 	return result;
 }
 

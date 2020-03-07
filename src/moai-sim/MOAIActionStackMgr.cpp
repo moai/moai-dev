@@ -12,7 +12,7 @@
 MOAIAction* MOAIActionStackMgr::GetCurrent () {
 
 	ZLSize top = this->mStack.GetTop ();
-	return top > 0 ? this->mStack [ ZLIndexCast ( top - 1 )] : 0;
+	return top > 0 ? this->mStack [ top - 1 ] : 0;
 }
 
 //----------------------------------------------------------------//

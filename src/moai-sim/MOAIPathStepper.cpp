@@ -60,7 +60,7 @@ MOAIPathStepper::MOAIPathStepper () :
 	mStepSize ( 0.0f ),
 	mEdgeBase ( 0.0f ),
 	mEdgeLength ( 0.0f ),
-	mSegmentIdx ( ZLIndexOp::ZERO ),
+	mSegmentIdx ( 0 ),
 	mTotalSegments ( 0 ),
 	mLength ( 0.0f ) {
 	
@@ -150,8 +150,8 @@ void MOAIPathStepper::Start ( MOAIPath& path, float stepSize ) {
 	this->mTotalSegments = path.CountSegments ();
 	this->mLength = path.GetLength ();
 	
-	this->mSegmentIdx = ZLIndexOp::ZERO;
-	this->mFlattener.Init ( this->mPath->GetSegment ( ZLIndexOp::ZERO ));
+	this->mSegmentIdx = 0;
+	this->mFlattener.Init ( this->mPath->GetSegment ( 0 ));
 	
 	this->mStepCount = 0;
 	this->mTotalSteps = ( u32 )( this->mLength / stepSize );

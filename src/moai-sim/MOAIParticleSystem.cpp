@@ -70,7 +70,7 @@ int MOAIParticleSystem::_clearSprites ( lua_State* L ) {
 int MOAIParticleSystem::_getState ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleSystem, "UN" )
 
-	ZLIndex idx = state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex idx = state.GetValue < MOAILuaIndex >( 2, 0 );
 	
 	MOAIParticleState* particleState = self->GetState ( idx );
 	if ( particleState ) {
@@ -120,7 +120,7 @@ int MOAIParticleSystem::_pushParticle ( lua_State* L ) {
 	float dx = state.GetValue < float >( 4, 0.0f );
 	float dy = state.GetValue < float >( 5, 0.0f );
 
-	ZLIndex stateIdx = state.GetValue < MOAILuaIndex >( 6, ZLIndexOp::ZERO );
+	ZLIndex stateIdx = state.GetValue < MOAILuaIndex >( 6, 0 );
 
 	bool result = self->PushParticle ( x, y, dx, dy, stateIdx );
 	lua_pushboolean ( state, result );
@@ -156,7 +156,7 @@ int MOAIParticleSystem::_pushSprite ( lua_State* L ) {
 	sprite.mBlue		= 1.0f;
 	sprite.mAlpha		= 1.0f;
 	
-	sprite.mGfxID		= ZLIndexOp::ONE;
+	sprite.mGfxID		= 1;
 	
 	bool result = self->PushSprite ( sprite );
 	
@@ -286,7 +286,7 @@ int MOAIParticleSystem::_setSpriteDeckIdx ( lua_State* L ) {
 
 	AKUParticleSprite* sprite = self->GetTopSprite ();
 	if ( sprite ) {
-		sprite->mGfxID = ZLIndexCast ( state.GetValue < u32 >( 2, sprite->mGfxID ) ); // TODO: this is suspicious. are thes indexed from one?
+		sprite->mGfxID = state.GetValue < u32 >( 2, sprite->mGfxID ); // TODO: this is suspicious. are thes indexed from one?
 	}
 	return 0;
 }
@@ -303,7 +303,7 @@ int MOAIParticleSystem::_setSpriteDeckIdx ( lua_State* L ) {
 int MOAIParticleSystem::_setState ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIParticleSystem, "UNU" )
 
-	ZLIndex idx = ZLIndexCast ( state.GetValue < u32 >( 2, 0 ) - 1 );
+	ZLIndex idx = state.GetValue < u32 >( 2, 0 ) - 1;
 
 	if ( idx < self->mStates.Size ()) {
 	
@@ -353,7 +353,7 @@ int MOAIParticleSystem::_surge ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIParticleSystem::ClearStates () {
 
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mStates.Size (); ++i ) {
+	for ( ZLIndex i = 0; i < this->mStates.Size (); ++i ) {
 		this->LuaRelease ( this->mStates [ i ]);
 	}
 	this->mStates.Clear ();
@@ -393,7 +393,7 @@ MOAIParticleState* MOAIParticleSystem::GetState ( ZLIndex id ) {
 AKUParticleSprite* MOAIParticleSystem::GetTopSprite () {
 
 	if ( this->mSpriteTop ) {
-		ZLIndex idx = ZLIndexCast (( this->mSpriteTop - 1 ) % this->mSprites.Size ());
+		ZLIndex idx = ( this->mSpriteTop - 1 ) % this->mSprites.Size ();
 		return &this->mSprites [ idx ];
 	}
 	return 0;
@@ -418,7 +418,7 @@ MOAIParticleSystem::MOAIParticleSystem () :
 	
 	// prop's index is *added* to particle's index;
 	// should be initialized to 0 instead of 1
-	this->mIndex = ZLIndexOp::ZERO;
+	this->mIndex = 0;
 }
 
 //----------------------------------------------------------------//
@@ -430,13 +430,13 @@ MOAIParticleSystem::~MOAIParticleSystem () {
 //----------------------------------------------------------------//
 bool MOAIParticleSystem::PushParticle ( float x, float y ) {
 	
-	return this->PushParticle ( x, y, 0.0, 0.0, ZLIndexOp::ZERO );
+	return this->PushParticle ( x, y, 0.0, 0.0, 0 );
 }
 
 //----------------------------------------------------------------//
 bool MOAIParticleSystem::PushParticle ( float x, float y, float dx, float dy ) {
 	
-	return this->PushParticle ( x, y, dx, dy, ZLIndexOp::ZERO );
+	return this->PushParticle ( x, y, dx, dy, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -492,7 +492,7 @@ bool MOAIParticleSystem::PushSprite ( const AKUParticleSprite& sprite ) {
 			return false;
 		}
 		
-		ZLIndex idx = ZLIndexCast (( this->mSpriteTop++ ) % size );
+		ZLIndex idx = ( this->mSpriteTop++ ) % size;
 		this->mSprites [ idx ] = sprite;
 		
 		// TODO: need to take rotation into account
@@ -532,7 +532,7 @@ void MOAIParticleSystem::ReserveParticles ( ZLSize maxParticles, ZLSize particle
 	this->mParticleData.Init ( maxParticles * particleSize );
 	this->mParticleData.Fill ( 0.0f );
 	
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < maxParticles; ++i ) {
+	for ( ZLIndex i = 0; i < maxParticles; ++i ) {
 		MOAIParticle& particle = this->mParticles [ i ];
 		particle.mNext = this->mFree;
 		this->mFree = &particle;
@@ -652,10 +652,10 @@ void MOAIParticleSystem::MOAIDrawable_Draw ( int subPrimID ) {
 
 		ZLIndex idx;
 		if ( this->mDrawOrder == ORDER_NORMAL ) {
-			idx = ZLIndexCast (( base + i ) % maxSprites );
+			idx = ( base + i ) % maxSprites;
 		}
 		else {
-			idx = ZLIndexCast (( base + ( total - 1 - i )) % maxSprites );
+			idx = ( base + ( total - 1 - i )) % maxSprites;
 		}
 		
 		AKUParticleSprite& sprite = this->mSprites [ idx ];

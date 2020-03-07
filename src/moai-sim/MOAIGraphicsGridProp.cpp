@@ -150,7 +150,7 @@ void MOAIGraphicsGridProp::DrawGrid ( const MOAICellCoord &c0, const MOAICellCoo
 				gfxMgr.SetPenColor ( penColor * fancyGrid->GetTileColor ( addr ));
 			}
 			
-			this->mDeck->Draw ( ZLIndexCast (( idx & MOAITileFlags::CODE_MASK ) - 1 ));
+			this->mDeck->Draw (( idx & MOAITileFlags::CODE_MASK ) - 1 );
 		}
 	}
 }
@@ -220,7 +220,7 @@ void MOAIGraphicsGridProp::MOAIDrawable_Draw ( int subPrimID ) {
 		this->GetGridFrameInView ( this->GetWorldToLocalMtx (), c0, c1 );
 	}
 	else {
-		c0 = c1 = this->mGrid->GetCellCoord ( ZLIndexCast ( subPrimID ));
+		c0 = c1 = this->mGrid->GetCellCoord ( subPrimID );
 	}
 	
 	this->DrawGrid ( c0, c1 );
@@ -301,7 +301,7 @@ void MOAIGraphicsGridProp::MOAIPartitionHull_AddToSortBuffer ( MOAIPartitionResu
 				ZLVec3D loc;
 				loc.Init ( grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER ));
 				
-				ZLBox aabb = this->mDeck->GetBounds ( ZLIndexCast ( idx )).mAABB;
+				ZLBox aabb = this->mDeck->GetBounds ( idx ).mAABB;
 				aabb.Offset ( loc );
 				
 				mtx.Transform ( loc );

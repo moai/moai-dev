@@ -181,7 +181,7 @@ void MOAITextStyleParser::Parse () {
 	}
 	
 	ZLSize totalActiveStyles = this->mActiveStyles.GetTop ();
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalActiveStyles; ++i ) {
+	for ( ZLIndex i = 0; i < totalActiveStyles; ++i ) {
 		MOAITextStyleState* style = this->mActiveStyles [ i ];
 		assert ( style->mFont );
 		style->mFont->ProcessGlyphs ();
@@ -358,7 +358,7 @@ void MOAITextStyleParser::PopStyle () {
 
 	if ( this->mStyleStack.GetTop () > 1 ) {
 		this->mStyleStack.Pop ();
-		this->mCurrentStyle = this->mStyleStack [ ZLIndexCast ( this->mStyleStack.GetTop () - 1 )];
+		this->mCurrentStyle = this->mStyleStack [ this->mStyleStack.GetTop () - 1 ];
 	}
 }
 
@@ -367,7 +367,7 @@ void MOAITextStyleParser::PushStyle ( MOAITextStyleState* style ) {
 
 	assert ( style );
 	
-	ZLIndex styleID = ZLIndexOp::ZERO;
+	ZLIndex styleID = 0;
 	ZLSize totalStyles = this->mActiveStyles.GetTop (); // TODO: cast
 	for ( ; styleID < totalStyles; ++styleID ) {
 		if ( this->mActiveStyles [ styleID ] == style ) {

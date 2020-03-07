@@ -192,7 +192,7 @@ void MOAIFont::InitWithBMFont ( cc8* filename, const u32 numPreloadedTextures, M
 				texture = texture2D;
 			}
 				
-			glyphCache->SetTexture ( ZLIndexCast ( id ), texture );
+			glyphCache->SetTexture ( id, texture );
 		}
 		else if ( strcmp ( key, "chars" ) == 0 ) {
 			//chars count=95
@@ -234,7 +234,7 @@ void MOAIFont::InitWithBMFont ( cc8* filename, const u32 numPreloadedTextures, M
 				
 				glyph.mSrcX = x;
 				glyph.mSrcY = y;
-				glyph.mPageID = ZLIndexCast ( page );
+				glyph.mPageID = page;
 				glyph.mWidth = width;
 				glyph.mHeight = height;
 				glyph.mAdvanceX = xadv;
@@ -268,7 +268,7 @@ void MOAIFont::InitWithBMFont ( cc8* filename, const u32 numPreloadedTextures, M
 				if ( glyphSet ) {
 					MOAIGlyph& glyph = glyphSet->EditGlyph ( first );
 					
-					ZLIndex i = ZLIndexCast ( glyph.mKernTable.Size ());
+					ZLIndex i = glyph.mKernTable.Size ();
 					glyph.mKernTable.Grow (( ZLSize )i + 1 );
 					glyph.mKernTable [ i ].mName = second;
 					glyph.mKernTable [ i ].mX = amount;

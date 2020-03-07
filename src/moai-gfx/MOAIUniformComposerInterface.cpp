@@ -37,10 +37,10 @@ int MOAIUniformComposerInterface::_reserveTextures ( lua_State* L ) {
 int MOAIUniformComposerInterface::_setGlobal ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIUniformComposerInterface, "UNNN" )
 
-	ZLIndex globalIdx	= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex globalIdx	= state.GetValue < MOAILuaIndex >( 2, 0 );
 	u32 globalID		= state.GetValue < u32 >( 3, MOAIGfxMgr::NULL_GLOBAL );
-	ZLIndex uniformID	= state.GetValue < MOAILuaIndex >( 4, ZLIndexOp::ZERO );
-	ZLIndex index		= state.GetValue < MOAILuaIndex >( 5, ZLIndexOp::ZERO );
+	ZLIndex uniformID	= state.GetValue < MOAILuaIndex >( 4, 0 );
+	ZLIndex index		= state.GetValue < MOAILuaIndex >( 5, 0 );
 	
 	self->SetGlobal ( globalIdx, globalID, uniformID, index );
 
@@ -52,8 +52,8 @@ int MOAIUniformComposerInterface::_setGlobal ( lua_State* L ) {
 int MOAIUniformComposerInterface::_setTexture ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIUniformComposerInterface, "U" )
 	
-	ZLIndex idx		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-	ZLIndex unit	= state.GetValue < MOAILuaIndex >( 3, ZLIndexOp::ZERO );
+	ZLIndex idx		= state.GetValue < MOAILuaIndex >( 2, 0 );
+	ZLIndex unit	= state.GetValue < MOAILuaIndex >( 3, 0 );
 	
 	if ( state.IsType ( 3, LUA_TUSERDATA )) {
 	

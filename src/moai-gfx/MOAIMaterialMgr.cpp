@@ -148,28 +148,28 @@ MOAILight* MOAIMaterialMgr::MOAIAbstractMaterial_ClearGlobals () {
 MOAILight* MOAIMaterialMgr::MOAIAbstractMaterial_GetLight ( u32 name ) {
 
 	assert ( name < MOAIMaterialGlobals::MAX_GLOBAL_TEXTURES );
-	return this->mNamedLights [ ZLIndexCast ( name )].mLight;
+	return this->mNamedLights [ name ].mLight;
 }
 
 //----------------------------------------------------------------//
 MOAITexture* MOAIMaterialMgr::MOAIAbstractMaterial_GetTexture ( u32 name ) {
 
 	assert ( name < MOAIMaterialGlobals::MAX_GLOBAL_TEXTURES );
-	return this->mNamedTextures [ ZLIndexCast ( name )].mTexture;
+	return this->mNamedTextures [ name ].mTexture;
 }
 
 //----------------------------------------------------------------//
 void MOAIMaterialMgr::MOAIAbstractMaterial_SetLight ( u32 name, MOAILight* light ) {
 
 	assert ( name < MOAIMaterialGlobals::MAX_GLOBAL_LIGHTS );
-	this->SetGlobal ( this->mNamedLights [ ZLIndexCast ( name )], light );
+	this->SetGlobal ( this->mNamedLights [ name ], light );
 }
 
 //----------------------------------------------------------------//
 void MOAIMaterialMgr::MOAIAbstractMaterial_SetTexture ( u32 name, MOAITexture* texture ) {
 
 	assert ( name < MOAIMaterialGlobals::MAX_GLOBAL_TEXTURES );
-	this->SetGlobal ( this->mNamedTextures [ ZLIndexCast ( name )], texture );
+	this->SetGlobal ( this->mNamedTextures [ name ], texture );
 }
 
 //----------------------------------------------------------------//

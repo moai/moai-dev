@@ -49,7 +49,7 @@ ZLSharedConstBuffer* MOAIGfxBufferGL::GetBufferForBind ( ZLGfx& gfx ) {
 
 //----------------------------------------------------------------//
 MOAIGfxBufferGL::MOAIGfxBufferGL () :
-	mCurrentVBO ( ZLIndexOp::ZERO ),
+	mCurrentVBO ( 0 ),
 	mTarget ( ZLGfxEnum::BUFFER_TARGET_ARRAY ),
 	mUseVBOs ( false ),
 	mCopyOnUpdate ( false ) {
@@ -75,7 +75,7 @@ void MOAIGfxBufferGL::ReserveVBOs ( ZLSize gpuBuffers ) {
 
 	if ( gpuBuffers ) {
 		this->mVBOs.Resize ( gpuBuffers );
-		this->mCurrentVBO = ZLIndexCast ( gpuBuffers - 1 );
+		this->mCurrentVBO = gpuBuffers - 1;
 	}
 
 	this->MOAIGfxResourceGL::ScheduleForGPUUpdate ();
@@ -109,7 +109,7 @@ bool MOAIGfxBufferGL::MOAIGfxResourceGL_OnGPUCreate () {
 		ZLGfx& gfx = this->mGfxMgr->GetDrawingAPI ();
 		ZLGfxEnum::_ hint = this->mVBOs.Size () > 1 ? ZLGfxEnum::BUFFER_USAGE_STREAM_DRAW : ZLGfxEnum::BUFFER_USAGE_STATIC_DRAW;
 
-		for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVBOs.Size (); ++i ) {
+		for ( ZLIndex i = 0; i < this->mVBOs.Size (); ++i ) {
 			
 			ZLGfxHandle vbo = gfx.CreateBuffer ();
 			
@@ -138,7 +138,7 @@ bool MOAIGfxBufferGL::MOAIGfxResourceGL_OnGPUCreate () {
 //----------------------------------------------------------------//
 void MOAIGfxBufferGL::MOAIGfxResourceGL_OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVBOs.Size (); ++i ) {
+	for ( ZLIndex i = 0; i < this->mVBOs.Size (); ++i ) {
 		this->mGfxMgr->DeleteOrDiscard ( this->mVBOs [ i ], shouldDelete );
 	}
 }

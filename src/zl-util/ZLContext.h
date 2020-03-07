@@ -18,8 +18,8 @@ protected:
 
 	//----------------------------------------------------------------//
 	static ZLIndex GetUniqueID ()	{
-		static ZLSize counter = 0;
-		return ZLIndexCast ( counter++ );
+		static ZLIndex counter = 0;
+		return counter++;
 	};
 };
 
@@ -77,7 +77,7 @@ public:
 		mGlobal ( NULL ),
 		mIsValid ( false ),
 		mAliasOf ( NULL ),
-		mAliasID ( ZLIndexCast ( 0 )) {
+		mAliasID ( 0) {
 	}
 };
 

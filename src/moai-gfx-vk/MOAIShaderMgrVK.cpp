@@ -83,16 +83,16 @@ void MOAIShaderMgrVK::AffirmAll () {
 
 	this->mOneTexDescriptorSetLayout = new MOAIDescriptorSetLayoutVK ();
 	this->mOneTexDescriptorSetLayout->Initialize ( logicalDevice, 1 );
-	this->mOneTexDescriptorSetLayout->SetBinding ( ZLIndexCast ( 0 ), VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT );
+	this->mOneTexDescriptorSetLayout->SetBinding ( 0, VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT );
 	
 	this->mOneTexPipelineLayout = new MOAIPipelineLayoutVK ();
 	this->mOneTexPipelineLayout->Initialize ( logicalDevice, 1 );
-	this->mOneTexPipelineLayout->SetDescriptorSetLayout ( ZLIndexCast ( 0 ), *this->mOneTexDescriptorSetLayout );
+	this->mOneTexPipelineLayout->SetDescriptorSetLayout ( 0, *this->mOneTexDescriptorSetLayout );
 
 	this->mOneTexComposer = new MOAIGfxComposerVK ();
 	this->mOneTexComposer->SetPipelineLayout ( *this->mOneTexPipelineLayout );
 	this->mOneTexComposer->Reserve ( 1 );
-	this->mOneTexComposer->PushTextureCommand ( ZLIndexOp::ZERO, ZLIndexOp::ZERO, ZLIndexOp::ZERO, ZLIndexOp::ZERO );
+	this->mOneTexComposer->PushTextureCommand ( 0, 0, 0, 0 );
 
 	for ( u32 i = 0; i < ( u32 )MOAIShaderPresetEnum::TOTAL_SHADERS; ++i ) {
 		this->GetShader (( MOAIShaderPresetEnum )i );
@@ -139,12 +139,12 @@ MOAIShaderProgramVK* MOAIShaderMgrVK::GetProgram ( MOAIShaderPresetEnum shaderID
 //					program->SetVertexAttribute ( MOAIVertexFormatMgrVK::XYZWUVC_COLOR, "color" );
 //
 //					program->ReserveUniforms ( 2 );
-//					program->DeclareUniform ( ZLIndexCast ( 0 ), "xSnap", MOAIShaderUniformVK::UNIFORM_TYPE_FLOAT );
-//					program->DeclareUniform ( ZLIndexCast ( 1 ), "ySnap", MOAIShaderUniformVK::UNIFORM_TYPE_FLOAT );
+//					program->DeclareUniform ( 0, "xSnap", MOAIShaderUniformVK::UNIFORM_TYPE_FLOAT );
+//					program->DeclareUniform ( 1, "ySnap", MOAIShaderUniformVK::UNIFORM_TYPE_FLOAT );
 //
 //					program->ReserveGlobals ( 2 );
-//					program->SetGlobal ( ZLIndexCast ( 0 ), MOAIGfxMgrVK::VIEW_HALF_WIDTH, ZLIndexCast ( 0 ), ZLIndexCast ( 0 ));
-//					program->SetGlobal ( ZLIndexCast ( 1 ), MOAIGfxMgrVK::VIEW_HALF_HEIGHT, ZLIndexCast ( 1 ), ZLIndexCast ( 0 ));
+//					program->SetGlobal ( 0, MOAIGfxMgrVK::VIEW_HALF_WIDTH, 0, 0);
+//					program->SetGlobal ( 1, MOAIGfxMgrVK::VIEW_HALF_HEIGHT, 1, 0);
 //
 //					program->Load ( _deck2DSnappingShaderVSH, _deck2DSnappingShaderFSH );
 //					break;
@@ -174,12 +174,12 @@ MOAIShaderProgramVK* MOAIShaderMgrVK::GetProgram ( MOAIShaderPresetEnum shaderID
 //					program->SetVertexAttribute ( MOAIVertexFormatMgrVK::XYZWUVC_COLOR, "color" );
 //
 //					program->ReserveUniforms ( 2 );
-//					program->DeclareUniform ( ZLIndexCast ( 0 ), "xSnap", MOAIShaderUniformVK::UNIFORM_TYPE_FLOAT );
-//					program->DeclareUniform ( ZLIndexCast ( 1 ), "ySnap", MOAIShaderUniformVK::UNIFORM_TYPE_FLOAT );
+//					program->DeclareUniform ( 0, "xSnap", MOAIShaderUniformVK::UNIFORM_TYPE_FLOAT );
+//					program->DeclareUniform ( 1, "ySnap", MOAIShaderUniformVK::UNIFORM_TYPE_FLOAT );
 //
 //					program->ReserveGlobals ( 2 );
-//					program->SetGlobal ( ZLIndexCast ( 0 ), MOAIGfxMgrVK::VIEW_HALF_WIDTH, ZLIndexCast ( 0 ), ZLIndexCast ( 0 ));
-//					program->SetGlobal ( ZLIndexCast ( 1 ), MOAIGfxMgrVK::VIEW_HALF_HEIGHT, ZLIndexCast ( 1 ), ZLIndexCast ( 0 ));
+//					program->SetGlobal ( 0, MOAIGfxMgrVK::VIEW_HALF_WIDTH, 0, 0);
+//					program->SetGlobal ( 1, MOAIGfxMgrVK::VIEW_HALF_HEIGHT, 1, 0);
 //
 //					program->Load ( _fontSnappingShaderVSH, _fontSnappingShaderFSH );
 //					break;
@@ -197,12 +197,12 @@ MOAIShaderProgramVK* MOAIShaderMgrVK::GetProgram ( MOAIShaderPresetEnum shaderID
 //					program->SetVertexAttribute ( 1, "color" );
 //
 //					program->ReserveUniforms ( 2 );
-//					program->DeclareUniform ( ZLIndexCast ( 0 ), "transform", MOAIShaderUniformVK::UNIFORM_TYPE_FLOAT, MOAIShaderUniformVK::UNIFORM_WIDTH_MATRIX_4X4 );
-//					program->DeclareUniform ( ZLIndexCast ( 1 ), "ucolor", MOAIShaderUniformVK::UNIFORM_TYPE_FLOAT, MOAIShaderUniformVK::UNIFORM_WIDTH_VEC_4 );
+//					program->DeclareUniform ( 0, "transform", MOAIShaderUniformVK::UNIFORM_TYPE_FLOAT, MOAIShaderUniformVK::UNIFORM_WIDTH_MATRIX_4X4 );
+//					program->DeclareUniform ( 1, "ucolor", MOAIShaderUniformVK::UNIFORM_TYPE_FLOAT, MOAIShaderUniformVK::UNIFORM_WIDTH_VEC_4 );
 //
 //					program->ReserveGlobals ( 2 );
-//					program->SetGlobal ( ZLIndexCast ( 0 ), MOAIGfxMgrVK::MODEL_TO_CLIP_MTX, ZLIndexCast ( 0 ), ZLIndexCast ( 0 ));
-//					program->SetGlobal ( ZLIndexCast ( 1 ), MOAIGfxMgrVK::PEN_COLOR, ZLIndexCast ( 1 ), ZLIndexCast ( 0 ));
+//					program->SetGlobal ( 0, MOAIGfxMgrVK::MODEL_TO_CLIP_MTX, 0, 0);
+//					program->SetGlobal ( 1, MOAIGfxMgrVK::PEN_COLOR, 1, 0);
 //
 //					program->Load ( _lineShader3DVSH, _lineShader3DFSH );
 //
@@ -215,12 +215,12 @@ MOAIShaderProgramVK* MOAIShaderMgrVK::GetProgram ( MOAIShaderPresetEnum shaderID
 //					program->SetVertexAttribute ( MOAIVertexFormatMgrVK::XYZWUVC_COLOR, "color" );
 //
 //					program->ReserveUniforms ( 2 );
-//					program->DeclareUniform ( ZLIndexCast ( 0 ), "transform", MOAIShaderUniformVK::UNIFORM_TYPE_FLOAT, MOAIShaderUniformVK::UNIFORM_WIDTH_MATRIX_4X4 );
-//					program->DeclareUniform ( ZLIndexCast ( 1 ), "ucolor", MOAIShaderUniformVK::UNIFORM_TYPE_FLOAT, MOAIShaderUniformVK::UNIFORM_WIDTH_VEC_4 );
+//					program->DeclareUniform ( 0, "transform", MOAIShaderUniformVK::UNIFORM_TYPE_FLOAT, MOAIShaderUniformVK::UNIFORM_WIDTH_MATRIX_4X4 );
+//					program->DeclareUniform ( 1, "ucolor", MOAIShaderUniformVK::UNIFORM_TYPE_FLOAT, MOAIShaderUniformVK::UNIFORM_WIDTH_VEC_4 );
 //
 //					program->ReserveGlobals ( 2 );
-//					program->SetGlobal ( ZLIndexCast ( 0 ), MOAIGfxMgrVK::MODEL_TO_CLIP_MTX, ZLIndexCast ( 0 ), ZLIndexCast ( 0 ));
-//					program->SetGlobal ( ZLIndexCast ( 1 ), MOAIGfxMgrVK::PEN_COLOR, ZLIndexCast ( 1 ), ZLIndexCast ( 0 ));
+//					program->SetGlobal ( 0, MOAIGfxMgrVK::MODEL_TO_CLIP_MTX, 0, 0);
+//					program->SetGlobal ( 1, MOAIGfxMgrVK::PEN_COLOR, 1, 0);
 //
 //					program->Load ( _meshShaderVSH, _meshShaderFSH );
 //
@@ -230,17 +230,17 @@ MOAIShaderProgramVK* MOAIShaderMgrVK::GetProgram ( MOAIShaderPresetEnum shaderID
 				
 					MOAIDescriptorSetLayoutVK* descriptorSetLayout = new MOAIDescriptorSetLayoutVK ();
 					descriptorSetLayout->Initialize ( logicalDevice, 2 );
-					descriptorSetLayout->SetBinding ( ZLIndexCast ( 0 ), VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT );
-					descriptorSetLayout->SetBinding ( ZLIndexCast ( 1 ), VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT );
+					descriptorSetLayout->SetBinding ( 0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT );
+					descriptorSetLayout->SetBinding ( 1, VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT );
 					
 					MOAIPipelineLayoutVK* pipelineLayout = new MOAIPipelineLayoutVK ();
 					pipelineLayout->Initialize ( logicalDevice, 1 );
-					pipelineLayout->SetDescriptorSetLayout ( ZLIndexOp::ZERO, *descriptorSetLayout );
+					pipelineLayout->SetDescriptorSetLayout ( 0, *descriptorSetLayout );
 					
 					MOAIGfxComposerVK* composer = new MOAIGfxComposerVK ();
 					composer->SetPipelineLayout ( *this->mOneTexPipelineLayout );
 					composer->Reserve ( 1 );
-					composer->PushTextureCommand ( ZLIndexCast ( 1 ), ZLIndexOp::ZERO, ZLIndexOp::ZERO, ZLIndexOp::ZERO );
+					composer->PushTextureCommand ( 1, 0, 0, 0 );
 					
 					program->LoadModule ( MOAIShaderProgramVK::VERTEX_MODULE, _oneTriShaderVSH, sizeof ( _oneTriShaderVSH ));
 					program->LoadModule ( MOAIShaderProgramVK::FRAGMENT_MODULE, _oneTriShaderFSH, sizeof ( _oneTriShaderFSH ));

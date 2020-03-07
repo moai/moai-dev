@@ -19,7 +19,7 @@ VkWriteDescriptorSet* MOAIDescriptorSetVK::GetWriteDescriptorSet ( ZLIndex bindi
 
 	if ( binding >= layout.GetSize ()) return NULL;
 
-	const VkDescriptorSetLayoutBinding& layoutBinding = layout.mLayoutBindings [ ZLIndexCast ( binding )];
+	const VkDescriptorSetLayoutBinding& layoutBinding = layout.mLayoutBindings [ binding ];
 
 	if ( arrayElement >= layoutBinding.descriptorCount ) return NULL;
 
@@ -42,12 +42,12 @@ void MOAIDescriptorSetVK::Initialize ( MOAIDescriptorSetLayoutVK& descriptorSetL
 	// set up the write array
 	this->Init ( signatureSize );
 
-	ZLIndex writeIndex = ZLIndexOp::ZERO;
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < nBindings; ++i ) {
+	ZLIndex writeIndex = 0;
+	for ( ZLIndex i = 0; i < nBindings; ++i ) {
 
 		const VkDescriptorSetLayoutBinding& binding = descriptorSetLayout.mLayoutBindings [ i ];
 
-		for ( u32 dstArrayElement = ZLIndexOp::ZERO; dstArrayElement < binding.descriptorCount; ++dstArrayElement, ++writeIndex ) {
+		for ( u32 dstArrayElement = 0; dstArrayElement < binding.descriptorCount; ++dstArrayElement, ++writeIndex ) {
 
 			( *this )[ writeIndex ] = MOAIGfxStructVK::writeDescriptorSet (
 				VK_NULL_HANDLE, // unused by signature

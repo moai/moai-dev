@@ -19,7 +19,7 @@
 int MOAIPathTerrainDeck::_getMask ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPathTerrainDeck, "UN" )
 	
-	ZLIndex idx = state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex idx = state.GetValue < MOAILuaIndex >( 2, 0 );
 	
 	if ( idx < self->mMasks.Size ()) {
 		lua_pushnumber ( state, self->mMasks [ idx ]);
@@ -39,13 +39,13 @@ int MOAIPathTerrainDeck::_getMask ( lua_State* L ) {
 int MOAIPathTerrainDeck::_getTerrainVec ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPathTerrainDeck, "UN" )
 	
-	ZLIndex idx 	= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex idx 	= state.GetValue < MOAILuaIndex >( 2, 0 );
 	float* vector 	= self->GetVector ( idx + ( ZLSize )1 );
 
 	ZLSize size = self->mVectorSize;
 	lua_checkstack ( L, size );
 	
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
+	for ( ZLIndex i = 0; i < size; ++i ) {
 		lua_pushnumber ( state, vector [ i ]);
 	}
 	return size;
@@ -63,7 +63,7 @@ int MOAIPathTerrainDeck::_getTerrainVec ( lua_State* L ) {
 int MOAIPathTerrainDeck::_setMask ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPathTerrainDeck, "UNN" )
 	
-	ZLIndex idx 	= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex idx 	= state.GetValue < MOAILuaIndex >( 2, 0 );
 	u32 mask		= state.GetValue < int >( 3, 0 );
 	
 	if ( idx < self->mMasks.Size ()) {
@@ -84,7 +84,7 @@ int MOAIPathTerrainDeck::_setMask ( lua_State* L ) {
 int MOAIPathTerrainDeck::_setTerrainVec ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPathTerrainDeck, "UN" )
 	
-	ZLIndex idx 	= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex idx 	= state.GetValue < MOAILuaIndex >( 2, 0 );
 	ZLSize total	= lua_gettop ( state ) - 2;
 	
 	if ( total > self->mVectorSize ) {
@@ -93,7 +93,7 @@ int MOAIPathTerrainDeck::_setTerrainVec ( lua_State* L ) {
 	
 	float* vector = self->GetVector ( idx + ( ZLSize )1 );
 	
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < total; ++i ) {
+	for ( ZLIndex i = 0; i < total; ++i ) {
 		vector [ i ] = state.GetValue < float >( 3 + i, 0.0 );
 	}
 	
@@ -131,13 +131,13 @@ int MOAIPathTerrainDeck::_reserve ( lua_State* L ) {
 //----------------------------------------------------------------//
 u32 MOAIPathTerrainDeck::GetMask ( u32 idx ) {
 
-	return this->mMasks [ ZLIndexCast ( idx - 1 )];
+	return this->mMasks [ idx - 1 ];
 }
 
 //----------------------------------------------------------------//
 float* MOAIPathTerrainDeck::GetVector ( u32 idx ) {
 
-	return &this->mVectors [ ZLIndexCast (( idx - 1 ) * this->mVectorSize )];
+	return &this->mVectors [ ( idx - 1 ) * this->mVectorSize ];
 }
 
 //----------------------------------------------------------------//

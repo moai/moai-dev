@@ -745,7 +745,7 @@ template <>
 MOAILuaIndex MOAILuaState::GetValue < MOAILuaIndex >( int idx, const MOAILuaIndex value ) {
 
 	if ( this->IsType ( idx, LUA_TNUMBER )) {
-		return MOAILuaIndex ( ZLIndexCast (( ZLSize )lua_tonumber ( this->mState, idx ) - 1 ));
+		return MOAILuaIndex (( ZLSize )lua_tonumber ( this->mState, idx ) - 1 );
 	}
 	return value;
 }

@@ -743,7 +743,7 @@ void MOAIParticleScript::PushSprite ( MOAIParticleSystem& system, float* registe
 	sprite.mBlue		= registers [ SPRITE_BLUE ] * opacity;
 	sprite.mAlpha		= opacity * glow;
 	
-	sprite.mGfxID		= ZLIndexCast ( ZLFloat::ToInt ( registers [ SPRITE_IDX ]) );
+	sprite.mGfxID		= ZLFloat::ToInt ( registers [ SPRITE_IDX ]);
 	
 	system.PushSprite ( sprite );
 }

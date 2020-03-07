@@ -91,7 +91,7 @@ int MOAIDynamicGlyphCache::_setPadding ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIDynamicGlyphCache::ClearPages () {
 
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mPages.Size (); ++i ) {
+	for ( ZLIndex i = 0; i < this->mPages.Size (); ++i ) {
 		this->mPages [ i ]->Clear ( *this );
 		delete this->mPages [ i ];
 	}
@@ -121,14 +121,14 @@ MOAIImage* MOAIDynamicGlyphCache::GetImage () {
 	u32 width = 0;
 	u32 height = 0;
 
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalPages; ++i ) {
+	for ( ZLIndex i = 0; i < totalPages; ++i ) {
 		MOAIImage& srcImage = *this->mPages [ i ]->mImageTexture;
 		
 		width = srcImage.GetWidth ();
 		height += srcImage.GetHeight ();
 	}
 	
-	MOAIImage& srcImage0 = *this->mPages [ ZLIndexOp::ZERO ]->mImageTexture;
+	MOAIImage& srcImage0 = *this->mPages [ 0 ]->mImageTexture;
 	MOAIImage* image = new MOAIImage ();
 	
 	image->Init (
@@ -139,7 +139,7 @@ MOAIImage* MOAIDynamicGlyphCache::GetImage () {
 	);
 	
 	u32 y = 0;
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalPages; ++i ) {
+	for ( ZLIndex i = 0; i < totalPages; ++i ) {
 		MOAIImage& srcImage = *this->mPages [ i ]->mImageTexture;
 		
 		u32 copyHeight = srcImage.GetHeight ();
@@ -182,7 +182,7 @@ int MOAIDynamicGlyphCache::PlaceGlyph ( MOAIFont& font, MOAIGlyph& glyph ) {
 		font.GetFilename ()
 	);
 
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mPages.Size (); ++i ) {
+	for ( ZLIndex i = 0; i < this->mPages.Size (); ++i ) {
 		DEBUG_LOG ( "  TRYING PAGE: %d\n", i );
 		MOAIDynamicGlyphCachePage* page = this->mPages [ i ];
 		MOAISpan < MOAIGlyph* >* span = page->Alloc ( *this, font, glyph );
@@ -194,7 +194,7 @@ int MOAIDynamicGlyphCache::PlaceGlyph ( MOAIFont& font, MOAIGlyph& glyph ) {
 		}
 	}
 	
-	ZLIndex pageID = ZLIndexCast ( this->mPages.Size () ); // TODO: cast
+	ZLIndex pageID = this->mPages.Size (); // TODO: cast
 	this->mPages.Resize (( ZLSize )pageID + 1 );
 	
 	DEBUG_LOG ( "  NEW PAGE: %d\n", pageID );

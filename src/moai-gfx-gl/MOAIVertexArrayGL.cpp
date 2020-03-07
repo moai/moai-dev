@@ -34,10 +34,10 @@ int MOAIVertexArrayGL::_setVertexBuffer ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVertexArrayGL, "U" )
 	
 	u32 baseParam = 2;
-	ZLIndex idx = ZLIndexOp::ZERO;
+	ZLIndex idx = 0;
 	
 	if ( state.IsType ( baseParam, LUA_TNUMBER )) {
-		idx = ZLIndexCast ( state.GetValue < u32 >( baseParam++, 1 ) - 1 );
+		idx = state.GetValue < u32 >( baseParam++, 1 ) - 1;
 	}
 	
 	MOAIVertexBufferGL* buffer	= state.GetLuaObject < MOAIVertexBufferGL >( baseParam++, false );
@@ -88,7 +88,7 @@ void MOAIVertexArrayGL::BindVertexArrayItems () {
 	ZLGfx& gfx = this->mGfxMgr->GetDrawingAPI ();
 
 	ZLSize totalVBOs = this->mVertexBuffers.Size ();
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalVBOs; ++i ) {
+	for ( ZLIndex i = 0; i < totalVBOs; ++i ) {
 	
 		MOAIVertexBufferGL* buffer = this->mVertexBuffers [ i ].mBuffer;
 		MOAIVertexFormatGL* format = this->mVertexBuffers [ i ].mFormat;
@@ -125,7 +125,7 @@ MOAIVertexArrayGL::~MOAIVertexArrayGL () {
 //----------------------------------------------------------------//
 void MOAIVertexArrayGL::ReserveVAOs ( u32 total ) {
 
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVAOs.Size (); ++i ) {
+	for ( ZLIndex i = 0; i < this->mVAOs.Size (); ++i ) {
 		this->mGfxMgr->DeleteOrDiscard ( this->mVAOs [ i ], false );
 	}
 	this->mVAOs.Init ( total );
@@ -135,7 +135,7 @@ void MOAIVertexArrayGL::ReserveVAOs ( u32 total ) {
 //----------------------------------------------------------------//
 void MOAIVertexArrayGL::ReserveVertexBuffers ( u32 total ) {
 
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVertexBuffers.Size (); ++i ) {
+	for ( ZLIndex i = 0; i < this->mVertexBuffers.Size (); ++i ) {
 		this->mVertexBuffers [ i ].SetBufferAndFormat ( 0, 0 );
 	}
 	this->mVertexBuffers.Init ( total );
@@ -147,7 +147,7 @@ void MOAIVertexArrayGL::ReserveVertexBuffers ( u32 total ) {
 void MOAIVertexArrayGL::UnbindVertexArrayItems () {
 
 	size_t totalVBOs = this->mVertexBuffers.Size ();
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalVBOs; ++i ) {
+	for ( ZLIndex i = 0; i < totalVBOs; ++i ) {
 	
 		MOAIVertexFormatGL* format = this->mVertexBuffers [ i ].mFormat;
 		assert ( format );
@@ -179,7 +179,7 @@ bool MOAIVertexArrayGL::MOAIGfxResourceGL_OnGPUCreate () {
 
 	if ( totalVAOs ) {
 		
-		for ( ZLIndex i = ZLIndexOp::ZERO; i < totalVAOs; ++i ) {
+		for ( ZLIndex i = 0; i < totalVAOs; ++i ) {
 			ZLGfxHandle vao = this->mGfxMgr->GetDrawingAPI ().CreateVertexArray (); // OK for this to return 0
 			if ( vao.GetType () != ZLGfxResource::NONE ) {
 				this->mVAOs [ i ] = vao;
@@ -188,7 +188,7 @@ bool MOAIVertexArrayGL::MOAIGfxResourceGL_OnGPUCreate () {
 		}
 	}
 	
-	this->mCurrentVAO = ZLIndexCast ( 0 );
+	this->mCurrentVAO = 0;
 	this->MOAIGfxResourceGL_OnGPUUpdate ();
 	
 	return true;
@@ -197,7 +197,7 @@ bool MOAIVertexArrayGL::MOAIGfxResourceGL_OnGPUCreate () {
 //----------------------------------------------------------------//
 void MOAIVertexArrayGL::MOAIGfxResourceGL_OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVAOs.Size (); ++i ) {
+	for ( ZLIndex i = 0; i < this->mVAOs.Size (); ++i ) {
 		this->mGfxMgr->DeleteOrDiscard ( this->mVAOs [ i ], shouldDelete );
 	}
 }
@@ -264,7 +264,7 @@ void MOAIVertexArrayGL::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAI
 	
 	if ( state.PushFieldWithType ( -1, "mVertexBuffers", LUA_TTABLE )) {
 		int itr = state.PushTableItr ( -1 );
-		for ( ZLIndex i = ZLIndexOp::ZERO; state.TableItrNext ( itr ); ++i ) {
+		for ( ZLIndex i = 0; state.TableItrNext ( itr ); ++i ) {
 			if ( state.IsType ( -1, LUA_TTABLE )) {
 				MOAIVertexBufferGL* buffer = serializer.MemberIDToObject < MOAIVertexBufferGL >( state.GetFieldValue < cc8*, MOAISerializer::ObjID >( -1, "mBuffer", 0 ));
 				MOAIVertexFormatGL* format = serializer.MemberIDToObject < MOAIVertexFormatGL >( state.GetFieldValue < cc8*, MOAISerializer::ObjID >( -1, "mFormat", 0 ));
@@ -283,7 +283,7 @@ void MOAIVertexArrayGL::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOA
 	state.SetField < cc8*, MOAILuaSize >( -1, "mTotalVertexBuffers", this->mVertexBuffers.Size ());
 	
 	lua_newtable ( state );
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mVertexBuffers.Size (); ++i ) {
+	for ( ZLIndex i = 0; i < this->mVertexBuffers.Size (); ++i ) {
 		state.Push ( MOAILuaIndex ( i ));
 		lua_newtable ( state );
 		

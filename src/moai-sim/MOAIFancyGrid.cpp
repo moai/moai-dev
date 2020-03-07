@@ -50,7 +50,7 @@ int MOAIFancyGrid::_getPaletteColor ( lua_State* L ) {
 
 	u32 idx	= state.GetValue < u32 >( 2, 1 );
 	
-	state.Push ( self->GetPaletteColor ( ZLIndexCast ( idx ))); // TODO: index from 1?
+	state.Push ( self->GetPaletteColor ( idx )); // TODO: index from 1?
 	return 1;
 }
 
@@ -122,7 +122,7 @@ int MOAIFancyGrid::_setPaletteColor ( lua_State* L ) {
 	u32 idx				= state.GetValue < u32 >( 2, 1 );
 	MOAIColor* color	= state.GetLuaObject < MOAIColor >( 3, true );
 	
-	self->SetPaletteColor ( ZLIndexCast ( idx ), color ); // TODO: index from one?
+	self->SetPaletteColor ( idx, color ); // TODO: index from one?
 	return 0;
 }
 
@@ -152,7 +152,7 @@ void MOAIFancyGrid::DiscardColorSet () {
 //----------------------------------------------------------------//
 void MOAIFancyGrid::DiscardPalette () {
 
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mPalette.Size (); ++i ) {
+	for ( ZLIndex i = 0; i < this->mPalette.Size (); ++i ) {
 		this->LuaRelease ( this->mPalette [ i ]);
 	}
 	this->mPalette.Clear ();
@@ -240,7 +240,7 @@ ZLColorVec MOAIFancyGrid::GetTileColor ( int addr ) const {
 	u32 color = this->GetColor ( addr );
 	if ( paletteSize ) {
 	
-		MOAIColor* paletteColor = this->mPalette [ ZLIndexCast ( color )];
+		MOAIColor* paletteColor = this->mPalette [ color ];
 		if ( paletteColor ) {
 			result = *paletteColor;
 		}

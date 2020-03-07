@@ -130,12 +130,12 @@ int MOAIAssimpScene::_getAnimations ( lua_State* L ) {
 	if ( !self->mScene ) return 0;
 
 	if ( state.IsType ( 2, LUA_TNUMBER )) {
-		state.Push ( self->GetAnimation ( ZLIndexCast ( state.GetValue < u32 >( 2, 0 ))));
+		state.Push ( self->GetAnimation ( state.GetValue < u32 >( 2, 0 )));
 	}
 	else {
 
 		lua_newtable ( state );
-		for ( ZLIndex i = ZLIndexOp::ZERO; i < self->mScene->mNumAnimations; ++i ) {
+		for ( ZLIndex i = 0; i < self->mScene->mNumAnimations; ++i ) {
 			state.SetField ( -1, MOAILuaIndex ( i ), self->GetAnimation ( i ));
 		}
 	}
@@ -150,12 +150,12 @@ int MOAIAssimpScene::_getCameras ( lua_State* L ) {
 	if ( !self->mScene ) return 0;
 
 	if ( state.IsType ( 2, LUA_TNUMBER )) {
-		state.Push ( self->GetCamera ( ZLIndexCast ( state.GetValue < u32 >( 2, 0 ))));
+		state.Push ( self->GetCamera ( state.GetValue < u32 >( 2, 0 )));
 	}
 	else {
 
 		lua_newtable ( state );
-		for ( ZLIndex i = ZLIndexOp::ZERO; i < self->mScene->mNumCameras; ++i ) {
+		for ( ZLIndex i = 0; i < self->mScene->mNumCameras; ++i ) {
 			state.SetField ( -1, MOAILuaIndex ( i ), self->GetCamera ( i ));
 		}
 	}
@@ -171,7 +171,7 @@ int MOAIAssimpScene::_getMaterials ( lua_State* L ) {
 
 	if ( state.IsType ( 2, LUA_TNUMBER )) {
 	
-		MOAILuaMemberRef* material = self->GetMaterial ( ZLIndexCast ( state.GetValue < u32 >( 2, 0 )));
+		MOAILuaMemberRef* material = self->GetMaterial ( state.GetValue < u32 >( 2, 0 ));
 		if ( material ) {
 			state.Push ( *material );
 			return 1;
@@ -180,7 +180,7 @@ int MOAIAssimpScene::_getMaterials ( lua_State* L ) {
 	else {
 	
 		lua_newtable ( state );
-		for ( ZLIndex i = ZLIndexOp::ZERO; i < self->mScene->mNumMaterials; ++i ) {
+		for ( ZLIndex i = 0; i < self->mScene->mNumMaterials; ++i ) {
 
 			MOAILuaMemberRef* material = self->GetMaterial ( i );
 			assert ( material );
@@ -200,12 +200,12 @@ int MOAIAssimpScene::_getMeshes ( lua_State* L ) {
 	if ( !self->mScene ) return 0;
 
 	if ( state.IsType ( 2, LUA_TNUMBER )) {
-		state.Push ( self->GetMesh ( ZLIndexCast ( state.GetValue < u32 >( 2, 0 ))));
+		state.Push ( self->GetMesh ( state.GetValue < u32 >( 2, 0 )));
 	}
 	else {
 
 		lua_newtable ( state );
-		for ( ZLIndex i = ZLIndexOp::ZERO; i < self->mScene->mNumMeshes; ++i ) {
+		for ( ZLIndex i = 0; i < self->mScene->mNumMeshes; ++i ) {
 			state.SetField ( -1, MOAILuaIndex ( i ), self->GetMesh ( i ));
 		}
 	}
@@ -283,17 +283,17 @@ void MOAIAssimpScene::Clear () {
 	this->mSceneMembers.clear ();
 
 	// now safe to release the scene members
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mCameras.Size (); ++i ) {
+	for ( ZLIndex i = 0; i < this->mCameras.Size (); ++i ) {
 		this->LuaRelease ( this->mCameras [ i ]);
 	}
 	this->mCameras.Clear ();
 
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mMaterials.Size (); ++i ) {
+	for ( ZLIndex i = 0; i < this->mMaterials.Size (); ++i ) {
 		this->mMaterials [ i ].Clear ();
 	}
 	this->mMaterials.Clear ();
 
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mMeshes.Size (); ++i ) {
+	for ( ZLIndex i = 0; i < this->mMeshes.Size (); ++i ) {
 		this->LuaRelease ( this->mMeshes [ i ]);
 	}
 	this->mMeshes.Clear ();

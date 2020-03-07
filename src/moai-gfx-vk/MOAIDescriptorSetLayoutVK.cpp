@@ -63,10 +63,10 @@ void MOAIDescriptorSetLayoutVK::AffirmDescritorSetLayout () {
 	STLMap < VkDescriptorType, ZLPrimitiveWithDefault < u32, 0 > > histogram;
 
 	this->mSignatureSize = 0;
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalBindings; ++i ) {
+	for ( ZLIndex i = 0; i < totalBindings; ++i ) {
 		const VkDescriptorSetLayoutBinding& binding = this->mLayoutBindings [ i ];
 		histogram [ binding.descriptorType ] += binding.descriptorCount;
-		this->mSignatureOffsets [ i ] = ZLIndexCast ( this->mSignatureSize );
+		this->mSignatureOffsets [ i ] = this->mSignatureSize;
 		this->mSignatureSize += binding.descriptorCount;
 	}
 
@@ -74,7 +74,7 @@ void MOAIDescriptorSetLayoutVK::AffirmDescritorSetLayout () {
 	VkDescriptorPoolSize* typeCounts = ( VkDescriptorPoolSize* )alloca ( nTypes * sizeof ( VkDescriptorPoolSize ));
 
 	STLMap < VkDescriptorType, ZLPrimitiveWithDefault < u32, 0 > >::const_iterator histogramIt = histogram.cbegin ();
-	for ( ZLIndex i = ZLIndexOp::ZERO; histogramIt != histogram.cend (); ++histogramIt, ++i ) {
+	for ( ZLIndex i = 0; histogramIt != histogram.cend (); ++histogramIt, ++i ) {
 		typeCounts [ i ].type = histogramIt->first;
 		typeCounts [ i ].descriptorCount = histogramIt->second;
 	}

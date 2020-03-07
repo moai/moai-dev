@@ -57,7 +57,7 @@ ZLRect MOAIGlyph::GetGlyphLogicalRect ( float x, float y, float xScale, float yS
 MOAIKernVec MOAIGlyph::GetKerning ( u32 name ) const {
 
 	ZLSize total = this->mKernTable.Size ();
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < total; ++i ) {
+	for ( ZLIndex i = 0; i < total; ++i ) {
 		const MOAIKernVec& kernVec = this->mKernTable [ i ];
 		
 		if ( kernVec.mName == name ) {
@@ -113,7 +113,7 @@ void MOAIGlyph::SerializeIn ( MOAILuaState& state ) {
 		int size = ( int )lua_objlen ( state, -1 ); // TODO: cast
 		this->mKernTable.Init ( size );
 		
-		for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
+		for ( ZLIndex i = 0; i < size; ++i ) {
 		
 			if ( state.PushFieldWithType ( -1, ( int )i + 1, LUA_TTABLE )) {
 				
@@ -144,7 +144,7 @@ void MOAIGlyph::SerializeOut ( MOAILuaState& state ) {
 	
 	if ( this->mKernTable.Size ()) {
 		lua_newtable ( state );
-		for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mKernTable.Size (); ++i ) {
+		for ( ZLIndex i = 0; i < this->mKernTable.Size (); ++i ) {
 		
 			state.Push ( MOAILuaIndex ( i ));
 			lua_newtable ( state );

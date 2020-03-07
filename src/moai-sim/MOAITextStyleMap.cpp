@@ -55,7 +55,7 @@ void MOAITextStyleMap::RefreshStyleGlyphs ( cc8* str ) {
 	size_t totalSpans = ( u32 )this->GetTop ();
 	if ( !totalSpans ) return;
 	
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalSpans; ++i ) {
+	for ( ZLIndex i = 0; i < totalSpans; ++i ) {
 		MOAITextStyleSpan& span = this->Elem ( i );
 		
 		int idx = span.mBase;
@@ -67,7 +67,7 @@ void MOAITextStyleMap::RefreshStyleGlyphs ( cc8* str ) {
 	
 	// TODO: think about keeping list of currently active styles instead of iterating through everything
 	
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalSpans; ++i ) {
+	for ( ZLIndex i = 0; i < totalSpans; ++i ) {
 		MOAITextStyleSpan& span = this->Elem ( i );
 		span.mStyle->mFont->ProcessGlyphs ();
 	}

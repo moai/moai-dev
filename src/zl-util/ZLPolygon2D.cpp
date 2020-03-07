@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <zl-util/ZLDistance.h>
 #include <zl-util/ZLFloat.h>
+#include <zl-util/ZLIndexOp.h>
 #include <zl-util/ZLIntersect.h>
 #include <zl-util/ZLMemStream.h>
 #include <zl-util/ZLPolygon2D.h>
@@ -30,7 +31,7 @@ u32 ZLPolygon2D::Analyze () {
 	
 	ZLReal area = 0.0;
 	
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalVerts; i++ ) {
+	for ( ZLIndex i = 0; i < totalVerts; i++ ) {
 
 		ZLIndex nextIndex =  ZLIndexOp::AddAndWrap ( i, 1, totalVerts );
 
@@ -61,7 +62,7 @@ u32 ZLPolygon2D::Analyze () {
 		// TODO: check number of edges and do something efficient (Shamos-Hoey, for example)
 		if ( i >= 2 ) {
 			
-			for ( ZLIndex j = ( nextIndex == 0 ) ? ZLIndexOp::ONE : ZLIndexOp::ZERO; j < (( ZLSize )i - 1 ); ++j ) {
+			for ( ZLIndex j = ( nextIndex == 0 ) ? 1 : 0; j < (( ZLSize )i - 1 ); ++j ) {
 			
 				ZLVec2D& q0 = this->mVertices [ j ];
 				ZLVec2D& q1 = this->mVertices [ j + ( ZLSize )1 ];
@@ -103,9 +104,9 @@ size_t ZLPolygon2D::Bless () {
 		return this->mInfo;
 	}
 	
-	this->mFrame.Init (this->mVertices [ ZLIndexOp::ZERO ]);
+	this->mFrame.Init (this->mVertices [ 0 ]);
 	
-	for ( ZLIndex i = ZLIndexOp::ONE; i < totalVerts; ++i ) {
+	for ( ZLIndex i = 1; i < totalVerts; ++i ) {
 		ZLVec2D& point = this->mVertices [ i ];
 		this->mFrame.Grow ( point );
 	}
@@ -238,7 +239,7 @@ ZLReal ZLPolygon2D::GetCorner ( ZLIndex idx, ZLVec2D* normal ) {
 	
 	idx =  ZLIndexOp::Wrap ( idx, size );
 
-	ZLVec2D v0 = this->mVertices [( idx == 0 ? ZLIndexCast ( size ): idx ) - ( ZLSize )1 ];
+	ZLVec2D v0 = this->mVertices [( idx == 0 ? size: idx ) - ( ZLSize )1 ];
 	ZLVec2D v1 = this->mVertices [ idx ];
 	ZLVec2D v2 = this->mVertices [  ZLIndexOp::AddAndWrap ( idx, 1, size )];
 	
@@ -278,7 +279,7 @@ bool ZLPolygon2D::GetDistance ( const ZLVec2D& point, ZLReal& d, ZLVec2D& p ) co
 	
 	ZLSize totalVerts = this->mVertices.Size ();
 	
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalVerts; ++i ) {
+	for ( ZLIndex i = 0; i < totalVerts; ++i ) {
 	
 		const ZLVec2D& e0 = this->mVertices [ i ];
 		const ZLVec2D& e1 = this->mVertices [  ZLIndexOp::AddAndWrap ( i, 1, totalVerts )];
@@ -357,10 +358,10 @@ void ZLPolygon2D::InitAsRect ( const ZLRect& rect ) {
 
 	this->mVertices.Init ( 4 );
 	
-	static const ZLIndex idx0 = ZLIndexCast ( 0 );
-	static const ZLIndex idx1 = ZLIndexCast ( 1 );
-	static const ZLIndex idx2 = ZLIndexCast ( 2 );
-	static const ZLIndex idx3 = ZLIndexCast ( 3 );
+	static const ZLIndex idx0 = 0;
+	static const ZLIndex idx1 = 1;
+	static const ZLIndex idx2 = 2;
+	static const ZLIndex idx3 = 3;
 	
 	this->mVertices [ idx0 ].mX = rect.mXMin;
 	this->mVertices [ idx0 ].mY = rect.mYMin;
@@ -467,7 +468,7 @@ u32 ZLPolygon2D::PointInside ( const ZLVec2D& p, ZLReal pad ) const {
 		ZLReal y = p.mY;
 		
 		ZLSize totalVerts = this->mVertices.Size ();
-		for ( ZLIndex i = ZLIndexOp::ZERO; i < totalVerts; i++ ) {
+		for ( ZLIndex i = 0; i < totalVerts; i++ ) {
 
 			const ZLVec2D& p1 = this->mVertices [ i ];
 			const ZLVec2D& p2 = this->mVertices [  ZLIndexOp::AddAndWrap ( i, 1, totalVerts )];
@@ -520,9 +521,9 @@ void ZLPolygon2D::ReverseWinding () {
 	ZLSize nVerts = this->mVertices.Size ();
 	ZLSize nSwaps = nVerts >> 1;
 	
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < nSwaps; ++i ) {
+	for ( ZLIndex i = 0; i < nSwaps; ++i ) {
 	
-		ZLIndex j = ZLIndexCast ( nVerts - ( ZLSize )i - 1 );
+		ZLIndex j = nVerts - ( ZLSize )i - 1;
 		
 		ZLVec2D& v0 = this->mVertices [ i ];
 		ZLVec2D& v1 = this->mVertices [ j ];
@@ -567,7 +568,7 @@ void ZLPolygon2D::SetVertices ( const ZLVec2D* vertices, ZLSize total ) {
 void ZLPolygon2D::Snap ( ZLReal xSnap, ZLReal ySnap ) {
 
 	ZLSize totalVerts = this->mVertices.Size ();
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalVerts; i++ ) {
+	for ( ZLIndex i = 0; i < totalVerts; i++ ) {
 		
 		ZLVec2D& vert = this->mVertices [ i ];
 	
@@ -580,7 +581,7 @@ void ZLPolygon2D::Snap ( ZLReal xSnap, ZLReal ySnap ) {
 void ZLPolygon2D::Transform ( const ZLAffine2D& matrix ) {
 
 	ZLSize totalVerts = this->mVertices.Size ();
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalVerts; i++ ) {
+	for ( ZLIndex i = 0; i < totalVerts; i++ ) {
 		matrix.Transform ( this->mVertices [ i ]);
 	}
 	

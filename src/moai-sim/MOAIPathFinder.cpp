@@ -59,7 +59,7 @@ int MOAIPathFinder::_getGraph ( lua_State* L ) {
 int MOAIPathFinder::_getPathEntry ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPathFinder, "UN" )
 	
-	ZLIndex index = state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex index = state.GetValue < MOAILuaIndex >( 2, 0 );
 	
 	if ( index < self->mPath.Size ()) {
 	
@@ -95,8 +95,8 @@ int MOAIPathFinder::_getPathSize ( lua_State* L ) {
 int MOAIPathFinder::_init ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPathFinder, "UNN" )
 	
-	self->mStartNodeID = state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-	self->mTargetNodeID = state.GetValue < MOAILuaIndex >( 3, ZLIndexOp::ZERO );
+	self->mStartNodeID = state.GetValue < MOAILuaIndex >( 2, 0 );
+	self->mTargetNodeID = state.GetValue < MOAILuaIndex >( 3, 0 );
 	
 	self->Reset ();
 	
@@ -238,7 +238,7 @@ int MOAIPathFinder::_setTerrainMask ( lua_State* L ) {
 int MOAIPathFinder::_setTerrainWeight ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPathFinder, "UNNN" )
 	
-	ZLIndex index = state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex index = state.GetValue < MOAILuaIndex >( 2, 0 );
 
 	if ( index < self->mWeights.Size ()) {
 	
@@ -279,7 +279,7 @@ void MOAIPathFinder::BuildPath ( MOAIPathState* state ) {
 	
 	this->mPath.Init ( size );
 	for ( MOAIPathState* cursor = state; cursor; cursor = cursor->mParent ) {
-		this->mPath [ ZLIndexCast ( --size )] = cursor->mNodeID;
+		this->mPath [ --size ] = cursor->mNodeID;
 	}
 	
 	this->ClearVisitation ();
@@ -347,7 +347,7 @@ float MOAIPathFinder::ComputeTerrainCost ( float moveCost, u32 terrain0, u32 ter
 	float* v1 = this->mTerrainDeck->GetVector ( terrain1 & MOAITileFlags::CODE_MASK );
 	
 	float terrainCost = 0.0f;
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < total; ++i ) {
+	for ( ZLIndex i = 0; i < total; ++i ) {
 		
 		const MOAIPathWeight& weight = this->mWeights [ i ];
 		
@@ -404,8 +404,8 @@ bool MOAIPathFinder::IsVisited ( ZLIndex nodeID ) {
 MOAIPathFinder::MOAIPathFinder () :
 	mOpen ( 0 ),
 	mClosed ( 0 ),
-	mStartNodeID ( ZLIndexOp::ZERO ),
-	mTargetNodeID ( ZLIndexOp::ZERO ),
+	mStartNodeID ( 0 ),
+	mTargetNodeID ( 0 ),
 	mState ( 0 ),
 	mMask ( 0xffffffff ),
 	mHeuristic ( 0 ),

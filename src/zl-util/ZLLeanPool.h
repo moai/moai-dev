@@ -26,7 +26,7 @@ private:
 			TYPE* chunk = ( TYPE* )malloc ( CHUNKSIZE * sizeof ( TYPE ));
 			this->mChunks.Push ( chunk );
 			
-			for ( ZLIndex i = ZLIndexOp::ZERO; i < CHUNKSIZE; ++i ) {
+			for ( ZLIndex i = 0; i < CHUNKSIZE; ++i ) {
 				TYPE* elem = &chunk [ i ];
 				this->mFree.Push ( elem );
 			}
@@ -58,7 +58,7 @@ public:
 	void Clear () {
 		
 		ZLSize top = this->mChunks.GetTop ();
-		for ( ZLIndex i = ZLIndexOp::ZERO; i < top; ++i ) {
+		for ( ZLIndex i = 0; i < top; ++i ) {
 			free ( this->mChunks [ i ]);
 		}
 		

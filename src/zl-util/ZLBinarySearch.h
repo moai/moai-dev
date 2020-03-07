@@ -4,6 +4,8 @@
 #ifndef	ZLBINARYSEARCH_H
 #define	ZLBINARYSEARCH_H
 
+#include <zl-util/ZLIndexOp.h>
+
 //================================================================//
 // ZLBinarySearch
 //================================================================//
@@ -16,8 +18,8 @@ ZLSize ZLBinarySearch ( const TYPE* buffer, const TYPE& key, ZLSize total ) {
 	ZLSize j = total - 1;
 	ZLSize s = j;
 	
-	if ( key < buffer [ i ]) return ZLIndexOp::INVALID_KEY;
-	if ( buffer [ j ] < key ) return ZLIndexOp::INVALID_KEY;
+	if ( key < buffer [ i ]) return ZLIndexOp::INVALID;
+	if ( buffer [ j ] < key ) return ZLIndexOp::INVALID;
 	
 	while ( s ) {
 		
@@ -37,7 +39,7 @@ ZLSize ZLBinarySearch ( const TYPE* buffer, const TYPE& key, ZLSize total ) {
 		s = j - i;
 	}
 	
-	return ( !(( key < buffer [ i ]) || ( buffer [ i ] < key ))) ? i : ZLIndexOp::INVALID_KEY;
+	return ( !(( key < buffer [ i ]) || ( buffer [ i ] < key ))) ? i : ZLIndexOp::INVALID;
 }
 
 //----------------------------------------------------------------//
@@ -48,8 +50,8 @@ ZLSize ZLBinarySearchNearest ( const TYPE* buffer, const TYPE& key, ZLSize total
 	ZLSize j = total - 1;
 	ZLSize s = j;
 	
-	if ( key < buffer [ i ]) return ZLIndexOp::INVALID_KEY;
-	if ( buffer [ j ] < key ) return ZLIndexOp::INVALID_KEY;
+	if ( key < buffer [ i ]) return ZLIndexOp::INVALID;
+	if ( buffer [ j ] < key ) return ZLIndexOp::INVALID;
 	
 	while ( s > 1 ) {
 		

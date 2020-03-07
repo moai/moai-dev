@@ -82,13 +82,13 @@ void MOAIOneTriVK::PreparePipeline () {
 	
 	MOAIDescriptorSetLayoutVK* descriptorSetLayout = new MOAIDescriptorSetLayoutVK ();
 	descriptorSetLayout->Initialize ( logicalDevice, 2 );
-	descriptorSetLayout->SetBinding ( ZLIndexCast ( 0 ), VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT );
-	descriptorSetLayout->SetBinding ( ZLIndexCast ( 1 ), VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT );
+	descriptorSetLayout->SetBinding ( 0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT );
+	descriptorSetLayout->SetBinding ( 1, VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT );
 	
 	// create the pipeline layout
 	this->mPipelineLayout = new MOAIPipelineLayoutVK ();
 	this->mPipelineLayout->Initialize ( logicalDevice, 1 );
-	this->mPipelineLayout->SetDescriptorSetLayout ( ZLIndexOp::ZERO, *descriptorSetLayout );
+	this->mPipelineLayout->SetDescriptorSetLayout ( 0, *descriptorSetLayout );
 	this->mPipelineLayout->AffirmPipelineLayout ();
 	
 	this->mDescriptorSet = new MOAIDescriptorSetVK ();
@@ -349,12 +349,12 @@ void MOAIOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 	uniforms->Initialize ( logicalDevice, *this->mUniforms );
 
 	// initialize the descriptor set
-	MOAIDescriptorSetLayoutVK& descriptorSetLayout = this->mPipelineLayout->GetDescriptorSetLayout ( ZLIndexOp::ZERO );
+	MOAIDescriptorSetLayoutVK& descriptorSetLayout = this->mPipelineLayout->GetDescriptorSetLayout ( 0 );
 	
 	MOAIDescriptorSetVK* descriptorSetSignature = new MOAIDescriptorSetVK ();
 	descriptorSetSignature->Initialize ( descriptorSetLayout );
-	descriptorSetSignature->SetDescriptor ( ZLIndexCast ( 0 ), ZLIndexCast ( 0 ), *uniforms );
-	descriptorSetSignature->SetDescriptor ( ZLIndexCast ( 1 ), ZLIndexCast ( 0 ), &this->mTextureDescriptor );
+	descriptorSetSignature->SetDescriptor ( 0, 0, *uniforms );
+	descriptorSetSignature->SetDescriptor ( 1, 0, &this->mTextureDescriptor );
 	
 	MOAIDescriptorSetSnapshotVK* descriptorSet = descriptorSetLayout.ProcureDescriptorSet ( *descriptorSetSignature );
 	

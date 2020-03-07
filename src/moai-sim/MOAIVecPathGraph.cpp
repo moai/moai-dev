@@ -21,8 +21,8 @@
 int MOAIVecPathGraph::_areNeighbors ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVecPathGraph, "UNN" )
 
-	ZLIndex id1 = state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-	ZLIndex id2 = state.GetValue < MOAILuaIndex >( 3, ZLIndexOp::ZERO );
+	ZLIndex id1 = state.GetValue < MOAILuaIndex >( 2, 0 );
+	ZLIndex id2 = state.GetValue < MOAILuaIndex >( 3, 0 );
 
 	if ( MOAILogMgr::CheckIndexPlusOne ( id1, self->mNodes.Size (), L ) &&
 		MOAILogMgr::CheckIndexPlusOne ( id2, self->mNodes.Size (), L )) {
@@ -49,7 +49,7 @@ int MOAIVecPathGraph::_areNeighbors ( lua_State* L ) {
 int MOAIVecPathGraph::_getNode ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVecPathGraph, "UN" )
 
-	ZLIndex id = state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex id = state.GetValue < MOAILuaIndex >( 2, 0 );
 
 	if ( MOAILogMgr::CheckIndexPlusOne ( id, self->mNodes.Size (), L )) {
 		ZLVec3D vec = self->GetNode( id );
@@ -110,8 +110,8 @@ int MOAIVecPathGraph::_reserveNodes ( lua_State* L ) {
 int MOAIVecPathGraph::_setNeighbors ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVecPathGraph, "UNN" )
 
-	ZLIndex id1 = state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-	ZLIndex id2 = state.GetValue < MOAILuaIndex >( 3, ZLIndexOp::ZERO );
+	ZLIndex id1 = state.GetValue < MOAILuaIndex >( 2, 0 );
+	ZLIndex id2 = state.GetValue < MOAILuaIndex >( 3, 0 );
 	bool neighbors = state.GetValue < bool >( 4, true );
 
 	if ( MOAILogMgr::CheckIndexPlusOne ( id1, self->mNodes.Size (), L ) &&
@@ -137,7 +137,7 @@ int MOAIVecPathGraph::_setNeighbors ( lua_State* L ) {
 int MOAIVecPathGraph::_setNode ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVecPathGraph, "UN" )
 
-	ZLIndex id = state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex id = state.GetValue < MOAILuaIndex >( 2, 0 );
 	float x = state.GetValue < float >( 3, 0.0f );
 	float y = state.GetValue < float >( 4, 0.0f );
 	float z = state.GetValue < float >( 5, 0.0f );
@@ -199,7 +199,7 @@ void MOAIVecPathGraph::PushNeighbors ( MOAIPathFinder& pathFinder, ZLIndex nodeI
 	ZLVec3D currentNode = this->GetNode ( nodeID );
 	ZLVec3D targetNode = this->GetNode ( pathFinder.GetTargetNodeID ());
 
-	for ( ZLIndex neighborID = ZLIndexOp::ZERO; neighborID < total; ++neighborID ) {
+	for ( ZLIndex neighborID = 0; neighborID < total; ++neighborID ) {
 		if ( this->AreNeighbors ( nodeID, neighborID ) &&
 			!pathFinder.IsVisited ( neighborID )) {
 

@@ -79,11 +79,11 @@ void MOAICollisionPrimVisitor::Process ( const MOAICollisionShape& shape0, const
 
 	if ( shapeCount0 == 1 ) {
 	
-		this->Process ( *shape0.mShapes [ ZLIndexOp::ZERO ], shape1, t0, t1 );
+		this->Process ( *shape0.mShapes [ 0 ], shape1, t0, t1 );
 	}
 	else {
 	
-		for ( ZLIndex i = ZLIndexOp::ZERO; i < shapeCount0; ++i ) {
+		for ( ZLIndex i = 0; i < shapeCount0; ++i ) {
 			this->Process ( *shape0.mShapes [ i ], shape1, t0, t1 );
 		}
 	}
@@ -99,25 +99,25 @@ void MOAICollisionPrimVisitor::Process ( const MOAICollisionShape& shape0, const
 	
 		if (( shapeCount0 == 1 ) && ( shapeCount1 == 1 )) {
 		
-			this->Process ( *shape0.mShapes [ ZLIndexOp::ZERO ], *shape1.mShapes [ ZLIndexOp::ZERO ], t0, t1 );
+			this->Process ( *shape0.mShapes [ 0 ], *shape1.mShapes [ 0 ], t0, t1 );
 		}
 		else if ( shapeCount1 == 1 ) {
 		
-			for ( ZLIndex i = ZLIndexOp::ZERO; i < shapeCount0; ++i ) {
-				this->Process ( *shape0.mShapes [ i ], *shape1.mShapes [ ZLIndexOp::ZERO ], t0, t1 );
+			for ( ZLIndex i = 0; i < shapeCount0; ++i ) {
+				this->Process ( *shape0.mShapes [ i ], *shape1.mShapes [ 0 ], t0, t1 );
 			}
 		}
 		else {
 		
-			for ( ZLIndex i = ZLIndexOp::ZERO; i < shapeCount1; ++i ) {
-				this->Process ( *shape0.mShapes [ ZLIndexOp::ZERO ], *shape1.mShapes [ i ], t0, t1 );
+			for ( ZLIndex i = 0; i < shapeCount1; ++i ) {
+				this->Process ( *shape0.mShapes [ 0 ], *shape1.mShapes [ i ], t0, t1 );
 			}
 		}
 	}
 	else {
 	
-		for ( ZLIndex i = ZLIndexOp::ZERO; i < shapeCount0; ++i ) {
-			for ( ZLIndex j = ZLIndexOp::ZERO; j < shapeCount1; ++j ) {
+		for ( ZLIndex i = 0; i < shapeCount0; ++i ) {
+			for ( ZLIndex j = 0; j < shapeCount1; ++j ) {
 				this->Process ( *shape0.mShapes [ i ], *shape1.mShapes [ j ], t0, t1 );
 			}
 		}

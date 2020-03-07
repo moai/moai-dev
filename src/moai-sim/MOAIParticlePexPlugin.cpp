@@ -483,7 +483,7 @@ void MOAIParticlePexPlugin::OnRender ( float* particle, float* registers, AKUPar
 	sprite->mXLoc = particle [ MOAIParticle::PARTICLE_X ];
 	sprite->mYLoc = particle [ MOAIParticle::PARTICLE_Y ];
 
-	sprite->mGfxID = ZLIndexCast ( 1 );
+	sprite->mGfxID = 1;
 }
 
 //----------------------------------------------------------------//

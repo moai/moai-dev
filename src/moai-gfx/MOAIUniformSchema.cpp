@@ -64,7 +64,7 @@ MOAIUniformHandle MOAIUniformSchema::GetUniformHandleForAttributeID ( void* buff
 	ZLSize uniformID = rawID / MAX_UNIFORM_ARRAY_SIZE;
 	ZLSize index = rawID - ( uniformID * MAX_UNIFORM_ARRAY_SIZE );
 	
-	return this->GetUniformHandle ( buffer, ZLIndexCast ( uniformID ), ZLIndexCast ( index ));
+	return this->GetUniformHandle ( buffer, uniformID, index );
 }
 
 //----------------------------------------------------------------//
@@ -127,7 +127,7 @@ ZLSize MOAIUniformSchema::UpdateUniformOffsets () {
 	ZLSize bufferSize = 0;
 	ZLSize nUniforms = this->mUniformDescriptors.Size ();
 	
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < nUniforms; ++i ) {
+	for ( ZLIndex i = 0; i < nUniforms; ++i ) {
 		
 		MOAIUniformDescriptor& descriptor = this->mUniformDescriptors [ i ];
 		descriptor.mCPUOffset = bufferSize;

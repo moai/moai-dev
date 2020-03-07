@@ -84,8 +84,8 @@ u32 SafeTesselator::GetTriangles ( MOAIVertexFormat& format, ZLStream& vtxStream
 		const ZLVec2D& vert = (( const ZLVec2D* )verts )[ i ];
 		
 		format.WriteAhead ( vtxStream );
-		format.WriteCoord ( vtxStream, ZLIndexOp::ZERO, vert.mX, vert.mY, 0.0f, 1.0f );
-		format.WriteColor ( vtxStream, ZLIndexOp::ZERO, 0xffffffff );
+		format.WriteCoord ( vtxStream, 0, vert.mX, vert.mY, 0.0f, 1.0f );
+		format.WriteColor ( vtxStream, 0, 0xffffffff );
 		format.SeekVertex ( vtxStream, vtxCursor, i + 1 );
 	}
 

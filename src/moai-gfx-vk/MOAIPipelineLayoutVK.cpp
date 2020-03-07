@@ -18,7 +18,7 @@ void MOAIPipelineLayoutVK::AffirmPipelineLayout () {
 	
 	ZLSize total = this->mDescriptorSetLayouts.Size ();
 	VkDescriptorSetLayout* descriptorSetLayouts = ( VkDescriptorSetLayout* )alloca ( total * sizeof ( VkDescriptorSetLayout ));
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < total; ++i ) {
+	for ( ZLIndex i = 0; i < total; ++i ) {
 		descriptorSetLayouts [ i ] = *this->mDescriptorSetLayouts [ i ];
 	}
 	

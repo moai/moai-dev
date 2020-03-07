@@ -19,7 +19,7 @@ void MOAIDynamicGlyphCachePage::AffirmCanvas ( MOAIDynamicGlyphCache& owner, MOA
 	if ( !this->mImageTexture ) {
 		
 		STLString debugName;
-		debugName.write ( "page %d - %s (%p)", ZLIndexOp::ToInt ( this->mPageID ), font.GetFilename (), &font );
+		debugName.write ( "page %d - %s (%p)", ( int )this->mPageID, font.GetFilename (), &font );
 		
 		this->mImageTexture = MOAIGfxMgr::Get ().CreateImageTexture ();
 		this->mImageTexture->Init ( MAX_TEXTURE_SIZE, ( u32 )this->mRows.mSize, owner.mColorFormat, MOAIImage::TRUECOLOR );
@@ -139,7 +139,7 @@ bool MOAIDynamicGlyphCachePage::ExpandToNextPowerofTwo () {
 
 //----------------------------------------------------------------//
 MOAIDynamicGlyphCachePage::MOAIDynamicGlyphCachePage () :
-	mPageID ( ZLIndexOp::ZERO ),
+	mPageID ( 0 ),
 	mImageTexture ( 0 ),
 	//mColorFormat ( ZLColor::A_8 ),
 	mThreshold ( 0.8f ) {

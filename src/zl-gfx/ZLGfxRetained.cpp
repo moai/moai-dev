@@ -1037,7 +1037,7 @@ void ZLGfxRetained::PopSection () {
 void ZLGfxRetained::PublishEvents () {
 
 	ZLSize top = this->mListenerRecords.GetTop ();
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < top; ++i ) {
+	for ( ZLIndex i = 0; i < top; ++i ) {
 	
 		ZLGfxListenerRecord& record = this->mListenerRecords [ i ];
 		
@@ -1131,7 +1131,7 @@ void ZLGfxRetained::Reset () {
 	
 		this->Abandon ();
 		
-		for ( ZLIndex i = ZLIndexOp::ZERO; i < totalListeners; ++i ) {
+		for ( ZLIndex i = 0; i < totalListeners; ++i ) {
 			this->mListenerRecords [ i ].mListener = 0;
 		}
 	}
@@ -1329,7 +1329,7 @@ ZLGfxRetained::~ZLGfxRetained () {
 //----------------------------------------------------------------//
 void ZLGfxRetained::ZLGfxListener_OnGfxEvent ( u32 event, void* userdata ) {
 
-	ZLIndex idx = ZLIndexCast (( ZLSize )userdata );
+	ZLIndex idx = ( ZLIndex )userdata;
 	if ( idx < this->mListenerRecords.GetTop ()) {
 		ZLGfxListenerRecord& listenerRecord = this->mListenerRecords [ idx ];
 		
@@ -1341,7 +1341,7 @@ void ZLGfxRetained::ZLGfxListener_OnGfxEvent ( u32 event, void* userdata ) {
 //----------------------------------------------------------------//
 void ZLGfxRetained::ZLGfxListener_OnReadPixels ( const ZLCopyOnWrite& copyOnWrite, void* userdata ) {
 
-	ZLIndex idx = ZLIndexCast (( ZLSize )userdata );
+	ZLIndex idx = ( ZLIndex )userdata;
 	if ( idx < this->mListenerRecords.GetTop ()) {
 		ZLGfxListenerRecord& listenerRecord = this->mListenerRecords [ idx ];
 		
@@ -1353,7 +1353,7 @@ void ZLGfxRetained::ZLGfxListener_OnReadPixels ( const ZLCopyOnWrite& copyOnWrit
 //----------------------------------------------------------------//
 void ZLGfxRetained::ZLGfxListener_OnUniformLocation ( u32 addr, void* userdata ) {
 	
-	ZLIndex idx = ZLIndexCast (( ZLSize )userdata );
+	ZLIndex idx = ( ZLIndex )userdata;
 	if ( idx < this->mListenerRecords.GetTop ()) {
 		ZLGfxListenerRecord& listenerRecord = this->mListenerRecords [ idx ];
 		

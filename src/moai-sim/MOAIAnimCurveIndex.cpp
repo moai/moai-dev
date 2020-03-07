@@ -48,9 +48,9 @@ int MOAIAnimCurveIndex::_getValueAtTime ( lua_State* L ) {
 int MOAIAnimCurveIndex::_setKey ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAnimCurveIndex, "UNN" );
 
-	ZLIndex index		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO ) ;
+	ZLIndex index		= state.GetValue < MOAILuaIndex >( 2, 0 ) ;
 	float time			= state.GetValue < float >( 3, 0.0 );
-	ZLIndex value		= state.GetValue < MOAILuaIndex >( 4, ZLIndexOp::ZERO );
+	ZLIndex value		= state.GetValue < MOAILuaIndex >( 4, 0 );
 	u32 mode			= state.GetValue < u32 >( 5, ZLInterpolate::kSmooth );
 	float weight		= state.GetValue < float >( 6, 1.0 );
 	
@@ -81,7 +81,7 @@ ZLIndex MOAIAnimCurveIndex::GetValue ( const MOAIAnimKeySpan& span ) const {
 
 //----------------------------------------------------------------//
 MOAIAnimCurveIndex::MOAIAnimCurveIndex () :
-	mValue ( ZLIndexOp::ZERO ) {
+	mValue ( 0 ) {
 	
 	RTTI_SINGLE ( MOAIAnimCurve )
 }
@@ -132,7 +132,7 @@ void MOAIAnimCurveIndex::MOAIAnimCurve_GetValue ( ZLAttribute& attr, const MOAIA
 //----------------------------------------------------------------//
 void MOAIAnimCurveIndex::MOAIAnimCurve_GetZero ( ZLAttribute& attr ) const {
 
-	attr.SetValue ( ZLIndexOp::ZERO );
+	attr.SetValue ( 0 );
 }
 
 //----------------------------------------------------------------//

@@ -90,7 +90,7 @@ public:
 	bool					GetDepthMask				() const;
 	MOAIFrameBuffer*		GetFrameBuffer				();
 	MOAIShader*				GetShader					();
-	MOAITexture*			GetTexture					( ZLIndex textureUnit = ZLIndexOp::ZERO );
+	MOAITexture*			GetTexture					( ZLIndex textureUnit = 0 );
 	MOAIVertexFormat*		GetVertexFormat				();
 	float					GetViewHeight				() const;
 	ZLRect					GetViewRect					() const;
@@ -117,7 +117,7 @@ public:
 	void					SetScissorRect				( ZLRect rect );
 	void					SetShader					( MOAIShader* shader = NULL );
 	void					SetShader					( MOAIShaderPresetEnum preset );
-	void					SetTexture					( MOAITexture* texture = NULL, ZLIndex textureUnit = ZLIndexOp::ZERO );
+	void					SetTexture					( MOAITexture* texture = NULL, ZLIndex textureUnit = 0 );
 	void					SetVertexArray				( MOAIVertexArray* vtxArray = NULL );
 	void					SetVertexBuffer				( MOAIVertexBuffer* buffer = NULL );
 	void					SetVertexFormat				( MOAIVertexFormat* format = NULL );

@@ -24,7 +24,7 @@ void MOAIMeshSparseQuadTreeBuilder::Build ( MOAIMeshSparseQuadTree& meshPartitio
 	ZLRect bounds;
 
 	ZLSize totalPrims = 0;
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalMeshPrims; ++i, ++totalPrims ) {
+	for ( ZLIndex i = 0; i < totalMeshPrims; ++i, ++totalPrims ) {
 	
 		MOAIMeshPrimCoords prim;
 		primReader.GetPrimCoords ( i, prim ); // TODO: should index skip ahead by more than 1?
@@ -65,7 +65,7 @@ void MOAIMeshSparseQuadTreeBuilder::Build ( MOAIMeshSparseQuadTree& meshPartitio
 	coord.Clear ();
 	
 	MOAIMeshSparseQuadTreeNode*	root = 0;
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalPrims; ++i ) {
+	for ( ZLIndex i = 0; i < totalPrims; ++i ) {
 		root = this->InsertPrim ( coord, root, this->mPrims [ i ]);
 	}
 	

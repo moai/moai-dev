@@ -370,7 +370,7 @@ int MOAIPartition::_reserveLevels ( lua_State* L ) {
 int MOAIPartition::_setLevel ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartition, "UNNNN" )
 
-	ZLIndex levelID		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex levelID		= state.GetValue < MOAILuaIndex >( 2, 0 );
 	float cellSize		= state.GetValue < float >( 3, 1.0f );
 	u32 width			= state.GetValue < u32 >( 4, 0 );
 	u32 height			= state.GetValue < u32 >( 5, 0 );
@@ -418,7 +418,7 @@ void MOAIPartition::AffirmPriority ( MOAIPartitionHull& hull ) {
 void MOAIPartition::Clear () {
 
 	ZLSize totalLevels = this->mLevels.Size ();
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalLevels; ++i ) {
+	for ( ZLIndex i = 0; i < totalLevels; ++i ) {
 		this->mLevels [ i ].Clear ();
 	}
 	this->mBiggies.Clear ();
@@ -445,7 +445,7 @@ u32 MOAIPartition::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartiti
 	results.Reset ();
 	
 	ZLSize totalLevels = this->mLevels.Size ();
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalLevels; ++i ) {
+	for ( ZLIndex i = 0; i < totalLevels; ++i ) {
 		this->mLevels [ i ].GatherHulls ( results, ignoreProp, typeID, queryMask );
 	}
 	this->mBiggies.GatherHulls ( results, ignoreProp, typeID, queryMask );
@@ -461,7 +461,7 @@ u32 MOAIPartition::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartiti
 	results.Reset ();
 	
 	ZLSize totalLevels = this->mLevels.Size ();
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalLevels; ++i ) {
+	for ( ZLIndex i = 0; i < totalLevels; ++i ) {
 		this->mLevels [ i ].GatherHulls ( results, ignoreProp, point, this->mPlaneID, typeID, queryMask );
 	}
 	this->mBiggies.GatherHulls ( results, ignoreProp, point, typeID, queryMask );
@@ -476,7 +476,7 @@ u32 MOAIPartition::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartiti
 	results.Reset ();
 	
 	ZLSize totalLevels = this->mLevels.Size ();
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalLevels; ++i ) {
+	for ( ZLIndex i = 0; i < totalLevels; ++i ) {
 		this->mLevels [ i ].GatherHulls ( results, ignoreProp, point, orientation, typeID, queryMask );
 	}
 	this->mBiggies.GatherHulls ( results, ignoreProp, point, orientation, typeID, queryMask );
@@ -492,7 +492,7 @@ u32 MOAIPartition::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartiti
 	rect.Bless ();
 	
 	ZLSize totalLevels = this->mLevels.Size ();
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalLevels; ++i ) {
+	for ( ZLIndex i = 0; i < totalLevels; ++i ) {
 		this->mLevels [ i ].GatherHulls ( results, ignoreProp, rect, typeID, queryMask );
 	}
 	this->mBiggies.GatherHulls ( results, ignoreProp, rect, typeID, queryMask );
@@ -508,7 +508,7 @@ u32 MOAIPartition::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartiti
 	box.Bless ();
 	
 	ZLSize totalLevels = this->mLevels.Size ();
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalLevels; ++i ) {
+	for ( ZLIndex i = 0; i < totalLevels; ++i ) {
 		this->mLevels [ i ].GatherHulls ( results, ignoreProp, box, this->mPlaneID, typeID, queryMask );
 	}
 	this->mBiggies.GatherHulls ( results, ignoreProp, box, typeID, queryMask );
@@ -523,7 +523,7 @@ u32 MOAIPartition::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartiti
 	results.Reset ();
 	
 	ZLSize totalLevels = this->mLevels.Size ();
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalLevels; ++i ) {
+	for ( ZLIndex i = 0; i < totalLevels; ++i ) {
 		this->mLevels [ i ].GatherHulls ( results, ignoreProp, frustum, this->mPlaneID, typeID, queryMask );
 	}
 	this->mBiggies.GatherHulls ( results, ignoreProp, frustum, typeID, queryMask );
@@ -587,7 +587,7 @@ MOAIPartition::~MOAIPartition () {
 void MOAIPartition::PrepareRebuild () {
 
 	ZLSize totalLevels = this->mLevels.Size ();
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalLevels; ++i ) {
+	for ( ZLIndex i = 0; i < totalLevels; ++i ) {
 		this->mLevels [ i ].ExtractProps ( this->mEmpties, 0 );
 	}
 	this->mBiggies.ExtractProps ( this->mEmpties, 0 );
@@ -663,7 +663,7 @@ void MOAIPartition::UpdateHull ( MOAIPartitionHull& hull ) {
 		MOAIPartitionLevel* level = 0;
 		
 		ZLSize totalLevels = this->mLevels.Size ();
-		for ( ZLIndex i = ZLIndexOp::ZERO; i < totalLevels; ++i ) {
+		for ( ZLIndex i = 0; i < totalLevels; ++i ) {
 			
 			MOAIPartitionLevel* testLevel = &this->mLevels [ i ];
 			

@@ -182,8 +182,8 @@ int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, SafeTesselator& 
 //----------------------------------------------------------------//
 int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, ZLStream& vtxStream, ZLStream& idxStream, MOAIVertexFormat& format, u32 flags ) {
 	
-	ZLIndex fillExtraID		= ZLIndexCast ( this->mStyle.GetFillExtraID ());
-	ZLIndex strokeExtraID	= ZLIndexCast ( this->mStyle.GetStrokeExtraID ());
+	ZLIndex fillExtraID		= this->mStyle.GetFillExtraID ();
+	ZLIndex strokeExtraID	= this->mStyle.GetStrokeExtraID ();
 	int error = 0;
 	
 	bool isExtruded		= this->mStyle.GetExtrude () > 0.0f;

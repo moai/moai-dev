@@ -15,15 +15,15 @@
 int MOAISelectionMesh::_addSelection ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISelectionMesh, "UNN*" )
 	
-	ZLIndex set		= ZLIndexOp::ZERO;
-	ZLIndex base	= ZLIndexOp::ZERO;
-	ZLIndex top		= ZLIndexOp::ZERO;
+	ZLIndex set		= 0;
+	ZLIndex base	= 0;
+	ZLIndex top		= 0;
 	
 	if ( state.IsType ( 4, LUA_TNUMBER )) {
 
-		set			= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-		base		= state.GetValue < MOAILuaIndex >( 3, ZLIndexOp::ZERO );
-		top			= state.GetValue < MOAILuaIndex >( 4, ZLIndexOp::ZERO );
+		set			= state.GetValue < MOAILuaIndex >( 2, 0 );
+		base		= state.GetValue < MOAILuaIndex >( 3, 0 );
+		top			= state.GetValue < MOAILuaIndex >( 4, 0 );
 	}
 	else {
 	
@@ -31,8 +31,8 @@ int MOAISelectionMesh::_addSelection ( lua_State* L ) {
 		if ( result.mCode != ZL_OK ) return 0;
 		
 		set			= result;
-		base		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-		top			= state.GetValue < MOAILuaIndex >( 3, ZLIndexOp::ZERO );
+		base		= state.GetValue < MOAILuaIndex >( 2, 0 );
+		top			= state.GetValue < MOAILuaIndex >( 3, 0 );
 	}
 	
 	self->AddSelection ( set, base, top );
@@ -45,12 +45,12 @@ int MOAISelectionMesh::_addSelection ( lua_State* L ) {
 int MOAISelectionMesh::_clearSelection ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISelectionMesh, "UN" )
 
-	ZLIndex set		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex set		= state.GetValue < MOAILuaIndex >( 2, 0 );
 	
 	if ( state.CheckParams ( 3, "NN", false )) {
 	
-		ZLIndex base	= state.GetValue < MOAILuaIndex >( 3, ZLIndexOp::ZERO );
-		ZLIndex top		= state.GetValue < MOAILuaIndex >( 4, ZLIndexOp::ZERO );
+		ZLIndex base	= state.GetValue < MOAILuaIndex >( 3, 0 );
+		ZLIndex top		= state.GetValue < MOAILuaIndex >( 4, 0 );
 	
 		self->ClearSelection ( set, base, top );
 	}
@@ -65,8 +65,8 @@ int MOAISelectionMesh::_clearSelection ( lua_State* L ) {
 int MOAISelectionMesh::_mergeSelection ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISelectionMesh, "UNN" )
 
-	ZLIndex set		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-	ZLIndex merge	= state.GetValue < MOAILuaIndex >( 3, ZLIndexOp::ZERO );
+	ZLIndex set		= state.GetValue < MOAILuaIndex >( 2, 0 );
+	ZLIndex merge	= state.GetValue < MOAILuaIndex >( 3, 0 );
 
 	self->MergeSelection ( set, merge );
 
@@ -79,7 +79,7 @@ int MOAISelectionMesh::_printSelection ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISelectionMesh, "U" )
 
 	if ( state.IsType ( 2, LUA_TNUMBER )) {
-		self->PrintSelection ( state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO ));
+		self->PrintSelection ( state.GetValue < MOAILuaIndex >( 2, 0 ));
 	}
 	else {
 		self->PrintSelections ();
@@ -214,9 +214,9 @@ void MOAISelectionMesh::AddSelection ( ZLIndex set, ZLIndex base, ZLIndex top ) 
 //----------------------------------------------------------------//
 ZLResult < ZLIndex > MOAISelectionMesh::AffirmSpanSet () {
 
-	ZLIndex top = ZLIndexCast ( this->mSets.Size () );
+	ZLIndex top = this->mSets.Size ();
 
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < top; ++i ) {
+	for ( ZLIndex i = 0; i < top; ++i ) {
 		if ( !this->mSets [ i ]) {
 			ZL_RETURN_RESULT ( ZLIndex, i, ZL_OK );
 		}

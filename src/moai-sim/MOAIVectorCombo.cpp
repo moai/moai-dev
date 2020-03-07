@@ -17,7 +17,7 @@ int MOAIVectorCombo::AddFillContours ( SafeTesselator& tess ) {
 	SafeTesselator outline;
 	int error = 0;
 
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mShapes.Size (); ++i ) {
+	for ( ZLIndex i = 0; i < this->mShapes.Size (); ++i ) {
 		MOAIVectorShape& shape = *this->mShapes [ i ];
 		error = shape.AddFillContours ( outline );
 		if ( error ) return error;
@@ -58,7 +58,7 @@ MOAIVectorCombo::~MOAIVectorCombo () {
 
 	u32 size = this->mShapes.Size ();
 	
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
+	for ( ZLIndex i = 0; i < size; ++i ) {
 		delete this->mShapes [ i ];
 	}
 }
@@ -69,7 +69,7 @@ void MOAIVectorCombo::Read ( ZLStream& stream, MOAIVectorTesselatorWriter& write
 	u32 size = ( u32 )stream.Read < u16 >( 0 );
 	this->mShapes.Init ( size );
 	
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
+	for ( ZLIndex i = 0; i < size; ++i ) {
 		MOAIVectorShape* shape = writer.ReadShape ( stream );
 		this->mShapes [ i ] = shape;
 	}
@@ -82,7 +82,7 @@ void MOAIVectorCombo::Write ( ZLStream& stream, MOAIVectorTesselatorWriter& writ
 	u32 size = this->mShapes.Size ();
 	stream.Write < u16 >(( u16 )size );
 	
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
+	for ( ZLIndex i = 0; i < size; ++i ) {
 		MOAIVectorShape* shape = this->mShapes [ i ];
 		writer.WriteShape ( stream, *shape );
 	}

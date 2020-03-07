@@ -201,7 +201,7 @@ MOAIGfxMgrGL::MOAIGfxMgrGL () :
 	mTextureMemoryUsage ( 0 ),
 	mMaxTextureSize ( 0 ),
 	mRenderCounter ( 0 ),
-	mStateStackTop ( ZLIndexOp::ZERO ) {
+	mStateStackTop ( 0 ) {
 	
 	RTTI_BEGIN
 		RTTI_SINGLE ( MOAIGfxMgr )
@@ -215,7 +215,7 @@ MOAIGfxMgrGL::~MOAIGfxMgrGL () {
 
 	this->Clear ();
 
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mStateStack.Size (); ++i ) {
+	for ( ZLIndex i = 0; i < this->mStateStack.Size (); ++i ) {
 		delete this->mStateStack [ i ];
 	}
 	

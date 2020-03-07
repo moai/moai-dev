@@ -4,7 +4,6 @@
 #ifndef	ZLLEANARRAY_H
 #define	ZLLEANARRAY_H
 
-#include <zl-util/ZLIndex.h>
 #include <zl-util/ZLResult.h>
 
 #define ZL_DECLARE_SCOPED_BUFFER(name,type,size,stackAllocMax)									\

@@ -51,7 +51,7 @@ void MOAIGfxComposerVK::ApplyAndBind (  MOAIGfxMgrVK& gfxMgr, MOAICommandBufferV
 
 	// TODO: pass in listener to detect changes (to invalidate graphics cache)
 
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mCommandCount; ++i ) {
+	for ( ZLIndex i = 0; i < this->mCommandCount; ++i ) {
 		MOAIGfxComposerCommandVK* command = this->mCommands [ i ];
 		if ( command ) {
 			MOAIDescriptorSetVK& descriptorSet = this->mDescriptorSets [ command->mDescriptorSetIndex ];
@@ -86,7 +86,7 @@ MOAIGfxComposerVK::~MOAIGfxComposerVK () {
 //----------------------------------------------------------------//
 void MOAIGfxComposerVK::PushTextureCommand ( ZLIndex descriptorSetIndex, ZLIndex bindPoint, ZLIndex arrayItem, ZLIndex textureUnit ) {
 
-	this->mCommands [ ZLIndexCast ( this->mCommandCount++ )] = new MOAIGfxComposerTextureCommandVK ( descriptorSetIndex, bindPoint, arrayItem, textureUnit );
+	this->mCommands [ this->mCommandCount++ ] = new MOAIGfxComposerTextureCommandVK ( descriptorSetIndex, bindPoint, arrayItem, textureUnit );
 }
 
 //----------------------------------------------------------------//
@@ -106,7 +106,7 @@ void MOAIGfxComposerVK::SetPipelineLayout ( MOAIPipelineLayoutVK& pipelineLayout
 	ZLSize nLayouts = this->mPipelineLayout->mDescriptorSetLayouts.Size ();
 	this->mDescriptorSets.Init ( nLayouts );
 	
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < nLayouts; ++i ) {
+	for ( ZLIndex i = 0; i < nLayouts; ++i ) {
 		MOAIDescriptorSetVK& descriptorSet = this->mDescriptorSets [ i ];
 		descriptorSet.Initialize ( this->mPipelineLayout->GetDescriptorSetLayout ( i ));
 	}

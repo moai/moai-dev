@@ -14,8 +14,8 @@
 int MOAIAbstractUniformBuffer::_getAttributeID ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractUniformBuffer, "UN" )
 
-	ZLIndex uniformID		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-	ZLIndex index			= state.GetValue < MOAILuaIndex >( 3, ZLIndexOp::ZERO );
+	ZLIndex uniformID		= state.GetValue < MOAILuaIndex >( 2, 0 );
+	ZLIndex index			= state.GetValue < MOAILuaIndex >( 3, 0 );
 	
 	const MOAIUniformSchema* schema = self->GetSchema ();
 	
@@ -29,12 +29,12 @@ int MOAIAbstractUniformBuffer::_getAttributeID ( lua_State* L ) {
 int MOAIAbstractUniformBuffer::_setUniform ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractUniformBuffer, "U" )
 
-	ZLIndex uniformID	= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex uniformID	= state.GetValue < MOAILuaIndex >( 2, 0 );
 
 	const MOAIUniformSchema* schema = self->GetSchema ();
 
 	if ( schema ) {
-		schema->SetUniformValue ( L, 3, self->mUniforms.GetBuffer (), uniformID, ZLIndexOp::ZERO );
+		schema->SetUniformValue ( L, 3, self->mUniforms.GetBuffer (), uniformID, 0 );
 	}
 	return 0;
 }
@@ -43,8 +43,8 @@ int MOAIAbstractUniformBuffer::_setUniform ( lua_State* L ) {
 int MOAIAbstractUniformBuffer::_setUniformArrayItem ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractUniformBuffer, "U" )
 
-	ZLIndex uniformID	= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-	ZLIndex index		= state.GetValue < MOAILuaIndex >( 3, ZLIndexOp::ZERO );
+	ZLIndex uniformID	= state.GetValue < MOAILuaIndex >( 2, 0 );
+	ZLIndex index		= state.GetValue < MOAILuaIndex >( 3, 0 );
 
 	const MOAIUniformSchema* schema = self->GetSchema ();
 

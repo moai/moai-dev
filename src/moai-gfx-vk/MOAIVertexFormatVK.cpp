@@ -100,7 +100,7 @@ void MOAIVertexFormatVK::UpdatePipelineCreateInfo ( VkGraphicsPipelineCreateInfo
 	
 		this->mVertexInputAttributeDescriptionsVK.Init ( nAttributes );
 		
-		for ( ZLIndex i = ZLIndexOp::ZERO; i < nAttributes; ++i ) {
+		for ( ZLIndex i = 0; i < nAttributes; ++i ) {
 		
 			MOAIVertexAttribute& attribute = this->mAttributes [ i ];
 	

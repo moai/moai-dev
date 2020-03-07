@@ -37,7 +37,7 @@ int MOAIHasDeckAndIndex::_getIndex ( lua_State* L ) {
 int MOAIHasDeckAndIndex::_setIndex ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHasDeckAndIndex, "U" )
 
-	self->mIndex = state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	self->mIndex = state.GetValue < MOAILuaIndex >( 2, 0 );
 	self->ScheduleUpdate ();
 
 	return 0;
@@ -49,7 +49,7 @@ int MOAIHasDeckAndIndex::_setIndex ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 MOAIHasDeckAndIndex::MOAIHasDeckAndIndex () :
-	mIndex ( ZLIndexOp::ZERO ) {
+	mIndex ( 0 ) {
 	
 	RTTI_BEGIN
 		RTTI_EXTEND ( MOAIHasDeck )

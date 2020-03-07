@@ -246,9 +246,9 @@ public:
 	inline ZLIndex GetValue ( const ZLIndex& value ) const {
 
 		switch ( this->mAttrTypeID ) {
-			case ATTR_TYPE_FLOAT_32:	return ZLIndexCast (( ZLSize )( *( float* )this->mBuffer ));
+			case ATTR_TYPE_FLOAT_32:	return ( ZLSize )( *( float* )this->mBuffer );
 			case ATTR_TYPE_INDEX_32:	return *( ZLIndex* )this->mBuffer;
-			case ATTR_TYPE_INT_32:		return ZLIndexCast (( ZLSize )( *( s32* )this->mBuffer ));
+			case ATTR_TYPE_INT_32:		return ( ZLSize )( *( s32* )this->mBuffer );
 			default:					return value;
 		}
 	}

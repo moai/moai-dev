@@ -12,7 +12,7 @@
 //----------------------------------------------------------------//
 void MOAIVertexFormatGL::Bind ( ZLGfx& gfx, ZLSharedConstBuffer* buffer ) const {
 
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mTotalAttributes; ++i ) {
+	for ( ZLIndex i = 0; i < this->mTotalAttributes; ++i ) {
 		
 		const MOAIVertexAttribute& attr = this->mAttributes [ i ];
 		
@@ -44,7 +44,7 @@ MOAIVertexFormatGL::~MOAIVertexFormatGL () {
 //----------------------------------------------------------------//
 void MOAIVertexFormatGL::Unbind ( ZLGfx& gfx ) const {
 
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mTotalAttributes; ++i ) {
+	for ( ZLIndex i = 0; i < this->mTotalAttributes; ++i ) {
 		
 		const MOAIVertexAttribute& attr = this->mAttributes [ i ];
 		gfx.DisableVertexAttribArray ( attr.mIndex );

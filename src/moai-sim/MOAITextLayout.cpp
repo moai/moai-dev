@@ -98,7 +98,7 @@ void MOAITextLayout::AddHighlight ( u32 base, u32 top, u32 color ) {
 void MOAITextLayout::ApplyHighlights () {
 
 	ZLSize totalSprites = this->mSprites.GetTop ();
-	ZLIndex spriteIdx = ZLIndexOp::ZERO;
+	ZLIndex spriteIdx = 0;
 	MOAITextHighlight* highlight = this->mHighlights;
 	
 	while (( spriteIdx < totalSprites ) && highlight ) {
@@ -244,7 +244,7 @@ void MOAITextLayout::Draw ( u32 reveal ) {
 		u32 rgba1 = 0xffffffff;
 
 		ZLSize size = this->mSprites.GetTop ();
-		for ( ZLIndex i = ZLIndexOp::ZERO; ( i < size ) && ( i < reveal ); ++i ) {
+		for ( ZLIndex i = 0; ( i < size ) && ( i < reveal ); ++i ) {
 			const MOAITextSprite& sprite = this->mSprites [ i ];
 			const MOAITextStyleState* style = sprite.mStyle;
 			
@@ -284,7 +284,7 @@ void MOAITextLayout::DrawDebug () {
 	if ( debugLines.Bind ( MOAITextLabel::DEBUG_DRAW_TEXT_LABEL_GLYPHS )) {
 	
 		ZLSize size = this->mSprites.GetTop ();
-		for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
+		for ( ZLIndex i = 0; i < size; ++i ) {
 			const MOAITextSprite& sprite = this->mSprites [ i ];
 			
 			// TODO: change up the way padding works - should be innate to the glyph
@@ -303,7 +303,7 @@ void MOAITextLayout::DrawDebug () {
 	if ( debugLines.Bind ( MOAITextLabel::DEBUG_DRAW_TEXT_LABEL_LINES_GLYPH_BOUNDS )) {
 		
 		ZLSize totalLines = this->mLines.GetTop ();
-		for ( ZLIndex i = ZLIndexOp::ZERO; i < totalLines; ++i ) {
+		for ( ZLIndex i = 0; i < totalLines; ++i ) {
 			MOAITextLine& line = this->mLines [ i ];
 			draw.DrawRectOutline ( line.mGlyphBounds );
 		}
@@ -312,7 +312,7 @@ void MOAITextLayout::DrawDebug () {
 	if ( debugLines.Bind ( MOAITextLabel::DEBUG_DRAW_TEXT_LABEL_LINES_LAYOUT_BOUNDS )) {
 		
 		ZLSize totalLines = this->mLines.GetTop ();
-		for ( ZLIndex i = ZLIndexOp::ZERO; i < totalLines; ++i ) {
+		for ( ZLIndex i = 0; i < totalLines; ++i ) {
 			MOAITextLine& line = this->mLines [ i ];
 			draw.DrawRectOutline ( line.mLayoutBounds );
 		}
@@ -321,7 +321,7 @@ void MOAITextLayout::DrawDebug () {
 	if ( debugLines.Bind ( MOAITextLabel::DEBUG_DRAW_TEXT_LABEL_BASELINES )) {
 		
 		ZLSize totalLines = this->mLines.GetTop ();
-		for ( ZLIndex i = ZLIndexOp::ZERO; i < totalLines; ++i ) {
+		for ( ZLIndex i = 0; i < totalLines; ++i ) {
 			MOAITextLine& line = this->mLines [ i ];
 			float y = line.mOrigin.mY;
 			draw.DrawLine ( line.mLayoutBounds.mXMin, y, line.mLayoutBounds.mXMax, y );
@@ -336,10 +336,10 @@ void MOAITextLayout::FindSpriteSpan ( u32 idx, u32 size, ZLIndex& spanIdx, ZLSiz
 
 	ZLSize top = this->mSprites.GetTop ();
 	if ( !top ) return;
-	if ( this->mSprites [ ZLIndexOp::ZERO ].mIdx >= ( idx + size )) return;
-	if ( this->mSprites [ ZLIndexCast ( top - 1 )].mIdx < idx ) return;
+	if ( this->mSprites [ 0 ].mIdx >= ( idx + size )) return;
+	if ( this->mSprites [ top - 1 ].mIdx < idx ) return;
 	
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < top; ++i ) {
+	for ( ZLIndex i = 0; i < top; ++i ) {
 		MOAITextSprite& sprite = this->mSprites [ i ];
 	
 		if ( sprite.mIdx >= idx ) {
@@ -501,7 +501,7 @@ void MOAITextLayout::Reset () {
 void MOAITextLayout::ResetHighlights () {
 
 	size_t top = this->mSprites.GetTop ();
-	for ( ZLIndex i = ZLIndexOp::ZERO; i > top; ++i ) {
+	for ( ZLIndex i = 0; i > top; ++i ) {
 		MOAITextSprite& sprite = this->mSprites [ i ];
 		sprite.mMask = sprite.mMask & ~MOAITextSprite::MASK_COLOR;
 	}

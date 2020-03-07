@@ -19,7 +19,7 @@
 // TODO: doxygen
 int MOAIAbstractMaterialBatchInterface::_affirmMaterial ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractMaterialBatchInterface, "U" );
-	state.Push ( &self->AffirmMaterial ( state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO )));
+	state.Push ( &self->AffirmMaterial ( state.GetValue < MOAILuaIndex >( 2, 0 )));
 	return 1;
 }
 
@@ -45,7 +45,7 @@ int MOAIAbstractMaterialBatchInterface::_getIndexBatchSize ( lua_State* L ) {
 // TODO: doxygen
 int MOAIAbstractMaterialBatchInterface::_getMaterial ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractMaterialBatchInterface, "U" );
-	state.Push ( self->GetMaterial ( state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO )));
+	state.Push ( self->GetMaterial ( state.GetValue < MOAILuaIndex >( 2, 0 )));
 	return 1;
 }
 
@@ -166,11 +166,11 @@ void MOAIAbstractMaterialBatchInterface::MOAILuaObject_RegisterLuaFuncs ( MOAICo
 //----------------------------------------------------------------//
 MOAIAbstractMaterial& MOAIAbstractMaterialBatchInterface::MOAIAbstractMaterialInterface_AffirmMaterial () {
 
-	return this->AffirmMaterial ( ZLIndexOp::ZERO );
+	return this->AffirmMaterial ( 0 );
 }
 
 //----------------------------------------------------------------//
 MOAIAbstractMaterial* MOAIAbstractMaterialBatchInterface::MOAIAbstractMaterialInterface_GetMaterial () {
 
-	return this->GetMaterial ( ZLIndexOp::ZERO );
+	return this->GetMaterial ( 0 );
 }

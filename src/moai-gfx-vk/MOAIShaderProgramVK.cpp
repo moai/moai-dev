@@ -129,7 +129,7 @@ void MOAIShaderProgramVK::UpdatePipelineCreateInfo ( VkGraphicsPipelineCreateInf
 			VkShaderModule module = this->mModules [ i ];
 			if ( module ) {
 			
-				this->mStageInfos [ ZLIndexCast ( cursor++ )] = MOAIGfxStructVK::pipelineShaderStageCreateInfo (
+				this->mStageInfos [ cursor++ ] = MOAIGfxStructVK::pipelineShaderStageCreateInfo (
 					this->GetShaderStageBit ( moduleID ),
 					module,
 					"main"

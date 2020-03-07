@@ -28,7 +28,7 @@ void MOAIDescriptorSetSnapshotVK::Update ( const MOAIDescriptorSetVK& descriptor
 
 	ZLSize totalWrites = descriptorSet.Size ();
 	VkWriteDescriptorSet* writeDescriptors = ( VkWriteDescriptorSet* )alloca ( totalWrites * sizeof ( VkWriteDescriptorSet ));
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < totalWrites; ++i ) {
+	for ( ZLIndex i = 0; i < totalWrites; ++i ) {
 		writeDescriptors [ i ] = descriptorSet [ i ];
 		writeDescriptors [ i ].dstSet = this->mDescriptorSet;
 	}

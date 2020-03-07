@@ -51,7 +51,7 @@ MOAICellCoord::~MOAICellCoord () {
 int MOAIGridSpace::_cellAddrToCoord	( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGridSpace, "UN" )
 
-	ZLIndex addr = state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex addr = state.GetValue < MOAILuaIndex >( 2, 0 );
 	
 	MOAICellCoord coord = self->GetCellCoord ( addr );
 	
@@ -656,7 +656,7 @@ ZLIndex MOAIGridSpace::GetCellAddr ( MOAICellCoord cellCoord ) const {
 //----------------------------------------------------------------//
 ZLIndex MOAIGridSpace::GetCellAddr ( int xCell, int yCell ) const {
 
-	if ( !( this->mWidth && this->mHeight )) return ZLIndexOp::ZERO;
+	if ( !( this->mWidth && this->mHeight )) return 0;
 
 	xCell = xCell % this->mWidth;
 	if ( xCell < 0 ) xCell += this->mWidth;
@@ -664,7 +664,7 @@ ZLIndex MOAIGridSpace::GetCellAddr ( int xCell, int yCell ) const {
 	yCell = yCell % this->mHeight;
 	if ( yCell < 0 ) yCell += this->mHeight;
 
-	return ZLIndexCast (( ZLSize )(( yCell * this->mWidth ) + xCell ) );
+	return ( ZLSize )(( yCell * this->mWidth ) + xCell );
 }
 
 //----------------------------------------------------------------//

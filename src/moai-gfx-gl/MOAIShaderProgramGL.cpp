@@ -26,7 +26,7 @@
 int MOAIShaderProgramGL::_declareUniform ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShaderProgramGL, "UNSN" )
 
-	ZLIndex idx			= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex idx			= state.GetValue < MOAILuaIndex >( 2, 0 );
 	STLString name		= state.GetValue < cc8* >( 3, "" );
 	u32 type			= state.GetValue < u32 >( 4, MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT );
 	u32 width			= state.GetValue < u32 >( 5, 1 );
@@ -86,7 +86,7 @@ int MOAIShaderProgramGL::_reserveUniforms ( lua_State* L ) {
 int MOAIShaderProgramGL::_setVertexAttribute ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIShaderProgramGL, "UNS" )
 
-	ZLIndex idx				= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex idx				= state.GetValue < MOAILuaIndex >( 2, 0 );
 	STLString attribute		= state.GetValue < cc8* >( 3, "" );
 
 	self->SetVertexAttribute ( idx, attribute );
@@ -123,7 +123,7 @@ void MOAIShaderProgramGL::BindUniforms () {
 	
 	size_t nUniforms = this->mUniformBindings.Size ();
 	
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < nUniforms; ++i ) {
+	for ( ZLIndex i = 0; i < nUniforms; ++i ) {
 	
 		MOAIUniformHandle handle = this->GetUniformHandle ( this->mUniformBuffer.GetBuffer (), i );
 		
@@ -183,7 +183,7 @@ void MOAIShaderProgramGL::InitUniformBuffer ( ZLLeanArray < u8 >& buffer ) {
 	size_t nUniforms = this->mUniformDescriptors.Size ();
 	buffer.Init ( this->mUniformBufferSize );
 	
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < nUniforms; ++i ) {
+	for ( ZLIndex i = 0; i < nUniforms; ++i ) {
 		MOAIUniformHandle handle = this->GetUniformHandle ( buffer.GetBuffer (), i );
 		handle.Default ( this->mUniformDescriptors [ i ].mCount );
 	}
@@ -271,7 +271,7 @@ bool MOAIShaderProgramGL::MOAIGfxResourceGL_OnGPUCreate () {
 	gfx.LinkProgram ( this->mProgram, true );
 
 	// get the uniform locations
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mUniformBindings.Size (); ++i ) {
+	for ( ZLIndex i = 0; i < this->mUniformBindings.Size (); ++i ) {
 		MOAIShaderUniformBindingGL& uniform = this->mUniformBindings [ i ];
 		gfx.GetUniformLocation ( this->mProgram, uniform.mName, this, ( void* )(( size_t )i )); // TODO: cast?
 	}
@@ -336,6 +336,6 @@ void MOAIShaderProgramGL::ZLGfxListener_OnUniformLocation ( u32 addr, void* user
 	ZLSize i = ( size_t )userdata;
 	
 	if ( i < this->mUniformBindings.Size ()) {
-		this->mUniformBindings [ ZLIndexCast ( i )].mGPUBase = addr;
+		this->mUniformBindings [ i ].mGPUBase = addr;
 	}
 }

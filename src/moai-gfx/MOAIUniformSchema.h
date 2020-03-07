@@ -20,10 +20,10 @@ public:
 
 	//----------------------------------------------------------------//
 	bool						ApplyAttrOp							( void* buffer, ZLAttrID attrID, ZLAttribute& attr, u32 op ) const;
-	u32							GetAttributeID						( u32 uniformID, ZLIndex index = ZLIndexOp::ZERO ) const;
-	MOAIUniformHandle			GetUniformHandle					( void* buffer, ZLIndex uniformID, ZLIndex index = ZLIndexOp::ZERO ) const;
+	u32							GetAttributeID						( u32 uniformID, ZLIndex index = 0 ) const;
+	MOAIUniformHandle			GetUniformHandle					( void* buffer, ZLIndex uniformID, ZLIndex index = 0 ) const;
 	MOAIUniformHandle			GetUniformHandleForAttributeID		( void* buffer, ZLAttrID attrID ) const;
-	void						SetUniformValue						( lua_State* L, int idx, void* buffer, ZLIndex uniformID, ZLIndex index = ZLIndexOp::ZERO ) const;
+	void						SetUniformValue						( lua_State* L, int idx, void* buffer, ZLIndex uniformID, ZLIndex index = 0 ) const;
 								MOAIUniformSchema					();
 								~MOAIUniformSchema					();
 	ZLSize						UpdateUniformOffsets				();
@@ -32,7 +32,7 @@ public:
 	template < typename TYPE >
 	void SetUniformValue ( void* buffer, ZLIndex uniformID, const TYPE& value ) const {
 
-		MOAIUniformHandle uniform = this->GetUniformHandle ( buffer, uniformID, ZLIndexOp::ZERO );
+		MOAIUniformHandle uniform = this->GetUniformHandle ( buffer, uniformID, 0 );
 		assert ( uniform.IsValid ());
 		uniform.SetValue ( value );
 	}

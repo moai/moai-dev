@@ -24,7 +24,7 @@ int MOAIDeckRemapper::_reserve ( lua_State* L ) {
 	ZLSize size = state.GetValue < u32 >( 2, 0 );
 	self->mRemap.Init ( size );
 	
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < size; ++i ) {
+	for ( ZLIndex i = 0; i < size; ++i ) {
 		self->mRemap [ i ] = i;
 	}
 	return 0;
@@ -60,8 +60,8 @@ int MOAIDeckRemapper::_setBase ( lua_State* L ) {
 int MOAIDeckRemapper::_setRemap ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDeckRemapper, "UN" )
 
-	ZLIndex idx		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-	ZLIndex remap	= state.GetValue < MOAILuaIndex >( 3, ZLIndexOp::ZERO );
+	ZLIndex idx		= state.GetValue < MOAILuaIndex >( 2, 0 );
+	ZLIndex remap	= state.GetValue < MOAILuaIndex >( 3, 0 );
 	
 	ZLIndex code = idx - self->mBase;
 	
@@ -98,7 +98,7 @@ ZLIndex MOAIDeckRemapper::MOAIDeckProxy_Remap ( ZLIndex idx ) {
 
 	ZLIndex code = idx - this->mBase;
 	
-	return ZLIndexCast (( code < this->mRemap.Size ()) ? this->mRemap [ code ] : idx );
+	return ( code < this->mRemap.Size () ? this->mRemap [ code ] : idx );
 }
 
 //----------------------------------------------------------------//
@@ -127,12 +127,12 @@ void MOAIDeckRemapper::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, 
 //----------------------------------------------------------------//
 bool MOAIDeckRemapper::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 
-	ZLIndex code = ZLIndexCast (( ZLSize )attrID.Unpack () - this->mBase - 1 ); // TODO: verify
+	ZLIndex code = ( ZLSize )attrID.Unpack () - this->mBase - 1; // TODO: verify
 
 	// TODO: verify
 	if ( code < this->mRemap.Size ()) {
 		ZLSize remap = this->mRemap [ code ];
-		ZLIndex idx = ZLIndexCast ( ZLFloat::ToIndex ( attr.Apply (( float )remap, op, ZLAttribute::ATTR_READ_WRITE )) - 1 );
+		ZLIndex idx = ZLFloat::ToIndex ( attr.Apply (( float )remap, op, ZLAttribute::ATTR_READ_WRITE )) - 1;
 		this->mRemap [ code ] = idx;
 		return true;
 	}

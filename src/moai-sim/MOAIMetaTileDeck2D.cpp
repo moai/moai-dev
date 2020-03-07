@@ -91,7 +91,7 @@ int MOAIMetaTileDeck2D::_setGrid ( lua_State* L ) {
 int MOAIMetaTileDeck2D::_setMetaTile ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMetaTileDeck2D, "UNNNNN" )
 	
-	ZLIndex idx = state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex idx = state.GetValue < MOAILuaIndex >( 2, 0 );
 	if ( idx < self->mBrushes.Size ()) {
 	
 		MOAIMetaTile& brush = self->mBrushes [ idx ];
@@ -140,8 +140,8 @@ ZLBounds MOAIMetaTileDeck2D::MOAIDeck_ComputeMaxAABB () {
 	}
 
 	ZLBox aabb;
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mBrushes.Size (); ++i ) {
-		aabb.Grow ( this->GetBounds ( i ).mAABB, i > ZLIndexOp::ZERO );
+	for ( ZLIndex i = 0; i < this->mBrushes.Size (); ++i ) {
+		aabb.Grow ( this->GetBounds ( i ).mAABB, i > 0 );
 	}
 	return ZLBounds ( aabb );
 }
@@ -182,7 +182,7 @@ void MOAIMetaTileDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 		for ( int x = c0.mX; x <= c1.mX; ++x ) {
 			
 			MOAICellCoord wrap = grid.WrapCellCoord ( x, y );
-			idx = ZLIndexCast ( grid.GetTile ( wrap.mX, wrap.mY ) );
+			idx = grid.GetTile ( wrap.mX, wrap.mY );
 			
 			MOAICellCoord coord ( x, y );
 			ZLVec3D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER, 0.0f );

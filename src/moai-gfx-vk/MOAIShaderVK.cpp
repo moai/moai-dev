@@ -14,8 +14,8 @@
 //int MOAIShaderVK::_getAttributeID ( lua_State* L ) {
 //	MOAI_LUA_SETUP ( MOAIShaderVK, "UN" )
 //
-//	ZLIndex uniformID		= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-//	ZLIndex index			= state.GetValue < MOAILuaIndex >( 3, ZLIndexOp::ZERO );
+//	ZLIndex uniformID		= state.GetValue < MOAILuaIndex >( 2, 0 );
+//	ZLIndex index			= state.GetValue < MOAILuaIndex >( 3, 0 );
 //
 //	if ( self->mProgram ) {
 //		state.Push ( self->mProgram->GetAttributeID ( uniformID, index ));
@@ -37,12 +37,12 @@
 //int MOAIShaderVK::_setUniform ( lua_State* L ) {
 //	MOAI_LUA_SETUP ( MOAIShaderVK, "U" )
 //
-//	ZLIndex uniformID	= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+//	ZLIndex uniformID	= state.GetValue < MOAILuaIndex >( 2, 0 );
 //
 //	MOAIShaderProgramVK* program = MOAICast < MOAIShaderProgramVK >( self->mProgram );
 //
 //	if ( program ) {
-//		program->SetUniform ( L, 3, self->mPendingUniformBuffer.GetBuffer (), uniformID, ZLIndexOp::ZERO );
+//		program->SetUniform ( L, 3, self->mPendingUniformBuffer.GetBuffer (), uniformID, 0 );
 //	}
 //	return 0;
 //}
@@ -51,8 +51,8 @@
 //int MOAIShaderVK::_setUniformArrayItem ( lua_State* L ) {
 //	MOAI_LUA_SETUP ( MOAIShaderVK, "U" )
 //
-//	ZLIndex uniformID	= state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
-//	ZLIndex index		= state.GetValue < MOAILuaIndex >( 3, ZLIndexOp::ZERO );
+//	ZLIndex uniformID	= state.GetValue < MOAILuaIndex >( 2, 0 );
+//	ZLIndex index		= state.GetValue < MOAILuaIndex >( 3, 0 );
 //
 //	MOAIShaderProgramVK* program = MOAICast < MOAIShaderProgramVK >( self->mProgram );
 //

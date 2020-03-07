@@ -129,12 +129,12 @@ void MOAIDynamicOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 	MOAIPipelineLayoutVK& pipelineLayout = gfxMgr.GetShaderPresetVK ( ONETRI_SHADER )->GetProgram ()->GetPipelineLayout ();
 
 	// initialize the descriptor set
-	MOAIDescriptorSetLayoutVK& descriptorSetLayout = pipelineLayout.GetDescriptorSetLayout ( ZLIndexOp::ZERO );
+	MOAIDescriptorSetLayoutVK& descriptorSetLayout = pipelineLayout.GetDescriptorSetLayout ( 0 );
 	
 	MOAIDescriptorSetVK* descriptorSet = new MOAIDescriptorSetVK ();
 	descriptorSet->Initialize ( descriptorSetLayout );
-	descriptorSet->SetDescriptor ( ZLIndexCast ( 0 ), ZLIndexCast ( 0 ), *this->mUniforms->GetSnapshot ( commandBuffer ));
-	descriptorSet->SetDescriptor ( ZLIndexCast ( 1 ), ZLIndexCast ( 0 ), *this->mTexture->GetSnapshot ( commandBuffer ));
+	descriptorSet->SetDescriptor ( 0, 0, *this->mUniforms->GetSnapshot ( commandBuffer ));
+	descriptorSet->SetDescriptor ( 1, 0, *this->mTexture->GetSnapshot ( commandBuffer ));
 	
 	commandBuffer.BindDescriptorSet ( VK_PIPELINE_BIND_POINT_GRAPHICS, *descriptorSet->GetSnapshot ( commandBuffer ), pipelineLayout, 0 );
 	

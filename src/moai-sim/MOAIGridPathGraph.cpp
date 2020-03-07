@@ -100,7 +100,7 @@ void MOAIGridPathGraph::PushNeighbor ( MOAIPathFinder& pathFinder, MOAIGridPathG
 		
 		if ( pathFinder.CheckMask ( tile1 )) {
 			
-			ZLIndex neighborID = ZLIndexCast ( this->mGrid->GetCellAddr ( coord ) );
+			ZLIndex neighborID = this->mGrid->GetCellAddr ( coord );
 			
 			if ( !pathFinder.IsVisited ( neighborID )) {
 				

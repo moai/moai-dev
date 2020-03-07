@@ -249,7 +249,7 @@ void MOAIGfxMgrVK::InitCommandBuffers () {
 	this->mDrawCommandBuffers.Init ( imageCount );
 	
 	MOAIQueueVK& queue = this->mLogicalDevice.GetGraphicsQueue ();
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < imageCount; ++i ) {
+	for ( ZLIndex i = 0; i < imageCount; ++i ) {
 		queue.CreateCommandBuffer ( this->mDrawCommandBuffers [ i ]);
 	}
 }
@@ -308,7 +308,7 @@ void MOAIGfxMgrVK::InitFrameBuffers () {
 
     // Create frame buffers for every swap chain image
     this->mFrameBuffers.Init ( imageCount );
-    for ( ZLIndex i = ZLIndexOp::ZERO; i < imageCount; ++i ) {
+    for ( ZLIndex i = 0; i < imageCount; ++i ) {
         attachments [ 0 ] = this->mSwapChain.GetImageView ( i );
         this->mFrameBuffers [ i ] = this->mLogicalDevice.CreateFramebuffer ( framebufferCreateInfo );
     }
@@ -412,7 +412,7 @@ void MOAIGfxMgrVK::InitRenderPass () {
 //	mTextureMemoryUsage ( 0 ),
 //	mMaxTextureSize ( 0 ),
 //	mRenderCounter ( 0 ),
-//	mStateStackTop ( ZLIndexOp::ZERO ) {
+//	mStateStackTop ( 0 ) {
 //
 //	RTTI_BEGIN
 //		RTTI_SINGLE ( MOAIGfxMgr )
@@ -437,7 +437,7 @@ MOAIGfxMgrVK::~MOAIGfxMgrVK () {
 
 //	this->Clear ();
 //
-//	for ( ZLIndex i = ZLIndexOp::ZERO; i < this->mStateStack.Size (); ++i ) {
+//	for ( ZLIndex i = 0; i < this->mStateStack.Size (); ++i ) {
 //		delete this->mStateStack [ i ];
 //	}
 //

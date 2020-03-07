@@ -4491,8 +4491,6 @@
 		CDE7ED801E40364F0005D63A /* MOAIAbstractDrawShape.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE7ED7E1E40364F0005D63A /* MOAIAbstractDrawShape.cpp */; };
 		CDE93C1A1B34EF370051ADA1 /* moai_version.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE93C191B34EF370051ADA1 /* moai_version.h */; };
 		CDE93C1B1B34EF370051ADA1 /* moai_version.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE93C191B34EF370051ADA1 /* moai_version.h */; };
-		CDEC2F7821BBD03D00DBA57F /* ZLSemanticNumeric.h in Headers */ = {isa = PBXBuildFile; fileRef = CDEC2F7721BBD03D00DBA57F /* ZLSemanticNumeric.h */; };
-		CDEC2F7921BBD03D00DBA57F /* ZLSemanticNumeric.h in Headers */ = {isa = PBXBuildFile; fileRef = CDEC2F7721BBD03D00DBA57F /* ZLSemanticNumeric.h */; };
 		CDECEE2018E0C87C00546426 /* mongoose.c in Sources */ = {isa = PBXBuildFile; fileRef = CD795EFE17F0901A006AEB47 /* mongoose.c */; };
 		CDECEE2118E0C87C00546426 /* mongoose.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795EFF17F0901A006AEB47 /* mongoose.h */; };
 		CDECEE2418E0C88700546426 /* mongoose.c in Sources */ = {isa = PBXBuildFile; fileRef = CD795EFE17F0901A006AEB47 /* mongoose.c */; };
@@ -4545,8 +4543,8 @@
 		CDF288B317ED41CF00FD4F59 /* ZLVfsVirtualPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6943173974FD00DFE837 /* ZLVfsVirtualPath.cpp */; };
 		CDF288B417ED41CF00FD4F59 /* ZLVfsZipArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6945173974FD00DFE837 /* ZLVfsZipArchive.cpp */; };
 		CDF288B517ED41CF00FD4F59 /* ZLVfsZipStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6947173974FD00DFE837 /* ZLVfsZipStream.cpp */; };
-		CDF3F4B22038DC1E0000D684 /* ZLIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF3F4B12038DC1D0000D684 /* ZLIndex.h */; };
-		CDF3F4B32038DC1E0000D684 /* ZLIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF3F4B12038DC1D0000D684 /* ZLIndex.h */; };
+		CDF3F4B22038DC1E0000D684 /* ZLIndexOp.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF3F4B12038DC1D0000D684 /* ZLIndexOp.h */; };
+		CDF3F4B32038DC1E0000D684 /* ZLIndexOp.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF3F4B12038DC1D0000D684 /* ZLIndexOp.h */; };
 		CDF3F4B62038EEFA0000D684 /* MOAIAnimCurveIndex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDF3F4B42038EEF90000D684 /* MOAIAnimCurveIndex.cpp */; };
 		CDF3F4B72038EEFA0000D684 /* MOAIAnimCurveIndex.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDF3F4B42038EEF90000D684 /* MOAIAnimCurveIndex.cpp */; };
 		CDF3F4B82038EEFA0000D684 /* MOAIAnimCurveIndex.h in Headers */ = {isa = PBXBuildFile; fileRef = CDF3F4B52038EEF90000D684 /* MOAIAnimCurveIndex.h */; };
@@ -8000,7 +7998,6 @@
 		CDE7ED751E4033AB0005D63A /* MOAIDrawShapeRetained.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIDrawShapeRetained.h; sourceTree = "<group>"; };
 		CDE7ED7E1E40364F0005D63A /* MOAIAbstractDrawShape.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIAbstractDrawShape.cpp; sourceTree = "<group>"; };
 		CDE93C191B34EF370051ADA1 /* moai_version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = moai_version.h; sourceTree = "<group>"; };
-		CDEC2F7721BBD03D00DBA57F /* ZLSemanticNumeric.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLSemanticNumeric.h; sourceTree = "<group>"; };
 		CDEEC77C1C7BCEDC0014CC3F /* ZLResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLResult.h; sourceTree = "<group>"; };
 		CDEFD55C181ECB3E0058D772 /* MOAITextLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITextLabel.cpp; sourceTree = "<group>"; };
 		CDEFD55D181ECB3E0058D772 /* MOAITextLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITextLabel.h; sourceTree = "<group>"; };
@@ -8013,7 +8010,7 @@
 		CDEFD564181ECB3E0058D772 /* MOAIVectorRect.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVectorRect.cpp; sourceTree = "<group>"; };
 		CDEFD565181ECB3E0058D772 /* MOAIVectorRect.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVectorRect.h; sourceTree = "<group>"; };
 		CDF288BC17ED41CF00FD4F59 /* libmoai-ios-zl-vfs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-zl-vfs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CDF3F4B12038DC1D0000D684 /* ZLIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLIndex.h; sourceTree = "<group>"; };
+		CDF3F4B12038DC1D0000D684 /* ZLIndexOp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLIndexOp.h; sourceTree = "<group>"; };
 		CDF3F4B42038EEF90000D684 /* MOAIAnimCurveIndex.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIAnimCurveIndex.cpp; sourceTree = "<group>"; };
 		CDF3F4B52038EEF90000D684 /* MOAIAnimCurveIndex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIAnimCurveIndex.h; sourceTree = "<group>"; };
 		CDF51D8E238F929D003D7F71 /* MOAIDynamicOneTriVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIDynamicOneTriVK.cpp; path = "moai-gfx-vk/MOAIDynamicOneTriVK.cpp"; sourceTree = "<group>"; };
@@ -8985,6 +8982,7 @@
 				89BE68CB173974FC00DFE837 /* ZLHashedString.h */,
 				89BE68E0173974FC00DFE837 /* ZLHexDump.cpp */,
 				89BE68E1173974FC00DFE837 /* ZLHexDump.h */,
+				CDF3F4B12038DC1D0000D684 /* ZLIndexOp.h */,
 				89BE68F1173974FC00DFE837 /* ZLLog.cpp */,
 				89BE68F2173974FC00DFE837 /* ZLLog.h */,
 				89BE690B173974FC00DFE837 /* ZLRadixSort16.h */,
@@ -13493,8 +13491,6 @@
 		CDEC2F7321BBA9D900DBA57F /* semantic-numeric */ = {
 			isa = PBXGroup;
 			children = (
-				CDF3F4B12038DC1D0000D684 /* ZLIndex.h */,
-				CDEC2F7721BBD03D00DBA57F /* ZLSemanticNumeric.h */,
 			);
 			name = "semantic-numeric";
 			sourceTree = "<group>";
@@ -14439,7 +14435,6 @@
 				89BE697B173974FD00DFE837 /* ZLBase64Encoder.h in Headers */,
 				89BE697F173974FD00DFE837 /* ZLBase64Reader.h in Headers */,
 				89BE6983173974FD00DFE837 /* ZLBase64Writer.h in Headers */,
-				CDEC2F7821BBD03D00DBA57F /* ZLSemanticNumeric.h in Headers */,
 				CDC2A179222C3DDD002E6CA4 /* ZLAttribute.h in Headers */,
 				89BE6985173974FD00DFE837 /* ZLBinarySearch.h in Headers */,
 				89BE6989173974FD00DFE837 /* ZLBox.h in Headers */,
@@ -14477,7 +14472,7 @@
 				89BE6A09173974FD00DFE837 /* ZLLeanList.h in Headers */,
 				89BE6A0B173974FD00DFE837 /* ZLLeanPool.h in Headers */,
 				89BE6A0D173974FD00DFE837 /* ZLLeanStack.h in Headers */,
-				CDF3F4B22038DC1E0000D684 /* ZLIndex.h in Headers */,
+				CDF3F4B22038DC1E0000D684 /* ZLIndexOp.h in Headers */,
 				CDC2A188222C4895002E6CA4 /* ZLAttrID.h in Headers */,
 				89BE6A11173974FD00DFE837 /* ZLLexStream.h in Headers */,
 				89BE6A13173974FD00DFE837 /* ZLList.h in Headers */,
@@ -14547,7 +14542,7 @@
 				CD4A956C229DF8F300F9E400 /* ZLViewport.h in Headers */,
 				89BE6962173974FD00DFE837 /* STLIteration.h in Headers */,
 				CDDB55401CFC15E9009E82D8 /* ZLCleanup.h in Headers */,
-				CDF3F4B32038DC1E0000D684 /* ZLIndex.h in Headers */,
+				CDF3F4B32038DC1E0000D684 /* ZLIndexOp.h in Headers */,
 				89BE6964173974FD00DFE837 /* STLList.h in Headers */,
 				89BE6966173974FD00DFE837 /* STLMap.h in Headers */,
 				89BE6968173974FD00DFE837 /* STLSet.h in Headers */,
@@ -14555,7 +14550,6 @@
 				CD6891CC1DC93D510086B16B /* ZLRtti.h in Headers */,
 				89BE696E173974FD00DFE837 /* ZLAccessors.h in Headers */,
 				89BE6970173974FD00DFE837 /* ZLAdapterInfo.h in Headers */,
-				CDEC2F7921BBD03D00DBA57F /* ZLSemanticNumeric.h in Headers */,
 				CD1D85951E1922BD0089FFAD /* ZLWeakPtr.h in Headers */,
 				CD1756481A199B24009C430A /* ZLBarycentric.h in Headers */,
 				89BE6976173974FD00DFE837 /* ZLAffine2D.h in Headers */,

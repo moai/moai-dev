@@ -65,7 +65,7 @@ int MOAIScriptNode::_setCallback ( lua_State* L ) {
 int MOAIScriptNode::_setAttrName ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIScriptNode, "U" );
 	
-	ZLIndex idx = state.GetValue < MOAILuaIndex >( 2, ZLIndexOp::ZERO );
+	ZLIndex idx = state.GetValue < MOAILuaIndex >( 2, 0 );
 	self->mAttrNames [ idx ] = state.GetValue < cc8* >( 3, 0 );
 	
 	return 0;
@@ -211,7 +211,7 @@ void MOAIScriptNode::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MO
 //----------------------------------------------------------------//
 bool MOAIScriptNode::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 	
-	ZLIndex attrIndex = ZLIndexCast ( attrID.Unpack () - 1 );
+	ZLIndex attrIndex = attrID.Unpack () - 1;
 	
 	// TODO: verify
 	if ( attrIndex >= this->mAttributes.Size()) {

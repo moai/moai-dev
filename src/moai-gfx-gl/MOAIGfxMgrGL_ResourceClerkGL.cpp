@@ -34,7 +34,7 @@ void MOAIGfxMgrGL_ResourceClerkGL::DiscardResources () {
 	
 	ZLSize top = this->mDeleterStack.GetTop ();
 
-	for ( ZLIndex i = ZLIndexOp::ZERO; i < top; ++i ) {
+	for ( ZLIndex i = 0; i < top; ++i ) {
 		ZLGfx::DiscardResource ( this->mDeleterStack [ i ]);
 	}
 	this->mDeleterStack.Reset ();
@@ -65,7 +65,7 @@ void MOAIGfxMgrGL_ResourceClerkGL::ProcessDeleters ( ZLGfx& gfx ) {
 	
 		gfx.Flush ();
 	
-		for ( ZLIndex i = ZLIndexOp::ZERO; i < top; ++i ) {
+		for ( ZLIndex i = 0; i < top; ++i ) {
 			gfx.DeleteResource ( this->mDeleterStack [ i ]);
 		}
 		this->mDeleterStack.Reset ();
