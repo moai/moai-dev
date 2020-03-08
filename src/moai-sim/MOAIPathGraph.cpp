@@ -17,7 +17,7 @@
 //----------------------------------------------------------------//
 MOAIPathGraph::MOAIPathGraph () {
 
-	RTTI_SINGLE ( MOAIPathGraph )
+	RTTI_SINGLE ( MOAIPathGraph, MOAIPathGraph )
 }
 
 //----------------------------------------------------------------//

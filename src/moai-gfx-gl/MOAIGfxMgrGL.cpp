@@ -203,8 +203,8 @@ MOAIGfxMgrGL::MOAIGfxMgrGL () :
 	mRenderCounter ( 0 ),
 	mStateStackTop ( 0 ) {
 	
-	RTTI_BEGIN
-		RTTI_SINGLE ( MOAIGfxMgr )
+	RTTI_BEGIN ( MOAIGfxMgrGL )
+		RTTI_EXTEND ( MOAIGfxMgr )
 	RTTI_END
 	
 	this->SetDefaultFrameBuffer ( new MOAIFrameBufferGL ());

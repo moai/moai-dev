@@ -115,7 +115,7 @@ int MOAIVertexBuffer::_printVertices ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIVertexBuffer::MOAIVertexBuffer () {
 
-	RTTI_SINGLE ( MOAIGfxBuffer )
+	RTTI_SINGLE ( MOAIVertexBuffer, MOAIGfxBuffer )
 }
 
 //----------------------------------------------------------------//

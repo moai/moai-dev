@@ -51,7 +51,7 @@ int MOAIHasDeckAndIndex::_setIndex ( lua_State* L ) {
 MOAIHasDeckAndIndex::MOAIHasDeckAndIndex () :
 	mIndex ( 0 ) {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIHasDeckAndIndex )
 		RTTI_EXTEND ( MOAIHasDeck )
 	RTTI_END
 }

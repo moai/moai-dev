@@ -77,7 +77,7 @@ MOAILocationSensor::MOAILocationSensor () :
 	mVAccuracy ( 0.0f ),
 	mSpeed ( 0.0f ) {
 
-	RTTI_SINGLE ( MOAISensor )
+	RTTI_SINGLE ( MOAILocationSensor, MOAISensor )
 }
 
 //----------------------------------------------------------------//

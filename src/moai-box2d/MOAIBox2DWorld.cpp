@@ -1119,7 +1119,7 @@ MOAIBox2DWorld::MOAIBox2DWorld () :
 	mDestroyFixtures ( 0 ),
 	mDestroyJoints ( 0 ) {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIBox2DWorld )
 		RTTI_EXTEND ( MOAIAction )
 		RTTI_EXTEND ( MOAIDrawable )
 	RTTI_END

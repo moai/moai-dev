@@ -25,7 +25,7 @@ public:
 	GTESTMoaiLuaBoundClass () :
 		mMembership ( 0 ) {
 	
-		RTTI_SINGLE ( MOAILuaObject )
+		RTTI_SINGLE ( GTESTMoaiLuaBoundClass, MOAILuaObject )
 	}
 	
 	//----------------------------------------------------------------//

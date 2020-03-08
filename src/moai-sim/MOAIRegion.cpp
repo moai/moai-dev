@@ -1049,7 +1049,7 @@ ZLSizeResult MOAIRegion::GetVertices ( ZLStream& vtxStream ) const {
 //----------------------------------------------------------------//
 MOAIRegion::MOAIRegion () {
 	
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAIRegion, MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

@@ -261,7 +261,7 @@ MOAILogMgr::MOAILogMgr () :
 	mFile ( 0 ),
 	mTypeCheckLuaParams ( true ) {
 
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAILogMgr, MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

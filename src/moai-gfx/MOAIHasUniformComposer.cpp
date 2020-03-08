@@ -41,7 +41,7 @@ bool MOAIHasUniformComposer::HasComposer () {
 //----------------------------------------------------------------//
 MOAIHasUniformComposer::MOAIHasUniformComposer () {
 
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIHasUniformComposer )
 		RTTI_EXTEND ( MOAIUniformComposerInterface )
 	RTTI_END
 }

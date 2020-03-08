@@ -411,7 +411,7 @@ MOAIParticleSystem::MOAIParticleSystem () :
 	mDrawOrder ( ORDER_NORMAL ),
 	mComputeBounds ( false ) {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIParticleSystem )
 		RTTI_EXTEND ( MOAIGraphicsProp )
 		RTTI_EXTEND ( MOAIAction )
 	RTTI_END

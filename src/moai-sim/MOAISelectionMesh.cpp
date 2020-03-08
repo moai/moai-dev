@@ -491,7 +491,7 @@ MOAISelectionMesh::MOAISelectionMesh () :
 	mSpanListHead ( 0 ),
 	mMesh ( 0 ) {
 
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAISelectionMesh )
 		RTTI_EXTEND ( MOAIDeckProxy )
 	RTTI_END
 }

@@ -19,7 +19,7 @@ void ZLTextureFormat::CleanupTexture ( MOAITextureVK& texture ) {
 //----------------------------------------------------------------//
 ZLTextureFormat::ZLTextureFormat () {
 
-	RTTI_SINGLE ( ZLImageFormat )
+	RTTI_SINGLE ( ZLTextureFormat, ZLImageFormat )
 }
 
 //----------------------------------------------------------------//

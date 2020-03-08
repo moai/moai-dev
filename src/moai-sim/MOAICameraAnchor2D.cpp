@@ -69,7 +69,7 @@ MOAICameraAnchor2D::MOAICameraAnchor2D () :
 	mRect ( ZLRect::EMPTY ),
 	mLoc ( ZLVec3D::ORIGIN ) {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAICameraAnchor2D )
 		RTTI_EXTEND ( MOAINode )
 	RTTI_END
 }

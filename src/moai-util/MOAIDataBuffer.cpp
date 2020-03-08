@@ -598,7 +598,7 @@ void MOAIDataBuffer::Lock ( void** bytes, size_t* size ) {
 //----------------------------------------------------------------//
 MOAIDataBuffer::MOAIDataBuffer () {
 	
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAIDataBuffer, MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

@@ -358,7 +358,7 @@ int MOAIBox2DPrismaticJoint::_setMotorSpeed ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIBox2DPrismaticJoint::MOAIBox2DPrismaticJoint () {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIBox2DPrismaticJoint)
 		RTTI_EXTEND ( MOAIBox2DJoint )
 	RTTI_END
 }

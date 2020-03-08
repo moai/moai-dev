@@ -435,7 +435,7 @@ void MOAIAbstractMaterialInterface::LoadGfxState () {
 //----------------------------------------------------------------//
 MOAIAbstractMaterialInterface::MOAIAbstractMaterialInterface () {
 
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIAbstractMaterialInterface )
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }

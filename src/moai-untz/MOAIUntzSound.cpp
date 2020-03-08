@@ -381,7 +381,7 @@ MOAIUntzSound::MOAIUntzSound () :
 	mFilename ( 0 ),
 	mInMemory ( false ) {
 
-	RTTI_SINGLE ( MOAINode )
+	RTTI_SINGLE ( MOAIUntzSound, MOAINode )
 }
 
 //----------------------------------------------------------------//

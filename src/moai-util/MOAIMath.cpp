@@ -59,7 +59,7 @@
 //----------------------------------------------------------------//
 MOAIMath::MOAIMath () {
 
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIMath )
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 	

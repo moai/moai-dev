@@ -115,7 +115,7 @@ int MOAIMetaTileDeck2D::_setMetaTile ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIMetaTileDeck2D::MOAIMetaTileDeck2D () {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIMetaTileDeck2D )
 		RTTI_EXTEND ( MOAIDeck )
 	RTTI_END
 }

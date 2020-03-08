@@ -175,7 +175,7 @@ MOAIGfxResourceGL::MOAIGfxResourceGL () :
 	mState ( STATE_UNINITIALIZED ),
 	mLastRenderCount ( 0 ) {
 
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIGfxResourceGL )
 		RTTI_EXTEND ( MOAIGfxResource )
 		RTTI_EXTEND ( MOAIInstanceEventSource )
 	RTTI_END

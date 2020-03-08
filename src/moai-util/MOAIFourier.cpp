@@ -506,7 +506,7 @@ MOAIFourier::MOAIFourier () :
 	mWindowFunction ( RECTANGULAR ),
 	mWindowAlpha ( 0.0f ) {
 	
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAIFourier, MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

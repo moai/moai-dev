@@ -178,7 +178,7 @@ float MOAIAssimpCamera::CalculateYaw ( aiQuaternion quaternion ) {
 //----------------------------------------------------------------//
 MOAIAssimpCamera::MOAIAssimpCamera () {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIAssimpCamera )
 		RTTI_EXTEND ( MOAIAssimpSceneMember )
 	RTTI_END
 }

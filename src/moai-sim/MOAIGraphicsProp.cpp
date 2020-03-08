@@ -25,7 +25,7 @@
 //----------------------------------------------------------------//
 MOAIGraphicsProp::MOAIGraphicsProp () {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIGraphicsProp )
 		RTTI_EXTEND ( MOAIHasDeckAndIndex )
 		RTTI_EXTEND ( MOAIGraphicsPropBase )
 	RTTI_END

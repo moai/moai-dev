@@ -122,7 +122,7 @@ int MOAIMemStream::_open ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIMemStream::MOAIMemStream () {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIMemStream )
 		RTTI_EXTEND ( MOAIStream )
 	RTTI_END
 }

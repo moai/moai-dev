@@ -273,7 +273,7 @@ bool MOAIKeyboardSensor::KeyUp ( u32 keyID ) {
 MOAIKeyboardSensor::MOAIKeyboardSensor () :
 	mClearCount ( 0 ) {
 	
-	RTTI_SINGLE ( MOAISensor )
+	RTTI_SINGLE ( MOAIKeyboardSensor, MOAISensor )
 	
 	memset ( this->mState, 0, MOAI_KEY_TOTAL * sizeof ( u32 ));
 }

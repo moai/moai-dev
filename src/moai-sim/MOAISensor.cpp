@@ -27,7 +27,7 @@ MOAISensor::MOAISensor () :
 	mType ( 0 ),
 	mTimestamp ( 0 ) {
 
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAISensor, MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

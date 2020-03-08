@@ -11,7 +11,7 @@
 //----------------------------------------------------------------//
 MOAIGfxStateGPUCacheFrameGL::MOAIGfxStateGPUCacheFrameGL () {
 
-	RTTI_SINGLE ( MOAIGfxStateGPUCacheFrame )
+	RTTI_SINGLE ( MOAIGfxStateGPUCacheFrameGL, MOAIGfxStateGPUCacheFrame )
 }
 
 //----------------------------------------------------------------//

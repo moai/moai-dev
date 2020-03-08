@@ -29,7 +29,7 @@ int MOAIDeckProxy::_setDeck ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIDeckProxy::MOAIDeckProxy () {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIDeckProxy )
 		RTTI_EXTEND ( MOAIDeck )
 	RTTI_END
 }

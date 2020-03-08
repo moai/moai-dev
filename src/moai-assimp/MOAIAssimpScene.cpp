@@ -562,7 +562,7 @@ MOAIAssimpScene::MOAIAssimpScene () :
 	mScene ( 0 ),
 	mImporter ( 0 ) {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIAssimpScene )
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }

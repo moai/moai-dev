@@ -439,7 +439,7 @@ MOAIAction::MOAIAction () :
 
 	this->mLink.Data ( this );
 
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIAction )
 		RTTI_EXTEND ( MOAILuaObject )
 		RTTI_EXTEND ( MOAIInstanceEventSource )
 	RTTI_END

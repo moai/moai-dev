@@ -22,8 +22,8 @@
 //----------------------------------------------------------------//
 MOAIBox2DWheelJoint::MOAIBox2DWheelJoint () {
 	
-	RTTI_BEGIN
-	RTTI_EXTEND ( MOAIBox2DJoint )
+	RTTI_BEGIN ( MOAIBox2DWheelJoint )
+		RTTI_EXTEND ( MOAIBox2DJoint )
 	RTTI_END
 }
 

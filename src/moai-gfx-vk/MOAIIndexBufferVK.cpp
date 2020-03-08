@@ -14,7 +14,7 @@
 //----------------------------------------------------------------//
 MOAIIndexBufferVK::MOAIIndexBufferVK () {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIIndexBufferVK )
 		RTTI_EXTEND ( MOAIIndexBuffer )
 		RTTI_EXTEND ( MOAIGfxBufferVK )
 	RTTI_END

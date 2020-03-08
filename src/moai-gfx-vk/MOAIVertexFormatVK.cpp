@@ -78,7 +78,7 @@ VkFormat MOAIVertexFormatVK::GuessFormat ( const MOAIVertexAttribute& attribute 
 //----------------------------------------------------------------//
 MOAIVertexFormatVK::MOAIVertexFormatVK () {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIVertexFormatVK )
 		RTTI_EXTEND ( MOAIVertexFormat )
 	RTTI_END
 }

@@ -498,7 +498,7 @@ bool MOAIMaterialBatch::LoadGfxState ( MOAIMaterialBatch* override, u32 material
 MOAIMaterialBatch::MOAIMaterialBatch () :
 	mIndexBatchSize ( 1 ) {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIMaterialBatch )
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }

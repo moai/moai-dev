@@ -112,7 +112,7 @@ ZLCamera::ZLCamera () :
 	mFarPlane ( DEFAULT_FAR_PLANE ),
 	mType ( CAMERA_TYPE_WINDOW ) {
 	
-	RTTI_SINGLE ( RTTIBase )
+	RTTI_SINGLE ( ZLCamera, RTTIBase )
 	
 	this->mViewMtx = ZLMatrix4x4::IDENT;
 	this->mProjectionMtx = ZLMatrix4x4::IDENT;

@@ -587,7 +587,7 @@ int MOAIStream::_writeU32 ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIStream::MOAIStream () {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIStream )
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }

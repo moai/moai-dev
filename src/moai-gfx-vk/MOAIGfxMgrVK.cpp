@@ -414,8 +414,8 @@ void MOAIGfxMgrVK::InitRenderPass () {
 //	mRenderCounter ( 0 ),
 //	mStateStackTop ( 0 ) {
 //
-//	RTTI_BEGIN
-//		RTTI_SINGLE ( MOAIGfxMgr )
+//	RTTI_BEGIN ( MOAIGfxMgrVK )
+//		RTTI_SINGLE ( MOAIGfxMgrVK, MOAIGfxMgr )
 //	RTTI_END
 //
 //	this->SetDefaultFrameBuffer ( new MOAIFrameBufferVK ());
@@ -425,8 +425,8 @@ void MOAIGfxMgrVK::InitRenderPass () {
 MOAIGfxMgrVK::MOAIGfxMgrVK () :
 	mHostCreateSurfaceFunc ( NULL, NULL ) {
 	
-	RTTI_BEGIN
-		RTTI_SINGLE ( MOAIGfxMgr )
+	RTTI_BEGIN ( MOAIGfxMgrVK )
+		RTTI_EXTEND ( MOAIGfxMgr )
 	RTTI_END
 	
 //	this->SetDefaultFrameBuffer ( new MOAIFrameBufferVK ());

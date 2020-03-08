@@ -268,7 +268,7 @@ MOAICollisionWorld::MOAICollisionWorld () :
 	mUpdated ( false ),
 	mOverlapPass ( OVERLAP_PASS_INIT ) {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAICollisionWorld )
 		RTTI_EXTEND ( MOAIAction )
 		RTTI_EXTEND ( MOAIDrawable )
 		RTTI_EXTEND ( MOAIPartition )

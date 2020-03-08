@@ -12,7 +12,7 @@
 //----------------------------------------------------------------//
 MOAITexture2DGL::MOAITexture2DGL () {
 
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAITexture2DGL )
 		RTTI_EXTEND ( MOAITexture2D )
 		RTTI_EXTEND ( MOAITextureGL )
 	RTTI_END

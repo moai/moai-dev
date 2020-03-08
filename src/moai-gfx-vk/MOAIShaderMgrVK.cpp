@@ -298,7 +298,7 @@ MOAIShaderVK* MOAIShaderMgrVK::GetShader ( MOAIShaderPresetEnum shaderID ) {
 //----------------------------------------------------------------//
 MOAIShaderMgrVK::MOAIShaderMgrVK () {
 
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAIShaderMgrVK, MOAILuaObject )
 
 	for ( u32 i = 0; i < MOAIShaderPresetEnum::TOTAL_SHADERS; ++i ) {
 		this->mPrograms [ i ] = 0;

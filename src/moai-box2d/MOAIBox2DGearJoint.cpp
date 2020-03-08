@@ -95,7 +95,7 @@ int MOAIBox2DGearJoint::_setRatio ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIBox2DGearJoint::MOAIBox2DGearJoint () {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIBox2DGearJoint )
 		RTTI_EXTEND ( MOAIBox2DJoint )
 	RTTI_END
 }

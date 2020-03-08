@@ -282,7 +282,7 @@ MOAIMotionMgrIOS::MOAIMotionMgrIOS () :
 	mMotionMgr ( 0 ),
 	mOperationQueue ( 0 ) {
 
-	RTTI_SINGLE ( MOAIAction )
+	RTTI_SINGLE ( MOAIMotionMgrIOS, MOAIAction )
 }
 
 //----------------------------------------------------------------//

@@ -76,7 +76,7 @@ void MOAILight::BindTextures ( u32 textureOffset ) {
 //----------------------------------------------------------------//
 MOAILight::MOAILight () {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAILight )
 		RTTI_EXTEND ( MOAINode )
 	RTTI_END
 }

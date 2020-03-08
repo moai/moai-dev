@@ -29,7 +29,7 @@ bool MOAIShader::IsReadyForUse () const {
 //----------------------------------------------------------------//
 MOAIShader::MOAIShader () {
 
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAIShader, MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

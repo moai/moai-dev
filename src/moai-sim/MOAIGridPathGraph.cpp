@@ -80,7 +80,7 @@ float MOAIGridPathGraph::ComputeHeuristic ( MOAIGridPathGraphParams& params, con
 //----------------------------------------------------------------//
 MOAIGridPathGraph::MOAIGridPathGraph () {
 	
-	RTTI_SINGLE ( MOAIGridPathGraph )
+	RTTI_SINGLE ( MOAIGridPathGraph, MOAIGridPathGraph )
 }
 
 //----------------------------------------------------------------//

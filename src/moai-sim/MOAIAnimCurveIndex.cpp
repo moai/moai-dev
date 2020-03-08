@@ -83,7 +83,7 @@ ZLIndex MOAIAnimCurveIndex::GetValue ( const MOAIAnimKeySpan& span ) const {
 MOAIAnimCurveIndex::MOAIAnimCurveIndex () :
 	mValue ( 0 ) {
 	
-	RTTI_SINGLE ( MOAIAnimCurve )
+	RTTI_SINGLE ( MOAIAnimCurveIndex, MOAIAnimCurve )
 }
 
 //----------------------------------------------------------------//

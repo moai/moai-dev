@@ -54,7 +54,7 @@ MOAIGfxBufferGL::MOAIGfxBufferGL () :
 	mUseVBOs ( false ),
 	mCopyOnUpdate ( false ) {
 		
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIGfxBufferGL )
 		RTTI_EXTEND ( MOAIGfxResourceGL )
 		RTTI_EXTEND ( MOAIGfxBuffer )
 	RTTI_END

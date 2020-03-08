@@ -74,7 +74,7 @@ void MOAIByteStream::Close () {
 MOAIByteStream::MOAIByteStream () :
 	mData ( 0 ) {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIByteStream )
 		RTTI_EXTEND ( MOAIStream )
 	RTTI_END
 }

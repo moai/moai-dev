@@ -129,7 +129,7 @@ MOAIMaterialBatch* MOAIAbstractMaterialBatchInterface::GetMaterialBatch () {
 //----------------------------------------------------------------//
 MOAIAbstractMaterialBatchInterface::MOAIAbstractMaterialBatchInterface () {
 
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIAbstractMaterialBatchInterface )
 		RTTI_EXTEND ( MOAIAbstractMaterialInterface )
 	RTTI_END
 }

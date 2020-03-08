@@ -941,7 +941,7 @@ MOAITransform::MOAITransform () :
 	mRot ( ZLVec3D::ORIGIN ),
 	mEulerOrder ( EULER_XYZ ) {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAITransform )
 		RTTI_EXTEND ( MOAIAbstractChildTransform )
 	RTTI_END
 }

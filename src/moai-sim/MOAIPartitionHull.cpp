@@ -289,7 +289,7 @@ MOAIPartitionHull::MOAIPartitionHull () :
 	mWorldBounds ( ZLBounds::EMPTY ),
 	mHitGranularity ( HIT_TEST_COARSE ) {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIPartitionHull )
 		RTTI_EXTEND ( MOAINode )
 	RTTI_END
 	

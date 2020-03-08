@@ -268,7 +268,7 @@ MOAITexture2D::MOAITexture2D () :
 	mTextureDataFormat ( 0 ),
 	mImage ( NULL ) {
 
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAITexture2D )
 		RTTI_EXTEND ( MOAITexture )
 	RTTI_END
 }

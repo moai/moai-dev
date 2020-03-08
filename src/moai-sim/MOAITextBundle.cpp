@@ -242,7 +242,7 @@ const char *MOAITextBundle::Lookup(const char *key) {
 MOAITextBundle::MOAITextBundle ()
 : mData(0)
 {
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAITextBundle, MOAILuaObject )
 
 	Clear();
 }

@@ -873,7 +873,7 @@ MOAITextLabel::MOAITextLabel () :
 	mOverrun ( false ),
 	mAutoFlip ( false ) {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAITextLabel )
 		RTTI_EXTEND ( MOAIAction )
 		RTTI_EXTEND ( MOAIGraphicsProp )
 	RTTI_END

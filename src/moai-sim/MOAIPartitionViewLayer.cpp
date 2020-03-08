@@ -268,7 +268,7 @@ MOAIPartitionViewLayer::MOAIPartitionViewLayer () :
 	mSortInViewSpace ( false ),
 	mPartitionCull2D ( true ) {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIPartitionViewLayer )
 		RTTI_EXTEND ( MOAIPartitionHolder )
 		RTTI_EXTEND ( MOAIAbstractViewLayer )
 	RTTI_END

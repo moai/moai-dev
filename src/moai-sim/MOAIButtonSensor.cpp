@@ -136,7 +136,7 @@ void MOAIButtonSensor::EnqueueButtonEvent ( ZLIndex deviceID, ZLIndex sensorID, 
 MOAIButtonSensor::MOAIButtonSensor () :
 	mState ( 0 ) {
 
-	RTTI_SINGLE ( MOAISensor )
+	RTTI_SINGLE ( MOAIButtonSensor, MOAISensor )
 }
 
 //----------------------------------------------------------------//

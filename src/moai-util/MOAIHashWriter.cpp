@@ -205,7 +205,7 @@ ZLHashWriter* MOAIHashWriter::GetHashWriter () {
 MOAIHashWriter::MOAIHashWriter () :
 	mHashWriter ( 0 ) {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIHashWriter )
 		RTTI_EXTEND ( MOAIStreamAdapter )
 	RTTI_END
 }

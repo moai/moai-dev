@@ -366,7 +366,7 @@ int MOAIWebViewIOS::_show ( lua_State* L ) {
 MOAIWebViewIOS::MOAIWebViewIOS () :
 	mWebViewController ( 0 ) {
 
-	RTTI_SINGLE ( MOAIInstanceEventSource )
+	RTTI_SINGLE ( MOAIWebViewIOS, MOAIInstanceEventSource )
 	
 	this->mWebViewController = [[ MOAIWebViewController alloc ] init ];
 	[ this->mWebViewController setMoaiWebView:this ];

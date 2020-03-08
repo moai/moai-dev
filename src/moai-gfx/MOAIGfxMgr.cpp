@@ -166,8 +166,8 @@ ZLMatrix4x4 MOAIGfxMgr::GetWndToWorldMtx ( const ZLRect& wndRect ) {
 //----------------------------------------------------------------//
 MOAIGfxMgr::MOAIGfxMgr () {
 	
-	RTTI_BEGIN
-		RTTI_SINGLE ( MOAIGlobalEventSource )
+	RTTI_BEGIN ( MOAIGfxMgr )
+		RTTI_SINGLE ( MOAIGfxMgr, MOAIGlobalEventSource )
 	RTTI_END
 }
 

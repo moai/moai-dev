@@ -39,7 +39,7 @@ int MOAIProjectionProp::_init ( lua_State* L ) {
 MOAIProjectionProp::MOAIProjectionProp () :
 	mFront ( 1.0 ) {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIProjectionProp )
 		RTTI_EXTEND ( MOAIDrawable )
 		RTTI_EXTEND ( MOAIPartitionHull )
 	RTTI_END

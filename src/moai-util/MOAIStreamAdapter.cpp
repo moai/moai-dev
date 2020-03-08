@@ -183,7 +183,7 @@ void MOAIStreamAdapter::Close () {
 MOAIStreamAdapter::MOAIStreamAdapter () :
 	mAdapter ( 0 ) {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIStreamAdapter )
 		RTTI_EXTEND ( MOAIStream )
 	RTTI_END
 }

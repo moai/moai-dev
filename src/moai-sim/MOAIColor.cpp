@@ -247,7 +247,7 @@ bool MOAIColor::IsClear () {
 //----------------------------------------------------------------//
 MOAIColor::MOAIColor () {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIColor )
 		RTTI_EXTEND ( MOAINode )
 	RTTI_END
 	

@@ -24,7 +24,7 @@ void MOAIGfxBufferVK::Initialize ( ZLSize size, VkBufferUsageFlags usage ) {
 MOAIGfxBufferVK::MOAIGfxBufferVK () :
 	mUsage ( 0 ) {
 		
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIGfxBufferVK )
 		RTTI_EXTEND ( MOAIGfxResourceVK )
 		RTTI_EXTEND ( MOAIGfxBuffer )
 	RTTI_END

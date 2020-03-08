@@ -5,22 +5,28 @@
 #define	ZLRTTI_H
 
 #include <zl-common/zl_types.h>
+#include <zl-util/STLMap.h>
 #include <zl-util/ZLType.h>
 
 class RTTILinkBase;
 class RTTIRecord;
 
-#define RTTI_SINGLE(super) \
-	this->SimpleRTTI < super >( this );
-
-#define RTTI_BEGIN \
-	this->BeginRTTI ( this );
+#define RTTI_BEGIN(name) \
+	this->BeginRTTI ( this, #name );
 
 #define RTTI_EXTEND(super) \
 	this->ExtendRTTI < super >( this );
 
+#define RTTI_VISITOR(interface, adapter) \
+	this->RegisterVisitor < interface, adapter >();
+
 #define RTTI_END \
 	this->EndRTTI ();
+
+#define RTTI_SINGLE(name, super) \
+	RTTI_BEGIN ( name ) \
+	RTTI_EXTEND ( super ) \
+	RTTI_END
 
 //================================================================//
 // RTTILinkBase
@@ -68,25 +74,31 @@ private:
 
 	static const u32 MAX = 32;
 
+	STLString 		mClassName;
+
 	RTTILinkBase*	mLinks [ MAX ];
 	u32				mLinkCount;
 	bool			mIsConstructed;
 	
-	RTTIRecord*		mTypeSet [ MAX ];
+	RTTIRecord*		mTypeSet [ MAX ]; // set of all superclass records
 	u32				mTypeCount;
-	ptrdiff_t		mJumpTable [ MAX ];
+	ptrdiff_t		mJumpTable [ MAX ]; // offset to superclass records
 	bool			mIsComplete;
 
 	ZLTypeID		mTypeID;
 
+	STLMap < ZLTypeID, void* > mVisitors;
+	STLMap < ZLTypeID, ZLLeanArray < void* > > mVisitorArrays;
+
 	//----------------------------------------------------------------//
-	void		AffirmCasts		( void* ptr );
-	void*		AsType			( ZLTypeID typeID, void* ptr );
-	void*		AsType			( RTTIRecord& record, void* ptr );
-	void		Complete		();
-	void		Inherit			( RTTIRecord& record, void* ptr, ptrdiff_t offset );
-	bool		IsType			( ZLTypeID typeID, void* ptr );
-	bool		IsType			( RTTIRecord& record, void* ptr );
+	void						AffirmCasts				( void* ptr );
+	void*						AsType					( ZLTypeID typeID, void* ptr );
+	void						BuildVisitorArrays 		();
+	void						Complete				();
+	void*						GetVisitor				( ZLTypeID visitorTypeID );
+	ZLLeanArray < void* >&		GetVisitors				( ZLTypeID visitorTypeID  );
+	void						Inherit					( RTTIRecord& record, void* ptr, ptrdiff_t offset );
+	bool						IsType					( ZLTypeID typeID, void* ptr );
 
 	//----------------------------------------------------------------//
 	template < typename TYPE, typename SUPER_TYPE >
@@ -104,6 +116,15 @@ private:
 	static RTTIRecord& Get () {
 		static RTTIRecord single ( ZLType::GetID < TYPE >());
 		return single;
+	}
+
+	//----------------------------------------------------------------//
+	template < typename ABSTRACT_VISITOR_TYPE, typename CONCRETE_VISITOR_TYPE >
+	void RegisterVisitor () {
+	
+		static CONCRETE_VISITOR_TYPE singleVisitor;
+		ZLTypeID visitorTypeID = ZLType::GetID < ABSTRACT_VISITOR_TYPE >();
+		this->mVisitors [ visitorTypeID ] = ( void* )&singleVisitor;
 	}
 
 	//----------------------------------------------------------------//
@@ -130,9 +151,10 @@ protected:
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	void BeginRTTI ( TYPE* ptr ) {
+	void BeginRTTI ( TYPE* ptr, cc8* name ) {
 		this->mThis = ptr;
 		this->mRTTI = &RTTIRecord::Get < TYPE >();
+		this->mRTTI->mClassName = name;
 	}
 	
 	//----------------------------------------------------------------//
@@ -147,30 +169,35 @@ protected:
 		this->mRTTI->AddLink < TYPE, SUPER_TYPE >();
 	}
 	
-	//----------------------------------------------------------------//
-	template < typename SUPER_TYPE, typename TYPE >
-	void SimpleRTTI ( TYPE* ptr ) {
-		this->BeginRTTI < TYPE >( ptr );
-		this->ExtendRTTI < SUPER_TYPE >( ptr );
-		this->EndRTTI ();
-	}
-
 public:
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
 	TYPE* AsType () {
 		
-		RTTIRecord& record = RTTIRecord::Get < TYPE >();
-		return ( TYPE* )this->mRTTI->AsType ( record, this->mThis );
+		return ( TYPE* )this->mRTTI->AsType ( ZLType::GetID < TYPE >(), this->mThis );
+	}
+	
+	//----------------------------------------------------------------//
+	template < typename ABSTRACT_VISITOR_TYPE >
+	ZLLeanArray < ABSTRACT_VISITOR_TYPE* >& GetVisitors () {
+	
+		this->mRTTI->AffirmCasts ( this->mThis );
+		return ( ZLLeanArray < ABSTRACT_VISITOR_TYPE* >& )this->mRTTI->GetVisitors ( ZLType::GetID < ABSTRACT_VISITOR_TYPE >());
 	}
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
 	bool IsType () {
 		
-		RTTIRecord& record = RTTIRecord::Get < TYPE >();
-		return this->mRTTI->IsType ( record, this->mThis );
+		return this->mRTTI->IsType ( ZLType::GetID < TYPE >(), this->mThis );
+	}
+	
+	//----------------------------------------------------------------//
+	template < typename ABSTRACT_ADAPTER_TYPE, typename CONCRETE_ADAPTER_TYPE >
+	void RegisterVisitor () {
+	
+		this->mRTTI->RegisterVisitor < ABSTRACT_ADAPTER_TYPE, CONCRETE_ADAPTER_TYPE >();
 	}
 	
 	//----------------------------------------------------------------//
@@ -179,29 +206,6 @@ public:
 					RTTIBase		();
 	virtual			~RTTIBase		();
 	virtual cc8*	TypeName		() const;
-};
-
-//================================================================//
-// RTTI
-//================================================================//
-// Convenience template class for automatically extending the RTTI hierarchy.
-// To use, inherit it and pass in the current class (the class that you are defining) along
-// with its super class.  A 'shim' class will be created in the hierarchy (between the class
-// and its superclass) which will call RTTIBase::ExtendRTTI() automatically in its constructor.
-// Note that the shim class itself will be excluded from the RTTI hierarchy.
-template < typename TYPE, typename SUPER >
-class RTTI :
-	public virtual SUPER {
-public:
-	
-	//----------------------------------------------------------------//
-	RTTI () {
-		this->template SimpleRTTI < SUPER >(( TYPE* )this );
-	}
-	
-	//----------------------------------------------------------------//
-	~RTTI () {
-	}
 };
 
 //----------------------------------------------------------------//

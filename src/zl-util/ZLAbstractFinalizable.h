@@ -141,7 +141,7 @@ public:
 class ZLAbstractFinalizable :
 	public virtual ZLAbstractFinalizable_Solo,
 
-	// has intenral is a separate class just to enforce the use of virtual inheritance.
+	// has internal is a separate class just to enforce the use of virtual inheritance.
 	// otherwise, user would have to remember to always use virtual inheritance or
 	// face conflicts with _HasDependencyOn (see below).
 	public virtual ZLAbstractFinalizable_HasInternal {

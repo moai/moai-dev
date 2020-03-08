@@ -470,7 +470,7 @@ MOAIDeck* MOAISpriteDeck2D::AffirmDeck ( MOAILuaState& state, int idx ) {
 //----------------------------------------------------------------//
 MOAISpriteDeck2D::MOAISpriteDeck2D () {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAISpriteDeck2D )
 		RTTI_EXTEND ( MOAIDeck )
 		RTTI_EXTEND ( MOAIHasMaterialBatch )
 	RTTI_END

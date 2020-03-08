@@ -66,7 +66,7 @@ MOAIMotionSensor::MOAIMotionSensor () :
 	mY ( 0.0f ),
 	mZ ( 0.0f ) {
 
-	RTTI_SINGLE ( MOAISensor )
+	RTTI_SINGLE ( MOAIMotionSensor, MOAISensor )
 }
 
 //----------------------------------------------------------------//

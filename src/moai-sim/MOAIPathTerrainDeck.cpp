@@ -145,7 +145,7 @@ MOAIPathTerrainDeck::MOAIPathTerrainDeck () :
 	mDeckSize ( 0 ),
 	mVectorSize ( 0 ) {
 
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAIPathTerrainDeck, MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

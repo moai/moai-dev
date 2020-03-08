@@ -115,7 +115,7 @@ int MOAIDialogIOS::_showDialog ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIDialogIOS::MOAIDialogIOS () {
 
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAIDialogIOS, MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

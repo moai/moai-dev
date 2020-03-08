@@ -110,7 +110,7 @@ MOAIVertexArrayGL::MOAIVertexArrayGL () :
 	mCurrentVAO ( ZLIndexOp::INVALID ),
 	mUseVAOs ( false ) {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIVertexArrayGL )
 		RTTI_EXTEND ( MOAIVertexArray )
 		RTTI_EXTEND ( MOAIGfxResourceGL )
 	RTTI_END

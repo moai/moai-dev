@@ -13,7 +13,7 @@ void RTTIRecord::AffirmCasts ( void* ptr ) {
 
 	if ( !this->mIsComplete ) {
 		this->Inherit ( *this, ptr, 0 );
-		// TODO: maybe sort for binary search? or by frequency of use?
+		this->BuildVisitorArrays ();
 	}
 	this->mIsComplete = true;
 }
@@ -23,10 +23,8 @@ void* RTTIRecord::AsType ( ZLTypeID typeID, void* ptr ) {
 
 	if ( this->mTypeID == typeID ) return ptr;
 	
-	if ( this->mIsComplete == false ) {
-		this->AffirmCasts ( ptr );
-	}
-	
+	this->AffirmCasts ( ptr );
+
 	// TODO: binary search?
 	for ( u32 i = 0; i < this->mTypeCount; ++i ) {
 		if ( this->mTypeSet [ i ]->mTypeID == typeID ) {
@@ -37,43 +35,81 @@ void* RTTIRecord::AsType ( ZLTypeID typeID, void* ptr ) {
 }
 
 //----------------------------------------------------------------//
-void* RTTIRecord::AsType ( RTTIRecord& record, void* ptr ) {
+void RTTIRecord::BuildVisitorArrays () {
+
+	void* adapters [ MAX ];
+	ZLSize total = 0;
+
+	STLMap < ZLTypeID, void* >::iterator visitorIt = this->mVisitors.begin ();
+	for ( ; visitorIt != this->mVisitors.end (); ++visitorIt ) {
 	
-	if ( this == &record ) return ptr;
-	
-	if ( this->mIsComplete == false ) {
-		this->AffirmCasts ( ptr );
-	}
-	
-	// TODO: binary search?
-	for ( u32 i = 0; i < this->mTypeCount; ++i ) {
-		if ( this->mTypeSet [ i ] == &record ) {
-			return ( void* )(( ptrdiff_t )ptr + this->mJumpTable [ i ]);
+		ZLTypeID adapterTypeID = visitorIt->first;
+		ZLLeanArray < void* >& adapterArray = this->mVisitorArrays [ adapterTypeID ];
+		
+		for ( ZLIndex i = 0; i < this->mTypeCount; ++i ) {
+			void* adapter = this->mTypeSet [ i ]->GetVisitor ( adapterTypeID );
+			if ( adapter ) {
+				adapters [ total++ ] = adapter;
+			}
+		}
+		
+		adapterArray.Init ( total + 1 );
+		adapterArray [ 0 ] = visitorIt->second;
+		for ( ZLIndex i = 0; i < total; ++i ) {
+			adapterArray [ i + 1 ] = adapters [ i ];
 		}
 	}
-	return 0;
 }
 
 //----------------------------------------------------------------//
-void RTTIRecord::Complete() {
+void RTTIRecord::Complete () {
+
 	this->mIsConstructed = true;
+}
+
+//----------------------------------------------------------------//
+void* RTTIRecord::GetVisitor ( ZLTypeID visitorTypeID ) {
+
+	if ( this->mVisitors.contains ( visitorTypeID )) {
+		return this->mVisitors [ visitorTypeID ];
+	}
+	return NULL;
+}
+
+//----------------------------------------------------------------//
+ZLLeanArray < void* >& RTTIRecord::GetVisitors ( ZLTypeID visitorTypeID  ) {
+
+	assert ( this->mIsComplete );
+
+	static ZLLeanArray < void* > staticDummy;
+	
+	if ( this->mVisitors.contains ( visitorTypeID )) {
+		return this->mVisitorArrays [ visitorTypeID ];
+	}
+	return staticDummy;
 }
 
 //----------------------------------------------------------------//
 void RTTIRecord::Inherit ( RTTIRecord& record, void* ptr, ptrdiff_t offset ) {
 	
+	// TODO: maybe sort type set for binary search? or by frequency of use?
+	
+	// if not own record, add to type set
 	if ( this != &record ) {
 	
+		// bail if already inherited
 		for ( u32 i = 0; i < this->mTypeCount; ++i ) {
 			if ( this->mTypeSet [ i ] == &record ) {
-				return;
+				return; // TODO: warn about this
 			}
 		}
 		
+		// can only handle MAX super classes
 		assert ( this->mTypeCount < MAX );
 		
-		this->mTypeSet [ this->mTypeCount ] = &record;
-		this->mJumpTable [ this->mTypeCount ] = offset;
+		
+		this->mTypeSet [ this->mTypeCount ] = &record; // type info for superclass
+		this->mJumpTable [ this->mTypeCount ] = offset; // offset to convert pointer to superclass
 		this->mTypeCount++;
 	}
 	
@@ -85,6 +121,7 @@ void RTTIRecord::Inherit ( RTTIRecord& record, void* ptr, ptrdiff_t offset ) {
 		ptrdiff_t jump = link.GetOffset ( ptr );
 		RTTIRecord& nextRecord = *link.mTarget;
 		
+		// walk up the class hierarchy
 		void* nextPtr = ( void* )(( ptrdiff_t )ptr + jump );
 		
 		this->Inherit ( nextRecord, nextPtr, offset + jump );
@@ -101,20 +138,6 @@ bool RTTIRecord::IsType ( ZLTypeID typeID, void* ptr ) {
 	// TODO: binary search?
 	for ( u32 i = 0; i < this->mTypeCount; ++i ) {
 		if ( this->mTypeSet [ i ]->mTypeID == typeID ) return true;
-	}
-	return false;
-}
-
-//----------------------------------------------------------------//
-bool RTTIRecord::IsType ( RTTIRecord& record, void* ptr ) {
-	
-	if ( this == &record ) return true;
-	
-	this->AffirmCasts ( ptr );
-
-	// TODO: binary search?
-	for ( u32 i = 0; i < this->mTypeCount; ++i ) {
-		if ( this->mTypeSet [ i ] == &record ) return true;
 	}
 	return false;
 }
@@ -150,7 +173,7 @@ bool RTTIBase::IsType ( ZLTypeID typeID ) {
 
 //----------------------------------------------------------------//
 RTTIBase::RTTIBase () {
-	this->BeginRTTI < RTTIBase >(this);
+	this->BeginRTTI < RTTIBase >( this, "RTTIBase" );
 	this->EndRTTI ();
 }
 
@@ -160,5 +183,5 @@ RTTIBase::~RTTIBase () {
 
 //----------------------------------------------------------------//
 cc8* RTTIBase::TypeName () const {
-	return "RTTIBase";
+	return this->mRTTI->mClassName.c_str ();
 }

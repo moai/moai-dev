@@ -176,7 +176,7 @@ void MOAIGraphicsGridProp::GetGridFrameInView ( const ZLAffine3D& worldToLocalMt
 //----------------------------------------------------------------//
 MOAIGraphicsGridProp::MOAIGraphicsGridProp () {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIGraphicsGridProp )
 		RTTI_EXTEND ( MOAIHasDeckAndGrid )
 		RTTI_EXTEND ( MOAIGraphicsPropBase )
 	RTTI_END

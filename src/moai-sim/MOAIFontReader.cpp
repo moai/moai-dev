@@ -220,7 +220,7 @@ int MOAIFontReader::GetKernVec ( u32 c, MOAIKernVec& kernVec ) {
 //----------------------------------------------------------------//
 MOAIFontReader::MOAIFontReader () {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIFontReader )
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }

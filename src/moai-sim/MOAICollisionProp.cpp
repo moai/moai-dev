@@ -211,7 +211,7 @@ MOAICollisionProp::MOAICollisionProp () :
 	mTouched ( MOAICollisionWorld::OVERLAP_PASS_INIT ),
 	mCollisionWorld ( 0 ) {
 
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAICollisionProp )
 		RTTI_EXTEND ( MOAIAbstractProp )
 		RTTI_EXTEND ( MOAIDrawable )
 		RTTI_EXTEND ( MOAIHasDeckAndIndex )

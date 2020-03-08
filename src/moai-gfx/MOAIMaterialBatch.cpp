@@ -24,7 +24,7 @@ void MOAIMaterialBatch::Clear () {
 MOAIMaterialBatch::MOAIMaterialBatch () :
 	mIndexBatchSize ( 1 ) {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIMaterialBatch )
 		RTTI_EXTEND ( MOAIAbstractMaterialBatchInterface )
 	RTTI_END
 }

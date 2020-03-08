@@ -685,7 +685,7 @@ MOAIParticleScript::MOAIParticleScript () :
 
 	int i;
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIParticleScript )
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 

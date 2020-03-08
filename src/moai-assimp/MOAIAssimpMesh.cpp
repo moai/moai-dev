@@ -342,7 +342,7 @@ int MOAIAssimpMesh::_getVertices ( lua_State* L ) {
 MOAIAssimpMesh::MOAIAssimpMesh () :
 	mMesh ( 0 ) {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIAssimpMesh )
 		RTTI_EXTEND ( MOAIAssimpSceneMember )
 	RTTI_END
 }

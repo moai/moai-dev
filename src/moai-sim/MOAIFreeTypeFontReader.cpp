@@ -238,7 +238,7 @@ MOAIFreeTypeFontReader::MOAIFreeTypeFontReader () :
 	mFaceHeight ( 0.0f ),
 	mAntiAlias ( true ) {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIFreeTypeFontReader )
 		RTTI_EXTEND ( MOAIFontReader )
 	RTTI_END
 	

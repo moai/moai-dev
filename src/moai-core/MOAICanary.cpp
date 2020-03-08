@@ -30,7 +30,7 @@ int MOAICanary::_setMessage ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAICanary::MOAICanary () {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAICanary )
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }

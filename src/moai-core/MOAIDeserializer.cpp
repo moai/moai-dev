@@ -124,7 +124,7 @@ MOAILuaObject* MOAIDeserializer::MemberIDToObject ( ObjID objectID ) {
 //----------------------------------------------------------------//
 MOAIDeserializer::MOAIDeserializer () {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIDeserializer )
 		RTTI_EXTEND ( MOAISerializerBase )
 	RTTI_END
 }

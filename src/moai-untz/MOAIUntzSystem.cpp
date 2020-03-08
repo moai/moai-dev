@@ -181,7 +181,7 @@ int MOAIUntzSystem::_getVolume ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIUntzSystem::MOAIUntzSystem () {
 
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAIUntzSystem, MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

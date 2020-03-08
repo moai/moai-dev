@@ -21,7 +21,7 @@ MOAIParticleCallbackPlugin::MOAIParticleCallbackPlugin () :
 	mInitFunc ( 0 ),
 	mRenderFunc ( 0 ) {
 
-	RTTI_SINGLE ( MOAIParticlePlugin )
+	RTTI_SINGLE ( MOAIParticleCallbackPlugin, MOAIParticlePlugin )
 }
 
 //----------------------------------------------------------------//

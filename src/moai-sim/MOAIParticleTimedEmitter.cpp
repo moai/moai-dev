@@ -45,7 +45,7 @@ MOAIParticleTimedEmitter::MOAIParticleTimedEmitter () :
 	mMinFrequency ( 1.0f ),
 	mMaxFrequency ( 1.0f ) {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIParticleTimedEmitter )
 		RTTI_EXTEND ( MOAIParticleEmitter )
 	RTTI_END
 }

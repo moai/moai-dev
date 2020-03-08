@@ -39,7 +39,7 @@ MOAIGfxStateGPUCacheFrame::MOAIGfxStateGPUCacheFrame () :
 	mScissorRect ( ZLRect::EMPTY ),
 	mViewRect ( ZLRect::EMPTY ) {
 	
-	RTTI_SINGLE ( RTTIBase )
+	RTTI_SINGLE ( MOAIGfxStateGPUCacheFrame, RTTIBase )
 }
 
 //----------------------------------------------------------------//

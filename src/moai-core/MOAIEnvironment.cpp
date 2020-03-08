@@ -186,7 +186,7 @@ void MOAIEnvironment::DetectEnvironment () {
 //----------------------------------------------------------------//
 MOAIEnvironment::MOAIEnvironment () {
 
-	RTTI_SINGLE ( MOAIGlobalEventSource )
+	RTTI_SINGLE ( MOAIEnvironment, MOAIGlobalEventSource )
 }
 
 //----------------------------------------------------------------//

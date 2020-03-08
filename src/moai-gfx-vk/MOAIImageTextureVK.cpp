@@ -12,7 +12,7 @@
 //----------------------------------------------------------------//
 MOAIImageTextureVK::MOAIImageTextureVK () {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIImageTextureVK )
 		RTTI_EXTEND ( MOAIImageTexture )
 		RTTI_EXTEND ( MOAITextureVK )
 	RTTI_END

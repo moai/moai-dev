@@ -179,7 +179,7 @@ MOAIParticlePexPlugin::MOAIParticlePexPlugin () :
 	mSourcePos[0] = mSourcePos[1] = 0;
 	mSourcePosVariance[0] = mSourcePosVariance[1] = 0;
 
-	RTTI_SINGLE ( MOAIParticlePlugin )
+	RTTI_SINGLE ( MOAIParticlePexPlugin, MOAIParticlePlugin )
 }
 
 //----------------------------------------------------------------//

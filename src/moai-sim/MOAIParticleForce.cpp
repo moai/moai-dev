@@ -189,7 +189,7 @@ MOAIParticleForce::MOAIParticleForce () :
 	mShape ( LINEAR ),
 	mType ( GRAVITY ) {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIParticleForce )
 		RTTI_EXTEND ( MOAITransform )
 	RTTI_END
 	

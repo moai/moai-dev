@@ -68,7 +68,7 @@ bool ZLImageFormat::GuessHeader ( const void* buffer ) {
 //----------------------------------------------------------------//
 ZLImageFormat::ZLImageFormat () {
 
-	RTTI_SINGLE ( RTTIBase )
+	RTTI_SINGLE ( ZLImageFormat, RTTIBase )
 }
 
 //----------------------------------------------------------------//

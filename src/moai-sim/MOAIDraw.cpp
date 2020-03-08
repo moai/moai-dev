@@ -1506,7 +1506,7 @@ void MOAIDraw::DrawVertexArray2D ( const float* verts, u32 count, u32 color, MOA
 //----------------------------------------------------------------//
 MOAIDraw::MOAIDraw () {
 
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAIDraw, MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

@@ -244,7 +244,7 @@ void MOAIParticleState::InitParticle ( MOAIParticleSystem& system, MOAIParticle&
 MOAIParticleState::MOAIParticleState () :
 	mDamping ( 0.0f ) {
 
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIParticleState )
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 	

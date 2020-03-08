@@ -1286,7 +1286,7 @@ MOAIImage* MOAIImage::AffirmImage ( MOAILuaState& state, int idx ) {
 //----------------------------------------------------------------//
 MOAIImage::MOAIImage () {
 	
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAIImage, MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

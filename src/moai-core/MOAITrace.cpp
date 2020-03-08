@@ -205,7 +205,7 @@ MOAITrace::MOAITrace () :
 	mVerbose ( false ),
 	mListener ( 0 ) {
 
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAITrace, MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

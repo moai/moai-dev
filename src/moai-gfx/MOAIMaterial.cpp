@@ -18,7 +18,7 @@ MOAIMaterial::MOAIMaterial () :
 	mLights ( NULL ),
 	mTextures ( NULL ) {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIMaterial )
 		RTTI_EXTEND ( MOAIAbstractMaterial )
 	RTTI_END
 }

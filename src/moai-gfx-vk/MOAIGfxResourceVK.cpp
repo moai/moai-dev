@@ -14,7 +14,7 @@
 //----------------------------------------------------------------//
 MOAIGfxResourceVK::MOAIGfxResourceVK () {
 
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIGfxResourceVK )
 		RTTI_EXTEND ( MOAIGfxResource )
 	RTTI_END
 }

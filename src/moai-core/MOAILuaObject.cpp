@@ -412,7 +412,8 @@ void MOAILuaObject::LuaRetain ( MOAILuaObject* object ) {
 //----------------------------------------------------------------//
 MOAILuaObject::MOAILuaObject () :
 	mActiveUserdataCount ( 0 ) {
-	RTTI_SINGLE ( RTTIBase )
+	
+	RTTI_SINGLE ( MOAILuaObject, RTTIBase )
 	
 	ZLTransmigrationCache& transmigrationCache = ZLTransmigrationCache::Get ();
 	if ( transmigrationCache.IsActive ()) {

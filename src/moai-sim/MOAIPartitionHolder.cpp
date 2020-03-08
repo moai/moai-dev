@@ -74,7 +74,7 @@ MOAIPartition* MOAIPartitionHolder::GetPartition () {
 //----------------------------------------------------------------//
 MOAIPartitionHolder::MOAIPartitionHolder () {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIPartitionHolder )
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }

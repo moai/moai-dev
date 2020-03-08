@@ -413,7 +413,7 @@ MOAIPathFinder::MOAIPathFinder () :
 	mGWeight ( 1.0f ),
 	mHWeight ( 1.0f ) {
 	
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAIPathFinder, MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

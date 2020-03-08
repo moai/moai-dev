@@ -235,7 +235,7 @@ MOAIShaderGL* MOAIShaderMgrGL::GetShader ( lua_State* L, int idx ) {
 //----------------------------------------------------------------//
 MOAIShaderMgrGL::MOAIShaderMgrGL () {
 
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAIShaderMgrGL, MOAILuaObject )
 
 	for ( u32 i = 0; i < MOAIShaderPresetEnum::TOTAL_SHADERS; ++i ) {
 		this->mPrograms [ i ] = 0;

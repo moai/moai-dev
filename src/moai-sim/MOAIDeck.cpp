@@ -114,7 +114,7 @@ MOAIDeck::MOAIDeck () :
 	mMaxBounds ( ZLBounds::EMPTY ),
 	mBoundsDirty ( true ) {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIDeck )
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }

@@ -79,7 +79,7 @@ MOAILightFormat::MOAILightFormat () :
 	mTextures ( 0 ),
 	mDirty ( false ) {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAILightFormat )
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }

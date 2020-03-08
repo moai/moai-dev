@@ -116,7 +116,7 @@ int MOAIBox2DFrictionJoint::_setMaxTorque ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIBox2DFrictionJoint::MOAIBox2DFrictionJoint () {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIBox2DFrictionJoint )
 		RTTI_EXTEND ( MOAIBox2DJoint )
 	RTTI_END
 }

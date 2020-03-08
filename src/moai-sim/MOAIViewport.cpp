@@ -157,7 +157,7 @@ int MOAIViewport::_setSize ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIViewport::MOAIViewport () {
 	
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAIViewport, MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

@@ -276,7 +276,7 @@ u32 MOAIGrid::GetTile ( int xTile, int yTile ) const {
 //----------------------------------------------------------------//
 MOAIGrid::MOAIGrid () {
 	
-	RTTI_SINGLE ( MOAIGridSpace )
+	RTTI_SINGLE ( MOAIGrid, MOAIGridSpace )
 }
 
 //----------------------------------------------------------------//

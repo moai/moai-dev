@@ -110,7 +110,7 @@ MOAIHttpTaskNSURL::MOAIHttpTaskNSURL () :
 	mStream ( 0 ),
 	mRequest ( 0 ) {
 	
-	RTTI_SINGLE ( MOAIHttpTaskBase )
+	RTTI_SINGLE ( MOAIHttpTaskNSURL, MOAIHttpTaskBase )
 }
 
 //----------------------------------------------------------------//

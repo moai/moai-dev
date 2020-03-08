@@ -57,7 +57,7 @@ void MOAICompassSensor::EnqueueCompassEvent ( ZLIndex deviceID, ZLIndex sensorID
 MOAICompassSensor::MOAICompassSensor () :
 	mHeading ( 0.0f ) {
 
-	RTTI_SINGLE ( MOAISensor )
+	RTTI_SINGLE ( MOAICompassSensor, MOAISensor )
 }
 
 //----------------------------------------------------------------//

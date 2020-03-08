@@ -15,7 +15,7 @@
 //----------------------------------------------------------------//
 MOAIStreamWriter::MOAIStreamWriter () {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIStreamWriter )
 		RTTI_EXTEND ( MOAIStreamAdapter )
 	RTTI_END
 }

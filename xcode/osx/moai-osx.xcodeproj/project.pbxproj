@@ -19,6 +19,7 @@
 		B319C9911DBFF96600A6C621 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B319C9901DBFF96600A6C621 /* JavaScriptCore.framework */; };
 		CD096FD218E0FFE300A36EDD /* libstdc++.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = CD096FD118E0FFE300A36EDD /* libstdc++.dylib */; };
 		CD1845BD1A626F0300FCCCE0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1845BC1A626F0300FCCCE0 /* SystemConfiguration.framework */; };
+		CD212DFF24142458000FC3BD /* moai_gtest_rtti.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD212DFE24142458000FC3BD /* moai_gtest_rtti.cpp */; };
 		CD273EF821B1F209006C4D84 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD273EF721B1F209006C4D84 /* Metal.framework */; };
 		CD2E46C51C5181A3008E22A1 /* libmoai-osx-harfbuzz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1F44E81BDEBB7800F5CF59 /* libmoai-osx-harfbuzz.a */; };
 		CD323B071A8040CB00E2FEBB /* SDLJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD323B031A8040CB00E2FEBB /* SDLJoystick.cpp */; };
@@ -1661,6 +1662,7 @@
 		CD096FD118E0FFE300A36EDD /* libstdc++.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = "libstdc++.dylib"; path = "usr/lib/libstdc++.dylib"; sourceTree = SDKROOT; };
 		CD1845BC1A626F0300FCCCE0 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		CD212DD92413E33D000FC3BD /* moaiconfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; name = moaiconfig.xcconfig; path = ../moaiconfig.xcconfig; sourceTree = "<group>"; };
+		CD212DFE24142458000FC3BD /* moai_gtest_rtti.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = moai_gtest_rtti.cpp; path = "../../src/host-google-test/moai_gtest_rtti.cpp"; sourceTree = "<group>"; };
 		CD273EF721B1F209006C4D84 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
 		CD323B031A8040CB00E2FEBB /* SDLJoystick.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDLJoystick.cpp; path = "../../src/host-sdl/SDLJoystick.cpp"; sourceTree = "<group>"; };
 		CD323B041A8040CB00E2FEBB /* SDLJoystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDLJoystick.h; path = "../../src/host-sdl/SDLJoystick.h"; sourceTree = "<group>"; };
@@ -2128,6 +2130,7 @@
 				CDBF99652345C392003F430D /* moai_gtest_linked_finalizable.cpp */,
 				CDD813FC1E17333700996311 /* moai_gtest_lua_lifecycle.cpp */,
 				CDD813F91E1700D900996311 /* moai_gtest_main.cpp */,
+				CD212DFE24142458000FC3BD /* moai_gtest_rtti.cpp */,
 				CD5C9FC921C894630092C949 /* moai_gtest_virtual_inheritance.cpp */,
 				CDD813FE1E190DDD00996311 /* moai_gtest_ZLQuaternion.cpp */,
 			);
@@ -3032,6 +3035,7 @@
 				CDBF99662345C392003F430D /* moai_gtest_linked_finalizable.cpp in Sources */,
 				CDD813FD1E17333700996311 /* moai_gtest_lua_lifecycle.cpp in Sources */,
 				CDD813FF1E190DDD00996311 /* moai_gtest_ZLQuaternion.cpp in Sources */,
+				CD212DFF24142458000FC3BD /* moai_gtest_rtti.cpp in Sources */,
 				CD5C9FCA21C894630092C949 /* moai_gtest_virtual_inheritance.cpp in Sources */,
 				CD5C9FD021C8EA400092C949 /* moai_gtest_libtess2.cpp in Sources */,
 				CD7038CD21CB145D00DB4A9D /* moai_gtest_composition.cpp in Sources */,

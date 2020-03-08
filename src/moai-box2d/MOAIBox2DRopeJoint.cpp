@@ -11,8 +11,8 @@
 
 MOAIBox2DRopeJoint::MOAIBox2DRopeJoint () {
 	
-	RTTI_BEGIN
-	RTTI_EXTEND ( MOAIBox2DJoint )
+	RTTI_BEGIN ( MOAIBox2DRopeJoint )
+		RTTI_EXTEND ( MOAIBox2DJoint )
 	RTTI_END
 }
 

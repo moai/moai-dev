@@ -165,7 +165,7 @@ MOAIDebugLinesMgr::MOAIDebugLinesMgr () :
 	mActiveStyleSet ( 0 ),
 	mShowDebugLines ( true ) {
 
-	RTTI_SINGLE ( MOAILuaObject )
+	RTTI_SINGLE ( MOAIDebugLinesMgr, MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

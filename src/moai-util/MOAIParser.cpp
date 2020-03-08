@@ -129,7 +129,7 @@ int MOAIParser::_traverse ( lua_State* L ) {
 MOAIParser::MOAIParser () :
 	mAST ( 0 ) {
 
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIParser )
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }

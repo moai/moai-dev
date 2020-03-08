@@ -63,7 +63,7 @@ int MOAIMatrix::_setMatrix ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIMatrix::MOAIMatrix () {
 	
-	RTTI_BEGIN
+	RTTI_BEGIN ( MOAIMatrix )
 		RTTI_EXTEND ( MOAIAbstractChildTransform )
 	RTTI_END
 	

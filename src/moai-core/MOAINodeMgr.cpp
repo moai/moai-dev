@@ -76,7 +76,7 @@ MOAINodeMgr::MOAINodeMgr () :
 	mScheduled ( false ),
 	mMaxIterations ( DEFAULT_MAX_ITERATIONS ) {
 	
-	RTTI_SINGLE ( MOAIGlobalEventSource )
+	RTTI_SINGLE ( MOAINodeMgr, MOAIGlobalEventSource )
 }
 
 //----------------------------------------------------------------//
