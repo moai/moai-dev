@@ -413,7 +413,7 @@ void MOAILuaObject::LuaRetain ( MOAILuaObject* object ) {
 MOAILuaObject::MOAILuaObject () :
 	mActiveUserdataCount ( 0 ) {
 	
-	RTTI_SINGLE ( MOAILuaObject, RTTIBase )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAILuaObject, RTTIBase )
 	
 	ZLTransmigrationCache& transmigrationCache = ZLTransmigrationCache::Get ();
 	if ( transmigrationCache.IsActive ()) {
@@ -581,14 +581,20 @@ void MOAILuaObject::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAILuaObject::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 
 	MOAIComposer composer;
-	this->MOAILuaObject_SerializeIn ( composer, state, serializer );
+	RTTIVisitor < MOAIAbstractLuaObjectVisitor > visitor = this->GetVisitor < MOAIAbstractLuaObjectVisitor >();
+	for ( ; visitor; ++visitor ) {
+		( *visitor ).SerializeIn ( *this, composer, state, serializer );
+	}
 }
 
 //----------------------------------------------------------------//
 void MOAILuaObject::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
 	MOAIComposer composer;
-	this->MOAILuaObject_SerializeOut ( composer, state, serializer );
+	RTTIVisitor < MOAIAbstractLuaObjectVisitor > visitor = this->GetVisitor < MOAIAbstractLuaObjectVisitor >();
+	for ( ; visitor; ++visitor ) {
+		( *visitor ).SerializeOut ( *this, composer, state, serializer );
+	}
 }
 
 //----------------------------------------------------------------//

@@ -65,7 +65,7 @@ MOAIVectorSensor::MOAIVectorSensor () :
 	mY ( 0.0f ),
 	mZ ( 0.0f ) {
 
-	RTTI_SINGLE ( MOAIVectorSensor, MOAISensor )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIVectorSensor, MOAISensor )
 }
 
 //----------------------------------------------------------------//

@@ -201,7 +201,7 @@ MOAIAbstractProp::MOAIAbstractProp () :
 		mModelBoundsOverride ( ZLBox::EMPTY ),
 		mModelBoundsPad ( ZLVec3D::ORIGIN ) {
 	
-	RTTI_BEGIN ( MOAIAbstractProp )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIAbstractProp )
 		RTTI_EXTEND ( MOAIPartitionHull )
 		RTTI_EXTEND ( MOAITransform )
 	RTTI_END

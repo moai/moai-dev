@@ -1105,7 +1105,7 @@ MOAIGridSpace::MOAIGridSpace () :
 	mShape ( RECT_SHAPE ),
 	mRepeat ( 0 ) {
 	
-	RTTI_SINGLE ( MOAIGridSpace, MOAILuaObject )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIGridSpace, MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

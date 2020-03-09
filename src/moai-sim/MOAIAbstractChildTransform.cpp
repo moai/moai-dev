@@ -33,7 +33,7 @@ int MOAIAbstractChildTransform::_setParent ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIAbstractChildTransform::MOAIAbstractChildTransform () {
 	
-	RTTI_SINGLE ( MOAIAbstractChildTransform, MOAIAbstractBaseTransform )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIAbstractChildTransform, MOAIAbstractBaseTransform )
 }
 
 //----------------------------------------------------------------//

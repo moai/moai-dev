@@ -218,7 +218,7 @@ MOAICoroutine::MOAICoroutine () :
 	mIsActive ( false ),
 	mIsDefaultParent ( false ) {
 
-	RTTI_SINGLE ( MOAICoroutine, MOAIAction )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAICoroutine, MOAIAction )
 	
 	this->mTrackingGroup.write ( "MOAICoroutine: 0x%p", this );
 }

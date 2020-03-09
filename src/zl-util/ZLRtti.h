@@ -5,6 +5,7 @@
 #define	ZLRTTI_H
 
 #include <zl-common/zl_types.h>
+#include <zl-util/STLArray.h>
 #include <zl-util/STLMap.h>
 #include <zl-util/ZLType.h>
 
@@ -67,6 +68,26 @@ public:
 };
 
 //================================================================//
+// RTTISuper
+//================================================================//
+class RTTISuper {
+private:
+
+	friend class RTTIRecord;
+
+	const RTTIRecord* 		mRecord;
+	ptrdiff_t 				mJump;
+	ZLSize					mDepth;
+
+public:
+
+	//----------------------------------------------------------------//
+	inline bool operator < ( const RTTISuper& compare ) const {
+		return ( this->mDepth > compare.mDepth );
+	}
+};
+
+//================================================================//
 // RTTIRecord
 //================================================================//
 class RTTIRecord {
@@ -74,31 +95,29 @@ private:
 
 	static const u32 MAX = 32;
 
-	STLString 		mClassName;
+	STLString 				mClassName;
 
-	RTTILinkBase*	mLinks [ MAX ];
-	u32				mLinkCount;
-	bool			mIsConstructed;
+	RTTILinkBase*			mLinks [ MAX ];
+	u32						mLinkCount;
+	bool					mIsConstructed;
 	
-	RTTIRecord*		mTypeSet [ MAX ]; // set of all superclass records
-	u32				mTypeCount;
-	ptrdiff_t		mJumpTable [ MAX ]; // offset to superclass records
-	bool			mIsComplete;
+	STLArray < RTTISuper >	mSupers; // set of all superclass records
+	bool					mIsComplete;
 
-	ZLTypeID		mTypeID;
+	ZLTypeID				mTypeID;
 
-	STLMap < ZLTypeID, void* > mVisitors;
-	STLMap < ZLTypeID, ZLLeanArray < void* > > mVisitorArrays;
+	STLMap < ZLTypeID, const void* > mVisitors;
+	STLMap < ZLTypeID, ZLLeanArray < const void* > > mVisitorArrays;
 
 	//----------------------------------------------------------------//
-	void						AffirmCasts				( void* ptr );
-	void*						AsType					( ZLTypeID typeID, void* ptr );
-	void						BuildVisitorArrays 		();
-	void						Complete				();
-	void*						GetVisitor				( ZLTypeID visitorTypeID );
-	ZLLeanArray < void* >&		GetVisitors				( ZLTypeID visitorTypeID  );
-	void						Inherit					( RTTIRecord& record, void* ptr, ptrdiff_t offset );
-	bool						IsType					( ZLTypeID typeID, void* ptr );
+	void									AffirmCasts				( void* ptr );
+	void*									AsType					( ZLTypeID typeID, void* ptr );
+	void									BuildVisitorArrays 		();
+	void									Complete				();
+	void									GatherSupers			( RTTIRecord& record, void* ptr, ptrdiff_t offset, ZLSize depth );
+	const void*								GetVisitor				( ZLTypeID visitorTypeID ) const;
+	const ZLLeanArray < const void* >&		GetVisitors				( ZLTypeID visitorTypeID  ) const;
+	bool									IsType					( ZLTypeID typeID, void* ptr );
 
 	//----------------------------------------------------------------//
 	template < typename TYPE, typename SUPER_TYPE >
@@ -136,6 +155,46 @@ public:
 
 	//----------------------------------------------------------------//
 		~RTTIRecord		();
+};
+
+//================================================================//
+// RTTIVisitor
+//================================================================//
+template < typename ABSTRACT_VISITOR_TYPE >
+class RTTIVisitor {
+private:
+
+	friend class RTTIRecord;
+	friend class RTTIBase;
+
+	const ZLLeanArray < const ABSTRACT_VISITOR_TYPE* >& mVisitors;
+	int mIndex;
+	int mStep;
+
+public:
+
+	//----------------------------------------------------------------//
+	operator bool () const {
+		return (( 0 <= this->mIndex ) && ( this->mIndex < ( int )this->mVisitors.Size ()));
+	}
+	
+	//----------------------------------------------------------------//
+	RTTIVisitor& operator ++ () {
+		this->mIndex += this->mStep;
+		return *this;
+	}
+	
+	//----------------------------------------------------------------//
+	const ABSTRACT_VISITOR_TYPE& operator * () const {
+		return *this->mVisitors [ this->mIndex ];
+	}
+	
+	//----------------------------------------------------------------//
+	RTTIVisitor ( const ZLLeanArray < const ABSTRACT_VISITOR_TYPE* >& visitors, bool forward = true ) :
+		mVisitors ( visitors ),
+		mStep ( forward ? 1 : -1 ) {
+		this->mIndex = forward ? 0 : ( int )visitors.Size () - 1;
+	}
 };
 
 //================================================================//
@@ -180,10 +239,12 @@ public:
 	
 	//----------------------------------------------------------------//
 	template < typename ABSTRACT_VISITOR_TYPE >
-	ZLLeanArray < ABSTRACT_VISITOR_TYPE* >& GetVisitors () {
+	RTTIVisitor < ABSTRACT_VISITOR_TYPE > GetVisitor () {
 	
 		this->mRTTI->AffirmCasts ( this->mThis );
-		return ( ZLLeanArray < ABSTRACT_VISITOR_TYPE* >& )this->mRTTI->GetVisitors ( ZLType::GetID < ABSTRACT_VISITOR_TYPE >());
+		return RTTIVisitor < ABSTRACT_VISITOR_TYPE >(
+			( const ZLLeanArray < const ABSTRACT_VISITOR_TYPE* >& )this->mRTTI->GetVisitors ( ZLType::GetID < ABSTRACT_VISITOR_TYPE >())
+		);
 	}
 	
 	//----------------------------------------------------------------//

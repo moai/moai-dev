@@ -601,7 +601,7 @@ MOAIHttpTaskBase::MOAIHttpTaskBase () :
 	mResponseCode ( 0 ),
 	mTimeout ( DEFAULT_MOAI_HTTP_TIMEOUT ) {
 	
-	RTTI_SINGLE ( MOAIHttpTaskBase, MOAILuaObject )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIHttpTaskBase, MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

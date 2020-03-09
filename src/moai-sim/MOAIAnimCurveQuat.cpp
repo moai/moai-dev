@@ -122,7 +122,7 @@ ZLQuaternion MOAIAnimCurveQuat::GetValue ( const MOAIAnimKeySpan& span ) const {
 //----------------------------------------------------------------//
 MOAIAnimCurveQuat::MOAIAnimCurveQuat () {
 	
-	RTTI_SINGLE ( MOAIAnimCurveQuat, MOAIAnimCurve )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIAnimCurveQuat, MOAIAnimCurve )
 	
 	this->mValue = ZLQuaternion::IDENT;
 }

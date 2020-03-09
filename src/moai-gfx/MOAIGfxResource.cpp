@@ -56,7 +56,7 @@ bool MOAIGfxResource::IsReadyForUse () const {
 //----------------------------------------------------------------//
 MOAIGfxResource::MOAIGfxResource () {
 
-	RTTI_SINGLE ( MOAIGfxResource, MOAILuaObject )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIGfxResource, MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

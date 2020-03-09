@@ -98,7 +98,7 @@ MOAIGfxComposerVK& MOAIShaderVK::GetGfxComposer () {
 //----------------------------------------------------------------//
 MOAIShaderVK::MOAIShaderVK () {
 
-	RTTI_BEGIN ( MOAIShaderVK )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIShaderVK )
 		RTTI_EXTEND ( MOAIShader )
 		RTTI_EXTEND ( MOAINode )
 	RTTI_END

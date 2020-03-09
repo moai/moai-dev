@@ -267,7 +267,7 @@ MOAIFancyGrid::MOAIFancyGrid () :
 	mColorSize ( COLOR_SIZE_32 ),
 	mColorSet ( 0 ) {
 	
-	RTTI_SINGLE ( MOAIFancyGrid, MOAIGrid )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIFancyGrid, MOAIGrid )
 }
 
 //----------------------------------------------------------------//

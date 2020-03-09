@@ -142,7 +142,7 @@ int MOAIMoviePlayerIOS::_stop ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIMoviePlayerIOS::MOAIMoviePlayerIOS () {
 
-	RTTI_SINGLE ( MOAIMoviePlayerIOS, MOAILuaObject )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIMoviePlayerIOS, MOAILuaObject )
 	
 	mMoviePlayer = nil;
 	mPlaybackDelegate = [[ MOAIMoviePlayerPlaybackDelegate alloc ] init ];

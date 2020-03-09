@@ -51,7 +51,7 @@ int MOAIFileStream::_open ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIFileStream::MOAIFileStream () {
 	
-	RTTI_BEGIN ( MOAIFileStream )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIFileStream )
 		RTTI_EXTEND ( MOAIStream )
 	RTTI_END
 }

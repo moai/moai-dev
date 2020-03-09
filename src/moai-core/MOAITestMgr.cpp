@@ -232,7 +232,7 @@ MOAITestMgr::MOAITestMgr () :
 	mCurrent ( 0 ),
 	mStandalone ( false ) {
 
-	RTTI_SINGLE ( MOAITestMgr, MOAILuaObject )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAITestMgr, MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

@@ -94,7 +94,7 @@ void MOAIUniformComposer::ComposeUniforms ( const MOAIUniformSchema& schema, MOA
 //----------------------------------------------------------------//
 MOAIUniformComposer::MOAIUniformComposer () {
 
-	RTTI_BEGIN ( MOAIUniformComposer )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIUniformComposer )
 		RTTI_EXTEND ( MOAIUniformComposerInterface )
 	RTTI_END
 }

@@ -526,7 +526,7 @@ MOAICameraFitter2D::MOAICameraFitter2D () :
 	mDamper ( 0.0f ),
 	mFittingMode ( FITTING_MODE_DEFAULT ) {
 
-	RTTI_BEGIN ( MOAICameraFitter2D )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAICameraFitter2D )
 		RTTI_EXTEND ( MOAIAction )
 		RTTI_EXTEND ( MOAINode )
 	RTTI_END

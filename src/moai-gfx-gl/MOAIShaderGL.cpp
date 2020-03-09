@@ -48,7 +48,7 @@ bool MOAIShaderGL::HasDirtyUniforms () {
 //----------------------------------------------------------------//
 MOAIShaderGL::MOAIShaderGL () {
 
-	RTTI_BEGIN ( MOAIShaderGL )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIShaderGL )
 		RTTI_EXTEND ( MOAIShader )
 		RTTI_EXTEND ( MOAIAbstractUniformBuffer )
 		RTTI_EXTEND ( MOAIHasUniformComposer )

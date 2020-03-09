@@ -125,7 +125,7 @@ ZLVec3D MOAIAnimCurveVec::GetValue ( const MOAIAnimKeySpan& span ) const {
 MOAIAnimCurveVec::MOAIAnimCurveVec () :
 	mValue ( 0.0f, 0.0f, 0.0f ) {
 	
-	RTTI_SINGLE ( MOAIAnimCurveVec, MOAIAnimCurve )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIAnimCurveVec, MOAIAnimCurve )
 }
 
 //----------------------------------------------------------------//

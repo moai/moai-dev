@@ -110,7 +110,7 @@ int MOAIBox2DWeldJoint::_setFrequency ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIBox2DWeldJoint::MOAIBox2DWeldJoint () {
 	
-	RTTI_BEGIN ( MOAIBox2DWeldJoint )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIBox2DWeldJoint )
 		RTTI_EXTEND ( MOAIBox2DJoint )
 	RTTI_END
 }

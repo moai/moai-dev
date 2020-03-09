@@ -90,7 +90,7 @@ MOAIUniformComposer* MOAIUniformComposerInterface::GetComposer () {
 //----------------------------------------------------------------//
 MOAIUniformComposerInterface::MOAIUniformComposerInterface () {
 	
-	RTTI_BEGIN ( MOAIUniformComposerInterface )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIUniformComposerInterface )
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }

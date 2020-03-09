@@ -30,6 +30,8 @@ class MOAIHasDeckAndGrid :
 	public virtual MOAIHasDeck {
 protected:
 	
+	MOAI_LUA_OBJECT_VISITOR_FRIEND
+	
 	MOAILuaSharedPtr < MOAIGrid >			mGrid;
 	ZLVec2D									mGridScale;
 	

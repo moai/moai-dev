@@ -148,7 +148,7 @@
 //MOAIFrameBufferVK::MOAIFrameBufferVK () :
 //	mGrabNextFrame ( false ) {
 //
-//	RTTI_BEGIN ( MOAIFrameBufferVK )
+//	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIFrameBufferVK )
 //		RTTI_EXTEND ( MOAIFrameBuffer )
 //	RTTI_END
 //}
@@ -156,7 +156,7 @@
 //----------------------------------------------------------------//
 MOAIFrameBufferVK::MOAIFrameBufferVK () {
 	
-	RTTI_BEGIN ( MOAIFrameBufferVK )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIFrameBufferVK )
 		RTTI_EXTEND ( MOAIFrameBuffer )
 	RTTI_END
 }

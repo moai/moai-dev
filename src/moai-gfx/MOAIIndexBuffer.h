@@ -13,6 +13,8 @@ class MOAIIndexBuffer :
 	public virtual MOAIGfxBuffer {
 protected:
 
+	MOAI_LUA_OBJECT_VISITOR_FRIEND
+
 	u32				mIndexSize;
 
 	//----------------------------------------------------------------//

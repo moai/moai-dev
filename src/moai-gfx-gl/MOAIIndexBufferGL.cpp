@@ -14,7 +14,7 @@
 //----------------------------------------------------------------//
 MOAIIndexBufferGL::MOAIIndexBufferGL () {
 	
-	RTTI_BEGIN ( MOAIIndexBufferGL )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIIndexBufferGL )
 		RTTI_EXTEND ( MOAIIndexBuffer )
 		RTTI_EXTEND ( MOAIGfxBufferGL )
 	RTTI_END

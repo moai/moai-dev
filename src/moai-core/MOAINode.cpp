@@ -547,7 +547,7 @@ MOAINode::MOAINode () :
 	mPrev ( 0 ),
 	mNext ( 0 ) {
 	
-	RTTI_SINGLE ( MOAINode, MOAIInstanceEventSource )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAINode, MOAIInstanceEventSource )
 }
 
 //----------------------------------------------------------------//

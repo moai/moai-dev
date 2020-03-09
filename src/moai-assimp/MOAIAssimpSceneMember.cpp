@@ -60,7 +60,7 @@ MOAIAssimpSceneMember::MOAIAssimpSceneMember () :
 	mScene ( 0 ),
 	mIndex (( uint )-1 ) {
 	
-	RTTI_BEGIN ( MOAIAssimpSceneMember )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIAssimpSceneMember )
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }

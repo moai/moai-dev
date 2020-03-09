@@ -203,7 +203,7 @@ MOAIGfxMgrGL::MOAIGfxMgrGL () :
 	mRenderCounter ( 0 ),
 	mStateStackTop ( 0 ) {
 	
-	RTTI_BEGIN ( MOAIGfxMgrGL )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIGfxMgrGL )
 		RTTI_EXTEND ( MOAIGfxMgr )
 	RTTI_END
 	

@@ -59,7 +59,7 @@ int MOAIHasMaterialBatch::_setMaterialBatch ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIHasMaterialBatch::MOAIHasMaterialBatch () {
 
-	RTTI_BEGIN ( MOAIHasMaterialBatch )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIHasMaterialBatch )
 		RTTI_EXTEND ( MOAIAbstractMaterialBatchInterface )
 	RTTI_END
 }

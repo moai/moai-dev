@@ -67,7 +67,7 @@ MOAIFrameBufferTextureGL::MOAIFrameBufferTextureGL () :
 	mDepthFormat ( ZLGfxEnum::NONE ),
 	mStencilFormat ( ZLGfxEnum::NONE ) {
 	
-	RTTI_BEGIN ( MOAIFrameBufferTextureGL )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIFrameBufferTextureGL )
 		RTTI_EXTEND ( MOAIFrameBufferGL )
 		RTTI_EXTEND ( MOAITextureGL )
 	RTTI_END

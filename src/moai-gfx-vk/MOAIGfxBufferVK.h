@@ -21,6 +21,8 @@ class MOAIGfxBufferVK :
 	public virtual MOAIGfxBuffer {
 protected:
 
+	MOAI_LUA_OBJECT_VISITOR_FRIEND
+
 	friend class MOAIGfxBufferSnapshotVK;
 
 	VkBufferUsageFlags		mUsage;

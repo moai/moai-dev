@@ -16,6 +16,8 @@ class MOAIAbstractProp :
 	public virtual MOAITransform {
 protected:
 
+	MOAI_LUA_OBJECT_VISITOR_FRIEND
+
 	u32					mFlags;
 	ZLBox				mModelBoundsOverride;
 	ZLVec3D				mModelBoundsPad;

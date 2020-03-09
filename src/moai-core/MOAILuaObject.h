@@ -6,16 +6,31 @@
 
 #include <moai-core/MOAILuaRef.h>
 
+#define MOAI_LUA_OBJECT_RTTI_BEGIN(type) 													\
+	RTTI_BEGIN ( type ) 																	\
+	RTTI_VISITOR ( MOAIAbstractLuaObjectVisitor, MOAILuaObjectVisitor < type >)
+
+#define MOAI_LUA_OBJECT_RTTI_SINGLE(type, super) 											\
+	RTTI_BEGIN ( type ) 																	\
+	RTTI_VISITOR ( MOAIAbstractLuaObjectVisitor, MOAILuaObjectVisitor < type >) 			\
+	RTTI_EXTEND ( super ) 																	\
+	RTTI_END
+
+#define MOAI_LUA_OBJECT_VISITOR_FRIEND 														\
+	template < typename TYPE > friend class MOAILuaObjectVisitor;							\
+
 #define DECL_LUA_FACTORY(type)																\
 	IMPLEMENT_FINALIZABLE ( type )															\
+	MOAI_LUA_OBJECT_VISITOR_FRIEND															\
 	MOAILuaClass* GetLuaClass () { return &MOAILuaFactoryClass < type >::Get (); }			\
 	static void RegisterLuaType () { MOAILuaFactoryClass < type >::Get ().Register (); }	\
 	cc8* TypeName () const { return #type; }
 
 #define DECL_LUA_ABSTRACT(type)																\
-IMPLEMENT_ABSTRACT_FINALIZABLE ( type )														\
-MOAILuaClass* GetLuaClass () { return 0; }													\
-cc8* TypeName () const { return #type; }
+	IMPLEMENT_ABSTRACT_FINALIZABLE ( type )													\
+	MOAI_LUA_OBJECT_VISITOR_FRIEND															\
+	MOAILuaClass* GetLuaClass () { return 0; }												\
+	cc8* TypeName () const { return #type; }
 
 #define DECL_LUA_OPAQUE(type)																\
 	IMPLEMENT_FINALIZABLE ( type )															\
@@ -46,6 +61,7 @@ class MOAILuaObject :
 private:
 
 	friend class MOAILuaObjectMemo;
+	template < typename TYPE > friend class MOAILuaObjectVisitor;
 
 	u32						mActiveUserdataCount;
 	MOAILuaWeakRef			mUserdata;		// ref to userdata (weak)
@@ -124,6 +140,48 @@ public:
 		TYPE* type = ZLContextMgr::Get ()->GetGlobal < TYPE >();
 		assert ( type );
 		return InjectAndCall ( FUNC, type, L );
+	}
+};
+
+//================================================================//
+// MOAIAbstractLuaObjectVisitor
+//================================================================//
+class MOAIAbstractLuaObjectVisitor {
+public:
+
+	//----------------------------------------------------------------//
+	MOAIAbstractLuaObjectVisitor () {
+	}
+
+	//----------------------------------------------------------------//
+	virtual ~MOAIAbstractLuaObjectVisitor () {
+	}
+
+	//----------------------------------------------------------------//
+	virtual void 	SerializeIn 	( MOAILuaObject& self, MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) const = 0;
+	virtual void 	SerializeOut 	( MOAILuaObject& self, MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) const = 0;
+};
+
+//================================================================//
+// MOAILuaObjectVisitor
+//================================================================//
+template < typename TYPE >
+class MOAILuaObjectVisitor :
+	public MOAIAbstractLuaObjectVisitor {
+public:
+
+	//----------------------------------------------------------------//
+	void SerializeIn ( MOAILuaObject& self, MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) const {
+		TYPE* cast = self.AsType < TYPE >();
+		assert ( cast );
+		cast->TYPE::MOAILuaObject_SerializeIn ( composer, state, serializer );
+	}
+	
+	//----------------------------------------------------------------//
+	void SerializeOut ( MOAILuaObject& self, MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) const {
+		TYPE* cast = self.AsType < TYPE >();
+		assert ( cast );
+		cast->TYPE::MOAILuaObject_SerializeOut ( composer, state, serializer );
 	}
 };
 

@@ -12,7 +12,8 @@
 void RTTIRecord::AffirmCasts ( void* ptr ) {
 
 	if ( !this->mIsComplete ) {
-		this->Inherit ( *this, ptr, 0 );
+		this->GatherSupers ( *this, ptr, 0, 0 );
+		sort ( this->mSupers.begin (), this->mSupers.end ());
 		this->BuildVisitorArrays ();
 	}
 	this->mIsComplete = true;
@@ -26,9 +27,13 @@ void* RTTIRecord::AsType ( ZLTypeID typeID, void* ptr ) {
 	this->AffirmCasts ( ptr );
 
 	// TODO: binary search?
-	for ( u32 i = 0; i < this->mTypeCount; ++i ) {
-		if ( this->mTypeSet [ i ]->mTypeID == typeID ) {
-			return ( void* )(( ptrdiff_t )ptr + this->mJumpTable [ i ]);
+	ZLSize superCount = this->mSupers.size ();
+	for ( ZLIndex i = superCount; i > 0; --i ) {
+	
+		const RTTISuper& super = this->mSupers [ i - 1 ];
+	
+		if ( super.mRecord->mTypeID == typeID ) {
+			return ( void* )(( ptrdiff_t )ptr + super.mJump );
 		}
 	}
 	return 0;
@@ -37,27 +42,27 @@ void* RTTIRecord::AsType ( ZLTypeID typeID, void* ptr ) {
 //----------------------------------------------------------------//
 void RTTIRecord::BuildVisitorArrays () {
 
-	void* adapters [ MAX ];
+	const void* visitors [ MAX ];
 	ZLSize total = 0;
 
-	STLMap < ZLTypeID, void* >::iterator visitorIt = this->mVisitors.begin ();
+	STLMap < ZLTypeID, const void* >::iterator visitorIt = this->mVisitors.begin ();
 	for ( ; visitorIt != this->mVisitors.end (); ++visitorIt ) {
 	
-		ZLTypeID adapterTypeID = visitorIt->first;
-		ZLLeanArray < void* >& adapterArray = this->mVisitorArrays [ adapterTypeID ];
+		ZLTypeID visitorTypeID = visitorIt->first;
+		ZLLeanArray < const void* >& visitorArray = this->mVisitorArrays [ visitorTypeID ];
 		
-		for ( ZLIndex i = 0; i < this->mTypeCount; ++i ) {
-			void* adapter = this->mTypeSet [ i ]->GetVisitor ( adapterTypeID );
-			if ( adapter ) {
-				adapters [ total++ ] = adapter;
+		for ( ZLIndex i = 0; i < this->mSupers.size (); ++i ) {
+			const void* visitor = this->mSupers [ i ].mRecord->GetVisitor ( visitorTypeID );
+			if ( visitor ) {
+				visitors [ total++ ] = visitor;
 			}
 		}
 		
-		adapterArray.Init ( total + 1 );
-		adapterArray [ 0 ] = visitorIt->second;
+		visitorArray.Init ( total + 1 );
 		for ( ZLIndex i = 0; i < total; ++i ) {
-			adapterArray [ i + 1 ] = adapters [ i ];
+			visitorArray [ i ] = visitors [ i ];
 		}
+		visitorArray [ total ] = visitorIt->second;
 	}
 }
 
@@ -68,29 +73,7 @@ void RTTIRecord::Complete () {
 }
 
 //----------------------------------------------------------------//
-void* RTTIRecord::GetVisitor ( ZLTypeID visitorTypeID ) {
-
-	if ( this->mVisitors.contains ( visitorTypeID )) {
-		return this->mVisitors [ visitorTypeID ];
-	}
-	return NULL;
-}
-
-//----------------------------------------------------------------//
-ZLLeanArray < void* >& RTTIRecord::GetVisitors ( ZLTypeID visitorTypeID  ) {
-
-	assert ( this->mIsComplete );
-
-	static ZLLeanArray < void* > staticDummy;
-	
-	if ( this->mVisitors.contains ( visitorTypeID )) {
-		return this->mVisitorArrays [ visitorTypeID ];
-	}
-	return staticDummy;
-}
-
-//----------------------------------------------------------------//
-void RTTIRecord::Inherit ( RTTIRecord& record, void* ptr, ptrdiff_t offset ) {
+void RTTIRecord::GatherSupers ( RTTIRecord& record, void* ptr, ptrdiff_t offset, ZLSize depth ) {
 	
 	// TODO: maybe sort type set for binary search? or by frequency of use?
 	
@@ -98,19 +81,19 @@ void RTTIRecord::Inherit ( RTTIRecord& record, void* ptr, ptrdiff_t offset ) {
 	if ( this != &record ) {
 	
 		// bail if already inherited
-		for ( u32 i = 0; i < this->mTypeCount; ++i ) {
-			if ( this->mTypeSet [ i ] == &record ) {
+		for ( ZLIndex i = 0; i < this->mSupers.size (); ++i ) {
+			if ( this->mSupers [ i ].mRecord == &record ) {
 				return; // TODO: warn about this
 			}
 		}
 		
-		// can only handle MAX super classes
-		assert ( this->mTypeCount < MAX );
+		RTTISuper super;
 		
+		super.mRecord = &record; // type info for superclass
+		super.mJump = offset; // offset to convert pointer to superclass
+		super.mDepth = depth;
 		
-		this->mTypeSet [ this->mTypeCount ] = &record; // type info for superclass
-		this->mJumpTable [ this->mTypeCount ] = offset; // offset to convert pointer to superclass
-		this->mTypeCount++;
+		this->mSupers.push_back ( super );
 	}
 	
 	// follow the links and inherit them
@@ -124,8 +107,25 @@ void RTTIRecord::Inherit ( RTTIRecord& record, void* ptr, ptrdiff_t offset ) {
 		// walk up the class hierarchy
 		void* nextPtr = ( void* )(( ptrdiff_t )ptr + jump );
 		
-		this->Inherit ( nextRecord, nextPtr, offset + jump );
+		this->GatherSupers ( nextRecord, nextPtr, offset + jump, depth + 1 );
 	}
+}
+
+//----------------------------------------------------------------//
+const void* RTTIRecord::GetVisitor ( ZLTypeID visitorTypeID ) const {
+
+	STLMap < ZLTypeID, const void* >::const_iterator visitorIt = this->mVisitors.find ( visitorTypeID );
+	return ( visitorIt != this->mVisitors.end ()) ? visitorIt->second : NULL;
+}
+
+//----------------------------------------------------------------//
+const ZLLeanArray < const void* >& RTTIRecord::GetVisitors ( ZLTypeID visitorTypeID  ) const {
+
+	assert ( this->mIsComplete );
+
+	static ZLLeanArray < const void* > staticDummy;
+	STLMap < ZLTypeID, ZLLeanArray < const void* > >::const_iterator visitorArrayIt = this->mVisitorArrays.find ( visitorTypeID );
+	return ( visitorArrayIt != this->mVisitorArrays.end ()) ? visitorArrayIt->second : staticDummy;
 }
 
 //----------------------------------------------------------------//
@@ -136,8 +136,9 @@ bool RTTIRecord::IsType ( ZLTypeID typeID, void* ptr ) {
 	this->AffirmCasts ( ptr );
 
 	// TODO: binary search?
-	for ( u32 i = 0; i < this->mTypeCount; ++i ) {
-		if ( this->mTypeSet [ i ]->mTypeID == typeID ) return true;
+	ZLSize superCount = this->mSupers.size ();
+	for ( ZLIndex i = superCount; i > 0; --i ) {
+		if ( this->mSupers [ i - 1 ].mRecord->mTypeID == typeID ) return true;
 	}
 	return false;
 }
@@ -146,7 +147,6 @@ bool RTTIRecord::IsType ( ZLTypeID typeID, void* ptr ) {
 RTTIRecord::RTTIRecord ( ZLTypeID typeID ) :
 	mLinkCount ( 0 ),
 	mIsConstructed ( false ),
-	mTypeCount ( 0 ),
 	mIsComplete ( false ),
 	mTypeID ( typeID ) {
 }

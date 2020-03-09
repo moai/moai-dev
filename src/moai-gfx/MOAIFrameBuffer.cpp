@@ -16,7 +16,7 @@ MOAIFrameBuffer::MOAIFrameBuffer () :
 	mLandscape ( false ),
 	mNeedsClear ( true ) {
 
-	RTTI_SINGLE ( MOAIFrameBuffer, MOAILuaObject )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIFrameBuffer, MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

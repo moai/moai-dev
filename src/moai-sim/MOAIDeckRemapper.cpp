@@ -79,7 +79,7 @@ int MOAIDeckRemapper::_setRemap ( lua_State* L ) {
 MOAIDeckRemapper::MOAIDeckRemapper () :
 	mBase ( 0 ) {
 	
-	RTTI_BEGIN ( MOAIDeckRemapper )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIDeckRemapper )
 		RTTI_EXTEND ( MOAINode )
 		RTTI_EXTEND ( MOAIDeckProxy )
 	RTTI_END

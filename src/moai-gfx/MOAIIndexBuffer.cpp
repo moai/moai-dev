@@ -164,7 +164,7 @@ u32 MOAIIndexBuffer::GetIndex ( u32 element ) {
 MOAIIndexBuffer::MOAIIndexBuffer () :
 	mIndexSize ( 2 ) {
 	
-	RTTI_SINGLE ( MOAIIndexBuffer, MOAIGfxBuffer )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIIndexBuffer, MOAIGfxBuffer )
 }
 
 //----------------------------------------------------------------//

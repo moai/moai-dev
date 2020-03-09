@@ -178,7 +178,7 @@ void MOAIAnim::ClearLinks () {
 MOAIAnim::MOAIAnim () :
 	mLength ( 0.0f ) {
 	
-	RTTI_SINGLE ( MOAIAnim, MOAITimer )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIAnim, MOAITimer )
 }
 
 //----------------------------------------------------------------//

@@ -41,7 +41,7 @@ int MOAIImageTexture::_updateRegion ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIImageTexture::MOAIImageTexture () {
 
-	RTTI_SINGLE ( MOAIImageTexture, RTTIBase )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIImageTexture, RTTIBase )
 }
 
 //----------------------------------------------------------------//

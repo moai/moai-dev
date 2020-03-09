@@ -260,7 +260,7 @@ MOAIParticleEmitter::MOAIParticleEmitter () :
 	mEmission ( 0 ),
 	mParticleState ( 0 ) {
 	
-	RTTI_BEGIN ( MOAIParticleEmitter )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIParticleEmitter )
 		RTTI_EXTEND ( MOAITransform )
 		RTTI_EXTEND ( MOAIAction )
 	RTTI_END

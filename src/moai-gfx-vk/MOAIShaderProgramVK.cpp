@@ -81,7 +81,7 @@ void MOAIShaderProgramVK::LoadModule ( ModuleID moduleID, const void* shaderCode
 //----------------------------------------------------------------//
 MOAIShaderProgramVK::MOAIShaderProgramVK () {
 	
-	RTTI_BEGIN ( MOAIShaderProgramVK )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIShaderProgramVK )
 		RTTI_EXTEND ( MOAIGfxResourceVK )
 	RTTI_END
 	

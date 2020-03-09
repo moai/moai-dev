@@ -219,7 +219,7 @@ void MOAIGraphicsPropBase::LoadVertexTransform () {
 MOAIGraphicsPropBase::MOAIGraphicsPropBase () :
 	mBillboard ( BILLBOARD_NONE ) {
 	
-	RTTI_BEGIN ( MOAIGraphicsPropBase )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIGraphicsPropBase )
 		RTTI_EXTEND ( MOAIAbstractProp )
 		RTTI_EXTEND ( MOAIColor )
 		RTTI_EXTEND ( MOAIDrawable )

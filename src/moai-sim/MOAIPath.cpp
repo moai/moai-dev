@@ -157,7 +157,7 @@ MOAIPath::MOAIPath () :
 	mAngle ( DEFAULT_ANGLE ),
 	mLength ( 0.0f ) {
 	
-	RTTI_SINGLE ( MOAIPath, MOAILuaObject )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIPath, MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

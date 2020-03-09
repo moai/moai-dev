@@ -420,7 +420,7 @@ void MOAILayoutFrame::Layout ( u32 axis ) {
 //----------------------------------------------------------------//
 MOAILayoutFrame::MOAILayoutFrame () {
 	
-	RTTI_BEGIN ( MOAILayoutFrame )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAILayoutFrame )
 		RTTI_EXTEND ( MOAITransform )
 	RTTI_END
 	

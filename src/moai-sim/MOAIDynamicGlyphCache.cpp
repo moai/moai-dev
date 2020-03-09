@@ -161,7 +161,7 @@ MOAIDynamicGlyphCache::MOAIDynamicGlyphCache () :
 	mColorFormat ( ZLColor::A_8 ),
 	mPadding ( -1.0f, -1.0f, 1.0f, 1.0f ) {
 	
-	RTTI_BEGIN ( MOAIDynamicGlyphCache )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIDynamicGlyphCache )
 		RTTI_EXTEND ( MOAIGlyphCache )
 	RTTI_END
 }

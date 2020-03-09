@@ -227,7 +227,7 @@ MOAIHttpTaskCurl::MOAIHttpTaskCurl () :
 	mHeaderList ( 0 ),
 	mStream ( 0 ) {
 
-	RTTI_SINGLE ( MOAIHttpTaskCurl, MOAIHttpTaskBase )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIHttpTaskCurl, MOAIHttpTaskBase )
 	
 	this->Reset ();
 }

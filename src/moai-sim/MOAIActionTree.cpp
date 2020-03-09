@@ -91,7 +91,7 @@ MOAIActionTree::MOAIActionTree () :
 	mProfilingEnabled ( false ),
 	mThreadInfoEnabled ( false ) {
 	
-	RTTI_SINGLE ( MOAIActionTree, MOAIAction )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIActionTree, MOAIAction )
 }
 
 //----------------------------------------------------------------//

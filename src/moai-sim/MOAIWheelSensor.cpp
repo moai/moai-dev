@@ -73,7 +73,7 @@ MOAIWheelSensor::MOAIWheelSensor () :
 	mValue ( 0 ),
 	mDelta ( 0 ) {
 	
-	RTTI_SINGLE ( MOAIWheelSensor, MOAISensor )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIWheelSensor, MOAISensor )
 
 }
 

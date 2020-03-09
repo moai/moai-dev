@@ -75,7 +75,7 @@ int MOAIDrawDeck::_setDrawCallback ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIDrawDeck::MOAIDrawDeck () {
 	
-	RTTI_BEGIN ( MOAIDrawDeck )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIDrawDeck )
 		RTTI_EXTEND ( MOAIStretchDeck )
 	RTTI_END
 	

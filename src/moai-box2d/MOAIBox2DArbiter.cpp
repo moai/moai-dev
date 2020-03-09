@@ -201,7 +201,7 @@ MOAIBox2DArbiter::MOAIBox2DArbiter ( ) :
 	mImpulse ( 0 ),
 	mWorld ( NULL ) {
 	
-	RTTI_BEGIN ( MOAIBox2DArbiter )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIBox2DArbiter )
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }
@@ -212,7 +212,7 @@ MOAIBox2DArbiter::MOAIBox2DArbiter ( const MOAIBox2DWorld& world ) :
 	mImpulse ( 0 ),
 	mWorld ( &world ) {
 	
-	RTTI_BEGIN ( MOAIBox2DArbiter )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIBox2DArbiter )
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }

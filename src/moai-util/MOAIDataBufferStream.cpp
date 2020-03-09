@@ -65,7 +65,7 @@ void MOAIDataBufferStream::Close () {
 //----------------------------------------------------------------//
 MOAIDataBufferStream::MOAIDataBufferStream () {
 	
-	RTTI_BEGIN ( MOAIDataBufferStream )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIDataBufferStream )
 		RTTI_EXTEND ( MOAIStream )
 	RTTI_END
 }

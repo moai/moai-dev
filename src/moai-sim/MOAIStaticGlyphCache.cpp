@@ -54,7 +54,7 @@ bool MOAIStaticGlyphCache::IsDynamic () {
 //----------------------------------------------------------------//
 MOAIStaticGlyphCache::MOAIStaticGlyphCache () {
 	
-	RTTI_BEGIN ( MOAIStaticGlyphCache )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIStaticGlyphCache )
 		RTTI_EXTEND ( MOAIGlyphCache )
 	RTTI_END
 }

@@ -174,7 +174,7 @@ int MOAIUntzSampleBuffer::_setRawData ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIUntzSampleBuffer::MOAIUntzSampleBuffer () : mBuffer(0) {
 
-	RTTI_SINGLE ( MOAIUntzSampleBuffer, MOAINode )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIUntzSampleBuffer, MOAINode )
 }
 
 //----------------------------------------------------------------//

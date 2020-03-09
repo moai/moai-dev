@@ -129,7 +129,7 @@ MOAIVideoTexture::MOAIVideoTexture () :
 	mFormat ( AR_PIXEL_FORMAT_INVALID ),
 	mUsePlane ( false ) {
 	
-	RTTI_BEGIN ( MOAIVideoTexture )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIVideoTexture )
 		RTTI_EXTEND ( MOAITextureBaseGL )
 	RTTI_END
 }

@@ -288,7 +288,7 @@ bool MOAITextureGL::CreateTextureFromImage ( ZLImage& srcImage ) {
 //----------------------------------------------------------------//
 MOAITextureGL::MOAITextureGL () {
 	
-	RTTI_BEGIN ( MOAITextureGL )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAITextureGL )
 		RTTI_EXTEND ( MOAITexture )
 		RTTI_EXTEND ( MOAIGfxResourceGL )
 	RTTI_END

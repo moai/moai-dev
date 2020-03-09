@@ -215,7 +215,7 @@ void MOAIBox2DJoint::Destroy () {
 MOAIBox2DJoint::MOAIBox2DJoint () :
 	mJoint ( 0 ) {
 	
-	RTTI_BEGIN ( MOAIBox2DJoint )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIBox2DJoint )
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }

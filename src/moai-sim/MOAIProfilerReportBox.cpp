@@ -628,7 +628,7 @@ MOAIProfilerReportBox::MOAIProfilerReportBox () :
 	mCursorY ( 0 ),
 	mOneOverTotalDurationMicroSec ( 0 ) {
 
-	RTTI_BEGIN ( MOAIProfilerReportBox )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIProfilerReportBox )
 		RTTI_EXTEND ( MOAIGraphicsProp )
 	RTTI_END
 	

@@ -15,6 +15,8 @@ class MOAITexture2D :
 	public virtual MOAITexture {
 protected:
 
+	MOAI_LUA_OBJECT_VISITOR_FRIEND
+
 	// for loading from file
 	STLString			mFilename;
 	u32					mTransform;

@@ -71,7 +71,7 @@ void MOAIGfxBuffer::Initialize ( ZLStream& stream, size_t size ) {
 //----------------------------------------------------------------//
 MOAIGfxBuffer::MOAIGfxBuffer () {
 	
-	RTTI_BEGIN ( MOAIGfxBuffer )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIGfxBuffer )
 		RTTI_EXTEND ( MOAIGfxResource )
 		RTTI_EXTEND ( MOAIStream )
 	RTTI_END

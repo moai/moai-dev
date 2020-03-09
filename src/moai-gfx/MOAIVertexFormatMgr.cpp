@@ -102,7 +102,7 @@ u32 MOAIVertexFormatMgr::GetVertexSize ( MOAIVertexFormatPresetEnum formatID ) {
 //----------------------------------------------------------------//
 MOAIVertexFormatMgr::MOAIVertexFormatMgr () {
 	
-	RTTI_SINGLE ( MOAIVertexFormatMgr, MOAILuaObject )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIVertexFormatMgr, MOAILuaObject )
 	
 	for ( u32 i = 0; i < MOAIVertexFormatPresetEnum::TOTAL_FORMATS; ++i ) {
 		this->mFormats [ i ] = 0;

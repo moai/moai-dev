@@ -64,7 +64,7 @@ MOAIPathStepper::MOAIPathStepper () :
 	mTotalSegments ( 0 ),
 	mLength ( 0.0f ) {
 	
-	RTTI_SINGLE ( MOAIPathStepper, MOAILuaObject )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIPathStepper, MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

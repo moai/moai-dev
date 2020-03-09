@@ -14,6 +14,8 @@ class MOAIDeckProxy :
 	public virtual MOAIDeck {
 protected:
 
+	MOAI_LUA_OBJECT_VISITOR_FRIEND
+
 	MOAILuaSharedPtr < MOAIDeck >	mDeck;
 	
 	//----------------------------------------------------------------//

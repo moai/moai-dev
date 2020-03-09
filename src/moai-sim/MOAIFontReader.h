@@ -69,6 +69,8 @@ class MOAIFontReader :
 	public MOAILuaObject {
 protected:
 
+	MOAI_LUA_OBJECT_VISITOR_FRIEND
+
 	static const u32 GLYPH_CODE_NULL = 0xffffffff;
 
 	ZLColorBlendFunc	mBlendMode;

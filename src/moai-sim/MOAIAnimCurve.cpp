@@ -178,7 +178,7 @@ MOAIAnimCurve::MOAIAnimCurve () :
 	mTime ( 0.0f ),
 	mWrapMode ( CLAMP ) {
 	
-	RTTI_SINGLE ( MOAIAnimCurve, MOAINode )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIAnimCurve, MOAINode )
 }
 
 //----------------------------------------------------------------//

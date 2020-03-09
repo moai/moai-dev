@@ -292,7 +292,7 @@ void MOAITextStyle::Init ( MOAITextStyleState& style ) {
 //----------------------------------------------------------------//
 MOAITextStyle::MOAITextStyle () {
 	
-	RTTI_BEGIN ( MOAITextStyle )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAITextStyle )
 		RTTI_EXTEND ( MOAINode )
 	RTTI_END
 }

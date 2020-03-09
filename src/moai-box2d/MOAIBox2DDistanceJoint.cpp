@@ -157,7 +157,7 @@ int MOAIBox2DDistanceJoint::_setLength ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIBox2DDistanceJoint::MOAIBox2DDistanceJoint () {
 	
-	RTTI_BEGIN ( MOAIBox2DDistanceJoint )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIBox2DDistanceJoint )
 		RTTI_EXTEND ( MOAIBox2DJoint )
 	RTTI_END
 }

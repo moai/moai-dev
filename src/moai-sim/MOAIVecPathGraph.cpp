@@ -184,7 +184,7 @@ u32 MOAIVecPathGraph::GetNodeCount () {
 //----------------------------------------------------------------//
 MOAIVecPathGraph::MOAIVecPathGraph () {
 	
-	RTTI_SINGLE ( MOAIVecPathGraph, MOAIPathGraph )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIVecPathGraph, MOAIPathGraph )
 }
 
 //----------------------------------------------------------------//

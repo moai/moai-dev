@@ -133,7 +133,7 @@ int MOAINotificationsIOS::_unregisterForRemoteNotifications ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAINotificationsIOS::MOAINotificationsIOS () {
 
-	RTTI_SINGLE ( MOAINotificationsIOS, MOAILuaObject )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAINotificationsIOS, MOAILuaObject )
 }
 
 //----------------------------------------------------------------//

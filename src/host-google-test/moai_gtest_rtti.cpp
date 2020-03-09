@@ -58,15 +58,15 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	virtual void Visit ( IVisit& self, int x, int y ) = 0;
+	virtual void Visit ( IVisit& self, int x, int y ) const = 0;
 };
 
 //----------------------------------------------------------------//
 void IVisit::VisitAll ( int x, int y ) {
 
-	ZLLeanArray < IVisitAdapter* >& visitorArray = this->GetVisitors < IVisitAdapter >();
-	for ( ZLIndex i = 0; i < visitorArray.Size (); ++i ) {
-		visitorArray [ i ]->Visit ( *this, x, y );
+	RTTIVisitor < IVisitAdapter > visitor = this->GetVisitor < IVisitAdapter >();
+	for ( ; visitor; ++visitor ) {
+		( *visitor ).Visit ( *this, x, y );
 	}
 }
 
@@ -79,7 +79,7 @@ class VisitAdapter :
 public:
 
 	//----------------------------------------------------------------//
-	virtual void Visit ( IVisit& self, int x, int y ) {
+	virtual void Visit ( IVisit& self, int x, int y ) const {
 		TYPE* cast = self.AsType < TYPE >();
 		assert ( cast );
 		cast->TYPE::IVisit_Visit ( x, y );

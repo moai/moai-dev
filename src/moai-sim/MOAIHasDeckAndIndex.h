@@ -17,6 +17,8 @@ class MOAIHasDeckAndIndex :
 	public virtual MOAIHasDeck {
 protected:
 	
+	MOAI_LUA_OBJECT_VISITOR_FRIEND
+	
 	ZLIndex		mIndex;
 	
 	//----------------------------------------------------------------//

@@ -13,7 +13,7 @@
 //----------------------------------------------------------------//
 MOAIGlyphCache::MOAIGlyphCache () {
 	
-	RTTI_BEGIN ( MOAIGlyphCache )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIGlyphCache )
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }

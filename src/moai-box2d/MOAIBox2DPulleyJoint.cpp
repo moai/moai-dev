@@ -140,7 +140,7 @@ int MOAIBox2DPulleyJoint::_getRatio ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIBox2DPulleyJoint::MOAIBox2DPulleyJoint () {
 	
-	RTTI_BEGIN ( MOAIBox2DPulleyJoint )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIBox2DPulleyJoint )
 		RTTI_EXTEND ( MOAIBox2DJoint )
 	RTTI_END
 }

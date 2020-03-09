@@ -13,7 +13,7 @@
 //----------------------------------------------------------------//
 MOAITextureVK::MOAITextureVK () {
 	
-	RTTI_BEGIN ( MOAITextureVK )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAITextureVK )
 		RTTI_EXTEND ( MOAITexture )
 		RTTI_EXTEND ( MOAIGfxResourceVK )
 	RTTI_END

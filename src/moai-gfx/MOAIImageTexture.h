@@ -14,6 +14,8 @@ class MOAIImageTexture :
 	public virtual MOAITexture {
 protected:
 
+	MOAI_LUA_OBJECT_VISITOR_FRIEND
+
 	ZLIntRect		mRegion;
 
 	//----------------------------------------------------------------//

@@ -82,7 +82,7 @@ MOAIPinTransform::MOAIPinTransform () :
 	mFront ( 1.0 ),
 	mWorldBounds ( ZLBounds::EMPTY ) {
 	
-	RTTI_SINGLE ( MOAIPinTransform, MOAITransform )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIPinTransform, MOAITransform )
 }
 
 //----------------------------------------------------------------//

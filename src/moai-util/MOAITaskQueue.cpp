@@ -39,7 +39,7 @@ void MOAITaskQueue::Main () {
 MOAITaskQueue::MOAITaskQueue () :
 	mIsRunning ( false ) {
 
-	RTTI_SINGLE ( MOAITaskQueue, MOAITaskQueue )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAITaskQueue, MOAITaskQueue )
 }
 
 //----------------------------------------------------------------//

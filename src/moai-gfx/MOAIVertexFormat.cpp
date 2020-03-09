@@ -464,7 +464,7 @@ MOAIVertexFormat::MOAIVertexFormat () :
 	mTotalAttributes ( 0 ),
 	mVertexSize ( 0 ) {
 	
-	RTTI_BEGIN ( MOAIVertexFormat )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIVertexFormat )
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 	

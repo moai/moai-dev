@@ -59,7 +59,7 @@ void MOAIPointerSensor::EnqueuePointerEvent ( ZLIndex deviceID, ZLIndex sensorID
 //----------------------------------------------------------------//
 MOAIPointerSensor::MOAIPointerSensor () {
 
-	RTTI_SINGLE ( MOAIPointerSensor, MOAISensor )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIPointerSensor, MOAISensor )
 }
 
 //----------------------------------------------------------------//

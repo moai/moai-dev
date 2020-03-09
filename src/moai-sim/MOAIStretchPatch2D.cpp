@@ -291,7 +291,7 @@ MOAIStretchPatch2D::MOAIStretchPatch2D () :
 	mRect ( ZLRect::EMPTY ),
 	mNeedsUpdate ( true ) {
 
-	RTTI_BEGIN ( MOAIStretchPatch2D )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIStretchPatch2D )
 		RTTI_EXTEND ( MOAIStretchDeck )
 		RTTI_EXTEND ( MOAIHasMaterialBatch )
 	RTTI_END

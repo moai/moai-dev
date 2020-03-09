@@ -15,7 +15,7 @@
 //----------------------------------------------------------------//
 MOAITexture2DVK::MOAITexture2DVK () {
 
-	RTTI_BEGIN ( MOAITexture2DVK )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAITexture2DVK )
 		RTTI_EXTEND ( MOAITexture2D )
 		RTTI_EXTEND ( MOAITextureVK )
 	RTTI_END

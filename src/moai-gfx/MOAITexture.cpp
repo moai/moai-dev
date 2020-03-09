@@ -17,7 +17,7 @@ MOAITexture::MOAITexture () :
 	mWrap ( MOAITextureWrapEnum::CLAMP ),
 	mTextureSize ( 0 ) {
 
-	RTTI_SINGLE ( MOAITexture, MOAIGfxResource )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAITexture, MOAIGfxResource )
 }
 
 //----------------------------------------------------------------//

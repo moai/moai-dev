@@ -247,7 +247,7 @@ MOAIBitmapFontReader::MOAIBitmapFontReader () :
 	mCurrentPageSize ( 0.0f ),
 	mCurrentGlyph ( 0 ) {
 	
-	RTTI_BEGIN ( MOAIBitmapFontReader )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIBitmapFontReader )
 		RTTI_EXTEND ( MOAIFontReader )
 	RTTI_END
 }

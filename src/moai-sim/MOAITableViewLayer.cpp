@@ -23,7 +23,7 @@
 //----------------------------------------------------------------//
 MOAITableViewLayer::MOAITableViewLayer () {
 	
-	RTTI_BEGIN ( MOAITableViewLayer )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAITableViewLayer )
 		RTTI_EXTEND ( MOAITableLayer )
 		RTTI_EXTEND ( MOAIAbstractViewLayer )
 	RTTI_END

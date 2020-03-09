@@ -48,6 +48,8 @@ public:
 
 protected:
 
+	MOAI_LUA_OBJECT_VISITOR_FRIEND
+
 	friend class MOAIGfxPipelineClerkGL;
 	friend class ZLGfxStateGPUCacheGL;
 	friend class MOAIVertexArray;

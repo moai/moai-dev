@@ -15,6 +15,8 @@ class MOAIGfxBuffer :
 	public virtual ZLCopyOnWrite {
 protected:
 
+	MOAI_LUA_OBJECT_VISITOR_FRIEND
+
 	//----------------------------------------------------------------//
 	static int			_copyFromStream				( lua_State* L );
 	static int			_reserve					( lua_State* L );

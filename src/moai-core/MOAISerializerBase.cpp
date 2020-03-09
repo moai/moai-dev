@@ -45,7 +45,7 @@ MOAISerializerBase::ObjID MOAISerializerBase::GetID ( MOAILuaState& state, int i
 //----------------------------------------------------------------//
 MOAISerializerBase::MOAISerializerBase () {
 	
-	RTTI_BEGIN ( MOAISerializerBase )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAISerializerBase )
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }

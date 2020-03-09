@@ -82,7 +82,7 @@ int MOAIHasDeck::_setDeck ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIHasDeck::MOAIHasDeck () {
 	
-//	RTTI_BEGIN ( MOAIHasDeck )
+//	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIHasDeck )
 //		RTTI_EXTEND ( MOAIPartitionHull )
 //	RTTI_END
 }

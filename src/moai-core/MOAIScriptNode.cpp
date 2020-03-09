@@ -78,7 +78,7 @@ int MOAIScriptNode::_setAttrName ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIScriptNode::MOAIScriptNode () {
 	
-	RTTI_SINGLE ( MOAIScriptNode, MOAINode )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIScriptNode, MOAINode )
 }
 
 //----------------------------------------------------------------//

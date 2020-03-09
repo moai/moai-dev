@@ -264,7 +264,7 @@ int MOAIBox2DMotorJoint::_getCorrectionFactor ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIBox2DMotorJoint::MOAIBox2DMotorJoint () {
 	
-	RTTI_BEGIN ( MOAIBox2DMotorJoint )
+	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIBox2DMotorJoint )
 		RTTI_EXTEND ( MOAIBox2DJoint )
 	RTTI_END
 }

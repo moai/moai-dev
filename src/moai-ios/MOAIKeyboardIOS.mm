@@ -194,7 +194,7 @@ void MOAIKeyboardIOS::Finish () {
 MOAIKeyboardIOS::MOAIKeyboardIOS () :
 	mTextField ( 0 ) {
 
-	RTTI_SINGLE ( MOAIKeyboardIOS, MOAIGlobalEventSource )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIKeyboardIOS, MOAIGlobalEventSource )
 }
 
 //----------------------------------------------------------------//
