@@ -31,23 +31,21 @@ MOAIVertexBufferGL::~MOAIVertexBufferGL () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIVertexBufferGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIVertexBuffer, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxBufferGL, MOAILuaObject_RegisterLuaClass ( composer, state ));
+void MOAIVertexBufferGL::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexBufferGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIVertexBuffer, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxBufferGL, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+void MOAIVertexBufferGL::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexBufferGL::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxBufferGL, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+void MOAIVertexBufferGL::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexBufferGL::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxBufferGL, MOAILuaObject_SerializeOut ( composer, state, serializer ));
+void MOAIVertexBufferGL::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
+	if ( history.DidVisit ( *this )) return;
 }

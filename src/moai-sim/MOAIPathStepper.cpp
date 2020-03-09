@@ -175,12 +175,14 @@ void MOAIPathStepper::Start ( MOAIPath& path, float stepSize ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIPathStepper::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIPathStepper::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIPathStepper::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIPathStepper::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getLength",			_getLength },

@@ -57,8 +57,8 @@ protected:
 	void			UpdateHull				( MOAIPartitionHull& hull );
 
 	//----------------------------------------------------------------//
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
 	virtual void	MOAIPartition_DrawDebugBack			();
 	virtual void	MOAIPartition_DrawDebugFront		();
 	virtual void	MOAIPartition_OnInsertHull			( MOAIPartitionHull& hull );

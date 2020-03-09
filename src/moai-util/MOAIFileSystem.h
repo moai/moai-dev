@@ -40,7 +40,7 @@ private:
 	static int		_stripPKZipTimestamps		( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 	

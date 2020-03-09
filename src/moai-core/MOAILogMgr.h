@@ -52,7 +52,7 @@ private:
 	static int		_setTypeCheckLuaParams		( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 	

@@ -503,7 +503,7 @@ void MOAIAppIOS::RemoveNotificationListeners () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAppIOS::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIAppIOS::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 
 	state.SetField ( -1, "DID_BECOME_ACTIVE",			( u32 )DID_BECOME_ACTIVE );
 	state.SetField ( -1, "DID_ENTER_BACKGROUND",		( u32 )DID_ENTER_BACKGROUND );

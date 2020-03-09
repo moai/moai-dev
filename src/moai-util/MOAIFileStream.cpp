@@ -66,9 +66,8 @@ MOAIFileStream::~MOAIFileStream () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIFileStream::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIStream, MOAILuaObject_RegisterLuaClass ( composer, state ));
+void MOAIFileStream::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "APPEND",				( u32 )ZLFileStream::APPEND );
 	state.SetField ( -1, "READ",				( u32 )ZLFileStream::READ );
@@ -79,9 +78,8 @@ void MOAIFileStream::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MO
 }
 
 //----------------------------------------------------------------//
-void MOAIFileStream::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIStream, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+void MOAIFileStream::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "close",				_close },

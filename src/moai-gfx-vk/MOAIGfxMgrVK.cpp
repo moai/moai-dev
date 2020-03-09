@@ -617,7 +617,8 @@ MOAIGfxMgrVK_VertexCacheVK& MOAIGfxMgrVK::MOAIGfxMgrVKComponents_GetVertexCacheV
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrVK::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIGfxMgrVK::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 //	state.SetField ( -1, "EVENT_RESIZE",	( u32 )EVENT_RESIZE );
 //	

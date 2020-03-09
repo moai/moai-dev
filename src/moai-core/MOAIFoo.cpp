@@ -63,8 +63,8 @@ MOAIFoo::~MOAIFoo () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIFoo::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
+void MOAIFoo::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	// call any initializers for base classes here:
 	// MOAI_CALL_SUPER_ONCE ( composer, MOAIFooBase, MOAILuaObject_RegisterLuaClass ( composer, state ));
@@ -82,8 +82,8 @@ void MOAIFoo::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaSt
 }
 
 //----------------------------------------------------------------//
-void MOAIFoo::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
+void MOAIFoo::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	// call any initializers for base classes here:
 	// MOAI_CALL_SUPER_ONCE ( composer, MOAIFooBase, MOAILuaObject_RegisterLuaFuncs ( composer, state ));

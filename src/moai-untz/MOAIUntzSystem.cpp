@@ -209,7 +209,8 @@ void MOAIUntzSystem::Suspend () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIUntzSystem::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIUntzSystem::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
 		//{ "getDeviceCount",			_getDeviceCount },
@@ -233,6 +234,7 @@ void MOAIUntzSystem::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MO
 }
 
 //----------------------------------------------------------------//
-void MOAIUntzSystem::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIUntzSystem::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
+	if ( history.DidVisit ( *this )) return;
 }

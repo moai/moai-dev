@@ -745,8 +745,8 @@ void MOAIParticlePexPlugin::Parse ( cc8* filename, MOAIParticlePexPlugin& plugin
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIParticlePexPlugin::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIParticlePlugin, MOAILuaObject_RegisterLuaClass ( composer, state ));
+void MOAIParticlePexPlugin::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	//UNUSED ( state );
 	luaL_Reg regTable [] = {
@@ -758,8 +758,8 @@ void MOAIParticlePexPlugin::MOAILuaObject_RegisterLuaClass ( MOAIComposer& compo
 }
 
 //----------------------------------------------------------------//
-void MOAIParticlePexPlugin::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIParticlePlugin, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+void MOAIParticlePexPlugin::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable[] = {
 		{ "getBlendMode",		_getBlendMode },

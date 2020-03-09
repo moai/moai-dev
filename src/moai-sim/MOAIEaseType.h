@@ -50,7 +50,7 @@ class MOAIEaseType :
 protected:
 
 	//----------------------------------------------------------------//
-	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
 	
 public:
 	

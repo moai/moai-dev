@@ -243,14 +243,14 @@ void MOAIVecPathGraph::SetNode ( ZLIndex id, const ZLVec3D& node ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIVecPathGraph::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIPathGraph, MOAILuaObject_RegisterLuaClass ( composer, state ));
+void MOAIVecPathGraph::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIVecPathGraph::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIPathGraph, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	
+void MOAIVecPathGraph::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
 	luaL_Reg regTable [] = {
 		{ "areNeighbors",			_areNeighbors },
 		{ "getNode",				_getNode },

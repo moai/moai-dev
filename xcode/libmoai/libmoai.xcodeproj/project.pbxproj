@@ -1149,6 +1149,7 @@
 		CD1D85E21E1F14480089FFAD /* ZLBounds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1D85E11E1F14480089FFAD /* ZLBounds.cpp */; };
 		CD1D85E31E1F14480089FFAD /* ZLBounds.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD1D85E11E1F14480089FFAD /* ZLBounds.cpp */; };
 		CD1D85EA1E1F36560089FFAD /* MOAIDeckProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD67B45E1B264C9C004298CF /* MOAIDeckProxy.cpp */; };
+		CD212E272416C6D7000FC3BD /* ZLRttiVisitorHistory.h in Headers */ = {isa = PBXBuildFile; fileRef = CD212E262416C6D7000FC3BD /* ZLRttiVisitorHistory.h */; };
 		CD21C20821CB91A000B3C66E /* MOAIAbstractChildTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD21C20421CB91A000B3C66E /* MOAIAbstractChildTransform.cpp */; };
 		CD21C20921CB91A100B3C66E /* MOAIAbstractChildTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD21C20421CB91A000B3C66E /* MOAIAbstractChildTransform.cpp */; };
 		CD21C20A21CB91A100B3C66E /* MOAIAbstractChildTransform.h in Headers */ = {isa = PBXBuildFile; fileRef = CD21C20521CB91A000B3C66E /* MOAIAbstractChildTransform.h */; };
@@ -2239,7 +2240,6 @@
 		CD4A966922A2045900F9E400 /* MOAIImageTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A966522A2045900F9E400 /* MOAIImageTexture.h */; };
 		CD4A966A22A2045900F9E400 /* MOAITexture2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4A966622A2045900F9E400 /* MOAITexture2D.cpp */; };
 		CD4A966B22A2045900F9E400 /* MOAITexture2D.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A966722A2045900F9E400 /* MOAITexture2D.h */; };
-		CD4A96A022A3DF3900F9E400 /* MOAIComposer.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4A969F22A3DF3900F9E400 /* MOAIComposer.h */; };
 		CD4BCF2A1E51F1C5002306C2 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD792FFC1E51D73400388A4B /* host.cpp */; };
 		CD4BCF2B1E51F1C5002306C2 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CD792FFD1E51D73400388A4B /* host.h */; };
 		CD4BCF2C1E51F1C5002306C2 /* MOAIHeadTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD792FFE1E51D73400388A4B /* MOAIHeadTransform.cpp */; };
@@ -5913,6 +5913,7 @@
 		CD1D85D61E1CDC590089FFAD /* MOAIOverlap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIOverlap.h; sourceTree = "<group>"; };
 		CD1D85DC1E1F06CA0089FFAD /* ZLBounds.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLBounds.h; sourceTree = "<group>"; };
 		CD1D85E11E1F14480089FFAD /* ZLBounds.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLBounds.cpp; sourceTree = "<group>"; };
+		CD212E262416C6D7000FC3BD /* ZLRttiVisitorHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLRttiVisitorHistory.h; sourceTree = "<group>"; };
 		CD218F8413A7FD6E008337E7 /* ls_sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ls_sqlite3.c; path = "../../3rdparty/luasql-2.2.0/src/ls_sqlite3.c"; sourceTree = SOURCE_ROOT; };
 		CD218F8513A7FD6E008337E7 /* luasql.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = luasql.c; path = "../../3rdparty/luasql-2.2.0/src/luasql.c"; sourceTree = SOURCE_ROOT; };
 		CD218F8613A7FD6E008337E7 /* luasql.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luasql.h; path = "../../3rdparty/luasql-2.2.0/src/luasql.h"; sourceTree = SOURCE_ROOT; };
@@ -6692,7 +6693,6 @@
 		CD4A966522A2045900F9E400 /* MOAIImageTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIImageTexture.h; path = "moai-gfx/MOAIImageTexture.h"; sourceTree = "<group>"; };
 		CD4A966622A2045900F9E400 /* MOAITexture2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAITexture2D.cpp; path = "moai-gfx/MOAITexture2D.cpp"; sourceTree = "<group>"; };
 		CD4A966722A2045900F9E400 /* MOAITexture2D.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAITexture2D.h; path = "moai-gfx/MOAITexture2D.h"; sourceTree = "<group>"; };
-		CD4A969F22A3DF3900F9E400 /* MOAIComposer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIComposer.h; sourceTree = "<group>"; };
 		CD4BCF0E1E51E9C4002306C2 /* pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pch.cpp; path = "moai-vr/pch.cpp"; sourceTree = "<group>"; };
 		CD4BCF0F1E51E9C4002306C2 /* pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pch.h; path = "moai-vr/pch.h"; sourceTree = "<group>"; };
 		CD4BCF121E51ECA7002306C2 /* MOAIVrMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIVrMgr.cpp; path = "moai-vr/MOAIVrMgr.cpp"; sourceTree = "<group>"; };
@@ -8990,6 +8990,7 @@
 				CDEEC77C1C7BCEDC0014CC3F /* ZLResult.h */,
 				CD6891C71DC93D510086B16B /* ZLRtti.cpp */,
 				CD6891C81DC93D510086B16B /* ZLRtti.h */,
+				CD212E262416C6D7000FC3BD /* ZLRttiVisitorHistory.h */,
 				CDCEFAF321CDD6F100A16B7F /* ZLType.cpp */,
 				89BE6920173974FD00DFE837 /* ZLType.h */,
 				89BE691E173974FD00DFE837 /* ZLTypedPtr.cpp */,
@@ -9064,7 +9065,6 @@
 				CDE93C191B34EF370051ADA1 /* moai_version.h */,
 				CDCDE224204F66C4005CD590 /* MOAICanary.cpp */,
 				CDCDE223204F66C4005CD590 /* MOAICanary.h */,
-				CD4A969F22A3DF3900F9E400 /* MOAIComposer.h */,
 				89BE6AD0173975E500DFE837 /* MOAIDeserializer.cpp */,
 				89BE6AD1173975E500DFE837 /* MOAIDeserializer.h */,
 				CD1845BE1A62751200FCCCE0 /* MOAIEnvironment.cpp */,
@@ -13774,7 +13774,6 @@
 				CD17124F22F446BA00381882 /* MOAILuaClass.h in Headers */,
 				89BE6D2B1739A42500DFE837 /* MOAIMutex_posix.h in Headers */,
 				CD1845C31A62751300FCCCE0 /* MOAIEnvironment.h in Headers */,
-				CD4A96A022A3DF3900F9E400 /* MOAIComposer.h in Headers */,
 				89BE6D2F1739A42500DFE837 /* MOAIMutex_win32.h in Headers */,
 				89BE6D331739A42500DFE837 /* MOAIParser.h in Headers */,
 				89BE6D371739A42500DFE837 /* MOAIStream.h in Headers */,
@@ -14592,6 +14591,7 @@
 				CDB718B31A44E7FE003DFFBA /* zl_usocket.h in Headers */,
 				CDC2A17A222C3DDD002E6CA4 /* ZLAttribute.h in Headers */,
 				89BE69FA173974FD00DFE837 /* ZLHexAdapter.h in Headers */,
+				CD212E272416C6D7000FC3BD /* ZLRttiVisitorHistory.h in Headers */,
 				89BE6A02173974FD00DFE837 /* ZLInterpolate.h in Headers */,
 				CDC2A1AA222C577D002E6CA4 /* ZLImage.h in Headers */,
 				89BE6A06173974FD00DFE837 /* ZLIntersect.h in Headers */,

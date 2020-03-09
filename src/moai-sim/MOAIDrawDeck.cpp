@@ -165,15 +165,13 @@ bool MOAIDrawDeck::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 granu
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawDeck::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIStretchDeck, MOAILuaObject_RegisterLuaClass ( composer, state ));
+void MOAIDrawDeck::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawDeck::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIStretchDeck, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+void MOAIDrawDeck::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "setBounds",				_setBounds },

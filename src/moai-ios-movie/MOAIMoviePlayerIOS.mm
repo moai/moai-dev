@@ -180,7 +180,7 @@ void MOAIMoviePlayerIOS::Reset () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIMoviePlayerIOS::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIMoviePlayerIOS::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	
 	luaL_Reg regTable[] = {
 		{ "init",			_init },

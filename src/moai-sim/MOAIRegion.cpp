@@ -1201,44 +1201,6 @@ void MOAIRegion::ReverseWinding ( const MOAIRegion& region ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIRegion::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( serializer );
-
-	ZLSize nPolys = ( int )lua_objlen ( state, -1 );
-	this->mPolygons.Init ( nPolys );
-	
-	for ( ZLIndex i = 0; i < nPolys; ++i ) {
-		ZLPolygon2D& poly = this->mPolygons [ i ];
-	
-		state.PushField ( -1, ( int )(( ZLSize )i + 1 )); // TODO: cast
-	
-		size_t len = 0;
-		const void* vertices = lua_tolstring ( state, -1, &len );
-		
-		size_t nVertices = len / sizeof ( ZLVec2D );
-		
-		poly.SetVertices (( ZLVec2D* )vertices, nVertices );
-		poly.Bless ();
-		
-		state.Pop ( 1 );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIRegion::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( serializer );
-	
-	ZLSize nPolys = this->mPolygons.Size ();
-	for ( ZLIndex i = 0; i < nPolys; ++i ) {
-		const ZLPolygon2D& poly = this->mPolygons [ i ];
-
-		state.Push (( u32 )i + 1 );
-		lua_pushlstring ( state, ( cc8* )poly.GetVertices (), poly.GetSize () * sizeof ( ZLVec2D ));
-		lua_settable ( state, -3 );
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIRegion::SetWinding ( u32 winding ) {
 
 	ZLSize nPolys = this->mPolygons.Size ();
@@ -1353,7 +1315,8 @@ void MOAIRegion::Transform ( const MOAIRegion& region, const ZLAffine2D& transfo
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIRegion::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIRegion::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "BOOLEAN_AND",					( u32 )BOOLEAN_AND );
 	state.SetField ( -1, "BOOLEAN_NOT",					( u32 )BOOLEAN_NOT );
@@ -1386,7 +1349,8 @@ void MOAIRegion::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILu
 }
 
 //----------------------------------------------------------------//
-void MOAIRegion::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIRegion::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "append",				_append },
@@ -1421,4 +1385,44 @@ void MOAIRegion::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILu
 	};
 
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIRegion::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	UNUSED ( serializer );
+	if ( history.DidVisit ( *this )) return;
+
+	ZLSize nPolys = ( int )lua_objlen ( state, -1 );
+	this->mPolygons.Init ( nPolys );
+	
+	for ( ZLIndex i = 0; i < nPolys; ++i ) {
+		ZLPolygon2D& poly = this->mPolygons [ i ];
+	
+		state.PushField ( -1, ( int )(( ZLSize )i + 1 )); // TODO: cast
+	
+		size_t len = 0;
+		const void* vertices = lua_tolstring ( state, -1, &len );
+		
+		size_t nVertices = len / sizeof ( ZLVec2D );
+		
+		poly.SetVertices (( ZLVec2D* )vertices, nVertices );
+		poly.Bless ();
+		
+		state.Pop ( 1 );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIRegion::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
+	UNUSED ( serializer );
+	if ( history.DidVisit ( *this )) return;
+	
+	ZLSize nPolys = this->mPolygons.Size ();
+	for ( ZLIndex i = 0; i < nPolys; ++i ) {
+		const ZLPolygon2D& poly = this->mPolygons [ i ];
+
+		state.Push (( u32 )i + 1 );
+		lua_pushlstring ( state, ( cc8* )poly.GetVertices (), poly.GetSize () * sizeof ( ZLVec2D ));
+		lua_settable ( state, -3 );
+	}
 }

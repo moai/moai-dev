@@ -295,10 +295,9 @@ bool MOAIColor::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 o
 }
 
 //----------------------------------------------------------------//
-void MOAIColor::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	
+void MOAIColor::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
 	state.SetField ( -1, "ATTR_R_COL",		AttrID_ATTR_R_COL ().ToRaw ());
 	state.SetField ( -1, "ATTR_G_COL",		AttrID_ATTR_G_COL ().ToRaw ());
 	state.SetField ( -1, "ATTR_B_COL",		AttrID_ATTR_B_COL ().ToRaw ());
@@ -318,10 +317,9 @@ void MOAIColor::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILua
 }
 
 //----------------------------------------------------------------//
-void MOAIColor::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	
+void MOAIColor::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
 	luaL_Reg regTable [] = {
 		{ "getColor",				_getColor },
 		{ "moveColor",				_moveColor },

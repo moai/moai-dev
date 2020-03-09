@@ -662,8 +662,8 @@ void MOAIDataBuffer::Unlock () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDataBuffer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
+void MOAIDataBuffer::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "NO_INFLATE",		( u32 )NO_INFLATE );
 	state.SetField ( -1, "FORCE_INFLATE",	( u32 )FORCE_INFLATE );
@@ -684,8 +684,8 @@ void MOAIDataBuffer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MO
 }
 
 //----------------------------------------------------------------//
-void MOAIDataBuffer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
+void MOAIDataBuffer::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "base64Decode",	_base64Decode },

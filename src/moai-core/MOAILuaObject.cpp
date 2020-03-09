@@ -2,7 +2,6 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-core/MOAIComposer.h>
 #include <moai-core/MOAIDeserializer.h>
 #include <moai-core/MOAILua.h>
 #include <moai-core/MOAISerializer.h>
@@ -564,36 +563,44 @@ bool MOAILuaObject::PushRefTable ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAILuaObject::RegisterLuaClass ( MOAILuaState& state ) {
 	
-	MOAIComposer composer;
-	MOAI_CALL_SUPER_ONCE ( composer, MOAILuaObject, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	this->MOAILuaObject_RegisterLuaClass ( composer, state );
+	RTTIVisitorHistory history;
+	RTTIVisitor < MOAIAbstractLuaObjectVisitor > visitor = this->GetVisitor < MOAIAbstractLuaObjectVisitor >();
+	for ( ; visitor; ++visitor ) {
+		( *visitor ).RegisterLuaClass ( *this, history, state );
+		assert ( history.CountVisits () == ( visitor.GetCount () + 1 ));
+	}
 }
 
 //----------------------------------------------------------------//
 void MOAILuaObject::RegisterLuaFuncs ( MOAILuaState& state ) {
-
-	MOAIComposer composer;
-	MOAI_CALL_SUPER_ONCE ( composer, MOAILuaObject, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	this->MOAILuaObject_RegisterLuaFuncs ( composer, state );
+	
+	RTTIVisitorHistory history;
+	RTTIVisitor < MOAIAbstractLuaObjectVisitor > visitor = this->GetVisitor < MOAIAbstractLuaObjectVisitor >();
+	for ( ; visitor; ++visitor ) {
+		( *visitor ).RegisterLuaFuncs ( *this, history, state );
+		assert ( history.CountVisits () == ( visitor.GetCount () + 1 ));
+	}
 }
 
 //----------------------------------------------------------------//
 void MOAILuaObject::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 
-	MOAIComposer composer;
+	RTTIVisitorHistory history;
 	RTTIVisitor < MOAIAbstractLuaObjectVisitor > visitor = this->GetVisitor < MOAIAbstractLuaObjectVisitor >();
 	for ( ; visitor; ++visitor ) {
-		( *visitor ).SerializeIn ( *this, composer, state, serializer );
+		( *visitor ).SerializeIn ( *this, history, state, serializer );
+		assert ( history.CountVisits () == ( visitor.GetCount () + 1 ));
 	}
 }
 
 //----------------------------------------------------------------//
 void MOAILuaObject::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
-	MOAIComposer composer;
+	RTTIVisitorHistory history;
 	RTTIVisitor < MOAIAbstractLuaObjectVisitor > visitor = this->GetVisitor < MOAIAbstractLuaObjectVisitor >();
 	for ( ; visitor; ++visitor ) {
-		( *visitor ).SerializeOut ( *this, composer, state, serializer );
+		( *visitor ).SerializeOut ( *this, history, state, serializer );
+		assert ( history.CountVisits () == ( visitor.GetCount () + 1 ));
 	}
 }
 
@@ -663,14 +670,14 @@ void MOAILuaObject::Unbind ( MOAILuaObject* object, MOAILuaWeakRef& userdata ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAILuaObject::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
+void MOAILuaObject::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAILuaObject::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
+void MOAILuaObject::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getClass",				_getClass },
@@ -692,17 +699,17 @@ void MOAILuaObject::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOA
 }
 
 //----------------------------------------------------------------//
-void MOAILuaObject::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( composer );
+void MOAILuaObject::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAILuaObject::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( composer );
+void MOAILuaObject::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//

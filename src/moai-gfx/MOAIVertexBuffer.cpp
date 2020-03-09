@@ -138,11 +138,14 @@ void MOAIVertexBuffer::PrintVertices ( MOAIVertexFormat& vertexFormat ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIVertexBuffer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIVertexBuffer::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	UNUSED ( state );
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexBuffer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIVertexBuffer::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
 		{ "computeBounds",			_computeBounds },

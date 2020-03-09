@@ -90,16 +90,14 @@ void MOAIParticleDistanceEmitter::MOAIAction_Update ( double step ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleDistanceEmitter::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIParticleEmitter, MOAILuaObject_RegisterLuaClass ( composer, state ));
+void MOAIParticleDistanceEmitter::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleDistanceEmitter::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIParticleEmitter, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	
+void MOAIParticleDistanceEmitter::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
 	luaL_Reg regTable [] = {
 		{ "reset",					_reset },
 		{ "setDistance",			_setDistance },

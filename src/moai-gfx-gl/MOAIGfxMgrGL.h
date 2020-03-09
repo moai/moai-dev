@@ -78,7 +78,7 @@ protected:
 	MOAIGfxMgrGL_RenderTreeGL&			MOAIGfxMgrGLComponents_GetRenderTreeGL			();
 	MOAIGfxMgrGL_ResourceClerkGL&		MOAIGfxMgrGLComponents_GetResourceClerkGL		();
 	MOAIGfxMgrGL_VertexCacheGL&			MOAIGfxMgrGLComponents_GetVertexCacheGL			();
-	void								MOAILuaObject_RegisterLuaClass					( MOAIComposer& composer, MOAILuaState& state );
+	void								MOAILuaObject_RegisterLuaClass					( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 

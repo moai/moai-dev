@@ -1518,8 +1518,9 @@ MOAIDraw::~MOAIDraw () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDraw::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIDraw::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
+	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "PROJ_MATRIX",					( u32 )MOAIGfxMgr::VIEW_TO_CLIP_MTX );
 	state.SetField ( -1, "UV_MATRIX",					( u32 )MOAIGfxMgr::UV_TO_MODEL_MTX );

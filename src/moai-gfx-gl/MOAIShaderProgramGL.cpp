@@ -306,15 +306,13 @@ bool MOAIShaderProgramGL::MOAIGfxResourceGL_OnGPUUpdate () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderProgramGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxResourceGL, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasUniformComposer, MOAILuaObject_RegisterLuaClass ( composer, state ));
+void MOAIShaderProgramGL::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderProgramGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxResourceGL, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasUniformComposer, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+void MOAIShaderProgramGL::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "declareUniform",				_declareUniform },

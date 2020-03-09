@@ -127,6 +127,7 @@ private:
 		
 		RTTILinkBase& link = RTTILink < TYPE, SUPER_TYPE >::Get ();
 		link.mTarget = &RTTIRecord::Get < SUPER_TYPE >();
+		assert ( !( this->mTypeID == link.mTarget->mTypeID ));
 		this->mLinks [ this->mLinkCount++ ] = &link;
 	}
 
@@ -168,8 +169,9 @@ private:
 	friend class RTTIBase;
 
 	const ZLLeanArray < const ABSTRACT_VISITOR_TYPE* >& mVisitors;
-	int mIndex;
-	int mStep;
+	int 		mIndex;
+	int 		mStep;
+	ZLSize 		mCount;
 
 public:
 
@@ -181,6 +183,7 @@ public:
 	//----------------------------------------------------------------//
 	RTTIVisitor& operator ++ () {
 		this->mIndex += this->mStep;
+		this->mCount++;
 		return *this;
 	}
 	
@@ -190,9 +193,15 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
+	ZLSize GetCount () const {
+		return this->mCount;
+	}
+	
+	//----------------------------------------------------------------//
 	RTTIVisitor ( const ZLLeanArray < const ABSTRACT_VISITOR_TYPE* >& visitors, bool forward = true ) :
 		mVisitors ( visitors ),
-		mStep ( forward ? 1 : -1 ) {
+		mStep ( forward ? 1 : -1 ),
+		mCount ( 0 ) {
 		this->mIndex = forward ? 0 : ( int )visitors.Size () - 1;
 	}
 };

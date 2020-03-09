@@ -1072,20 +1072,18 @@ void MOAIBox2DBody::MOAIAbstractBaseTransform_BuildLocalToWorldMtx ( ZLAffine3D&
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DBody::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIBox2DBody::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractBaseTransform, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	
 	state.SetField ( -1, "DYNAMIC",		( u32 )b2_dynamicBody );
 	state.SetField ( -1, "KINEMATIC",	( u32 )b2_kinematicBody );
 	state.SetField ( -1, "STATIC",		( u32 )b2_staticBody );
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DBody::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractBaseTransform, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	
+void MOAIBox2DBody::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
 	luaL_Reg regTable [] = {
 		{ "addChain",				_addChain },
 		{ "addCircle",				_addCircle },

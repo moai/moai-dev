@@ -325,14 +325,15 @@ bool MOAITexture2D::MOAIGfxResource_FinishLoading () {
 }
 
 //----------------------------------------------------------------//
-void MOAITexture2D::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAITexture, MOAILuaObject_RegisterLuaClass ( composer, state ));
+void MOAITexture2D::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	UNUSED ( state );
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAITexture2D::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAITexture, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	
+void MOAITexture2D::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
 	luaL_Reg regTable [] = {
 		{ "load",					_load },
 		{ NULL, NULL }
@@ -342,7 +343,8 @@ void MOAITexture2D::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOA
 }
 
 //----------------------------------------------------------------//
-void MOAITexture2D::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAITexture2D::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	if ( history.DidVisit ( *this )) return;
 	
 	STLString path = state.GetFieldValue ( -1, "mPath", "" );
 	
@@ -352,7 +354,8 @@ void MOAITexture2D::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaS
 }
 
 //----------------------------------------------------------------//
-void MOAITexture2D::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAITexture2D::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
+	if ( history.DidVisit ( *this )) return;
 	
 	STLString path = ZLFileSys::GetRelativePath ( this->mFilename );
 	state.SetField ( -1, "mPath", path.str ());

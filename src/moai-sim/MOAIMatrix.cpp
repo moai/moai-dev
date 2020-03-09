@@ -85,18 +85,16 @@ void MOAIMatrix::MOAIAbstractBaseTransform_BuildLocalToWorldMtx ( ZLAffine3D& lo
 }
 
 //----------------------------------------------------------------//
-void MOAIMatrix::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractChildTransform, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	
+void MOAIMatrix::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
 	state.SetField ( -1, "ATTR_MATRIX",	AttrID::Pack ( ATTR_MATRIX ).ToRaw ());
 }
 
 //----------------------------------------------------------------//
-void MOAIMatrix::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractChildTransform, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	
+void MOAIMatrix::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
 	luaL_Reg regTable [] = {
 		{ "getMatrix",			_getMatrix },
 		{ "invert",				_invert },
@@ -108,15 +106,17 @@ void MOAIMatrix::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILu
 }
 
 //----------------------------------------------------------------//
-void MOAIMatrix::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIMatrix::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIMatrix::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIMatrix::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//

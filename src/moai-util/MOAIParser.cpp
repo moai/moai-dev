@@ -215,14 +215,14 @@ void MOAIParser::Traverse ( ZLSyntaxNode* node ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIParser::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
+void MOAIParser::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAIParser::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
+void MOAIParser::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable[] = {
 		{ "loadFile",			_loadFile },

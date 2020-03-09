@@ -80,7 +80,7 @@ float MOAIGridPathGraph::ComputeHeuristic ( MOAIGridPathGraphParams& params, con
 //----------------------------------------------------------------//
 MOAIGridPathGraph::MOAIGridPathGraph () {
 	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIGridPathGraph, MOAIGridPathGraph )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIGridPathGraph, MOAIPathGraph )
 }
 
 //----------------------------------------------------------------//
@@ -252,8 +252,8 @@ void MOAIGridPathGraph::SetGrid ( MOAIGrid* grid ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGridPathGraph::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIPathGraph, MOAILuaObject_RegisterLuaClass ( composer, state ));
+void MOAIGridPathGraph::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "MANHATTAN_DISTANCE", ( u32 )MANHATTAN_DISTANCE );
 	state.SetField ( -1, "DIAGONAL_DISTANCE", ( u32 )DIAGONAL_DISTANCE );
@@ -263,9 +263,9 @@ void MOAIGridPathGraph::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer,
 }
 
 //----------------------------------------------------------------//
-void MOAIGridPathGraph::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIPathGraph, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	
+void MOAIGridPathGraph::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
 	luaL_Reg regTable [] = {
 		{ "setGrid",			_setGrid },
 		{ NULL, NULL }

@@ -329,13 +329,15 @@ void MOAITextStyle::SetShader ( MOAIShader* shader ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITextStyle::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAITextStyle::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAITextStyle::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAITextStyle::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
+	if ( history.DidVisit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
 		{ "getColor",				_getColor },
@@ -355,13 +357,15 @@ void MOAITextStyle::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOA
 }
 
 //----------------------------------------------------------------//
-void MOAITextStyle::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAITextStyle::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAITextStyle::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAITextStyle::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
+	if ( history.DidVisit ( *this )) return;
 }

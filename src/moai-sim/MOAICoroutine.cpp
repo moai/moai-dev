@@ -338,9 +338,8 @@ void MOAICoroutine::MOAIAction_Update ( double step ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICoroutine::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaClass ( composer, state ));
+void MOAICoroutine::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "blockOnAction",		_blockOnAction },
@@ -352,9 +351,8 @@ void MOAICoroutine::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOA
 }
 
 //----------------------------------------------------------------//
-void MOAICoroutine::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+void MOAICoroutine::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getHistogram",			_getHistogram },

@@ -42,11 +42,11 @@ bool MOAIGfxResourceVK::MOAIGfxResource_ScheduleForGPUUpdate () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceVK::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxResource, MOAILuaObject_RegisterLuaClass ( composer, state ));
+void MOAIGfxResourceVK::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceVK::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGfxResource, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+void MOAIGfxResourceVK::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 }

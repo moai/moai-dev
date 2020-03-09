@@ -17,7 +17,7 @@
 //----------------------------------------------------------------//
 MOAIPathGraph::MOAIPathGraph () {
 
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIPathGraph, MOAIPathGraph )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIPathGraph, MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
@@ -29,11 +29,13 @@ MOAIPathGraph::~MOAIPathGraph () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIPathGraph::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIPathGraph::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIPathGraph::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIPathGraph::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
+	if ( history.DidVisit ( *this )) return;
 }

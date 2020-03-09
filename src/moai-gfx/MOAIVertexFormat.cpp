@@ -814,7 +814,8 @@ void MOAIVertexFormat::WriteUV ( ZLStream& stream, ZLIndex idx, float x, float y
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIVertexFormat::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIVertexFormat::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 	
 	state.SetField ( -1, "GL_BYTE",					( u32 )MOAIGfxTypeEnum::BYTE );
 	state.SetField ( -1, "GL_FLOAT",				( u32 )MOAIGfxTypeEnum::FLOAT );
@@ -832,7 +833,8 @@ void MOAIVertexFormat::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, 
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexFormat::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIVertexFormat::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "clear",					_clear },
@@ -852,8 +854,9 @@ void MOAIVertexFormat::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, 
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexFormat::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIVertexFormat::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
+	if ( history.DidVisit ( *this )) return;
 
 	this->mTotalAttributes		= state.GetFieldValue < cc8*, u32 >( -1, "mTotalAttributes", 0 );
 	this->mVertexSize			= state.GetFieldValue < cc8*, u32 >( -1, "mVertexSize", 0 );
@@ -897,8 +900,9 @@ void MOAIVertexFormat::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAIL
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexFormat::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIVertexFormat::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
+	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "mTotalAttributes", MOAILuaSize ( this->mTotalAttributes ));
 	state.SetField ( -1, "mVertexSize", MOAILuaSize ( this->mVertexSize ));

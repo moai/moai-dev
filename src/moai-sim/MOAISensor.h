@@ -16,6 +16,8 @@ class MOAISensor :
 	public MOAILuaObject {
 protected:
 
+	MOAI_LUA_OBJECT_VISITOR_FRIEND
+
 	u32			mType;
 	STLString	mName;
 	double		mTimestamp;
@@ -26,8 +28,8 @@ protected:
 	static int		_getTimestamp		( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs	( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass	( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs	( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 

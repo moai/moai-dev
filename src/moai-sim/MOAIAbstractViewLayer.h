@@ -46,8 +46,8 @@ protected:
 	virtual void			MOAIAbstractViewLayer_Draw			() = 0;
 	void					MOAIDrawable_Draw					( int subPrimID );
 	void					MOAIDrawable_DrawDebug				( int subPrimID );
-	void					MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void					MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 

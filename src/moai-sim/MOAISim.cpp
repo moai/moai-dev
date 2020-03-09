@@ -1058,8 +1058,8 @@ void MOAISim::Update () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAISim::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGlobalEventSource, MOAILuaObject_RegisterLuaClass ( composer, state ));
+void MOAISim::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "EVENT_FINALIZE",	( u32 )EVENT_FINALIZE );
 	state.SetField ( -1, "EVENT_PAUSE",		( u32 )EVENT_PAUSE );
@@ -1129,8 +1129,8 @@ void MOAISim::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaSt
 }
 
 //----------------------------------------------------------------//
-void MOAISim::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGlobalEventSource, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+void MOAISim::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//

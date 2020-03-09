@@ -1119,7 +1119,8 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIParticleScript::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIParticleScript::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "PARTICLE_X",			Pack64 ( MOAIParticle::PARTICLE_X,		PARAM_TYPE_PARTICLE_REG ));
 	state.SetField ( -1, "PARTICLE_Y",			Pack64 ( MOAIParticle::PARTICLE_Y,		PARAM_TYPE_PARTICLE_REG ));
@@ -1153,7 +1154,8 @@ void MOAIParticleScript::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleScript::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIParticleScript::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
 		{ "abs",				_abs },

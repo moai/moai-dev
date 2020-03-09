@@ -20,6 +20,8 @@ class MOAIAbstractMaterialBatchInterface :
 	public virtual MOAIAbstractMaterialInterface {
 protected:
 	
+	MOAI_LUA_OBJECT_VISITOR_FRIEND
+	
 	//----------------------------------------------------------------//
 	static int			_affirmMaterial				( lua_State* L );
 	static int			_getIndexBatchSize			( lua_State* L );
@@ -34,8 +36,8 @@ protected:
 	virtual MOAIMaterialBatch*		MOAIAbstractMaterialBatchInterface_GetMaterialBatch			() = 0;
 	
 	//----------------------------------------------------------------//
-	void							MOAILuaObject_RegisterLuaClass					( MOAIComposer& composer, MOAILuaState& state );
-	void							MOAILuaObject_RegisterLuaFuncs					( MOAIComposer& composer, MOAILuaState& state );
+	void							MOAILuaObject_RegisterLuaClass					( RTTIVisitorHistory& history, MOAILuaState& state );
+	void							MOAILuaObject_RegisterLuaFuncs					( RTTIVisitorHistory& history, MOAILuaState& state );
 	MOAIAbstractMaterial&			MOAIAbstractMaterialInterface_AffirmMaterial	();
 	MOAIAbstractMaterial*			MOAIAbstractMaterialInterface_GetMaterial		();
 	

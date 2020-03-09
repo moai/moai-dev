@@ -39,8 +39,8 @@ private:
 	int				GetIndex(const char *key);
 	
 	//----------------------------------------------------------------//
-	void			MOAILuaObject_RegisterLuaClass	( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs	( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass	( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs	( RTTIVisitorHistory& history, MOAILuaState& state );
 	
 	//----------------------------------------------------------------//
 	inline int readInt4(int offset) {

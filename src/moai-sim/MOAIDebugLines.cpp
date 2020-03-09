@@ -222,7 +222,8 @@ void MOAIDebugLinesMgr::SetStyle ( u32 styleID, float size, u32 color ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDebugLinesMgr::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIDebugLinesMgr::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable[] = {
 		{ "setStyle",			_setStyle },

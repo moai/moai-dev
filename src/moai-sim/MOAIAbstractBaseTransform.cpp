@@ -325,10 +325,9 @@ MOAIAbstractBaseTransform::~MOAIAbstractBaseTransform () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAbstractBaseTransform::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	
+void MOAIAbstractBaseTransform::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
 	state.SetField ( -1, "ATTR_WORLD_X_LOC",	AttrID::Pack ( ATTR_WORLD_X_LOC ).ToRaw ());
 	state.SetField ( -1, "ATTR_WORLD_Y_LOC",	AttrID::Pack ( ATTR_WORLD_Y_LOC ).ToRaw ());
 	state.SetField ( -1, "ATTR_WORLD_Z_LOC",	AttrID::Pack ( ATTR_WORLD_Z_LOC ).ToRaw ());
@@ -340,10 +339,9 @@ void MOAIAbstractBaseTransform::MOAILuaObject_RegisterLuaClass ( MOAIComposer& c
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractBaseTransform::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	
+void MOAIAbstractBaseTransform::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
 	luaL_Reg regTable [] = {
 		{ "getWorldDir",		_getWorldDir },
 		{ "getWorldLoc",		_getWorldLoc },

@@ -1127,10 +1127,9 @@ bool MOAITransform::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u
 }
 
 //----------------------------------------------------------------//
-void MOAITransform::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractChildTransform, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	
+void MOAITransform::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
 	state.SetField ( -1, "ATTR_X_PIV",			AttrID::Pack ( ATTR_X_PIV ).ToRaw ());
 	state.SetField ( -1, "ATTR_Y_PIV",			AttrID::Pack ( ATTR_Y_PIV ).ToRaw ());
 	state.SetField ( -1, "ATTR_Z_PIV",			AttrID::Pack ( ATTR_Z_PIV ).ToRaw ());
@@ -1148,10 +1147,9 @@ void MOAITransform::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOA
 }
 
 //----------------------------------------------------------------//
-void MOAITransform::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAbstractChildTransform, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	
+void MOAITransform::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
 	luaL_Reg regTable [] = {
 		{ "addLoc",				_addLoc },
 		{ "addPiv",				_addPiv },
@@ -1185,8 +1183,9 @@ void MOAITransform::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOA
 }
 
 //----------------------------------------------------------------//
-void MOAITransform::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAITransform::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
+	if ( history.DidVisit ( *this )) return;
 	
 	this->mPiv.mX		= state.GetFieldValue < cc8*, float >( -1, "mPiv.mX", 0.0f );
 	this->mPiv.mY		= state.GetFieldValue < cc8*, float >( -1, "mPiv.mY", 0.0f );
@@ -1201,8 +1200,9 @@ void MOAITransform::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaS
 }
 
 //----------------------------------------------------------------//
-void MOAITransform::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAITransform::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
+	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "mPiv.mX", this->mPiv.mX );
 	state.SetField ( -1, "mPiv.mY", this->mPiv.mY );

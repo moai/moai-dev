@@ -25,6 +25,8 @@ class MOAIHttpTaskBase :
 	public virtual MOAILuaObject {
 protected:
 
+	MOAI_LUA_OBJECT_VISITOR_FRIEND
+
 	typedef STLMap < STLString, STLString >::iterator HeaderMapIt;
 	typedef STLMap<STLString, STLString> HeaderMap;
 
@@ -76,8 +78,8 @@ protected:
 					MOAIHttpTaskBase	( const MOAIHttpTaskBase& task );
 
 	//----------------------------------------------------------------//
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 	

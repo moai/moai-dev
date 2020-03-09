@@ -208,19 +208,17 @@ MOAIParticleForce::~MOAIParticleForce () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIParticleForce::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIParticleForce::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
-	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	
 	state.SetField ( -1, "FORCE", ( u32 )FORCE );
 	state.SetField ( -1, "GRAVITY", ( u32 )GRAVITY );
 	state.SetField ( -1, "OFFSET", ( u32 )OFFSET );
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleForce::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+void MOAIParticleForce::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "initAttractor",		_initAttractor },

@@ -400,17 +400,15 @@ MOAIUntzSound::~MOAIUntzSound () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIUntzSound::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaClass ( composer, state ));
+void MOAIUntzSound::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "ATTR_VOLUME", AttrID::Pack ( ATTR_VOLUME ).ToRaw ());
 }
 
 //----------------------------------------------------------------//
-void MOAIUntzSound::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+void MOAIUntzSound::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getLength",			_getLength },

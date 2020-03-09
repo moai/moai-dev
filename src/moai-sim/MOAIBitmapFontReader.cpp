@@ -314,14 +314,14 @@ int MOAIBitmapFontReader::SelectGlyph ( u32 c ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIBitmapFontReader::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIFontReader, MOAILuaObject_RegisterLuaClass ( composer, state ));
+void MOAIBitmapFontReader::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIBitmapFontReader::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIFontReader, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	
+void MOAIBitmapFontReader::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
 	luaL_Reg regTable [] = {
 		{ "loadPage",				_loadPage },
 		{ NULL, NULL }
@@ -331,11 +331,11 @@ void MOAIBitmapFontReader::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& compos
 }
 
 //----------------------------------------------------------------//
-void MOAIBitmapFontReader::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIFontReader, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+void MOAIBitmapFontReader::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIBitmapFontReader::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIFontReader, MOAILuaObject_SerializeOut ( composer, state, serializer ));
+void MOAIBitmapFontReader::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
+	if ( history.DidVisit ( *this )) return;
 }

@@ -10,7 +10,6 @@
 #include <moai-core/MOAILua.h>
 
 #include <moai-core/MOAICanary.h>
-#include <moai-core/MOAIComposer.h>
 #include <moai-core/MOAIFoo.h>
 #include <moai-core/MOAIFooMgr.h>
 

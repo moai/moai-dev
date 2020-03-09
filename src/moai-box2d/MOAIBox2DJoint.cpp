@@ -236,13 +236,13 @@ void MOAIBox2DJoint::SetJoint ( b2Joint* joint ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIBox2DJoint::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIBox2DPrim, MOAILuaObject_RegisterLuaClass ( composer, state ));
+void MOAIBox2DJoint::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DJoint::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIBox2DPrim, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+void MOAIBox2DJoint::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "destroy",				_destroy },

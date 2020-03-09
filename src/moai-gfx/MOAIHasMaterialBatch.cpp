@@ -75,13 +75,14 @@ MOAIHasMaterialBatch::~MOAIHasMaterialBatch () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIHasMaterialBatch::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAIAbstractMaterialBatchInterface::MOAILuaObject_RegisterLuaClass ( composer, state );
+void MOAIHasMaterialBatch::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	UNUSED ( state );
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIHasMaterialBatch::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAIAbstractMaterialBatchInterface::MOAILuaObject_RegisterLuaFuncs ( composer, state );
+void MOAIHasMaterialBatch::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "affirmMaterialBatch",	_affirmMaterialBatch },
@@ -94,15 +95,17 @@ void MOAIHasMaterialBatch::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& compos
 }
 
 //----------------------------------------------------------------//
-void MOAIHasMaterialBatch::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIHasMaterialBatch::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIHasMaterialBatch::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIHasMaterialBatch::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//

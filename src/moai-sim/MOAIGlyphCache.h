@@ -29,11 +29,13 @@ class MOAIGlyphCache :
 	public virtual MOAILuaObject {
 protected:
 
+	MOAI_LUA_OBJECT_VISITOR_FRIEND
+
 	friend class MOAIFont;
 
 	//----------------------------------------------------------------//
-	void						MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void						MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void						MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void						MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 	

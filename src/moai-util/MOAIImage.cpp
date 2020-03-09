@@ -1298,9 +1298,9 @@ MOAIImage::~MOAIImage () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIImage::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
-	
+void MOAIImage::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
 	state.SetField ( -1, "FILTER_LINEAR",						( u32 )MOAIImage::FILTER_LINEAR );
 	state.SetField ( -1, "FILTER_NEAREST",						( u32 )MOAIImage::FILTER_NEAREST );
 	
@@ -1351,9 +1351,9 @@ void MOAIImage::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILua
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
+void MOAIImage::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "average",					_average },
@@ -1404,15 +1404,15 @@ void MOAIImage::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILua
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( composer );
+void MOAIImage::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( composer );
+void MOAIImage::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( state );
 	UNUSED ( serializer );
+	if ( history.DidVisit ( *this )) return;
 }

@@ -96,6 +96,8 @@
 #include <zl-util/ZLResult.h>
 #include <zl-util/ZLRhombus.h>
 #include <zl-util/ZLRingAdapter.h>
+#include <zl-util/ZLRtti.h>
+#include <zl-util/ZLRttiVisitorHistory.h>
 #include <zl-util/ZLSample.h>
 #include <zl-util/ZLSharedBuffer.h>
 #include <zl-util/ZLSphere.h>

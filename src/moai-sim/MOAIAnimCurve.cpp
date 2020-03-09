@@ -305,9 +305,8 @@ ZLReal MOAIAnimCurve::MOAIAnimCurve_GetFloatForTime ( ZLReal t ) const {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurve::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaClass ( composer, state ));
+void MOAIAnimCurve::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "ATTR_TIME",	AttrID::Pack ( ATTR_TIME ).ToRaw ());
 	state.SetField ( -1, "ATTR_VALUE", 	AttrID::Pack ( ATTR_VALUE ).ToRaw ());
@@ -319,9 +318,8 @@ void MOAIAnimCurve::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOA
 }
 
 //----------------------------------------------------------------//
-void MOAIAnimCurve::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+void MOAIAnimCurve::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getLength",			_getLength },

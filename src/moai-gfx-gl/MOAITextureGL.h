@@ -26,6 +26,8 @@ class MOAITextureGL :
 	public virtual MOAIGfxResourceGL {
 protected:
 
+	MOAI_LUA_OBJECT_VISITOR_FRIEND
+
 	friend class MOAIGfxMgrGL_GPUCacheGL;
 	friend class ZLTextureFormat;
 
@@ -54,8 +56,8 @@ protected:
 	void				MOAIGfxResourceGL_OnGPUDeleteOrDiscard	( bool shouldDelete );
 	void				MOAIGfxResourceGL_OnGPUUnbind			();
 	bool				MOAIGfxResourceGL_OnGPUUpdate			();
-	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
 	void				ZLGfxListener_OnGfxEvent				( u32 event, void* userdata );
 	
 public:

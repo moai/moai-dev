@@ -16,7 +16,7 @@ class MOAIUniformComposerInterface :
 	public virtual MOAILuaObject {
 protected:
 
-	// 
+	MOAI_LUA_OBJECT_VISITOR_FRIEND
 
 	//----------------------------------------------------------------//
 	static int					_reserveGlobals				( lua_State* L );
@@ -25,8 +25,8 @@ protected:
 	static int					_setTexture					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void						MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void						MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void						MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void						MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
 
 	//----------------------------------------------------------------//
 	virtual MOAIUniformComposer&		MOAIUniformComposerInterface_AffirmComposer		() = 0;

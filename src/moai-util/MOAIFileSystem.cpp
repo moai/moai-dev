@@ -505,8 +505,8 @@ int MOAIFileSystem::_stripPKZipTimestamps ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIFileSystem::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
+void MOAIFileSystem::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "affirmPath",					_affirmPath },

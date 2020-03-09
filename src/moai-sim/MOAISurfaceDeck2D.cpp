@@ -365,16 +365,14 @@ bool MOAISurfaceDeck2D::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 
 }
 
 //----------------------------------------------------------------//
-void MOAISurfaceDeck2D::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIStandardDeck, MOAILuaObject_RegisterLuaClass ( composer, state ));
+void MOAISurfaceDeck2D::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAISurfaceDeck2D::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAISurfaceDeck2D::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIStandardDeck, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	
 	luaL_Reg regTable [] = {
 		{ "reserveSurfaceLists",	_reserveSurfaceLists },
 		{ "reserveSurfaces",		_reserveSurfaces },

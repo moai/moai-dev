@@ -97,18 +97,17 @@ MOAIPinTransform::~MOAIPinTransform () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIPinTransform::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	
+void MOAIPinTransform::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
 	state.SetField ( -1, "ATTR_FRONT", 					AttrID::Pack ( ATTR_FRONT ).ToRaw ());
 	state.SetField ( -1, "ATTR_INHERIT_WORLD_BOUNDS", 	AttrID::Pack ( ATTR_INHERIT_WORLD_BOUNDS ).ToRaw ());
 }
 
 //----------------------------------------------------------------//
-void MOAIPinTransform::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	
+void MOAIPinTransform::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
 	luaL_Reg regTable [] = {
 		{ "getWorldBounds",				_getWorldBounds },
 		{ "getWorldBoundsCenter",		_getWorldBoundsCenter },

@@ -60,6 +60,8 @@ class MOAIAnimCurve :
 	public virtual MOAINode {
 protected:
 
+	MOAI_LUA_OBJECT_VISITOR_FRIEND
+
 	ZLLeanArray < MOAIAnimKey > mKeys;
 
 	ZLReal		mTime;
@@ -81,8 +83,8 @@ protected:
 	virtual void		MOAIAnimCurve_ReserveSamples		( u32 total ) = 0;
 
 	//----------------------------------------------------------------//
-	void				MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
 	bool				MOAINode_ApplyAttrOp				( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 
 public:

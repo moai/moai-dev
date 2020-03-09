@@ -76,7 +76,7 @@ MOAINodeMgr::MOAINodeMgr () :
 	mScheduled ( false ),
 	mMaxIterations ( DEFAULT_MAX_ITERATIONS ) {
 	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAINodeMgr, MOAIGlobalEventSource )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAINodeMgr, MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
@@ -178,8 +178,8 @@ void MOAINodeMgr::Update () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAINodeMgr::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
+void MOAINodeMgr::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "reset",					_reset },
@@ -192,7 +192,7 @@ void MOAINodeMgr::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAIL
 }
 
 //----------------------------------------------------------------//
-void MOAINodeMgr::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
+void MOAINodeMgr::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
+	if ( history.DidVisit ( *this )) return;
 }

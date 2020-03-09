@@ -34,11 +34,13 @@
 
 #define DECL_LUA_OPAQUE(type)																\
 	IMPLEMENT_FINALIZABLE ( type )															\
+	MOAI_LUA_OBJECT_VISITOR_FRIEND															\
 	MOAILuaClass* GetLuaClass () { return &MOAILuaFactoryClass < type >::Get (); }			\
 	cc8* TypeName () const { return #type; }
 
 #define DECL_LUA_SINGLETON(type)															\
 	IMPLEMENT_FINALIZABLE ( type )															\
+	MOAI_LUA_OBJECT_VISITOR_FRIEND 															\
 	MOAILuaClass* GetLuaClass () { return &MOAILuaSingletonClass < type >::Get (); }		\
 	static void RegisterLuaType () { MOAILuaSingletonClass < type >::Get ().Register (); }	\
 	cc8* TypeName () const { return #type; }
@@ -92,10 +94,10 @@ protected:
 	static void				Unbind					( MOAILuaObject* object, MOAILuaWeakRef& userdata );
 
 	//----------------------------------------------------------------//
-	virtual void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	virtual void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
-	virtual	void			MOAILuaObject_SerializeIn			( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer );
-	virtual	void			MOAILuaObject_SerializeOut			( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer );
+	virtual void			MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	virtual void			MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
+	virtual	void			MOAILuaObject_SerializeIn			( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
+	virtual	void			MOAILuaObject_SerializeOut			( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
 	void					ZLRefCountedObjectBase_OnRelease	( u32 refCount );
 
 public:
@@ -158,8 +160,10 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	virtual void 	SerializeIn 	( MOAILuaObject& self, MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) const = 0;
-	virtual void 	SerializeOut 	( MOAILuaObject& self, MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) const = 0;
+	virtual void	RegisterLuaClass		( MOAILuaObject& self, RTTIVisitorHistory& history, MOAILuaState& state ) const = 0;
+	virtual void	RegisterLuaFuncs		( MOAILuaObject& self, RTTIVisitorHistory& history, MOAILuaState& state ) const = 0;
+	virtual void 	SerializeIn 			( MOAILuaObject& self, RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) const = 0;
+	virtual void 	SerializeOut 			( MOAILuaObject& self, RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) const = 0;
 };
 
 //================================================================//
@@ -171,17 +175,23 @@ class MOAILuaObjectVisitor :
 public:
 
 	//----------------------------------------------------------------//
-	void SerializeIn ( MOAILuaObject& self, MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) const {
-		TYPE* cast = self.AsType < TYPE >();
-		assert ( cast );
-		cast->TYPE::MOAILuaObject_SerializeIn ( composer, state, serializer );
+	void RegisterLuaClass ( MOAILuaObject& self, RTTIVisitorHistory& history, MOAILuaState& state ) const {
+		self.AsType < TYPE >()->TYPE::MOAILuaObject_RegisterLuaClass ( history, state );
 	}
 	
 	//----------------------------------------------------------------//
-	void SerializeOut ( MOAILuaObject& self, MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) const {
-		TYPE* cast = self.AsType < TYPE >();
-		assert ( cast );
-		cast->TYPE::MOAILuaObject_SerializeOut ( composer, state, serializer );
+	void RegisterLuaFuncs ( MOAILuaObject& self, RTTIVisitorHistory& history, MOAILuaState& state ) const {
+		self.AsType < TYPE >()->TYPE::MOAILuaObject_RegisterLuaFuncs ( history, state );
+	}
+
+	//----------------------------------------------------------------//
+	void SerializeIn ( MOAILuaObject& self, RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) const {
+		self.AsType < TYPE >()->TYPE::MOAILuaObject_SerializeIn ( history, state, serializer );
+	}
+	
+	//----------------------------------------------------------------//
+	void SerializeOut ( MOAILuaObject& self, RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) const {
+		self.AsType < TYPE >()->TYPE::MOAILuaObject_SerializeOut ( history, state, serializer );
 	}
 };
 

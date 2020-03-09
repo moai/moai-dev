@@ -79,17 +79,15 @@ bool MOAIHasDeckAndIndex::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& a
 }
 
 //----------------------------------------------------------------//
-void MOAIHasDeckAndIndex::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasDeck, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	
+void MOAIHasDeckAndIndex::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
 	state.SetField ( -1, "ATTR_INDEX", AttrID::Pack ( ATTR_INDEX ).ToRaw ());
 }
 
 //----------------------------------------------------------------//
-void MOAIHasDeckAndIndex::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasDeck, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+void MOAIHasDeckAndIndex::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getIndex",				_getIndex },
@@ -101,13 +99,11 @@ void MOAIHasDeckAndIndex::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& compose
 }
 
 //----------------------------------------------------------------//
-void MOAIHasDeckAndIndex::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasDeck, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+void MOAIHasDeckAndIndex::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIHasDeckAndIndex::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasDeck, MOAILuaObject_SerializeOut ( composer, state, serializer ));
+void MOAIHasDeckAndIndex::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
+	if ( history.DidVisit ( *this )) return;
 }

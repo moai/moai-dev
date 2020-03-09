@@ -671,8 +671,8 @@ void MOAISerializer::WriteTableInits ( ZLStream& stream ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAISerializer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
+void MOAISerializer::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "floatToHex",			_floatToHex },
@@ -686,8 +686,8 @@ void MOAISerializer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MO
 }
 
 //----------------------------------------------------------------//
-void MOAISerializer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
+void MOAISerializer::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getObjectTables",		_getObjectTables },

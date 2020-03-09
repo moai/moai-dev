@@ -494,10 +494,9 @@ void MOAILayoutFrame::SetParent ( MOAIAbstractChildTransform* parent ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAILayoutFrame::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	
+void MOAILayoutFrame::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
 	state.SetField ( -1, "LAYOUT_ALIGN_MIN", ( u32 )LAYOUT_ALIGN_MIN );
 	state.SetField ( -1, "LAYOUT_ALIGN_MAX", ( u32 )LAYOUT_ALIGN_MAX );
 	state.SetField ( -1, "LAYOUT_ALIGN_CENTER", ( u32 )LAYOUT_ALIGN_CENTER );
@@ -512,10 +511,9 @@ void MOAILayoutFrame::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, M
 }
 
 //----------------------------------------------------------------//
-void MOAILayoutFrame::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	
+void MOAILayoutFrame::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
 	luaL_Reg regTable [] = {
 		{ "layout",				_layout },
 		{ "setFit",				_setFit },

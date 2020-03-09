@@ -120,7 +120,8 @@ void MOAIInputDevice::SetSensor ( ZLIndex sensorID, cc8* name, MOAISensor* senso
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIInputDevice::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIInputDevice::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getHardwareInfo",		_getHardwareInfo },
@@ -132,6 +133,7 @@ void MOAIInputDevice::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, M
 }
 
 //----------------------------------------------------------------//
-void MOAIInputDevice::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIInputDevice::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
+	if ( history.DidVisit ( *this )) return;
 }

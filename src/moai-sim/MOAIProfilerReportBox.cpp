@@ -642,7 +642,8 @@ MOAIProfilerReportBox::~MOAIProfilerReportBox () {
 }
 
 //----------------------------------------------------------------//
-void MOAIProfilerReportBox::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIProfilerReportBox::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 	
 	MOAIGraphicsProp, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 	

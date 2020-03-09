@@ -1145,7 +1145,8 @@ ZLVec2D MOAIGridSpace::WorldToCell ( MOAICellCoord cellCoord, ZLVec2D loc ) cons
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGridSpace::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIGridSpace::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "TILE_X_FLIP", ( u32 )MOAITileFlags::XFLIP );
 	state.SetField ( -1, "TILE_Y_FLIP", ( u32 )MOAITileFlags::YFLIP );
@@ -1172,7 +1173,8 @@ void MOAIGridSpace::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOA
 }
 
 //----------------------------------------------------------------//
-void MOAIGridSpace::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIGridSpace::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "cellAddrToCoord",	_cellAddrToCoord },
@@ -1200,8 +1202,9 @@ void MOAIGridSpace::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOA
 }
 
 //----------------------------------------------------------------//
-void MOAIGridSpace::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIGridSpace::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
+	if ( history.DidVisit ( *this )) return;
 	
 	this->mXOff			= state.GetFieldValue ( -1, "mXOff", this->mXOff );
 	this->mYOff			= state.GetFieldValue ( -1, "mYOff", this->mYOff );
@@ -1220,8 +1223,9 @@ void MOAIGridSpace::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaS
 }
 
 //----------------------------------------------------------------//
-void MOAIGridSpace::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIGridSpace::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
+	if ( history.DidVisit ( *this )) return;
 	
 	state.SetField ( -1, "mXOff", this->mXOff );
 	state.SetField ( -1, "mYOff", this->mYOff );

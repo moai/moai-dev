@@ -226,7 +226,7 @@ void MOAINotificationsIOS::NotifyRemoteRegistrationComplete ( NSData* deviceToke
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAINotificationsIOS::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAINotificationsIOS::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 
 	state.SetField ( -1, "REMOTE_NOTIFICATION_NONE",					( u32 )UIRemoteNotificationTypeNone );
 	state.SetField ( -1, "REMOTE_NOTIFICATION_BADGE",					( u32 )UIRemoteNotificationTypeBadge );

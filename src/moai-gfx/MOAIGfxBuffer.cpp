@@ -86,13 +86,13 @@ MOAIGfxBuffer::~MOAIGfxBuffer () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxBuffer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIStream, MOAILuaObject_RegisterLuaClass ( composer, state ));
+void MOAIGfxBuffer::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBuffer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIStream, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+void MOAIGfxBuffer::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "copyFromStream",			_copyFromStream },
@@ -104,8 +104,9 @@ void MOAIGfxBuffer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOA
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBuffer::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIGfxBuffer::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
+	if ( history.DidVisit ( *this )) return;
 
 	u32 size = state.GetFieldValue < cc8*, u32 >( -1, "mSize", 0 );
 	this->Reserve ( size );
@@ -126,8 +127,9 @@ void MOAIGfxBuffer::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaS
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBuffer::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIGfxBuffer::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
+	if ( history.DidVisit ( *this )) return;
 
 	ZLSize size = this->GetLength ();
 

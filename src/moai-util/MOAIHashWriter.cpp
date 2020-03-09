@@ -219,15 +219,15 @@ MOAIHashWriter::~MOAIHashWriter () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIHashWriter::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIStreamAdapter, MOAILuaObject_RegisterLuaClass ( composer, state ));
+void MOAIHashWriter::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	UNUSED ( state );
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIHashWriter::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIStreamAdapter, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+void MOAIHashWriter::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	UNUSED ( state );
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "close",				_close },

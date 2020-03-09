@@ -143,13 +143,14 @@ MOAIAbstractMaterialBatchInterface::~MOAIAbstractMaterialBatchInterface () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAbstractMaterialBatchInterface::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAIAbstractMaterialInterface::MOAILuaObject_RegisterLuaClass ( composer, state );
+void MOAIAbstractMaterialBatchInterface::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	UNUSED ( state );
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractMaterialBatchInterface::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAIAbstractMaterialInterface::MOAILuaObject_RegisterLuaFuncs ( composer, state );
+void MOAIAbstractMaterialBatchInterface::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
 		{ "affirmMaterial",			_affirmMaterial },

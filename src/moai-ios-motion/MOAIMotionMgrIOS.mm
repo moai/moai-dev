@@ -442,7 +442,7 @@ void MOAIMotionMgrIOS::MOAIAction_Update ( double step ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMotionMgrIOS::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIMotionMgrIOS::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	
 	
 	NSUInteger availableFrames = [ CMMotionManager availableAttitudeReferenceFrames ];

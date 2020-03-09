@@ -2,7 +2,6 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-core/MOAIComposer.h>
 #include <moai-core/MOAIEnvironment.h>
 
 #ifdef _WIN32
@@ -229,8 +228,8 @@ void MOAIEnvironment::SetValue ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIEnvironment::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGlobalEventSource, MOAILuaObject_RegisterLuaClass ( composer, state ));
+void MOAIEnvironment::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "EVENT_VALUE_CHANGED", ( u32 )EVENT_VALUE_CHANGED );
 

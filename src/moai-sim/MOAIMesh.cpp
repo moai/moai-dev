@@ -659,11 +659,8 @@ ZLBounds MOAIMesh::MOAIDeck_GetBounds ( ZLIndex idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMesh::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasMaterialBatch, MOAILuaObject_RegisterLuaClass ( composer, state ));
-//	MOAI_CALL_SUPER_ONCE ( composer, MOAIVertexArray, MOAILuaObject_RegisterLuaClass ( composer, state ));
+void MOAIMesh::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 	
 	state.SetField ( -1, "GL_LINES",			( u32 )MOAIGfxTopologyEnum::LINE_LIST );
 	state.SetField ( -1, "GL_LINE_LOOP",		( u32 )MOAIGfxTopologyEnum::LINE_LOOP );
@@ -680,11 +677,8 @@ void MOAIMesh::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaS
 }
 
 //----------------------------------------------------------------//
-void MOAIMesh::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasMaterialBatch, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-//	MOAI_CALL_SUPER_ONCE ( composer, MOAIVertexArray, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+void MOAIMesh::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "buildQuadTree",				_buildQuadTree },
@@ -706,11 +700,8 @@ void MOAIMesh::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaS
 }
 
 //----------------------------------------------------------------//
-void MOAIMesh::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_SerializeIn ( composer, state, serializer ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasMaterialBatch, MOAILuaObject_SerializeIn ( composer, state, serializer ));
-//	MOAI_CALL_SUPER_ONCE ( composer, MOAIVertexArray, MOAILuaObject_SerializeIn ( composer, state, serializer )); // TODO: Gfx
+void MOAIMesh::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	if ( history.DidVisit ( *this )) return;
 
 	this->SetIndexBuffer (
 		serializer.MemberIDToObject < MOAIIndexBuffer >( state.GetFieldValue < cc8*, MOAISerializer::ObjID >( -1, "mIndexBuffer", 0 ))
@@ -741,11 +732,8 @@ void MOAIMesh::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState&
 }
 
 //----------------------------------------------------------------//
-void MOAIMesh::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_SerializeOut ( composer, state, serializer ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasMaterialBatch, MOAILuaObject_SerializeOut ( composer, state, serializer ));
-//	MOAI_CALL_SUPER_ONCE ( composer, MOAIVertexArray, MOAILuaObject_SerializeOut ( composer, state, serializer )); // TODO: Gfx
+void MOAIMesh::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
+	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "mIndexBuffer", serializer.AffirmMemberID ( this->mIndexBuffer ));
 	

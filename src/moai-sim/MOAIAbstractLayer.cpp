@@ -218,7 +218,8 @@ void MOAIAbstractLayer::MOAIDrawable_DrawDebug ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractLayer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIAbstractLayer::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "CLEAR_ALWAYS",			( u32 )CLEAR_ALWAYS );
 	state.SetField ( -1, "CLEAR_NEVER",				( u32 )CLEAR_NEVER );
@@ -226,7 +227,8 @@ void MOAIAbstractLayer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer,
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractLayer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIAbstractLayer::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "draw",						_draw },

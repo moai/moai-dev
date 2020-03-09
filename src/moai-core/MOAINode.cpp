@@ -3,7 +3,6 @@
 
 #include "pch.h"
 //#include <moai-sim/MOAIEaseDriver.h>
-#include <moai-core/MOAIComposer.h>
 #include <moai-core/MOAINode.h>
 #include <moai-core/MOAINodeMgr.h>
 #include <moai-core/strings.h>
@@ -762,9 +761,8 @@ bool MOAINode::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op
 }
 
 //----------------------------------------------------------------//
-void MOAINode::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaClass ( composer, state ));
+void MOAINode::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "EVENT_UPDATE",			( u32 )EVENT_NODE_PRE_UPDATE ); // TODO: deprecate
 	
@@ -778,9 +776,8 @@ void MOAINode::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaS
 }
 
 //----------------------------------------------------------------//
-void MOAINode::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+void MOAINode::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "clearAttrLink",			_clearAttrLink },

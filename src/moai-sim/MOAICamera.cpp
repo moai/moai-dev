@@ -407,10 +407,9 @@ bool MOAICamera::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 
 }
 
 //----------------------------------------------------------------//
-void MOAICamera::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAICamera::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
-	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	
 	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAICamera >( TOTAL_DEBUG_LINE_STYLES );
 	
 	state.SetField ( -1, "DEBUG_DRAW_CAMERA_MASTER",			MOAIDebugLinesMgr::Pack < MOAICamera >( (u32) -1 ));
@@ -425,9 +424,9 @@ void MOAICamera::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILu
 }
 
 //----------------------------------------------------------------//
-void MOAICamera::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAITransform, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	
+void MOAICamera::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
 	luaL_Reg regTable [] = {
 		{ "getFarPlane",		_getFarPlane },
 		{ "getFieldOfView",		_getFieldOfView },

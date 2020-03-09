@@ -174,7 +174,7 @@ int MOAIUntzSampleBuffer::_setRawData ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIUntzSampleBuffer::MOAIUntzSampleBuffer () : mBuffer(0) {
 
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIUntzSampleBuffer, MOAINode )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIUntzSampleBuffer, MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
@@ -188,12 +188,14 @@ MOAIUntzSampleBuffer::~MOAIUntzSampleBuffer () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIUntzSampleBuffer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIUntzSampleBuffer::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIUntzSampleBuffer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIUntzSampleBuffer::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getData",			_getData },

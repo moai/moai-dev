@@ -160,8 +160,8 @@ u32 MOAIDeserializer::SerializeFromFile ( cc8* filename ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDeserializer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
+void MOAIDeserializer::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "base64Decode",			_base64Decode },
@@ -172,8 +172,8 @@ void MOAIDeserializer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, 
 }
 
 //----------------------------------------------------------------//
-void MOAIDeserializer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
+void MOAIDeserializer::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "createObject",			_createObject },

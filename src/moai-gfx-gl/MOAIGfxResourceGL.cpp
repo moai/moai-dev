@@ -277,10 +277,9 @@ bool MOAIGfxResourceGL::MOAIGfxResource_ScheduleForGPUUpdate () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	
+void MOAIGfxResourceGL::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
 	state.SetField ( -1, "STATE_UNINITIALIZED",					( u32 )MOAIGfxResourceGL::STATE_UNINITIALIZED );
 	state.SetField ( -1, "STATE_READY_FOR_GPU_CREATE",			( u32 )MOAIGfxResourceGL::STATE_READY_FOR_GPU_CREATE );
 	state.SetField ( -1, "STATE_READY_TO_BIND",					( u32 )MOAIGfxResourceGL::STATE_READY_TO_BIND );
@@ -293,9 +292,8 @@ void MOAIGfxResourceGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer,
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+void MOAIGfxResourceGL::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "clear",						_destroy }, // TODO: deprecate

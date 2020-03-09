@@ -23,6 +23,8 @@ class MOAIAbstractBaseTransform :
 	public virtual MOAINode {
 protected:
 	
+	MOAI_LUA_OBJECT_VISITOR_FRIEND
+	
 	ZLAffine3D		mLocalToWorldMtx;
 	ZLAffine3D		mWorldToLocalMtx;
 
@@ -44,8 +46,8 @@ protected:
 	virtual void		MOAIAbstractBaseTransform_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx ) = 0;
 
 	//----------------------------------------------------------------//
-	void				MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				MOAILuaObject_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
 	bool				MOAINode_ApplyAttrOp					( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	void				MOAINode_Update							();
 

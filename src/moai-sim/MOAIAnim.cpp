@@ -230,15 +230,13 @@ void MOAIAnim::MOAIAction_Update ( double step ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAnim::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAITimer, MOAILuaObject_RegisterLuaClass ( composer, state ));
+void MOAIAnim::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIAnim::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAITimer, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+void MOAIAnim::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "apply",				_apply },

@@ -53,9 +53,9 @@ void MOAITask::Start ( MOAITaskQueue& queue, MOAITaskSubscriber& subscriber ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITask::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
-	
+void MOAITask::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
 	luaL_Reg regTable [] = {
 		{ "new",							MOAILuaObject::_alertNewIsUnsupported },
 		{ NULL, NULL }
@@ -65,7 +65,7 @@ void MOAITask::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaS
 }
 
 //----------------------------------------------------------------//
-void MOAITask::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
+void MOAITask::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 	UNUSED ( state );
 }

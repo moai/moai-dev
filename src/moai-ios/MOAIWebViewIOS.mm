@@ -442,7 +442,7 @@ void MOAIWebViewIOS::RaiseWebViewDidHideEvent () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIWebViewIOS::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIWebViewIOS::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 
 	state.SetField ( -1, "DID_FAIL_LOAD_WITH_ERROR", 		( u32 )DID_FAIL_LOAD_WITH_ERROR );
 	state.SetField ( -1, "SHOULD_START_LOAD_WITH_REQUEST",	( u32 )SHOULD_START_LOAD_WITH_REQUEST );
@@ -466,7 +466,7 @@ void MOAIWebViewIOS::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MO
 }
 
 //----------------------------------------------------------------//
-void MOAIWebViewIOS::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIWebViewIOS::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 
 	MOAIInstanceEventSource, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
 

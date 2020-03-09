@@ -85,7 +85,7 @@ private:
 	void					SetStyle				( u32 styleID, float size, u32 color );
 
 	//----------------------------------------------------------------//
-	void					MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void					MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 	

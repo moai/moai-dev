@@ -16,6 +16,8 @@ class MOAINodeMgr :
 	public virtual MOAILuaObject {
 private:
 
+	MOAI_LUA_OBJECT_VISITOR_FRIEND
+
 	static const u32 DEFAULT_MAX_ITERATIONS = 3; // arbitrary number
 
 	MOAINode* mUpdateListHead;
@@ -37,8 +39,8 @@ private:
 	void			Remove				( MOAINode& node );
 
 	//----------------------------------------------------------------//
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 

@@ -791,9 +791,9 @@ void MOAIFont::RenderGlyph ( MOAIGlyph& glyph ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIFont::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	
+void MOAIFont::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
 	state.SetField ( -1, "EVENT_RENDER_GLYPH",		( u32 )EVENT_RENDER_GLYPH );
 	
 	state.SetField ( -1, "DEFAULT_FLAGS",			( u32 )DEFAULT_FLAGS );
@@ -801,9 +801,9 @@ void MOAIFont::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaS
 }
 
 //----------------------------------------------------------------//
-void MOAIFont::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIInstanceEventSource, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	
+void MOAIFont::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
 	luaL_Reg regTable [] = {
 		{ "getCache",					_getCache },
 		{ "getDefaultSize",				_getDefaultSize },
@@ -829,8 +829,9 @@ void MOAIFont::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaS
 }
 
 //----------------------------------------------------------------//
-void MOAIFont::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIFont::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
+	if ( history.DidVisit ( *this )) return;
 
 	this->mFilename = state.GetFieldValue ( -1, "mFilename", this->mFilename );
 	this->mFlags = state.GetFieldValue ( -1, "mFlags", this->mFlags );
@@ -849,8 +850,9 @@ void MOAIFont::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState&
 }
 
 //----------------------------------------------------------------//
-void MOAIFont::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIFont::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
+	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "mFilename", this->mFilename );
 	state.SetField ( -1, "mFlags", this->mFlags );

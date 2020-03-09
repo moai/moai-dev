@@ -80,7 +80,7 @@ private:
 	void			DrawLuaArray			( lua_State* L, MOAIGfxTopologyEnum::_ primType );
 	
 	//----------------------------------------------------------------//
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
 	
 public:
 

@@ -7,9 +7,9 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIKeyCode::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
-	
+void MOAIKeyCode::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
 	state.SetField ( -1, "BACKSPACE",		( u32 )MOAI_KEY_BACKSPACE );
 	state.SetField ( -1, "TAB",				( u32 )MOAI_KEY_TAB );
 	state.SetField ( -1, "RETURN",			( u32 )MOAI_KEY_RETURN );

@@ -247,7 +247,7 @@ void MOAIKeyboardIOS::ShowKeyboard ( cc8* text, int type, int returnKey, bool se
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIKeyboardIOS::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIKeyboardIOS::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 
 	state.SetField ( -1, "EVENT_INPUT",					( u32 )EVENT_INPUT );
 	state.SetField ( -1, "EVENT_RETURN",				( u32 )EVENT_RETURN );

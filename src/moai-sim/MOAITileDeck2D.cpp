@@ -311,20 +311,14 @@ MOAICollisionShape* MOAITileDeck2D::MOAIDeck_GetCollisionShape ( ZLIndex idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITileDeck2D::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasMaterialBatch, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGridSpace, MOAILuaObject_RegisterLuaClass ( composer, state ));
+void MOAITileDeck2D::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAITileDeck2D::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeck, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIHasMaterialBatch, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGridSpace, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-
+void MOAITileDeck2D::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+	
 	luaL_Reg regTable [] = {
 		{ "setQuad",			_setQuad },
 		{ "setRect",			_setRect },
@@ -340,18 +334,16 @@ void MOAITileDeck2D::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MO
 }
 
 //----------------------------------------------------------------//
-void MOAITileDeck2D::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAITileDeck2D::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	if ( history.DidVisit ( *this )) return;
 
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGridSpace, MOAILuaObject_SerializeIn ( composer, state, serializer ));
-	
 	//this->mTexture.Set ( *this, serializer.MemberIDToObject < MOAITexture >( state.GetFieldValue < MOAISerializerBase::ObjID >( -1, "mTexture", 0 )));
 }
 
 //----------------------------------------------------------------//
-void MOAITileDeck2D::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAITileDeck2D::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
+	if ( history.DidVisit ( *this )) return;
 
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGridSpace, MOAILuaObject_SerializeOut ( composer, state, serializer ));
-	
 	//state.SetField ( -1, "mTexture", serializer.AffirmMemberID ( this->mTexture ));
 }
 

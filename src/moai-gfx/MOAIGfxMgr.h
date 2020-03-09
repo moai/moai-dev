@@ -32,6 +32,8 @@ class MOAIGfxMgr :
 	public virtual MOAIGfxMgr_VertexCache {
 protected:
 
+	MOAI_LUA_OBJECT_VISITOR_FRIEND
+
 	//----------------------------------------------------------------//
 	virtual MOAIShader*			MOAIGfxMgr_AffirmShader				( MOAILuaState& state, int idx ) const = 0;
 	virtual MOAITexture*		MOAIGfxMgr_AffirmTexture			( MOAILuaState& state, int idx ) const = 0;
@@ -52,8 +54,8 @@ protected:
 	MOAIGfxMgr_GPUCache&		MOAIGfxMgrComponents_GetGPUCache		();
 	MOAIGfxMgr_RenderTree&		MOAIGfxMgrComponents_GetRenderTree		();
 	MOAIGfxMgr_VertexCache&		MOAIGfxMgrComponents_GetVertexCache		();
-	void						MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void						MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
+	void						MOAILuaObject_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
+	void						MOAILuaObject_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
 	void						ZLContextClass_Finalize					();
 	void						ZLContextClass_Initialize				();
 

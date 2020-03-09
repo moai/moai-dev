@@ -704,7 +704,8 @@ void MOAIPartition::SetPlane ( u32 planeID ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIPartition::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIPartition::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 	
 	state.SetField ( -1, "PLANE_XY",	( u32 )ZLBox::PLANE_XY );
 	state.SetField ( -1, "PLANE_XZ",	( u32 )ZLBox::PLANE_XZ );
@@ -712,7 +713,8 @@ void MOAIPartition::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOA
 }
 
 //----------------------------------------------------------------//
-void MOAIPartition::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIPartition::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
 		{ "clear",						_clear },

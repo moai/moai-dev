@@ -34,8 +34,8 @@ protected:
 	
 	//----------------------------------------------------------------//
 	const MOAIUniformSchema*	MOAIAbstractUniformBuffer_GetSchema		() const;
-	void						MOAILuaObject_RegisterLuaClass			( MOAIComposer& composer, MOAILuaState& state );
-	void						MOAILuaObject_RegisterLuaFuncs			( MOAIComposer& composer, MOAILuaState& state );
+	void						MOAILuaObject_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
+	void						MOAILuaObject_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
 	void						MOAIShader_ComposeUniforms				();
 	bool						MOAIShader_IsReadyForUse				() const;
 	void						MOAIShader_SelectTextures				();

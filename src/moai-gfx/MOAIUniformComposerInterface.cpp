@@ -163,7 +163,8 @@ void MOAIUniformComposerInterface::SetTexture ( ZLIndex idx, MOAITexture* textur
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIUniformComposerInterface::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIUniformComposerInterface::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 	
 	state.SetField ( -1, "UNIFORM_WIDTH_VEC_2",						( u32 )MOAIUniformDescriptor::UNIFORM_WIDTH_VEC_2 );
 	state.SetField ( -1, "UNIFORM_WIDTH_VEC_3",						( u32 )MOAIUniformDescriptor::UNIFORM_WIDTH_VEC_3 );
@@ -243,7 +244,8 @@ void MOAIUniformComposerInterface::MOAILuaObject_RegisterLuaClass ( MOAIComposer
 }
 
 //----------------------------------------------------------------//
-void MOAIUniformComposerInterface::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIUniformComposerInterface::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "reserveGlobals",				_reserveGlobals },

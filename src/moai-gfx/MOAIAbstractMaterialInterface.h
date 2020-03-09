@@ -19,6 +19,8 @@ class MOAIAbstractMaterialInterface :
 	public virtual MOAILuaObject {
 protected:
 	
+	MOAI_LUA_OBJECT_VISITOR_FRIEND
+	
 	//----------------------------------------------------------------//
 	static int			_getBlendMode				( lua_State* L );
 	static int			_getCullMode				( lua_State* L );
@@ -43,8 +45,8 @@ protected:
 	virtual MOAIAbstractMaterial*		MOAIAbstractMaterialInterface_GetMaterial		() = 0;
 	
 	//----------------------------------------------------------------//
-	void						MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void						MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void						MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void						MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
 	
 public:
 

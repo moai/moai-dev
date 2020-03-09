@@ -17,6 +17,8 @@ class MOAIAbstractLayer :
 	public virtual MOAIDrawable {
 private:
 
+	MOAI_LUA_OBJECT_VISITOR_FRIEND
+
 	u32				mClearFlags;
 	u32				mClearColor;
 	u32				mClearMode;
@@ -41,8 +43,8 @@ protected:
 
 	//----------------------------------------------------------------//
 	void			MOAIDrawable_DrawDebug				( int subPrimID );
-	void			MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 

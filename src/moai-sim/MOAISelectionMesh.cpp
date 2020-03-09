@@ -564,15 +564,13 @@ void MOAISelectionMesh::MOAIDeck_Draw ( ZLIndex idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAISelectionMesh::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckProxy, MOAILuaObject_RegisterLuaClass ( composer, state ));
+void MOAISelectionMesh::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAISelectionMesh::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckProxy, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+void MOAISelectionMesh::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "addSelection",			_addSelection },
@@ -589,13 +587,11 @@ void MOAISelectionMesh::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer,
 }
 
 //----------------------------------------------------------------//
-void MOAISelectionMesh::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckProxy, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+void MOAISelectionMesh::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAISelectionMesh::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIDeckProxy, MOAILuaObject_SerializeOut ( composer, state, serializer ));
+void MOAISelectionMesh::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
+	if ( history.DidVisit ( *this )) return;
 }

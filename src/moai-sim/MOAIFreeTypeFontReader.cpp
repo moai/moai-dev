@@ -406,9 +406,9 @@ int MOAIFreeTypeFontReader::StrokeGlyph ( MOAIImage& image, float x, float y, fl
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIFreeTypeFontReader::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIFontReader, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	
+void MOAIFreeTypeFontReader::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
 	state.SetField ( -1, "STROKER_CAP_STYLE_BUTT",				( u32 )FT_STROKER_LINECAP_BUTT );
 	state.SetField ( -1, "STROKER_CAP_STYLE_ROUND",				( u32 )FT_STROKER_LINECAP_ROUND );
 	state.SetField ( -1, "STROKER_CAP_STYLE_SQUARE",			( u32 )FT_STROKER_LINECAP_SQUARE );
@@ -428,8 +428,8 @@ void MOAIFreeTypeFontReader::MOAILuaObject_RegisterLuaClass ( MOAIComposer& comp
 }
 
 //----------------------------------------------------------------//
-void MOAIFreeTypeFontReader::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIFontReader, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+void MOAIFreeTypeFontReader::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "enableAntiAliasing",		_enableAntiAliasing },
@@ -442,13 +442,13 @@ void MOAIFreeTypeFontReader::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& comp
 }
 
 //----------------------------------------------------------------//
-void MOAIFreeTypeFontReader::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIFontReader, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+void MOAIFreeTypeFontReader::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIFreeTypeFontReader::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIFontReader, MOAILuaObject_SerializeOut ( composer, state, serializer ));
+void MOAIFreeTypeFontReader::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
+	if ( history.DidVisit ( *this )) return;
 }
 
 #endif

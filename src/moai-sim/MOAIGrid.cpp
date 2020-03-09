@@ -339,15 +339,13 @@ size_t MOAIGrid::StreamTilesOut ( ZLStream* stream ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGrid::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGridSpace, MOAILuaObject_RegisterLuaClass ( composer, state ));
+void MOAIGrid::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIGrid::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGridSpace, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+void MOAIGrid::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "clearTileFlags",		_clearTileFlags },
@@ -367,10 +365,10 @@ void MOAIGrid::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaS
 }
 
 //----------------------------------------------------------------//
-void MOAIGrid::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIGrid::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGridSpace, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+	if ( history.DidVisit ( *this )) return;
+	
 	this->mTiles.Init ( this->MOAIGridSpace::GetTotalCells ());
 
 	state.PushField ( -1, "mData" );
@@ -399,10 +397,9 @@ void MOAIGrid::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState&
 }
 
 //----------------------------------------------------------------//
-void MOAIGrid::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIGrid::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIGridSpace, MOAILuaObject_SerializeOut ( composer, state, serializer ));
+	if ( history.DidVisit ( *this )) return;
 
 	ZLLeanArray < u8 > zip;
 	ZLZip::Deflate ( this->mTiles.GetBuffer (), this->mTiles.Size () * sizeof ( u32 ), zip );

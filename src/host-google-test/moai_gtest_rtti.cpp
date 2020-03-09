@@ -10,9 +10,9 @@
 class IVisitAdapter;
 
 //================================================================//
-// IVisit
+// AbstractVisitable
 //================================================================//
-class IVisit :
+class AbstractVisitable :
 	virtual public RTTIBase {
 public:
 
@@ -29,75 +29,75 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	IVisit () {
+	AbstractVisitable () {
 	}
 
 	//----------------------------------------------------------------//
-	virtual ~IVisit () {
+	virtual ~AbstractVisitable () {
 	}
 
 	//----------------------------------------------------------------//
-	virtual void IVisit_Visit ( int x, int y ) = 0;
+	virtual void AbstractVisitable_Visit ( int x, int y ) = 0;
 	
 	//----------------------------------------------------------------//
 	void VisitAll ( int x, int y );
 };
 
 //================================================================//
-// IVisitAdapter
+// AbstractVisitor
 //================================================================//
-class IVisitAdapter {
+class AbstractVisitor {
 public:
 
 	//----------------------------------------------------------------//
-	IVisitAdapter () {
+	AbstractVisitor () {
 	}
 
 	//----------------------------------------------------------------//
-	virtual ~IVisitAdapter () {
+	virtual ~AbstractVisitor () {
 	}
 
 	//----------------------------------------------------------------//
-	virtual void Visit ( IVisit& self, int x, int y ) const = 0;
+	virtual void Visit ( AbstractVisitable& self, int x, int y ) const = 0;
+};
+
+//================================================================//
+// Visitor
+//================================================================//
+template < typename TYPE >
+class Visitor :
+	public AbstractVisitor {
+public:
+
+	//----------------------------------------------------------------//
+	virtual void Visit ( AbstractVisitable& self, int x, int y ) const {
+	
+		void ( TYPE::*funcPtr )( int, int ) = &TYPE::AbstractVisitable_Visit;
+		( self.AsType < TYPE >()->*funcPtr )( x, y );
+	}
 };
 
 //----------------------------------------------------------------//
-void IVisit::VisitAll ( int x, int y ) {
+void AbstractVisitable::VisitAll ( int x, int y ) {
 
-	RTTIVisitor < IVisitAdapter > visitor = this->GetVisitor < IVisitAdapter >();
+	RTTIVisitor < AbstractVisitor > visitor = this->GetVisitor < AbstractVisitor >();
 	for ( ; visitor; ++visitor ) {
 		( *visitor ).Visit ( *this, x, y );
 	}
 }
 
-//================================================================//
-// VisitAdapter
-//================================================================//
-template < typename TYPE >
-class VisitAdapter :
-	public IVisitAdapter {
-public:
-
-	//----------------------------------------------------------------//
-	virtual void Visit ( IVisit& self, int x, int y ) const {
-		TYPE* cast = self.AsType < TYPE >();
-		assert ( cast );
-		cast->TYPE::IVisit_Visit ( x, y );
-	}
-};
 
 //================================================================//
 // A
 //================================================================//
 class A :
-	public IVisit {
+	public AbstractVisitable {
 public:
 
 	//----------------------------------------------------------------//
 	A () {
 		RTTI_BEGIN ( A )
-			RTTI_EXTEND ( IVisit )
-			RTTI_VISITOR ( IVisitAdapter, VisitAdapter < A >)
+			RTTI_VISITOR ( AbstractVisitor, Visitor < A >)
 		RTTI_END
 	}
 	
@@ -111,7 +111,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void IVisit_Visit ( int x, int y ) {
+	void AbstractVisitable_Visit ( int x, int y ) {
 		printf ( "VISIT FROM A: %d %d\n", x, y );
 	}
 };
@@ -128,7 +128,7 @@ public:
 	B () {
 		RTTI_BEGIN ( B )
 			RTTI_EXTEND ( A )
-			RTTI_VISITOR ( IVisitAdapter, VisitAdapter < B >)
+			RTTI_VISITOR ( AbstractVisitor, Visitor < B >)
 		RTTI_END
 	}
 	
@@ -142,7 +142,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void IVisit_Visit ( int x, int y ) {
+	void AbstractVisitable_Visit ( int x, int y ) {
 		printf ( "VISIT FROM B: %d %d\n", x, y );
 	}
 };
@@ -158,7 +158,7 @@ public:
 	C () {
 		RTTI_BEGIN ( C )
 			RTTI_EXTEND ( A )
-			RTTI_VISITOR ( IVisitAdapter, VisitAdapter < C >)
+			RTTI_VISITOR ( AbstractVisitor, Visitor < C >)
 		RTTI_END
 	}
 	
@@ -172,7 +172,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void IVisit_Visit ( int x, int y ) {
+	void AbstractVisitable_Visit ( int x, int y ) {
 		printf ( "VISIT FROM C: %d %d\n", x, y );
 	}
 };
@@ -190,7 +190,7 @@ public:
 		RTTI_BEGIN ( D )
 			RTTI_EXTEND ( B )
 			RTTI_EXTEND ( C )
-			RTTI_VISITOR ( IVisitAdapter, VisitAdapter < D >)
+			RTTI_VISITOR ( AbstractVisitor, Visitor < D >)
 		RTTI_END
 	}
 	
@@ -204,7 +204,7 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void IVisit_Visit ( int x, int y ) {
+	void AbstractVisitable_Visit ( int x, int y ) {
 		printf ( "VISIT FROM D: %d %d\n", x, y );
 	}
 };

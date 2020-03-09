@@ -344,8 +344,8 @@ MOAILuaUtil::~MOAILuaUtil () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAILuaUtil::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
+void MOAILuaUtil::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable[] = {
 		{ "convert",					_convert },
@@ -357,8 +357,8 @@ void MOAILuaUtil::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAIL
 }
 
 //----------------------------------------------------------------//
-void MOAILuaUtil::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
+void MOAILuaUtil::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 	UNUSED ( state );
 }
 

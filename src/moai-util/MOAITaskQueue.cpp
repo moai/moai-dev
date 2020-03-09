@@ -39,7 +39,7 @@ void MOAITaskQueue::Main () {
 MOAITaskQueue::MOAITaskQueue () :
 	mIsRunning ( false ) {
 
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAITaskQueue, MOAITaskQueue )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAITaskQueue, MOAILuaObject )
 }
 
 //----------------------------------------------------------------//
@@ -132,13 +132,13 @@ void MOAITaskQueue::Stop () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITaskQueue::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
+void MOAITaskQueue::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAITaskQueue::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	UNUSED ( composer );
+void MOAITaskQueue::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 	UNUSED ( state );
 }

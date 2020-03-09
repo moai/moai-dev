@@ -246,15 +246,13 @@ void MOAIFrameBufferGL::MOAIFrameBufferGL_AffirmBuffers () {
 }
 
 //----------------------------------------------------------------//
-void MOAIFrameBufferGL::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIFrameBuffer, MOAILuaObject_RegisterLuaClass ( composer, state ));
+void MOAIFrameBufferGL::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIFrameBufferGL::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIFrameBuffer, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+void MOAIFrameBufferGL::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getGrabbedImage",			_getGrabbedImage },

@@ -92,20 +92,19 @@ void MOAIProjectionProp::MOAIDrawable_DrawDebug ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIProjectionProp::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIPartitionHull, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	
+void MOAIProjectionProp::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
 	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAIProjectionProp >( TOTAL_DEBUG_LINE_STYLES );
 	
 	state.SetField ( -1, "DEBUG_DRAW_WORLD_BOUNDS",		MOAIDebugLinesMgr::Pack < MOAIProjectionProp >( DEBUG_DRAW_WORLD_BOUNDS ));
-	
 	state.SetField ( -1, "ATTR_FRONT",					AttrID::Pack ( ATTR_FRONT ).ToRaw ());
 }
 
 //----------------------------------------------------------------//
-void MOAIProjectionProp::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIPartitionHull, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	
+void MOAIProjectionProp::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
 	luaL_Reg regTable [] = {
 		{ "init",					_init },
 		{ NULL, NULL }
@@ -115,15 +114,13 @@ void MOAIProjectionProp::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer
 }
 
 //----------------------------------------------------------------//
-void MOAIProjectionProp::MOAILuaObject_SerializeIn ( MOAIComposer& composer, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIPartitionHull, MOAILuaObject_SerializeIn ( composer, state, serializer ));
+void MOAIProjectionProp::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIProjectionProp::MOAILuaObject_SerializeOut ( MOAIComposer& composer, MOAILuaState& state, MOAISerializer& serializer ) {
-	
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIPartitionHull, MOAILuaObject_SerializeOut ( composer, state, serializer ));
+void MOAIProjectionProp::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//

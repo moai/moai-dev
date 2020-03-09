@@ -32,13 +32,15 @@ MOAIMaterial::~MOAIMaterial () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIMaterial::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAIAbstractMaterialInterface::MOAILuaObject_RegisterLuaClass ( composer, state );
+void MOAIMaterial::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	UNUSED ( state );
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterial::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-	MOAIAbstractMaterialInterface::MOAILuaObject_RegisterLuaFuncs ( composer, state );
+void MOAIMaterial::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	UNUSED ( state );
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//

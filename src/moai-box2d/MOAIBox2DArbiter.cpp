@@ -261,7 +261,8 @@ void MOAIBox2DArbiter::PreSolve ( b2Contact* contact, const b2Manifold* oldManif
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIBox2DArbiter::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIBox2DArbiter::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "ALL", ( u32 )ALL );
 	state.SetField ( -1, "BEGIN", ( u32 )BEGIN );
@@ -278,7 +279,8 @@ void MOAIBox2DArbiter::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, 
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DArbiter::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIBox2DArbiter::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getContactNormal",			_getContactNormal },

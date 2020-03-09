@@ -79,7 +79,8 @@ void MOAIGfxMgr_RenderTree::Render () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxMgr_RenderTree::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIGfxMgr_RenderTree::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getRenderCount",				_getRenderCount },
@@ -92,6 +93,7 @@ void MOAIGfxMgr_RenderTree::MOAILuaObject_RegisterLuaClass ( MOAIComposer& compo
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgr_RenderTree::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
+void MOAIGfxMgr_RenderTree::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
+	if ( history.DidVisit ( *this )) return;
 }

@@ -614,10 +614,8 @@ void MOAITimer::MOAIAction_Update ( double step ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITimer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaClass ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaClass ( composer, state ));
+void MOAITimer::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "ATTR_TIME", AttrID::Pack ( ATTR_TIME ).ToRaw ());
 	
@@ -636,10 +634,8 @@ void MOAITimer::MOAILuaObject_RegisterLuaClass ( MOAIComposer& composer, MOAILua
 }
 
 //----------------------------------------------------------------//
-void MOAITimer::MOAILuaObject_RegisterLuaFuncs ( MOAIComposer& composer, MOAILuaState& state ) {
-
-	MOAI_CALL_SUPER_ONCE ( composer, MOAINode, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
-	MOAI_CALL_SUPER_ONCE ( composer, MOAIAction, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+void MOAITimer::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getSpeed",			_getSpeed },

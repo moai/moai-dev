@@ -25,12 +25,14 @@ class MOAIAbstractChildTransform :
 	public virtual MOAIAbstractBaseTransform {
 protected:
 
+	MOAI_LUA_OBJECT_VISITOR_FRIEND
+
 	//----------------------------------------------------------------//
 	static int	_setParent							( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void		MOAILuaObject_RegisterLuaClass		( MOAIComposer& composer, MOAILuaState& state );
-	void		MOAILuaObject_RegisterLuaFuncs		( MOAIComposer& composer, MOAILuaState& state );
+	void		MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void		MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
 	bool		MOAINode_ApplyAttrOp				( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	void		MOAINode_Update						();
 
