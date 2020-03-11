@@ -19,7 +19,6 @@ MOAIMaterial::MOAIMaterial () :
 	mTextures ( NULL ) {
 	
 	RTTI_BEGIN ( MOAIMaterial )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIMaterial >)
 		RTTI_EXTEND ( MOAIAbstractMaterial )
 	RTTI_END
 }

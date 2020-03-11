@@ -21,8 +21,8 @@ protected:
 	u32							mWidth;
 	u32							mHeight;
 
-	MOAITextureFilterEnum::_		mMinFilter;
-	MOAITextureFilterEnum::_		mMagFilter;
+	MOAITextureFilterEnum::_	mMinFilter;
+	MOAITextureFilterEnum::_	mMagFilter;
 	MOAITextureWrapEnum::_		mWrap;
 	
 	size_t						mTextureSize;

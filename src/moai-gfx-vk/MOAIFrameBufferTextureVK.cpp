@@ -14,7 +14,6 @@
 MOAIFrameBufferTextureVK::MOAIFrameBufferTextureVK () {
 	
 	RTTI_BEGIN ( MOAIFrameBufferTextureVK )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIFrameBufferTextureVK >)
 		RTTI_EXTEND ( MOAIFrameBufferVK )
 		RTTI_EXTEND ( MOAITextureVK )
 	RTTI_END

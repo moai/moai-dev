@@ -13,7 +13,6 @@
 MOAIImageTextureVK::MOAIImageTextureVK () {
 	
 	RTTI_BEGIN ( MOAIImageTextureVK )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIImageTextureVK >)
 		RTTI_EXTEND ( MOAIImageTexture )
 		RTTI_EXTEND ( MOAITextureVK )
 	RTTI_END

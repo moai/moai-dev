@@ -18,7 +18,6 @@
 MOAIPathGraph::MOAIPathGraph () {
 	
 	RTTI_BEGIN ( MOAIPathGraph )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIPathGraph >)
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }

@@ -23,13 +23,7 @@ class ZLImage;
 */
 class MOAITextureVK :
 	public virtual MOAITexture,
-	public virtual MOAIGfxResourceVK {
-protected:
-	
-	MOAI_LUA_OBJECT_VISITOR_FRIEND
-	
-	//----------------------------------------------------------------//
-	
+	public virtual MOAIGfxResourceVK {	
 public:
 	
 	//----------------------------------------------------------------//

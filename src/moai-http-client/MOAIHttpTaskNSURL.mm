@@ -111,7 +111,6 @@ MOAIHttpTaskNSURL::MOAIHttpTaskNSURL () :
 	mRequest ( 0 ) {
 		
 	RTTI_BEGIN ( MOAIHttpTaskNSURL )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIHttpTaskNSURL >)
 		RTTI_EXTEND ( MOAIHttpTaskBase )
 	RTTI_END
 }

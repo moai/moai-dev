@@ -28,7 +28,6 @@ MOAIAbstractMaterial::MOAIAbstractMaterial () :
 	mOverwrite ( true ) {
 	
 	RTTI_BEGIN ( MOAIAbstractMaterial )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractMaterial >)
 		RTTI_EXTEND ( MOAIAbstractMaterialInterface )
 	RTTI_END
 	

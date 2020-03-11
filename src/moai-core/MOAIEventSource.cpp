@@ -14,7 +14,6 @@
 MOAIEventSource::MOAIEventSource () {
 
 	RTTI_BEGIN ( MOAIEventSource )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIEventSource >)
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }
@@ -213,7 +212,6 @@ void MOAIGlobalEventSource::InvokeListener ( u32 eventID ) {
 MOAIGlobalEventSource::MOAIGlobalEventSource () {
 
 	RTTI_BEGIN ( MOAIGlobalEventSource )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIGlobalEventSource >)
 		RTTI_EXTEND ( MOAIEventSource )
 	RTTI_END
 }

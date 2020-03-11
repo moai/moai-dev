@@ -18,7 +18,6 @@ MOAITexture::MOAITexture () :
 	mTextureSize ( 0 ) {
 	
 	RTTI_BEGIN ( MOAITexture )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAITexture >)
 		RTTI_EXTEND ( MOAIGfxResource )
 	RTTI_END
 }

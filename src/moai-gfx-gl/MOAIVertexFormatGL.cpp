@@ -33,7 +33,6 @@ void MOAIVertexFormatGL::Bind ( ZLGfx& gfx, ZLSharedConstBuffer* buffer ) const 
 MOAIVertexFormatGL::MOAIVertexFormatGL () {
 	
 	RTTI_BEGIN ( MOAIVertexFormatGL )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIVertexFormatGL >)
 		RTTI_EXTEND ( MOAIVertexFormat )
 	RTTI_END
 }

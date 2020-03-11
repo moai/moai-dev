@@ -15,7 +15,6 @@
 MOAIIndexBufferVK::MOAIIndexBufferVK () {
 	
 	RTTI_BEGIN ( MOAIIndexBufferVK )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIIndexBufferVK >)
 		RTTI_EXTEND ( MOAIIndexBuffer )
 		RTTI_EXTEND ( MOAIGfxBufferVK )
 	RTTI_END

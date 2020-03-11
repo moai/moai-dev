@@ -12,6 +12,7 @@ private:
 
 	STLSet < ZLType::RAW_ID > mTypeIDs;
 	size_t mVisits;
+	size_t mRevisits;
 
 	//----------------------------------------------------------------//
 	bool DidVisit ( ZLType::RAW_ID typeID ) {
@@ -27,18 +28,28 @@ public:
 	size_t CountVisits () {
 		return this->mVisits;
 	}
+	
+	//----------------------------------------------------------------//
+	size_t CountRevisits () {
+		return this->mRevisits;
+	}
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
 	bool DidVisit ( TYPE& self ) {
 		UNUSED ( self );
 		this->mVisits++;
-		return this->DidVisit ( ZLType::RawID < TYPE >());
+		if ( this->DidVisit ( ZLType::RawID < TYPE >())) {
+			this->mRevisits++;
+			return true;
+		}
+		return false;
 	}
 	
 	//----------------------------------------------------------------//
 	RTTIVisitorHistory () :
-		mVisits ( 0 )  {
+		mVisits ( 0 ),
+		mRevisits ( 0 ) {
 	}
 };
 

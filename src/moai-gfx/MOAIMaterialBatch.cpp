@@ -25,7 +25,6 @@ MOAIMaterialBatch::MOAIMaterialBatch () :
 	mIndexBatchSize ( 1 ) {
 	
 	RTTI_BEGIN ( MOAIMaterialBatch )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIMaterialBatch >)
 		RTTI_EXTEND ( MOAIAbstractMaterialBatchInterface )
 	RTTI_END
 }

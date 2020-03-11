@@ -619,31 +619,6 @@ MOAIGfxMgrVK_VertexCacheVK& MOAIGfxMgrVK::MOAIGfxMgrVKComponents_GetVertexCacheV
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrVK::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-//	state.SetField ( -1, "EVENT_RESIZE",	( u32 )EVENT_RESIZE );
-//	
-//	state.SetField ( -1, "DRAWING_QUEUE",	( u32 )MOAIGfxMgrVK_PipelineClerkVK::DRAWING_QUEUE );
-//	state.SetField ( -1, "LOADING_QUEUE",	( u32 )MOAIGfxMgrVK_PipelineClerkVK::LOADING_QUEUE );
-//
-//	luaL_Reg regTable [] = {
-//		{ "enablePipelineLogging",		_enablePipelineLogging },
-//		{ "getFrameBuffer",				_getFrameBuffer },
-//		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAIGfxMgrVK > },
-//		{ "getMaxTextureSize",			_getMaxTextureSize },
-//		{ "getMaxTextureUnits",			_getMaxTextureUnits },
-//		{ "getViewSize",				_getViewSize },
-//		{ "purgeResources",				_purgeResources },
-//		{ "renewResources",				_renewResources },
-//		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAIGfxMgrVK > },
-//		{ NULL, NULL }
-//	};
-//
-//	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxMgrVK::ZLContextClass_Finalize () {
 	MOAIGfxMgr::ZLContextClass_Finalize ();
 

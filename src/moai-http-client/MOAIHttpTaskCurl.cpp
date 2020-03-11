@@ -228,7 +228,6 @@ MOAIHttpTaskCurl::MOAIHttpTaskCurl () :
 	mStream ( 0 ) {
 	
 	RTTI_BEGIN ( MOAIHttpTaskCurl )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIHttpTaskCurl >)
 		RTTI_EXTEND ( MOAIHttpTaskBase )
 	RTTI_END
 	

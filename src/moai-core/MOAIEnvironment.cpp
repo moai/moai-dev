@@ -260,3 +260,9 @@ void MOAIEnvironment::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& histo
 
 	luaL_register ( state, 0, regTable );
 }
+
+//----------------------------------------------------------------//
+void MOAIEnvironment::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	UNUSED ( state );
+	if ( history.DidVisit ( *this )) return;
+}

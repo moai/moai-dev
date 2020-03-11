@@ -524,6 +524,7 @@ void MOAILuaObject::RegisterLuaClass ( MOAILuaState& state ) {
 	for ( ; visitorIt; ++visitorIt ) {
 		( *visitorIt ).RegisterLuaClass ( *this, history, state );
 		assert ( history.CountVisits () == ( visitorIt.GetCount () + 1 ));
+		assert ( history.CountRevisits () == 0 );
 	}
 }
 
@@ -535,6 +536,7 @@ void MOAILuaObject::RegisterLuaFuncs ( MOAILuaState& state ) {
 	for ( ; visitorIt; ++visitorIt ) {
 		( *visitorIt ).RegisterLuaFuncs ( *this, history, state );
 		assert ( history.CountVisits () == ( visitorIt.GetCount () + 1 ));
+		assert ( history.CountRevisits () == 0 );
 	}
 }
 
@@ -546,6 +548,7 @@ void MOAILuaObject::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seriali
 	for ( ; visitorIt; ++visitorIt ) {
 		( *visitorIt ).SerializeIn ( *this, history, state, serializer );
 		assert ( history.CountVisits () == ( visitorIt.GetCount () + 1 ));
+		assert ( history.CountRevisits () == 0 );
 	}
 }
 
@@ -557,6 +560,7 @@ void MOAILuaObject::SerializeOut ( MOAILuaState& state, MOAISerializer& serializ
 	for ( ; visitorIt; ++visitorIt ) {
 		( *visitorIt ).SerializeOut ( *this, history, state, serializer );
 		assert ( history.CountVisits () == ( visitorIt.GetCount () + 1 ));
+		assert ( history.CountRevisits () == 0 );
 	}
 }
 

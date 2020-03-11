@@ -157,7 +157,6 @@
 MOAIFrameBufferVK::MOAIFrameBufferVK () {
 	
 	RTTI_BEGIN ( MOAIFrameBufferVK )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIFrameBufferVK >)
 		RTTI_EXTEND ( MOAIFrameBuffer )
 	RTTI_END
 }

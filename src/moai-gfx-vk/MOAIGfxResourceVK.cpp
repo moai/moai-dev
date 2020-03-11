@@ -15,7 +15,6 @@
 MOAIGfxResourceVK::MOAIGfxResourceVK () {
 
 	RTTI_BEGIN ( MOAIGfxResourceVK )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIGfxResourceVK >)
 		RTTI_EXTEND ( MOAIGfxResource )
 	RTTI_END
 }

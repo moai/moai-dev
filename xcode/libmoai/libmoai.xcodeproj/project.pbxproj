@@ -1149,6 +1149,7 @@
 		CD1D85EA1E1F36560089FFAD /* MOAIDeckProxy.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD67B45E1B264C9C004298CF /* MOAIDeckProxy.cpp */; };
 		CD212E272416C6D7000FC3BD /* ZLRttiVisitorHistory.h in Headers */ = {isa = PBXBuildFile; fileRef = CD212E262416C6D7000FC3BD /* ZLRttiVisitorHistory.h */; };
 		CD212E2924182868000FC3BD /* ZLFinalizationVisitor.h in Headers */ = {isa = PBXBuildFile; fileRef = CD212E2824182868000FC3BD /* ZLFinalizationVisitor.h */; };
+		CD212E2D24194ED2000FC3BD /* MOAILuaObjectVisitor.h in Headers */ = {isa = PBXBuildFile; fileRef = CD212E2B24194ED2000FC3BD /* MOAILuaObjectVisitor.h */; };
 		CD21C20821CB91A000B3C66E /* MOAIAbstractChildTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD21C20421CB91A000B3C66E /* MOAIAbstractChildTransform.cpp */; };
 		CD21C20921CB91A100B3C66E /* MOAIAbstractChildTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD21C20421CB91A000B3C66E /* MOAIAbstractChildTransform.cpp */; };
 		CD21C20A21CB91A100B3C66E /* MOAIAbstractChildTransform.h in Headers */ = {isa = PBXBuildFile; fileRef = CD21C20521CB91A000B3C66E /* MOAIAbstractChildTransform.h */; };
@@ -5910,6 +5911,7 @@
 		CD1D85E11E1F14480089FFAD /* ZLBounds.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLBounds.cpp; sourceTree = "<group>"; };
 		CD212E262416C6D7000FC3BD /* ZLRttiVisitorHistory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLRttiVisitorHistory.h; sourceTree = "<group>"; };
 		CD212E2824182868000FC3BD /* ZLFinalizationVisitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLFinalizationVisitor.h; sourceTree = "<group>"; };
+		CD212E2B24194ED2000FC3BD /* MOAILuaObjectVisitor.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAILuaObjectVisitor.h; sourceTree = "<group>"; };
 		CD218F8413A7FD6E008337E7 /* ls_sqlite3.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ls_sqlite3.c; path = "../../3rdparty/luasql-2.2.0/src/ls_sqlite3.c"; sourceTree = SOURCE_ROOT; };
 		CD218F8513A7FD6E008337E7 /* luasql.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = luasql.c; path = "../../3rdparty/luasql-2.2.0/src/luasql.c"; sourceTree = SOURCE_ROOT; };
 		CD218F8613A7FD6E008337E7 /* luasql.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = luasql.h; path = "../../3rdparty/luasql-2.2.0/src/luasql.h"; sourceTree = SOURCE_ROOT; };
@@ -9060,8 +9062,6 @@
 				CDE93C191B34EF370051ADA1 /* moai_version.h */,
 				CDCDE224204F66C4005CD590 /* MOAICanary.cpp */,
 				CDCDE223204F66C4005CD590 /* MOAICanary.h */,
-				89BE6AD0173975E500DFE837 /* MOAIDeserializer.cpp */,
-				89BE6AD1173975E500DFE837 /* MOAIDeserializer.h */,
 				CD1845BE1A62751200FCCCE0 /* MOAIEnvironment.cpp */,
 				CD1845BF1A62751200FCCCE0 /* MOAIEnvironment.h */,
 				89BE6AD2173975E500DFE837 /* MOAIEventSource.cpp */,
@@ -9588,6 +9588,7 @@
 				CD17123B22F446BA00381882 /* MOAILuaLocal.h */,
 				CD17123C22F446BA00381882 /* MOAILuaObject.cpp */,
 				CD17123D22F446BA00381882 /* MOAILuaObject.h */,
+				CD212E2B24194ED2000FC3BD /* MOAILuaObjectVisitor.h */,
 				CD17123E22F446BA00381882 /* MOAILuaRef.cpp */,
 				CD17123F22F446BA00381882 /* MOAILuaRef.h */,
 				CD17124022F446BA00381882 /* MOAILuaRefTable.cpp */,
@@ -9620,6 +9621,8 @@
 		CD17123622F4468700381882 /* serialization */ = {
 			isa = PBXGroup;
 			children = (
+				89BE6AD0173975E500DFE837 /* MOAIDeserializer.cpp */,
+				89BE6AD1173975E500DFE837 /* MOAIDeserializer.h */,
 				CD17128222F446E000381882 /* MOAISerializer.cpp */,
 				CD17128322F446E000381882 /* MOAISerializer.h */,
 				CD17128422F446E000381882 /* MOAISerializerBase.cpp */,
@@ -13727,6 +13730,7 @@
 				89BE6AF9173975E500DFE837 /* headers.h in Headers */,
 				89BE6AFD173975E500DFE837 /* host.h in Headers */,
 				CD5F96FA1C2BCD0D000FA476 /* MOAIFourier.h in Headers */,
+				CD212E2D24194ED2000FC3BD /* MOAILuaObjectVisitor.h in Headers */,
 				CD2FB1B91C473B15005F8D8D /* MOAIConditionVariable.h in Headers */,
 				CD17127B22F446C500381882 /* MOAIScriptNode.h in Headers */,
 				CDCDE226204F66C4005CD590 /* MOAICanary.h in Headers */,

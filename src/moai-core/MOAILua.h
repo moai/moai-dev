@@ -7,6 +7,7 @@
 #include <moai-core/MOAILuaState.h>
 #include <moai-core/MOAIScopedLuaState.h>
 #include <moai-core/MOAILuaObject.h>
+#include <moai-core/MOAILuaObjectVisitor.h>
 #include <moai-core/MOAILuaClass.h>
 #include <moai-core/MOAILuaSharedPtr.h>
 #include <moai-core/MOAILuaState.h>

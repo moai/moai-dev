@@ -25,7 +25,6 @@ MOAIGfxBufferVK::MOAIGfxBufferVK () :
 	mUsage ( 0 ) {
 		
 	RTTI_BEGIN ( MOAIGfxBufferVK )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIGfxBufferVK >)
 		RTTI_EXTEND ( MOAIGfxResourceVK )
 		RTTI_EXTEND ( MOAIGfxBuffer )
 	RTTI_END

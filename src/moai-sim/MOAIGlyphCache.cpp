@@ -14,7 +14,6 @@
 MOAIGlyphCache::MOAIGlyphCache () {
 	
 	RTTI_BEGIN ( MOAIGlyphCache )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIGlyphCache >)
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }

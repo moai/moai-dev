@@ -99,7 +99,6 @@ MOAIGfxComposerVK& MOAIShaderVK::GetGfxComposer () {
 MOAIShaderVK::MOAIShaderVK () {
 
 	RTTI_BEGIN ( MOAIShaderVK )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIShaderVK >)
 		RTTI_EXTEND ( MOAIShader )
 		RTTI_EXTEND ( MOAINode )
 	RTTI_END

@@ -22,7 +22,6 @@ MOAIParticleCallbackPlugin::MOAIParticleCallbackPlugin () :
 	mRenderFunc ( 0 ) {
 	
 	RTTI_BEGIN ( MOAIParticleCallbackPlugin )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIParticleCallbackPlugin >)
 		RTTI_EXTEND ( MOAIParticlePlugin )
 	RTTI_END
 }

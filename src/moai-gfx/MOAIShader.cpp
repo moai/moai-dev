@@ -30,7 +30,6 @@ bool MOAIShader::IsReadyForUse () const {
 MOAIShader::MOAIShader () {
 	
 	RTTI_BEGIN ( MOAIShader )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIShader >)
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }

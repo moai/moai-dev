@@ -299,7 +299,6 @@ MOAIShaderVK* MOAIShaderMgrVK::GetShader ( MOAIShaderPresetEnum shaderID ) {
 MOAIShaderMgrVK::MOAIShaderMgrVK () {
 	
 	RTTI_BEGIN ( MOAIShaderMgrVK )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIShaderMgrVK >)
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 

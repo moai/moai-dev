@@ -17,7 +17,6 @@ MOAIFrameBuffer::MOAIFrameBuffer () :
 	mNeedsClear ( true ) {
 	
 	RTTI_BEGIN ( MOAIFrameBuffer )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIFrameBuffer >)
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }

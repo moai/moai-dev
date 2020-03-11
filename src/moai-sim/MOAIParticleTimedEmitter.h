@@ -29,19 +29,18 @@ private:
 	float			GetRandomFrequency		();
 	
 	//----------------------------------------------------------------//
-	void			MOAIAction_Update		( double step );
+	void			MOAIAction_Update						( double step );
+	void			MOAILuaObject_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			MOAILuaObject_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAIParticleTimedEmitter )
 
-
 	//----------------------------------------------------------------//
-					MOAIParticleTimedEmitter	();
-					~MOAIParticleTimedEmitter	();
-	void			MOAILuaObject_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			SetFrequencyRange			( float min, float max );
+					MOAIParticleTimedEmitter		();
+					~MOAIParticleTimedEmitter		();
+	void			SetFrequencyRange				( float min, float max );
 };
 
 #endif
