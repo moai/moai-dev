@@ -941,7 +941,9 @@ MOAITransform::MOAITransform () :
 	mRot ( ZLVec3D::ORIGIN ),
 	mEulerOrder ( EULER_XYZ ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAITransform )
+	RTTI_BEGIN ( MOAITransform )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAITransform >)
+		RTTI_VISITOR ( MOAIAbstractLuaSerializationVisitor, MOAILuaSerializationVisitor < MOAITransform >)
 		RTTI_EXTEND ( MOAIAbstractChildTransform )
 	RTTI_END
 }

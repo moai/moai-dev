@@ -292,7 +292,8 @@ void MOAITextStyle::Init ( MOAITextStyleState& style ) {
 //----------------------------------------------------------------//
 MOAITextStyle::MOAITextStyle () {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAITextStyle )
+	RTTI_BEGIN ( MOAITextStyle )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAITextStyle >)
 		RTTI_EXTEND ( MOAINode )
 	RTTI_END
 }
@@ -354,18 +355,4 @@ void MOAITextStyle::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAITextStyle::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAITextStyle::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
 }

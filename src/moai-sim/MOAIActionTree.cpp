@@ -90,8 +90,11 @@ MOAIActionTree::MOAIActionTree () :
 	mRoot ( 0 ),
 	mProfilingEnabled ( false ),
 	mThreadInfoEnabled ( false ) {
-	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIActionTree, MOAIAction )
+		
+	RTTI_BEGIN ( MOAIActionTree )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIActionTree >)
+		RTTI_EXTEND ( MOAIAction )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

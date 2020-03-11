@@ -113,7 +113,8 @@ ZLRect MOAIScissorRect::GetScissorRect ( const ZLMatrix4x4& worldToWndMtx ) cons
 MOAIScissorRect::MOAIScissorRect () :
  	mRect ( ZLRect::EMPTY ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIScissorRect )
+	RTTI_BEGIN ( MOAIScissorRect )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIScissorRect >)
 		RTTI_EXTEND ( MOAITransform )
 	RTTI_END
 }

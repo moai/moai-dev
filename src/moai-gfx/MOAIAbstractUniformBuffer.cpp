@@ -67,7 +67,8 @@ const MOAIUniformSchema* MOAIAbstractUniformBuffer::GetSchema () const {
 //----------------------------------------------------------------//
 MOAIAbstractUniformBuffer::MOAIAbstractUniformBuffer () {
 
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIAbstractUniformBuffer )
+	RTTI_BEGIN ( MOAIAbstractUniformBuffer )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractUniformBuffer >)
 		RTTI_EXTEND ( MOAINode )
 	RTTI_END
 }

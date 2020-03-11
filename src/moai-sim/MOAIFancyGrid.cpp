@@ -266,8 +266,11 @@ ZLColorVec MOAIFancyGrid::GetTileColor ( int xTile, int yTile ) const {
 MOAIFancyGrid::MOAIFancyGrid () :
 	mColorSize ( COLOR_SIZE_32 ),
 	mColorSet ( 0 ) {
-	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIFancyGrid, MOAIGrid )
+		
+	RTTI_BEGIN ( MOAIFancyGrid )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIFancyGrid >)
+		RTTI_EXTEND ( MOAIGrid )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//
@@ -389,14 +392,4 @@ void MOAIFancyGrid::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIFancyGrid::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIFancyGrid::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
 }

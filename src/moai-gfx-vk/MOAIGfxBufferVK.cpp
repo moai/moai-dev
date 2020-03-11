@@ -24,7 +24,8 @@ void MOAIGfxBufferVK::Initialize ( ZLSize size, VkBufferUsageFlags usage ) {
 MOAIGfxBufferVK::MOAIGfxBufferVK () :
 	mUsage ( 0 ) {
 		
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIGfxBufferVK )
+	RTTI_BEGIN ( MOAIGfxBufferVK )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIGfxBufferVK >)
 		RTTI_EXTEND ( MOAIGfxResourceVK )
 		RTTI_EXTEND ( MOAIGfxBuffer )
 	RTTI_END
@@ -44,24 +45,4 @@ MOAIGfxBufferSnapshotVK* MOAIGfxBufferVK::MOAIAbstractSnapshotFactoryVK_GetSnaps
 	MOAIGfxBufferSnapshotVK* snapshot = new MOAIGfxBufferSnapshotVK ();
 	snapshot->Initialize ( commandBuffer.GetLogicalDevice (), *this );
 	return snapshot;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxBufferVK::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxBufferVK::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxBufferVK::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxBufferVK::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
 }

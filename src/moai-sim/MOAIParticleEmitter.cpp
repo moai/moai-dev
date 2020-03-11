@@ -260,7 +260,8 @@ MOAIParticleEmitter::MOAIParticleEmitter () :
 	mEmission ( 0 ),
 	mParticleState ( 0 ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIParticleEmitter )
+	RTTI_BEGIN ( MOAIParticleEmitter )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIParticleEmitter >)
 		RTTI_EXTEND ( MOAITransform )
 		RTTI_EXTEND ( MOAIAction )
 	RTTI_END
@@ -334,16 +335,6 @@ void MOAIParticleEmitter::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& h
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleEmitter::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleEmitter::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//

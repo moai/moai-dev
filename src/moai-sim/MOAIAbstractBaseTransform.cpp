@@ -309,8 +309,11 @@ const ZLAffine3D& MOAIAbstractBaseTransform::GetWorldToLocalMtx () const {
 
 //----------------------------------------------------------------//
 MOAIAbstractBaseTransform::MOAIAbstractBaseTransform () {
-	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIAbstractBaseTransform, MOAINode )
+		
+	RTTI_BEGIN ( MOAIAbstractBaseTransform )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractBaseTransform >)
+		RTTI_EXTEND ( MOAINode )
+	RTTI_END
 	
 	this->mLocalToWorldMtx.Ident ();
 	this->mWorldToLocalMtx.Ident ();

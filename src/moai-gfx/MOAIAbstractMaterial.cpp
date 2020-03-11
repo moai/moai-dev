@@ -27,7 +27,8 @@ u32 MOAIMaterialGlobals::GetNamedGlobalID ( MOAILuaState& state, int idx ) {
 MOAIAbstractMaterial::MOAIAbstractMaterial () :
 	mOverwrite ( true ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIAbstractMaterial )
+	RTTI_BEGIN ( MOAIAbstractMaterial )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractMaterial >)
 		RTTI_EXTEND ( MOAIAbstractMaterialInterface )
 	RTTI_END
 	

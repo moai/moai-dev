@@ -56,7 +56,8 @@ ZLVec3D MOAIStretchDeck::BindStretchVertexTransform () const {
 MOAIStretchDeck::MOAIStretchDeck () :
 	mStretchFactor ( 1.0f ) {
 
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIStretchDeck )
+	RTTI_BEGIN ( MOAIStretchDeck )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIStretchDeck >)
 		RTTI_EXTEND ( MOAIDeck )
 	RTTI_END
 }

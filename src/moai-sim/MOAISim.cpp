@@ -746,8 +746,11 @@ MOAISim::MOAISim () :
 	mGCActive ( true ),
 	mSmoothIdx ( 0 ),
 	mGCStep ( 0 ) {
-	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAISim, MOAIGlobalEventSource )
+		
+	RTTI_BEGIN ( MOAISim )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAISim >)
+		RTTI_EXTEND ( MOAIGlobalEventSource )
+	RTTI_END
 	
 	for ( u32 i = 0; i < FPS_BUFFER_SIZE; ++i ) {
 		this->mFrameRateBuffer [ i ] = 0.0f;

@@ -350,7 +350,8 @@ int MOAIBox2DRevoluteJoint::_setMotorEnabled ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIBox2DRevoluteJoint::MOAIBox2DRevoluteJoint () {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIBox2DRevoluteJoint )
+	RTTI_BEGIN ( MOAIBox2DRevoluteJoint )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIBox2DRevoluteJoint >)
 		RTTI_EXTEND ( MOAIBox2DJoint )
 	RTTI_END
 }

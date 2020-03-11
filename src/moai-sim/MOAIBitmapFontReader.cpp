@@ -247,7 +247,8 @@ MOAIBitmapFontReader::MOAIBitmapFontReader () :
 	mCurrentPageSize ( 0.0f ),
 	mCurrentGlyph ( 0 ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIBitmapFontReader )
+	RTTI_BEGIN ( MOAIBitmapFontReader )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIBitmapFontReader >)
 		RTTI_EXTEND ( MOAIFontReader )
 	RTTI_END
 }
@@ -328,14 +329,4 @@ void MOAIBitmapFontReader::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& 
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIBitmapFontReader::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIBitmapFontReader::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
 }

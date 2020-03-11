@@ -291,7 +291,8 @@ MOAIStretchPatch2D::MOAIStretchPatch2D () :
 	mRect ( ZLRect::EMPTY ),
 	mNeedsUpdate ( true ) {
 
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIStretchPatch2D )
+	RTTI_BEGIN ( MOAIStretchPatch2D )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIStretchPatch2D >)
 		RTTI_EXTEND ( MOAIStretchDeck )
 		RTTI_EXTEND ( MOAIHasMaterialBatch )
 	RTTI_END
@@ -445,18 +446,4 @@ void MOAIStretchPatch2D::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& hi
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIStretchPatch2D::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIStretchPatch2D::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
 }

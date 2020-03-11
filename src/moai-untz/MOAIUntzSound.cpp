@@ -380,8 +380,11 @@ MOAIUntzSound::MOAIUntzSound () :
 	mSound ( 0 ),
 	mFilename ( 0 ),
 	mInMemory ( false ) {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIUntzSound, MOAINode )
+	
+	RTTI_BEGIN ( MOAIUntzSound )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIUntzSound >)
+		RTTI_EXTEND ( MOAINode )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

@@ -25,7 +25,7 @@
 //----------------------------------------------------------------//
 MOAIGraphicsProp::MOAIGraphicsProp () {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIGraphicsProp )
+	RTTI_BEGIN ( MOAIGraphicsProp )
 		RTTI_EXTEND ( MOAIHasDeckAndIndex )
 		RTTI_EXTEND ( MOAIGraphicsPropBase )
 	RTTI_END
@@ -68,26 +68,6 @@ bool MOAIGraphicsProp::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr
 	if ( MOAIHasDeckAndIndex::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
 	if ( MOAIGraphicsPropBase::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
 	return false;
-}
-
-//----------------------------------------------------------------//
-void MOAIGraphicsProp::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIGraphicsProp::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIGraphicsProp::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIGraphicsProp::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//

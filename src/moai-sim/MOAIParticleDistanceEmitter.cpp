@@ -60,7 +60,8 @@ MOAIParticleDistanceEmitter::MOAIParticleDistanceEmitter () :
 	mMaxDistance ( 0.0f ),
 	mEmitDistance ( 0.0f ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIParticleDistanceEmitter )
+	RTTI_BEGIN ( MOAIParticleDistanceEmitter )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIParticleDistanceEmitter >)
 		RTTI_EXTEND ( MOAIParticleEmitter )
 	RTTI_END
 	

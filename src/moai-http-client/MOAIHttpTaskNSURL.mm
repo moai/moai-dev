@@ -109,8 +109,11 @@ MOAIHttpTaskNSURL::MOAIHttpTaskNSURL () :
 	mCanceled ( false ),
 	mStream ( 0 ),
 	mRequest ( 0 ) {
-	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIHttpTaskNSURL, MOAIHttpTaskBase )
+		
+	RTTI_BEGIN ( MOAIHttpTaskNSURL )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIHttpTaskNSURL >)
+		RTTI_EXTEND ( MOAIHttpTaskBase )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//
@@ -283,16 +286,6 @@ void MOAIHttpTaskNSURL::SetVerbose ( bool verbose ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIHttpTaskNSURL::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIHttpTaskNSURL::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	
-	if ( history.DidVisit ( *this )) return;
-}
 
 //================================================================//
 // MOAIHttpTaskNSURLDelegate

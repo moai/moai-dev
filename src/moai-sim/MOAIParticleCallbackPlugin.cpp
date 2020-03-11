@@ -20,8 +20,11 @@ void MOAIParticleCallbackPlugin::Init ( AKUParticleInitFunc initFunc, AKUParticl
 MOAIParticleCallbackPlugin::MOAIParticleCallbackPlugin () :
 	mInitFunc ( 0 ),
 	mRenderFunc ( 0 ) {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIParticleCallbackPlugin, MOAIParticlePlugin )
+	
+	RTTI_BEGIN ( MOAIParticleCallbackPlugin )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIParticleCallbackPlugin >)
+		RTTI_EXTEND ( MOAIParticlePlugin )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//
@@ -49,12 +52,3 @@ void MOAIParticleCallbackPlugin::OnRender ( float* particle, float* registers, A
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIParticleCallbackPlugin::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleCallbackPlugin::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-

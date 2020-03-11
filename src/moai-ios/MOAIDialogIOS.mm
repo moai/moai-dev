@@ -114,8 +114,11 @@ int MOAIDialogIOS::_showDialog ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 MOAIDialogIOS::MOAIDialogIOS () {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIDialogIOS, MOAILuaObject )
+	
+	RTTI_BEGIN ( MOAIDialogIOS )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIDialogIOS >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

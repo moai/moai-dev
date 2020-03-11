@@ -54,7 +54,8 @@ bool MOAIStaticGlyphCache::IsDynamic () {
 //----------------------------------------------------------------//
 MOAIStaticGlyphCache::MOAIStaticGlyphCache () {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIStaticGlyphCache )
+	RTTI_BEGIN ( MOAIStaticGlyphCache )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIStaticGlyphCache >)
 		RTTI_EXTEND ( MOAIGlyphCache )
 	RTTI_END
 }
@@ -116,25 +117,3 @@ void MOAIStaticGlyphCache::SetTexture ( ZLIndex id, MOAITexture* texture ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIStaticGlyphCache::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIStaticGlyphCache::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIStaticGlyphCache::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIStaticGlyphCache::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
-}

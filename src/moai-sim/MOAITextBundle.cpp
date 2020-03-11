@@ -239,17 +239,20 @@ const char *MOAITextBundle::Lookup(const char *key) {
 }
 
 //----------------------------------------------------------------//
-MOAITextBundle::MOAITextBundle ()
-: mData(0)
-{
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAITextBundle, MOAILuaObject )
+MOAITextBundle::MOAITextBundle () :
+	mData ( 0 ) {
+	
+	RTTI_BEGIN ( MOAITextBundle )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAITextBundle >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 
-	Clear();
+	Clear ();
 }
 
 //----------------------------------------------------------------//
 MOAITextBundle::~MOAITextBundle () {
-	Clear();
+	Clear ();
 }
 
 //================================================================//

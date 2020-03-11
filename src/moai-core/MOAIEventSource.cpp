@@ -13,7 +13,8 @@
 //----------------------------------------------------------------//
 MOAIEventSource::MOAIEventSource () {
 
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIEventSource )
+	RTTI_BEGIN ( MOAIEventSource )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIEventSource >)
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }
@@ -131,7 +132,8 @@ void MOAIInstanceEventSource::InvokeListenerWithSelf ( u32 eventID ) {
 //----------------------------------------------------------------//
 MOAIInstanceEventSource::MOAIInstanceEventSource () {
 
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIInstanceEventSource )
+	RTTI_BEGIN ( MOAIInstanceEventSource )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIInstanceEventSource >)
 		RTTI_EXTEND ( MOAIEventSource )
 	RTTI_END
 }
@@ -210,7 +212,8 @@ void MOAIGlobalEventSource::InvokeListener ( u32 eventID ) {
 //----------------------------------------------------------------//
 MOAIGlobalEventSource::MOAIGlobalEventSource () {
 
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIGlobalEventSource )
+	RTTI_BEGIN ( MOAIGlobalEventSource )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIGlobalEventSource >)
 		RTTI_EXTEND ( MOAIEventSource )
 	RTTI_END
 }

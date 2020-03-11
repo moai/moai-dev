@@ -65,8 +65,11 @@ MOAIMotionSensor::MOAIMotionSensor () :
 	mX ( 0.0f ),
 	mY ( 0.0f ),
 	mZ ( 0.0f ) {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIMotionSensor, MOAISensor )
+	
+	RTTI_BEGIN ( MOAIMotionSensor )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIMotionSensor >)
+		RTTI_EXTEND ( MOAISensor )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

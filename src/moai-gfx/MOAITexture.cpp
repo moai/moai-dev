@@ -16,8 +16,11 @@ MOAITexture::MOAITexture () :
 	mMagFilter ( MOAITextureFilterEnum::NEAREST ),
 	mWrap ( MOAITextureWrapEnum::CLAMP ),
 	mTextureSize ( 0 ) {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAITexture, MOAIGfxResource )
+	
+	RTTI_BEGIN ( MOAITexture )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAITexture >)
+		RTTI_EXTEND ( MOAIGfxResource )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

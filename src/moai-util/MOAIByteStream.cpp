@@ -74,7 +74,8 @@ void MOAIByteStream::Close () {
 MOAIByteStream::MOAIByteStream () :
 	mData ( 0 ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIByteStream )
+	RTTI_BEGIN ( MOAIByteStream )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIByteStream >)
 		RTTI_EXTEND ( MOAIStream )
 	RTTI_END
 }

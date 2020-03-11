@@ -32,8 +32,6 @@ protected:
 //	bool					IsDirty						();
 
 	//----------------------------------------------------------------//
-	void					MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
 	bool					MOAINode_ApplyAttrOp				( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	void					MOAIShader_ComposeUniforms			();
 	bool					MOAIShader_IsReadyForUse			() const;

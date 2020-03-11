@@ -411,7 +411,8 @@ MOAIParticleSystem::MOAIParticleSystem () :
 	mDrawOrder ( ORDER_NORMAL ),
 	mComputeBounds ( false ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIParticleSystem )
+	RTTI_BEGIN ( MOAIParticleSystem )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIParticleSystem >)
 		RTTI_EXTEND ( MOAIGraphicsProp )
 		RTTI_EXTEND ( MOAIAction )
 	RTTI_END
@@ -707,14 +708,4 @@ void MOAIParticleSystem::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& hi
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleSystem::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleSystem::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
 }

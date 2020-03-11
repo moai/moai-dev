@@ -213,8 +213,11 @@ MOAIInputMgr::MOAIInputMgr () :
 	mAutosuspended ( false ),
 	mLastUpdate ( 0 ),
 	mPlayback ( false ) {
-	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIInputMgr, MOAILuaObject )
+		
+	RTTI_BEGIN ( MOAIInputMgr )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIInputMgr >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 	
 	this->SetChunkSize ( CHUNK_SIZE );
 }

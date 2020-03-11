@@ -13,7 +13,8 @@
 //----------------------------------------------------------------//
 MOAITextureVK::MOAITextureVK () {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAITextureVK )
+	RTTI_BEGIN ( MOAITextureVK )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAITextureVK >)
 		RTTI_EXTEND ( MOAITexture )
 		RTTI_EXTEND ( MOAIGfxResourceVK )
 	RTTI_END
@@ -28,11 +29,3 @@ MOAITextureVK::~MOAITextureVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITextureVK::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAITextureVK::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}

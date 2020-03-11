@@ -30,8 +30,6 @@ protected:
 	MOAITextureSnapshot2DVK*		MOAIAbstractSnapshotFactoryVK_GetSnapshot		( MOAICommandBufferVK& commandBuffer );
 	bool							MOAIGfxResource_FinishLoading					();
 	bool							MOAIGfxResource_IsReadyForUse					() const;
-	void							MOAILuaObject_RegisterLuaClass					( RTTIVisitorHistory& history, MOAILuaState& state );
-	void							MOAILuaObject_RegisterLuaFuncs					( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 			

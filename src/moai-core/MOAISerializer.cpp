@@ -348,7 +348,8 @@ bool MOAISerializer::IsSimpleStringKey ( cc8* str ) {
 MOAISerializer::MOAISerializer () :
 	mBase64 ( true ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAISerializer )
+	RTTI_BEGIN ( MOAISerializer )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAISerializer >)
 		RTTI_EXTEND ( MOAISerializerBase )
 	RTTI_END
 }

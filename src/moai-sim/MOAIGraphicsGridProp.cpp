@@ -176,7 +176,7 @@ void MOAIGraphicsGridProp::GetGridFrameInView ( const ZLAffine3D& worldToLocalMt
 //----------------------------------------------------------------//
 MOAIGraphicsGridProp::MOAIGraphicsGridProp () {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIGraphicsGridProp )
+	RTTI_BEGIN ( MOAIGraphicsGridProp )
 		RTTI_EXTEND ( MOAIHasDeckAndGrid )
 		RTTI_EXTEND ( MOAIGraphicsPropBase )
 	RTTI_END
@@ -226,26 +226,6 @@ void MOAIGraphicsGridProp::MOAIDrawable_Draw ( int subPrimID ) {
 	this->DrawGrid ( c0, c1 );
 	
 	this->PopGfxState ();
-}
-
-//----------------------------------------------------------------//
-void MOAIGraphicsGridProp::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIGraphicsGridProp::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIGraphicsGridProp::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIGraphicsGridProp::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//

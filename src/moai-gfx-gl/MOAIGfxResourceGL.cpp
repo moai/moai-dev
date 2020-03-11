@@ -175,7 +175,8 @@ MOAIGfxResourceGL::MOAIGfxResourceGL () :
 	mState ( STATE_UNINITIALIZED ),
 	mLastRenderCount ( 0 ) {
 
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIGfxResourceGL )
+	RTTI_BEGIN ( MOAIGfxResourceGL )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIGfxResourceGL >)
 		RTTI_EXTEND ( MOAIGfxResource )
 		RTTI_EXTEND ( MOAIInstanceEventSource )
 	RTTI_END

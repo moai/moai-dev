@@ -268,7 +268,8 @@ MOAIPartitionViewLayer::MOAIPartitionViewLayer () :
 	mSortInViewSpace ( false ),
 	mPartitionCull2D ( true ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIPartitionViewLayer )
+	RTTI_BEGIN ( MOAIPartitionViewLayer )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIPartitionViewLayer >)
 		RTTI_EXTEND ( MOAIPartitionHolder )
 		RTTI_EXTEND ( MOAIAbstractViewLayer )
 	RTTI_END
@@ -334,14 +335,4 @@ void MOAIPartitionViewLayer::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIPartitionViewLayer::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIPartitionViewLayer::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
 }

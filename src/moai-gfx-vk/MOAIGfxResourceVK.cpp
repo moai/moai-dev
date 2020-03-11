@@ -14,7 +14,8 @@
 //----------------------------------------------------------------//
 MOAIGfxResourceVK::MOAIGfxResourceVK () {
 
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIGfxResourceVK )
+	RTTI_BEGIN ( MOAIGfxResourceVK )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIGfxResourceVK >)
 		RTTI_EXTEND ( MOAIGfxResource )
 	RTTI_END
 }
@@ -39,14 +40,4 @@ void MOAIGfxResourceVK::MOAIGfxResource_ScheduleForGPUDestroy () {
 //----------------------------------------------------------------//
 bool MOAIGfxResourceVK::MOAIGfxResource_ScheduleForGPUUpdate () {
 	return true;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxResourceVK::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxResourceVK::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
 }

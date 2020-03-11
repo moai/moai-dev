@@ -19,10 +19,6 @@ private:
 	AKUParticleInitFunc			mInitFunc;
 	AKUParticleRenderFunc		mRenderFunc;
 
-	//----------------------------------------------------------------//
-	void			MOAILuaObject_RegisterLuaClass				( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs				( RTTIVisitorHistory& history, MOAILuaState& state );
-
 public:
 	
 	DECL_LUA_FACTORY ( MOAIParticleCallbackPlugin )

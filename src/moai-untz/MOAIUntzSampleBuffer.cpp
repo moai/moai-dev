@@ -173,8 +173,11 @@ int MOAIUntzSampleBuffer::_setRawData ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 MOAIUntzSampleBuffer::MOAIUntzSampleBuffer () : mBuffer(0) {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIUntzSampleBuffer, MOAILuaObject )
+	
+	RTTI_BEGIN ( MOAIUntzSampleBuffer )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIUntzSampleBuffer >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

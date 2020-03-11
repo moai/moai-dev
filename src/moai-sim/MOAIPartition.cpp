@@ -572,7 +572,8 @@ MOAIPartition::MOAIPartition () :
 	mPriorityCounter ( 0 ),
 	mPlaneID ( ZLBox::PLANE_XY ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIPartition )
+	RTTI_BEGIN ( MOAIPartition )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIPartition >)
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }

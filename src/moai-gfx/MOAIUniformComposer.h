@@ -62,8 +62,6 @@ protected:
 	ZLLeanArray < MOAIUniformComposerTextureRef >	mTextures;
 
 	//----------------------------------------------------------------//
-	void						MOAILuaObject_RegisterLuaClass					( RTTIVisitorHistory& history, MOAILuaState& state );
-	void						MOAILuaObject_RegisterLuaFuncs					( RTTIVisitorHistory& history, MOAILuaState& state );
 	MOAIUniformComposer&		MOAIUniformComposerInterface_AffirmComposer		();
 	MOAIUniformComposer*		MOAIUniformComposerInterface_GetComposer		();
 

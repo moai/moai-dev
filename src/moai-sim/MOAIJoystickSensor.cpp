@@ -67,8 +67,11 @@ void MOAIJoystickSensor::EnqueueJoystickEvent( ZLIndex deviceID, ZLIndex sensorI
 
 //----------------------------------------------------------------//
 MOAIJoystickSensor::MOAIJoystickSensor () {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIJoystickSensor, MOAISensor )
+	
+	RTTI_BEGIN ( MOAIJoystickSensor )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIJoystickSensor >)
+		RTTI_EXTEND ( MOAISensor )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

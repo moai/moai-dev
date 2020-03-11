@@ -155,8 +155,11 @@ void MOAIAnimCurveBone::GetValue ( const MOAIAnimKeySpan& span, ZLVec3D& pos, ZL
 
 //----------------------------------------------------------------//
 MOAIAnimCurveBone::MOAIAnimCurveBone () {
-	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIAnimCurveBone, MOAIAnimCurve )
+		
+	RTTI_BEGIN ( MOAIAnimCurveBone )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAnimCurveBone >)
+		RTTI_EXTEND ( MOAIAnimCurve )
+	RTTI_END
 	
 	this->mValue.Ident ();
 }

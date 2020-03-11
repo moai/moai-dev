@@ -369,8 +369,11 @@ u32 MOAITouchSensor::FindTouch ( u32 touchID ) {
 
 //----------------------------------------------------------------//
 MOAITouchSensor::MOAITouchSensor () {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAITouchSensor, MOAISensor )
+	
+	RTTI_BEGIN ( MOAITouchSensor )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAITouchSensor >)
+		RTTI_EXTEND ( MOAISensor )
+	RTTI_END
 	
 	mTapTime = DEFAULT_TAPTIME;
 	mTapMargin = DEFAULT_TAPMARGIN;

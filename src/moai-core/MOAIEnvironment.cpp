@@ -184,8 +184,11 @@ void MOAIEnvironment::DetectEnvironment () {
 
 //----------------------------------------------------------------//
 MOAIEnvironment::MOAIEnvironment () {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIEnvironment, MOAIGlobalEventSource )
+	
+	RTTI_BEGIN ( MOAIEnvironment )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIEnvironment >)
+		RTTI_EXTEND ( MOAIGlobalEventSource )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

@@ -18,7 +18,8 @@ MOAIMaterial::MOAIMaterial () :
 	mLights ( NULL ),
 	mTextures ( NULL ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIMaterial )
+	RTTI_BEGIN ( MOAIMaterial )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIMaterial >)
 		RTTI_EXTEND ( MOAIAbstractMaterial )
 	RTTI_END
 }
@@ -30,18 +31,6 @@ MOAIMaterial::~MOAIMaterial () {
 //================================================================//
 // virtual
 //================================================================//
-
-//----------------------------------------------------------------//
-void MOAIMaterial::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIMaterial::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
-}
 
 //----------------------------------------------------------------//
 void MOAIMaterial::MOAIAbstractMaterial_ApplyGlobals ( MOAIAbstractMaterialInterface& dest ) {

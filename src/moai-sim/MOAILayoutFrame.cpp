@@ -420,7 +420,8 @@ void MOAILayoutFrame::Layout ( u32 axis ) {
 //----------------------------------------------------------------//
 MOAILayoutFrame::MOAILayoutFrame () {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAILayoutFrame )
+	RTTI_BEGIN ( MOAILayoutFrame )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAILayoutFrame >)
 		RTTI_EXTEND ( MOAITransform )
 	RTTI_END
 	

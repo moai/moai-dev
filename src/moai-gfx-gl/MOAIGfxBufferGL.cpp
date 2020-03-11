@@ -54,7 +54,9 @@ MOAIGfxBufferGL::MOAIGfxBufferGL () :
 	mUseVBOs ( false ),
 	mCopyOnUpdate ( false ) {
 		
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIGfxBufferGL )
+	RTTI_BEGIN ( MOAIGfxBufferGL )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIGfxBufferGL >)
+		RTTI_VISITOR ( MOAIAbstractLuaSerializationVisitor, MOAILuaSerializationVisitor < MOAIGfxBufferGL >)
 		RTTI_EXTEND ( MOAIGfxResourceGL )
 		RTTI_EXTEND ( MOAIGfxBuffer )
 	RTTI_END

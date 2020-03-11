@@ -28,8 +28,11 @@ bool MOAIShader::IsReadyForUse () const {
 
 //----------------------------------------------------------------//
 MOAIShader::MOAIShader () {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIShader, MOAILuaObject )
+	
+	RTTI_BEGIN ( MOAIShader )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIShader >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

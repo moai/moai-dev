@@ -177,7 +177,8 @@ int MOAIXmlParser::_step ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIXmlParser::MOAIXmlParser () {
 
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIXmlParser )
+	RTTI_BEGIN ( MOAIXmlParser )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIXmlParser >)
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }

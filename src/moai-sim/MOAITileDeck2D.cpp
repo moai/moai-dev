@@ -231,7 +231,9 @@ int MOAITileDeck2D::_transformUV ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAITileDeck2D::MOAITileDeck2D () {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAITileDeck2D )
+	RTTI_BEGIN ( MOAITileDeck2D )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAITileDeck2D >)
+		RTTI_VISITOR ( MOAIAbstractLuaSerializationVisitor, MOAILuaSerializationVisitor < MOAITileDeck2D >)
 		RTTI_EXTEND ( MOAIDeck )
 		RTTI_EXTEND ( MOAIHasMaterialBatch )
 		RTTI_EXTEND ( MOAIGridSpace )

@@ -22,7 +22,8 @@
 MOAIVectorTesselatorWriter::MOAIVectorTesselatorWriter () :
 	mFlushStyle ( true ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIVectorTesselatorWriter )
+	RTTI_BEGIN ( MOAIVectorTesselatorWriter )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIVectorTesselatorWriter >)
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }
@@ -897,7 +898,8 @@ MOAIVectorTesselator::MOAIVectorTesselator () :
 	
 	this->mStyle.Default ();
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIVectorTesselator )
+	RTTI_BEGIN ( MOAIVectorTesselator )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIVectorTesselator >)
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }

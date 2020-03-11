@@ -43,9 +43,7 @@ private:
 //	static int				_getShader				( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void					MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
-	
+
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIShaderMgrVK )

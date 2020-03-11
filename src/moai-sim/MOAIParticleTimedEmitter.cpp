@@ -45,7 +45,8 @@ MOAIParticleTimedEmitter::MOAIParticleTimedEmitter () :
 	mMinFrequency ( 1.0f ),
 	mMaxFrequency ( 1.0f ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIParticleTimedEmitter )
+	RTTI_BEGIN ( MOAIParticleTimedEmitter )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIParticleTimedEmitter >)
 		RTTI_EXTEND ( MOAIParticleEmitter )
 	RTTI_END
 }

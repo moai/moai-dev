@@ -69,7 +69,8 @@ MOAICameraAnchor2D::MOAICameraAnchor2D () :
 	mRect ( ZLRect::EMPTY ),
 	mLoc ( ZLVec3D::ORIGIN ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAICameraAnchor2D )
+	RTTI_BEGIN ( MOAICameraAnchor2D )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAICameraAnchor2D >)
 		RTTI_EXTEND ( MOAINode )
 	RTTI_END
 }

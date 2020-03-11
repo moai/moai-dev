@@ -24,7 +24,8 @@ void MOAIMaterialBatch::Clear () {
 MOAIMaterialBatch::MOAIMaterialBatch () :
 	mIndexBatchSize ( 1 ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIMaterialBatch )
+	RTTI_BEGIN ( MOAIMaterialBatch )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIMaterialBatch >)
 		RTTI_EXTEND ( MOAIAbstractMaterialBatchInterface )
 	RTTI_END
 }
@@ -54,32 +55,6 @@ size_t MOAIMaterialBatch::Size () {
 //================================================================//
 // virtual
 //================================================================//
-
-//----------------------------------------------------------------//
-void MOAIMaterialBatch::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIMaterialBatch::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIMaterialBatch::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIMaterialBatch::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
-}
 
 //----------------------------------------------------------------//
 MOAIMaterial& MOAIMaterialBatch::MOAIAbstractMaterialBatchInterface_AffirmMaterial ( ZLIndex index ) {

@@ -72,9 +72,11 @@ void MOAIWheelSensor::EnqueueWheelEvent ( ZLIndex deviceID, ZLIndex sensorID, fl
 MOAIWheelSensor::MOAIWheelSensor () :
 	mValue ( 0 ),
 	mDelta ( 0 ) {
-	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIWheelSensor, MOAISensor )
-
+		
+	RTTI_BEGIN ( MOAIWheelSensor )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIWheelSensor >)
+		RTTI_EXTEND ( MOAISensor )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

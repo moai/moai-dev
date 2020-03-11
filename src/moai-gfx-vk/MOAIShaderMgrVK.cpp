@@ -297,8 +297,11 @@ MOAIShaderVK* MOAIShaderMgrVK::GetShader ( MOAIShaderPresetEnum shaderID ) {
 
 //----------------------------------------------------------------//
 MOAIShaderMgrVK::MOAIShaderMgrVK () {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIShaderMgrVK, MOAILuaObject )
+	
+	RTTI_BEGIN ( MOAIShaderMgrVK )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIShaderMgrVK >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 
 	for ( u32 i = 0; i < MOAIShaderPresetEnum::TOTAL_SHADERS; ++i ) {
 		this->mPrograms [ i ] = 0;
@@ -330,29 +333,4 @@ MOAIShaderMgrVK::~MOAIShaderMgrVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIShaderMgrVK::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
 
-//	state.SetField ( -1, "DECK2D_SHADER",			( u32 )MOAIShaderPresetEnum::DECK2D_SHADER );
-//	state.SetField ( -1, "DECK2D_SNAPPING_SHADER",	( u32 )MOAIShaderPresetEnum::DECK2D_SNAPPING_SHADER );
-//	state.SetField ( -1, "FONT_SHADER",				( u32 )MOAIShaderPresetEnum::FONT_SHADER );
-//	state.SetField ( -1, "FONT_SNAPPING_SHADER",	( u32 )MOAIShaderPresetEnum::FONT_SNAPPING_SHADER );
-//	state.SetField ( -1, "FONT_EFFECTS_SHADER",	    ( u32 )MOAIShaderPresetEnum::FONT_EFFECTS_SHADER );
-//	state.SetField ( -1, "LINE_SHADER",				( u32 )MOAIShaderPresetEnum::LINE_SHADER );
-//	state.SetField ( -1, "LINE_SHADER_3D",			( u32 )MOAIShaderPresetEnum::LINE_SHADER_3D );
-//	state.SetField ( -1, "MESH_SHADER",				( u32 )MOAIShaderPresetEnum::MESH_SHADER );
-//	
-//	luaL_Reg regTable [] = {
-//		{ "getProgram",				_getProgram },
-//		{ "getShader",				_getShader },
-//		{ NULL, NULL }
-//	};
-//
-//	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderMgrVK::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
-}

@@ -51,7 +51,8 @@ int MOAIHasDeckAndIndex::_setIndex ( lua_State* L ) {
 MOAIHasDeckAndIndex::MOAIHasDeckAndIndex () :
 	mIndex ( 0 ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIHasDeckAndIndex )
+	RTTI_BEGIN ( MOAIHasDeckAndIndex )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIHasDeckAndIndex >)
 		RTTI_EXTEND ( MOAIHasDeck )
 	RTTI_END
 }
@@ -96,14 +97,4 @@ void MOAIHasDeckAndIndex::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& h
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIHasDeckAndIndex::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIHasDeckAndIndex::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
 }

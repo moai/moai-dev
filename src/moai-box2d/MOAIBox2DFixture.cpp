@@ -295,7 +295,8 @@ MOAIBox2DFixture::MOAIBox2DFixture () :
 	mCollisionPhaseMask ( 0 ),
 	mCollisionCategoryMask ( 0 ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIBox2DFixture )
+	RTTI_BEGIN ( MOAIBox2DFixture )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIBox2DFixture >)
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }

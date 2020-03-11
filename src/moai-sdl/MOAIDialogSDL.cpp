@@ -90,8 +90,11 @@ int MOAIDialogSDL::_show ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIDialogSDL::MOAIDialogSDL () :
 	mWindow ( 0 ) {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIDialogSDL, MOAILuaObject )
+	
+	RTTI_BEGIN ( MOAIDialogSDL )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIDialogSDL >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

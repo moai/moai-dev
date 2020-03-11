@@ -180,8 +180,11 @@ int MOAIUntzSystem::_getVolume ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 MOAIUntzSystem::MOAIUntzSystem () {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIUntzSystem, MOAILuaObject )
+	
+	RTTI_BEGIN ( MOAIUntzSystem )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIUntzSystem >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

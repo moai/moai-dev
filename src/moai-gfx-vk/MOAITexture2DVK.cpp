@@ -15,7 +15,8 @@
 //----------------------------------------------------------------//
 MOAITexture2DVK::MOAITexture2DVK () {
 
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAITexture2DVK )
+	RTTI_BEGIN ( MOAITexture2DVK )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAITexture2DVK >)
 		RTTI_EXTEND ( MOAITexture2D )
 		RTTI_EXTEND ( MOAITextureVK )
 	RTTI_END
@@ -56,11 +57,3 @@ bool MOAITexture2DVK::MOAIGfxResource_IsReadyForUse () const {
 }
 
 //----------------------------------------------------------------//
-void MOAITexture2DVK::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAITexture2DVK::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}

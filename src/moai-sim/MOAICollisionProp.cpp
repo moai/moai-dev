@@ -211,7 +211,8 @@ MOAICollisionProp::MOAICollisionProp () :
 	mTouched ( MOAICollisionWorld::OVERLAP_PASS_INIT ),
 	mCollisionWorld ( 0 ) {
 
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAICollisionProp )
+	RTTI_BEGIN ( MOAICollisionProp )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAICollisionProp >)
 		RTTI_EXTEND ( MOAIAbstractProp )
 		RTTI_EXTEND ( MOAIDrawable )
 		RTTI_EXTEND ( MOAIHasDeckAndIndex )
@@ -552,16 +553,6 @@ void MOAICollisionProp::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& his
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAICollisionProp::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAICollisionProp::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//

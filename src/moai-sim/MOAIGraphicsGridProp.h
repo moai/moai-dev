@@ -24,10 +24,6 @@ private:
 	//----------------------------------------------------------------//
 	ZLBounds		MOAIAbstractProp_GetModelBounds			(); // get the prop bounds in model space
 	void			MOAIDrawable_Draw						( int subPrimID );
-	void			MOAILuaObject_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAILuaObject_SerializeIn				( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
-	void			MOAILuaObject_SerializeOut				( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
 	bool			MOAINode_ApplyAttrOp					( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	void			MOAINode_Update							();
 	void			MOAIPartitionHull_AddToSortBuffer		( MOAIPartitionResultBuffer& buffer, u32 key = 0 );

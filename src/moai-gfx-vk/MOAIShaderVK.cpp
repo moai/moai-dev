@@ -98,7 +98,8 @@ MOAIGfxComposerVK& MOAIShaderVK::GetGfxComposer () {
 //----------------------------------------------------------------//
 MOAIShaderVK::MOAIShaderVK () {
 
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIShaderVK )
+	RTTI_BEGIN ( MOAIShaderVK )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIShaderVK >)
 		RTTI_EXTEND ( MOAIShader )
 		RTTI_EXTEND ( MOAINode )
 	RTTI_END
@@ -139,26 +140,6 @@ void MOAIShaderVK::SetProgram ( MOAIShaderProgramVK* program ) {
 //================================================================//
 // virtual
 //================================================================//
-
-//----------------------------------------------------------------//
-void MOAIShaderVK::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderVK::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-//	luaL_Reg regTable [] = {
-//		{ "getAttributeID",				_getAttributeID },
-//		{ "setProgram",					_setProgram },
-//		{ "setUniform",					_setUniform },
-//		{ "setUniformArrayItem",		_setUniformArrayItem },
-//		{ NULL, NULL }
-//	};
-//	luaL_register ( state, 0, regTable );
-}
 
 //----------------------------------------------------------------//
 bool MOAIShaderVK::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {

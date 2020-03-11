@@ -144,8 +144,11 @@ float* MOAIPathTerrainDeck::GetVector ( u32 idx ) {
 MOAIPathTerrainDeck::MOAIPathTerrainDeck () :
 	mDeckSize ( 0 ),
 	mVectorSize ( 0 ) {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIPathTerrainDeck, MOAILuaObject )
+	
+	RTTI_BEGIN ( MOAIPathTerrainDeck )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIPathTerrainDeck >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

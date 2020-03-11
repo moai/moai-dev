@@ -151,7 +151,8 @@ int MOAIHttpServer::HandleRequest ( mg_connection* connection, mg_request_info* 
 MOAIHttpServer::MOAIHttpServer () :
 	mContext ( 0 ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIHttpServer )
+	RTTI_BEGIN ( MOAIHttpServer )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIHttpServer >)
 		RTTI_EXTEND ( MOAIInstanceEventSource )
 	RTTI_END
 }

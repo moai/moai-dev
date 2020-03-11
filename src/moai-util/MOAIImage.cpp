@@ -1285,8 +1285,11 @@ MOAIImage* MOAIImage::AffirmImage ( MOAILuaState& state, int idx ) {
 
 //----------------------------------------------------------------//
 MOAIImage::MOAIImage () {
-	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIImage, MOAILuaObject )
+		
+	RTTI_BEGIN ( MOAIImage )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIImage >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//
@@ -1401,18 +1404,4 @@ void MOAIImage::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MO
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIImage::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIImage::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
 }

@@ -268,7 +268,8 @@ MOAICollisionWorld::MOAICollisionWorld () :
 	mUpdated ( false ),
 	mOverlapPass ( OVERLAP_PASS_INIT ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAICollisionWorld )
+	RTTI_BEGIN ( MOAICollisionWorld )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAICollisionWorld >)
 		RTTI_EXTEND ( MOAIAction )
 		RTTI_EXTEND ( MOAIDrawable )
 		RTTI_EXTEND ( MOAIPartition )
@@ -412,16 +413,6 @@ void MOAICollisionWorld::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& hi
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAICollisionWorld::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAICollisionWorld::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//

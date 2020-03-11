@@ -498,7 +498,8 @@ bool MOAIMaterialBatch::LoadGfxState ( MOAIMaterialBatch* override, u32 material
 MOAIMaterialBatch::MOAIMaterialBatch () :
 	mIndexBatchSize ( 1 ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIMaterialBatch )
+	RTTI_BEGIN ( MOAIMaterialBatch )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIMaterialBatch >)
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }
@@ -760,20 +761,6 @@ void MOAIMaterialBatch::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& his
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIMaterialBatch::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIMaterialBatch::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
 }
 
 #endif

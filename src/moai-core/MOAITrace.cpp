@@ -204,8 +204,11 @@ MOAITrace::MOAITrace () :
 	mCurrentThreadTrace ( 0 ),
 	mVerbose ( false ),
 	mListener ( 0 ) {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAITrace, MOAILuaObject )
+	
+	RTTI_BEGIN ( MOAITrace )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAITrace >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

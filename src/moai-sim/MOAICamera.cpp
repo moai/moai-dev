@@ -378,7 +378,8 @@ void MOAICamera::LookAt ( float x, float y, float z ) {
 //----------------------------------------------------------------//
 MOAICamera::MOAICamera () {
 
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAICamera )
+	RTTI_BEGIN ( MOAICamera )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAICamera >)
 		RTTI_EXTEND ( ZLCamera )
 		RTTI_EXTEND ( MOAITransform )
 	RTTI_END

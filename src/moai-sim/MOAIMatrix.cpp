@@ -63,7 +63,8 @@ int MOAIMatrix::_setMatrix ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIMatrix::MOAIMatrix () {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIMatrix )
+	RTTI_BEGIN ( MOAIMatrix )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIMatrix >)
 		RTTI_EXTEND ( MOAIAbstractChildTransform )
 	RTTI_END
 	
@@ -103,20 +104,6 @@ void MOAIMatrix::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, M
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIMatrix::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIMatrix::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//

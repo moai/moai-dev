@@ -275,8 +275,12 @@ u32 MOAIGrid::GetTile ( int xTile, int yTile ) const {
 
 //----------------------------------------------------------------//
 MOAIGrid::MOAIGrid () {
-	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIGrid, MOAIGridSpace )
+		
+	RTTI_BEGIN ( MOAIGrid )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIGrid >)
+		RTTI_VISITOR ( MOAIAbstractLuaSerializationVisitor, MOAILuaSerializationVisitor < MOAIGrid >)
+		RTTI_EXTEND ( MOAIGridSpace )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

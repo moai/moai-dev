@@ -491,7 +491,8 @@ MOAISelectionMesh::MOAISelectionMesh () :
 	mSpanListHead ( 0 ),
 	mMesh ( 0 ) {
 
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAISelectionMesh )
+	RTTI_BEGIN ( MOAISelectionMesh )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAISelectionMesh >)
 		RTTI_EXTEND ( MOAIDeckProxy )
 	RTTI_END
 }
@@ -584,14 +585,4 @@ void MOAISelectionMesh::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& his
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAISelectionMesh::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAISelectionMesh::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
 }

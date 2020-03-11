@@ -177,8 +177,11 @@ void MOAIAnimCurve::GetValue ( ZLAttribute& attr, float time ) {
 MOAIAnimCurve::MOAIAnimCurve () :
 	mTime ( 0.0f ),
 	mWrapMode ( CLAMP ) {
-	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIAnimCurve, MOAINode )
+		
+	RTTI_BEGIN ( MOAIAnimCurve )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAnimCurve >)
+		RTTI_EXTEND ( MOAINode )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

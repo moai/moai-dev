@@ -217,8 +217,11 @@ MOAICoroutine::MOAICoroutine () :
 	mIsUpdating ( false ),
 	mIsActive ( false ),
 	mIsDefaultParent ( false ) {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAICoroutine, MOAIAction )
+	
+	RTTI_BEGIN ( MOAICoroutine )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAICoroutine >)
+		RTTI_EXTEND ( MOAIAction )
+	RTTI_END
 	
 	this->mTrackingGroup.write ( "MOAICoroutine: 0x%p", this );
 }

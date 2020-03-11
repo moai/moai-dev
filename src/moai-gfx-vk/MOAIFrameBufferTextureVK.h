@@ -17,10 +17,6 @@ private:
 	
 	//----------------------------------------------------------------//
 	void				MOAIFrameBufferVK_AffirmBuffers				();
-	void				MOAILuaObject_RegisterLuaClass				( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs				( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				MOAILuaObject_SerializeIn					( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
-	void				MOAILuaObject_SerializeOut					( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
 
 public:
 	

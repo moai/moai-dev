@@ -414,7 +414,8 @@ MOAITimer::MOAITimer () :
 	mStartTime ( 0.0f ),
 	mEndTime ( 1.0f ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAITimer )
+	RTTI_BEGIN ( MOAITimer )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAITimer >)
 		RTTI_EXTEND ( MOAINode )
 		RTTI_EXTEND ( MOAIAction )
 	RTTI_END

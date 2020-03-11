@@ -14,7 +14,7 @@
 //----------------------------------------------------------------//
 MOAIVertexBufferGL::MOAIVertexBufferGL () {
 		
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIVertexBufferGL )
+	RTTI_BEGIN ( MOAIVertexBufferGL )
 		RTTI_EXTEND ( MOAIVertexBuffer )
 		RTTI_EXTEND ( MOAIGfxBufferGL )
 	RTTI_END
@@ -31,21 +31,3 @@ MOAIVertexBufferGL::~MOAIVertexBufferGL () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIVertexBufferGL::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexBufferGL::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexBufferGL::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexBufferGL::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-}

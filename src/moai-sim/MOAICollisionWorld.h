@@ -63,8 +63,6 @@ protected:
 	void				MOAIAction_Update					( double step );
 	void				MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
 	void				MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				MOAILuaObject_SerializeIn			( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
-	void				MOAILuaObject_SerializeOut			( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
 	void				MOAIPartition_DrawDebugFront		();
 	void				MOAIPartition_OnInsertHull			( MOAIPartitionHull& hull );
 	void				MOAIPartition_OnRemoveHull			( MOAIPartitionHull& hull );

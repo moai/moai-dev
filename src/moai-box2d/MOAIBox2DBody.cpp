@@ -1046,7 +1046,8 @@ void MOAIBox2DBody::Destroy () {
 MOAIBox2DBody::MOAIBox2DBody () :
 	mBody ( 0 ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIBox2DBody )
+	RTTI_BEGIN ( MOAIBox2DBody )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIBox2DBody >)
 		RTTI_EXTEND ( MOAIAbstractBaseTransform )
 	RTTI_END
 }

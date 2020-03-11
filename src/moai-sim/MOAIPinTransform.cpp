@@ -81,8 +81,11 @@ int MOAIPinTransform::_init ( lua_State* L ) {
 MOAIPinTransform::MOAIPinTransform () :
 	mFront ( 1.0 ),
 	mWorldBounds ( ZLBounds::EMPTY ) {
-	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIPinTransform, MOAITransform )
+		
+	RTTI_BEGIN ( MOAIPinTransform )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIPinTransform >)
+		RTTI_EXTEND ( MOAITransform )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

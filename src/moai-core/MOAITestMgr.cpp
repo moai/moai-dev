@@ -231,8 +231,11 @@ MOAITestMgr::MOAITestMgr () :
 	mRoot ( 0 ),
 	mCurrent ( 0 ),
 	mStandalone ( false ) {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAITestMgr, MOAILuaObject )
+	
+	RTTI_BEGIN ( MOAITestMgr )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAITestMgr >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

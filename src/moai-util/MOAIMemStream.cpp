@@ -122,7 +122,8 @@ int MOAIMemStream::_open ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIMemStream::MOAIMemStream () {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIMemStream )
+	RTTI_BEGIN ( MOAIMemStream )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIMemStream >)
 		RTTI_EXTEND ( MOAIStream )
 	RTTI_END
 }

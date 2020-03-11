@@ -464,7 +464,9 @@ MOAIVertexFormat::MOAIVertexFormat () :
 	mTotalAttributes ( 0 ),
 	mVertexSize ( 0 ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIVertexFormat )
+	RTTI_BEGIN ( MOAIVertexFormat )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIVertexFormat >)
+		RTTI_VISITOR ( MOAIAbstractLuaSerializationVisitor, MOAILuaSerializationVisitor < MOAIVertexFormat >)
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 	

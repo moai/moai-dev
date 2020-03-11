@@ -180,7 +180,8 @@ MOAIAbstractLayer::MOAIAbstractLayer () :
 	mClearColor ( ZLColor::PackRGBA ( 0.0f, 0.0f, 0.0f, 1.0f )),
 	mClearMode ( CLEAR_ON_BUFFER_FLAG ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIAbstractLayer )
+	RTTI_BEGIN ( MOAIAbstractLayer )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractLayer >)
 		RTTI_EXTEND ( MOAILuaObject )
 		RTTI_EXTEND ( MOAIDrawable )
 	RTTI_END

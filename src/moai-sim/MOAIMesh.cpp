@@ -588,7 +588,9 @@ MOAIMesh::MOAIMesh () :
 	mPenWidth ( 1.0f ),
 	mPartition ( 0 ) {
 
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIMesh )
+	RTTI_BEGIN ( MOAIMesh )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIMesh >)
+		RTTI_VISITOR ( MOAIAbstractLuaSerializationVisitor, MOAILuaSerializationVisitor < MOAIMesh >)
 		RTTI_EXTEND ( MOAIDeck )
 		RTTI_EXTEND ( MOAIHasMaterialBatch )
 		RTTI_EXTEND ( MOAIVertexArray )

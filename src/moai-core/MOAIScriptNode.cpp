@@ -76,8 +76,11 @@ int MOAIScriptNode::_setAttrName ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 MOAIScriptNode::MOAIScriptNode () {
-	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIScriptNode, MOAINode )
+		
+	RTTI_BEGIN ( MOAIScriptNode )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIScriptNode >)
+		RTTI_EXTEND ( MOAINode )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

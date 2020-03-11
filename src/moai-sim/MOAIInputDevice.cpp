@@ -60,8 +60,11 @@ MOAISensor* MOAIInputDevice::GetSensor ( ZLIndex sensorID ) {
 //----------------------------------------------------------------//
 MOAIInputDevice::MOAIInputDevice () :
 	mIsActive ( true ) {
-	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIInputDevice, MOAILuaObject )
+		
+	RTTI_BEGIN ( MOAIInputDevice )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIInputDevice >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

@@ -29,7 +29,8 @@ int MOAIDeckProxy::_setDeck ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIDeckProxy::MOAIDeckProxy () {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIDeckProxy )
+	RTTI_BEGIN ( MOAIDeckProxy )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIDeckProxy >)
 		RTTI_EXTEND ( MOAIDeck )
 	RTTI_END
 }
@@ -103,14 +104,4 @@ void MOAIDeckProxy::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIDeckProxy::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIDeckProxy::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
 }

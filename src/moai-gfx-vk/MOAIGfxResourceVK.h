@@ -24,8 +24,6 @@ protected:
 	virtual bool		MOAIGfxResource_IsReadyForUse				() const;
 	virtual void		MOAIGfxResource_ScheduleForGPUDestroy		();
 	virtual bool		MOAIGfxResource_ScheduleForGPUUpdate		();
-	void				MOAILuaObject_RegisterLuaClass				( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs				( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 

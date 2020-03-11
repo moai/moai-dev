@@ -281,8 +281,11 @@ MOAIMotionMgrIOS::MOAIMotionMgrIOS () :
 	mLocationMgr ( 0 ),
 	mMotionMgr ( 0 ),
 	mOperationQueue ( 0 ) {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIMotionMgrIOS, MOAIAction )
+	
+	RTTI_BEGIN ( MOAIMotionMgrIOS )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIMotionMgrIOS >)
+		RTTI_EXTEND ( MOAIAction )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

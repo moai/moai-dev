@@ -18,8 +18,11 @@ void ZLTextureFormat::CleanupTexture ( MOAITextureVK& texture ) {
 
 //----------------------------------------------------------------//
 ZLTextureFormat::ZLTextureFormat () {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( ZLTextureFormat, ZLImageFormat )
+	
+	RTTI_BEGIN ( ZLTextureFormat )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < ZLTextureFormat >)
+		RTTI_EXTEND ( ZLImageFormat )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

@@ -46,7 +46,8 @@ int MOAITableLayer::_setRenderTable ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAITableLayer::MOAITableLayer () {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAITableLayer )
+	RTTI_BEGIN ( MOAITableLayer )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAITableLayer >)
 		RTTI_EXTEND ( MOAIAbstractLayer )
 	RTTI_END
 }

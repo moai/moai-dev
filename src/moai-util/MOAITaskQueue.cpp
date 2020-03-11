@@ -38,8 +38,11 @@ void MOAITaskQueue::Main () {
 //----------------------------------------------------------------//
 MOAITaskQueue::MOAITaskQueue () :
 	mIsRunning ( false ) {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAITaskQueue, MOAILuaObject )
+	
+	RTTI_BEGIN ( MOAITaskQueue )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAITaskQueue >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

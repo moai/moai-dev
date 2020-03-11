@@ -470,7 +470,8 @@ MOAIDeck* MOAISpriteDeck2D::AffirmDeck ( MOAILuaState& state, int idx ) {
 //----------------------------------------------------------------//
 MOAISpriteDeck2D::MOAISpriteDeck2D () {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAISpriteDeck2D )
+	RTTI_BEGIN ( MOAISpriteDeck2D )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAISpriteDeck2D >)
 		RTTI_EXTEND ( MOAIDeck )
 		RTTI_EXTEND ( MOAIHasMaterialBatch )
 	RTTI_END
@@ -807,14 +808,4 @@ void MOAISpriteDeck2D::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& hist
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAISpriteDeck2D::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAISpriteDeck2D::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
 }

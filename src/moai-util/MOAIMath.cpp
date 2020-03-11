@@ -59,7 +59,8 @@
 //----------------------------------------------------------------//
 MOAIMath::MOAIMath () {
 
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIMath )
+	RTTI_BEGIN ( MOAIMath )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIMath >)
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 	

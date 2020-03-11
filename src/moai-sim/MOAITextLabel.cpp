@@ -873,7 +873,8 @@ MOAITextLabel::MOAITextLabel () :
 	mOverrun ( false ),
 	mAutoFlip ( false ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAITextLabel )
+	RTTI_BEGIN ( MOAITextLabel )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAITextLabel >)
 		RTTI_EXTEND ( MOAIAction )
 		RTTI_EXTEND ( MOAIGraphicsProp )
 	RTTI_END
@@ -1295,16 +1296,6 @@ void MOAITextLabel::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAITextLabel::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAITextLabel::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//

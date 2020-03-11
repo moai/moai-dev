@@ -1104,8 +1104,12 @@ MOAIGridSpace::MOAIGridSpace () :
 	mHeight ( 0 ),
 	mShape ( RECT_SHAPE ),
 	mRepeat ( 0 ) {
-	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIGridSpace, MOAILuaObject )
+		
+	RTTI_BEGIN ( MOAIGridSpace )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIGridSpace >)
+		RTTI_VISITOR ( MOAIAbstractLuaSerializationVisitor, MOAILuaSerializationVisitor < MOAIGridSpace >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

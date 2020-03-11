@@ -260,8 +260,11 @@ bool MOAILogMgr::LuaSetupClass( MOAILuaState& state, cc8* typeStr ) {
 MOAILogMgr::MOAILogMgr () :
 	mFile ( 0 ),
 	mTypeCheckLuaParams ( true ) {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAILogMgr, MOAILuaObject )
+	
+	RTTI_BEGIN ( MOAILogMgr )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAILogMgr >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

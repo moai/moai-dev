@@ -81,8 +81,12 @@ int MOAIHasDeck::_setDeck ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 MOAIHasDeck::MOAIHasDeck () {
-	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIHasDeck, MOAINode )
+		
+	RTTI_BEGIN ( MOAIHasDeck )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIHasDeck >)
+		RTTI_VISITOR ( MOAIAbstractLuaSerializationVisitor, MOAILuaSerializationVisitor < MOAIHasDeck >)
+		RTTI_EXTEND ( MOAINode )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

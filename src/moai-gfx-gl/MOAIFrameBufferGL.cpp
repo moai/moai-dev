@@ -148,7 +148,8 @@ void MOAIFrameBufferGL::GrabImage ( MOAIImage* image ) {
 MOAIFrameBufferGL::MOAIFrameBufferGL () :
 	mGrabNextFrame ( false ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIFrameBufferGL )
+	RTTI_BEGIN ( MOAIFrameBufferGL )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIFrameBufferGL >)
 		RTTI_EXTEND ( MOAIFrameBuffer )
 	RTTI_END
 }

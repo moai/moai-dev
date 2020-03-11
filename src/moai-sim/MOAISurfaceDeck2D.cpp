@@ -299,8 +299,11 @@ ZLBox MOAISurfaceDeck2D::GetItemAABB ( u32 idx ) {
 
 //----------------------------------------------------------------//
 MOAISurfaceDeck2D::MOAISurfaceDeck2D () {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAISurfaceDeck2D, MOAIStandardDeck )
+	
+	RTTI_BEGIN ( MOAISurfaceDeck2D )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAISurfaceDeck2D >)
+		RTTI_EXTEND ( MOAIStandardDeck )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

@@ -445,7 +445,8 @@ MOAIAbstractViewLayer::MOAIAbstractViewLayer () :
 	mParallax ( 1.0f, 1.0f, 1.0f ),
 	mShowDebugLines ( true ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIAbstractViewLayer )
+	RTTI_BEGIN ( MOAIAbstractViewLayer )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractViewLayer >)
 		RTTI_EXTEND ( MOAIGraphicsProp )
 		RTTI_EXTEND ( MOAIAbstractLayer )
 	RTTI_END

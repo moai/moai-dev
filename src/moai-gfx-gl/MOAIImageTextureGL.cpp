@@ -12,7 +12,7 @@
 //----------------------------------------------------------------//
 MOAIImageTextureGL::MOAIImageTextureGL () {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIImageTextureGL )
+	RTTI_BEGIN ( MOAIImageTextureGL )
 		RTTI_EXTEND ( MOAIImageTexture )
 		RTTI_EXTEND ( MOAITextureGL )
 	RTTI_END
@@ -50,14 +50,4 @@ bool MOAIImageTextureGL::MOAIGfxResourceGL_OnGPUUpdate () {
 		this->mRegion.Clear ();
 	}
 	return result && MOAITextureGL::MOAIGfxResourceGL_OnGPUUpdate ();
-}
-
-//----------------------------------------------------------------//
-void MOAIImageTextureGL::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIImageTextureGL::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
 }

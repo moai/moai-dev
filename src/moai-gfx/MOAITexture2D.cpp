@@ -268,7 +268,9 @@ MOAITexture2D::MOAITexture2D () :
 	mTextureDataFormat ( 0 ),
 	mImage ( NULL ) {
 
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAITexture2D )
+	RTTI_BEGIN ( MOAITexture2D )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAITexture2D >)
+		RTTI_VISITOR ( MOAIAbstractLuaSerializationVisitor, MOAILuaSerializationVisitor < MOAITexture2D >)
 		RTTI_EXTEND ( MOAITexture )
 		this->RegisterFinalizationVisitor < MOAITexture2D >();
 	RTTI_END

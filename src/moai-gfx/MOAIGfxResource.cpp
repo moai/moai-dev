@@ -55,8 +55,11 @@ bool MOAIGfxResource::IsReadyForUse () const {
 
 //----------------------------------------------------------------//
 MOAIGfxResource::MOAIGfxResource () {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIGfxResource, MOAILuaObject )
+	
+	RTTI_BEGIN ( MOAIGfxResource )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIGfxResource >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

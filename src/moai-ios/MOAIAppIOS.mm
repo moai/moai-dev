@@ -459,8 +459,11 @@ BOOL MOAIAppIOS::IsSystemVersionLessThan ( NSString* version ) {
 
 //----------------------------------------------------------------//
 MOAIAppIOS::MOAIAppIOS () {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIAppIOS, MOAIGlobalEventSource )
+	
+	RTTI_BEGIN ( MOAIAppIOS )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAppIOS >)
+		RTTI_EXTEND ( MOAIGlobalEventSource )
+	RTTI_END
 
 	//this->mMailDelegate = [ MOAIMailComposeDelegate alloc ];
 	//this->mTakeCameraListener = [ MOAITakeCameraListener alloc ];

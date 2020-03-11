@@ -219,7 +219,8 @@ void MOAIGraphicsPropBase::LoadVertexTransform () {
 MOAIGraphicsPropBase::MOAIGraphicsPropBase () :
 	mBillboard ( BILLBOARD_NONE ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIGraphicsPropBase )
+	RTTI_BEGIN ( MOAIGraphicsPropBase )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIGraphicsPropBase >)
 		RTTI_EXTEND ( MOAIAbstractProp )
 		RTTI_EXTEND ( MOAIColor )
 		RTTI_EXTEND ( MOAIDrawable )
@@ -623,16 +624,6 @@ void MOAIGraphicsPropBase::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& 
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIGraphicsPropBase::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIGraphicsPropBase::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//

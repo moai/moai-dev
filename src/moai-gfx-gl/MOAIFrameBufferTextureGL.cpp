@@ -67,7 +67,8 @@ MOAIFrameBufferTextureGL::MOAIFrameBufferTextureGL () :
 	mDepthFormat ( ZLGfxEnum::NONE ),
 	mStencilFormat ( ZLGfxEnum::NONE ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIFrameBufferTextureGL )
+	RTTI_BEGIN ( MOAIFrameBufferTextureGL )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIFrameBufferTextureGL >)
 		RTTI_EXTEND ( MOAIFrameBufferGL )
 		RTTI_EXTEND ( MOAITextureGL )
 	RTTI_END
@@ -204,12 +205,3 @@ void MOAIFrameBufferTextureGL::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHisto
 	luaL_register ( state, 0, regTable );
 }
 
-//----------------------------------------------------------------//
-void MOAIFrameBufferTextureGL::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBufferTextureGL::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-}

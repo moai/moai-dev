@@ -102,7 +102,9 @@ int MOAIHasDeckAndGrid::_setGridScale ( lua_State* L ) {
 MOAIHasDeckAndGrid::MOAIHasDeckAndGrid () :
 	mGridScale ( 1.0f, 1.0f ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIHasDeckAndGrid )
+	RTTI_BEGIN ( MOAIHasDeckAndGrid )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIHasDeckAndGrid >)
+		RTTI_VISITOR ( MOAIAbstractLuaSerializationVisitor, MOAILuaSerializationVisitor < MOAIHasDeckAndGrid >)
 		RTTI_EXTEND ( MOAIHasDeck )
 	RTTI_END
 }

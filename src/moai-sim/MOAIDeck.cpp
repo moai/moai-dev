@@ -114,7 +114,8 @@ MOAIDeck::MOAIDeck () :
 	mMaxBounds ( ZLBounds::EMPTY ),
 	mBoundsDirty ( true ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIDeck )
+	RTTI_BEGIN ( MOAIDeck )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIDeck >)
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }

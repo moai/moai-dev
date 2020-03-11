@@ -251,13 +251,6 @@ void MOAIHttpTaskNaCl::SetVerbose ( bool verbose ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIHttpTaskNaCl::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
 
-//----------------------------------------------------------------//
-void MOAIHttpTaskNaCl::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
 
 #endif

@@ -235,7 +235,8 @@ aiVectorKey* MOAIAssimpAnimation::GetScaleKey ( u32 channel, u32 key ) {
 //----------------------------------------------------------------//
 MOAIAssimpAnimation::MOAIAssimpAnimation () {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIAssimpAnimation )
+	RTTI_BEGIN ( MOAIAssimpAnimation )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAssimpAnimation >)
 		RTTI_EXTEND ( MOAIAssimpSceneMember )
 	RTTI_END
 }

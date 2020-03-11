@@ -148,7 +148,7 @@
 //MOAIFrameBufferVK::MOAIFrameBufferVK () :
 //	mGrabNextFrame ( false ) {
 //
-//	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIFrameBufferVK )
+//	RTTI_BEGIN ( MOAIFrameBufferVK )
 //		RTTI_EXTEND ( MOAIFrameBuffer )
 //	RTTI_END
 //}
@@ -156,7 +156,8 @@
 //----------------------------------------------------------------//
 MOAIFrameBufferVK::MOAIFrameBufferVK () {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIFrameBufferVK )
+	RTTI_BEGIN ( MOAIFrameBufferVK )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIFrameBufferVK >)
 		RTTI_EXTEND ( MOAIFrameBuffer )
 	RTTI_END
 }
@@ -180,25 +181,6 @@ MOAIFrameBufferVK::~MOAIFrameBufferVK () {
 
 //----------------------------------------------------------------//
 void MOAIFrameBufferVK::MOAIFrameBufferVK_AffirmBuffers () {
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBufferVK::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBufferVK::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-//	luaL_Reg regTable [] = {
-//		{ "getGrabbedImage",			_getGrabbedImage },
-//		{ "grabNextFrame",				_grabNextFrame },
-//		{ "isPendingGrab",				_isPendingGrab },
-//		{ NULL, NULL }
-//	};
-//
-//	luaL_register ( state, 0, regTable );
 }
 
 ////----------------------------------------------------------------//

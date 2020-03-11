@@ -33,10 +33,6 @@ private:
 	ZLLeanArray < ZLStrongPtr < MOAIMaterial > >	mMaterials;
 
 	//----------------------------------------------------------------//
-	void					MOAILuaObject_RegisterLuaClass								( RTTIVisitorHistory& history, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs								( RTTIVisitorHistory& history, MOAILuaState& state );
-	void					MOAILuaObject_SerializeIn									( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
-	void					MOAILuaObject_SerializeOut									( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
 	MOAIMaterial&			MOAIAbstractMaterialBatchInterface_AffirmMaterial			( ZLIndex index );
 	MOAIMaterialBatch&		MOAIAbstractMaterialBatchInterface_AffirmMaterialBatch		();
 	MOAIMaterial*			MOAIAbstractMaterialBatchInterface_GetMaterial				( ZLIndex index );

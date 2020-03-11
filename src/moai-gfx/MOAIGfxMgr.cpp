@@ -165,8 +165,10 @@ ZLMatrix4x4 MOAIGfxMgr::GetWndToWorldMtx ( const ZLRect& wndRect ) {
 
 //----------------------------------------------------------------//
 MOAIGfxMgr::MOAIGfxMgr () {
-	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIGfxMgr, MOAIGlobalEventSource )
+		
+	RTTI_BEGIN ( MOAIGfxMgr )
+		RTTI_EXTEND ( MOAIGlobalEventSource )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//
@@ -210,16 +212,6 @@ MOAIGfxMgr_RenderTree& MOAIGfxMgr::MOAIGfxMgrComponents_GetRenderTree () {
 //----------------------------------------------------------------//
 MOAIGfxMgr_VertexCache& MOAIGfxMgr::MOAIGfxMgrComponents_GetVertexCache () {
 	return *this;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgr::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgr::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//

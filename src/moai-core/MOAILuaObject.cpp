@@ -390,7 +390,10 @@ void MOAILuaObject::LuaRetain ( MOAILuaObject* object ) {
 MOAILuaObject::MOAILuaObject () :
 	mActiveUserdataCount ( 0 ) {
 	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAILuaObject, RTTIBase )
+	RTTI_BEGIN ( MOAILuaObject )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAILuaObject >)
+		RTTI_EXTEND ( RTTIBase )
+	RTTI_END
 
 	if ( MOAILuaRuntime::IsValid ()) {
 		MOAILuaRuntime::Get ().RegisterObject ( *this );
@@ -517,7 +520,7 @@ bool MOAILuaObject::PushRefTable ( MOAILuaState& state ) {
 void MOAILuaObject::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	RTTIVisitorHistory history;
-	RTTIVisitorIterator < MOAIAbstractLuaObjectVisitor > visitorIt = this->GetVisitors < MOAIAbstractLuaObjectVisitor >();
+	RTTIVisitorIterator < MOAIAbstractLuaRegistrationVisitor > visitorIt = this->GetVisitors < MOAIAbstractLuaRegistrationVisitor >();
 	for ( ; visitorIt; ++visitorIt ) {
 		( *visitorIt ).RegisterLuaClass ( *this, history, state );
 		assert ( history.CountVisits () == ( visitorIt.GetCount () + 1 ));
@@ -528,7 +531,7 @@ void MOAILuaObject::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAILuaObject::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	RTTIVisitorHistory history;
-	RTTIVisitorIterator < MOAIAbstractLuaObjectVisitor > visitorIt = this->GetVisitors < MOAIAbstractLuaObjectVisitor >();
+	RTTIVisitorIterator < MOAIAbstractLuaRegistrationVisitor > visitorIt = this->GetVisitors < MOAIAbstractLuaRegistrationVisitor >();
 	for ( ; visitorIt; ++visitorIt ) {
 		( *visitorIt ).RegisterLuaFuncs ( *this, history, state );
 		assert ( history.CountVisits () == ( visitorIt.GetCount () + 1 ));
@@ -539,7 +542,7 @@ void MOAILuaObject::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAILuaObject::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 
 	RTTIVisitorHistory history;
-	RTTIVisitorIterator < MOAIAbstractLuaObjectVisitor > visitorIt = this->GetVisitors < MOAIAbstractLuaObjectVisitor >();
+	RTTIVisitorIterator < MOAIAbstractLuaSerializationVisitor > visitorIt = this->GetVisitors < MOAIAbstractLuaSerializationVisitor >();
 	for ( ; visitorIt; ++visitorIt ) {
 		( *visitorIt ).SerializeIn ( *this, history, state, serializer );
 		assert ( history.CountVisits () == ( visitorIt.GetCount () + 1 ));
@@ -550,7 +553,7 @@ void MOAILuaObject::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seriali
 void MOAILuaObject::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
 	RTTIVisitorHistory history;
-	RTTIVisitorIterator < MOAIAbstractLuaObjectVisitor > visitorIt = this->GetVisitors < MOAIAbstractLuaObjectVisitor >();
+	RTTIVisitorIterator < MOAIAbstractLuaSerializationVisitor > visitorIt = this->GetVisitors < MOAIAbstractLuaSerializationVisitor >();
 	for ( ; visitorIt; ++visitorIt ) {
 		( *visitorIt ).SerializeOut ( *this, history, state, serializer );
 		assert ( history.CountVisits () == ( visitorIt.GetCount () + 1 ));
@@ -649,20 +652,6 @@ void MOAILuaObject::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAILuaObject::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAILuaObject::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//

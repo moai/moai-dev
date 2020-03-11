@@ -23,7 +23,7 @@
 //----------------------------------------------------------------//
 MOAITableViewLayer::MOAITableViewLayer () {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAITableViewLayer )
+	RTTI_BEGIN ( MOAITableViewLayer )
 		RTTI_EXTEND ( MOAITableLayer )
 		RTTI_EXTEND ( MOAIAbstractViewLayer )
 	RTTI_END
@@ -51,24 +51,4 @@ void MOAITableViewLayer::MOAIAbstractViewLayer_Draw () {
 void MOAITableViewLayer::MOAIDrawable_Draw ( int subPrimID ) {
 
 	this->MOAIAbstractViewLayer::MOAIDrawable_Draw ( subPrimID );
-}
-
-//----------------------------------------------------------------//
-void MOAITableViewLayer::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAITableViewLayer::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAITableViewLayer::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAITableViewLayer::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
 }

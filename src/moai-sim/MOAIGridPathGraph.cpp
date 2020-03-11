@@ -79,8 +79,11 @@ float MOAIGridPathGraph::ComputeHeuristic ( MOAIGridPathGraphParams& params, con
 
 //----------------------------------------------------------------//
 MOAIGridPathGraph::MOAIGridPathGraph () {
-	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIGridPathGraph, MOAIPathGraph )
+		
+	RTTI_BEGIN ( MOAIGridPathGraph )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIGridPathGraph >)
+		RTTI_EXTEND ( MOAIPathGraph )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

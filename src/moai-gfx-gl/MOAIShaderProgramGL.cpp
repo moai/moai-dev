@@ -205,7 +205,8 @@ void MOAIShaderProgramGL::Load ( cc8* vshSource, cc8* fshSource ) {
 MOAIShaderProgramGL::MOAIShaderProgramGL () :
 	mUniformBufferSize ( 0 ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIShaderProgramGL )
+	RTTI_BEGIN ( MOAIShaderProgramGL )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIShaderProgramGL >)
 		RTTI_EXTEND ( MOAIGfxResourceGL )
 		RTTI_EXTEND ( MOAIHasUniformComposer )
 	RTTI_END

@@ -238,7 +238,8 @@ MOAIFreeTypeFontReader::MOAIFreeTypeFontReader () :
 	mFaceHeight ( 0.0f ),
 	mAntiAlias ( true ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIFreeTypeFontReader )
+	RTTI_BEGIN ( MOAIFreeTypeFontReader )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIFreeTypeFontReader >)
 		RTTI_EXTEND ( MOAIFontReader )
 	RTTI_END
 	
@@ -439,16 +440,6 @@ void MOAIFreeTypeFontReader::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIFreeTypeFontReader::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIFreeTypeFontReader::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
 }
 
 #endif

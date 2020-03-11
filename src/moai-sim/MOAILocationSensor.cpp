@@ -76,8 +76,11 @@ MOAILocationSensor::MOAILocationSensor () :
 	mHAccuracy ( 0.0f ),
 	mVAccuracy ( 0.0f ),
 	mSpeed ( 0.0f ) {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAILocationSensor, MOAISensor )
+	
+	RTTI_BEGIN ( MOAILocationSensor )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAILocationSensor >)
+		RTTI_EXTEND ( MOAISensor )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

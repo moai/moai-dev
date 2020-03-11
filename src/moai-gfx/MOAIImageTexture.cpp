@@ -40,8 +40,11 @@ int MOAIImageTexture::_updateRegion ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 MOAIImageTexture::MOAIImageTexture () {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIImageTexture, RTTIBase )
+	
+	RTTI_BEGIN ( MOAIImageTexture )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIImageTexture >)
+		RTTI_EXTEND ( RTTIBase )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//
@@ -95,18 +98,4 @@ void MOAIImageTexture::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& hist
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIImageTexture::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIImageTexture::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
 }

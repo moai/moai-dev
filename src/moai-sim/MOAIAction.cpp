@@ -439,7 +439,8 @@ MOAIAction::MOAIAction () :
 
 	this->mLink.Data ( this );
 
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIAction )
+	RTTI_BEGIN ( MOAIAction )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAction >)
 		RTTI_EXTEND ( MOAILuaObject )
 		RTTI_EXTEND ( MOAIInstanceEventSource )
 	RTTI_END

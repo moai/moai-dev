@@ -59,7 +59,8 @@ int MOAIHasMaterialBatch::_setMaterialBatch ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIHasMaterialBatch::MOAIHasMaterialBatch () {
 
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIHasMaterialBatch )
+	RTTI_BEGIN ( MOAIHasMaterialBatch )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIHasMaterialBatch >)
 		RTTI_EXTEND ( MOAIAbstractMaterialBatchInterface )
 	RTTI_END
 }
@@ -92,20 +93,6 @@ void MOAIHasMaterialBatch::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& 
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIHasMaterialBatch::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIHasMaterialBatch::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//

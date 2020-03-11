@@ -92,7 +92,8 @@ MOAICollisionShape& MOAICollisionDeck::AffirmShape ( ZLIndex idx ) {
 //----------------------------------------------------------------//
 MOAICollisionDeck::MOAICollisionDeck () {
 
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAICollisionDeck )
+	RTTI_BEGIN ( MOAICollisionDeck )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAICollisionDeck >)
 		RTTI_EXTEND ( MOAIDeck )
 	RTTI_END
 }

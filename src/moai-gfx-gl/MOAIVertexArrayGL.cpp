@@ -110,7 +110,9 @@ MOAIVertexArrayGL::MOAIVertexArrayGL () :
 	mCurrentVAO ( ZLIndexOp::INVALID ),
 	mUseVAOs ( false ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIVertexArrayGL )
+	RTTI_BEGIN ( MOAIVertexArrayGL )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIVertexArrayGL >)
+		RTTI_VISITOR ( MOAIAbstractLuaSerializationVisitor, MOAILuaSerializationVisitor < MOAIVertexArrayGL >)
 		RTTI_EXTEND ( MOAIVertexArray )
 		RTTI_EXTEND ( MOAIGfxResourceGL )
 	RTTI_END

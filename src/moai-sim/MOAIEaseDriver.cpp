@@ -88,8 +88,11 @@ int MOAIEaseDriver::_setLink ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 MOAIEaseDriver::MOAIEaseDriver () {
-	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIEaseDriver, MOAITimer )
+		
+	RTTI_BEGIN ( MOAIEaseDriver )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIEaseDriver >)
+		RTTI_EXTEND ( MOAITimer )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

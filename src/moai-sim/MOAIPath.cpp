@@ -156,8 +156,11 @@ MOAIPath::MOAIPath () :
 	mFlatness ( DEFAULT_FLATNESS ),
 	mAngle ( DEFAULT_ANGLE ),
 	mLength ( 0.0f ) {
-	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIPath, MOAILuaObject )
+		
+	RTTI_BEGIN ( MOAIPath )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIPath >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

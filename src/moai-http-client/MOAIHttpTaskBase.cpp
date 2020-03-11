@@ -600,8 +600,11 @@ MOAIHttpTaskBase::MOAIHttpTaskBase () :
 	mProgress ( 0.0f ),
 	mResponseCode ( 0 ),
 	mTimeout ( DEFAULT_MOAI_HTTP_TIMEOUT ) {
-	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIHttpTaskBase, MOAILuaObject )
+		
+	RTTI_BEGIN ( MOAIHttpTaskBase )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIHttpTaskBase >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

@@ -490,8 +490,11 @@ bool MOAIImageFormatPvr::GetTextureInfo ( ZLStream& stream, ZLTextureInfo& info 
 
 //----------------------------------------------------------------//
 MOAIImageFormatPvr::MOAIImageFormatPvr () {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIImageFormatPvr, ZLTextureFormat );
+	
+	RTTI_BEGIN ( MOAIImageFormatPvr )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIImageFormatPvr >)
+		RTTI_EXTEND ( ZLTextureFormat )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

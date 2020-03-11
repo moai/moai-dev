@@ -54,8 +54,6 @@ protected:
 	MOAIGfxMgr_GPUCache&		MOAIGfxMgrComponents_GetGPUCache		();
 	MOAIGfxMgr_RenderTree&		MOAIGfxMgrComponents_GetRenderTree		();
 	MOAIGfxMgr_VertexCache&		MOAIGfxMgrComponents_GetVertexCache		();
-	void						MOAILuaObject_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
-	void						MOAILuaObject_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
 	void						ZLContextClass_Finalize					();
 	void						ZLContextClass_Initialize				();
 

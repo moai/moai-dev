@@ -685,7 +685,8 @@ MOAIParticleScript::MOAIParticleScript () :
 
 	int i;
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIParticleScript )
+	RTTI_BEGIN ( MOAIParticleScript )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIParticleScript >)
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 

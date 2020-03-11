@@ -32,7 +32,8 @@ void MOAIVertexFormatGL::Bind ( ZLGfx& gfx, ZLSharedConstBuffer* buffer ) const 
 //----------------------------------------------------------------//
 MOAIVertexFormatGL::MOAIVertexFormatGL () {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIVertexFormatGL )
+	RTTI_BEGIN ( MOAIVertexFormatGL )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIVertexFormatGL >)
 		RTTI_EXTEND ( MOAIVertexFormat )
 	RTTI_END
 }
@@ -56,23 +57,3 @@ void MOAIVertexFormatGL::Unbind ( ZLGfx& gfx ) const {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIVertexFormatGL::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexFormatGL::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexFormatGL::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexFormatGL::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
-}

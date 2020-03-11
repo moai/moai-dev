@@ -247,7 +247,8 @@ bool MOAIColor::IsClear () {
 //----------------------------------------------------------------//
 MOAIColor::MOAIColor () {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIColor )
+	RTTI_BEGIN ( MOAIColor )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIColor >)
 		RTTI_EXTEND ( MOAINode )
 	RTTI_END
 	

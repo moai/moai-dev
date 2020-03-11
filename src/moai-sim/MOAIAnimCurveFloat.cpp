@@ -187,8 +187,11 @@ void MOAIAnimCurveFloat::GetValueRange ( float t0, float t1, float &min, float &
 //----------------------------------------------------------------//
 MOAIAnimCurveFloat::MOAIAnimCurveFloat () :
 	mValue ( 0.0f ) {
-	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIAnimCurveFloat, MOAIAnimCurve )
+		
+	RTTI_BEGIN ( MOAIAnimCurveFloat )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAnimCurveFloat >)
+		RTTI_EXTEND ( MOAIAnimCurve )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

@@ -26,8 +26,11 @@ int MOAISensor::_getTimestamp ( lua_State* L ) {
 MOAISensor::MOAISensor () :
 	mType ( 0 ),
 	mTimestamp ( 0 ) {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAISensor, MOAILuaObject )
+	
+	RTTI_BEGIN ( MOAISensor )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAISensor >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

@@ -250,8 +250,11 @@ MOAIAudioSamplerCocoa::MOAIAudioSamplerCocoa () :
 	mStreamFormat ( 0 ),
 	mSampleSize ( 0 ),
 	mSamplesWritten ( 0 ) {
-	
-    MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIAudioSamplerCocoa, MOAIInstanceEventSource )
+	    
+    RTTI_BEGIN ( MOAIAudioSamplerCocoa )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAudioSamplerCocoa >)
+		RTTI_EXTEND ( MOAIInstanceEventSource )
+	RTTI_END
     
     mSessionActiveObserver = [[ NSNotificationCenter defaultCenter ] addObserverForName:@"UntzSessionActive"
 		object:nil

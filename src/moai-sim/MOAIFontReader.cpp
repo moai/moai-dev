@@ -220,7 +220,8 @@ int MOAIFontReader::GetKernVec ( u32 c, MOAIKernVec& kernVec ) {
 //----------------------------------------------------------------//
 MOAIFontReader::MOAIFontReader () {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIFontReader )
+	RTTI_BEGIN ( MOAIFontReader )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIFontReader >)
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }
@@ -266,18 +267,4 @@ void MOAIFontReader::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& histor
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIFontReader::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIFontReader::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
 }

@@ -30,8 +30,11 @@ int MOAIParticlePlugin::_getSize ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIParticlePlugin::MOAIParticlePlugin () :
 	mSize ( 0 ) {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIParticlePlugin, MOAILuaObject )
+	
+	RTTI_BEGIN ( MOAIParticlePlugin )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIParticlePlugin >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

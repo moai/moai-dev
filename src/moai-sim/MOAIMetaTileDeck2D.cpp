@@ -115,7 +115,8 @@ int MOAIMetaTileDeck2D::_setMetaTile ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIMetaTileDeck2D::MOAIMetaTileDeck2D () {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIMetaTileDeck2D )
+	RTTI_BEGIN ( MOAIMetaTileDeck2D )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIMetaTileDeck2D >)
 		RTTI_EXTEND ( MOAIDeck )
 	RTTI_END
 }
@@ -259,14 +260,4 @@ void MOAIMetaTileDeck2D::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& hi
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIMetaTileDeck2D::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIMetaTileDeck2D::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
 }

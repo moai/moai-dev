@@ -201,7 +201,8 @@ MOAIAbstractProp::MOAIAbstractProp () :
 		mModelBoundsOverride ( ZLBox::EMPTY ),
 		mModelBoundsPad ( ZLVec3D::ORIGIN ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIAbstractProp )
+	RTTI_BEGIN ( MOAIAbstractProp )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractProp >)
 		RTTI_EXTEND ( MOAIPartitionHull )
 		RTTI_EXTEND ( MOAITransform )
 	RTTI_END
@@ -238,16 +239,6 @@ void MOAIAbstractProp::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& hist
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIAbstractProp::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIAbstractProp::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//

@@ -79,7 +79,8 @@ MOAILightFormat::MOAILightFormat () :
 	mTextures ( 0 ),
 	mDirty ( false ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAILightFormat )
+	RTTI_BEGIN ( MOAILightFormat )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAILightFormat >)
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }

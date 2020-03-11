@@ -183,7 +183,8 @@ void MOAIStreamAdapter::Close () {
 MOAIStreamAdapter::MOAIStreamAdapter () :
 	mAdapter ( 0 ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIStreamAdapter )
+	RTTI_BEGIN ( MOAIStreamAdapter )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIStreamAdapter >)
 		RTTI_EXTEND ( MOAIStream )
 	RTTI_END
 }

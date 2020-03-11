@@ -58,8 +58,6 @@ private:
 	static void		PrintError				( CURLcode error );
 
 	//----------------------------------------------------------------//
-	void			MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 

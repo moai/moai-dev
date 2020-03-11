@@ -46,7 +46,8 @@ MOAIFoo::MOAIFoo () {
 	
 	// register all classes MOAIFoo derives from
 	// we need this for custom RTTI implementation
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIFoo )
+	RTTI_BEGIN ( MOAIFoo )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIFoo >)
 		RTTI_EXTEND ( MOAILuaObject )
 		
 		// and any other objects from multiple inheritance...

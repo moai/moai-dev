@@ -593,7 +593,9 @@ MOAIFont::MOAIFont () :
 	mMinFilter ( MOAITextureFilterEnum::LINEAR ),
 	mMagFilter ( MOAITextureFilterEnum::LINEAR ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIFont )
+	RTTI_BEGIN ( MOAIFont )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIFont >)
+		RTTI_VISITOR ( MOAIAbstractLuaSerializationVisitor, MOAILuaSerializationVisitor < MOAIFont >)
 		RTTI_EXTEND ( MOAILuaObject )
 		RTTI_EXTEND ( MOAIInstanceEventSource )
 	RTTI_END

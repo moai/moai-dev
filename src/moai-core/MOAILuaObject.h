@@ -6,18 +6,9 @@
 
 #include <moai-core/MOAILuaRef.h>
 
-#define MOAI_LUA_OBJECT_RTTI_BEGIN(type) 													\
-	RTTI_BEGIN ( type ) 																	\
-	RTTI_VISITOR ( MOAIAbstractLuaObjectVisitor, MOAILuaObjectVisitor < type >)
-
-#define MOAI_LUA_OBJECT_RTTI_SINGLE(type, super) 											\
-	RTTI_BEGIN ( type ) 																	\
-	RTTI_VISITOR ( MOAIAbstractLuaObjectVisitor, MOAILuaObjectVisitor < type >) 			\
-	RTTI_EXTEND ( super ) 																	\
-	RTTI_END
-
 #define MOAI_LUA_OBJECT_VISITOR_FRIEND 														\
-	template < typename TYPE > friend class MOAILuaObjectVisitor;							\
+	template < typename TYPE > friend class MOAILuaRegistrationVisitor;						\
+	template < typename TYPE > friend class MOAILuaSerializationVisitor;
 
 #define DECL_LUA_FACTORY(type)																\
 	IMPLEMENT_DEPENDS_ON ( type )															\
@@ -62,8 +53,7 @@ class MOAILuaObject :
 	public virtual ZLFinalizable {
 private:
 
-	friend class MOAILuaObjectMemo;
-	template < typename TYPE > friend class MOAILuaObjectVisitor;
+	MOAI_LUA_OBJECT_VISITOR_FRIEND
 
 	u32						mActiveUserdataCount;
 	MOAILuaWeakRef			mUserdata;		// ref to userdata (weak)
@@ -94,10 +84,8 @@ protected:
 	static void				Unbind					( MOAILuaObject* object, MOAILuaWeakRef& userdata );
 
 	//----------------------------------------------------------------//
-	virtual void			MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	virtual void			MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
-	virtual	void			MOAILuaObject_SerializeIn			( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
-	virtual	void			MOAILuaObject_SerializeOut			( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
+	void					MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void					MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
 	void					ZLRefCountedObjectBase_OnRelease	( u32 refCount );
 
 public:
@@ -146,32 +134,26 @@ public:
 };
 
 //================================================================//
-// MOAIAbstractLuaObjectVisitor
+// MOAIAbstractLuaRegistrationVisitor
 //================================================================//
-class MOAIAbstractLuaObjectVisitor {
+class MOAIAbstractLuaRegistrationVisitor {
 public:
 
 	//----------------------------------------------------------------//
-	MOAIAbstractLuaObjectVisitor () {
-	}
-
-	//----------------------------------------------------------------//
-	virtual ~MOAIAbstractLuaObjectVisitor () {
+	virtual ~MOAIAbstractLuaRegistrationVisitor () {
 	}
 
 	//----------------------------------------------------------------//
 	virtual void	RegisterLuaClass		( MOAILuaObject& self, RTTIVisitorHistory& history, MOAILuaState& state ) const = 0;
 	virtual void	RegisterLuaFuncs		( MOAILuaObject& self, RTTIVisitorHistory& history, MOAILuaState& state ) const = 0;
-	virtual void 	SerializeIn 			( MOAILuaObject& self, RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) const = 0;
-	virtual void 	SerializeOut 			( MOAILuaObject& self, RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) const = 0;
 };
 
 //================================================================//
 // MOAILuaObjectVisitor
 //================================================================//
 template < typename TYPE >
-class MOAILuaObjectVisitor :
-	public MOAIAbstractLuaObjectVisitor {
+class MOAILuaRegistrationVisitor :
+	public MOAIAbstractLuaRegistrationVisitor {
 public:
 
 	//----------------------------------------------------------------//
@@ -183,6 +165,30 @@ public:
 	void RegisterLuaFuncs ( MOAILuaObject& self, RTTIVisitorHistory& history, MOAILuaState& state ) const {
 		self.AsType < TYPE >()->TYPE::MOAILuaObject_RegisterLuaFuncs ( history, state );
 	}
+};
+
+//================================================================//
+// MOAIAbstractLuaSerializationVisitor
+//================================================================//
+class MOAIAbstractLuaSerializationVisitor {
+public:
+
+	//----------------------------------------------------------------//
+	virtual ~MOAIAbstractLuaSerializationVisitor () {
+	}
+
+	//----------------------------------------------------------------//
+	virtual void 	SerializeIn 			( MOAILuaObject& self, RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) const = 0;
+	virtual void 	SerializeOut 			( MOAILuaObject& self, RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) const = 0;
+};
+
+//================================================================//
+// MOAILuaSerializationVisitor
+//================================================================//
+template < typename TYPE >
+class MOAILuaSerializationVisitor :
+	public MOAIAbstractLuaSerializationVisitor {
+public:
 
 	//----------------------------------------------------------------//
 	void SerializeIn ( MOAILuaObject& self, RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) const {

@@ -161,7 +161,8 @@ MOAIDynamicGlyphCache::MOAIDynamicGlyphCache () :
 	mColorFormat ( ZLColor::A_8 ),
 	mPadding ( -1.0f, -1.0f, 1.0f, 1.0f ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIDynamicGlyphCache )
+	RTTI_BEGIN ( MOAIDynamicGlyphCache )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIDynamicGlyphCache >)
 		RTTI_EXTEND ( MOAIGlyphCache )
 	RTTI_END
 }
@@ -231,18 +232,4 @@ void MOAIDynamicGlyphCache::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory&
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIDynamicGlyphCache::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIDynamicGlyphCache::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( state );
-	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
 }

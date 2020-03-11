@@ -178,8 +178,11 @@ MOAIParticlePexPlugin::MOAIParticlePexPlugin () :
 	memset(mFinishColorRegister, -1,sizeof(mFinishColorRegister));
 	mSourcePos[0] = mSourcePos[1] = 0;
 	mSourcePosVariance[0] = mSourcePosVariance[1] = 0;
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIParticlePexPlugin, MOAIParticlePlugin )
+	
+	RTTI_BEGIN ( MOAIParticlePexPlugin )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIParticlePexPlugin >)
+		RTTI_EXTEND ( MOAIParticlePlugin )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

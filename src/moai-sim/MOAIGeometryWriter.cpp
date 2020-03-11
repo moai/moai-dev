@@ -655,8 +655,11 @@ u32 MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream& vtxS
 
 //----------------------------------------------------------------//
 MOAIGeometryWriter::MOAIGeometryWriter () {
-	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIGeometryWriter, MOAILuaObject )
+		
+	RTTI_BEGIN ( MOAIGeometryWriter )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIGeometryWriter >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

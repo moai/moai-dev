@@ -39,7 +39,8 @@ int MOAIProjectionProp::_init ( lua_State* L ) {
 MOAIProjectionProp::MOAIProjectionProp () :
 	mFront ( 1.0 ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIProjectionProp )
+	RTTI_BEGIN ( MOAIProjectionProp )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIProjectionProp >)
 		RTTI_EXTEND ( MOAIDrawable )
 		RTTI_EXTEND ( MOAIPartitionHull )
 	RTTI_END
@@ -111,16 +112,6 @@ void MOAIProjectionProp::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& hi
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIProjectionProp::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIProjectionProp::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//

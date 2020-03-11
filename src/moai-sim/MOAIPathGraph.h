@@ -25,10 +25,6 @@ protected:
 	//----------------------------------------------------------------//
 	virtual void	PushNeighbors			( MOAIPathFinder& pathFinder, ZLIndex nodeID ) = 0;
 
-	//----------------------------------------------------------------//
-	void			MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
-
 public:
 
 	//----------------------------------------------------------------//

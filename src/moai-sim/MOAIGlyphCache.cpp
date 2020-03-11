@@ -13,7 +13,8 @@
 //----------------------------------------------------------------//
 MOAIGlyphCache::MOAIGlyphCache () {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIGlyphCache )
+	RTTI_BEGIN ( MOAIGlyphCache )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIGlyphCache >)
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }
@@ -55,13 +56,3 @@ int MOAIGlyphCache::SetImage ( MOAIFont& font, MOAIImage& image ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGlyphCache::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIGlyphCache::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
-}

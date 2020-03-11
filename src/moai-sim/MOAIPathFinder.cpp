@@ -412,8 +412,11 @@ MOAIPathFinder::MOAIPathFinder () :
 	mFlags ( 0 ),
 	mGWeight ( 1.0f ),
 	mHWeight ( 1.0f ) {
-	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIPathFinder, MOAILuaObject )
+		
+	RTTI_BEGIN ( MOAIPathFinder )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIPathFinder >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

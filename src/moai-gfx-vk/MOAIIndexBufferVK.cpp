@@ -14,7 +14,8 @@
 //----------------------------------------------------------------//
 MOAIIndexBufferVK::MOAIIndexBufferVK () {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIIndexBufferVK )
+	RTTI_BEGIN ( MOAIIndexBufferVK )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIIndexBufferVK >)
 		RTTI_EXTEND ( MOAIIndexBuffer )
 		RTTI_EXTEND ( MOAIGfxBufferVK )
 	RTTI_END
@@ -29,21 +30,3 @@ MOAIIndexBufferVK::~MOAIIndexBufferVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIIndexBufferVK::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIIndexBufferVK::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIIndexBufferVK::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIIndexBufferVK::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-}

@@ -81,7 +81,8 @@ void MOAIShaderProgramVK::LoadModule ( ModuleID moduleID, const void* shaderCode
 //----------------------------------------------------------------//
 MOAIShaderProgramVK::MOAIShaderProgramVK () {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIShaderProgramVK )
+	RTTI_BEGIN ( MOAIShaderProgramVK )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIShaderProgramVK >)
 		RTTI_EXTEND ( MOAIGfxResourceVK )
 	RTTI_END
 	
@@ -136,29 +137,6 @@ void MOAIShaderProgramVK::UpdatePipelineCreateInfo ( VkGraphicsPipelineCreateInf
 //================================================================//
 // virtual
 //================================================================//
-
-//----------------------------------------------------------------//
-void MOAIShaderProgramVK::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderProgramVK::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-//	luaL_Reg regTable [] = {
-//		{ "declareUniform",				_declareUniform },
-//		{ "load",						_load },
-//		{ "reserveGlobals",				_reserveGlobals },
-//		{ "reserveTextures",			_reserveTextures },
-//		{ "reserveUniforms",			_reserveUniforms },
-//		{ "setGlobal",					_setGlobal },
-//		{ "setTexture",					_setTexture },
-//		{ "setVertexAttribute",			_setVertexAttribute },
-//		{ NULL, NULL }
-//	};
-//	luaL_register ( state, 0, regTable );
-}
 
 //----------------------------------------------------------------//
 void MOAIShaderProgramVK::Visitor_Finalize () {

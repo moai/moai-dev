@@ -196,12 +196,13 @@ float MOAIBox2DArbiter::GetUnitsToMeters ( ) const {
 }
 
 //----------------------------------------------------------------//
-MOAIBox2DArbiter::MOAIBox2DArbiter ( ) :
+MOAIBox2DArbiter::MOAIBox2DArbiter () :
 	mContact ( 0 ),
 	mImpulse ( 0 ),
 	mWorld ( NULL ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIBox2DArbiter )
+	RTTI_BEGIN ( MOAIBox2DArbiter )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIBox2DArbiter >)
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }
@@ -212,7 +213,8 @@ MOAIBox2DArbiter::MOAIBox2DArbiter ( const MOAIBox2DWorld& world ) :
 	mImpulse ( 0 ),
 	mWorld ( &world ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIBox2DArbiter )
+	RTTI_BEGIN ( MOAIBox2DArbiter )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIBox2DArbiter >)
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }

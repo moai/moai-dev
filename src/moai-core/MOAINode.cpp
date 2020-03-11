@@ -545,8 +545,11 @@ MOAINode::MOAINode () :
 	mState ( STATE_IDLE ),
 	mPrev ( 0 ),
 	mNext ( 0 ) {
-	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAINode, MOAIInstanceEventSource )
+		
+	RTTI_BEGIN ( MOAINode )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAINode >)
+		RTTI_EXTEND ( MOAIInstanceEventSource )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

@@ -129,7 +129,8 @@ MOAIMaterialBatch* MOAIAbstractMaterialBatchInterface::GetMaterialBatch () {
 //----------------------------------------------------------------//
 MOAIAbstractMaterialBatchInterface::MOAIAbstractMaterialBatchInterface () {
 
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIAbstractMaterialBatchInterface )
+	RTTI_BEGIN ( MOAIAbstractMaterialBatchInterface )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractMaterialBatchInterface >)
 		RTTI_EXTEND ( MOAIAbstractMaterialInterface )
 	RTTI_END
 }

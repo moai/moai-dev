@@ -124,7 +124,8 @@ MOAILuaObject* MOAIDeserializer::MemberIDToObject ( ObjID objectID ) {
 //----------------------------------------------------------------//
 MOAIDeserializer::MOAIDeserializer () {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIDeserializer )
+	RTTI_BEGIN ( MOAIDeserializer )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIDeserializer >)
 		RTTI_EXTEND ( MOAISerializerBase )
 	RTTI_END
 }

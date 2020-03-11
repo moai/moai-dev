@@ -177,8 +177,11 @@ void MOAIAnim::ClearLinks () {
 //----------------------------------------------------------------//
 MOAIAnim::MOAIAnim () :
 	mLength ( 0.0f ) {
-	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIAnim, MOAITimer )
+		
+	RTTI_BEGIN ( MOAIAnim )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAnim >)
+		RTTI_EXTEND ( MOAITimer )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

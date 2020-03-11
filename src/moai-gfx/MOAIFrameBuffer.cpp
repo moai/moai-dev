@@ -15,8 +15,11 @@ MOAIFrameBuffer::MOAIFrameBuffer () :
 	mBufferScale ( 1.0 ),
 	mLandscape ( false ),
 	mNeedsClear ( true ) {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIFrameBuffer, MOAILuaObject )
+	
+	RTTI_BEGIN ( MOAIFrameBuffer )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIFrameBuffer >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

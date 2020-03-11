@@ -164,8 +164,11 @@ bool MOAIDebugLinesMgr::IsVisible ( u32 styleID ) {
 MOAIDebugLinesMgr::MOAIDebugLinesMgr () :
 	mActiveStyleSet ( 0 ),
 	mShowDebugLines ( true ) {
-
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIDebugLinesMgr, MOAILuaObject )
+	
+	RTTI_BEGIN ( MOAIDebugLinesMgr )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIDebugLinesMgr >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

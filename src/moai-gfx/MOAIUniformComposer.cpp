@@ -94,7 +94,8 @@ void MOAIUniformComposer::ComposeUniforms ( const MOAIUniformSchema& schema, MOA
 //----------------------------------------------------------------//
 MOAIUniformComposer::MOAIUniformComposer () {
 
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIUniformComposer )
+	RTTI_BEGIN ( MOAIUniformComposer )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIUniformComposer >)
 		RTTI_EXTEND ( MOAIUniformComposerInterface )
 	RTTI_END
 }
@@ -133,16 +134,6 @@ void MOAIUniformComposer::SelectTextures () {
 //================================================================//
 // virtual
 //================================================================//
-
-//----------------------------------------------------------------//
-void MOAIUniformComposer::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIUniformComposer::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
 
 //----------------------------------------------------------------//
 MOAIUniformComposer& MOAIUniformComposer::MOAIUniformComposerInterface_AffirmComposer () {

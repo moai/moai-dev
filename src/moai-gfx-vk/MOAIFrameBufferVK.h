@@ -43,8 +43,6 @@ protected:
 	
 	//----------------------------------------------------------------//
 	virtual void		MOAIFrameBufferVK_AffirmBuffers			();
-	void				MOAILuaObject_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
 //	void				ZLGfxListener_OnReadPixels				( const ZLCopyOnWrite& buffer, void* userdata );
 
 public:

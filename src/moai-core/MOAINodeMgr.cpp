@@ -75,8 +75,11 @@ MOAINodeMgr::MOAINodeMgr () :
 	mUpdateListTail ( 0 ),
 	mScheduled ( false ),
 	mMaxIterations ( DEFAULT_MAX_ITERATIONS ) {
-	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAINodeMgr, MOAILuaObject )
+		
+	RTTI_BEGIN ( MOAINodeMgr )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAINodeMgr >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

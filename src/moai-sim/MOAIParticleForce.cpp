@@ -189,7 +189,8 @@ MOAIParticleForce::MOAIParticleForce () :
 	mShape ( LINEAR ),
 	mType ( GRAVITY ) {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIParticleForce )
+	RTTI_BEGIN ( MOAIParticleForce )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIParticleForce >)
 		RTTI_EXTEND ( MOAITransform )
 	RTTI_END
 	

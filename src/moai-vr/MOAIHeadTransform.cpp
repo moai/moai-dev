@@ -35,7 +35,8 @@ int MOAIHeadTransform::_recenterTracking ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIHeadTransform::MOAIHeadTransform () {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIHeadTransform )
+	RTTI_BEGIN ( MOAIHeadTransform )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIHeadTransform >)
 		RTTI_EXTEND ( MOAIAction )
 		RTTI_EXTEND ( MOAIAbstractBaseTransform )
 	RTTI_END

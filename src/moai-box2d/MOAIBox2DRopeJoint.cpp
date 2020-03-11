@@ -11,7 +11,8 @@
 
 MOAIBox2DRopeJoint::MOAIBox2DRopeJoint () {
 	
-	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAIBox2DRopeJoint )
+	RTTI_BEGIN ( MOAIBox2DRopeJoint )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIBox2DRopeJoint >)
 		RTTI_EXTEND ( MOAIBox2DJoint )
 	RTTI_END
 }

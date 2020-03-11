@@ -505,8 +505,11 @@ MOAIFourier::MOAIFourier () :
 	mBandsPerOctave ( 0 ),
 	mWindowFunction ( RECTANGULAR ),
 	mWindowAlpha ( 0.0f ) {
-	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIFourier, MOAILuaObject )
+		
+	RTTI_BEGIN ( MOAIFourier )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIFourier >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//
