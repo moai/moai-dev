@@ -893,7 +893,7 @@ void MOAIFourier::WriteOctaves ( float* amplitudes, ZLStream& outStream, u32 out
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIFourier::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIFourier::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 	
 	state.SetField ( -1, "SAMPLE_S8",			( u32 )ZLSample::SAMPLE_S8 );
@@ -931,7 +931,7 @@ void MOAIFourier::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, 
 }
 
 //----------------------------------------------------------------//
-void MOAIFourier::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIFourier::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {

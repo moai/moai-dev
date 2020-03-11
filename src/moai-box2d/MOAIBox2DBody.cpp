@@ -1068,12 +1068,7 @@ void MOAIBox2DBody::SetBody ( b2Body* body ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIBox2DBody::MOAIAbstractBaseTransform_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
-	UNUSED ( localToWorldMtx );
-}
-
-//----------------------------------------------------------------//
-void MOAIBox2DBody::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIBox2DBody::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "DYNAMIC",		( u32 )b2_dynamicBody );
@@ -1082,7 +1077,7 @@ void MOAIBox2DBody::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DBody::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIBox2DBody::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
@@ -1127,6 +1122,11 @@ void MOAIBox2DBody::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history
 	};
 	
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIBox2DBody::MOAIAbstractBaseTransform_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
+	UNUSED ( localToWorldMtx );
 }
 
 //----------------------------------------------------------------//

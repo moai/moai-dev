@@ -88,9 +88,9 @@ protected:
 	void					PushGfxState				();
 
 	//----------------------------------------------------------------//
+	void					_RegisterLuaClass							( RTTIVisitorHistory& history, MOAILuaState& state );
+	void					_RegisterLuaFuncs							( RTTIVisitorHistory& history, MOAILuaState& state );
 	virtual ZLMatrix4x4		MOAIGraphicsPropBase_GetWorldDrawingMtx		() const; // factors in billboard flags
-	void					MOAILuaObject_RegisterLuaClass				( RTTIVisitorHistory& history, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs				( RTTIVisitorHistory& history, MOAILuaState& state );
 	bool					MOAINode_ApplyAttrOp						( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	void					MOAINode_Update								();
 

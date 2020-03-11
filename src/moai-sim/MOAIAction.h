@@ -70,16 +70,16 @@ private:
 protected:
 
 	//----------------------------------------------------------------//
-	virtual void			MOAIAction_DidLoseChild				( MOAIAction* child );
-	virtual STLString		MOAIAction_GetDebugInfo				() const;
-	virtual MOAIAction*		MOAIAction_GetDefaultParent			();
-	virtual bool			MOAIAction_IsDone					();
-	virtual void			MOAIAction_Start					();
-	virtual void			MOAIAction_Stop						();
-	virtual void			MOAIAction_Update					( double step );
-	void					MOAIBlocker_Unblock					();
-	void					MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void					_RegisterLuaClass				( RTTIVisitorHistory& history, MOAILuaState& state );
+	void					_RegisterLuaFuncs				( RTTIVisitorHistory& history, MOAILuaState& state );
+	virtual void			MOAIAction_DidLoseChild			( MOAIAction* child );
+	virtual STLString		MOAIAction_GetDebugInfo			() const;
+	virtual MOAIAction*		MOAIAction_GetDefaultParent		();
+	virtual bool			MOAIAction_IsDone				();
+	virtual void			MOAIAction_Start				();
+	virtual void			MOAIAction_Stop					();
+	virtual void			MOAIAction_Update				( double step );
+	void					MOAIBlocker_Unblock				();
 	
 public:
 	

@@ -53,7 +53,7 @@ void MOAITask::Start ( MOAITaskQueue& queue, MOAITaskSubscriber& subscriber ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITask::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAITask::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
@@ -65,7 +65,7 @@ void MOAITask::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOA
 }
 
 //----------------------------------------------------------------//
-void MOAITask::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAITask::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 	UNUSED ( state );
 }

@@ -40,8 +40,8 @@ private:
 	static int			_getVertices				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 
@@ -50,10 +50,10 @@ public:
 	DECL_LUA_FACTORY ( MOAIAssimpMesh )
 
 	//----------------------------------------------------------------//
-					MOAIAssimpMesh				();
-					~MOAIAssimpMesh				();
-	u32				ReadIndices					( ZLStream& stream, u32 indexSize );
-	u32				ReadVertices				( const MOAIVertexFormat& format, ZLStream& stream, bool renormalizeBones );
+						MOAIAssimpMesh				();
+						~MOAIAssimpMesh				();
+	u32					ReadIndices					( ZLStream& stream, u32 indexSize );
+	u32					ReadVertices				( const MOAIVertexFormat& format, ZLStream& stream, bool renormalizeBones );
 };
 
 #endif

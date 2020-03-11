@@ -264,6 +264,43 @@ void MOAITileDeck2D::TransformUV ( const ZLAffine3D& mtx ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAITileDeck2D::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+}
+
+//----------------------------------------------------------------//
+void MOAITileDeck2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+	
+	luaL_Reg regTable [] = {
+		{ "setQuad",			_setQuad },
+		{ "setRect",			_setRect },
+		{ "setUVQuad",			_setUVQuad },
+		{ "setUVRect",			_setUVRect },
+		{ "setSize",			_setSize },
+		{ "transform",			_transform },
+		{ "transformUV",		_transformUV },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAITileDeck2D::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	if ( history.DidVisit ( *this )) return;
+
+	//this->mTexture.Set ( *this, serializer.MemberIDToObject < MOAITexture >( state.GetFieldValue < MOAISerializerBase::ObjID >( -1, "mTexture", 0 )));
+}
+
+//----------------------------------------------------------------//
+void MOAITileDeck2D::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
+	if ( history.DidVisit ( *this )) return;
+
+	//state.SetField ( -1, "mTexture", serializer.AffirmMemberID ( this->mTexture ));
+}
+
+//----------------------------------------------------------------//
 ZLBounds MOAITileDeck2D::MOAIDeck_ComputeMaxAABB () {
 
 	return this->MOAIDeck::GetBounds ( 0 );
@@ -310,43 +347,6 @@ MOAICollisionShape* MOAITileDeck2D::MOAIDeck_GetCollisionShape ( ZLIndex idx ) {
 	UNUSED ( idx );
 
 	return 0;
-}
-
-//----------------------------------------------------------------//
-void MOAITileDeck2D::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAITileDeck2D::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-	
-	luaL_Reg regTable [] = {
-		{ "setQuad",			_setQuad },
-		{ "setRect",			_setRect },
-		{ "setUVQuad",			_setUVQuad },
-		{ "setUVRect",			_setUVRect },
-		{ "setSize",			_setSize },
-		{ "transform",			_transform },
-		{ "transformUV",		_transformUV },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAITileDeck2D::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-
-	//this->mTexture.Set ( *this, serializer.MemberIDToObject < MOAITexture >( state.GetFieldValue < MOAISerializerBase::ObjID >( -1, "mTexture", 0 )));
-}
-
-//----------------------------------------------------------------//
-void MOAITileDeck2D::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-
-	//state.SetField ( -1, "mTexture", serializer.AffirmMemberID ( this->mTexture ));
 }
 
 //----------------------------------------------------------------//

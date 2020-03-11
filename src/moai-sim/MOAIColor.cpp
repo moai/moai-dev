@@ -296,7 +296,7 @@ bool MOAIColor::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 o
 }
 
 //----------------------------------------------------------------//
-void MOAIColor::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIColor::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "ATTR_R_COL",		AttrID_ATTR_R_COL ().ToRaw ());
@@ -318,7 +318,7 @@ void MOAIColor::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MO
 }
 
 //----------------------------------------------------------------//
-void MOAIColor::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIColor::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {

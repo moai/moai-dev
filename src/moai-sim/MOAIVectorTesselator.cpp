@@ -1420,7 +1420,7 @@ void MOAIVectorTesselator::WriteVertex ( ZLStream& stream, MOAIVertexFormat& for
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIVectorTesselator::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 	
 	state.SetField ( -1, "FILL_NONE",					( u32 )MOAIVectorStyle::FILL_NONE );
@@ -1455,7 +1455,7 @@ void MOAIVectorTesselator::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& 
 }
 
 //----------------------------------------------------------------//
-void MOAIVectorTesselator::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIVectorTesselator::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {

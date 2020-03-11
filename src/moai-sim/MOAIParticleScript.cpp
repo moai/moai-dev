@@ -1120,7 +1120,7 @@ void MOAIParticleScript::Run ( MOAIParticleSystem& system, MOAIParticle& particl
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIParticleScript::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIParticleScript::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "PARTICLE_X",			Pack64 ( MOAIParticle::PARTICLE_X,		PARAM_TYPE_PARTICLE_REG ));
@@ -1155,7 +1155,7 @@ void MOAIParticleScript::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& hi
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleScript::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIParticleScript::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 	
 	luaL_Reg regTable [] = {

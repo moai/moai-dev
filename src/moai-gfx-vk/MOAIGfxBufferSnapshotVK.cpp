@@ -123,7 +123,7 @@ MOAIGfxBufferSnapshotVK::~MOAIGfxBufferSnapshotVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxBufferSnapshotVK::Visitor_Finalize () {
+void MOAIGfxBufferSnapshotVK::_Finalize () {
 
 	if ( this->HasDependency < MOAILogicalDeviceVK >()) {
 		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();

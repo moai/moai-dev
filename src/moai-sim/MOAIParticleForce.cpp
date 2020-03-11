@@ -209,7 +209,7 @@ MOAIParticleForce::~MOAIParticleForce () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIParticleForce::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIParticleForce::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "FORCE", ( u32 )FORCE );
@@ -218,7 +218,7 @@ void MOAIParticleForce::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& his
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleForce::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIParticleForce::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {

@@ -630,13 +630,13 @@ void MOAILuaObject::Unbind ( MOAILuaObject* object, MOAILuaWeakRef& userdata ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAILuaObject::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAILuaObject::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
-void MOAILuaObject::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAILuaObject::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {

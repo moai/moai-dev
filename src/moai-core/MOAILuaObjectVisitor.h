@@ -31,12 +31,12 @@ public:
 
 	//----------------------------------------------------------------//
 	void RegisterLuaClass ( MOAILuaObject& self, RTTIVisitorHistory& history, MOAILuaState& state ) const {
-		self.AsType < TYPE >()->TYPE::MOAILuaObject_RegisterLuaClass ( history, state );
+		self.AsType < TYPE >()->TYPE::_RegisterLuaClass ( history, state );
 	}
 	
 	//----------------------------------------------------------------//
 	void RegisterLuaFuncs ( MOAILuaObject& self, RTTIVisitorHistory& history, MOAILuaState& state ) const {
-		self.AsType < TYPE >()->TYPE::MOAILuaObject_RegisterLuaFuncs ( history, state );
+		self.AsType < TYPE >()->TYPE::_RegisterLuaFuncs ( history, state );
 	}
 };
 
@@ -65,12 +65,12 @@ public:
 
 	//----------------------------------------------------------------//
 	void SerializeIn ( MOAILuaObject& self, RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) const {
-		self.AsType < TYPE >()->TYPE::MOAILuaObject_SerializeIn ( history, state, serializer );
+		self.AsType < TYPE >()->TYPE::_SerializeIn ( history, state, serializer );
 	}
 	
 	//----------------------------------------------------------------//
 	void SerializeOut ( MOAILuaObject& self, RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) const {
-		self.AsType < TYPE >()->TYPE::MOAILuaObject_SerializeOut ( history, state, serializer );
+		self.AsType < TYPE >()->TYPE::_SerializeOut ( history, state, serializer );
 	}
 };
 

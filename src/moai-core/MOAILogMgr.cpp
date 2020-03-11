@@ -290,7 +290,7 @@ void MOAILogMgr::OpenFile ( cc8* filename ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAILogMgr::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAILogMgr::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "LOG_DEBUG",			( u32 )ZLLog::LOG_DEBUG );

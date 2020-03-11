@@ -26,8 +26,8 @@ protected:
 	static int				_setMaterialBatch		( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void					MOAILuaObject_RegisterLuaClass								( RTTIVisitorHistory& history, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs								( RTTIVisitorHistory& history, MOAILuaState& state );
+	void					_RegisterLuaClass											( RTTIVisitorHistory& history, MOAILuaState& state );
+	void					_RegisterLuaFuncs											( RTTIVisitorHistory& history, MOAILuaState& state );
 	MOAIMaterial&			MOAIAbstractMaterialBatchInterface_AffirmMaterial			( ZLIndex index );
 	MOAIMaterialBatch&		MOAIAbstractMaterialBatchInterface_AffirmMaterialBatch		();
 	MOAIMaterial*			MOAIAbstractMaterialBatchInterface_GetMaterial				( ZLIndex index );

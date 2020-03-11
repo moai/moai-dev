@@ -18,13 +18,13 @@ private:
 		struct SFMT_T*	mSFMT;
 		
 		//----------------------------------------------------------------//
-		static int		_randSFMT			( lua_State* L );
-		static int		_seedSFMT			( lua_State* L );
+		static int		_randSFMT		( lua_State* L );
+		static int		_seedSFMT		( lua_State* L );
 
 	#endif
 
 	//----------------------------------------------------------------//
-	void			MOAILuaObject_RegisterLuaClass	( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaClass	( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 	

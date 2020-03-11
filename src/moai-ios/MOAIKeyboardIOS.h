@@ -121,7 +121,7 @@ private:
 	void			ShowKeyboard			( cc8* text, int type, int returnKey, bool secure, int autocap, int appearance );
 
 	//----------------------------------------------------------------//
-	void			MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 	

@@ -86,37 +86,37 @@ protected:
 	u32			mRepeat;
 
 	//----------------------------------------------------------------//
-	static int		_cellAddrToCoord	( lua_State* L );
-	static int		_getCellAddr		( lua_State* L );
-	static int		_getCellSize		( lua_State* L );
-	static int		_getOffset			( lua_State* L );
-	static int		_getSize			( lua_State* L );
-	static int		_getTileLoc			( lua_State* L );
-	static int		_getTileSize		( lua_State* L );
-	static int		_initAxialHexGrid	( lua_State* L );
-	static int		_initDiamondGrid	( lua_State* L );
-	static int		_initHexGrid		( lua_State* L );
-	static int		_initObliqueGrid	( lua_State* L );
-	static int		_initRectGrid		( lua_State* L );
-	static int		_locToCellAddr		( lua_State* L );
-	static int		_locToCoord			( lua_State* L );
-	static int		_setRepeat			( lua_State* L );
-	static int		_setShape			( lua_State* L );
-	static int		_setSize			( lua_State* L );
-	static int		_wrapCoord			( lua_State* L );
+	static int		_cellAddrToCoord		( lua_State* L );
+	static int		_getCellAddr			( lua_State* L );
+	static int		_getCellSize			( lua_State* L );
+	static int		_getOffset				( lua_State* L );
+	static int		_getSize				( lua_State* L );
+	static int		_getTileLoc				( lua_State* L );
+	static int		_getTileSize			( lua_State* L );
+	static int		_initAxialHexGrid		( lua_State* L );
+	static int		_initDiamondGrid		( lua_State* L );
+	static int		_initHexGrid			( lua_State* L );
+	static int		_initObliqueGrid		( lua_State* L );
+	static int		_initRectGrid			( lua_State* L );
+	static int		_locToCellAddr			( lua_State* L );
+	static int		_locToCoord				( lua_State* L );
+	static int		_setRepeat				( lua_State* L );
+	static int		_setShape				( lua_State* L );
+	static int		_setSize				( lua_State* L );
+	static int		_wrapCoord				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	MOAICellCoord	GetAxialHexCellCoord		( float x, float y ) const;
-	MOAICellCoord	GetHexCellCoord				( float x, float y, float a, float b ) const;
-	MOAICellCoord	GetObliqueCellCoord			( float x, float y ) const;
-	ZLVec2D			GetRectPoint				( float x, float y, float width, float height, u32 position ) const;
-	virtual void	OnResize					();
+	MOAICellCoord	GetAxialHexCellCoord	( float x, float y ) const;
+	MOAICellCoord	GetHexCellCoord			( float x, float y, float a, float b ) const;
+	MOAICellCoord	GetObliqueCellCoord		( float x, float y ) const;
+	ZLVec2D			GetRectPoint			( float x, float y, float width, float height, u32 position ) const;
+	virtual void	OnResize				();
 
 	//----------------------------------------------------------------//
-	void			MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAILuaObject_SerializeIn			( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
-	void			MOAILuaObject_SerializeOut			( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
+	void			_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_SerializeIn			( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
+	void			_SerializeOut			( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
 
 public:
 	

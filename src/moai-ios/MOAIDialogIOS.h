@@ -30,7 +30,7 @@ private:
 	static int	_showDialog	( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void	MOAILuaObject_RegisterLuaClass	( RTTIVisitorHistory& history, MOAILuaState& state );
+	void	_RegisterLuaClass	( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 	

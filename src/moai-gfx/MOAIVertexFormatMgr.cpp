@@ -127,7 +127,7 @@ MOAIVertexFormatMgr::~MOAIVertexFormatMgr () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIVertexFormatMgr::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIVertexFormatMgr::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "XYZC",			( u32 )MOAIVertexFormatPresetEnum::XYZC );
@@ -145,7 +145,7 @@ void MOAIVertexFormatMgr::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& h
 }
 
 //----------------------------------------------------------------//
-void MOAIVertexFormatMgr::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIVertexFormatMgr::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
 	if ( history.DidVisit ( *this )) return;
 }

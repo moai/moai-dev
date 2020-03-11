@@ -55,8 +55,8 @@ private:
 	void			PreSolve				( b2Contact* contact, const b2Manifold* oldManifold );
 
 	//----------------------------------------------------------------//
-	void			MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 	

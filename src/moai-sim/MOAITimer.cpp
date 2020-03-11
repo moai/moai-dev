@@ -580,6 +580,46 @@ void MOAITimer::ToggleDirection () {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAITimer::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	state.SetField ( -1, "ATTR_TIME", AttrID::Pack ( ATTR_TIME ).ToRaw ());
+	
+	state.SetField ( -1, "EVENT_TIMER_KEYFRAME",	( u32 )EVENT_TIMER_KEYFRAME );
+	state.SetField ( -1, "EVENT_TIMER_LOOP",		( u32 )EVENT_TIMER_LOOP );
+	state.SetField ( -1, "EVENT_TIMER_BEGIN_SPAN",	( u32 )EVENT_TIMER_BEGIN_SPAN );
+	state.SetField ( -1, "EVENT_TIMER_END_SPAN",	( u32 )EVENT_TIMER_END_SPAN );
+	
+	state.SetField ( -1, "NORMAL",					( u32 )NORMAL );
+	state.SetField ( -1, "REVERSE",					( u32 )REVERSE );
+	state.SetField ( -1, "CONTINUE",				( u32 )CONTINUE );
+	state.SetField ( -1, "CONTINUE_REVERSE",		( u32 )CONTINUE_REVERSE );
+	state.SetField ( -1, "LOOP",					( u32 )LOOP );
+	state.SetField ( -1, "LOOP_REVERSE",			( u32 )LOOP_REVERSE );
+	state.SetField ( -1, "PING_PONG",				( u32 )PING_PONG );
+}
+
+//----------------------------------------------------------------//
+void MOAITimer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "getSpeed",			_getSpeed },
+		{ "getTime",			_getTime },
+		{ "getTimesExecuted",	_getTimesExecuted },
+		{ "setCurve",			_setCurve },
+		{ "setMode",			_setMode },
+		{ "setSpan",			_setSpan },
+		{ "setSpeed",			_setSpeed },
+		{ "setTime",			_setTime },
+		{ "toggleDirection",	_toggleDirection },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 bool MOAITimer::MOAIAction_IsDone () {
 
 	if ( this->mMode == NORMAL ) {
@@ -612,46 +652,6 @@ void MOAITimer::MOAIAction_Start () {
 void MOAITimer::MOAIAction_Update ( double step ) {
 
 	this->DoStep (( float )step ); // TODO: change everything to doubles
-}
-
-//----------------------------------------------------------------//
-void MOAITimer::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	state.SetField ( -1, "ATTR_TIME", AttrID::Pack ( ATTR_TIME ).ToRaw ());
-	
-	state.SetField ( -1, "EVENT_TIMER_KEYFRAME",	( u32 )EVENT_TIMER_KEYFRAME );
-	state.SetField ( -1, "EVENT_TIMER_LOOP",		( u32 )EVENT_TIMER_LOOP );
-	state.SetField ( -1, "EVENT_TIMER_BEGIN_SPAN",	( u32 )EVENT_TIMER_BEGIN_SPAN );
-	state.SetField ( -1, "EVENT_TIMER_END_SPAN",	( u32 )EVENT_TIMER_END_SPAN );
-	
-	state.SetField ( -1, "NORMAL",					( u32 )NORMAL );
-	state.SetField ( -1, "REVERSE",					( u32 )REVERSE );
-	state.SetField ( -1, "CONTINUE",				( u32 )CONTINUE );
-	state.SetField ( -1, "CONTINUE_REVERSE",		( u32 )CONTINUE_REVERSE );
-	state.SetField ( -1, "LOOP",					( u32 )LOOP );
-	state.SetField ( -1, "LOOP_REVERSE",			( u32 )LOOP_REVERSE );
-	state.SetField ( -1, "PING_PONG",				( u32 )PING_PONG );
-}
-
-//----------------------------------------------------------------//
-void MOAITimer::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "getSpeed",			_getSpeed },
-		{ "getTime",			_getTime },
-		{ "getTimesExecuted",	_getTimesExecuted },
-		{ "setCurve",			_setCurve },
-		{ "setMode",			_setMode },
-		{ "setSpan",			_setSpan },
-		{ "setSpeed",			_setSpeed },
-		{ "setTime",			_setTime },
-		{ "toggleDirection",	_toggleDirection },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//

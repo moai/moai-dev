@@ -44,7 +44,7 @@ private:
 	void			InitializeImages			();
 	
 	//----------------------------------------------------------------//
-	void 			Visitor_Finalize			();
+	void 			_Finalize					();
 
 public:
 

@@ -48,7 +48,7 @@ MOAIAbstractChildTransform::~MOAIAbstractChildTransform () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAbstractChildTransform::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIAbstractChildTransform::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "INHERIT_LOC",			AttrID::Pack ( INHERIT_LOC ).ToRaw ());
@@ -56,7 +56,7 @@ void MOAIAbstractChildTransform::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHis
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractChildTransform::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIAbstractChildTransform::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {

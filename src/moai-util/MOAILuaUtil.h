@@ -51,15 +51,15 @@ private:
 	static int			_getHeader				( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void				ConvertBytes					( ZLStream& srcStream, ZLStream& dstStream, size_t srcSize, size_t dstSize );
-	void				ConvertConst					( const MOAILuaHeader& srcFormat, const MOAILuaHeader& dstFormat, ZLStream& srcStream, ZLStream& dstStream );
-	void				ConvertFunction					( const MOAILuaHeader& srcFormat, const MOAILuaHeader& dstFormat, ZLStream& srcStream, ZLStream& dstStream );
-	s64					ConvertInt						( const MOAILuaHeader& srcFormat, const MOAILuaHeader& dstFormat, ZLStream& srcStream, ZLStream& dstStream );
-	void				ConvertString					( const MOAILuaHeader& srcFormat, const MOAILuaHeader& dstFormat, ZLStream& srcStream, ZLStream& dstStream );
+	void				ConvertBytes			( ZLStream& srcStream, ZLStream& dstStream, size_t srcSize, size_t dstSize );
+	void				ConvertConst			( const MOAILuaHeader& srcFormat, const MOAILuaHeader& dstFormat, ZLStream& srcStream, ZLStream& dstStream );
+	void				ConvertFunction			( const MOAILuaHeader& srcFormat, const MOAILuaHeader& dstFormat, ZLStream& srcStream, ZLStream& dstStream );
+	s64					ConvertInt				( const MOAILuaHeader& srcFormat, const MOAILuaHeader& dstFormat, ZLStream& srcStream, ZLStream& dstStream );
+	void				ConvertString			( const MOAILuaHeader& srcFormat, const MOAILuaHeader& dstFormat, ZLStream& srcStream, ZLStream& dstStream );
 
 	//----------------------------------------------------------------//
-	void				MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 	

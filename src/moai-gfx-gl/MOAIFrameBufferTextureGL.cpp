@@ -87,6 +87,23 @@ MOAIFrameBufferTextureGL::~MOAIFrameBufferTextureGL () {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIFrameBufferTextureGL::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+}
+
+//----------------------------------------------------------------//
+void MOAIFrameBufferTextureGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "init",						_init },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 void MOAIFrameBufferTextureGL::MOAIFrameBufferGL_AffirmBuffers () {
 
 	this->Affirm ();
@@ -187,21 +204,3 @@ void MOAIFrameBufferTextureGL::MOAIGfxResourceGL_OnGPUDeleteOrDiscard ( bool sho
 
 	this->MOAITextureGL::MOAIGfxResourceGL_OnGPUDeleteOrDiscard ( shouldDelete );
 }
-
-//----------------------------------------------------------------//
-void MOAIFrameBufferTextureGL::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBufferTextureGL::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "init",						_init },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-

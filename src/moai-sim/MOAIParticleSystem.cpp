@@ -676,7 +676,7 @@ void MOAIParticleSystem::MOAIDrawable_Draw ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleSystem::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIParticleSystem::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "ORDER_NORMAL",	( u32 )ORDER_NORMAL );
@@ -684,7 +684,7 @@ void MOAIParticleSystem::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& hi
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleSystem::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIParticleSystem::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 	
 	luaL_Reg regTable [] = {

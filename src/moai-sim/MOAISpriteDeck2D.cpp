@@ -583,6 +583,38 @@ void MOAISpriteDeck2D::TransformUV ( const ZLAffine3D& mtx ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAISpriteDeck2D::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+}
+
+//----------------------------------------------------------------//
+void MOAISpriteDeck2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "getQuad",				_getQuad },
+		{ "getRect",				_getRect },
+		{ "getUVQuad",				_getUVQuad },
+		{ "getUVRect",				_getUVRect },
+		{ "reserveQuads",			_reserveQuads },
+		{ "reserveSprites",			_reserveSprites },
+		{ "reserveSpriteLists",		_reserveSpriteLists },
+		{ "reserveUVQuads",			_reserveUVQuads },
+		{ "setQuad",				_setQuad },
+		{ "setRect",				_setRect },
+		{ "setSprite",				_setSprite },
+		{ "setSpriteList",			_setSpriteList },
+		{ "setUVQuad",				_setUVQuad },
+		{ "setUVRect",				_setUVRect },
+		{ "transform",				_transform },
+		{ "transformUV",			_transformUV },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 ZLBounds MOAISpriteDeck2D::MOAIDeck_ComputeMaxAABB () {
 
 	ZLSize size = this->mQuads.Size ();
@@ -776,36 +808,4 @@ bool MOAISpriteDeck2D::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 g
 	// TODO: handle granularity
 
 	return (( vec.mZ == 0.0f ) && this->MOAIDeck_Overlap ( idx, vec, granularity, result ));
-}
-
-//----------------------------------------------------------------//
-void MOAISpriteDeck2D::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAISpriteDeck2D::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "getQuad",				_getQuad },
-		{ "getRect",				_getRect },
-		{ "getUVQuad",				_getUVQuad },
-		{ "getUVRect",				_getUVRect },
-		{ "reserveQuads",			_reserveQuads },
-		{ "reserveSprites",			_reserveSprites },
-		{ "reserveSpriteLists",		_reserveSpriteLists },
-		{ "reserveUVQuads",			_reserveUVQuads },
-		{ "setQuad",				_setQuad },
-		{ "setRect",				_setRect },
-		{ "setSprite",				_setSprite },
-		{ "setSpriteList",			_setSpriteList },
-		{ "setUVQuad",				_setUVQuad },
-		{ "setUVRect",				_setUVRect },
-		{ "transform",				_transform },
-		{ "transformUV",			_transformUV },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
 }

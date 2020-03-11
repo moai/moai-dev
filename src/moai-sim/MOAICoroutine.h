@@ -44,13 +44,13 @@ private:
 	int					Resume					( float step );
 	
 	//----------------------------------------------------------------//
-	STLString			MOAIAction_GetDebugInfo				() const;
-	bool				MOAIAction_IsDone					();
-	void				MOAIAction_Start					();
-	void				MOAIAction_Stop						();
-	void				MOAIAction_Update					( double step );
-	void				MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
+	STLString			MOAIAction_GetDebugInfo		() const;
+	bool				MOAIAction_IsDone			();
+	void				MOAIAction_Start			();
+	void				MOAIAction_Stop				();
+	void				MOAIAction_Update			( double step );
 
 public:
 	

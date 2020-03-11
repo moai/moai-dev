@@ -29,10 +29,10 @@ private:
 	bool				mIsValid;
 
 	//----------------------------------------------------------------//
-	void				Invalidate					();
+	void				Invalidate				();
 	
 	//----------------------------------------------------------------//
-	void				Visitor_Finalize 			();
+	void				_Finalize 				();
 
 public:
 

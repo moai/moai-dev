@@ -70,12 +70,12 @@ private:
 	MOAIParticleState*		GetState				( ZLIndex id );
 	
 	//----------------------------------------------------------------//
+	void					_RegisterLuaClass					( RTTIVisitorHistory& history, MOAILuaState& state );
+	void					_RegisterLuaFuncs					( RTTIVisitorHistory& history, MOAILuaState& state );
 	ZLBounds				MOAIAbstractProp_GetModelBounds		();
 	bool					MOAIAction_IsDone					();
 	void					MOAIAction_Update					( double step );
 	void					MOAIDrawable_Draw					( int subPrimID );
-	void					MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 

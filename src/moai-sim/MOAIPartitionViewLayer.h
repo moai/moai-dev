@@ -54,17 +54,17 @@ private:
 	void			DrawPropsDebug			( MOAIPartitionResultBuffer& buffer);
 
 	//----------------------------------------------------------------//
-	void			MOAIAbstractViewLayer_Draw			();
-	void			MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaClass				( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaFuncs				( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			MOAIAbstractViewLayer_Draw		();
 
 public:
 		
 	DECL_LUA_FACTORY ( MOAIPartitionViewLayer )
 	
 	//----------------------------------------------------------------//
-					MOAIPartitionViewLayer		();
-					~MOAIPartitionViewLayer		();
+					MOAIPartitionViewLayer			();
+					~MOAIPartitionViewLayer			();
 };
 
 #endif

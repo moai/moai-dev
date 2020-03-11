@@ -106,7 +106,7 @@ MOAIDialogSDL::~MOAIDialogSDL () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDialogSDL::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIDialogSDL::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 //	state.SetField ( -1, "DIALOG_RESULT_POSITIVE",	( u32 )DIALOG_RESULT_POSITIVE );

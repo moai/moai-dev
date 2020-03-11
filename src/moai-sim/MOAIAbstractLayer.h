@@ -27,14 +27,14 @@ private:
 	MOAILuaSharedPtr < MOAIFrameBuffer >	mFrameBuffer;
 
 	//----------------------------------------------------------------//
-	static int		_draw					( lua_State* L );
-	static int		_getClearMode			( lua_State* L );
-	static int		_getFrameBuffer			( lua_State* L );
-	static int		_pushRenderPass			( lua_State* L );
-	static int		_setClearColor			( lua_State* L );
-	static int		_setClearDepth			( lua_State* L );
-	static int		_setClearMode			( lua_State* L );
-	static int		_setFrameBuffer			( lua_State* L );
+	static int		_draw						( lua_State* L );
+	static int		_getClearMode				( lua_State* L );
+	static int		_getFrameBuffer				( lua_State* L );
+	static int		_pushRenderPass				( lua_State* L );
+	static int		_setClearColor				( lua_State* L );
+	static int		_setClearDepth				( lua_State* L );
+	static int		_setClearMode				( lua_State* L );
+	static int		_setFrameBuffer				( lua_State* L );
 
 protected:
 
@@ -42,9 +42,9 @@ protected:
 	void			ClearSurface				();
 
 	//----------------------------------------------------------------//
-	void			MOAIDrawable_DrawDebug				( int subPrimID );
-	void			MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			MOAIDrawable_DrawDebug		( int subPrimID );
 
 public:
 

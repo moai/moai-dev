@@ -52,12 +52,12 @@ protected:
 	bool				UpdateTextureFromImage		( ZLImage& image, ZLIntRect rect );
 	
 	//----------------------------------------------------------------//
+	void				_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
 	void				MOAIGfxResourceGL_OnGPUBind				();
 	void				MOAIGfxResourceGL_OnGPUDeleteOrDiscard	( bool shouldDelete );
 	void				MOAIGfxResourceGL_OnGPUUnbind			();
 	bool				MOAIGfxResourceGL_OnGPUUpdate			();
-	void				MOAILuaObject_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
 	void				ZLGfxListener_OnGfxEvent				( u32 event, void* userdata );
 	
 public:

@@ -1149,7 +1149,7 @@ ZLVec2D MOAIGridSpace::WorldToCell ( MOAICellCoord cellCoord, ZLVec2D loc ) cons
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGridSpace::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIGridSpace::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "TILE_X_FLIP", ( u32 )MOAITileFlags::XFLIP );
@@ -1177,7 +1177,7 @@ void MOAIGridSpace::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history
 }
 
 //----------------------------------------------------------------//
-void MOAIGridSpace::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIGridSpace::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
@@ -1206,7 +1206,7 @@ void MOAIGridSpace::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history
 }
 
 //----------------------------------------------------------------//
-void MOAIGridSpace::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIGridSpace::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 	if ( history.DidVisit ( *this )) return;
 	
@@ -1227,7 +1227,7 @@ void MOAIGridSpace::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOA
 }
 
 //----------------------------------------------------------------//
-void MOAIGridSpace::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIGridSpace::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
 	if ( history.DidVisit ( *this )) return;
 	

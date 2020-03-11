@@ -1319,7 +1319,7 @@ void MOAIRegion::Transform ( const MOAIRegion& region, const ZLAffine2D& transfo
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIRegion::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIRegion::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "BOOLEAN_AND",					( u32 )BOOLEAN_AND );
@@ -1353,7 +1353,7 @@ void MOAIRegion::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, M
 }
 
 //----------------------------------------------------------------//
-void MOAIRegion::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIRegion::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
@@ -1392,7 +1392,7 @@ void MOAIRegion::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, M
 }
 
 //----------------------------------------------------------------//
-void MOAIRegion::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIRegion::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 	if ( history.DidVisit ( *this )) return;
 
@@ -1417,7 +1417,7 @@ void MOAIRegion::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILu
 }
 
 //----------------------------------------------------------------//
-void MOAIRegion::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIRegion::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
 	if ( history.DidVisit ( *this )) return;
 	

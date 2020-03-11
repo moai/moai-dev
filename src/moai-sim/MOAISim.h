@@ -171,9 +171,9 @@ private:
 	double			StepSim						( double step, u32 multiplier );
 
 	//----------------------------------------------------------------//
-	void			MOAILuaObject_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			ZLContextClass_Finalize					();
+	void			_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			ZLContextClass_Finalize		();
 
 public:
 	

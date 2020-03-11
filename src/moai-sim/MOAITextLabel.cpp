@@ -983,6 +983,85 @@ void MOAITextLabel::SetText ( cc8* text ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAITextLabel::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAITextLabel >( TOTAL_DEBUG_LINE_STYLES );
+
+	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_MASTER",				MOAIDebugLinesMgr::Pack < MOAITextLabel >( (u32) -1 ));
+	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL",						MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL ));
+	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_BASELINES",				MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL_BASELINES ));
+	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_GLYPH_BOUNDS",			MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL_GLYPH_BOUNDS ));
+	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_GLYPHS",				MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL_GLYPHS ));
+	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_LAYOUT_BOUNDS",			MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL_LAYOUT_BOUNDS ));
+	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_LIMITS",				MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL_LIMITS ));
+	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_LINES_GLYPH_BOUNDS",	MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL_LINES_GLYPH_BOUNDS ));
+	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_LINES_LAYOUT_BOUNDS",	MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL_LINES_LAYOUT_BOUNDS ));
+	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_MARGINS",				MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL_MARGINS));
+
+	state.SetField ( -1, "OVERRUN_MOVE_WORD",		( u32 )MOAITextLayoutRules::OVERRUN_MOVE_WORD );
+	state.SetField ( -1, "OVERRUN_SPLIT_WORD",		( u32 )MOAITextLayoutRules::OVERRUN_SPLIT_WORD );
+	state.SetField ( -1, "OVERRUN_TRUNCATE_WORD",	( u32 )MOAITextLayoutRules::OVERRUN_TRUNCATE_WORD );
+	state.SetField ( -1, "OVERRUN_ABORT_LAYOUT",	( u32 )MOAITextLayoutRules::OVERRUN_ABORT_LAYOUT );
+
+	state.SetField ( -1, "GLYPH_SIZE",				( u32 )MOAITextLayoutRules::GLYPH_SIZE );
+	state.SetField ( -1, "LOGICAL_SIZE",			( u32 )MOAITextLayoutRules::LOGICAL_SIZE );
+
+	state.SetField ( -1, "BASELINE_JUSTIFY",		( u32 )MOAITextLayoutRules::BASELINE_JUSTIFY );
+	state.SetField ( -1, "BOTTOM_JUSTIFY",			( u32 )MOAITextLayoutRules::BOTTOM_JUSTIFY );
+	state.SetField ( -1, "LEFT_JUSTIFY",			( u32 )MOAITextLayoutRules::LEFT_JUSTIFY );
+	state.SetField ( -1, "CENTER_JUSTIFY",			( u32 )MOAITextLayoutRules::CENTER_JUSTIFY );
+	state.SetField ( -1, "RIGHT_JUSTIFY",			( u32 )MOAITextLayoutRules::RIGHT_JUSTIFY );
+	state.SetField ( -1, "TOP_JUSTIFY",				( u32 )MOAITextLayoutRules::TOP_JUSTIFY );
+}
+
+//----------------------------------------------------------------//
+void MOAITextLabel::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+	
+	luaL_Reg regTable [] = {
+		{ "clearHighlights",		_clearHighlights },
+		{ "getAlignment",			_getAlignment },
+		{ "getGlyphScale",			_getGlyphScale },
+		{ "getLineSpacing",			_getLineSpacing },
+		{ "getOverrunRules",		_getOverrunRules },
+		{ "getRect",				_getRect },
+		{ "getSizingRules",			_getSizingRules },
+		{ "getStyle",				_getStyle },
+		{ "getText",				_getText },
+		{ "getTextBounds",			_getTextBounds },
+		{ "hasOverrun",				_hasOverrun },
+		{ "more",					_more },
+		{ "nextPage",				_nextPage },
+		{ "reserveCurves",			_reserveCurves },
+		{ "revealAll",				_revealAll },
+		{ "setAlignment",			_setAlignment },
+		{ "setAutoFlip",			_setAutoFlip },
+		{ "setBounds",				_setBounds },
+		{ "setCurve",				_setCurve },
+		{ "setGlyphScale",			_setGlyphScale },
+		{ "setLineSnap",			_setLineSnap },
+		{ "setLineSpacing",			_setLineSpacing },
+		{ "setHighlight",			_setHighlight },
+		{ "setMargins",				_setMargins },
+		{ "setOverrunRules",		_setOverrunRules },
+		{ "setRect",				_setRect },
+		{ "setRectLimits",			_setRectLimits },
+		{ "setReveal",				_setReveal },
+		{ "setSizingRules",			_setSizingRules },
+		{ "setSpeed",				_setSpeed },
+		{ "setStyle",				_setStyle },
+		{ "setText",				_setText },
+		{ "setWordBreak",			_setWordBreak },
+		{ "setYFlip",				_setYFlip },
+		{ "spool",					_spool },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 void MOAITextLabel::MOAIAbstractBaseTransform_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
 
 	this->MOAITransform::MOAIAbstractBaseTransform_BuildLocalToWorldMtx ( localToWorldMtx );
@@ -1217,85 +1296,6 @@ ZLMatrix4x4 MOAITextLabel::MOAIGraphicsPropBase_GetWorldDrawingMtx () const {
 	}
 	
 	return worldDrawingMtx;
-}
-
-//----------------------------------------------------------------//
-void MOAITextLabel::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAITextLabel >( TOTAL_DEBUG_LINE_STYLES );
-
-	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_MASTER",				MOAIDebugLinesMgr::Pack < MOAITextLabel >( (u32) -1 ));
-	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL",						MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL ));
-	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_BASELINES",				MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL_BASELINES ));
-	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_GLYPH_BOUNDS",			MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL_GLYPH_BOUNDS ));
-	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_GLYPHS",				MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL_GLYPHS ));
-	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_LAYOUT_BOUNDS",			MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL_LAYOUT_BOUNDS ));
-	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_LIMITS",				MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL_LIMITS ));
-	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_LINES_GLYPH_BOUNDS",	MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL_LINES_GLYPH_BOUNDS ));
-	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_LINES_LAYOUT_BOUNDS",	MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL_LINES_LAYOUT_BOUNDS ));
-	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_MARGINS",				MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL_MARGINS));
-
-	state.SetField ( -1, "OVERRUN_MOVE_WORD",		( u32 )MOAITextLayoutRules::OVERRUN_MOVE_WORD );
-	state.SetField ( -1, "OVERRUN_SPLIT_WORD",		( u32 )MOAITextLayoutRules::OVERRUN_SPLIT_WORD );
-	state.SetField ( -1, "OVERRUN_TRUNCATE_WORD",	( u32 )MOAITextLayoutRules::OVERRUN_TRUNCATE_WORD );
-	state.SetField ( -1, "OVERRUN_ABORT_LAYOUT",	( u32 )MOAITextLayoutRules::OVERRUN_ABORT_LAYOUT );
-
-	state.SetField ( -1, "GLYPH_SIZE",				( u32 )MOAITextLayoutRules::GLYPH_SIZE );
-	state.SetField ( -1, "LOGICAL_SIZE",			( u32 )MOAITextLayoutRules::LOGICAL_SIZE );
-
-	state.SetField ( -1, "BASELINE_JUSTIFY",		( u32 )MOAITextLayoutRules::BASELINE_JUSTIFY );
-	state.SetField ( -1, "BOTTOM_JUSTIFY",			( u32 )MOAITextLayoutRules::BOTTOM_JUSTIFY );
-	state.SetField ( -1, "LEFT_JUSTIFY",			( u32 )MOAITextLayoutRules::LEFT_JUSTIFY );
-	state.SetField ( -1, "CENTER_JUSTIFY",			( u32 )MOAITextLayoutRules::CENTER_JUSTIFY );
-	state.SetField ( -1, "RIGHT_JUSTIFY",			( u32 )MOAITextLayoutRules::RIGHT_JUSTIFY );
-	state.SetField ( -1, "TOP_JUSTIFY",				( u32 )MOAITextLayoutRules::TOP_JUSTIFY );
-}
-
-//----------------------------------------------------------------//
-void MOAITextLabel::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-	
-	luaL_Reg regTable [] = {
-		{ "clearHighlights",		_clearHighlights },
-		{ "getAlignment",			_getAlignment },
-		{ "getGlyphScale",			_getGlyphScale },
-		{ "getLineSpacing",			_getLineSpacing },
-		{ "getOverrunRules",		_getOverrunRules },
-		{ "getRect",				_getRect },
-		{ "getSizingRules",			_getSizingRules },
-		{ "getStyle",				_getStyle },
-		{ "getText",				_getText },
-		{ "getTextBounds",			_getTextBounds },
-		{ "hasOverrun",				_hasOverrun },
-		{ "more",					_more },
-		{ "nextPage",				_nextPage },
-		{ "reserveCurves",			_reserveCurves },
-		{ "revealAll",				_revealAll },
-		{ "setAlignment",			_setAlignment },
-		{ "setAutoFlip",			_setAutoFlip },
-		{ "setBounds",				_setBounds },
-		{ "setCurve",				_setCurve },
-		{ "setGlyphScale",			_setGlyphScale },
-		{ "setLineSnap",			_setLineSnap },
-		{ "setLineSpacing",			_setLineSpacing },
-		{ "setHighlight",			_setHighlight },
-		{ "setMargins",				_setMargins },
-		{ "setOverrunRules",		_setOverrunRules },
-		{ "setRect",				_setRect },
-		{ "setRectLimits",			_setRectLimits },
-		{ "setReveal",				_setReveal },
-		{ "setSizingRules",			_setSizingRules },
-		{ "setSpeed",				_setSpeed },
-		{ "setStyle",				_setStyle },
-		{ "setText",				_setText },
-		{ "setWordBreak",			_setWordBreak },
-		{ "setYFlip",				_setYFlip },
-		{ "spool",					_spool },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//

@@ -55,8 +55,8 @@ private:
 	static void			WriteVertex				( const MOAIVertexFormat& format, ZLStream& stream, const ZLVec3D& coord, const ZLVec3D& normal );
 	
 	//----------------------------------------------------------------//
-	void				MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
 	
 public:
 	

@@ -22,7 +22,7 @@ protected:
 	ZLLeanArray < ZLStrongPtr < MOAIDescriptorSetLayoutVK > >	mDescriptorSetLayouts;
 
 	//----------------------------------------------------------------//
-	void 							Visitor_Finalize				();
+	void 							_Finalize				();
 	
 public:
 

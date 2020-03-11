@@ -138,7 +138,7 @@ void MOAIShaderProgramVK::UpdatePipelineCreateInfo ( VkGraphicsPipelineCreateInf
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIShaderProgramVK::Visitor_Finalize () {
+void MOAIShaderProgramVK::_Finalize () {
 
 	if ( this->HasDependency < MOAILogicalDeviceVK >()) {
 		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();

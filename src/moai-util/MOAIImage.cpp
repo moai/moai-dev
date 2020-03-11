@@ -1301,7 +1301,7 @@ MOAIImage::~MOAIImage () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIImage::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIImage::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "FILTER_LINEAR",						( u32 )MOAIImage::FILTER_LINEAR );
@@ -1354,7 +1354,7 @@ void MOAIImage::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MO
 }
 
 //----------------------------------------------------------------//
-void MOAIImage::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIImage::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
 	if ( history.DidVisit ( *this )) return;
 

@@ -88,12 +88,12 @@ MOAIGfxBuffer::~MOAIGfxBuffer () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxBuffer::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIGfxBuffer::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBuffer::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIGfxBuffer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
@@ -106,7 +106,7 @@ void MOAIGfxBuffer::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBuffer::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIGfxBuffer::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 	if ( history.DidVisit ( *this )) return;
 
@@ -129,7 +129,7 @@ void MOAIGfxBuffer::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOA
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxBuffer::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIGfxBuffer::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
 	if ( history.DidVisit ( *this )) return;
 

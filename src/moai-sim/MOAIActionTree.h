@@ -33,16 +33,16 @@ protected:
 	static int			_setThreadInfoEnabled	( lua_State* L );
 
 	//----------------------------------------------------------------//
-	MOAIAction*			AffirmRoot					();
-	void				SetRoot						( MOAIAction* root );
+	MOAIAction*			AffirmRoot				();
+	void				SetRoot					( MOAIAction* root );
 
 	//----------------------------------------------------------------//
+	void				_RegisterLuaClass				( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaFuncs				( RTTIVisitorHistory& history, MOAILuaState& state );
 	void				MOAIAction_DidLoseChild			( MOAIAction* child );
 	MOAIAction*			MOAIAction_GetDefaultParent		();
 	bool				MOAIAction_IsDone				();
 	void				MOAIAction_Update				( double step );
-	void				MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 

@@ -29,8 +29,8 @@ protected:
 	ZLSize					mTextureSize;
 
 	//----------------------------------------------------------------//
+	void 		_Finalize 							();
 	void		MOAIAbstractSnapshotVK_OnUnpin		() {}
-	void 		Visitor_Finalize 					();
 
 public:
 	

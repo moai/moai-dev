@@ -319,6 +319,46 @@ MOAIMotionMgrIOS::~MOAIMotionMgrIOS () {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIMotionMgrIOS::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	
+	
+	NSUInteger availableFrames = [ CMMotionManager availableAttitudeReferenceFrames ];
+	
+	if ( availableFrames & CMAttitudeReferenceFrameXArbitraryZVertical ) {
+		state.SetField ( -1, "XARBITRARY_ZVERTICAL",			( u32 )CMAttitudeReferenceFrameXArbitraryZVertical );
+	}
+	
+	if ( availableFrames & CMAttitudeReferenceFrameXArbitraryCorrectedZVertical ) {
+		state.SetField ( -1, "XARBITRARY_CORRECTEDZVERTICAL",	( u32 )CMAttitudeReferenceFrameXArbitraryCorrectedZVertical );
+	}
+	
+	if ( availableFrames & CMAttitudeReferenceFrameXMagneticNorthZVertical ) {
+		state.SetField ( -1, "XMAGNETICNORTH_ZVERTICAL",		( u32 )CMAttitudeReferenceFrameXMagneticNorthZVertical );
+	}
+	
+	if ( availableFrames & CMAttitudeReferenceFrameXTrueNorthZVertical ) {
+		state.SetField ( -1, "XTRUENORTH_ZVERTICAL",			( u32 )CMAttitudeReferenceFrameXTrueNorthZVertical );
+	}
+	
+	luaL_Reg regTable [] = {
+		{ "init",								_init },
+		{ "isAccelerometerAvailable",			_isAccelerometerAvailable },
+		{ "isDeviceMotionAvailable",			_isDeviceMotionAvailable },
+		{ "isGyroAvailable",					_isGyroAvailable }, // Mmmmmm. Gyros!
+		{ "isHeadingAvailable",					_isHeadingAvailable },
+		{ "isMagnetometerAvailable",			_isMagnetometerAvailable },
+		{ "setAccelerometerActive",				_setAccelerometerActive },
+		{ "setGyroActive",						_setGyroActive },
+		{ "setDeviceMotionActive",				_setDeviceMotionActive },
+		{ "setHeadingActive",					_setHeadingActive },
+		{ "setMagnetometerActive",				_setMagnetometerActive },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 bool MOAIMotionMgrIOS::MOAIAction_IsDone () {
 
 	return false;
@@ -442,44 +482,4 @@ void MOAIMotionMgrIOS::MOAIAction_Update ( double step ) {
 			}
 		}
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAIMotionMgrIOS::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	
-	
-	NSUInteger availableFrames = [ CMMotionManager availableAttitudeReferenceFrames ];
-	
-	if ( availableFrames & CMAttitudeReferenceFrameXArbitraryZVertical ) {
-		state.SetField ( -1, "XARBITRARY_ZVERTICAL",			( u32 )CMAttitudeReferenceFrameXArbitraryZVertical );
-	}
-	
-	if ( availableFrames & CMAttitudeReferenceFrameXArbitraryCorrectedZVertical ) {
-		state.SetField ( -1, "XARBITRARY_CORRECTEDZVERTICAL",	( u32 )CMAttitudeReferenceFrameXArbitraryCorrectedZVertical );
-	}
-	
-	if ( availableFrames & CMAttitudeReferenceFrameXMagneticNorthZVertical ) {
-		state.SetField ( -1, "XMAGNETICNORTH_ZVERTICAL",		( u32 )CMAttitudeReferenceFrameXMagneticNorthZVertical );
-	}
-	
-	if ( availableFrames & CMAttitudeReferenceFrameXTrueNorthZVertical ) {
-		state.SetField ( -1, "XTRUENORTH_ZVERTICAL",			( u32 )CMAttitudeReferenceFrameXTrueNorthZVertical );
-	}
-	
-	luaL_Reg regTable [] = {
-		{ "init",								_init },
-		{ "isAccelerometerAvailable",			_isAccelerometerAvailable },
-		{ "isDeviceMotionAvailable",			_isDeviceMotionAvailable },
-		{ "isGyroAvailable",					_isGyroAvailable }, // Mmmmmm. Gyros!
-		{ "isHeadingAvailable",					_isHeadingAvailable },
-		{ "isMagnetometerAvailable",			_isMagnetometerAvailable },
-		{ "setAccelerometerActive",				_setAccelerometerActive },
-		{ "setGyroActive",						_setGyroActive },
-		{ "setDeviceMotionActive",				_setDeviceMotionActive },
-		{ "setHeadingActive",					_setHeadingActive },
-		{ "setMagnetometerActive",				_setMagnetometerActive },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
 }

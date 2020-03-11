@@ -257,6 +257,31 @@ void MOAIGfxMgrGL::ResetDrawCount () {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIGfxMgrGL::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	state.SetField ( -1, "EVENT_RESIZE",	( u32 )EVENT_RESIZE );
+	
+	state.SetField ( -1, "DRAWING_QUEUE",	( u32 )MOAIGfxMgrGL_DisplayListClerkGL::DRAWING_QUEUE );
+	state.SetField ( -1, "LOADING_QUEUE",	( u32 )MOAIGfxMgrGL_DisplayListClerkGL::LOADING_QUEUE );
+
+	luaL_Reg regTable [] = {
+		{ "enablePipelineLogging",		_enablePipelineLogging },
+		{ "getFrameBuffer",				_getFrameBuffer },
+		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAIGfxMgrGL > },
+		{ "getMaxTextureSize",			_getMaxTextureSize },
+		{ "getMaxTextureUnits",			_getMaxTextureUnits },
+		{ "getViewSize",				_getViewSize },
+		{ "purgeResources",				_purgeResources },
+		{ "renewResources",				_renewResources },
+		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAIGfxMgrGL > },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 MOAIShader* MOAIGfxMgrGL::MOAIGfxMgr_AffirmShader ( MOAILuaState& state, int idx ) const {
 
 	MOAIShaderGL* shader = 0;
@@ -392,29 +417,4 @@ MOAIGfxMgrGL_ResourceClerkGL& MOAIGfxMgrGL::MOAIGfxMgrGLComponents_GetResourceCl
 //----------------------------------------------------------------//
 MOAIGfxMgrGL_VertexCacheGL& MOAIGfxMgrGL::MOAIGfxMgrGLComponents_GetVertexCacheGL () {
 	return *this;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrGL::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	state.SetField ( -1, "EVENT_RESIZE",	( u32 )EVENT_RESIZE );
-	
-	state.SetField ( -1, "DRAWING_QUEUE",	( u32 )MOAIGfxMgrGL_DisplayListClerkGL::DRAWING_QUEUE );
-	state.SetField ( -1, "LOADING_QUEUE",	( u32 )MOAIGfxMgrGL_DisplayListClerkGL::LOADING_QUEUE );
-
-	luaL_Reg regTable [] = {
-		{ "enablePipelineLogging",		_enablePipelineLogging },
-		{ "getFrameBuffer",				_getFrameBuffer },
-		{ "getListener",				&MOAIGlobalEventSource::_getListener < MOAIGfxMgrGL > },
-		{ "getMaxTextureSize",			_getMaxTextureSize },
-		{ "getMaxTextureUnits",			_getMaxTextureUnits },
-		{ "getViewSize",				_getViewSize },
-		{ "purgeResources",				_purgeResources },
-		{ "renewResources",				_renewResources },
-		{ "setListener",				&MOAIGlobalEventSource::_setListener < MOAIGfxMgrGL > },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
 }

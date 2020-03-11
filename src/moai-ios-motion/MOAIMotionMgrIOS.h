@@ -43,9 +43,9 @@ private:
 	static int	_setMagnetometerActive					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool				MOAIAction_IsDone					();
-	void				MOAIAction_Update					( double step );
-	void				MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaClass				( RTTIVisitorHistory& history, MOAILuaState& state );
+	bool				MOAIAction_IsDone				();
+	void				MOAIAction_Update				( double step );
 
 public:
 	

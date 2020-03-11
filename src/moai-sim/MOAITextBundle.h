@@ -30,20 +30,20 @@ private:
 	int		mHashOffset;
 	
 	//----------------------------------------------------------------//
-	static int		_load			( lua_State* L );
-	static int		_lookup			( lua_State* L );
+	static int		_load				( lua_State* L );
+	static int		_lookup				( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	const char*		GetKeyString(int idx);
-	const char*		GetValueString(int idx);
-	int				GetIndex(const char *key);
+	const char*		GetKeyString		( int idx );
+	const char*		GetValueString		( int idx );
+	int				GetIndex			( const char *key );
 	
 	//----------------------------------------------------------------//
-	void			MOAILuaObject_RegisterLuaClass	( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs	( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaClass	( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaFuncs	( RTTIVisitorHistory& history, MOAILuaState& state );
 	
 	//----------------------------------------------------------------//
-	inline int readInt4(int offset) {
+	inline int readInt4 ( int offset ) {
 		unsigned long *ptr = (unsigned long *)(((char *)this->mData) + offset);
 		
 		if( this->mReversed ) {

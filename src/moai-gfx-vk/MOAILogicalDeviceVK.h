@@ -42,10 +42,10 @@ private:
 	VkDevice						mDevice;
 
 	//----------------------------------------------------------------//
-	void			InitQueue				( MOAIQueueVK& queueAndPool, u32 index );
+	void			InitQueue		( MOAIQueueVK& queueAndPool, u32 index );
 	
 	//----------------------------------------------------------------//
-	void 			Visitor_Finalize		();
+	void 			_Finalize		();
 
 public:
 	

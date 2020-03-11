@@ -137,6 +137,26 @@ void MOAICollisionDeck::SetQuad ( ZLIndex idx, const ZLQuad& quad ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAICollisionDeck::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+}
+
+//----------------------------------------------------------------//
+void MOAICollisionDeck::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "reserveShapes",		_reserveShapes },
+		{ "setBox",				_setBox },
+		{ "setRect",			_setRect },
+		{ "setQuad",			_setQuad },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 ZLBounds MOAICollisionDeck::MOAIDeck_ComputeMaxAABB () {
 
 	return this->MOAIDeck::GetBounds ( 0 );
@@ -208,24 +228,4 @@ bool MOAICollisionDeck::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 
 
 	//return this->TestHit ( materials, idx, granularity, this->mQuad.mModelQuad, this->mQuad.mUVQuad, vec.mX, vec.mY );
 	return false;
-}
-
-//----------------------------------------------------------------//
-void MOAICollisionDeck::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAICollisionDeck::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "reserveShapes",		_reserveShapes },
-		{ "setBox",				_setBox },
-		{ "setRect",			_setRect },
-		{ "setQuad",			_setQuad },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
 }

@@ -380,6 +380,28 @@ void MOAICollisionWorld::PruneOverlaps ( MOAICollisionProp& prop ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAICollisionWorld::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+	
+	state.SetField ( -1, "OVERLAP_BEGIN",				( u32 )OVERLAP_BEGIN );
+	state.SetField ( -1, "OVERLAP_END",					( u32 )OVERLAP_END );
+	state.SetField ( -1, "OVERLAP_UPDATE",				( u32 )OVERLAP_UPDATE );
+}
+
+//----------------------------------------------------------------//
+void MOAICollisionWorld::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+	
+	luaL_Reg regTable [] = {
+		{ "processOverlaps",	_processOverlaps },
+		{ "setCallback",		_setCallback },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 bool MOAICollisionWorld::MOAIAction_IsDone () {
 
 	return false;
@@ -391,28 +413,6 @@ void MOAICollisionWorld::MOAIAction_Update ( double step ) {
 
 	this->ResetShapeStream ();
 	this->ProcessOverlaps ();
-}
-
-//----------------------------------------------------------------//
-void MOAICollisionWorld::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-	
-	state.SetField ( -1, "OVERLAP_BEGIN",				( u32 )OVERLAP_BEGIN );
-	state.SetField ( -1, "OVERLAP_END",					( u32 )OVERLAP_END );
-	state.SetField ( -1, "OVERLAP_UPDATE",				( u32 )OVERLAP_UPDATE );
-}
-
-//----------------------------------------------------------------//
-void MOAICollisionWorld::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-	
-	luaL_Reg regTable [] = {
-		{ "processOverlaps",	_processOverlaps },
-		{ "setCallback",		_setCallback },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//

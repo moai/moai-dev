@@ -403,14 +403,14 @@ MOAIUntzSound::~MOAIUntzSound () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIUntzSound::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIUntzSound::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "ATTR_VOLUME", AttrID::Pack ( ATTR_VOLUME ).ToRaw ());
 }
 
 //----------------------------------------------------------------//
-void MOAIUntzSound::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIUntzSound::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {

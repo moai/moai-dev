@@ -214,12 +214,7 @@ void MOAIAbstractLayer::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAbstractLayer::MOAIDrawable_DrawDebug ( int subPrimID ) {
-	UNUSED ( subPrimID );
-}
-
-//----------------------------------------------------------------//
-void MOAIAbstractLayer::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIAbstractLayer::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "CLEAR_ALWAYS",			( u32 )CLEAR_ALWAYS );
@@ -228,7 +223,7 @@ void MOAIAbstractLayer::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& his
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractLayer::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIAbstractLayer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
@@ -244,4 +239,9 @@ void MOAIAbstractLayer::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& his
 	};
 
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIAbstractLayer::MOAIDrawable_DrawDebug ( int subPrimID ) {
+	UNUSED ( subPrimID );
 }

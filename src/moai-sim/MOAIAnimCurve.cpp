@@ -270,6 +270,34 @@ ZLReal MOAIAnimCurve::WrapTime ( ZLReal t, ZLReal &repeat ) const {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIAnimCurve::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	state.SetField ( -1, "ATTR_TIME",	AttrID::Pack ( ATTR_TIME ).ToRaw ());
+	state.SetField ( -1, "ATTR_VALUE", 	AttrID::Pack ( ATTR_VALUE ).ToRaw ());
+
+	state.SetField ( -1, "CLAMP", ( u32 )CLAMP );
+	state.SetField ( -1, "WRAP", ( u32 )WRAP );
+	state.SetField ( -1, "MIRROR", ( u32 )MIRROR );
+	state.SetField ( -1, "APPEND", ( u32 )APPEND );
+}
+
+//----------------------------------------------------------------//
+void MOAIAnimCurve::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "getLength",			_getLength },
+		{ "reserveKeys",		_reserveKeys },
+		{ "setTime",			_setTime },
+		{ "setWrapMode",		_setWrapMode },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 void MOAIAnimCurve::MOAIAnimCurve_Draw ( u32 resolution ) const {
 
 	// TODO: this isn't entirely correct. the value of each key frame should be drawn
@@ -305,34 +333,6 @@ void MOAIAnimCurve::MOAIAnimCurve_Draw ( u32 resolution ) const {
 ZLReal MOAIAnimCurve::MOAIAnimCurve_GetFloatForTime ( ZLReal t ) const {
 
 	return 0.0;
-}
-
-//----------------------------------------------------------------//
-void MOAIAnimCurve::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	state.SetField ( -1, "ATTR_TIME",	AttrID::Pack ( ATTR_TIME ).ToRaw ());
-	state.SetField ( -1, "ATTR_VALUE", 	AttrID::Pack ( ATTR_VALUE ).ToRaw ());
-
-	state.SetField ( -1, "CLAMP", ( u32 )CLAMP );
-	state.SetField ( -1, "WRAP", ( u32 )WRAP );
-	state.SetField ( -1, "MIRROR", ( u32 )MIRROR );
-	state.SetField ( -1, "APPEND", ( u32 )APPEND );
-}
-
-//----------------------------------------------------------------//
-void MOAIAnimCurve::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "getLength",			_getLength },
-		{ "reserveKeys",		_reserveKeys },
-		{ "setTime",			_setTime },
-		{ "setWrapMode",		_setWrapMode },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//

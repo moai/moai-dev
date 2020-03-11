@@ -148,6 +148,24 @@ void MOAIAnimCurveVec::SetSample ( ZLIndex idx, const ZLVec3D& value ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIAnimCurveVec::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+}
+
+//----------------------------------------------------------------//
+void MOAIAnimCurveVec::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "getValueAtTime",		_getValueAtTime },
+		{ "setKey",				_setKey },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 void MOAIAnimCurveVec::MOAIAnimCurve_ApplyValueAttrOp ( ZLAttribute& attr, u32 op ) {
 
 	this->mValue = attr.Apply ( this->mValue, op, ZLAttribute::ATTR_READ_WRITE );
@@ -181,24 +199,6 @@ void MOAIAnimCurveVec::MOAIAnimCurve_GetZero ( ZLAttribute& attr ) const {
 void MOAIAnimCurveVec::MOAIAnimCurve_ReserveSamples ( u32 total ) {
 
 	this->mSamples.Init ( total );
-}
-
-//----------------------------------------------------------------//
-void MOAIAnimCurveVec::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIAnimCurveVec::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "getValueAtTime",		_getValueAtTime },
-		{ "setKey",				_setKey },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//

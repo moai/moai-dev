@@ -35,7 +35,7 @@ private:
 	STLSet < MOAIDescriptorSetSnapshotVK* >			mUnpinnedSpanshots;
 
 	//----------------------------------------------------------------//
-	void							Visitor_Finalize 					();
+	void							_Finalize 					();
 
 public:
 

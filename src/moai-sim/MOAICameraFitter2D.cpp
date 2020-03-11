@@ -651,27 +651,7 @@ void MOAICameraFitter2D::UpdateTracking () {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAICameraFitter2D::MOAIAction_IsDone () {
-
-	return false;
-}
-
-//----------------------------------------------------------------//
-void MOAICameraFitter2D::MOAIAction_Update ( double step ) {
-	UNUSED ( step );
-	
-	this->ScheduleUpdate ();
-	
-	// make sure all the anchors are ahead of fitter in the update schedule
-	AnchorIt anchorIt = this->mAnchors.begin ();	
-	for ( ; anchorIt != this->mAnchors.end (); ++anchorIt ) {
-		MOAICameraAnchor2D* anchor = *anchorIt;
-		anchor->Activate ( *this );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAICameraFitter2D::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAICameraFitter2D::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "FITTING_MODE_SEEK_LOC", ( u32 )FITTING_MODE_SEEK_LOC );
@@ -684,7 +664,7 @@ void MOAICameraFitter2D::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& hi
 }
 
 //----------------------------------------------------------------//
-void MOAICameraFitter2D::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAICameraFitter2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
@@ -713,6 +693,26 @@ void MOAICameraFitter2D::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& hi
 	};
 
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+bool MOAICameraFitter2D::MOAIAction_IsDone () {
+
+	return false;
+}
+
+//----------------------------------------------------------------//
+void MOAICameraFitter2D::MOAIAction_Update ( double step ) {
+	UNUSED ( step );
+	
+	this->ScheduleUpdate ();
+	
+	// make sure all the anchors are ahead of fitter in the update schedule
+	AnchorIt anchorIt = this->mAnchors.begin ();	
+	for ( ; anchorIt != this->mAnchors.end (); ++anchorIt ) {
+		MOAICameraAnchor2D* anchor = *anchorIt;
+		anchor->Activate ( *this );
+	}
 }
 
 //----------------------------------------------------------------//

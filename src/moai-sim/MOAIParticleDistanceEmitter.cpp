@@ -84,19 +84,12 @@ void MOAIParticleDistanceEmitter::SetDistanceRange ( float min, float max ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIParticleDistanceEmitter::MOAIAction_Update ( double step ) {
-	UNUSED ( step );
-	
-	this->ScheduleUpdate ();
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleDistanceEmitter::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIParticleDistanceEmitter::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleDistanceEmitter::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIParticleDistanceEmitter::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
@@ -106,6 +99,13 @@ void MOAIParticleDistanceEmitter::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHi
 	};
 	
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleDistanceEmitter::MOAIAction_Update ( double step ) {
+	UNUSED ( step );
+	
+	this->ScheduleUpdate ();
 }
 
 //----------------------------------------------------------------//

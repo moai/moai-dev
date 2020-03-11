@@ -77,18 +77,12 @@ void MOAIShaderGL::SetProgram ( MOAIShaderProgramGL* program ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-const MOAIUniformSchema* MOAIShaderGL::MOAIAbstractUniformBuffer_GetSchema () const {
-
-	return this->mProgram;
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderGL::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIShaderGL::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderGL::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIShaderGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
@@ -96,6 +90,12 @@ void MOAIShaderGL::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history,
 		{ NULL, NULL }
 	};
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+const MOAIUniformSchema* MOAIShaderGL::MOAIAbstractUniformBuffer_GetSchema () const {
+
+	return this->mProgram;
 }
 
 //----------------------------------------------------------------//

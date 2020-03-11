@@ -17,13 +17,13 @@ public MOAIBox2DJoint {
 private:
 	
 	//----------------------------------------------------------------//
-	static int _getLimitState			( lua_State* L );
-	static int _getMaxLength			( lua_State* L );
-	static int _setMaxLength			( lua_State* L );
+	static int		_getLimitState			( lua_State* L );
+	static int		_getMaxLength			( lua_State* L );
+	static int		_setMaxLength			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 	

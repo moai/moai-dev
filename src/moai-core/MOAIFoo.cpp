@@ -64,11 +64,11 @@ MOAIFoo::~MOAIFoo () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIFoo::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIFoo::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	// call any initializers for base classes here:
-	// MOAI_CALL_SUPER_ONCE ( composer, MOAIFooBase, MOAILuaObject_RegisterLuaClass ( composer, state ));
+	// MOAI_CALL_SUPER_ONCE ( composer, MOAIFooBase, _RegisterLuaClass ( composer, state ));
 
 	// also register constants:
 	// state.SetField ( -1, "FOO_CONST", ( u32 )FOO_CONST );
@@ -83,11 +83,11 @@ void MOAIFoo::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAI
 }
 
 //----------------------------------------------------------------//
-void MOAIFoo::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIFoo::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	// call any initializers for base classes here:
-	// MOAI_CALL_SUPER_ONCE ( composer, MOAIFooBase, MOAILuaObject_RegisterLuaFuncs ( composer, state ));
+	// MOAI_CALL_SUPER_ONCE ( composer, MOAIFooBase, _RegisterLuaFuncs ( composer, state ));
 
 	// here are the instance methods:
 	luaL_Reg regTable [] = {

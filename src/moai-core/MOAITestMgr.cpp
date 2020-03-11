@@ -368,7 +368,7 @@ void MOAITestMgr::WriteLog () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITestMgr::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAITestMgr::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
@@ -391,7 +391,7 @@ void MOAITestMgr::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, 
 }
 
 //----------------------------------------------------------------//
-void MOAITestMgr::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAITestMgr::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
 	if ( history.DidVisit ( *this )) return;
 }

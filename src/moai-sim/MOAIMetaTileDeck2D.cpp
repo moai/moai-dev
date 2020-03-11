@@ -133,6 +133,26 @@ MOAIMetaTileDeck2D::~MOAIMetaTileDeck2D () {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIMetaTileDeck2D::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+}
+
+//----------------------------------------------------------------//
+void MOAIMetaTileDeck2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "reserveMetaTiles",	_reserveMetaTiles },
+		{ "setDeck",			_setDeck },
+		{ "setGrid",			_setGrid },
+		{ "setMetaTile",		_setMetaTile },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 ZLBounds MOAIMetaTileDeck2D::MOAIDeck_ComputeMaxAABB () {
 
 	ZLSize size = this->mBrushes.Size ();
@@ -240,24 +260,4 @@ bool MOAIMetaTileDeck2D::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32
 	UNUSED ( result );
 
 	return false;
-}
-
-//----------------------------------------------------------------//
-void MOAIMetaTileDeck2D::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIMetaTileDeck2D::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "reserveMetaTiles",	_reserveMetaTiles },
-		{ "setDeck",			_setDeck },
-		{ "setGrid",			_setGrid },
-		{ "setMetaTile",		_setMetaTile },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
 }

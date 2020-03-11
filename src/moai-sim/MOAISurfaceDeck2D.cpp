@@ -315,6 +315,25 @@ MOAISurfaceDeck2D::~MOAISurfaceDeck2D () {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAISurfaceDeck2D::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+}
+
+//----------------------------------------------------------------//
+void MOAISurfaceDeck2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "reserveSurfaceLists",	_reserveSurfaceLists },
+		{ "reserveSurfaces",		_reserveSurfaces },
+		{ "setSurface",				_setSurface },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 ZLBounds MOAISurfaceDeck2D::MOAIDeck_ComputeMaxAABB () {
 
 	size_t size = this->mBrushes.Size ();
@@ -365,25 +384,6 @@ bool MOAISurfaceDeck2D::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 
 	UNUSED ( result );
 
 	return false;
-}
-
-//----------------------------------------------------------------//
-void MOAISurfaceDeck2D::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAISurfaceDeck2D::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "reserveSurfaceLists",	_reserveSurfaceLists },
-		{ "reserveSurfaces",		_reserveSurfaces },
-		{ "setSurface",				_setSurface },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
 }
 
 #endif

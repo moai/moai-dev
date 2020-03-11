@@ -1005,7 +1005,7 @@ void MOAIMarkerMgr::VideoDidStart () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIMarkerMgr::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIMarkerMgr::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 
 	state.SetField ( -1, "EVENT_KPM_BEGIN",		( u32 )EVENT_KPM_BEGIN );
 	state.SetField ( -1, "EVENT_KPM_END",		( u32 )EVENT_KPM_END );
@@ -1037,7 +1037,7 @@ void MOAIMarkerMgr::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history
 }
 
 //----------------------------------------------------------------//
-void MOAIMarkerMgr::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIMarkerMgr::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
 }
 

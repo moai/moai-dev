@@ -79,7 +79,7 @@ void MOAIGfxMgr_RenderTree::Render () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxMgr_RenderTree::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIGfxMgr_RenderTree::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
@@ -93,7 +93,7 @@ void MOAIGfxMgr_RenderTree::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory&
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgr_RenderTree::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIGfxMgr_RenderTree::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
 	if ( history.DidVisit ( *this )) return;
 }

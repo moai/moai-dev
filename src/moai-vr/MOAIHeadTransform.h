@@ -23,19 +23,19 @@ protected:
 	static int		_recenterTracking			( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void			_RegisterLuaClass									( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaFuncs									( RTTIVisitorHistory& history, MOAILuaState& state );
 	void			MOAIAbstractBaseTransform_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx );
 	bool			MOAIAction_IsDone									();
 	void			MOAIAction_Update									( double step );
-	void			MOAILuaObject_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 
 	DECL_LUA_FACTORY ( MOAIHeadTransform )
 	
 	//----------------------------------------------------------------//
-					MOAIHeadTransform		();
-					~MOAIHeadTransform		();
+					MOAIHeadTransform			();
+					~MOAIHeadTransform			();
 	
 };
 

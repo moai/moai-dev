@@ -495,7 +495,7 @@ void MOAILayoutFrame::SetParent ( MOAIAbstractChildTransform* parent ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAILayoutFrame::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAILayoutFrame::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "LAYOUT_ALIGN_MIN", ( u32 )LAYOUT_ALIGN_MIN );
@@ -512,7 +512,7 @@ void MOAILayoutFrame::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& histo
 }
 
 //----------------------------------------------------------------//
-void MOAILayoutFrame::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAILayoutFrame::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {

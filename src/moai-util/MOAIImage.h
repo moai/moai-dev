@@ -80,17 +80,17 @@ protected:
 	static int		_write						( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				MOAILuaObject_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAIImage )
 	
 	//----------------------------------------------------------------//
-	static MOAIImage*	AffirmImage					( MOAILuaState& state, int idx );
-						MOAIImage					();
-						~MOAIImage					();
+	static MOAIImage*	AffirmImage				( MOAILuaState& state, int idx );
+						MOAIImage				();
+						~MOAIImage				();
 };
 
 #endif

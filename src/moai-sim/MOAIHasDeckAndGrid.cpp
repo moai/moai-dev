@@ -120,12 +120,12 @@ MOAIHasDeckAndGrid::~MOAIHasDeckAndGrid () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIHasDeckAndGrid::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIHasDeckAndGrid::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIHasDeckAndGrid::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIHasDeckAndGrid::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
@@ -139,14 +139,14 @@ void MOAIHasDeckAndGrid::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& hi
 }
 
 //----------------------------------------------------------------//
-void MOAIHasDeckAndGrid::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIHasDeckAndGrid::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	if ( history.DidVisit ( *this )) return;
 
 	this->mGrid.Set ( *this, serializer.MemberIDToObject < MOAIGrid >( state.GetFieldValue < cc8*, MOAISerializerBase::ObjID >( -1, "mGrid", 0 )));
 }
 
 //----------------------------------------------------------------//
-void MOAIHasDeckAndGrid::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIHasDeckAndGrid::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "mGrid", serializer.AffirmMemberID ( this->mGrid ));

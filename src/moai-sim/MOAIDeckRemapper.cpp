@@ -95,20 +95,12 @@ MOAIDeckRemapper::~MOAIDeckRemapper () {
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLIndex MOAIDeckRemapper::MOAIDeckProxy_Remap ( ZLIndex idx ) {
-
-	ZLIndex code = idx - this->mBase;
-	
-	return ( code < this->mRemap.Size () ? this->mRemap [ code ] : idx );
-}
-
-//----------------------------------------------------------------//
-void MOAIDeckRemapper::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIDeckRemapper::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIDeckRemapper::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIDeckRemapper::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
@@ -119,6 +111,14 @@ void MOAIDeckRemapper::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& hist
 	};
 	
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+ZLIndex MOAIDeckRemapper::MOAIDeckProxy_Remap ( ZLIndex idx ) {
+
+	ZLIndex code = idx - this->mBase;
+	
+	return ( code < this->mRemap.Size () ? this->mRemap [ code ] : idx );
 }
 
 //----------------------------------------------------------------//

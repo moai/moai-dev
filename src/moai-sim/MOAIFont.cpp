@@ -793,7 +793,7 @@ void MOAIFont::RenderGlyph ( MOAIGlyph& glyph ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIFont::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIFont::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "EVENT_RENDER_GLYPH",		( u32 )EVENT_RENDER_GLYPH );
@@ -803,7 +803,7 @@ void MOAIFont::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOA
 }
 
 //----------------------------------------------------------------//
-void MOAIFont::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIFont::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
@@ -831,7 +831,7 @@ void MOAIFont::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOA
 }
 
 //----------------------------------------------------------------//
-void MOAIFont::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIFont::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
 	if ( history.DidVisit ( *this )) return;
 
@@ -852,7 +852,7 @@ void MOAIFont::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaS
 }
 
 //----------------------------------------------------------------//
-void MOAIFont::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIFont::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
 	if ( history.DidVisit ( *this )) return;
 

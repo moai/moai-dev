@@ -22,9 +22,9 @@ protected:
 	static int		_updateRegion			( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void			_RegisterLuaClass					( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaFuncs					( RTTIVisitorHistory& history, MOAILuaState& state );
 	void			MOAIImage_OnImageStatusChanged		( bool isOK );
-	void			MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 

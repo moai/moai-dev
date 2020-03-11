@@ -15,22 +15,22 @@ private:
 	ZLLeanArray < ZLVec2D >				mControlPoints;
 	ZLLeanArray < float >				mSegmentLengths;
 
-	float			mFlatness;
-	float			mAngle;
+	float				mFlatness;
+	float				mAngle;
 
-	float			mLength;
-
-	//----------------------------------------------------------------//
-	static int		_bless				( lua_State* L );
-	static int		_evaluate			( lua_State* L );
-	static int		_getLength			( lua_State* L );
-	static int		_reserve			( lua_State* L );
-	static int		_setPoint			( lua_State* L );
-	static int		_setThresholds		( lua_State* L );
+	float				mLength;
 
 	//----------------------------------------------------------------//
-	void				MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
+	static int			_bless					( lua_State* L );
+	static int			_evaluate				( lua_State* L );
+	static int			_getLength				( lua_State* L );
+	static int			_reserve				( lua_State* L );
+	static int			_setPoint				( lua_State* L );
+	static int			_setThresholds			( lua_State* L );
+
+	//----------------------------------------------------------------//
+	void				_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 	

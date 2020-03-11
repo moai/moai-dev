@@ -611,7 +611,7 @@ void MOAITouchSensor::ResetState () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITouchSensor::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAITouchSensor::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "TOUCH_DOWN", ( u32 )TOUCH_DOWN );
@@ -621,7 +621,7 @@ void MOAITouchSensor::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& histo
 }
 
 //----------------------------------------------------------------//
-void MOAITouchSensor::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAITouchSensor::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {

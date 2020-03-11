@@ -83,7 +83,7 @@ MOAIMath::~MOAIMath () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIMath::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIMath::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {

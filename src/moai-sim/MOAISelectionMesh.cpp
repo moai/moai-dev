@@ -549,28 +549,12 @@ void MOAISelectionMesh::ReserveSelections ( ZLSize total ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAISelectionMesh::MOAIDeck_Draw ( ZLIndex idx ) {
-	
-	if ( !this->mMesh ) return;
-	
-	size_t size = this->mSets.Size ();
-	if ( !size ) return;
-
-	ZLIndex itemIdx =  ZLIndexOp::Wrap ( idx, size );
-	
-	MOAIMeshSpan* span = this->mSets [ itemIdx ];
-	if ( !span ) return;
-
-	this->mMesh->DrawIndex ( idx, span );
-}
-
-//----------------------------------------------------------------//
-void MOAISelectionMesh::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAISelectionMesh::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAISelectionMesh::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAISelectionMesh::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
@@ -585,4 +569,20 @@ void MOAISelectionMesh::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& his
 	};
 	
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAISelectionMesh::MOAIDeck_Draw ( ZLIndex idx ) {
+	
+	if ( !this->mMesh ) return;
+	
+	size_t size = this->mSets.Size ();
+	if ( !size ) return;
+
+	ZLIndex itemIdx =  ZLIndexOp::Wrap ( idx, size );
+	
+	MOAIMeshSpan* span = this->mSets [ itemIdx ];
+	if ( !span ) return;
+
+	this->mMesh->DrawIndex ( idx, span );
 }

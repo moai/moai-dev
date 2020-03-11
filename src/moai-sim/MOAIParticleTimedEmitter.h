@@ -23,15 +23,15 @@ private:
 	float	mMaxFrequency;
 
 	//----------------------------------------------------------------//
-	static int		_setFrequency			( lua_State* L );
+	static int		_setFrequency					( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	float			GetRandomFrequency		();
+	float			GetRandomFrequency				();
 	
+	void			MOAIAction_Update				( double step );
+	void			_RegisterLuaClass				( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaFuncs				( RTTIVisitorHistory& history, MOAILuaState& state );
 	//----------------------------------------------------------------//
-	void			MOAIAction_Update						( double step );
-	void			MOAILuaObject_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 	

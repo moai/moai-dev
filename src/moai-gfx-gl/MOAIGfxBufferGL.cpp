@@ -88,6 +88,41 @@ void MOAIGfxBufferGL::ReserveVBOs ( ZLSize gpuBuffers ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIGfxBufferGL::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+	
+	state.SetField ( -1, "INDEX_BUFFER",			( u32 )ZLGfxEnum::BUFFER_TARGET_ELEMENT_ARRAY );
+	state.SetField ( -1, "VERTEX_BUFFER",			( u32 )ZLGfxEnum::BUFFER_TARGET_ARRAY );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxBufferGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "reserveVBOs",			_reserveVBOs },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxBufferGL::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	if ( history.DidVisit ( *this )) return;
+
+	u32 totalVBOs = state.GetFieldValue < cc8*, u32 >( -1, "mTotalVBOs", 0 );
+	this->ReserveVBOs ( totalVBOs );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxBufferGL::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
+	if ( history.DidVisit ( *this )) return;
+	
+	state.SetField < cc8*, MOAILuaSize >( -1, "mTotalVBOs", this->CountVBOs ());
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxBufferGL::MOAIGfxResourceGL_OnGPUBind () {
 	
 	if ( !this->mUseVBOs ) return;
@@ -190,39 +225,4 @@ bool MOAIGfxBufferGL::MOAIGfxResourceGL_OnGPUUpdate () {
 	}
 	
 	return true;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxBufferGL::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-	
-	state.SetField ( -1, "INDEX_BUFFER",			( u32 )ZLGfxEnum::BUFFER_TARGET_ELEMENT_ARRAY );
-	state.SetField ( -1, "VERTEX_BUFFER",			( u32 )ZLGfxEnum::BUFFER_TARGET_ARRAY );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxBufferGL::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "reserveVBOs",			_reserveVBOs },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxBufferGL::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-
-	u32 totalVBOs = state.GetFieldValue < cc8*, u32 >( -1, "mTotalVBOs", 0 );
-	this->ReserveVBOs ( totalVBOs );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxBufferGL::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-	
-	state.SetField < cc8*, MOAILuaSize >( -1, "mTotalVBOs", this->CountVBOs ());
 }

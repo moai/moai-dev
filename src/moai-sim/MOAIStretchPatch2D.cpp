@@ -363,6 +363,30 @@ void MOAIStretchPatch2D::SetRow ( ZLIndex idx, float percent, bool canStretch ) 
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIStretchPatch2D::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+}
+
+//----------------------------------------------------------------//
+void MOAIStretchPatch2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "ninePatch",			_ninePatch },
+		{ "reserveColumns",		_reserveColumns },
+		{ "reserveRows",		_reserveRows },
+		{ "reserveUVRects",		_reserveUVRects },
+		{ "setColumn",			_setColumn },
+		{ "setRect",			_setRect },
+		{ "setRow",				_setRow },
+		{ "setUVRect",			_setUVRect },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 ZLBounds MOAIStretchPatch2D::MOAIDeck_ComputeMaxAABB () {
 
 	return this->GetBounds ( 0 );
@@ -422,28 +446,4 @@ bool MOAIStretchPatch2D::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32
 	UNUSED ( result );
 
 	return false;
-}
-
-//----------------------------------------------------------------//
-void MOAIStretchPatch2D::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIStretchPatch2D::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "ninePatch",			_ninePatch },
-		{ "reserveColumns",		_reserveColumns },
-		{ "reserveRows",		_reserveRows },
-		{ "reserveUVRects",		_reserveUVRects },
-		{ "setColumn",			_setColumn },
-		{ "setRect",			_setRect },
-		{ "setRow",				_setRow },
-		{ "setUVRect",			_setUVRect },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
 }

@@ -34,9 +34,9 @@ protected:
 	virtual ZLBounds	MOAIAbstractProp_GetModelBounds			() = 0; // get the prop bounds in model space
 
 	//----------------------------------------------------------------//
+	void				_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
 	bool				MOAINode_ApplyAttrOp					( ZLAttrID attrID, ZLAttribute& attr, u32 op );
-	void				MOAILuaObject_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
 	void				MOAINode_Update							();
 	void				MOAIPartitionHull_AddToSortBuffer		( MOAIPartitionResultBuffer& buffer, u32 key );
 	bool				MOAIPartitionHull_Inside				( ZLVec3D vec, float pad );

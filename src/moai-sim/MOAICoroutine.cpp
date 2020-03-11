@@ -307,6 +307,50 @@ int MOAICoroutine::Resume ( float step ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAICoroutine::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "blockOnAction",		_blockOnAction },
+		{ "currentThread",		_currentThread },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAICoroutine::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "getHistogram",			_getHistogram },
+		{ "getTrackingGroup",		_getTrackingGroup },
+		{ "reportHistogram",		_reportHistogram },
+		{ "reportLeaks",			_reportLeaks },
+		{ "run",					_run },
+		{ "setDefaultParent",		_setDefaultParent },
+		{ "setTrackingGroup",		_setTrackingGroup },
+		{ "step",					_step },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+	
+	// ?
+	
+	lua_getglobal ( state, "coroutine" );
+	
+	lua_getfield ( state, -1, "create" );
+	lua_setfield ( state, -3, "create" );
+	
+	lua_getfield ( state, -1, "resume" );
+	lua_setfield ( state, -3, "resume" );
+	
+	lua_pop ( state, 1 );
+}
+
+//----------------------------------------------------------------//
 STLString MOAICoroutine::MOAIAction_GetDebugInfo () const {
 	return mFuncName;
 }
@@ -338,48 +382,4 @@ void MOAICoroutine::MOAIAction_Stop () {
 //----------------------------------------------------------------//
 void MOAICoroutine::MOAIAction_Update ( double step ) {
 	this->Resume (( float )step );
-}
-
-//----------------------------------------------------------------//
-void MOAICoroutine::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "blockOnAction",		_blockOnAction },
-		{ "currentThread",		_currentThread },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAICoroutine::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "getHistogram",			_getHistogram },
-		{ "getTrackingGroup",		_getTrackingGroup },
-		{ "reportHistogram",		_reportHistogram },
-		{ "reportLeaks",			_reportLeaks },
-		{ "run",					_run },
-		{ "setDefaultParent",		_setDefaultParent },
-		{ "setTrackingGroup",		_setTrackingGroup },
-		{ "step",					_step },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-	
-	// ?
-	
-	lua_getglobal ( state, "coroutine" );
-	
-	lua_getfield ( state, -1, "create" );
-	lua_setfield ( state, -3, "create" );
-	
-	lua_getfield ( state, -1, "resume" );
-	lua_setfield ( state, -3, "resume" );
-	
-	lua_pop ( state, 1 );
 }

@@ -71,7 +71,7 @@ void MOAIPipelineLayoutVK::SetDescriptorSetLayout ( ZLIndex index, MOAIDescripto
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIPipelineLayoutVK::Visitor_Finalize () {
+void MOAIPipelineLayoutVK::_Finalize () {
 
 	if ( this->HasDependency < MOAILogicalDeviceVK >()) {
 		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();

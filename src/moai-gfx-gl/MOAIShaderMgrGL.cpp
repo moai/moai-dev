@@ -270,7 +270,7 @@ MOAIShaderMgrGL::~MOAIShaderMgrGL () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIShaderMgrGL::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIShaderMgrGL::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "DECK2D_SHADER",			( u32 )MOAIShaderPresetEnum::DECK2D_SHADER );
@@ -292,7 +292,7 @@ void MOAIShaderMgrGL::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& histo
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderMgrGL::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIShaderMgrGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
 	if ( history.DidVisit ( *this )) return;
 }

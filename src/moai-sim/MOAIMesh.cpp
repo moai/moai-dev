@@ -642,26 +642,7 @@ void MOAIMesh::SetIndexBuffer ( MOAIIndexBuffer* indexBuffer ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLBounds MOAIMesh::MOAIDeck_ComputeMaxAABB () {
-
-	return this->mBounds;
-}
-
-//----------------------------------------------------------------//
-void MOAIMesh::MOAIDeck_Draw ( ZLIndex idx ) {
-
-	this->DrawIndex ( idx, 0 );
-}
-
-//----------------------------------------------------------------//
-ZLBounds MOAIMesh::MOAIDeck_GetBounds ( ZLIndex idx ) {
-	UNUSED ( idx );
-
-	return this->mBounds;
-}
-
-//----------------------------------------------------------------//
-void MOAIMesh::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIMesh::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 	
 	state.SetField ( -1, "GL_LINES",			( u32 )MOAIGfxTopologyEnum::LINE_LIST );
@@ -679,7 +660,7 @@ void MOAIMesh::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOA
 }
 
 //----------------------------------------------------------------//
-void MOAIMesh::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIMesh::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
@@ -702,7 +683,7 @@ void MOAIMesh::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOA
 }
 
 //----------------------------------------------------------------//
-void MOAIMesh::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIMesh::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	if ( history.DidVisit ( *this )) return;
 
 	this->SetIndexBuffer (
@@ -734,7 +715,7 @@ void MOAIMesh::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaS
 }
 
 //----------------------------------------------------------------//
-void MOAIMesh::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIMesh::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "mIndexBuffer", serializer.AffirmMemberID ( this->mIndexBuffer ));
@@ -754,4 +735,23 @@ void MOAIMesh::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILua
 	lua_setfield ( state, -2, "mBounds" );
 	
 	state.SetField < cc8*, u32 >( -1, "mPenWidth", ( u32 )this->mPenWidth );
+}
+
+//----------------------------------------------------------------//
+ZLBounds MOAIMesh::MOAIDeck_ComputeMaxAABB () {
+
+	return this->mBounds;
+}
+
+//----------------------------------------------------------------//
+void MOAIMesh::MOAIDeck_Draw ( ZLIndex idx ) {
+
+	this->DrawIndex ( idx, 0 );
+}
+
+//----------------------------------------------------------------//
+ZLBounds MOAIMesh::MOAIDeck_GetBounds ( ZLIndex idx ) {
+	UNUSED ( idx );
+
+	return this->mBounds;
 }

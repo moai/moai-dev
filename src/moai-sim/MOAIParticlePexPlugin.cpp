@@ -748,7 +748,7 @@ void MOAIParticlePexPlugin::Parse ( cc8* filename, MOAIParticlePexPlugin& plugin
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIParticlePexPlugin::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIParticlePexPlugin::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	//UNUSED ( state );
@@ -761,7 +761,7 @@ void MOAIParticlePexPlugin::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory&
 }
 
 //----------------------------------------------------------------//
-void MOAIParticlePexPlugin::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIParticlePexPlugin::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable[] = {

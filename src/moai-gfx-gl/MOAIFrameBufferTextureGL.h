@@ -27,12 +27,12 @@ private:
 	static int			_init							( lua_State* L );
 	
 	//----------------------------------------------------------------//
+	void				_RegisterLuaClass							( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaFuncs							( RTTIVisitorHistory& history, MOAILuaState& state );
 	void				MOAIFrameBufferGL_AffirmBuffers				();
 	void				MOAIGfxResourceGL_OnGPUBind					();
 	bool				MOAIGfxResourceGL_OnGPUCreate				();
 	void				MOAIGfxResourceGL_OnGPUDeleteOrDiscard		( bool shouldDelete );
-	void				MOAILuaObject_RegisterLuaClass				( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs				( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 	

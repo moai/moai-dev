@@ -41,7 +41,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void ZLAbstractFinalizationVisitor_Finalize ( RTTIBase& self ) const {
-		self.AsType < TYPE >()->TYPE::Visitor_Finalize ();
+		self.AsType < TYPE >()->TYPE::_Finalize ();
 	}
 };
 

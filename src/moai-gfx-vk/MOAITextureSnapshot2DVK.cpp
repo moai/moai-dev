@@ -220,7 +220,7 @@ MOAITextureSnapshot2DVK::~MOAITextureSnapshot2DVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITextureSnapshot2DVK::Visitor_Finalize () {
+void MOAITextureSnapshot2DVK::_Finalize () {
 
 	if ( this->HasDependency < MOAILogicalDeviceVK >()) {
 		

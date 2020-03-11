@@ -344,7 +344,7 @@ MOAILuaUtil::~MOAILuaUtil () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAILuaUtil::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAILuaUtil::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable[] = {
@@ -357,7 +357,7 @@ void MOAILuaUtil::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, 
 }
 
 //----------------------------------------------------------------//
-void MOAILuaUtil::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAILuaUtil::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 	UNUSED ( state );
 }

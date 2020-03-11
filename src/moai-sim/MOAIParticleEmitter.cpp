@@ -307,18 +307,12 @@ void MOAIParticleEmitter::Surge ( u32 total ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIParticleEmitter::MOAIAction_IsDone () {
-
-	return false;
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleEmitter::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIParticleEmitter::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleEmitter::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIParticleEmitter::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
@@ -335,6 +329,12 @@ void MOAIParticleEmitter::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& h
 	};
 	
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+bool MOAIParticleEmitter::MOAIAction_IsDone () {
+
+	return false;
 }
 
 //----------------------------------------------------------------//

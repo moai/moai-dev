@@ -84,14 +84,14 @@ MOAICameraAnchor2D::~MOAICameraAnchor2D () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAICameraAnchor2D::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAICameraAnchor2D::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "INHERIT_LOC", AttrID::Pack ( INHERIT_LOC ).ToRaw ());
 }
 
 //----------------------------------------------------------------//
-void MOAICameraAnchor2D::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAICameraAnchor2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {

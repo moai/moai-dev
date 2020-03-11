@@ -217,7 +217,7 @@ MOAIAbstractProp::~MOAIAbstractProp () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAbstractProp::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIAbstractProp::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 	
 	state.SetField ( -1, "FLAGS_EXPAND_FOR_SORT",		( u32 )FLAGS_EXPAND_FOR_SORT );
@@ -225,7 +225,7 @@ void MOAIAbstractProp::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& hist
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractProp::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIAbstractProp::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 	
 	luaL_Reg regTable [] = {

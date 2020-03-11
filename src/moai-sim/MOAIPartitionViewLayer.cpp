@@ -289,15 +289,7 @@ MOAIPartitionViewLayer::~MOAIPartitionViewLayer () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIPartitionViewLayer::MOAIAbstractViewLayer_Draw () {
-	
-	if ( this->MOAIPartitionHolder::mPartition ) {
-		this->DrawPartition ( *this->MOAIPartitionHolder::mPartition );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIPartitionViewLayer::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIPartitionViewLayer::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 	
 	state.SetField ( -1, "SORT_NONE",						( u32 )MOAIPartitionResultBuffer::SORT_NONE );
@@ -317,7 +309,7 @@ void MOAIPartitionViewLayer::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionViewLayer::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIPartitionViewLayer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
@@ -335,4 +327,12 @@ void MOAIPartitionViewLayer::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory
 	};
 	
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIPartitionViewLayer::MOAIAbstractViewLayer_Draw () {
+	
+	if ( this->MOAIPartitionHolder::mPartition ) {
+		this->DrawPartition ( *this->MOAIPartitionHolder::mPartition );
+	}
 }

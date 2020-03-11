@@ -162,6 +162,73 @@ void MOAIVertexArrayGL::UnbindVertexArrayItems () {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIVertexArrayGL::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexArrayGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "reserveVAOs",				_reserveVAOs },
+		{ "reserveVertexBuffers",		_reserveVertexBuffers },
+		{ "setVertexBuffer",			_setVertexBuffer },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexArrayGL::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	if ( history.DidVisit ( *this )) return;
+
+	ZLSize totalVAOs = state.GetFieldValue < cc8*, MOAILuaSize >( -1, "mTotalVAOs", 0 );
+	this->ReserveVAOs ( totalVAOs );
+	
+	ZLSize totalVertexBuffers = state.GetFieldValue < cc8*, MOAILuaSize >( -1, "mTotalVertexBuffers", 0 );
+	this->ReserveVertexBuffers ( totalVertexBuffers );
+	
+	if ( state.PushFieldWithType ( -1, "mVertexBuffers", LUA_TTABLE )) {
+		int itr = state.PushTableItr ( -1 );
+		for ( ZLIndex i = 0; state.TableItrNext ( itr ); ++i ) {
+			if ( state.IsType ( -1, LUA_TTABLE )) {
+				MOAIVertexBufferGL* buffer = serializer.MemberIDToObject < MOAIVertexBufferGL >( state.GetFieldValue < cc8*, MOAISerializer::ObjID >( -1, "mBuffer", 0 ));
+				MOAIVertexFormatGL* format = serializer.MemberIDToObject < MOAIVertexFormatGL >( state.GetFieldValue < cc8*, MOAISerializer::ObjID >( -1, "mFormat", 0 ));
+				this->SetVertexBuffer ( i, buffer, format );
+			}
+		}
+		state.Pop ();
+	}
+	this->ScheduleForGPUUpdate ();
+}
+
+//----------------------------------------------------------------//
+void MOAIVertexArrayGL::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
+	if ( history.DidVisit ( *this )) return;
+
+	state.SetField < cc8*, MOAILuaSize >( -1, "mTotalVAOs", this->mVAOs.Size ());
+	state.SetField < cc8*, MOAILuaSize >( -1, "mTotalVertexBuffers", this->mVertexBuffers.Size ());
+	
+	lua_newtable ( state );
+	for ( ZLIndex i = 0; i < this->mVertexBuffers.Size (); ++i ) {
+		state.Push ( MOAILuaIndex ( i ));
+		lua_newtable ( state );
+		
+		MOAIVertexBufferGL* buffer = this->mVertexBuffers [ i ].mBuffer->AsType < MOAIVertexBufferGL >();
+		MOAIVertexFormatGL* format = this->mVertexBuffers [ i ].mFormat->AsType < MOAIVertexFormatGL >();
+		
+		assert ( buffer && format );
+		
+		state.SetField < cc8*, MOAISerializer::ObjID >( -1, "mBuffer", serializer.AffirmMemberID ( buffer ));
+		state.SetField < cc8*, MOAISerializer::ObjID >( -1, "mFormat", serializer.AffirmMemberID ( format ));
+		lua_settable ( state, -3 );
+	}
+	lua_setfield ( state, -2, "mVertexBuffers" );
+}
+
+//----------------------------------------------------------------//
 void MOAIVertexArrayGL::MOAIGfxResourceGL_OnGPUBind () {
 
 	if ( this->mUseVAOs && this->mVAOs.Size ()) {
@@ -232,73 +299,6 @@ bool MOAIVertexArrayGL::MOAIGfxResourceGL_OnGPUUpdate () {
 		return true;
 	}
 	return false;
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexArrayGL::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexArrayGL::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "reserveVAOs",				_reserveVAOs },
-		{ "reserveVertexBuffers",		_reserveVertexBuffers },
-		{ "setVertexBuffer",			_setVertexBuffer },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexArrayGL::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-
-	ZLSize totalVAOs = state.GetFieldValue < cc8*, MOAILuaSize >( -1, "mTotalVAOs", 0 );
-	this->ReserveVAOs ( totalVAOs );
-	
-	ZLSize totalVertexBuffers = state.GetFieldValue < cc8*, MOAILuaSize >( -1, "mTotalVertexBuffers", 0 );
-	this->ReserveVertexBuffers ( totalVertexBuffers );
-	
-	if ( state.PushFieldWithType ( -1, "mVertexBuffers", LUA_TTABLE )) {
-		int itr = state.PushTableItr ( -1 );
-		for ( ZLIndex i = 0; state.TableItrNext ( itr ); ++i ) {
-			if ( state.IsType ( -1, LUA_TTABLE )) {
-				MOAIVertexBufferGL* buffer = serializer.MemberIDToObject < MOAIVertexBufferGL >( state.GetFieldValue < cc8*, MOAISerializer::ObjID >( -1, "mBuffer", 0 ));
-				MOAIVertexFormatGL* format = serializer.MemberIDToObject < MOAIVertexFormatGL >( state.GetFieldValue < cc8*, MOAISerializer::ObjID >( -1, "mFormat", 0 ));
-				this->SetVertexBuffer ( i, buffer, format );
-			}
-		}
-		state.Pop ();
-	}
-	this->ScheduleForGPUUpdate ();
-}
-
-//----------------------------------------------------------------//
-void MOAIVertexArrayGL::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-
-	state.SetField < cc8*, MOAILuaSize >( -1, "mTotalVAOs", this->mVAOs.Size ());
-	state.SetField < cc8*, MOAILuaSize >( -1, "mTotalVertexBuffers", this->mVertexBuffers.Size ());
-	
-	lua_newtable ( state );
-	for ( ZLIndex i = 0; i < this->mVertexBuffers.Size (); ++i ) {
-		state.Push ( MOAILuaIndex ( i ));
-		lua_newtable ( state );
-		
-		MOAIVertexBufferGL* buffer = this->mVertexBuffers [ i ].mBuffer->AsType < MOAIVertexBufferGL >();
-		MOAIVertexFormatGL* format = this->mVertexBuffers [ i ].mFormat->AsType < MOAIVertexFormatGL >();
-		
-		assert ( buffer && format );
-		
-		state.SetField < cc8*, MOAISerializer::ObjID >( -1, "mBuffer", serializer.AffirmMemberID ( buffer ));
-		state.SetField < cc8*, MOAISerializer::ObjID >( -1, "mFormat", serializer.AffirmMemberID ( format ));
-		lua_settable ( state, -3 );
-	}
-	lua_setfield ( state, -2, "mVertexBuffers" );
 }
 
 //----------------------------------------------------------------//

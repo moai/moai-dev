@@ -1213,6 +1213,58 @@ void MOAIBox2DWorld::ScheduleDestruction ( MOAIBox2DJoint& joint ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIBox2DWorld::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	state.SetField ( -1, "DEBUG_DRAW_SHAPES", ( u32 )DEBUG_DRAW_SHAPES );
+	state.SetField ( -1, "DEBUG_DRAW_JOINTS", ( u32 )DEBUG_DRAW_JOINTS );
+	state.SetField ( -1, "DEBUG_DRAW_BOUNDS", ( u32 )DEBUG_DRAW_BOUNDS );
+	state.SetField ( -1, "DEBUG_DRAW_PAIRS", ( u32 )DEBUG_DRAW_PAIRS );
+	state.SetField ( -1, "DEBUG_DRAW_CENTERS", ( u32 )DEBUG_DRAW_CENTERS );
+	
+	state.SetField ( -1, "DEBUG_DRAW_DEFAULT", ( u32 )DEBUG_DRAW_DEFAULT );
+}
+
+//----------------------------------------------------------------//
+void MOAIBox2DWorld::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "addBody",					_addBody },
+		{ "addDistanceJoint",			_addDistanceJoint },
+		{ "addFrictionJoint",			_addFrictionJoint },
+		{ "addGearJoint",				_addGearJoint },
+		{ "addMotorJoint", 				_addMotorJoint },
+		{ "addMouseJoint",				_addMouseJoint },
+		{ "addPrismaticJoint",			_addPrismaticJoint },
+		{ "addPulleyJoint",				_addPulleyJoint },
+		{ "addRevoluteJoint",			_addRevoluteJoint },
+		{ "addRevoluteJointLocal",		_addRevoluteJointLocal },
+		{ "addRopeJoint",				_addRopeJoint },
+		{ "addWeldJoint",				_addWeldJoint },
+		{ "addWheelJoint",				_addWheelJoint },
+		{ "getAngularSleepTolerance",	_getAngularSleepTolerance },
+		{ "getAutoClearForces",			_getAutoClearForces },
+		{ "getGravity",					_getGravity },
+		{ "getLinearSleepTolerance",	_getLinearSleepTolerance },
+		{ "getRayCast",					_getRayCast },
+		{ "getTimeToSleep",				_getTimeToSleep },
+		{ "setAngularSleepTolerance",	_setAngularSleepTolerance },
+		{ "setAutoClearForces",			_setAutoClearForces },
+		{ "setDebugDrawEnabled",		_setDebugDrawEnabled },
+		{ "setDebugDrawFlags",			_setDebugDrawFlags },
+		{ "setGravity",					_setGravity },
+		{ "setIterations",				_setIterations },
+		{ "setLinearSleepTolerance",	_setLinearSleepTolerance },
+		{ "setTimeToSleep",				_setTimeToSleep },
+		{ "setUnitsToMeters",			_setUnitsToMeters },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 bool MOAIBox2DWorld::MOAIAction_IsDone () {
 
 	return false;
@@ -1256,54 +1308,3 @@ void MOAIBox2DWorld::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	UNUSED ( subPrimID );
 }
 
-//----------------------------------------------------------------//
-void MOAIBox2DWorld::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	state.SetField ( -1, "DEBUG_DRAW_SHAPES", ( u32 )DEBUG_DRAW_SHAPES );
-	state.SetField ( -1, "DEBUG_DRAW_JOINTS", ( u32 )DEBUG_DRAW_JOINTS );
-	state.SetField ( -1, "DEBUG_DRAW_BOUNDS", ( u32 )DEBUG_DRAW_BOUNDS );
-	state.SetField ( -1, "DEBUG_DRAW_PAIRS", ( u32 )DEBUG_DRAW_PAIRS );
-	state.SetField ( -1, "DEBUG_DRAW_CENTERS", ( u32 )DEBUG_DRAW_CENTERS );
-	
-	state.SetField ( -1, "DEBUG_DRAW_DEFAULT", ( u32 )DEBUG_DRAW_DEFAULT );
-}
-
-//----------------------------------------------------------------//
-void MOAIBox2DWorld::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "addBody",					_addBody },
-		{ "addDistanceJoint",			_addDistanceJoint },
-		{ "addFrictionJoint",			_addFrictionJoint },
-		{ "addGearJoint",				_addGearJoint },
-		{ "addMotorJoint", 				_addMotorJoint },
-		{ "addMouseJoint",				_addMouseJoint },
-		{ "addPrismaticJoint",			_addPrismaticJoint },
-		{ "addPulleyJoint",				_addPulleyJoint },
-		{ "addRevoluteJoint",			_addRevoluteJoint },
-		{ "addRevoluteJointLocal",		_addRevoluteJointLocal },
-		{ "addRopeJoint",				_addRopeJoint },
-		{ "addWeldJoint",				_addWeldJoint },
-		{ "addWheelJoint",				_addWheelJoint },
-		{ "getAngularSleepTolerance",	_getAngularSleepTolerance },
-		{ "getAutoClearForces",			_getAutoClearForces },
-		{ "getGravity",					_getGravity },
-		{ "getLinearSleepTolerance",	_getLinearSleepTolerance },
-		{ "getRayCast",					_getRayCast },
-		{ "getTimeToSleep",				_getTimeToSleep },
-		{ "setAngularSleepTolerance",	_setAngularSleepTolerance },
-		{ "setAutoClearForces",			_setAutoClearForces },
-		{ "setDebugDrawEnabled",		_setDebugDrawEnabled },
-		{ "setDebugDrawFlags",			_setDebugDrawFlags },
-		{ "setGravity",					_setGravity },
-		{ "setIterations",				_setIterations },
-		{ "setLinearSleepTolerance",	_setLinearSleepTolerance },
-		{ "setTimeToSleep",				_setTimeToSleep },
-		{ "setUnitsToMeters",			_setUnitsToMeters },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}

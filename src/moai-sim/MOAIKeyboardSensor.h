@@ -46,8 +46,8 @@ private:
 	static int			_setKeyCallback				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				MOAILuaObject_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 

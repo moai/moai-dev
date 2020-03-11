@@ -46,6 +46,23 @@ MOAIDeckProxy::~MOAIDeckProxy () {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIDeckProxy::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+}
+
+//----------------------------------------------------------------//
+void MOAIDeckProxy::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "setDeck",				_setDeck },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 ZLBounds MOAIDeckProxy::MOAIDeck_ComputeMaxAABB () {
 
 	return this->mDeck ? this->mDeck->MOAIDeck_ComputeMaxAABB () : ZLBounds::ZL_BOUNDS_EMPTY;
@@ -87,21 +104,4 @@ bool MOAIDeckProxy::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 gran
 ZLIndex MOAIDeckProxy::MOAIDeckProxy_Remap ( ZLIndex idx ) {
 
 	return idx;
-}
-
-//----------------------------------------------------------------//
-void MOAIDeckProxy::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIDeckProxy::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "setDeck",				_setDeck },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
 }

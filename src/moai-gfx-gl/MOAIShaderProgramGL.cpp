@@ -238,6 +238,29 @@ void MOAIShaderProgramGL::SetVertexAttribute ( u32 idx, cc8* attribute ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIShaderProgramGL::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderProgramGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "declareUniform",				_declareUniform },
+		{ "load",						_load },
+		{ "reserveGlobals",				_reserveGlobals },
+		{ "reserveTextures",			_reserveTextures },
+		{ "reserveUniforms",			_reserveUniforms },
+		{ "setGlobal",					_setGlobal },
+		{ "setTexture",					_setTexture },
+		{ "setVertexAttribute",			_setVertexAttribute },
+		{ NULL, NULL }
+	};
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 void MOAIShaderProgramGL::MOAIGfxResourceGL_OnGPUBind () {
 
 	// use shader program.
@@ -304,29 +327,6 @@ void MOAIShaderProgramGL::MOAIGfxResourceGL_OnGPUUnbind () {
 bool MOAIShaderProgramGL::MOAIGfxResourceGL_OnGPUUpdate () {
 
 	return true;
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderProgramGL::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderProgramGL::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "declareUniform",				_declareUniform },
-		{ "load",						_load },
-		{ "reserveGlobals",				_reserveGlobals },
-		{ "reserveTextures",			_reserveTextures },
-		{ "reserveUniforms",			_reserveUniforms },
-		{ "setGlobal",					_setGlobal },
-		{ "setTexture",					_setTexture },
-		{ "setVertexAttribute",			_setVertexAttribute },
-		{ NULL, NULL }
-	};
-	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//

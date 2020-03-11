@@ -137,14 +137,14 @@ MOAIMemStream::~MOAIMemStream () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIMemStream::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIMemStream::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "DEFAULT_CHUNK_SIZE", ( u32 )ZLMemStream::DEFAULT_CHUNK_SIZE );
 }
 
 //----------------------------------------------------------------//
-void MOAIMemStream::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIMemStream::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {

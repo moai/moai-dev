@@ -39,13 +39,13 @@ protected:
 	bool				LoadFromStream				( ZLStream& stream, u32 transform );
 	
 	//----------------------------------------------------------------//
-	void				MOAIGfxResource_ClearReloadable				();
-	bool				MOAIGfxResource_FinishLoading				();
-	void				MOAILuaObject_RegisterLuaClass				( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs				( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				MOAILuaObject_SerializeIn					( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
-	void				MOAILuaObject_SerializeOut					( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
-	void				Visitor_Finalize							();
+	void				_Finalize								();
+	void				_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_SerializeIn							( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
+	void				_SerializeOut							( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
+	void				MOAIGfxResource_ClearReloadable			();
+	bool				MOAIGfxResource_FinishLoading			();
 	
 public:
 

@@ -43,14 +43,14 @@ private:
 	ZLBox			GetItemAABB				( u32 idx );
 
 	//----------------------------------------------------------------//
-	ZLBounds				MOAIDeck_ComputeMaxAABB				();
-	void					MOAIDeck_Draw						( ZLIndex idx );
-	ZLBounds				MOAIDeck_GetBounds					( ZLIndex idx );
-	MOAICollisionShape*		MOAIDeck_GetCollisionShape			( ZLIndex idx );
-	bool					MOAIDeck_Overlap					( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result );
-	bool					MOAIDeck_Overlap					( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result );
-	void					MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
+	ZLBounds				MOAIDeck_ComputeMaxAABB			();
+	void					MOAIDeck_Draw					( ZLIndex idx );
+	ZLBounds				MOAIDeck_GetBounds				( ZLIndex idx );
+	MOAICollisionShape*		MOAIDeck_GetCollisionShape		( ZLIndex idx );
+	bool					MOAIDeck_Overlap				( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result );
+	bool					MOAIDeck_Overlap				( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result );
+	void					_RegisterLuaClass				( RTTIVisitorHistory& history, MOAILuaState& state );
+	void					_RegisterLuaFuncs				( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 	

@@ -394,21 +394,7 @@ MOAICamera::~MOAICamera () {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAICamera::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
-
-	if ( AttrID::Check ( attrID )) {
-
-		switch ( attrID.Unpack ()) {
-			case ATTR_FOV:
-				this->mFieldOfView = attr.Apply ( this->mFieldOfView, op, ZLAttribute::ATTR_READ_WRITE );
-				return true;
-		}
-	}
-	return MOAITransform::MOAINode_ApplyAttrOp ( attrID, attr, op );
-}
-
-//----------------------------------------------------------------//
-void MOAICamera::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAICamera::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAICamera >( TOTAL_DEBUG_LINE_STYLES );
@@ -425,7 +411,7 @@ void MOAICamera::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, M
 }
 
 //----------------------------------------------------------------//
-void MOAICamera::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAICamera::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
@@ -447,6 +433,20 @@ void MOAICamera::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, M
 	};
 
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+bool MOAICamera::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
+
+	if ( AttrID::Check ( attrID )) {
+
+		switch ( attrID.Unpack ()) {
+			case ATTR_FOV:
+				this->mFieldOfView = attr.Apply ( this->mFieldOfView, op, ZLAttribute::ATTR_READ_WRITE );
+				return true;
+		}
+	}
+	return MOAITransform::MOAINode_ApplyAttrOp ( attrID, attr, op );
 }
 
 //----------------------------------------------------------------//

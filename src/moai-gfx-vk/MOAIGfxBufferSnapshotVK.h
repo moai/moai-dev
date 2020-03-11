@@ -29,8 +29,8 @@ protected:
 	VkDescriptorBufferInfo	mDescriptor;
 
 	//----------------------------------------------------------------//
+	void 		_Finalize 							();
 	void		MOAIAbstractSnapshotVK_OnUnpin		() {}
-	void 		Visitor_Finalize 					();
 
 public:
 	

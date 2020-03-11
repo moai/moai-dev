@@ -42,7 +42,7 @@ MOAISensor::~MOAISensor () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAISensor::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAISensor::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
@@ -54,7 +54,7 @@ void MOAISensor::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, M
 }
 
 //----------------------------------------------------------------//
-void MOAISensor::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAISensor::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {

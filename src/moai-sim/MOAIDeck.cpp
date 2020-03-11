@@ -141,6 +141,25 @@ void MOAIDeck::SetBoundsDirty () {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIDeck::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	UNUSED ( state );
+	if ( history.DidVisit ( *this )) return;
+}
+
+//----------------------------------------------------------------//
+void MOAIDeck::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "draw",					_draw },
+		{ "getBounds",				_getBounds },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 ZLBounds MOAIDeck::MOAIDeck_ComputeMaxAABB () {
 
 	return ZLBounds::EMPTY;
@@ -181,23 +200,4 @@ bool MOAIDeck::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 granulari
 	
 	ZLBounds bounds = this->GetBounds ( idx );
 	return (( bounds.mStatus == ZLBounds::ZL_BOUNDS_OK ) && bounds.mAABB.Contains ( vec ));
-}
-
-//----------------------------------------------------------------//
-void MOAIDeck::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIDeck::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "draw",					_draw },
-		{ "getBounds",				_getBounds },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
 }

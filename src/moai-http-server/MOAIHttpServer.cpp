@@ -198,14 +198,14 @@ void MOAIHttpServer::Stop () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIHttpServer::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIHttpServer::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "EVENT_HANDLE_REQUEST", ( u32 )EVENT_HANDLE_REQUEST );
 }
 
 //----------------------------------------------------------------//
-void MOAIHttpServer::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIHttpServer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {

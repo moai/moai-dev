@@ -161,7 +161,7 @@ u32 MOAIDeserializer::SerializeFromFile ( cc8* filename ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDeserializer::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIDeserializer::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
@@ -173,7 +173,7 @@ void MOAIDeserializer::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& hist
 }
 
 //----------------------------------------------------------------//
-void MOAIDeserializer::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIDeserializer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {

@@ -385,6 +385,51 @@ bool MOAITextureGL::UpdateTextureFromImage ( ZLImage& image, ZLIntRect rect ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAITextureGL::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+	
+	state.SetField ( -1, "GL_LINEAR",					( u32 )MOAITextureFilterEnum::LINEAR );
+	state.SetField ( -1, "GL_LINEAR_MIPMAP_LINEAR",		( u32 )MOAITextureFilterEnum::LINEAR_MIPMAP_LINEAR );
+	state.SetField ( -1, "GL_LINEAR_MIPMAP_NEAREST",	( u32 )MOAITextureFilterEnum::LINEAR_MIPMAP_NEAREST );
+	
+	state.SetField ( -1, "GL_NEAREST",					( u32 )MOAITextureFilterEnum::NEAREST );
+	state.SetField ( -1, "GL_NEAREST_MIPMAP_LINEAR",	( u32 )MOAITextureFilterEnum::NEAREST_MIPMAP_LINEAR );
+	state.SetField ( -1, "GL_NEAREST_MIPMAP_NEAREST",	( u32 )MOAITextureFilterEnum::NEAREST_MIPMAP_NEAREST );
+	
+	state.SetField ( -1, "GL_RGBA4",					( u32 )ZLGfxEnum::PIXEL_FORMAT_RGBA4 );
+	state.SetField ( -1, "GL_RGB5_A1",					( u32 )ZLGfxEnum::PIXEL_FORMAT_RGB5_A1 );
+	state.SetField ( -1, "GL_DEPTH_COMPONENT16",		( u32 )ZLGfxEnum::PIXEL_FORMAT_DEPTH_COMPONENT16 );
+	//***state.SetField ( -1, "GL_DEPTH_COMPONENT24",	( u32 )GL_DEPTH_COMPONENT24 );
+	//***state.SetField ( -1, "GL_STENCIL_INDEX1",		( u32 )GL_STENCIL_INDEX1 );
+	//***state.SetField ( -1, "GL_STENCIL_INDEX4",		( u32 )GL_STENCIL_INDEX4 );
+	state.SetField ( -1, "GL_STENCIL_INDEX8",			( u32 )ZLGfxEnum::PIXEL_FORMAT_STENCIL_INDEX8 );
+	//***state.SetField ( -1, "GL_STENCIL_INDEX16",		( u32 )GL_STENCIL_INDEX16 );
+	
+	// TODO:
+	#ifdef MOAI_OS_ANDROID
+		state.SetField ( -1, "GL_RGB565",				( u32 )ZLGfxEnum::PIXEL_FORMAT_RGB565 );
+	#else
+		state.SetField ( -1, "GL_RGBA8",				( u32 )ZLGfxEnum::PIXEL_FORMAT_RGBA8 );
+	#endif
+}
+
+//----------------------------------------------------------------//
+void MOAITextureGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "getSize",				_getSize },
+		{ "release",				_release },
+		{ "setDebugName",			_setDebugName },
+		{ "setFilter",				_setFilter },
+		{ "setWrap",				_setWrap },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 void MOAITextureGL::MOAIGfxResourceGL_OnGPUBind () {
 
 	this->mGfxMgr->GetDrawingAPI ().BindTexture ( this->mGLTexture );
@@ -418,51 +463,6 @@ bool MOAITextureGL::MOAIGfxResourceGL_OnGPUUpdate () {
 	gfx.TexParameteri ( ZLGfxEnum::TEXTURE_MAG_FILTER, MOAIGfxConstsGL::Remap ( this->mMagFilter ));
 	
 	return true;
-}
-
-//----------------------------------------------------------------//
-void MOAITextureGL::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-	
-	state.SetField ( -1, "GL_LINEAR",					( u32 )MOAITextureFilterEnum::LINEAR );
-	state.SetField ( -1, "GL_LINEAR_MIPMAP_LINEAR",		( u32 )MOAITextureFilterEnum::LINEAR_MIPMAP_LINEAR );
-	state.SetField ( -1, "GL_LINEAR_MIPMAP_NEAREST",	( u32 )MOAITextureFilterEnum::LINEAR_MIPMAP_NEAREST );
-	
-	state.SetField ( -1, "GL_NEAREST",					( u32 )MOAITextureFilterEnum::NEAREST );
-	state.SetField ( -1, "GL_NEAREST_MIPMAP_LINEAR",	( u32 )MOAITextureFilterEnum::NEAREST_MIPMAP_LINEAR );
-	state.SetField ( -1, "GL_NEAREST_MIPMAP_NEAREST",	( u32 )MOAITextureFilterEnum::NEAREST_MIPMAP_NEAREST );
-	
-	state.SetField ( -1, "GL_RGBA4",					( u32 )ZLGfxEnum::PIXEL_FORMAT_RGBA4 );
-	state.SetField ( -1, "GL_RGB5_A1",					( u32 )ZLGfxEnum::PIXEL_FORMAT_RGB5_A1 );
-	state.SetField ( -1, "GL_DEPTH_COMPONENT16",		( u32 )ZLGfxEnum::PIXEL_FORMAT_DEPTH_COMPONENT16 );
-	//***state.SetField ( -1, "GL_DEPTH_COMPONENT24",	( u32 )GL_DEPTH_COMPONENT24 );
-	//***state.SetField ( -1, "GL_STENCIL_INDEX1",		( u32 )GL_STENCIL_INDEX1 );
-	//***state.SetField ( -1, "GL_STENCIL_INDEX4",		( u32 )GL_STENCIL_INDEX4 );
-	state.SetField ( -1, "GL_STENCIL_INDEX8",			( u32 )ZLGfxEnum::PIXEL_FORMAT_STENCIL_INDEX8 );
-	//***state.SetField ( -1, "GL_STENCIL_INDEX16",		( u32 )GL_STENCIL_INDEX16 );
-	
-	// TODO:
-	#ifdef MOAI_OS_ANDROID
-		state.SetField ( -1, "GL_RGB565",				( u32 )ZLGfxEnum::PIXEL_FORMAT_RGB565 );
-	#else
-		state.SetField ( -1, "GL_RGBA8",				( u32 )ZLGfxEnum::PIXEL_FORMAT_RGBA8 );
-	#endif
-}
-
-//----------------------------------------------------------------//
-void MOAITextureGL::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "getSize",				_getSize },
-		{ "release",				_release },
-		{ "setDebugName",			_setDebugName },
-		{ "setFilter",				_setFilter },
-		{ "setWrap",				_setWrap },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//

@@ -989,6 +989,96 @@ void MOAITransform::SetScl ( float x, float y, float z ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAITransform::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	state.SetField ( -1, "ATTR_X_PIV",			AttrID::Pack ( ATTR_X_PIV ).ToRaw ());
+	state.SetField ( -1, "ATTR_Y_PIV",			AttrID::Pack ( ATTR_Y_PIV ).ToRaw ());
+	state.SetField ( -1, "ATTR_Z_PIV",			AttrID::Pack ( ATTR_Z_PIV ).ToRaw ());
+	state.SetField ( -1, "ATTR_X_LOC",			AttrID::Pack ( ATTR_X_LOC ).ToRaw ());
+	state.SetField ( -1, "ATTR_Y_LOC",			AttrID::Pack ( ATTR_Y_LOC ).ToRaw ());
+	state.SetField ( -1, "ATTR_Z_LOC",			AttrID::Pack ( ATTR_Z_LOC ).ToRaw ());
+	state.SetField ( -1, "ATTR_X_ROT",			AttrID::Pack ( ATTR_X_ROT ).ToRaw ());
+	state.SetField ( -1, "ATTR_Y_ROT",			AttrID::Pack ( ATTR_Y_ROT ).ToRaw ());
+	state.SetField ( -1, "ATTR_Z_ROT",			AttrID::Pack ( ATTR_Z_ROT ).ToRaw ());
+	state.SetField ( -1, "ATTR_X_SCL",			AttrID::Pack ( ATTR_X_SCL ).ToRaw ());
+	state.SetField ( -1, "ATTR_Y_SCL",			AttrID::Pack ( ATTR_Y_SCL ).ToRaw ());
+	state.SetField ( -1, "ATTR_Z_SCL",			AttrID::Pack ( ATTR_Z_SCL ).ToRaw ());
+	state.SetField ( -1, "ATTR_ROTATE_QUAT",	AttrID::Pack ( ATTR_ROTATE_QUAT ).ToRaw ());
+	state.SetField ( -1, "ATTR_TRANSLATE",		AttrID::Pack ( ATTR_TRANSLATE ).ToRaw ());
+}
+
+//----------------------------------------------------------------//
+void MOAITransform::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "addLoc",				_addLoc },
+		{ "addPiv",				_addPiv },
+		{ "addRot",				_addRot },
+		{ "addScl",				_addScl },
+		{ "getLoc",				_getLoc },
+		{ "getPiv",				_getPiv },
+		{ "getRot",				_getRot },
+		{ "getScl",				_getScl },
+		{ "move",				_move },
+		{ "moveLoc",			_moveLoc },
+		{ "movePiv",			_movePiv },
+		{ "moveRot",			_moveRot },
+		{ "moveScl",			_moveScl },
+		{ "seek",				_seek },
+		{ "seekLoc",			_seekLoc },
+		{ "seekPiv",			_seekPiv },
+		{ "seekRot",			_seekRot },
+		{ "seekScl",			_seekScl },
+		{ "setLoc",				_setLoc },
+		{ "setPiv",				_setPiv },
+		{ "setRot",				_setRot },
+		{ "setScl",				_setScl },
+		{ "setShearByX",		_setShearByX },
+		{ "setShearByY",		_setShearByY },
+		{ "setShearByZ",		_setShearByZ },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAITransform::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	UNUSED ( serializer );
+	if ( history.DidVisit ( *this )) return;
+	
+	this->mPiv.mX		= state.GetFieldValue < cc8*, float >( -1, "mPiv.mX", 0.0f );
+	this->mPiv.mY		= state.GetFieldValue < cc8*, float >( -1, "mPiv.mY", 0.0f );
+	
+	this->mLoc.mX		= state.GetFieldValue < cc8*, float >( -1, "mLoc.mX", 0.0f );
+	this->mLoc.mY		= state.GetFieldValue < cc8*, float >( -1, "mLoc.mY", 0.0f );
+	
+	this->mScale.mX		= state.GetFieldValue < cc8*, float >( -1, "mScale.mX", 1.0f );
+	this->mScale.mY		= state.GetFieldValue < cc8*, float >( -1, "mScale.mY", 1.0f );
+	
+	this->mRot.mZ		= state.GetFieldValue < cc8*, float >( -1, "mDegrees", 0.0f );
+}
+
+//----------------------------------------------------------------//
+void MOAITransform::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
+	UNUSED ( serializer );
+	if ( history.DidVisit ( *this )) return;
+
+	state.SetField ( -1, "mPiv.mX", this->mPiv.mX );
+	state.SetField ( -1, "mPiv.mY", this->mPiv.mY );
+	
+	state.SetField ( -1, "mLoc.mX", this->mLoc.mX );
+	state.SetField ( -1, "mLoc.mY", this->mLoc.mY );
+	
+	state.SetField ( -1, "mScale.mX", this->mScale.mX );
+	state.SetField ( -1, "mScale.mY", this->mScale.mY );
+	
+	state.SetField ( -1, "mDegrees", this->mRot.mZ );
+}
+
+//----------------------------------------------------------------//
 void MOAITransform::MOAIAbstractBaseTransform_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
 
 	float xRot = ClampEuler ( this->mRot.mX ) * ( float )D2R;
@@ -1126,94 +1216,4 @@ bool MOAITransform::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u
 		}
 	}
 	return MOAIAbstractChildTransform::MOAINode_ApplyAttrOp ( attrID, attr, op );
-}
-
-//----------------------------------------------------------------//
-void MOAITransform::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	state.SetField ( -1, "ATTR_X_PIV",			AttrID::Pack ( ATTR_X_PIV ).ToRaw ());
-	state.SetField ( -1, "ATTR_Y_PIV",			AttrID::Pack ( ATTR_Y_PIV ).ToRaw ());
-	state.SetField ( -1, "ATTR_Z_PIV",			AttrID::Pack ( ATTR_Z_PIV ).ToRaw ());
-	state.SetField ( -1, "ATTR_X_LOC",			AttrID::Pack ( ATTR_X_LOC ).ToRaw ());
-	state.SetField ( -1, "ATTR_Y_LOC",			AttrID::Pack ( ATTR_Y_LOC ).ToRaw ());
-	state.SetField ( -1, "ATTR_Z_LOC",			AttrID::Pack ( ATTR_Z_LOC ).ToRaw ());
-	state.SetField ( -1, "ATTR_X_ROT",			AttrID::Pack ( ATTR_X_ROT ).ToRaw ());
-	state.SetField ( -1, "ATTR_Y_ROT",			AttrID::Pack ( ATTR_Y_ROT ).ToRaw ());
-	state.SetField ( -1, "ATTR_Z_ROT",			AttrID::Pack ( ATTR_Z_ROT ).ToRaw ());
-	state.SetField ( -1, "ATTR_X_SCL",			AttrID::Pack ( ATTR_X_SCL ).ToRaw ());
-	state.SetField ( -1, "ATTR_Y_SCL",			AttrID::Pack ( ATTR_Y_SCL ).ToRaw ());
-	state.SetField ( -1, "ATTR_Z_SCL",			AttrID::Pack ( ATTR_Z_SCL ).ToRaw ());
-	state.SetField ( -1, "ATTR_ROTATE_QUAT",	AttrID::Pack ( ATTR_ROTATE_QUAT ).ToRaw ());
-	state.SetField ( -1, "ATTR_TRANSLATE",		AttrID::Pack ( ATTR_TRANSLATE ).ToRaw ());
-}
-
-//----------------------------------------------------------------//
-void MOAITransform::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "addLoc",				_addLoc },
-		{ "addPiv",				_addPiv },
-		{ "addRot",				_addRot },
-		{ "addScl",				_addScl },
-		{ "getLoc",				_getLoc },
-		{ "getPiv",				_getPiv },
-		{ "getRot",				_getRot },
-		{ "getScl",				_getScl },
-		{ "move",				_move },
-		{ "moveLoc",			_moveLoc },
-		{ "movePiv",			_movePiv },
-		{ "moveRot",			_moveRot },
-		{ "moveScl",			_moveScl },
-		{ "seek",				_seek },
-		{ "seekLoc",			_seekLoc },
-		{ "seekPiv",			_seekPiv },
-		{ "seekRot",			_seekRot },
-		{ "seekScl",			_seekScl },
-		{ "setLoc",				_setLoc },
-		{ "setPiv",				_setPiv },
-		{ "setRot",				_setRot },
-		{ "setScl",				_setScl },
-		{ "setShearByX",		_setShearByX },
-		{ "setShearByY",		_setShearByY },
-		{ "setShearByZ",		_setShearByZ },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAITransform::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
-	
-	this->mPiv.mX		= state.GetFieldValue < cc8*, float >( -1, "mPiv.mX", 0.0f );
-	this->mPiv.mY		= state.GetFieldValue < cc8*, float >( -1, "mPiv.mY", 0.0f );
-	
-	this->mLoc.mX		= state.GetFieldValue < cc8*, float >( -1, "mLoc.mX", 0.0f );
-	this->mLoc.mY		= state.GetFieldValue < cc8*, float >( -1, "mLoc.mY", 0.0f );
-	
-	this->mScale.mX		= state.GetFieldValue < cc8*, float >( -1, "mScale.mX", 1.0f );
-	this->mScale.mY		= state.GetFieldValue < cc8*, float >( -1, "mScale.mY", 1.0f );
-	
-	this->mRot.mZ		= state.GetFieldValue < cc8*, float >( -1, "mDegrees", 0.0f );
-}
-
-//----------------------------------------------------------------//
-void MOAITransform::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
-
-	state.SetField ( -1, "mPiv.mX", this->mPiv.mX );
-	state.SetField ( -1, "mPiv.mY", this->mPiv.mY );
-	
-	state.SetField ( -1, "mLoc.mX", this->mLoc.mX );
-	state.SetField ( -1, "mLoc.mY", this->mLoc.mY );
-	
-	state.SetField ( -1, "mScale.mX", this->mScale.mX );
-	state.SetField ( -1, "mScale.mY", this->mScale.mY );
-	
-	state.SetField ( -1, "mDegrees", this->mRot.mZ );
 }

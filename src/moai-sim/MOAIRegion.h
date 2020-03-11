@@ -54,14 +54,14 @@ private:
 	static int		_translate			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			Read				( ZLStream& verts, ZLStream& polySizes );
-	bool			ShouldCull			( const ZLPolygon2D& poly, u32 flag, bool checkArea, float minArea );
+	void			Read					( ZLStream& verts, ZLStream& polySizes );
+	bool			ShouldCull				( const ZLPolygon2D& poly, u32 flag, bool checkArea, float minArea );
 
 	//----------------------------------------------------------------//
-	void			MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAILuaObject_SerializeIn			( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
-	void			MOAILuaObject_SerializeOut			( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
+	void			_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_SerializeIn			( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
+	void			_SerializeOut			( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
 
 public:
 	

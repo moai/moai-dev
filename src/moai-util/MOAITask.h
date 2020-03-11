@@ -31,12 +31,12 @@ protected:
 	//static int		_setCallback		( lua_State* L );
 
 	//----------------------------------------------------------------//
-	virtual void	Execute				() = 0;
-	virtual void	Publish				();
+	virtual void	Execute					() = 0;
+	virtual void	Publish					();
 
 	//----------------------------------------------------------------//
-	void			MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 

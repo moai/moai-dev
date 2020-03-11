@@ -15,7 +15,7 @@ private:
 	ZL_FINALIZATION_VISITOR_FRIEND
 
 	//----------------------------------------------------------------//
-	void 				Visitor_Finalize			();
+	void 				_Finalize			();
 
 public:
 

@@ -212,7 +212,7 @@ void MOAIUntzSystem::Suspend () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIUntzSystem::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIUntzSystem::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
@@ -237,7 +237,7 @@ void MOAIUntzSystem::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& histor
 }
 
 //----------------------------------------------------------------//
-void MOAIUntzSystem::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIUntzSystem::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
 	if ( history.DidVisit ( *this )) return;
 }

@@ -74,21 +74,13 @@ void MOAIImageTexture::UpdateRegion ( ZLIntRect rect ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIImageTexture::MOAIImage_OnImageStatusChanged	( bool isOK ) {
-
-	if ( isOK ) {
-		this->ScheduleForGPUUpdate ();
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIImageTexture::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIImageTexture::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
 	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIImageTexture::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIImageTexture::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
@@ -98,4 +90,12 @@ void MOAIImageTexture::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& hist
 	};
 
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIImageTexture::MOAIImage_OnImageStatusChanged ( bool isOK ) {
+
+	if ( isOK ) {
+		this->ScheduleForGPUUpdate ();
+	}
 }

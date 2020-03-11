@@ -282,7 +282,7 @@ void MOAITrace::Start ( MOAILuaHookListener* listener ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITrace::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAITrace::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
@@ -297,7 +297,7 @@ void MOAITrace::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MO
 }
 
 //----------------------------------------------------------------//
-void MOAITrace::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAITrace::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
 	if ( history.DidVisit ( *this )) return;
 }

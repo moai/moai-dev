@@ -1521,7 +1521,7 @@ MOAIDraw::~MOAIDraw () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDraw::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIDraw::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
 	if ( history.DidVisit ( *this )) return;
 

@@ -100,13 +100,13 @@ MOAIHasDeck::~MOAIHasDeck () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIHasDeck::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIHasDeck::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
 	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIHasDeck::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIHasDeck::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
@@ -119,14 +119,14 @@ void MOAIHasDeck::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, 
 }
 
 //----------------------------------------------------------------//
-void MOAIHasDeck::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
+void MOAIHasDeck::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	if ( history.DidVisit ( *this )) return;
 	
 	this->mDeck.Set ( *this, serializer.MemberIDToObject < MOAIDeck >( state.GetFieldValue < cc8*, MOAISerializerBase::ObjID >( -1, "mDeck", 0 )));
 }
 
 //----------------------------------------------------------------//
-void MOAIHasDeck::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
+void MOAIHasDeck::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
 	if ( history.DidVisit ( *this )) return;
 	
 	state.SetField ( -1, "mDeck", serializer.AffirmMemberID ( this->mDeck ));

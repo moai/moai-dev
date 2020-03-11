@@ -236,6 +236,24 @@ void MOAIEaseDriver::SetLink ( ZLIndex idx, MOAINode* dest, ZLAttrID destAttrID,
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIEaseDriver::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+}
+
+//----------------------------------------------------------------//
+void MOAIEaseDriver::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "reserveLinks",			_reserveLinks },
+		{ "setLink",				_setLink },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 void MOAIEaseDriver::MOAIAction_Update ( double step ) {
 	
 	float c0 = this->GetCycle ();
@@ -290,22 +308,4 @@ void MOAIEaseDriver::MOAIAction_Update ( double step ) {
 			}
 		}
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAIEaseDriver::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIEaseDriver::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "reserveLinks",			_reserveLinks },
-		{ "setLink",				_setLink },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
 }

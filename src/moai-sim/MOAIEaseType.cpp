@@ -9,7 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIEaseType::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIEaseType::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 	
 	state.SetField ( -1, "EASE_IN",							( u32 )ZLInterpolate::kEaseIn );

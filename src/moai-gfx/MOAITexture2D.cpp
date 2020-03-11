@@ -287,6 +287,55 @@ MOAITexture2D::~MOAITexture2D () {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAITexture2D::_Finalize () {
+
+	if ( this->mImage ) {
+		delete this->mImage;
+	}
+	
+	if ( this->mTextureData ) {
+		free ( this->mTextureData );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAITexture2D::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	UNUSED ( state );
+	if ( history.DidVisit ( *this )) return;
+}
+
+//----------------------------------------------------------------//
+void MOAITexture2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "load",					_load },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAITexture2D::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
+	if ( history.DidVisit ( *this )) return;
+	
+	STLString path = state.GetFieldValue ( -1, "mPath", "" );
+	
+	if ( path.size ()) {
+		this->Init ( path, DEFAULT_TRANSFORM ); // TODO: serialization
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAITexture2D::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
+	if ( history.DidVisit ( *this )) return;
+	
+	STLString path = ZLFileSys::GetRelativePath ( this->mFilename );
+	state.SetField ( -1, "mPath", path.str ());
+}
+
+//----------------------------------------------------------------//
 void MOAITexture2D::MOAIGfxResource_ClearReloadable () {
 
 	// if we know the filename it is safe to clear out
@@ -319,53 +368,4 @@ bool MOAITexture2D::MOAIGfxResource_FinishLoading () {
 		stream.Close ();
 	}
 	return (( this->mImage && this->mImage->IsOK ()) || this->mTextureData );
-}
-
-//----------------------------------------------------------------//
-void MOAITexture2D::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAITexture2D::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "load",					_load },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAITexture2D::MOAILuaObject_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-	
-	STLString path = state.GetFieldValue ( -1, "mPath", "" );
-	
-	if ( path.size ()) {
-		this->Init ( path, DEFAULT_TRANSFORM ); // TODO: serialization
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAITexture2D::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
-	
-	STLString path = ZLFileSys::GetRelativePath ( this->mFilename );
-	state.SetField ( -1, "mPath", path.str ());
-}
-
-//----------------------------------------------------------------//
-void MOAITexture2D::Visitor_Finalize () {
-
-	if ( this->mImage ) {
-		delete this->mImage;
-	}
-	
-	if ( this->mTextureData ) {
-		free ( this->mTextureData );
-	}
 }

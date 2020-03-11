@@ -113,20 +113,20 @@ private:
 	static int		_setUnitsToMeters			( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void			Destroy					();
-	void			SayGoodbye				( b2Fixture* fixture ); 
-	void			SayGoodbye				( b2Joint* joint );
-	void			ScheduleDestruction		( MOAIBox2DBody& body );
-	void			ScheduleDestruction		( MOAIBox2DFixture& fixture );
-	void			ScheduleDestruction		( MOAIBox2DJoint& joint );
+	void			Destroy						();
+	void			SayGoodbye					( b2Fixture* fixture );
+	void			SayGoodbye					( b2Joint* joint );
+	void			ScheduleDestruction			( MOAIBox2DBody& body );
+	void			ScheduleDestruction			( MOAIBox2DFixture& fixture );
+	void			ScheduleDestruction			( MOAIBox2DJoint& joint );
 
 	//----------------------------------------------------------------//
-	bool			MOAIAction_IsDone					();
-	void			MOAIAction_Update					( double step );
-	void			MOAIDrawable_Draw					( int subPrimID );
-	void			MOAIDrawable_DrawDebug				( int subPrimID );
-	void			MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
+	bool			MOAIAction_IsDone			();
+	void			MOAIAction_Update			( double step );
+	void			MOAIDrawable_Draw			( int subPrimID );
+	void			MOAIDrawable_DrawDebug		( int subPrimID );
 
 public:
 	

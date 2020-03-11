@@ -1061,7 +1061,7 @@ void MOAISim::Update () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAISim::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAISim::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "EVENT_FINALIZE",	( u32 )EVENT_FINALIZE );
@@ -1132,7 +1132,7 @@ void MOAISim::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAI
 }
 
 //----------------------------------------------------------------//
-void MOAISim::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAISim::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 }
 

@@ -340,7 +340,7 @@ void MOAIAudioSamplerCocoa::Stop () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAudioSamplerCocoa::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIAudioSamplerCocoa::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 
 	if ( history.DidVisit ( *this )) return;
 
@@ -356,7 +356,7 @@ void MOAIAudioSamplerCocoa::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory&
 }
 
 //----------------------------------------------------------------//
-void MOAIAudioSamplerCocoa::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIAudioSamplerCocoa::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 
 	if ( history.DidVisit ( *this )) return;
 

@@ -15,7 +15,7 @@ class MOAIFenceVK :
 private:
 
 	//----------------------------------------------------------------//
-	void				Visitor_Finalize 			();
+	void				_Finalize 			();
 
 public:
 

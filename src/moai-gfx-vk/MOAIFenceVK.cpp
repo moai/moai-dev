@@ -42,7 +42,7 @@ void MOAIFenceVK::Wait () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIFenceVK::Visitor_Finalize () {
+void MOAIFenceVK::_Finalize () {
 
 	if ( this->HasDependency < MOAILogicalDeviceVK >()) {
 		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();

@@ -33,9 +33,9 @@ protected:
 	static int				_setProgram					( lua_State* L );
 	
 	//----------------------------------------------------------------//
+	void						_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
+	void						_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
 	const MOAIUniformSchema*	MOAIAbstractUniformBuffer_GetSchema		() const;
-	void						MOAILuaObject_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
-	void						MOAILuaObject_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
 	void						MOAIShader_ComposeUniforms				();
 	bool						MOAIShader_IsReadyForUse				() const;
 	void						MOAIShader_SelectTextures				();

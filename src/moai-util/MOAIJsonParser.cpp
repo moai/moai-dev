@@ -267,7 +267,7 @@ MOAIJsonParser::~MOAIJsonParser () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIJsonParser::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIJsonParser::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	lua_pushlightuserdata ( state, 0 );
@@ -290,7 +290,7 @@ void MOAIJsonParser::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& histor
 }
 
 //----------------------------------------------------------------//
-void MOAIJsonParser::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIJsonParser::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 	UNUSED ( state );
 }

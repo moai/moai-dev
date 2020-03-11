@@ -256,7 +256,7 @@ void MOAIXmlParser::Parse ( MOAILuaState& state, TiXmlNode* node ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIXmlParser::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIXmlParser::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "DONE",				( u32 )ZLXmlReader::DONE );
@@ -275,7 +275,7 @@ void MOAIXmlParser::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history
 }
 
 //----------------------------------------------------------------//
-void MOAIXmlParser::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIXmlParser::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable[] = {

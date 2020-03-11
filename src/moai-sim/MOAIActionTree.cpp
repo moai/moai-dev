@@ -126,6 +126,27 @@ void MOAIActionTree::Update ( double step ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIActionTree::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	UNUSED ( state );
+	if ( history.DidVisit ( *this )) return;
+}
+
+//----------------------------------------------------------------//
+void MOAIActionTree::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "getRoot",				_getRoot },
+		{ "setProfilingEnabled",	_setProfilingEnabled },
+		{ "setRoot",				_setRoot },
+		{ "setThreadInfoEnabled",	_setThreadInfoEnabled },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 void MOAIActionTree::MOAIAction_DidLoseChild ( MOAIAction* child ) {
 	if ( this->mRoot == child ) {
 		this->mRoot = 0;
@@ -146,25 +167,4 @@ bool MOAIActionTree::MOAIAction_IsDone () {
 //----------------------------------------------------------------//
 void MOAIActionTree::MOAIAction_Update ( double step ) {
 	UNUSED ( step );
-}
-
-//----------------------------------------------------------------//
-void MOAIActionTree::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIActionTree::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "getRoot",				_getRoot },
-		{ "setProfilingEnabled",	_setProfilingEnabled },
-		{ "setRoot",				_setRoot },
-		{ "setThreadInfoEnabled",	_setThreadInfoEnabled },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
 }

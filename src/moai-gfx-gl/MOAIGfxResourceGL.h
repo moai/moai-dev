@@ -59,6 +59,8 @@ protected:
 	void				Unbind						();
 	
 	//----------------------------------------------------------------//
+	void				_RegisterLuaClass							( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaFuncs							( RTTIVisitorHistory& history, MOAILuaState& state );
 	bool				MOAIGfxResource_IsReadyForUse				() const;
 	void				MOAIGfxResource_ScheduleForGPUDestroy		();
 	bool				MOAIGfxResource_ScheduleForGPUUpdate		();
@@ -67,8 +69,6 @@ protected:
 	virtual void		MOAIGfxResourceGL_OnGPUDeleteOrDiscard		( bool shouldDelete ) = 0; // delete or discard GPU resource handles
 	virtual void		MOAIGfxResourceGL_OnGPUUnbind				() = 0; // unbind GPU-side resource
 	virtual bool		MOAIGfxResourceGL_OnGPUUpdate				() = 0;
-	void				MOAILuaObject_RegisterLuaClass				( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs				( RTTIVisitorHistory& history, MOAILuaState& state );
 	void				ZLGfxListener_OnGfxEvent					( u32 event, void* userdata );
 
 public:

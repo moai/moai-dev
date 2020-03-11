@@ -93,6 +93,25 @@ MOAIDrawDeck::~MOAIDrawDeck () {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIDrawDeck::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+}
+
+//----------------------------------------------------------------//
+void MOAIDrawDeck::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "setBounds",				_setBounds },
+		{ "setBoundsCallback",		_setBoundsCallback },
+		{ "setDrawCallback",		_setDrawCallback },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 ZLBounds MOAIDrawDeck::MOAIDeck_ComputeMaxAABB () {
 
 	return this->mBounds;
@@ -163,23 +182,4 @@ bool MOAIDrawDeck::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 granu
 	UNUSED ( result );
 
 	return false;
-}
-
-//----------------------------------------------------------------//
-void MOAIDrawDeck::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIDrawDeck::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "setBounds",				_setBounds },
-		{ "setBoundsCallback",		_setBoundsCallback },
-		{ "setDrawCallback",		_setDrawCallback },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
 }

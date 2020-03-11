@@ -52,15 +52,15 @@ protected:
 	void					UnbindVertexArrayItems		();
 	
 	//----------------------------------------------------------------//
+	void					_RegisterLuaClass							( RTTIVisitorHistory& history, MOAILuaState& state );
+	void					_RegisterLuaFuncs							( RTTIVisitorHistory& history, MOAILuaState& state );
+	void					_SerializeIn								( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
+	void					_SerializeOut								( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
 	void					MOAIGfxResourceGL_OnGPUBind					(); // select GPU-side resource on device for use
 	bool					MOAIGfxResourceGL_OnGPUCreate				(); // create GPU-side resource
 	void					MOAIGfxResourceGL_OnGPUDeleteOrDiscard		( bool shouldDelete ); // delete or discard GPU resource
 	void					MOAIGfxResourceGL_OnGPUUnbind				(); // unbind GPU-side resource
 	bool					MOAIGfxResourceGL_OnGPUUpdate				();
-	void					MOAILuaObject_RegisterLuaClass				( RTTIVisitorHistory& history, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs				( RTTIVisitorHistory& history, MOAILuaState& state );
-	void					MOAILuaObject_SerializeIn					( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
-	void					MOAILuaObject_SerializeOut					( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
 	MOAIVertexBuffer*		MOAIVertexArray_GetVertexBuffer				( ZLIndex idx );
 	MOAIVertexFormat*		MOAIVertexArray_GetVertexFormat				( ZLIndex idx );
 	void					MOAIVertexArray_SetVertexBuffer				( ZLIndex idx, MOAIVertexBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat );

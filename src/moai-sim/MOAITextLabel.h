@@ -204,6 +204,8 @@ private:
 	virtual void		RefreshStyleGlyphs		();
 
 	//----------------------------------------------------------------//
+	void				_RegisterLuaClass									( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaFuncs									( RTTIVisitorHistory& history, MOAILuaState& state );
 	void				MOAIAbstractBaseTransform_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx );
 	void				MOAIDrawable_Draw									( int subPrimID );
 	void				MOAIDrawable_DrawDebug								( int subPrimID );
@@ -211,8 +213,6 @@ private:
 	bool				MOAIAction_IsDone									();
 	void				MOAIAction_Update									( double step );
 	ZLMatrix4x4			MOAIGraphicsPropBase_GetWorldDrawingMtx				() const;
-	void				MOAILuaObject_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
 	void				MOAINode_Update										();
 
 public:

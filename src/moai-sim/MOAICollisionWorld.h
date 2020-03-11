@@ -39,34 +39,34 @@ protected:
 	MOAILuaStrongRef mCallback;
 
 	//----------------------------------------------------------------//
-	static int			_insertProp				( lua_State* L );
-	static int			_processOverlaps		( lua_State* L );
-	static int			_setCallback			( lua_State* L );
+	static int		_insertProp				( lua_State* L );
+	static int		_processOverlaps		( lua_State* L );
+	static int		_setCallback			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				AffirmOverlap			( MOAICollisionProp& prop0, u32 type0, MOAICollisionProp& prop1, u32 type1, const ZLBounds& bounds );
-	void				ClearOverlap			( MOAICollisionProp& prop0, MOAICollisionProp& prop1 );
-	void				ClearOverlaps			( MOAICollisionProp& prop );
-	void				DoCallback				( u32 eventID, MOAICollisionProp& prop0, MOAICollisionProp& prop1 );
-	void				DoCallback				( u32 eventID, MOAICollisionProp& prop0, MOAICollisionProp& prop1, const ZLBounds& bounds );
-	void				HandleOverlap			( MOAICollisionProp& prop0, u32 type0, MOAICollisionProp& prop1, u32 type1, const ZLBounds& bounds );
-	void				InvalidateOverlaps		( MOAICollisionProp& prop, u32 nextPass );
-	void				MakeActive				( MOAICollisionProp& prop0 );
-	void				MakeInactive			( MOAICollisionProp& prop0 );
-	void				ProcessOverlaps			();
-	void				PruneOverlaps			( MOAICollisionProp& prop );
-	void				Render					();
-	void				RemoveHull				( MOAICollisionProp& prop );
+	void			AffirmOverlap			( MOAICollisionProp& prop0, u32 type0, MOAICollisionProp& prop1, u32 type1, const ZLBounds& bounds );
+	void			ClearOverlap			( MOAICollisionProp& prop0, MOAICollisionProp& prop1 );
+	void			ClearOverlaps			( MOAICollisionProp& prop );
+	void			DoCallback				( u32 eventID, MOAICollisionProp& prop0, MOAICollisionProp& prop1 );
+	void			DoCallback				( u32 eventID, MOAICollisionProp& prop0, MOAICollisionProp& prop1, const ZLBounds& bounds );
+	void			HandleOverlap			( MOAICollisionProp& prop0, u32 type0, MOAICollisionProp& prop1, u32 type1, const ZLBounds& bounds );
+	void			InvalidateOverlaps		( MOAICollisionProp& prop, u32 nextPass );
+	void			MakeActive				( MOAICollisionProp& prop0 );
+	void			MakeInactive			( MOAICollisionProp& prop0 );
+	void			ProcessOverlaps			();
+	void			PruneOverlaps			( MOAICollisionProp& prop );
+	void			Render					();
+	void			RemoveHull				( MOAICollisionProp& prop );
 
 	//----------------------------------------------------------------//
-	bool				MOAIAction_IsDone					();
-	void				MOAIAction_Update					( double step );
-	void				MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				MOAIPartition_DrawDebugFront		();
-	void				MOAIPartition_OnInsertHull			( MOAIPartitionHull& hull );
-	void				MOAIPartition_OnRemoveHull			( MOAIPartitionHull& hull );
-	void				MOAIPartition_OnUpdateHull			( MOAIPartitionHull& hull );
+	void			_RegisterLuaClass					( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaFuncs					( RTTIVisitorHistory& history, MOAILuaState& state );
+	bool			MOAIAction_IsDone					();
+	void			MOAIAction_Update					( double step );
+	void			MOAIPartition_DrawDebugFront		();
+	void			MOAIPartition_OnInsertHull			( MOAIPartitionHull& hull );
+	void			MOAIPartition_OnRemoveHull			( MOAIPartitionHull& hull );
+	void			MOAIPartition_OnUpdateHull			( MOAIPartitionHull& hull );
 
 public:
 	

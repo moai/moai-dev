@@ -358,7 +358,7 @@ void MOAIPartitionHull::WasRemovedFromPartition () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIPartitionHull::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIPartitionHull::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 	
 	state.SetField ( -1, "ATTR_PARTITION",				AttrID::Pack ( ATTR_PARTITION ).ToRaw ());
@@ -370,7 +370,7 @@ void MOAIPartitionHull::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& his
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionHull::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIPartitionHull::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 	
 	luaL_Reg regTable [] = {

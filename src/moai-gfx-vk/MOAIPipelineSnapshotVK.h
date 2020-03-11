@@ -23,6 +23,13 @@ protected:
 	VkPipeline		mPipeline;
 
 	//----------------------------------------------------------------//
+	void _Finalize () {
+		
+		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
+		vkDestroyPipeline ( logicalDevice, this->mPipeline, NULL );
+	}
+
+	//----------------------------------------------------------------//
 	void		MOAIAbstractSnapshotVK_OnUnpin		() {}
 
 public:
@@ -123,13 +130,6 @@ public:
 	~MOAIPipelineSnapshotVK () {
 	
 		this->Destruct ();
-	}
-	
-	//----------------------------------------------------------------//
-	void Visitor_Finalize () {
-		
-		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
-		vkDestroyPipeline ( logicalDevice, this->mPipeline, NULL );
 	}
 };
 

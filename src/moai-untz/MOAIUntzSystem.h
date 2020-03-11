@@ -37,18 +37,18 @@ private:
 	static int		_setVolume				( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void			MOAILuaObject_RegisterLuaClass	( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs	( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
 	
 public:
 
 	DECL_LUA_SINGLETON ( MOAIUntzSystem )
 
 	//----------------------------------------------------------------//
-					MOAIUntzSystem		();
-					~MOAIUntzSystem		();
-	void			Resume				();
-	void			Suspend				();
+					MOAIUntzSystem			();
+					~MOAIUntzSystem			();
+	void			Resume					();
+	void			Suspend					();
 };
 
 #endif

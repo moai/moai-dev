@@ -72,10 +72,10 @@ protected:
 	void			RemoveDepLink		( MOAIDepLink& link );
 
 	//----------------------------------------------------------------//
-	void			MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
-	virtual bool	MOAINode_ApplyAttrOp				( ZLAttrID attrID, ZLAttribute& attr, u32 op );
-	virtual void	MOAINode_Update						();
+	void				_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
+	virtual bool		MOAINode_ApplyAttrOp		( ZLAttrID attrID, ZLAttribute& attr, u32 op );
+	virtual void		MOAINode_Update				();
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >

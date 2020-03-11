@@ -48,27 +48,27 @@ protected:
 	ZLLeanArray < u8 >							mUniformBuffer;
 
 	//----------------------------------------------------------------//
-	static int					_declareUniform				( lua_State* L );
-	static int					_load						( lua_State* L );
-	static int					_reserveUniforms			( lua_State* L );
-	static int					_setVertexAttribute			( lua_State* L );
+	static int			_declareUniform				( lua_State* L );
+	static int			_load						( lua_State* L );
+	static int			_reserveUniforms			( lua_State* L );
+	static int			_setVertexAttribute			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void						AffirmUniforms				();
-	void						ApplyUniforms				( ZLLeanArray < u8 >& buffer );
-	void						BindUniforms				();
-	ZLGfxHandle					CompileShader				( ZLGfxEnum::_ type, cc8* source );
-	void						InitUniformBuffer			( ZLLeanArray < u8 >& buffer );
+	void				AffirmUniforms				();
+	void				ApplyUniforms				( ZLLeanArray < u8 >& buffer );
+	void				BindUniforms				();
+	ZLGfxHandle			CompileShader				( ZLGfxEnum::_ type, cc8* source );
+	void				InitUniformBuffer			( ZLLeanArray < u8 >& buffer );
 	
 	//----------------------------------------------------------------//
-	void						MOAIGfxResourceGL_OnGPUBind							();
-	bool						MOAIGfxResourceGL_OnGPUCreate						();
-	void						MOAIGfxResourceGL_OnGPUDeleteOrDiscard				( bool shouldDelete );
-	void						MOAIGfxResourceGL_OnGPUUnbind						();
-	bool						MOAIGfxResourceGL_OnGPUUpdate						();
-	void						MOAILuaObject_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
-	void						MOAILuaObject_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
-	void						ZLGfxListener_OnUniformLocation						( u32 addr, void* userdata );
+	void				_RegisterLuaClass							( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaFuncs							( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				MOAIGfxResourceGL_OnGPUBind					();
+	bool				MOAIGfxResourceGL_OnGPUCreate				();
+	void				MOAIGfxResourceGL_OnGPUDeleteOrDiscard		( bool shouldDelete );
+	void				MOAIGfxResourceGL_OnGPUUnbind				();
+	bool				MOAIGfxResourceGL_OnGPUUpdate				();
+	void				ZLGfxListener_OnUniformLocation				( u32 addr, void* userdata );
 	
 public:
 

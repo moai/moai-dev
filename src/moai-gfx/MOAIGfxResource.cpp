@@ -96,6 +96,24 @@ bool MOAIGfxResource::ScheduleForGPUUpdate () {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIGfxResource::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	UNUSED ( state );
+	if ( history.DidVisit ( *this )) return;
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxResource::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "setReloader",				_setReloader },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxResource::MOAIGfxResource_ClearReloadable () {
 }
 
@@ -116,22 +134,4 @@ void MOAIGfxResource::MOAIGfxResource_ScheduleForGPUDestroy () {
 //----------------------------------------------------------------//
 bool MOAIGfxResource::MOAIGfxResource_ScheduleForGPUUpdate () {
 	return false;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxResource::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxResource::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "setReloader",				_setReloader },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
 }

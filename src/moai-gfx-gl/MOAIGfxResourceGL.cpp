@@ -257,6 +257,39 @@ void MOAIGfxResourceGL::Unbind () {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIGfxResourceGL::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	state.SetField ( -1, "STATE_UNINITIALIZED",					( u32 )MOAIGfxResourceGL::STATE_UNINITIALIZED );
+	state.SetField ( -1, "STATE_READY_FOR_GPU_CREATE",			( u32 )MOAIGfxResourceGL::STATE_READY_FOR_GPU_CREATE );
+	state.SetField ( -1, "STATE_READY_TO_BIND",					( u32 )MOAIGfxResourceGL::STATE_READY_TO_BIND );
+	state.SetField ( -1, "STATE_ERROR",							( u32 )MOAIGfxResourceGL::STATE_ERROR );
+	
+	state.SetField ( -1, "GFX_EVENT_CREATED",					( u32 )MOAIGfxResourceGL::GFX_EVENT_CREATED );
+	
+	state.SetField ( -1, "DRAWING_QUEUE",					( u32 )MOAIGfxMgrGL_DisplayListClerkGL::DRAWING_QUEUE );
+	state.SetField ( -1, "LOADING_QUEUE",					( u32 )MOAIGfxMgrGL_DisplayListClerkGL::LOADING_QUEUE );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxResourceGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "clear",						_destroy }, // TODO: deprecate
+		{ "destroy",					_destroy },
+		{ "getAge",					_getAge },
+		{ "getResourceState",		_getResourceState },
+		{ "release",					_destroy }, // TODO: deprecate
+		{ "purge",					_purge },
+		{ "scheduleFlush",				_scheduleForGPUUpdate },
+		{ "scheduleForGPUUpdate",		_scheduleForGPUUpdate },
+		{ NULL, NULL }
+	};
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 bool MOAIGfxResourceGL::MOAIGfxResource_IsReadyForUse () const {
 
 	return (( this->mState == STATE_READY_TO_BIND ) || ( this->mState == STATE_NEEDS_GPU_UPDATE ));
@@ -275,39 +308,6 @@ void MOAIGfxResourceGL::MOAIGfxResource_ScheduleForGPUDestroy () {
 bool MOAIGfxResourceGL::MOAIGfxResource_ScheduleForGPUUpdate () {
 
 	return this->ScheduleForGPUUpdate ( RENDER_PIPELINE );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxResourceGL::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	state.SetField ( -1, "STATE_UNINITIALIZED",					( u32 )MOAIGfxResourceGL::STATE_UNINITIALIZED );
-	state.SetField ( -1, "STATE_READY_FOR_GPU_CREATE",			( u32 )MOAIGfxResourceGL::STATE_READY_FOR_GPU_CREATE );
-	state.SetField ( -1, "STATE_READY_TO_BIND",					( u32 )MOAIGfxResourceGL::STATE_READY_TO_BIND );
-	state.SetField ( -1, "STATE_ERROR",							( u32 )MOAIGfxResourceGL::STATE_ERROR );
-	
-	state.SetField ( -1, "GFX_EVENT_CREATED",					( u32 )MOAIGfxResourceGL::GFX_EVENT_CREATED );
-	
-	state.SetField ( -1, "DRAWING_QUEUE",					( u32 )MOAIGfxMgrGL_DisplayListClerkGL::DRAWING_QUEUE );
-	state.SetField ( -1, "LOADING_QUEUE",					( u32 )MOAIGfxMgrGL_DisplayListClerkGL::LOADING_QUEUE );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxResourceGL::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "clear",						_destroy }, // TODO: deprecate
-		{ "destroy",					_destroy },
-		{ "getAge",					_getAge },
-		{ "getResourceState",		_getResourceState },
-		{ "release",					_destroy }, // TODO: deprecate
-		{ "purge",					_purge },
-		{ "scheduleFlush",				_scheduleForGPUUpdate },
-		{ "scheduleForGPUUpdate",		_scheduleForGPUUpdate },
-		{ NULL, NULL }
-	};
-	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//

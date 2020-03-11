@@ -115,7 +115,7 @@ void MOAICommandBufferVK::UnpinAll () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAICommandBufferVK::Visitor_Finalize () {
+void MOAICommandBufferVK::_Finalize () {
 
 	this->UnpinAll ();
 

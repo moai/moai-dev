@@ -61,6 +61,24 @@ MOAITableLayer::~MOAITableLayer () {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAITableLayer::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+}
+
+//----------------------------------------------------------------//
+void MOAITableLayer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "getRenderTable",				_getRenderTable },
+		{ "setRenderTable",				_setRenderTable },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 void MOAITableLayer::MOAIDrawable_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
@@ -76,22 +94,4 @@ void MOAITableLayer::MOAIDrawable_Draw ( int subPrimID ) {
 		
 	// restore the frame buffer
 	gfxMgr.SetFrameBuffer ( this->GetFrameBuffer ());
-}
-
-//----------------------------------------------------------------//
-void MOAITableLayer::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAITableLayer::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "getRenderTable",				_getRenderTable },
-		{ "setRenderTable",				_setRenderTable },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
 }

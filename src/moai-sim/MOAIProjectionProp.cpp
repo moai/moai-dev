@@ -55,6 +55,28 @@ MOAIProjectionProp::~MOAIProjectionProp () {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIProjectionProp::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAIProjectionProp >( TOTAL_DEBUG_LINE_STYLES );
+	
+	state.SetField ( -1, "DEBUG_DRAW_WORLD_BOUNDS",		MOAIDebugLinesMgr::Pack < MOAIProjectionProp >( DEBUG_DRAW_WORLD_BOUNDS ));
+	state.SetField ( -1, "ATTR_FRONT",					AttrID::Pack ( ATTR_FRONT ).ToRaw ());
+}
+
+//----------------------------------------------------------------//
+void MOAIProjectionProp::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "init",					_init },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 bool MOAIProjectionProp::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 
 	if ( AttrID::Check ( attrID )) {
@@ -90,28 +112,6 @@ void MOAIProjectionProp::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	
 	draw.Bind ();
 	draw.DrawBoxOutline ( this->GetWorldBounds ().mAABB );
-}
-
-//----------------------------------------------------------------//
-void MOAIProjectionProp::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAIProjectionProp >( TOTAL_DEBUG_LINE_STYLES );
-	
-	state.SetField ( -1, "DEBUG_DRAW_WORLD_BOUNDS",		MOAIDebugLinesMgr::Pack < MOAIProjectionProp >( DEBUG_DRAW_WORLD_BOUNDS ));
-	state.SetField ( -1, "ATTR_FRONT",					AttrID::Pack ( ATTR_FRONT ).ToRaw ());
-}
-
-//----------------------------------------------------------------//
-void MOAIProjectionProp::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "init",					_init },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//

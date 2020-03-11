@@ -24,9 +24,9 @@ protected:
 	static int			_setRenderTable			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				MOAIDrawable_Draw					( int subPrimID );
-	void				MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				MOAIDrawable_Draw		( int subPrimID );
 
 public:
 

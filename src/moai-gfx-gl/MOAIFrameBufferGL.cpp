@@ -243,16 +243,12 @@ void MOAIFrameBufferGL::SetGLFrameBuffer ( MOAIGfxMgrGL& gfxMgr, const ZLGfxHand
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIFrameBufferGL::MOAIFrameBufferGL_AffirmBuffers () {
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBufferGL::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIFrameBufferGL::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIFrameBufferGL::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIFrameBufferGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
@@ -263,6 +259,10 @@ void MOAIFrameBufferGL::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& his
 	};
 
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIFrameBufferGL::MOAIFrameBufferGL_AffirmBuffers () {
 }
 
 //----------------------------------------------------------------//

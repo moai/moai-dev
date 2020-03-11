@@ -60,6 +60,7 @@ protected:
 	static int						_renewResources				( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void								_RegisterLuaClass								( RTTIVisitorHistory& history, MOAILuaState& state );
 	MOAIShader*							MOAIGfxMgr_AffirmShader							( MOAILuaState& state, int idx ) const;
 	MOAITexture*						MOAIGfxMgr_AffirmTexture						( MOAILuaState& state, int idx ) const;
 	MOAIImageTexture*					MOAIGfxMgr_CreateImageTexture					() const;
@@ -78,7 +79,6 @@ protected:
 	MOAIGfxMgrGL_RenderTreeGL&			MOAIGfxMgrGLComponents_GetRenderTreeGL			();
 	MOAIGfxMgrGL_ResourceClerkGL&		MOAIGfxMgrGLComponents_GetResourceClerkGL		();
 	MOAIGfxMgrGL_VertexCacheGL&			MOAIGfxMgrGLComponents_GetVertexCacheGL			();
-	void								MOAILuaObject_RegisterLuaClass					( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 

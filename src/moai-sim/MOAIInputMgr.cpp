@@ -445,7 +445,7 @@ bool MOAIInputMgr::WriteEventHeader ( ZLIndex deviceID, ZLIndex sensorID, u32 ty
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIInputMgr::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIInputMgr::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "INPUT_EVENT",			( u32 )INPUT_EVENT );
@@ -468,7 +468,7 @@ void MOAIInputMgr::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history,
 }
 
 //----------------------------------------------------------------//
-void MOAIInputMgr::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIInputMgr::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
 	if ( history.DidVisit ( *this )) return;
 }

@@ -197,7 +197,7 @@ ZLSize MOAISwapChainVK::Size () const {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAISwapChainVK::Visitor_Finalize () {
+void MOAISwapChainVK::_Finalize () {
 
 	if ( this->HasDependency < MOAILogicalDeviceVK >()) {
 		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();

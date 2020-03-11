@@ -28,13 +28,13 @@ private:
 	ZLVec3D			GetValue			( const MOAIAnimKeySpan& span ) const;
 
 	//----------------------------------------------------------------//
+	void			_RegisterLuaClass					( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaFuncs					( RTTIVisitorHistory& history, MOAILuaState& state );
 	void			MOAIAnimCurve_ApplyValueAttrOp		( ZLAttribute& attr, u32 op );
 	void			MOAIAnimCurve_GetDelta				( ZLAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const;
 	void			MOAIAnimCurve_GetValue				( ZLAttribute& attr, const MOAIAnimKeySpan& span ) const;
 	void			MOAIAnimCurve_GetZero				( ZLAttribute& attr ) const;
 	void			MOAIAnimCurve_ReserveSamples		( u32 total );
-	void			MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
 	void			MOAINode_Update						();
 
 public:

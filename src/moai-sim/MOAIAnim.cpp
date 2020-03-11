@@ -223,22 +223,12 @@ void MOAIAnim::SetLink ( ZLIndex linkID, MOAIAnimCurve* curve, MOAINode* target,
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAnim::MOAIAction_Update ( double step ) {
-
-	float t0 = this->GetTime ();
-	this->DoStep (( float )step );
-	float t1 = this->GetTime ();
-	
-	this->Apply ( t0, t1 );
-}
-
-//----------------------------------------------------------------//
-void MOAIAnim::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIAnim::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIAnim::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIAnim::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
@@ -250,4 +240,14 @@ void MOAIAnim::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOA
 	};
 
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIAnim::MOAIAction_Update ( double step ) {
+
+	float t0 = this->GetTime ();
+	this->DoStep (( float )step );
+	float t1 = this->GetTime ();
+	
+	this->Apply ( t0, t1 );
 }

@@ -66,6 +66,26 @@ MOAIHasDeckAndIndex::~MOAIHasDeckAndIndex () {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIHasDeckAndIndex::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	state.SetField ( -1, "ATTR_INDEX", AttrID::Pack ( ATTR_INDEX ).ToRaw ());
+}
+
+//----------------------------------------------------------------//
+void MOAIHasDeckAndIndex::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "getIndex",				_getIndex },
+		{ "setIndex",				_setIndex },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 bool MOAIHasDeckAndIndex::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 
 	if ( AttrID::Check ( attrID )) {
@@ -77,24 +97,4 @@ bool MOAIHasDeckAndIndex::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& a
 		}
 	}
 	return false;
-}
-
-//----------------------------------------------------------------//
-void MOAIHasDeckAndIndex::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	state.SetField ( -1, "ATTR_INDEX", AttrID::Pack ( ATTR_INDEX ).ToRaw ());
-}
-
-//----------------------------------------------------------------//
-void MOAIHasDeckAndIndex::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "getIndex",				_getIndex },
-		{ "setIndex",				_setIndex },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
 }

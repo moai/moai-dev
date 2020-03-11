@@ -44,8 +44,8 @@ private:
 	static void		ExtractSystemFont			( cc8* fontName, ZLStream& stream );
 
 	//----------------------------------------------------------------//
-	void			MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 	

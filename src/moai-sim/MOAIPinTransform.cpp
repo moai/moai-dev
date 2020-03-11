@@ -100,7 +100,7 @@ MOAIPinTransform::~MOAIPinTransform () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIPinTransform::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIPinTransform::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "ATTR_FRONT", 					AttrID::Pack ( ATTR_FRONT ).ToRaw ());
@@ -108,7 +108,7 @@ void MOAIPinTransform::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& hist
 }
 
 //----------------------------------------------------------------//
-void MOAIPinTransform::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIPinTransform::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {

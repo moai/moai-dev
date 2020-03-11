@@ -23,8 +23,8 @@ protected:
 	static int					_setComposer				( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void						MOAILuaObject_RegisterLuaClass					( RTTIVisitorHistory& history, MOAILuaState& state );
-	void						MOAILuaObject_RegisterLuaFuncs					( RTTIVisitorHistory& history, MOAILuaState& state );
+	void						_RegisterLuaClass								( RTTIVisitorHistory& history, MOAILuaState& state );
+	void						_RegisterLuaFuncs								( RTTIVisitorHistory& history, MOAILuaState& state );
 	MOAIUniformComposer&		MOAIUniformComposerInterface_AffirmComposer		();
 	MOAIUniformComposer*		MOAIUniformComposerInterface_GetComposer		();
 

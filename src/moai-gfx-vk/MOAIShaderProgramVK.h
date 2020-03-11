@@ -47,7 +47,7 @@ protected:
 	VkShaderStageFlagBits		GetShaderStageBit			( ModuleID moduleID );
 	
 	//----------------------------------------------------------------//
-	void 						Visitor_Finalize 					();
+	void 						_Finalize 					();
 	
 public:
 

@@ -119,13 +119,13 @@ protected:
 	static int			_setTotalElements			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	ZLBounds			MOAIDeck_ComputeMaxAABB				();
-	void				MOAIDeck_Draw						( ZLIndex idx );
-	ZLBounds			MOAIDeck_GetBounds					( ZLIndex idx );
-	void				MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				MOAILuaObject_SerializeIn			( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
-	void				MOAILuaObject_SerializeOut			( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
+	void				_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_SerializeIn				( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
+	void				_SerializeOut				( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
+	ZLBounds			MOAIDeck_ComputeMaxAABB		();
+	void				MOAIDeck_Draw				( ZLIndex idx );
+	ZLBounds			MOAIDeck_GetBounds			( ZLIndex idx );
 
 public:
 

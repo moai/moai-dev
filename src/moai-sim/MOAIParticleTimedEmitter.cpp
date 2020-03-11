@@ -67,6 +67,23 @@ void MOAIParticleTimedEmitter::SetFrequencyRange ( float min, float max ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIParticleTimedEmitter::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleTimedEmitter::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "setFrequency",		_setFrequency },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 void MOAIParticleTimedEmitter::MOAIAction_Update ( double step ) {
 
 	this->mTime += ( float )step;
@@ -77,21 +94,4 @@ void MOAIParticleTimedEmitter::MOAIAction_Update ( double step ) {
 	this->Surge ( emission );
 	
 	this->mEmitTime = this->mTime + this->GetRandomFrequency ();
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleTimedEmitter::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleTimedEmitter::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "setFrequency",		_setFrequency },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
 }

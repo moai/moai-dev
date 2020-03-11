@@ -7,7 +7,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIKeyCode::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIKeyCode::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "BACKSPACE",		( u32 )MOAI_KEY_BACKSPACE );

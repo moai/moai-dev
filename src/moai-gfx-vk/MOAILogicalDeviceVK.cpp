@@ -181,7 +181,7 @@ MOAILogicalDeviceVK::~MOAILogicalDeviceVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAILogicalDeviceVK::Visitor_Finalize () {
+void MOAILogicalDeviceVK::_Finalize () {
 
 	vkDestroyDevice ( this->mDevice, NULL );
 }

@@ -42,12 +42,12 @@ protected:
 	static int		_worldToWnd				( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void					_RegisterLuaClass					( RTTIVisitorHistory& history, MOAILuaState& state );
+	void					_RegisterLuaFuncs					( RTTIVisitorHistory& history, MOAILuaState& state );
 	ZLBounds				MOAIAbstractProp_GetModelBounds		();
 	virtual void			MOAIAbstractViewLayer_Draw			() = 0;
 	void					MOAIDrawable_Draw					( int subPrimID );
 	void					MOAIDrawable_DrawDebug				( int subPrimID );
-	void					MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void					MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 

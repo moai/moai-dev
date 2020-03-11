@@ -154,7 +154,7 @@ void MOAIDescriptorSetLayoutVK::SetBinding ( ZLIndex index, VkDescriptorType des
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetLayoutVK::Visitor_Finalize () {
+void MOAIDescriptorSetLayoutVK::_Finalize () {
 
 	if ( this->HasDependency < MOAILogicalDeviceVK >()) {
 		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();

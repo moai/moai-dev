@@ -84,11 +84,11 @@ private:
 	void			UpdateTarget			();
 
 	//----------------------------------------------------------------//
-	bool			MOAIAction_IsDone					();
-	void			MOAIAction_Update					( double step );
-	void			MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAINode_Update						();
+	void			_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
+	bool			MOAIAction_IsDone		();
+	void			MOAIAction_Update		( double step );
+	void			MOAINode_Update			();
 
 public:
 

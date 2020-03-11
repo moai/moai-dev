@@ -328,7 +328,7 @@ MOAIAbstractBaseTransform::~MOAIAbstractBaseTransform () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAbstractBaseTransform::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIAbstractBaseTransform::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "ATTR_WORLD_X_LOC",	AttrID::Pack ( ATTR_WORLD_X_LOC ).ToRaw ());
@@ -342,7 +342,7 @@ void MOAIAbstractBaseTransform::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHist
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractBaseTransform::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIAbstractBaseTransform::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {

@@ -24,29 +24,29 @@ private:
 	MOAILuaSharedPtr < MOAIStream >	mStream;
 
 	//----------------------------------------------------------------//
-	static int	_getElementAttribute		( lua_State* L );
-	static int	_getElementAttributes		( lua_State* L );
-	static int	_getElementName				( lua_State* L );
-	static int	_getElementText				( lua_State* L );
-	static int	_getErrorString				( lua_State* L );
-	static int	_getLineNumber				( lua_State* L );
-	static int	_parseFile					( lua_State* L );
-	static int	_parseString				( lua_State* L );
-	static int	_setStream					( lua_State* L );
-	static int	_step						( lua_State* L );
+	static int		_getElementAttribute		( lua_State* L );
+	static int		_getElementAttributes		( lua_State* L );
+	static int		_getElementName				( lua_State* L );
+	static int		_getElementText				( lua_State* L );
+	static int		_getErrorString				( lua_State* L );
+	static int		_getLineNumber				( lua_State* L );
+	static int		_parseFile					( lua_State* L );
+	static int		_parseString				( lua_State* L );
+	static int		_setStream					( lua_State* L );
+	static int		_step						( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAIXmlParser )
 	
 	//----------------------------------------------------------------//
-					MOAIXmlParser			();
-					~MOAIXmlParser			();
-	static void		Parse					( MOAILuaState& state, TiXmlNode* node );
+					MOAIXmlParser				();
+					~MOAIXmlParser				();
+	static void		Parse						( MOAILuaState& state, TiXmlNode* node );
 };
 
 #endif

@@ -80,20 +80,14 @@ MOAIMatrix::~MOAIMatrix () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIMatrix::MOAIAbstractBaseTransform_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
-
-	localToWorldMtx = *this;
-}
-
-//----------------------------------------------------------------//
-void MOAIMatrix::MOAILuaObject_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIMatrix::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "ATTR_MATRIX",	AttrID::Pack ( ATTR_MATRIX ).ToRaw ());
 }
 
 //----------------------------------------------------------------//
-void MOAIMatrix::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIMatrix::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
@@ -104,6 +98,12 @@ void MOAIMatrix::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& history, M
 	};
 	
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIMatrix::MOAIAbstractBaseTransform_BuildLocalToWorldMtx ( ZLAffine3D& localToWorldMtx ) {
+
+	localToWorldMtx = *this;
 }
 
 //----------------------------------------------------------------//

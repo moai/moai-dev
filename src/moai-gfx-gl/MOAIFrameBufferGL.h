@@ -40,13 +40,13 @@ protected:
 	static int			_isPendingGrab				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				AffirmBuffers					();
+	void				AffirmBuffers				();
 	
 	//----------------------------------------------------------------//
-	virtual void		MOAIFrameBufferGL_AffirmBuffers			();
-	void				MOAILuaObject_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				MOAILuaObject_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				ZLGfxListener_OnReadPixels				( const ZLCopyOnWrite& buffer, void* userdata );
+	void				_RegisterLuaClass					( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaFuncs					( RTTIVisitorHistory& history, MOAILuaState& state );
+	virtual void		MOAIFrameBufferGL_AffirmBuffers		();
+	void				ZLGfxListener_OnReadPixels			( const ZLCopyOnWrite& buffer, void* userdata );
 
 public:
 	

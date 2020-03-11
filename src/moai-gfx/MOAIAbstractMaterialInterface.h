@@ -45,8 +45,8 @@ protected:
 	virtual MOAIAbstractMaterial*		MOAIAbstractMaterialInterface_GetMaterial		() = 0;
 	
 	//----------------------------------------------------------------//
-	void						MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void						MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void						_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void						_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
 	
 public:
 

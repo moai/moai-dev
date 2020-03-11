@@ -35,15 +35,15 @@ private:
 	ZLLeanArray < MOAIAnimLink > mLinks;
 
 	//----------------------------------------------------------------//
-	static int		_apply				( lua_State* L );
-	static int		_getLength			( lua_State* L );
-	static int		_reserveLinks		( lua_State* L );
-	static int		_setLink			( lua_State* L );
+	static int		_apply					( lua_State* L );
+	static int		_getLength				( lua_State* L );
+	static int		_reserveLinks			( lua_State* L );
+	static int		_setLink				( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void			MOAIAction_Update					( double step );
-	void			MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			MOAIAction_Update		( double step );
 	
 public:
 	
@@ -52,14 +52,14 @@ public:
 	GET ( float, Length, mLength )
 	
 	//----------------------------------------------------------------//
-	void			Apply				( float t );
-	void			Apply				( float t0, float t1 );
-	void			Clear				();
-	void			ClearLinks			();
-					MOAIAnim			();
-					~MOAIAnim			();
-	void			ReserveLinks		( u32 totalLinks );
-	void			SetLink				( ZLIndex linkID, MOAIAnimCurve* curve, MOAINode* target, ZLAttrID attrID, bool relative );
+	void			Apply					( float t );
+	void			Apply					( float t0, float t1 );
+	void			Clear					();
+	void			ClearLinks				();
+					MOAIAnim				();
+					~MOAIAnim				();
+	void			ReserveLinks			( u32 totalLinks );
+	void			SetLink					( ZLIndex linkID, MOAIAnimCurve* curve, MOAINode* target, ZLAttrID attrID, bool relative );
 };
 
 #endif
