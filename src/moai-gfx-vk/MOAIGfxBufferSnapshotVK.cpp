@@ -115,12 +115,7 @@ MOAIGfxBufferSnapshotVK::MOAIGfxBufferSnapshotVK () :
 //----------------------------------------------------------------//
 MOAIGfxBufferSnapshotVK::~MOAIGfxBufferSnapshotVK () {
 
-	if ( this->HasDependency < MOAILogicalDeviceVK >()) {
-		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
-
-		vkDestroyBuffer ( logicalDevice, this->mBuffer, NULL );
-		vkFreeMemory ( logicalDevice, this->mMemory, NULL );
-	}
+	this->Destruct ();
 }
 
 //================================================================//
@@ -128,3 +123,12 @@ MOAIGfxBufferSnapshotVK::~MOAIGfxBufferSnapshotVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIGfxBufferSnapshotVK::Visitor_Finalize () {
+
+	if ( this->HasDependency < MOAILogicalDeviceVK >()) {
+		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
+
+		vkDestroyBuffer ( logicalDevice, this->mBuffer, NULL );
+		vkFreeMemory ( logicalDevice, this->mMemory, NULL );
+	}
+}

@@ -371,6 +371,8 @@ MOAIPhysicalDeviceVK::MOAIPhysicalDeviceVK () :
 //----------------------------------------------------------------//
 MOAIPhysicalDeviceVK::~MOAIPhysicalDeviceVK () {
 
+	this->Destruct ();
+
 	//	if ( this->mSwapChain != VK_NULL_HANDLE ) {
 	//		for ( ZLIndex i = 0; i < this->mImages.Size (); ++i ) {
 	//			vkDestroyImageView ( logicalDevice, this->mBuffers [ i ].view, NULL );

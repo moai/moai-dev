@@ -21,8 +21,8 @@
 // MOAISwapChainVK
 //================================================================//
 class MOAISwapChainVK :
-	public ZLAbstractFinalizable,
-	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK > {
+	public ZLFinalizable,
+	public ZLFinalizable_DependsOn < MOAILogicalDeviceVK > {
 private:
 
 	VkSwapchainKHR					mSwapChain;
@@ -42,10 +42,13 @@ private:
 	void			InitializeDepthStencil		();
 	void			InitializeFramebuffers		();
 	void			InitializeImages			();
+	
+	//----------------------------------------------------------------//
+	void 			Visitor_Finalize			();
 
 public:
 
-	IMPLEMENT_FINALIZABLE ( MOAISwapChainVK )
+	IMPLEMENT_DEPENDS_ON ( MOAISwapChainVK )
 
 	GET_CONST ( VkFormat, Format, this->mSurfaceFormat.format )
 	GET_CONST ( VkColorSpaceKHR, ColorSpace, this->mSurfaceFormat.colorSpace )

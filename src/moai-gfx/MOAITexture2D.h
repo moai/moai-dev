@@ -16,6 +16,7 @@ class MOAITexture2D :
 protected:
 
 	MOAI_LUA_OBJECT_VISITOR_FRIEND
+	ZL_FINALIZATION_VISITOR_FRIEND
 
 	// for loading from file
 	STLString			mFilename;
@@ -44,6 +45,7 @@ protected:
 	void				MOAILuaObject_RegisterLuaFuncs				( RTTIVisitorHistory& history, MOAILuaState& state );
 	void				MOAILuaObject_SerializeIn					( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
 	void				MOAILuaObject_SerializeOut					( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
+	void				Visitor_Finalize							();
 	
 public:
 

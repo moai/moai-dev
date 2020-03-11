@@ -159,17 +159,7 @@ MOAISwapChainVK::MOAISwapChainVK () :
 //----------------------------------------------------------------//
 MOAISwapChainVK::~MOAISwapChainVK () {
 
-	if ( this->HasDependency < MOAILogicalDeviceVK >()) {
-		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
-
-		if ( this->mSwapChain != VK_NULL_HANDLE ) {
-			for ( ZLIndex i = 0; i < this->mImages.Size (); ++i ) {
-				vkDestroyImageView ( logicalDevice, this->mViews [ i ], NULL );
-			}
-			logicalDevice.DestroySwapchainKHR ( this->mSwapChain, NULL );
-			this->mSwapChain = VK_NULL_HANDLE;
-		}
-	}
+	this->Destruct ();
 }
 
 //----------------------------------------------------------------//
@@ -207,3 +197,17 @@ ZLSize MOAISwapChainVK::Size () const {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAISwapChainVK::Visitor_Finalize () {
+
+	if ( this->HasDependency < MOAILogicalDeviceVK >()) {
+		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
+
+		if ( this->mSwapChain != VK_NULL_HANDLE ) {
+			for ( ZLIndex i = 0; i < this->mImages.Size (); ++i ) {
+				vkDestroyImageView ( logicalDevice, this->mViews [ i ], NULL );
+			}
+			logicalDevice.DestroySwapchainKHR ( this->mSwapChain, NULL );
+			this->mSwapChain = VK_NULL_HANDLE;
+		}
+	}
+}

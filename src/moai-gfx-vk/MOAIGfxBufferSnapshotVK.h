@@ -16,8 +16,8 @@ class MOAIVertexFormatVK;
 // TODO: doxygen
 class MOAIGfxBufferSnapshotVK :
 	public MOAIAbstractSnapshotVK,
-	public ZLAbstractFinalizable,
-	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK > {
+	public ZLFinalizable,
+	public ZLFinalizable_DependsOn < MOAILogicalDeviceVK > {
 protected:
 
 	VkBuffer				mBuffer;
@@ -30,10 +30,11 @@ protected:
 
 	//----------------------------------------------------------------//
 	void		MOAIAbstractSnapshotVK_OnUnpin		() {}
+	void 		Visitor_Finalize 					();
 
 public:
 	
-	IMPLEMENT_FINALIZABLE ( MOAIGfxBufferSnapshotVK )
+	IMPLEMENT_DEPENDS_ON ( MOAIGfxBufferSnapshotVK )
 	
 	static const VkMemoryPropertyFlags HOST_BUFFER_PROPS = VK_MEMORY_PROPERTY_HOST_VISIBLE_BIT | VK_MEMORY_PROPERTY_HOST_COHERENT_BIT;
 	static const VkMemoryPropertyFlags DEVICE_BUFFER_PROPS = VK_MEMORY_PROPERTY_DEVICE_LOCAL_BIT;

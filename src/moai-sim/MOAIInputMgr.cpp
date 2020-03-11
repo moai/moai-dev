@@ -214,7 +214,7 @@ MOAIInputMgr::MOAIInputMgr () :
 	mLastUpdate ( 0 ),
 	mPlayback ( false ) {
 	
-	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIInputMgr, MOAIAction )
+	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAIInputMgr, MOAILuaObject )
 	
 	this->SetChunkSize ( CHUNK_SIZE );
 }

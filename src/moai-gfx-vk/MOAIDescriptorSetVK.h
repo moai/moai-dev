@@ -14,8 +14,8 @@ class MOAIDescriptorSetSnapshotVK;
 //================================================================//
 class MOAIDescriptorSetVK :
 	public virtual ZLRefCountedObject,
-	public ZLAbstractFinalizable,
-	public ZLAbstractFinalizable_HasDependencyOn < MOAIDescriptorSetLayoutVK >,
+	public ZLFinalizable,
+	public ZLFinalizable_DependsOn < MOAIDescriptorSetLayoutVK >,
 	public MOAIAbstractSnapshotFactoryVK < MOAIDescriptorSetSnapshotVK >,
 	public ZLLeanArray < VkWriteDescriptorSet > {
 protected:
@@ -30,7 +30,7 @@ protected:
 	
 public:
 	
-	IMPLEMENT_FINALIZABLE ( MOAIDescriptorSetVK )
+	IMPLEMENT_DEPENDS_ON ( MOAIDescriptorSetVK )
 	
 	//----------------------------------------------------------------//
 	void			Initialize						( MOAIDescriptorSetLayoutVK& descriptorSetLayout );

@@ -23,7 +23,7 @@ class MOAITextureVK;
 			uniform values.
 */
 class MOAIShaderProgramVK :
-	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK >,
+	public ZLFinalizable_DependsOn < MOAILogicalDeviceVK >,
 	public virtual MOAIGfxResourceVK {
 public:
 
@@ -49,6 +49,7 @@ protected:
 	//----------------------------------------------------------------//
 	void						MOAILuaObject_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
 	void						MOAILuaObject_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void 						Visitor_Finalize 					();
 	
 public:
 

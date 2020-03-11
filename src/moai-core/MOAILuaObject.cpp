@@ -12,28 +12,6 @@
 #define MOAI_TAG "moai"
 
 //================================================================//
-// MOAILuaObjectMemo
-//================================================================//
-// Memo for Finalizable transmigration. I really hate this, but can't
-// think of a better way and don't want to give up the convenience
-// of finalizables. So here we are.
-class MOAILuaObjectMemo {
-public:
-
-	MOAILuaObject*			mObject;
-	u32						mActiveUserdataCount;
-	MOAILuaWeakRef			mUserdata;
-	MOAILuaStrongRef		mFinalizer;
-	
-	//----------------------------------------------------------------//
-	~MOAILuaObjectMemo () {
-		if ( this->mUserdata ) {
-			MOAILuaObject::Unbind ( this->mObject, this->mUserdata );
-		}
-	}
-};
-
-//================================================================//
 // lua
 //================================================================//
 
@@ -413,41 +391,16 @@ MOAILuaObject::MOAILuaObject () :
 	mActiveUserdataCount ( 0 ) {
 	
 	MOAI_LUA_OBJECT_RTTI_SINGLE ( MOAILuaObject, RTTIBase )
-	
-	ZLTransmigrationCache& transmigrationCache = ZLTransmigrationCache::Get ();
-	if ( transmigrationCache.IsActive ()) {
-	
-		const MOAILuaObjectMemo& memo = transmigrationCache.GetMemo < MOAILuaObjectMemo >( this );
-		
-		assert ( memo.mObject == this );
-		
-		this->mActiveUserdataCount	= memo.mActiveUserdataCount;
-		this->mUserdata				= memo.mUserdata;
-		this->mFinalizer			= memo.mFinalizer;
-	}
-	else {
-		if ( MOAILuaRuntime::IsValid ()) {
-			MOAILuaRuntime::Get ().RegisterObject ( *this );
-		}
+
+	if ( MOAILuaRuntime::IsValid ()) {
+		MOAILuaRuntime::Get ().RegisterObject ( *this );
 	}
 }
 
 //----------------------------------------------------------------//
 MOAILuaObject::~MOAILuaObject () {
 
-	ZLTransmigrationCache& transmigrationCache = ZLTransmigrationCache::Get ();
-	if ( transmigrationCache.IsActive ()) {
-	
-		MOAILuaObjectMemo& memo = transmigrationCache.AffirmMemo < MOAILuaObjectMemo >( this );
-		
-		memo.mObject				= this;
-		memo.mActiveUserdataCount	= this->mActiveUserdataCount;
-		memo.mUserdata				= this->mUserdata;
-		memo.mFinalizer				= this->mFinalizer;
-	}
-	else {
-		MOAILuaObject::Unbind ( this, this->mUserdata );
-	}
+	MOAILuaObject::Unbind ( this, this->mUserdata );
 }
 
 //----------------------------------------------------------------//
@@ -564,10 +517,10 @@ bool MOAILuaObject::PushRefTable ( MOAILuaState& state ) {
 void MOAILuaObject::RegisterLuaClass ( MOAILuaState& state ) {
 	
 	RTTIVisitorHistory history;
-	RTTIVisitor < MOAIAbstractLuaObjectVisitor > visitor = this->GetVisitor < MOAIAbstractLuaObjectVisitor >();
-	for ( ; visitor; ++visitor ) {
-		( *visitor ).RegisterLuaClass ( *this, history, state );
-		assert ( history.CountVisits () == ( visitor.GetCount () + 1 ));
+	RTTIVisitorIterator < MOAIAbstractLuaObjectVisitor > visitorIt = this->GetVisitors < MOAIAbstractLuaObjectVisitor >();
+	for ( ; visitorIt; ++visitorIt ) {
+		( *visitorIt ).RegisterLuaClass ( *this, history, state );
+		assert ( history.CountVisits () == ( visitorIt.GetCount () + 1 ));
 	}
 }
 
@@ -575,10 +528,10 @@ void MOAILuaObject::RegisterLuaClass ( MOAILuaState& state ) {
 void MOAILuaObject::RegisterLuaFuncs ( MOAILuaState& state ) {
 	
 	RTTIVisitorHistory history;
-	RTTIVisitor < MOAIAbstractLuaObjectVisitor > visitor = this->GetVisitor < MOAIAbstractLuaObjectVisitor >();
-	for ( ; visitor; ++visitor ) {
-		( *visitor ).RegisterLuaFuncs ( *this, history, state );
-		assert ( history.CountVisits () == ( visitor.GetCount () + 1 ));
+	RTTIVisitorIterator < MOAIAbstractLuaObjectVisitor > visitorIt = this->GetVisitors < MOAIAbstractLuaObjectVisitor >();
+	for ( ; visitorIt; ++visitorIt ) {
+		( *visitorIt ).RegisterLuaFuncs ( *this, history, state );
+		assert ( history.CountVisits () == ( visitorIt.GetCount () + 1 ));
 	}
 }
 
@@ -586,10 +539,10 @@ void MOAILuaObject::RegisterLuaFuncs ( MOAILuaState& state ) {
 void MOAILuaObject::SerializeIn ( MOAILuaState& state, MOAIDeserializer& serializer ) {
 
 	RTTIVisitorHistory history;
-	RTTIVisitor < MOAIAbstractLuaObjectVisitor > visitor = this->GetVisitor < MOAIAbstractLuaObjectVisitor >();
-	for ( ; visitor; ++visitor ) {
-		( *visitor ).SerializeIn ( *this, history, state, serializer );
-		assert ( history.CountVisits () == ( visitor.GetCount () + 1 ));
+	RTTIVisitorIterator < MOAIAbstractLuaObjectVisitor > visitorIt = this->GetVisitors < MOAIAbstractLuaObjectVisitor >();
+	for ( ; visitorIt; ++visitorIt ) {
+		( *visitorIt ).SerializeIn ( *this, history, state, serializer );
+		assert ( history.CountVisits () == ( visitorIt.GetCount () + 1 ));
 	}
 }
 
@@ -597,10 +550,10 @@ void MOAILuaObject::SerializeIn ( MOAILuaState& state, MOAIDeserializer& seriali
 void MOAILuaObject::SerializeOut ( MOAILuaState& state, MOAISerializer& serializer ) {
 
 	RTTIVisitorHistory history;
-	RTTIVisitor < MOAIAbstractLuaObjectVisitor > visitor = this->GetVisitor < MOAIAbstractLuaObjectVisitor >();
-	for ( ; visitor; ++visitor ) {
-		( *visitor ).SerializeOut ( *this, history, state, serializer );
-		assert ( history.CountVisits () == ( visitor.GetCount () + 1 ));
+	RTTIVisitorIterator < MOAIAbstractLuaObjectVisitor > visitorIt = this->GetVisitors < MOAIAbstractLuaObjectVisitor >();
+	for ( ; visitorIt; ++visitorIt ) {
+		( *visitorIt ).SerializeOut ( *this, history, state, serializer );
+		assert ( history.CountVisits () == ( visitorIt.GetCount () + 1 ));
 	}
 }
 

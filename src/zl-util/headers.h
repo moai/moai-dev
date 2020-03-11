@@ -15,8 +15,6 @@
 #include <zl-util/STLString.h>
 
 #include <zl-util/ZLAbstractFinalizable.h>
-#include <zl-util/ZLAbstractFinalizable_HasInternal.h>
-#include <zl-util/ZLAbstractFinalizable_Internal.h>
 #include <zl-util/ZLAccessors.h>
 #include <zl-util/ZLAdapterInfo.h>
 #include <zl-util/ZLAffine2D.h>
@@ -50,6 +48,8 @@
 #include <zl-util/ZLFactory.h>
 #include <zl-util/ZLFileStream.h>
 #include <zl-util/ZLFileSys.h>
+#include <zl-util/ZLFinalizable.h>
+#include <zl-util/ZLFinalizationVisitor.h>
 #include <zl-util/ZLFloat.h>
 #include <zl-util/ZLFrustum.h>
 #include <zl-util/ZLFrustumFitter.h>
@@ -107,7 +107,6 @@
 #include <zl-util/ZLSurface2D.h>
 #include <zl-util/ZLSyntaxNode.h>
 #include <zl-util/ZLSyntaxScanner.h>
-#include <zl-util/ZLTransmigrationCache.h>
 #include <zl-util/ZLTrig.h>
 #include <zl-util/ZLType.h>
 #include <zl-util/ZLTypedPtr.h>

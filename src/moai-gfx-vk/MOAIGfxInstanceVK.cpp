@@ -108,4 +108,6 @@ MOAIGfxInstanceVK::MOAIGfxInstanceVK () :
 
 //----------------------------------------------------------------//
 MOAIGfxInstanceVK::~MOAIGfxInstanceVK () {
+
+	this->Destruct ();
 }

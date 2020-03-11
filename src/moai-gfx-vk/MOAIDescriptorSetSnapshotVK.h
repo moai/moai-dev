@@ -14,8 +14,8 @@ class MOAIDescriptorSetVK;
 //================================================================//
 class MOAIDescriptorSetSnapshotVK :
 	public MOAIAbstractSnapshotVK,
-	public ZLAbstractFinalizable,
-	public ZLAbstractFinalizable_HasDependencyOn < MOAIDescriptorSetLayoutVK > {
+	public ZLFinalizable,
+	public ZLFinalizable_DependsOn < MOAIDescriptorSetLayoutVK > {
 private:
 
 	friend class MOAIDescriptorSetLayoutVK;
@@ -30,7 +30,7 @@ private:
 
 public:
 
-	IMPLEMENT_FINALIZABLE ( MOAIDescriptorSetSnapshotVK )
+	IMPLEMENT_DEPENDS_ON ( MOAIDescriptorSetSnapshotVK )
 
 	//----------------------------------------------------------------//
 	operator bool () const {

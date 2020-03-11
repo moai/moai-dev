@@ -111,7 +111,7 @@ private:
 
 public:
 
-	IMPLEMENT_ABSTRACT_FINALIZABLE ( MOAIMaterialMgr );
+	IMPLEMENT_DEPENDS_ON ( MOAIMaterialMgr );
 
 	//----------------------------------------------------------------//
 						MOAIMaterialMgr				();

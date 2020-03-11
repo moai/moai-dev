@@ -70,7 +70,7 @@ protected:
 //================================================================//
 class MOAIGfxComposerVK :
 	public virtual ZLRefCountedObject,
-	public virtual ZLAbstractFinalizable {
+	public virtual ZLFinalizable {
 protected:
 
 	ZLStrongPtr < MOAIPipelineLayoutVK >							mPipelineLayout;
@@ -80,7 +80,7 @@ protected:
 
 public:
 
-	IMPLEMENT_FINALIZABLE ( MOAIGfxComposerVK )
+	IMPLEMENT_DEPENDS_ON ( MOAIGfxComposerVK )
 	
 	//----------------------------------------------------------------//
 	void						ApplyAndBind						( MOAIGfxMgrVK& gfxMgr, MOAICommandBufferVK& commandBuffer, VkPipelineBindPoint pipelineBindPoint );

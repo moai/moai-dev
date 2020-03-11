@@ -8,23 +8,28 @@
 // MOAISemaphoreVK
 //================================================================//
 class MOAISemaphoreVK :
-	public ZLAbstractFinalizable,
-	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK > {
+	public ZLFinalizable,
+	public ZLFinalizable_DependsOn < MOAILogicalDeviceVK > {
+private:
+
+	ZL_FINALIZATION_VISITOR_FRIEND
+
+	//----------------------------------------------------------------//
+	void 				Visitor_Finalize			();
+
 public:
 
-	IMPLEMENT_FINALIZABLE ( MOAISemaphoreVK )
+	IMPLEMENT_DEPENDS_ON ( MOAISemaphoreVK )
 
 	VkSemaphore		mSemaphore;
 
 	//----------------------------------------------------------------//
 	operator bool () const {
-	
 		return ( this->mSemaphore != VK_NULL_HANDLE );
 	}
 	
 	//----------------------------------------------------------------//
 	operator VkSemaphore () {
-	
 		return this->mSemaphore;
 	}
 	

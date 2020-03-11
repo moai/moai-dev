@@ -16,8 +16,8 @@
 //================================================================//
 class MOAIPipelineSnapshotVK :
 	public MOAIAbstractSnapshotVK,
-	public ZLAbstractFinalizable,
-	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK > {
+	public ZLFinalizable,
+	public ZLFinalizable_DependsOn < MOAILogicalDeviceVK > {
 protected:
 
 	VkPipeline		mPipeline;
@@ -27,7 +27,7 @@ protected:
 
 public:
 
-	IMPLEMENT_FINALIZABLE ( MOAIPipelineSnapshotVK )
+	IMPLEMENT_DEPENDS_ON ( MOAIPipelineSnapshotVK )
 
 	//----------------------------------------------------------------//
 	operator bool () const {
@@ -122,8 +122,12 @@ public:
 	//----------------------------------------------------------------//
 	~MOAIPipelineSnapshotVK () {
 	
-		this->FinalizeDependencies ();
-
+		this->Destruct ();
+	}
+	
+	//----------------------------------------------------------------//
+	void Visitor_Finalize () {
+		
 		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
 		vkDestroyPipeline ( logicalDevice, this->mPipeline, NULL );
 	}

@@ -16,8 +16,8 @@ class ZLTextureFormat;
 //================================================================//
 class MOAITextureSnapshot2DVK :
 	public virtual MOAIAbstractSnapshotVK,
-	public ZLAbstractFinalizable,
-	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK > {
+	public ZLFinalizable,
+	public ZLFinalizable_DependsOn < MOAILogicalDeviceVK > {
 protected:
 
 	VkImage					mTextureImage;
@@ -30,10 +30,11 @@ protected:
 
 	//----------------------------------------------------------------//
 	void		MOAIAbstractSnapshotVK_OnUnpin		() {}
+	void 		Visitor_Finalize 					();
 
 public:
 	
-	IMPLEMENT_FINALIZABLE ( MOAITextureSnapshot2DVK )
+	IMPLEMENT_DEPENDS_ON ( MOAITextureSnapshot2DVK )
 	
 	GET ( ZLSize, Size, mTextureSize )
 	

@@ -92,17 +92,7 @@ MOAIShaderProgramVK::MOAIShaderProgramVK () {
 //----------------------------------------------------------------//
 MOAIShaderProgramVK::~MOAIShaderProgramVK () {
 
-	if ( this->HasDependency < MOAILogicalDeviceVK >()) {
-		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
-		
-		for ( size_t i = 0; i < TOTAL_MODULES; ++i ) {
-			ModuleID moduleID = ( ModuleID )i;
-			if ( this->mModules [ moduleID ]) {
-				vkDestroyShaderModule ( logicalDevice, this->mModules [ moduleID ], NULL );
-				this->mModules [ moduleID ] = NULL;
-			}
-		}
-	}
+	this->Destruct ();
 }
 
 //----------------------------------------------------------------//
@@ -168,4 +158,20 @@ void MOAIShaderProgramVK::MOAILuaObject_RegisterLuaFuncs ( RTTIVisitorHistory& h
 //		{ NULL, NULL }
 //	};
 //	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderProgramVK::Visitor_Finalize () {
+
+	if ( this->HasDependency < MOAILogicalDeviceVK >()) {
+		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
+		
+		for ( size_t i = 0; i < TOTAL_MODULES; ++i ) {
+			ModuleID moduleID = ( ModuleID )i;
+			if ( this->mModules [ moduleID ]) {
+				vkDestroyShaderModule ( logicalDevice, this->mModules [ moduleID ], NULL );
+				this->mModules [ moduleID ] = NULL;
+			}
+		}
+	}
 }

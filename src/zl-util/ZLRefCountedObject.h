@@ -40,7 +40,7 @@ class ZLRefCountedObject :
 	public virtual ZLRefCountedObjectBase {
 private:
 
-	friend class ZLAbstractFinalizable_Solo;
+	friend class ZLAbstractFinalizable_VirtualBase;
 
 	ZLRefCountedObjectHandle*		mHandle;					// only exists if referenced by weak pointer
 

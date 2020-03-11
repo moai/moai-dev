@@ -13,8 +13,8 @@ class MOAILogicalDeviceVK;
 // MOAIQueueVK
 //================================================================//
 class MOAIQueueVK :
-	public ZLAbstractFinalizable,
-	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK > {
+	public ZLFinalizable,
+	public ZLFinalizable_DependsOn < MOAILogicalDeviceVK > {
 private:
 
 	friend class MOAICommandBufferVK;
@@ -25,7 +25,7 @@ private:
 	
 public:
 
-	IMPLEMENT_FINALIZABLE ( MOAIQueueVK )
+	IMPLEMENT_DEPENDS_ON ( MOAIQueueVK )
 
 	u32				mIndex;
 	VkCommandPool	mPool;

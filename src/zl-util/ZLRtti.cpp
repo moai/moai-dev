@@ -42,27 +42,21 @@ void* RTTIRecord::AsType ( ZLTypeID typeID, void* ptr ) {
 //----------------------------------------------------------------//
 void RTTIRecord::BuildVisitorArrays () {
 
-	const void* visitors [ MAX ];
-	ZLSize total = 0;
+	// for each super
+	for ( ZLIndex i = 0; i < this->mSupers.size (); ++i ) {
+		const RTTIRecord* superRecord = this->mSupers [ i ].mRecord;
+		
+		// for each visitor in each super
+		STLMap < ZLTypeID, const void* >::const_iterator visitorIt = superRecord->mVisitors.cbegin ();
+		for ( ; visitorIt != superRecord->mVisitors.end (); ++visitorIt ) {
+			this->mVisitorArrays [ visitorIt->first ].push_back ( visitorIt->second );
+		}
+	}
 
+	// for each visitor in self
 	STLMap < ZLTypeID, const void* >::iterator visitorIt = this->mVisitors.begin ();
 	for ( ; visitorIt != this->mVisitors.end (); ++visitorIt ) {
-	
-		ZLTypeID visitorTypeID = visitorIt->first;
-		ZLLeanArray < const void* >& visitorArray = this->mVisitorArrays [ visitorTypeID ];
-		
-		for ( ZLIndex i = 0; i < this->mSupers.size (); ++i ) {
-			const void* visitor = this->mSupers [ i ].mRecord->GetVisitor ( visitorTypeID );
-			if ( visitor ) {
-				visitors [ total++ ] = visitor;
-			}
-		}
-		
-		visitorArray.Init ( total + 1 );
-		for ( ZLIndex i = 0; i < total; ++i ) {
-			visitorArray [ i ] = visitors [ i ];
-		}
-		visitorArray [ total ] = visitorIt->second;
+		this->mVisitorArrays [ visitorIt->first ].push_back ( visitorIt->second );
 	}
 }
 
@@ -119,12 +113,12 @@ const void* RTTIRecord::GetVisitor ( ZLTypeID visitorTypeID ) const {
 }
 
 //----------------------------------------------------------------//
-const ZLLeanArray < const void* >& RTTIRecord::GetVisitors ( ZLTypeID visitorTypeID  ) const {
+const STLArray < const void* >& RTTIRecord::GetVisitors ( ZLTypeID visitorTypeID  ) const {
 
 	assert ( this->mIsComplete );
 
-	static ZLLeanArray < const void* > staticDummy;
-	STLMap < ZLTypeID, ZLLeanArray < const void* > >::const_iterator visitorArrayIt = this->mVisitorArrays.find ( visitorTypeID );
+	static STLArray < const void* > staticDummy;
+	STLMap < ZLTypeID, STLArray < const void* > >::const_iterator visitorArrayIt = this->mVisitorArrays.find ( visitorTypeID );
 	return ( visitorArrayIt != this->mVisitorArrays.end ()) ? visitorArrayIt->second : staticDummy;
 }
 
@@ -172,9 +166,12 @@ bool RTTIBase::IsType ( ZLTypeID typeID ) {
 }
 
 //----------------------------------------------------------------//
-RTTIBase::RTTIBase () {
-	this->BeginRTTI < RTTIBase >( this, "RTTIBase" );
-	this->EndRTTI ();
+RTTIBase::RTTIBase () :
+	mRTTI ( NULL ),
+	mThis ( NULL ) {
+	if ( this->BeginRTTI < RTTIBase >( this, "RTTIBase" )) {
+		this->EndRTTI ();
+	}
 }
 
 //----------------------------------------------------------------//

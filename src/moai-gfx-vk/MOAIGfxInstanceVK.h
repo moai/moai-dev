@@ -11,7 +11,7 @@
 // MOAIGfxInstanceVK
 //================================================================//
 class MOAIGfxInstanceVK :
-	public ZLAbstractFinalizable {
+	public ZLFinalizable {
 private:
 
 	PFN_vkGetPhysicalDeviceSurfaceCapabilitiesKHR	mGetPhysicalDeviceSurfaceCapabilitiesKHR;
@@ -21,7 +21,7 @@ private:
 	
 public:
 
-	IMPLEMENT_FINALIZABLE ( MOAIGfxInstanceVK )
+	IMPLEMENT_DEPENDS_ON ( MOAIGfxInstanceVK )
 
 	VkInstance		mInstance;
 	bool			mEnableValidation;

@@ -26,9 +26,7 @@ MOAISemaphoreVK::MOAISemaphoreVK () :
 //----------------------------------------------------------------//
 MOAISemaphoreVK::~MOAISemaphoreVK () {
 
-	if ( this->HasDependency < MOAILogicalDeviceVK >()) {
-		vkDestroySemaphore ( this->GetDependency < MOAILogicalDeviceVK >(), this->mSemaphore, NULL );
-	}
+	this->Destruct ();
 }
 
 //================================================================//
@@ -36,3 +34,9 @@ MOAISemaphoreVK::~MOAISemaphoreVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAISemaphoreVK::Visitor_Finalize () {
+
+	if ( this->HasDependency < MOAILogicalDeviceVK >()) {
+		vkDestroySemaphore ( this->GetDependency < MOAILogicalDeviceVK >(), this->mSemaphore, NULL );
+	}
+}

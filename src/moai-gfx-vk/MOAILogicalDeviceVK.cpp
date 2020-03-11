@@ -173,8 +173,7 @@ MOAILogicalDeviceVK::MOAILogicalDeviceVK () :
 //----------------------------------------------------------------//
 MOAILogicalDeviceVK::~MOAILogicalDeviceVK () {
 
-	this->FinalizeDependencies ();
-	vkDestroyDevice ( this->mDevice, NULL );
+	this->Destruct ();
 }
 
 //================================================================//
@@ -182,4 +181,7 @@ MOAILogicalDeviceVK::~MOAILogicalDeviceVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAILogicalDeviceVK::Visitor_Finalize () {
 
+	vkDestroyDevice ( this->mDevice, NULL );
+}

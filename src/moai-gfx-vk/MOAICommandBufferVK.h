@@ -15,8 +15,8 @@ class MOAIPipelineSnapshotVK;
 // MOAICommandBufferVK
 //================================================================//
 class MOAICommandBufferVK :
-	public ZLAbstractFinalizable,
-	public ZLAbstractFinalizable_HasDependencyOn < MOAIQueueVK > {
+	public ZLFinalizable,
+	public ZLFinalizable_DependsOn < MOAIQueueVK > {
 private:
 
 	typedef STLMap < const MOAIAbstractSnapshotVK*, ZLWeakPtr < MOAIAbstractSnapshotVK > >		SnapshotMap;
@@ -30,10 +30,13 @@ private:
 
 	//----------------------------------------------------------------//
 	void				Invalidate					();
+	
+	//----------------------------------------------------------------//
+	void				Visitor_Finalize 			();
 
 public:
 
-	IMPLEMENT_FINALIZABLE ( MOAICommandBufferVK )
+	IMPLEMENT_DEPENDS_ON ( MOAICommandBufferVK )
 
 	//----------------------------------------------------------------//
 	operator bool () const {

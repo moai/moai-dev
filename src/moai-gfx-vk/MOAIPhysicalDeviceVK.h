@@ -42,8 +42,8 @@ public:
 // MOAIPhysicalDeviceVK
 //================================================================//
 class MOAIPhysicalDeviceVK :
-	public ZLAbstractFinalizable,
-	public ZLAbstractFinalizable_HasDependencyOn < MOAIGfxInstanceVK > {
+	public ZLFinalizable,
+	public ZLFinalizable_DependsOn < MOAIGfxInstanceVK > {
 private:
 
 	typedef const VkCompositeAlphaFlagBitsKHR* AlphaRank;
@@ -75,7 +75,7 @@ private:
 
 public:
 
-	IMPLEMENT_FINALIZABLE ( MOAIPhysicalDeviceVK )
+	IMPLEMENT_DEPENDS_ON ( MOAIPhysicalDeviceVK )
 
 	VkPhysicalDevice							mDevice;
 	VkPhysicalDeviceProperties					mProperties;

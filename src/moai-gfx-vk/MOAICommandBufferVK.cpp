@@ -60,12 +60,7 @@ MOAICommandBufferVK::MOAICommandBufferVK () :
 //----------------------------------------------------------------//
 MOAICommandBufferVK::~MOAICommandBufferVK () {
 
-	this->UnpinAll ();
-
-	if ( this->HasDependency < MOAIQueueVK >()) {
-		MOAIQueueVK& queue = this->GetDependency < MOAIQueueVK >();
-		vkFreeCommandBuffers ( queue.GetDependency < MOAILogicalDeviceVK >(), queue.mPool, 1, &this->mCommandBuffer );
-	}
+	this->Destruct ();
 }
 
 //----------------------------------------------------------------//
@@ -120,3 +115,12 @@ void MOAICommandBufferVK::UnpinAll () {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAICommandBufferVK::Visitor_Finalize () {
+
+	this->UnpinAll ();
+
+	if ( this->HasDependency < MOAIQueueVK >()) {
+		MOAIQueueVK& queue = this->GetDependency < MOAIQueueVK >();
+		vkFreeCommandBuffers ( queue.GetDependency < MOAILogicalDeviceVK >(), queue.mPool, 1, &this->mCommandBuffer );
+	}
+}

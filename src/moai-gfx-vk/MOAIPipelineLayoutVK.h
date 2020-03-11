@@ -12,8 +12,8 @@
 //================================================================//
 class MOAIPipelineLayoutVK :
 	public virtual ZLRefCountedObject,
-	public ZLAbstractFinalizable,
-	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK > {
+	public ZLFinalizable,
+	public ZLFinalizable_DependsOn < MOAILogicalDeviceVK > {
 protected:
 
 	friend class MOAIGfxComposerVK;
@@ -22,10 +22,11 @@ protected:
 	ZLLeanArray < ZLStrongPtr < MOAIDescriptorSetLayoutVK > >	mDescriptorSetLayouts;
 
 	//----------------------------------------------------------------//
+	void 							Visitor_Finalize				();
 	
 public:
 
-	IMPLEMENT_FINALIZABLE ( MOAIPipelineLayoutVK )
+	IMPLEMENT_DEPENDS_ON ( MOAIPipelineLayoutVK )
 
 	//----------------------------------------------------------------//
 	operator bool () const {

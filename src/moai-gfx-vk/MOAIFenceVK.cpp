@@ -26,10 +26,7 @@ MOAIFenceVK::MOAIFenceVK () :
 //----------------------------------------------------------------//
 MOAIFenceVK::~MOAIFenceVK () {
 
-	if ( this->HasDependency < MOAILogicalDeviceVK >()) {
-		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
-		vkDestroyFence ( logicalDevice, this->mFence, NULL );
-	}
+	this->Destruct ();
 }
 
 //----------------------------------------------------------------//
@@ -45,3 +42,10 @@ void MOAIFenceVK::Wait () {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIFenceVK::Visitor_Finalize () {
+
+	if ( this->HasDependency < MOAILogicalDeviceVK >()) {
+		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
+		vkDestroyFence ( logicalDevice, this->mFence, NULL );
+	}
+}

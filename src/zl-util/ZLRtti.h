@@ -13,7 +13,7 @@ class RTTILinkBase;
 class RTTIRecord;
 
 #define RTTI_BEGIN(name) \
-	this->BeginRTTI ( this, #name );
+	if ( this->BeginRTTI ( this, #name )) {
 
 #define RTTI_EXTEND(super) \
 	this->ExtendRTTI < super >( this );
@@ -22,7 +22,7 @@ class RTTIRecord;
 	this->RegisterVisitor < interface, adapter >();
 
 #define RTTI_END \
-	this->EndRTTI ();
+	this->EndRTTI (); }
 
 #define RTTI_SINGLE(name, super) \
 	RTTI_BEGIN ( name ) \
@@ -107,7 +107,7 @@ private:
 	ZLTypeID				mTypeID;
 
 	STLMap < ZLTypeID, const void* > mVisitors;
-	STLMap < ZLTypeID, ZLLeanArray < const void* > > mVisitorArrays;
+	STLMap < ZLTypeID, STLArray < const void* > > mVisitorArrays;
 
 	//----------------------------------------------------------------//
 	void									AffirmCasts				( void* ptr );
@@ -116,7 +116,7 @@ private:
 	void									Complete				();
 	void									GatherSupers			( RTTIRecord& record, void* ptr, ptrdiff_t offset, ZLSize depth );
 	const void*								GetVisitor				( ZLTypeID visitorTypeID ) const;
-	const ZLLeanArray < const void* >&		GetVisitors				( ZLTypeID visitorTypeID  ) const;
+	const STLArray < const void* >&			GetVisitors				( ZLTypeID visitorTypeID  ) const;
 	bool									IsType					( ZLTypeID typeID, void* ptr );
 
 	//----------------------------------------------------------------//
@@ -159,16 +159,16 @@ public:
 };
 
 //================================================================//
-// RTTIVisitor
+// RTTIVisitorIterator
 //================================================================//
 template < typename ABSTRACT_VISITOR_TYPE >
-class RTTIVisitor {
+class RTTIVisitorIterator {
 private:
 
 	friend class RTTIRecord;
 	friend class RTTIBase;
 
-	const ZLLeanArray < const ABSTRACT_VISITOR_TYPE* >& mVisitors;
+	const STLArray < const void* >& mVisitors;
 	int 		mIndex;
 	int 		mStep;
 	ZLSize 		mCount;
@@ -177,11 +177,11 @@ public:
 
 	//----------------------------------------------------------------//
 	operator bool () const {
-		return (( 0 <= this->mIndex ) && ( this->mIndex < ( int )this->mVisitors.Size ()));
+		return (( 0 <= this->mIndex ) && ( this->mIndex < ( int )this->mVisitors.size ()));
 	}
 	
 	//----------------------------------------------------------------//
-	RTTIVisitor& operator ++ () {
+	RTTIVisitorIterator& operator ++ () {
 		this->mIndex += this->mStep;
 		this->mCount++;
 		return *this;
@@ -189,7 +189,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	const ABSTRACT_VISITOR_TYPE& operator * () const {
-		return *this->mVisitors [ this->mIndex ];
+		return *( const ABSTRACT_VISITOR_TYPE* )this->mVisitors [ this->mIndex ];
 	}
 	
 	//----------------------------------------------------------------//
@@ -198,11 +198,11 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	RTTIVisitor ( const ZLLeanArray < const ABSTRACT_VISITOR_TYPE* >& visitors, bool forward = true ) :
+	RTTIVisitorIterator ( const STLArray < const void* >& visitors, bool forward = true ) :
 		mVisitors ( visitors ),
 		mStep ( forward ? 1 : -1 ),
 		mCount ( 0 ) {
-		this->mIndex = forward ? 0 : ( int )visitors.Size () - 1;
+		this->mIndex = forward ? 0 : ( int )visitors.size () - 1;
 	}
 };
 
@@ -219,10 +219,16 @@ protected:
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	void BeginRTTI ( TYPE* ptr, cc8* name ) {
-		this->mThis = ptr;
+	bool BeginRTTI ( TYPE* ptr, cc8* name ) {
+	
 		this->mRTTI = &RTTIRecord::Get < TYPE >();
-		this->mRTTI->mClassName = name;
+		this->mThis = ptr;
+	
+		if ( this->mRTTI->mClassName.size () == 0 ) {
+			this->mRTTI->mClassName = name;
+			return true;
+		}
+		return false;
 	}
 	
 	//----------------------------------------------------------------//
@@ -248,11 +254,19 @@ public:
 	
 	//----------------------------------------------------------------//
 	template < typename ABSTRACT_VISITOR_TYPE >
-	RTTIVisitor < ABSTRACT_VISITOR_TYPE > GetVisitor () {
+	const ABSTRACT_VISITOR_TYPE* GetVisitor () const {
 	
 		this->mRTTI->AffirmCasts ( this->mThis );
-		return RTTIVisitor < ABSTRACT_VISITOR_TYPE >(
-			( const ZLLeanArray < const ABSTRACT_VISITOR_TYPE* >& )this->mRTTI->GetVisitors ( ZLType::GetID < ABSTRACT_VISITOR_TYPE >())
+		return ( const ABSTRACT_VISITOR_TYPE* )this->mRTTI->GetVisitor ( ZLType::GetID < ABSTRACT_VISITOR_TYPE >());
+	}
+	
+	//----------------------------------------------------------------//
+	template < typename ABSTRACT_VISITOR_TYPE >
+	RTTIVisitorIterator < ABSTRACT_VISITOR_TYPE > GetVisitors () const {
+	
+		this->mRTTI->AffirmCasts ( this->mThis );
+		return RTTIVisitorIterator < ABSTRACT_VISITOR_TYPE >(
+			this->mRTTI->GetVisitors ( ZLType::GetID < ABSTRACT_VISITOR_TYPE >())
 		);
 	}
 	

@@ -14,8 +14,8 @@ class MOAIDescriptorSetSnapshotVK;
 //================================================================//
 class MOAIDescriptorSetLayoutVK :
 	public ZLRefCountedObject,
-	public ZLAbstractFinalizable,
-	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK > {
+	public ZLFinalizable,
+	public ZLFinalizable_DependsOn < MOAILogicalDeviceVK > {
 private:
 
 	friend class MOAIDescriptorSetVK;
@@ -34,9 +34,12 @@ private:
 	STLSet < MOAIDescriptorSetSnapshotVK* >			mSnapshots;
 	STLSet < MOAIDescriptorSetSnapshotVK* >			mUnpinnedSpanshots;
 
+	//----------------------------------------------------------------//
+	void							Visitor_Finalize 					();
+
 public:
 
-	IMPLEMENT_FINALIZABLE ( MOAIDescriptorSetLayoutVK )
+	IMPLEMENT_DEPENDS_ON ( MOAIDescriptorSetLayoutVK )
 
 	GET_CONST ( ZLSize, Size, mLayoutBindings.Size ())
 	GET_CONST ( ZLSize, SignatureSize, mSignatureSize )

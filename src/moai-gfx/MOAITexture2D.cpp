@@ -270,19 +270,14 @@ MOAITexture2D::MOAITexture2D () :
 
 	MOAI_LUA_OBJECT_RTTI_BEGIN ( MOAITexture2D )
 		RTTI_EXTEND ( MOAITexture )
+		this->RegisterFinalizationVisitor < MOAITexture2D >();
 	RTTI_END
 }
 
 //----------------------------------------------------------------//
 MOAITexture2D::~MOAITexture2D () {
 
-	if ( this->mImage ) {
-		delete this->mImage;
-	}
-	
-	if ( this->mTextureData ) {
-		free ( this->mTextureData );
-	}
+	this->Destruct ();
 }
 
 //================================================================//
@@ -359,4 +354,16 @@ void MOAITexture2D::MOAILuaObject_SerializeOut ( RTTIVisitorHistory& history, MO
 	
 	STLString path = ZLFileSys::GetRelativePath ( this->mFilename );
 	state.SetField ( -1, "mPath", path.str ());
+}
+
+//----------------------------------------------------------------//
+void MOAITexture2D::Visitor_Finalize () {
+
+	if ( this->mImage ) {
+		delete this->mImage;
+	}
+	
+	if ( this->mTextureData ) {
+		free ( this->mTextureData );
+	}
 }

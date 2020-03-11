@@ -36,7 +36,7 @@ protected:
 
 public:
 	
-	IMPLEMENT_FINALIZABLE ( MOAIGfxBufferVK )
+	IMPLEMENT_DEPENDS_ON ( MOAIGfxBufferVK )
 	
 	//----------------------------------------------------------------//
 	void						Initialize				( ZLSize size, VkBufferUsageFlags usage = 0 );

@@ -9,40 +9,114 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+ZLAbstractFinalizableImpl& ZLAbstractFinalizable::AffirmImpl () {
+
+	if ( !this->mImpl ) {
+		this->mImpl = new ZLAbstractFinalizableImpl ( *this );
+	}
+	return *this->mImpl;
+}
+
+//----------------------------------------------------------------//
+void ZLAbstractFinalizable::Destruct () {
+	
+	this->FinalizeDependencies ();
+	
+	const ZLAbstractFinalizationVisitor* visitor = this->GetVisitor < ZLAbstractFinalizationVisitor >();
+	if ( visitor ) {
+		visitor->Finalize ( *this );
+	}
+}
+
+//----------------------------------------------------------------//
+void ZLAbstractFinalizable::Finalize () {
+	
+	this->FinalizeDependencies ();
+	
+	RTTIVisitorIterator < ZLAbstractFinalizationVisitor > visitorIt = this->GetVisitors < ZLAbstractFinalizationVisitor >();
+	for ( ; visitorIt; ++visitorIt ) {
+		( *visitorIt ).Finalize ( *this );
+	}
+}
+
+//----------------------------------------------------------------//
 void ZLAbstractFinalizable::FinalizeDependencies () {
 
-	if ( this->mInternal ) {
-		delete this->mInternal;
-		this->mInternal = NULL;
+	if ( this->mImpl ) {
+		delete this->mImpl;
+		this->mImpl = NULL;
 	}
+}
+
+//----------------------------------------------------------------//
+ZLAbstractFinalizableImpl* ZLAbstractFinalizable::GetImpl () {
+
+	return this->mImpl;
 }
 
 //----------------------------------------------------------------//
 ZLAbstractFinalizable::ZLAbstractFinalizable () :
-	mInternal ( NULL ) {
+	mImpl ( NULL ) {
 }
 
 //----------------------------------------------------------------//
 ZLAbstractFinalizable::~ZLAbstractFinalizable () {
-
-	this->FinalizeDependencies ();
+	assert ( this->mImpl == NULL );
 }
 
 //================================================================//
-// virtual
+// ZLAbstractFinalizableImpl
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLAbstractFinalizable_Internal& ZLAbstractFinalizable::ZLAbstractFinalizable_HasInternal_AffirmInternal () {
+void ZLAbstractFinalizableImpl::AddDownstream ( ZLAbstractFinalizable& downstream ) {
+	this->mDownstream.insert ( &downstream );
+}
 
-	if ( !this->mInternal ) {
-		this->mInternal = new ZLAbstractFinalizable_Internal ( *this );
+//----------------------------------------------------------------//
+void ZLAbstractFinalizableImpl::AddUpstream ( ZLAbstractFinalizable& upstream ) {
+	this->mUpstream.insert ( &upstream );
+}
+
+//----------------------------------------------------------------//
+ZLAbstractFinalizable& ZLAbstractFinalizableImpl::GetOwner () {
+	assert ( this->mOwner );
+	return *this->mOwner;
+}
+
+//----------------------------------------------------------------//
+void ZLAbstractFinalizableImpl::RemoveDownstream ( ZLAbstractFinalizable& downstream ) {
+	this->mDownstream.erase ( &downstream );
+}
+
+//----------------------------------------------------------------//
+void ZLAbstractFinalizableImpl::RemoveUpstream ( ZLAbstractFinalizable& upstream ) {
+	this->mUpstream.erase ( &upstream );
+}
+
+
+//----------------------------------------------------------------//
+ZLAbstractFinalizableImpl::ZLAbstractFinalizableImpl () :
+	mOwner ( NULL ) {
+}
+//----------------------------------------------------------------//
+ZLAbstractFinalizableImpl::ZLAbstractFinalizableImpl ( ZLAbstractFinalizable& owner ) :
+	mOwner ( &owner ) {
+}
+
+//----------------------------------------------------------------//
+ZLAbstractFinalizableImpl::~ZLAbstractFinalizableImpl () {
+
+	// finalize all our clients; they will remove themselves front this membership
+	// when their own memberships are destroyed.
+	while ( this->mDownstream.size ()) {
+		( *this->mDownstream.begin ())->Finalize ();
 	}
-	return *this->mInternal;
-}
 
-//----------------------------------------------------------------//
-ZLAbstractFinalizable_Internal* ZLAbstractFinalizable::ZLAbstractFinalizable_HasInternal_GetInternal () {
-
-	return this->mInternal;
+	// remove self from providers.
+	STLSet < ZLAbstractFinalizable* >::iterator dependencyIt = this->mUpstream.begin ();
+	for ( ; dependencyIt != this->mUpstream.end (); ++dependencyIt ) {
+		ZLAbstractFinalizable* dependency = *dependencyIt;
+		dependency->GetImpl ()->RemoveDownstream ( *this->mOwner );
+	}
 }

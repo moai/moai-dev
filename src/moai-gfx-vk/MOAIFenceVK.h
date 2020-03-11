@@ -10,11 +10,16 @@ class MOAILogicalDeviceVK;
 // MOAIFenceVK
 //================================================================//
 class MOAIFenceVK :
-	public ZLAbstractFinalizable,
-	public ZLAbstractFinalizable_HasDependencyOn < MOAILogicalDeviceVK > {
+	public ZLFinalizable,
+	public ZLFinalizable_DependsOn < MOAILogicalDeviceVK > {
+private:
+
+	//----------------------------------------------------------------//
+	void				Visitor_Finalize 			();
+
 public:
 
-	IMPLEMENT_FINALIZABLE ( MOAIFenceVK )
+	IMPLEMENT_DEPENDS_ON ( MOAIFenceVK )
 
 	VkFence			mFence;
 

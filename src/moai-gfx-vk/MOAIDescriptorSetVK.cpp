@@ -65,6 +65,8 @@ MOAIDescriptorSetVK::MOAIDescriptorSetVK () {
 
 //----------------------------------------------------------------//
 MOAIDescriptorSetVK::~MOAIDescriptorSetVK () {
+
+	this->Destruct ();
 }
 
 //----------------------------------------------------------------//

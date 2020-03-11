@@ -14,8 +14,8 @@
 // MOAILogicalDeviceVK
 //================================================================//
 class MOAILogicalDeviceVK :
-	public ZLAbstractFinalizable,
-	public ZLAbstractFinalizable_HasDependencyOn < MOAIPhysicalDeviceVK > {
+	public ZLFinalizable,
+	public ZLFinalizable_DependsOn < MOAIPhysicalDeviceVK > {
 private:
 
 	friend class MOAIPhysicalDeviceVK;
@@ -42,11 +42,14 @@ private:
 	VkDevice						mDevice;
 
 	//----------------------------------------------------------------//
-	void			InitQueue										( MOAIQueueVK& queueAndPool, u32 index );
+	void			InitQueue				( MOAIQueueVK& queueAndPool, u32 index );
+	
+	//----------------------------------------------------------------//
+	void 			Visitor_Finalize		();
 
 public:
 	
-	IMPLEMENT_FINALIZABLE ( MOAILogicalDeviceVK )
+	IMPLEMENT_DEPENDS_ON ( MOAILogicalDeviceVK )
 	
 	GET ( MOAIQueueVK&, ComputeQueue, this->mQueues [ COMPUTE_QUEUE ]);
 	GET ( MOAIQueueVK&, GraphicsQueue, this->mQueues [ GRAPHICS_QUEUE ]);

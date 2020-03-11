@@ -51,12 +51,7 @@ MOAIPipelineLayoutVK::MOAIPipelineLayoutVK () :
 //----------------------------------------------------------------//
 MOAIPipelineLayoutVK::~MOAIPipelineLayoutVK () {
 
-	if ( this->HasDependency < MOAILogicalDeviceVK >()) {
-		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
-		if ( this->mPipelineLayout != VK_NULL_HANDLE ) {
-			vkDestroyPipelineLayout ( logicalDevice, this->mPipelineLayout, NULL );
-		}
-	}
+	this->Destruct ();
 }
 
 //----------------------------------------------------------------//
@@ -76,3 +71,12 @@ void MOAIPipelineLayoutVK::SetDescriptorSetLayout ( ZLIndex index, MOAIDescripto
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIPipelineLayoutVK::Visitor_Finalize () {
+
+	if ( this->HasDependency < MOAILogicalDeviceVK >()) {
+		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
+		if ( this->mPipelineLayout != VK_NULL_HANDLE ) {
+			vkDestroyPipelineLayout ( logicalDevice, this->mPipelineLayout, NULL );
+		}
+	}
+}

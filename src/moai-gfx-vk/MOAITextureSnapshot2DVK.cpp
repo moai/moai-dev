@@ -212,6 +212,16 @@ MOAITextureSnapshot2DVK::MOAITextureSnapshot2DVK () :
 //----------------------------------------------------------------//
 MOAITextureSnapshot2DVK::~MOAITextureSnapshot2DVK () {
 
+	this->Destruct ();
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAITextureSnapshot2DVK::Visitor_Finalize () {
+
 	if ( this->HasDependency < MOAILogicalDeviceVK >()) {
 		
 		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
@@ -221,9 +231,3 @@ MOAITextureSnapshot2DVK::~MOAITextureSnapshot2DVK () {
 		vkFreeMemory ( logicalDevice, this->mTextureImageMemory, NULL );
 	}
 }
-
-//================================================================//
-// virtual
-//================================================================//
-
-//----------------------------------------------------------------//
