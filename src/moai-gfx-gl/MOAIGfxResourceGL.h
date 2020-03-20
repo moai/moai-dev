@@ -44,11 +44,11 @@ protected:
 	ZLLeanLink < MOAIGfxResourceGL* > mPendingLink;
 
 	//----------------------------------------------------------------//
-	static int		_destroy					( lua_State* L );
-	static int		_getAge						( lua_State* L );
-	static int		_getResourceState			( lua_State* L );
-	static int		_purge						( lua_State* L );
-	static int		_scheduleForGPUUpdate		( lua_State* L );
+	static int			_destroy					( lua_State* L );
+	static int			_getAge						( lua_State* L );
+	static int			_getResourceState			( lua_State* L );
+	static int			_purge						( lua_State* L );
+	static int			_scheduleForGPUUpdate		( lua_State* L );
 
 	//----------------------------------------------------------------//	
 	bool				Affirm						();

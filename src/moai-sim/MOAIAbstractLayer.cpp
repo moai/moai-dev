@@ -183,7 +183,7 @@ MOAIAbstractLayer::MOAIAbstractLayer () :
 	RTTI_BEGIN ( MOAIAbstractLayer )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractLayer >)
 		RTTI_EXTEND ( MOAILuaObject )
-		RTTI_EXTEND ( MOAIDrawable )
+		RTTI_EXTEND ( MOAIAbstractDrawable )
 	RTTI_END
 }
 

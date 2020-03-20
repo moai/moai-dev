@@ -27,7 +27,7 @@ class MOAITextureGL;
 class MOAIShaderProgramGL :
 	public virtual MOAIGfxResourceGL,
 	public virtual MOAIUniformSchema,
-	public virtual MOAIHasUniformComposer {
+	public virtual MOAIHasGfxComposer {
 protected:
 
 	friend class MOAIShaderGL;

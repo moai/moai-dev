@@ -52,7 +52,6 @@ MOAIShaderGL::MOAIShaderGL () {
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIShaderGL >)
 		RTTI_EXTEND ( MOAIShader )
 		RTTI_EXTEND ( MOAIAbstractUniformBuffer )
-		RTTI_EXTEND ( MOAIHasUniformComposer )
 	RTTI_END
 }
 
@@ -99,15 +98,16 @@ const MOAIUniformSchema* MOAIShaderGL::MOAIAbstractUniformBuffer_GetSchema () co
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderGL::MOAIShader_ComposeUniforms () {
+MOAIGfxComposer* MOAIShaderGL::MOAIGfxComposerInterface_GetComposer	() {
 
-	if ( !this->mProgram ) return;
-	MOAIUniformComposer* composer = this->GetComposer ();
-	composer = composer ? composer : this->mProgram->GetComposer ();
+	MOAIGfxComposer* composer = this->GetComposer ();
+	return composer ? composer : ( this->mProgram ? this->mProgram->GetComposer () : NULL );
+}
 
-	if ( composer ) {
-		composer->ComposeUniforms ( *this->mProgram, *this );
-	}
+//----------------------------------------------------------------//
+MOAIUniformHandle MOAIShaderGL::MOAIShader_GetUniformHandle ( ZLIndex uniformID, ZLIndex index ) {
+
+	return this->mProgram->GetUniformHandle ( this->mUniforms.GetBuffer (), uniformID, index );
 }
 
 //----------------------------------------------------------------//
@@ -115,16 +115,3 @@ bool MOAIShaderGL::MOAIShader_IsReadyForUse () const {
 
 	return ( this->mProgram && this->mProgram->IsReadyForUse ());
 }
-
-//----------------------------------------------------------------//
-void MOAIShaderGL::MOAIShader_SelectTextures () {
-
-	if ( !this->mProgram ) return;
-	MOAIUniformComposer* composer = this->GetComposer ();
-	composer = composer ? composer : this->mProgram->GetComposer ();
-
-	if ( composer ) {
-		composer->SelectTextures ();
-	}
-}
-

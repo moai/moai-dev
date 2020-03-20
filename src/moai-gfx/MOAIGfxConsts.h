@@ -112,6 +112,17 @@ struct MOAIGfxTypeEnum {
 };
 
 //================================================================//
+// MOAIRenderPassAttachmentEnum
+//================================================================//
+//struct MOAIRenderPassAttachmentEnum {
+//	enum _ {
+//		COLOR_ATTACHMENT,
+//		DEPTH_ATTACHMENT,
+//		STENCIL_ATTACHMENT,
+//	};
+//};
+
+//================================================================//
 // MOAITextureFilterEnum
 //================================================================//
 struct MOAITextureFilterEnum {

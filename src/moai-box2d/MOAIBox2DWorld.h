@@ -61,7 +61,7 @@ public:
 */
 class MOAIBox2DWorld :
 	public MOAIAction,
-	public MOAIDrawable,
+	public MOAIAbstractDrawable,
 	public b2DestructionListener {
 private:
 

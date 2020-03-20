@@ -54,12 +54,12 @@ protected:
 	
 	MOAIBlendMode			mBlendMode;
 	MOAICullFuncEnum::_		mCullMode;
-	MOAIDepthFuncEnum::_		mDepthTest;
+	MOAIDepthFuncEnum::_	mDepthTest;
 	bool					mDepthMask;
 
 	u32						mFlags;
 	bool					mOverwrite;
-		
+	
 	//----------------------------------------------------------------//
 	virtual void				MOAIAbstractMaterial_ApplyGlobals					( MOAIAbstractMaterialInterface& dest ) = 0;
 	virtual MOAILight*			MOAIAbstractMaterial_ClearGlobals					() = 0;

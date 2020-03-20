@@ -1,26 +1,25 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MOAIDESCRIPTORSETLAYOUTVK_H
-#define MOAIDESCRIPTORSETLAYOUTVK_H
+#ifndef MOAIPIPELINEINPUTCHUNKSCHEMAVK_H
+#define MOAIPIPELINEINPUTCHUNKSCHEMAVK_H
 
 class MOAILogicalDeviceVK;
-class MOAIDescriptorSetVK;
-class MOAIDescriptorSetVK;
+class MOAIPipelineInputChunkVK;
 class MOAIDescriptorSetSnapshotVK;
 
 //================================================================//
-// MOAIDescriptorSetLayoutVK
+// MOAIPipelineInputChunkSchemaVK
 //================================================================//
-class MOAIDescriptorSetLayoutVK :
+class MOAIPipelineInputChunkSchemaVK :
 	public ZLRefCountedObject,
 	public ZLFinalizable,
 	public ZLFinalizable_DependsOn < MOAILogicalDeviceVK > {
 private:
 
-	friend class MOAIDescriptorSetVK;
+	friend class MOAIPipelineInputChunkVK;
 	friend class MOAIDescriptorSetSnapshotVK;
-	friend class MOAIDescriptorSetVK;
+	friend class MOAIPipelineInputChunkVK;
 
 	static const ZLSize MAX_DESCRIPTOR_SETS = 16;
 
@@ -39,7 +38,7 @@ private:
 
 public:
 
-	IMPLEMENT_DEPENDS_ON ( MOAIDescriptorSetLayoutVK )
+	IMPLEMENT_DEPENDS_ON ( MOAIPipelineInputChunkSchemaVK )
 
 	GET_CONST ( ZLSize, Size, mLayoutBindings.Size ())
 	GET_CONST ( ZLSize, SignatureSize, mSignatureSize )
@@ -64,9 +63,9 @@ public:
 	//----------------------------------------------------------------//
 	void							AffirmDescritorSetLayout			();
 	void							Initialize							( MOAILogicalDeviceVK& logicalDevice, ZLSize totalBindings );
-									MOAIDescriptorSetLayoutVK			();
-									~MOAIDescriptorSetLayoutVK			();
-	MOAIDescriptorSetSnapshotVK*	ProcureDescriptorSet				( const MOAIDescriptorSetVK& descriptorSet );
+									MOAIPipelineInputChunkSchemaVK			();
+									~MOAIPipelineInputChunkSchemaVK			();
+	MOAIDescriptorSetSnapshotVK*	ProcureDescriptorSet				( const MOAIPipelineInputChunkVK& descriptorSet );
 	void							RetireDescriptorSet					( MOAIDescriptorSetSnapshotVK& snapshot );
 	void							SetBinding							( ZLIndex index, VkDescriptorType descriptorType, VkShaderStageFlags stageFlags, ZLSize descriptorCount = 1 );
 };

@@ -14,7 +14,7 @@ public:
 
 	//----------------------------------------------------------------//
 	static u32				GetCap					( ZLGfxEnum::_ cap );
-	static ZLGfxEnum::_			GetError				();
+	static ZLGfxEnum::_		GetError				();
 	static cc8*				GetErrorString			( ZLGfxEnum::_ error );
 	static cc8*				GetString				( ZLGfxEnum::_ stringID );
 	static void				Initialize				();

@@ -7,9 +7,9 @@
 #include <moai-gfx-vk/MOAIGfxBufferVK.h>
 
 class MOAICommandBufferVK;
-class MOAIDescriptorSetLayoutVK;
-class MOAIDescriptorSetVK;
-class MOAIPipelineLayoutVK;
+class MOAIPipelineInputChunkSchemaVK;
+class MOAIPipelineInputChunkVK;
+class MOAIPipelineInputBodySchemaVK;
 class MOAIShaderProgramVK;
 class MOAIShaderVK;
 class MOAITexture2DVK;
@@ -19,7 +19,7 @@ class MOAIGfxBufferSnapshotVK;
 // MOAIOneTriVK
 //================================================================//
 class MOAIOneTriVK :
-	public virtual MOAIDrawable {
+	public virtual MOAIAbstractDrawable {
 private:
 
 	struct Vertex {
@@ -52,8 +52,8 @@ private:
 		float viewMatrix [ 16 ];
 	} mMatrixUniforms;
 
-	ZLStrongPtr < MOAIPipelineLayoutVK >			mPipelineLayout;
-	ZLStrongPtr < MOAIDescriptorSetVK >	mDescriptorSet;
+	ZLStrongPtr < MOAIPipelineInputBodySchemaVK >			mPipelineLayout;
+	ZLStrongPtr < MOAIPipelineInputChunkVK >	mDescriptorSet;
 	VkPipeline										mPipeline;
 
 	//----------------------------------------------------------------//

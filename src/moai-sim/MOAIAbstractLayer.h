@@ -14,7 +14,7 @@ class MOAIFrameBuffer;
 //================================================================//
 class MOAIAbstractLayer :
 	public virtual MOAILuaObject,
-	public virtual MOAIDrawable {
+	public virtual MOAIAbstractDrawable {
 private:
 
 	MOAI_LUA_OBJECT_VISITOR_FRIEND

@@ -2,20 +2,20 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
+#include <moai-gfx-vk/MOAIPipelineInputChunkSchemaVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetVK.h>
+#include <moai-gfx-vk/MOAIPipelineInputChunkVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 
 //================================================================//
-// MOAIDescriptorSetVK
+// MOAIPipelineInputChunkVK
 //================================================================//
 
 //----------------------------------------------------------------//
-VkWriteDescriptorSet* MOAIDescriptorSetVK::GetWriteDescriptorSet ( ZLIndex binding, ZLIndex arrayElement ) {
+VkWriteDescriptorSet* MOAIPipelineInputChunkVK::GetWriteDescriptorSet ( ZLIndex binding, ZLIndex arrayElement ) {
 
-	MOAIDescriptorSetLayoutVK& layout = this->GetDependency < MOAIDescriptorSetLayoutVK >();
+	MOAIPipelineInputChunkSchemaVK& layout = this->GetDependency < MOAIPipelineInputChunkSchemaVK >();
 
 	if ( binding >= layout.GetSize ()) return NULL;
 
@@ -31,9 +31,9 @@ VkWriteDescriptorSet* MOAIDescriptorSetVK::GetWriteDescriptorSet ( ZLIndex bindi
 }
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetVK::Initialize ( MOAIDescriptorSetLayoutVK& descriptorSetLayout ) {
+void MOAIPipelineInputChunkVK::Initialize ( MOAIPipelineInputChunkSchemaVK& descriptorSetLayout ) {
 
-	this->SetDependency < MOAIDescriptorSetLayoutVK >( descriptorSetLayout );
+	this->SetDependency < MOAIPipelineInputChunkSchemaVK >( descriptorSetLayout );
 	
 	// set up the pool
 	ZLSize nBindings		= descriptorSetLayout.GetSize ();
@@ -60,17 +60,17 @@ void MOAIDescriptorSetVK::Initialize ( MOAIDescriptorSetLayoutVK& descriptorSetL
 }
 
 //----------------------------------------------------------------//
-MOAIDescriptorSetVK::MOAIDescriptorSetVK () {
+MOAIPipelineInputChunkVK::MOAIPipelineInputChunkVK () {
 }
 
 //----------------------------------------------------------------//
-MOAIDescriptorSetVK::~MOAIDescriptorSetVK () {
+MOAIPipelineInputChunkVK::~MOAIPipelineInputChunkVK () {
 
 	this->Destruct ();
 }
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetVK::SetDescriptor ( ZLIndex binding, ZLIndex arrayElement, VkBufferView* texelBufferView ) {
+void MOAIPipelineInputChunkVK::SetDescriptor ( ZLIndex binding, ZLIndex arrayElement, VkBufferView* texelBufferView ) {
 
 	VkWriteDescriptorSet* writeDescriptorSet = this->GetWriteDescriptorSet ( binding, arrayElement );
 	assert ( writeDescriptorSet );
@@ -78,7 +78,7 @@ void MOAIDescriptorSetVK::SetDescriptor ( ZLIndex binding, ZLIndex arrayElement,
 }
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetVK::SetDescriptor ( ZLIndex binding, ZLIndex arrayElement, VkDescriptorBufferInfo* bufferInfo ) {
+void MOAIPipelineInputChunkVK::SetDescriptor ( ZLIndex binding, ZLIndex arrayElement, VkDescriptorBufferInfo* bufferInfo ) {
 
 	VkWriteDescriptorSet* writeDescriptorSet = this->GetWriteDescriptorSet ( binding, arrayElement );
 	assert ( writeDescriptorSet );
@@ -86,7 +86,7 @@ void MOAIDescriptorSetVK::SetDescriptor ( ZLIndex binding, ZLIndex arrayElement,
 }
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetVK::SetDescriptor ( ZLIndex binding, ZLIndex arrayElement, VkDescriptorImageInfo* imageInfo ) {
+void MOAIPipelineInputChunkVK::SetDescriptor ( ZLIndex binding, ZLIndex arrayElement, VkDescriptorImageInfo* imageInfo ) {
 
 	VkWriteDescriptorSet* writeDescriptorSet = this->GetWriteDescriptorSet ( binding, arrayElement );
 	assert ( writeDescriptorSet );
@@ -98,11 +98,11 @@ void MOAIDescriptorSetVK::SetDescriptor ( ZLIndex binding, ZLIndex arrayElement,
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIDescriptorSetSnapshotVK* MOAIDescriptorSetVK::MOAIAbstractSnapshotFactoryVK_GetSnapshot ( MOAICommandBufferVK& commandBuffer ) {
+MOAIDescriptorSetSnapshotVK* MOAIPipelineInputChunkVK::MOAIAbstractSnapshotFactoryVK_GetSnapshot ( MOAICommandBufferVK& commandBuffer ) {
 	UNUSED ( commandBuffer );
 
-	if ( this->HasDependency < MOAIDescriptorSetLayoutVK >()) {
-		return this->GetDependency < MOAIDescriptorSetLayoutVK >().ProcureDescriptorSet ( *this );
+	if ( this->HasDependency < MOAIPipelineInputChunkSchemaVK >()) {
+		return this->GetDependency < MOAIPipelineInputChunkSchemaVK >().ProcureDescriptorSet ( *this );
 	}
 	return NULL;
 }

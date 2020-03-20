@@ -1,26 +1,26 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MOAIDESCRIPTORSETVK_H
-#define MOAIDESCRIPTORSETVK_H
+#ifndef MOAIPIPELINEINPUTCHUNKVK_H
+#define MOAIPIPELINEINPUTCHUNKVK_H
 
 #include <moai-gfx-vk/MOAIAbstractSnapshotFactoryVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
+#include <moai-gfx-vk/MOAIPipelineInputChunkSchemaVK.h>
 
 class MOAIDescriptorSetSnapshotVK;
 
 //================================================================//
-// MOAIDescriptorSetVK
+// MOAIPipelineInputChunkVK
 //================================================================//
-class MOAIDescriptorSetVK :
+class MOAIPipelineInputChunkVK :
 	public virtual ZLRefCountedObject,
 	public ZLFinalizable,
-	public ZLFinalizable_DependsOn < MOAIDescriptorSetLayoutVK >,
+	public ZLFinalizable_DependsOn < MOAIPipelineInputChunkSchemaVK >,
 	public MOAIAbstractSnapshotFactoryVK < MOAIDescriptorSetSnapshotVK >,
 	public ZLLeanArray < VkWriteDescriptorSet > {
 protected:
 
-	friend class MOAIDescriptorSetLayoutVK;
+	friend class MOAIPipelineInputChunkSchemaVK;
 
 	//----------------------------------------------------------------//
 	VkWriteDescriptorSet*			GetWriteDescriptorSet 							( ZLIndex binding, ZLIndex arrayElement );
@@ -30,12 +30,12 @@ protected:
 	
 public:
 	
-	IMPLEMENT_DEPENDS_ON ( MOAIDescriptorSetVK )
+	IMPLEMENT_DEPENDS_ON ( MOAIPipelineInputChunkVK )
 	
 	//----------------------------------------------------------------//
-	void			Initialize						( MOAIDescriptorSetLayoutVK& descriptorSetLayout );
-					MOAIDescriptorSetVK				();
-					~MOAIDescriptorSetVK			();
+	void			Initialize						( MOAIPipelineInputChunkSchemaVK& descriptorSetLayout );
+					MOAIPipelineInputChunkVK		();
+					~MOAIPipelineInputChunkVK		();
 	void			SetDescriptor					( ZLIndex binding, ZLIndex arrayElement, VkBufferView* texelBufferView );
 	void			SetDescriptor					( ZLIndex binding, ZLIndex arrayElement, VkDescriptorBufferInfo* bufferInfo );
 	void			SetDescriptor					( ZLIndex binding, ZLIndex arrayElement, VkDescriptorImageInfo* imageInfo );

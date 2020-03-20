@@ -19,9 +19,9 @@ private:
 	ZLGfxHandle			mGLDepthBuffer;
 	ZLGfxHandle			mGLStencilBuffer;
 	
-	ZLGfxEnum::_				mColorFormat;
-	ZLGfxEnum::_				mDepthFormat;
-	ZLGfxEnum::_				mStencilFormat;
+	ZLGfxEnum::_		mColorFormat;
+	ZLGfxEnum::_		mDepthFormat;
+	ZLGfxEnum::_		mStencilFormat;
 	
 	//----------------------------------------------------------------//
 	static int			_init							( lua_State* L );

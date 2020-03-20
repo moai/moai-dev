@@ -20,8 +20,7 @@ class MOAIShaderProgramGL;
 */
 class MOAIShaderGL :
 	public virtual MOAIShader,
-	public virtual MOAIAbstractUniformBuffer,
-	public virtual MOAIHasUniformComposer {
+	public virtual MOAIAbstractUniformBuffer {
 protected:
 
 	friend class MOAIGfxMgrGL_GPUCacheGL;
@@ -30,15 +29,15 @@ protected:
 	ZLStrongPtr < MOAIShaderProgramGL >	mProgram;
 
 	//----------------------------------------------------------------//
-	static int				_setProgram					( lua_State* L );
+	static int					_setProgram					( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void						_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
 	void						_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
 	const MOAIUniformSchema*	MOAIAbstractUniformBuffer_GetSchema		() const;
-	void						MOAIShader_ComposeUniforms				();
+	MOAIGfxComposer*			MOAIGfxComposerInterface_GetComposer	();
+	MOAIUniformHandle			MOAIShader_GetUniformHandle				( ZLIndex uniformID, ZLIndex index );
 	bool						MOAIShader_IsReadyForUse				() const;
-	void						MOAIShader_SelectTextures				();
 
 public:
 

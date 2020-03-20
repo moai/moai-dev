@@ -34,8 +34,8 @@ protected:
 	// GL texture
 	ZLGfxHandle			mGLTexture;
 	
-	ZLGfxEnum::_				mGLInternalFormat;
-	ZLGfxEnum::_				mGLPixelType;
+	ZLGfxEnum::_		mGLInternalFormat;
+	ZLGfxEnum::_		mGLPixelType;
 
 	//----------------------------------------------------------------//
 	static int			_getSize					( lua_State* L );

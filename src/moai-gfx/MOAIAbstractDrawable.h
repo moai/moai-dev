@@ -5,10 +5,11 @@
 #define	MOAIDRAWABLE_H
 
 //================================================================//
-// MOAIDrawable
+// MOAIAbstractDrawable
 //================================================================//
-class MOAIDrawable :
-	public virtual MOAILuaObject {
+class MOAIAbstractDrawable :
+	public virtual RTTIBase,
+	public virtual ZLRefCountedObject {
 private:
 
 	//----------------------------------------------------------------//
@@ -18,10 +19,12 @@ private:
 public:
 
 	//----------------------------------------------------------------//
-	static void		Draw				( MOAILuaMemberRef& ref, bool debug = false );
-	static void		Draw				( MOAILuaState& state, int idx, bool debug = false );
-	void			Draw				( int subPrimID = ( int )-1 ) { MOAIDrawable_Draw ( subPrimID ); }
-	void			DrawDebug			( int subPrimID = ( int )-1 ) { MOAIDrawable_DrawDebug ( subPrimID ); }
+					MOAIAbstractDrawable		();
+	virtual 		~MOAIAbstractDrawable		();
+	static void		Draw						( MOAILuaMemberRef& ref, bool debug = false );
+	static void		Draw						( MOAILuaState& state, int idx, bool debug = false );
+	void			Draw						( int subPrimID = ( int )-1 ) { MOAIDrawable_Draw ( subPrimID ); }
+	void			DrawDebug					( int subPrimID = ( int )-1 ) { MOAIDrawable_DrawDebug ( subPrimID ); }
 };
 
 #endif

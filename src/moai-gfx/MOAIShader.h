@@ -4,6 +4,9 @@
 #ifndef	MOAISHADER_H
 #define	MOAISHADER_H
 
+#include <moai-gfx/MOAIHasGfxComposer.h>
+#include <moai-gfx/MOAIUniformHandle.h>
+
 // uniform buffer - attach statically (like a texture)
 // uniform buffer - assemble dynamically (from lights)
 // attach to shader at binding point
@@ -18,22 +21,21 @@
 // MOAIShader
 //================================================================//
 class MOAIShader :
-	public virtual MOAILuaObject {
-	
+	public virtual MOAIHasGfxComposer {
+protected:
+
 	//----------------------------------------------------------------//
-	virtual void	MOAIShader_ComposeUniforms		() = 0;
-	virtual bool	MOAIShader_IsReadyForUse		() const = 0;
-	virtual void	MOAIShader_SelectTextures		() = 0;
+	virtual MOAIUniformHandle		MOAIShader_GetUniformHandle		( ZLIndex uniformID, ZLIndex index ) = 0;
+	virtual bool					MOAIShader_IsReadyForUse		() const = 0;
 	
 public:
 
 	//----------------------------------------------------------------//
-	void			ComposeUniforms			();
-	bool			HasProgram				() const;
-	bool			IsReadyForUse			() const;
-					MOAIShader				();
-					~MOAIShader				();
-	void			SelectTextures			();
+	MOAIUniformHandle 		GetUniformHandle 		( ZLIndex uniformID, ZLIndex index );
+	bool					HasProgram				() const;
+	bool					IsReadyForUse			() const;
+							MOAIShader				();
+							~MOAIShader				();
 };
 
 #endif

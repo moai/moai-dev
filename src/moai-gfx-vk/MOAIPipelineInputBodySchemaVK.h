@@ -1,32 +1,32 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MOAIPIPELINELAYOUTVK_H
-#define MOAIPIPELINELAYOUTVK_H
+#ifndef MOAIPIPELINEINPUTBODYSCHEMAVK_H
+#define MOAIPIPELINEINPUTBODYSCHEMAVK_H
 
 #include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
+#include <moai-gfx-vk/MOAIPipelineInputChunkSchemaVK.h>
 
 //================================================================//
-// MOAIPipelineLayoutVK
+// MOAIPipelineInputBodySchemaVK
 //================================================================//
-class MOAIPipelineLayoutVK :
+class MOAIPipelineInputBodySchemaVK :
 	public virtual ZLRefCountedObject,
 	public ZLFinalizable,
 	public ZLFinalizable_DependsOn < MOAILogicalDeviceVK > {
 protected:
 
-	friend class MOAIGfxComposerVK;
+	friend class MOAIPipelineInputBodyVK;
 
-	VkPipelineLayout											mPipelineLayout;
-	ZLLeanArray < ZLStrongPtr < MOAIDescriptorSetLayoutVK > >	mDescriptorSetLayouts;
+	VkPipelineLayout													mPipelineLayout;
+	ZLLeanArray < ZLStrongPtr < MOAIPipelineInputChunkSchemaVK > >		mDescriptorSetLayouts;
 
 	//----------------------------------------------------------------//
 	void 							_Finalize				();
 	
 public:
 
-	IMPLEMENT_DEPENDS_ON ( MOAIPipelineLayoutVK )
+	IMPLEMENT_DEPENDS_ON ( MOAIPipelineInputBodySchemaVK )
 
 	//----------------------------------------------------------------//
 	operator bool () const {
@@ -49,12 +49,12 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void							AffirmPipelineLayout			();
-	MOAIDescriptorSetLayoutVK&		GetDescriptorSetLayout			( ZLIndex index );
-	void							Initialize						( MOAILogicalDeviceVK& logicalDevice, ZLSize size );
-									MOAIPipelineLayoutVK			();
-									~MOAIPipelineLayoutVK			();
-	void							SetDescriptorSetLayout 			( ZLIndex index, MOAIDescriptorSetLayoutVK& layout );
+	void								AffirmPipelineLayout				();
+	MOAIPipelineInputChunkSchemaVK&		GetDescriptorSetLayout				( ZLIndex index );
+	void								Initialize							( MOAILogicalDeviceVK& logicalDevice, ZLSize size );
+										MOAIPipelineInputBodySchemaVK		();
+										~MOAIPipelineInputBodySchemaVK		();
+	void								SetDescriptorSetLayout 				( ZLIndex index, MOAIPipelineInputChunkSchemaVK& layout );
 };
 
 #endif

@@ -1122,7 +1122,7 @@ MOAIBox2DWorld::MOAIBox2DWorld () :
 	RTTI_BEGIN ( MOAIBox2DWorld )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIBox2DWorld >)
 		RTTI_EXTEND ( MOAIAction )
-		RTTI_EXTEND ( MOAIDrawable )
+		RTTI_EXTEND ( MOAIAbstractDrawable )
 	RTTI_END
 	
 	this->mArbiter.Set ( *this, new MOAIBox2DArbiter ( *this ));

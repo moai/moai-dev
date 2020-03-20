@@ -69,7 +69,7 @@ void MOAIGfxMgrVK_RenderTreeVK::MOAIGfxMgr_RenderTree_Render () {
 	if ( this->mRenderRoot ) {
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		state.Push ( this->mRenderRoot );
-		MOAIDrawable::Draw ( state, -1 );
+		MOAIAbstractDrawable::Draw ( state, -1 );
 	}
 	
 	// flush any stragglers

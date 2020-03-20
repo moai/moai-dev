@@ -2,10 +2,10 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx-vk/MOAIGfxComposerVK.h>
+#include <moai-gfx-vk/MOAIPipelineInputBodyComposerVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
-#include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
+#include <moai-gfx-vk/MOAIPipelineInputBodySchemaVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
 
 //================================================================//
@@ -37,14 +37,14 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIGfxComposerVK& MOAIShaderProgramVK::GetGfxComposer () {
+MOAIPipelineInputBodyComposerVK& MOAIShaderProgramVK::GetGfxComposer () {
 
 	assert ( this->mComposer );
 	return *this->mComposer;
 }
 
 //----------------------------------------------------------------//
-MOAIPipelineLayoutVK& MOAIShaderProgramVK::GetPipelineLayout () {
+MOAIPipelineInputBodySchemaVK& MOAIShaderProgramVK::GetPipelineLayout () {
 
 	return this->GetGfxComposer ().GetPipelineLayout ();
 }
@@ -96,7 +96,7 @@ MOAIShaderProgramVK::~MOAIShaderProgramVK () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderProgramVK::SetGfxComposer ( MOAIGfxComposerVK& composer ) {
+void MOAIShaderProgramVK::SetGfxComposer ( MOAIPipelineInputBodyComposerVK& composer ) {
 
 	this->mComposer = &composer;
 }

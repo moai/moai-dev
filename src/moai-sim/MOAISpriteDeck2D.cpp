@@ -7,6 +7,16 @@
 #include <moai-sim/MOAISpriteDeck2D.h>
 
 //================================================================//
+// MOAISpriteDeck2DCallable
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAISpriteDeck2DCallable::MOAIAbstractGfxComposerCallable_Call () {
+
+	this->mBrush.Draw ();
+}
+
+//================================================================//
 // lua
 //================================================================//
 
@@ -410,21 +420,32 @@ MOAIDeck* MOAISpriteDeck2D::AffirmDeck ( MOAILuaState& state, int idx ) {
 		
 	if ( texture ) {
 		
-		MOAISpriteDeck2D* quadDeck = new MOAISpriteDeck2D ();
-		MOAIMaterialBatch& batch = quadDeck->AffirmMaterialBatch ();
-	
-		assert ( quadDeck );
+		MOAISpriteDeck2D* spriteDeck = new MOAISpriteDeck2D ();
+		assert ( spriteDeck );
+
+		spriteDeck->PushTextureCmd (
+			MOAIGfxComposerAddrModeEnum::FROM_OBJECT,
+			MOAIGfxComposerAddrModeEnum::TO_GFX_STATE,
+			texture,
+			0
+		);
 		
-		batch.AffirmMaterial ( 0 ).SetTexture ( texture );
+		spriteDeck->PushShaderCmd (
+			MOAIGfxComposerAddrModeEnum::FROM_OBJECT,
+			MOAIGfxComposerAddrModeEnum::TO_GFX_STATE,
+			MOAIGfxMgr::Get ().GetShaderPreset ( MOAIShaderPresetEnum::DECK2D_SHADER )
+		);
+		
+		spriteDeck->PushCallCmd ();
 		
 		int hWidth = ( int )( texture->GetWidth () / 2 );
 		int hHeight = ( int )( texture->GetHeight () / 2 );
 		
 		ZLRect rect;
-		rect.Init ( (float) -hWidth, (float) -hHeight, (float) hWidth, (float) hHeight );
-		quadDeck->SetRect ( 0, rect );
+		rect.Init (( float )-hWidth, ( float )-hHeight, ( float )hWidth, ( float )hHeight );
+		spriteDeck->SetRect ( 0, rect );
 		
-		return quadDeck;
+		return spriteDeck;
 	}
 	return 0;
 }
@@ -473,7 +494,7 @@ MOAISpriteDeck2D::MOAISpriteDeck2D () {
 	RTTI_BEGIN ( MOAISpriteDeck2D )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAISpriteDeck2D >)
 		RTTI_EXTEND ( MOAIDeck )
-		RTTI_EXTEND ( MOAIHasMaterialBatch )
+		RTTI_EXTEND ( MOAIHasGfxComposer )
 	RTTI_END
 }
 
@@ -667,68 +688,57 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 		}
 		
 		ZLIndex materialID = ZLIndexOp::INVALID;
-		materialMgr.Push (); // push an empty stack frame to facilitate "swap" below
+//		materialMgr.Push (); // push an empty stack frame to facilitate "swap" below
+		materialMgr.LoadGfxState ();
 		
 		for ( ZLIndex i = base; i < top; ++i ) {
 			
 			MOAISprite spritePair = this->mSprites [  ZLIndexOp::Wrap ( i, totalSprites )];
 			
-			if (( i == base ) || ( materialID != spritePair.mMaterialID )) {
+			MOAIGfxComposer* composer = this->GetComposer ();
+			if ( !composer ) continue;
 			
-				materialID = spritePair.mMaterialID;
-				
-				MOAIMaterial* spriteMaterial = this->GetMaterial ( materialID );
-				if ( spriteMaterial ) {
-					
-					materialMgr.Pop ();
-					materialMgr.Push ( spriteMaterial );
-					materialMgr.SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
-					materialMgr.LoadGfxState ();
-				}
-			}
+			MOAISpriteDeck2DCallable callable;
+			callable.mBrush.mUVQuad = this->mUVQuads [ spritePair.mUVQuadID ];
+			callable.mBrush.mModelQuad = this->mQuads [ spritePair.mQuadID ];
 			
-			MOAIQuadBrush glQuad;
-			glQuad.mUVQuad = this->mUVQuads [ spritePair.mUVQuadID ];
-			glQuad.mModelQuad = this->mQuads [ spritePair.mQuadID ];
-			glQuad.Draw ();
+			composer->Execute ( callable );
 		}
 		
-		materialMgr.Pop ();
+//		materialMgr.Pop ();
 	}
 	else {
 		
-		MOAIQuadBrush quadBrush;
+		MOAIGfxComposer* composer = this->GetComposer ();
+		if ( !composer ) return;
+		
+		MOAISpriteDeck2DCallable callable;
 		MOAIMaterial* material = 0;
 		
 		if ( totalQuads ) {
 		
 			ZLIndex itemIdx =  ZLIndexOp::Wrap ( idx, totalQuads );
-			material = this->GetMaterial ( itemIdx );
+//			material = this->GetMaterial ( itemIdx );
 
-			quadBrush.mModelQuad = this->mQuads [ itemIdx ];
+			callable.mBrush.mModelQuad = this->mQuads [ itemIdx ];
 
 			if ( itemIdx < this->mUVQuads.Size ()) {
-				quadBrush.mUVQuad = this->mUVQuads [ itemIdx ];
+				callable.mBrush.mUVQuad = this->mUVQuads [ itemIdx ];
 			}
 			else {
-				quadBrush.mUVQuad.Init ( 0.0f, 1.0f, 1.0f, 0.0f );
+				callable.mBrush.mUVQuad.Init ( 0.0f, 1.0f, 1.0f, 0.0f );
 			}
 		}
 		else {
-		
-			material = this->GetMaterial ( 0 );
-			
-			quadBrush.mModelQuad.Init ( -0.5f, -0.5f, 0.5f, 0.5f );
-			quadBrush.mUVQuad.Init ( 0.0f, 1.0f, 1.0f, 0.0f );
+				
+			callable.mBrush.mUVQuad.Init ( 0.0f, 1.0f, 1.0f, 0.0f );
+			callable.mBrush.mModelQuad.Init ( -0.5f, -0.5f, 0.5f, 0.5f );
 		}
 		
-		materialMgr.Push ( material );
-		materialMgr.SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
+//		materialMgr.Push ();
 		materialMgr.LoadGfxState ();
-		
-		quadBrush.Draw ();
-		
-		materialMgr.Pop ();
+		composer->Execute ( callable );
+//		materialMgr.Pop ();
 	}
 }
 

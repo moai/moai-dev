@@ -3,10 +3,10 @@
 
 #include "pch.h"
 #include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetVK.h>
+#include <moai-gfx-vk/MOAIPipelineInputChunkVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
+#include <moai-gfx-vk/MOAIPipelineInputChunkSchemaVK.h>
 
 //================================================================//
 // MOAIDescriptorSetSnapshotVK
@@ -22,7 +22,7 @@ MOAIDescriptorSetSnapshotVK::~MOAIDescriptorSetSnapshotVK () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetSnapshotVK::Update ( const MOAIDescriptorSetVK& descriptorSet ) {
+void MOAIDescriptorSetSnapshotVK::Update ( const MOAIPipelineInputChunkVK& descriptorSet ) {
 
 	assert ( *this != false );
 
@@ -33,7 +33,7 @@ void MOAIDescriptorSetSnapshotVK::Update ( const MOAIDescriptorSetVK& descriptor
 		writeDescriptors [ i ].dstSet = this->mDescriptorSet;
 	}
 
-	MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAIDescriptorSetLayoutVK >().GetDependency < MOAILogicalDeviceVK >();
+	MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAIPipelineInputChunkSchemaVK >().GetDependency < MOAILogicalDeviceVK >();
 	vkUpdateDescriptorSets ( logicalDevice, ( u32 )totalWrites, writeDescriptors, 0, NULL );
 }
 
@@ -44,5 +44,5 @@ void MOAIDescriptorSetSnapshotVK::Update ( const MOAIDescriptorSetVK& descriptor
 //----------------------------------------------------------------//
 void MOAIDescriptorSetSnapshotVK::MOAIAbstractSnapshotVK_OnUnpin () {
 
-	this->GetDependency < MOAIDescriptorSetLayoutVK >().RetireDescriptorSet ( *this );
+	this->GetDependency < MOAIPipelineInputChunkSchemaVK >().RetireDescriptorSet ( *this );
 }

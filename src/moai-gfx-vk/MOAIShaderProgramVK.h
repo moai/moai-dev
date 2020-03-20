@@ -6,9 +6,9 @@
 
 #include <moai-gfx-vk/MOAIGfxResourceVK.h>
 
-class MOAIGfxComposerVK;
+class MOAIPipelineInputBodyComposerVK;
 class MOAILogicalDeviceVK;
-class MOAIPipelineLayoutVK;
+class MOAIPipelineInputBodySchemaVK;
 class MOAIShaderVK;
 class MOAITextureVK;
 
@@ -38,7 +38,7 @@ protected:
 	VkShaderModule	mModules [ TOTAL_MODULES ];
 
 	ZLLeanArray < VkPipelineShaderStageCreateInfo >		mStageInfos;
-	ZLStrongPtr < MOAIGfxComposerVK > 					mComposer;
+	ZLStrongPtr < MOAIPipelineInputBodyComposerVK > 					mComposer;
 
 	//----------------------------------------------------------------//
 //	static int					_load						( lua_State* L );
@@ -54,13 +54,13 @@ public:
 	DECL_LUA_FACTORY ( MOAIShaderProgramVK )
 
 	//----------------------------------------------------------------//
-	MOAIGfxComposerVK&			GetGfxComposer						();
-	MOAIPipelineLayoutVK&		GetPipelineLayout					();
+	MOAIPipelineInputBodyComposerVK&			GetGfxComposer						();
+	MOAIPipelineInputBodySchemaVK&		GetPipelineLayout					();
 	void						Initialize							( MOAILogicalDeviceVK& logicalDevice );
 	void						LoadModule							( ModuleID moduleID, const void* shaderCode, size_t shaderSize );
 								MOAIShaderProgramVK					();
 								~MOAIShaderProgramVK				();
-	void						SetGfxComposer						( MOAIGfxComposerVK& composer );
+	void						SetGfxComposer						( MOAIPipelineInputBodyComposerVK& composer );
 	void						UpdatePipelineCreateInfo			( VkGraphicsPipelineCreateInfo& info );
 };
 

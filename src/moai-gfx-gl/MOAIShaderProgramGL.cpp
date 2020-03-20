@@ -113,7 +113,7 @@ void MOAIShaderProgramGL::AffirmUniforms () {
 //----------------------------------------------------------------//
 void MOAIShaderProgramGL::ApplyUniforms ( ZLLeanArray < u8 >& buffer ) {
 
-	this->mUniformBuffer.CopyFrom ( buffer);
+	this->mUniformBuffer.CopyFrom ( buffer );
 }
 
 //----------------------------------------------------------------//
@@ -208,7 +208,7 @@ MOAIShaderProgramGL::MOAIShaderProgramGL () :
 	RTTI_BEGIN ( MOAIShaderProgramGL )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIShaderProgramGL >)
 		RTTI_EXTEND ( MOAIGfxResourceGL )
-		RTTI_EXTEND ( MOAIHasUniformComposer )
+		RTTI_EXTEND ( MOAIHasGfxComposer )
 	RTTI_END
 }
 
@@ -249,11 +249,7 @@ void MOAIShaderProgramGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAIL
 	luaL_Reg regTable [] = {
 		{ "declareUniform",				_declareUniform },
 		{ "load",						_load },
-		{ "reserveGlobals",				_reserveGlobals },
-		{ "reserveTextures",			_reserveTextures },
 		{ "reserveUniforms",			_reserveUniforms },
-		{ "setGlobal",					_setGlobal },
-		{ "setTexture",					_setTexture },
 		{ "setVertexAttribute",			_setVertexAttribute },
 		{ NULL, NULL }
 	};

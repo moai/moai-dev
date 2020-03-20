@@ -2,9 +2,9 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx-vk/MOAIGfxComposerVK.h>
+#include <moai-gfx-vk/MOAIPipelineInputBodyComposerVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
-#include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
+#include <moai-gfx-vk/MOAIPipelineInputBodySchemaVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAIShaderMgrVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
@@ -81,15 +81,15 @@ void MOAIShaderMgrVK::AffirmAll () {
 
 	MOAILogicalDeviceVK& logicalDevice = MOAIGfxMgrVK::Get ().GetLogicalDevice ();
 
-	this->mOneTexDescriptorSetLayout = new MOAIDescriptorSetLayoutVK ();
+	this->mOneTexDescriptorSetLayout = new MOAIPipelineInputChunkSchemaVK ();
 	this->mOneTexDescriptorSetLayout->Initialize ( logicalDevice, 1 );
 	this->mOneTexDescriptorSetLayout->SetBinding ( 0, VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT );
 	
-	this->mOneTexPipelineLayout = new MOAIPipelineLayoutVK ();
+	this->mOneTexPipelineLayout = new MOAIPipelineInputBodySchemaVK ();
 	this->mOneTexPipelineLayout->Initialize ( logicalDevice, 1 );
 	this->mOneTexPipelineLayout->SetDescriptorSetLayout ( 0, *this->mOneTexDescriptorSetLayout );
 
-	this->mOneTexComposer = new MOAIGfxComposerVK ();
+	this->mOneTexComposer = new MOAIPipelineInputBodyComposerVK ();
 	this->mOneTexComposer->SetPipelineLayout ( *this->mOneTexPipelineLayout );
 	this->mOneTexComposer->Reserve ( 1 );
 	this->mOneTexComposer->PushTextureCommand ( 0, 0, 0, 0 );
@@ -228,16 +228,16 @@ MOAIShaderProgramVK* MOAIShaderMgrVK::GetProgram ( MOAIShaderPresetEnum shaderID
 
 				case MOAIShaderPresetEnum::ONETRI_SHADER: {
 				
-					MOAIDescriptorSetLayoutVK* descriptorSetLayout = new MOAIDescriptorSetLayoutVK ();
+					MOAIPipelineInputChunkSchemaVK* descriptorSetLayout = new MOAIPipelineInputChunkSchemaVK ();
 					descriptorSetLayout->Initialize ( logicalDevice, 2 );
 					descriptorSetLayout->SetBinding ( 0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT );
 					descriptorSetLayout->SetBinding ( 1, VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT );
 					
-					MOAIPipelineLayoutVK* pipelineLayout = new MOAIPipelineLayoutVK ();
+					MOAIPipelineInputBodySchemaVK* pipelineLayout = new MOAIPipelineInputBodySchemaVK ();
 					pipelineLayout->Initialize ( logicalDevice, 1 );
 					pipelineLayout->SetDescriptorSetLayout ( 0, *descriptorSetLayout );
 					
-					MOAIGfxComposerVK* composer = new MOAIGfxComposerVK ();
+					MOAIPipelineInputBodyComposerVK* composer = new MOAIPipelineInputBodyComposerVK ();
 					composer->SetPipelineLayout ( *this->mOneTexPipelineLayout );
 					composer->Reserve ( 1 );
 					composer->PushTextureCommand ( 1, 0, 0, 0 );

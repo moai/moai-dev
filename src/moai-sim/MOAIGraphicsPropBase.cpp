@@ -223,8 +223,7 @@ MOAIGraphicsPropBase::MOAIGraphicsPropBase () :
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIGraphicsPropBase >)
 		RTTI_EXTEND ( MOAIAbstractProp )
 		RTTI_EXTEND ( MOAIColor )
-		RTTI_EXTEND ( MOAIDrawable )
-		RTTI_EXTEND ( MOAIDrawable )
+		RTTI_EXTEND ( MOAIAbstractDrawable )
 		RTTI_EXTEND ( MOAIHasMaterialBatch )
 	RTTI_END
 	

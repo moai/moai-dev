@@ -40,10 +40,10 @@ MOAITableViewLayer::~MOAITableViewLayer () {
 //----------------------------------------------------------------//
 void MOAITableViewLayer::MOAIAbstractViewLayer_Draw () {
 	
-	MOAIDrawable::Draw ( this->mRenderTable );
+	MOAIAbstractDrawable::Draw ( this->mRenderTable );
 	
 	if ( MOAIDebugLinesMgr::Get ().IsVisible () && this->mShowDebugLines ) {
-		MOAIDrawable::Draw ( this->mRenderTable, true );
+		MOAIAbstractDrawable::Draw ( this->mRenderTable, true );
 	}
 }
 

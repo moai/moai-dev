@@ -33,6 +33,21 @@ private:
 };
 
 //================================================================//
+// MOAISpriteDeck2DCallable
+//================================================================//
+class MOAISpriteDeck2DCallable :
+	public MOAIAbstractGfxComposerCallable {
+private:
+
+	friend class MOAISpriteDeck2D;
+
+	MOAIQuadBrush	mBrush;
+
+	//----------------------------------------------------------------//
+	void 		MOAIAbstractGfxComposerCallable_Call 		();
+};
+
+//================================================================//
 // MOAISpriteDeck2D
 //================================================================//
 /**	@lua	MOAISpriteDeck2D
@@ -43,7 +58,7 @@ private:
 */
 class MOAISpriteDeck2D :
 	public MOAIDeck,
-	public MOAIHasMaterialBatch {
+	public MOAIHasGfxComposer {
 private:
 	
 	ZLLeanArray < ZLQuad >				mUVQuads;

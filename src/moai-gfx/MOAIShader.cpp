@@ -9,9 +9,9 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIShader::ComposeUniforms () {
+MOAIUniformHandle MOAIShader::GetUniformHandle ( ZLIndex uniformID, ZLIndex index ) {
 
-	this->MOAIShader_ComposeUniforms ();
+	return this->MOAIShader_GetUniformHandle ( uniformID, index );
 }
 
 //----------------------------------------------------------------//
@@ -30,16 +30,10 @@ bool MOAIShader::IsReadyForUse () const {
 MOAIShader::MOAIShader () {
 	
 	RTTI_BEGIN ( MOAIShader )
-		RTTI_EXTEND ( MOAILuaObject )
+		RTTI_EXTEND ( MOAIHasGfxComposer )
 	RTTI_END
 }
 
 //----------------------------------------------------------------//
 MOAIShader::~MOAIShader () {
-}
-
-//----------------------------------------------------------------//
-void MOAIShader::SelectTextures () {
-
-	this->MOAIShader_SelectTextures ();
 }

@@ -7,7 +7,7 @@
 #include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
-#include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
+#include <moai-gfx-vk/MOAIPipelineInputBodySchemaVK.h>
 #include <moai-gfx-vk/MOAIPipelineSnapshotVK.h>
 
 //================================================================//
@@ -23,7 +23,7 @@ void MOAICommandBufferVK::Begin () {
 }
 
 //----------------------------------------------------------------//
-void MOAICommandBufferVK::BindDescriptorSet ( VkPipelineBindPoint pipelineBindPoint, MOAIDescriptorSetSnapshotVK& descriptorSet, MOAIPipelineLayoutVK& pipelineLayout, u32 firstSet ) {
+void MOAICommandBufferVK::BindDescriptorSet ( VkPipelineBindPoint pipelineBindPoint, MOAIDescriptorSetSnapshotVK& descriptorSet, MOAIPipelineInputBodySchemaVK& pipelineLayout, u32 firstSet ) {
 
 	vkCmdBindDescriptorSets ( this->mCommandBuffer, pipelineBindPoint, pipelineLayout, firstSet, 1, descriptorSet, 0, NULL );
 }

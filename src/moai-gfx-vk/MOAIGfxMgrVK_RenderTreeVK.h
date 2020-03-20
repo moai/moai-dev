@@ -19,7 +19,7 @@ private:
 
 	friend class MOAIGfxMgrVK;
 
-	ZLStrongPtr < MOAIDrawable >	mOneTri;
+	ZLStrongPtr < MOAIAbstractDrawable >	mOneTri;
 
 	//----------------------------------------------------------------//
 	void				MOAIGfxMgr_RenderTree_Render		();

@@ -54,7 +54,7 @@ class MOAIScissorRect;
 class MOAIGraphicsPropBase :
 	public virtual MOAIAbstractProp,
 	public virtual MOAIColor,
-	public virtual MOAIDrawable,
+	public virtual MOAIAbstractDrawable,
 	public virtual MOAIHasMaterialBatch {
 protected:
 	

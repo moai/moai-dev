@@ -90,7 +90,7 @@ void MOAITableLayer::MOAIDrawable_Draw ( int subPrimID ) {
 	gfxMgr.SetScissorRect ();
 	this->ClearSurface ();
 	
-	MOAIDrawable::Draw ( this->mRenderTable );
+	MOAIAbstractDrawable::Draw ( this->mRenderTable );
 		
 	// restore the frame buffer
 	gfxMgr.SetFrameBuffer ( this->GetFrameBuffer ());

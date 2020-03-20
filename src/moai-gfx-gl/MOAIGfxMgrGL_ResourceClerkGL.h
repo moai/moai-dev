@@ -23,7 +23,7 @@ protected:
 	ZLLeanList < MOAIGfxResourceGL* >		mPendingForLoadList;
 	ZLLeanList < MOAIGfxResourceGL* >		mPendingForDrawList;
 	
-	ZLLeanStack < ZLGfxHandle, 32 >	mDeleterStack;
+	ZLLeanStack < ZLGfxHandle, 32 >			mDeleterStack;
 
 	//----------------------------------------------------------------//
 	void			InsertGfxResource			( MOAIGfxResourceGL& resource );

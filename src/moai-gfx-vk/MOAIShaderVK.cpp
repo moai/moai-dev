@@ -83,7 +83,7 @@
 //}
 
 //----------------------------------------------------------------//
-MOAIGfxComposerVK& MOAIShaderVK::GetGfxComposer () {
+MOAIPipelineInputBodyComposerVK& MOAIShaderVK::GetGfxComposer () {
 
 	assert ( this->mProgram );
 	return this->mProgram->GetGfxComposer ();

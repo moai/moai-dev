@@ -214,7 +214,7 @@ MOAICollisionProp::MOAICollisionProp () :
 	RTTI_BEGIN ( MOAICollisionProp )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAICollisionProp >)
 		RTTI_EXTEND ( MOAIAbstractProp )
-		RTTI_EXTEND ( MOAIDrawable )
+		RTTI_EXTEND ( MOAIAbstractDrawable )
 		RTTI_EXTEND ( MOAIHasDeckAndIndex )
 	RTTI_END
 	

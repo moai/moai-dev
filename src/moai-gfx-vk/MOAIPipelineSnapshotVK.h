@@ -6,10 +6,48 @@
 
 #include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
 #include <moai-gfx-vk/MOAIGfxConstsVK.h>
-#include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
+#include <moai-gfx-vk/MOAIGfxStructVK.h>
+#include <moai-gfx-vk/MOAIPipelineInputBodySchemaVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAIVertexFormatVK.h>
+
+//================================================================//
+// MOAIPipelineParamsVK
+//================================================================//
+class MOAIPipelineParamsVK {
+public:
+
+	MOAILogicalDeviceVK* 	mLogicalDevice;
+	VkRenderPass* 			mRenderPass;
+	VkPrimitiveTopology 	mTopology;
+	MOAIVertexFormatVK* 	mVertexFormat;
+	MOAIShaderVK* 			mShader;
+	MOAIBlendMode* 			mBlendMode;
+
+	//----------------------------------------------------------------//
+	bool operator < ( const MOAIPipelineParamsVK& other ) const {
+	
+		return ( memcmp ( this, &other, sizeof ( MOAIPipelineParamsVK )) < 0 );
+	}
+
+	//----------------------------------------------------------------//
+	MOAIPipelineParamsVK (
+		MOAILogicalDeviceVK& logicalDevice,
+		VkRenderPass& renderPass,
+		VkPrimitiveTopology topology,
+		MOAIVertexFormatVK* vertexFormat,
+		MOAIShaderVK* shader,
+		MOAIBlendMode* blendMode = NULL
+	) {
+		this->mLogicalDevice	= &logicalDevice;
+		this->mRenderPass		= &renderPass;
+		this->mTopology			= topology;
+		this->mVertexFormat		= vertexFormat;
+		this->mShader			= shader;
+		this->mBlendMode		= blendMode;
+	}
+};
 
 //================================================================//
 // MOAIPipelineSnapshotVK
@@ -52,16 +90,9 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void Initialize (
-		MOAILogicalDeviceVK& logicalDevice,
-		VkRenderPass& renderPass,
-		VkPrimitiveTopology topology,
-		MOAIVertexFormatVK* vertexFormat,
-		MOAIShaderVK* shader,
-		MOAIBlendMode* blendMode = NULL
-	) {
+	void Initialize ( const MOAIPipelineParamsVK& params ) {
 	
-		this->SetDependency < MOAILogicalDeviceVK >( logicalDevice );
+		this->SetDependency < MOAILogicalDeviceVK >( *params.mLogicalDevice );
 
 		VkDynamicState dynamicStateEnables [] = {
 			VK_DYNAMIC_STATE_VIEWPORT,
@@ -70,11 +101,11 @@ public:
 
 		VkPipelineColorBlendAttachmentState blendAttachmentState;
 
-		if ( blendMode ) {
+		if ( params.mBlendMode ) {
 
-			VkBlendOp blendOp			= MOAIGfxConstsVK::Remap ( blendMode->mEquation );
-			VkBlendFactor srcFactor		= MOAIGfxConstsVK::Remap ( blendMode->mSourceFactor );
-			VkBlendFactor dstFactor		= MOAIGfxConstsVK::Remap ( blendMode->mDestFactor );
+			VkBlendOp blendOp			= MOAIGfxConstsVK::Remap ( params.mBlendMode->mEquation );
+			VkBlendFactor srcFactor		= MOAIGfxConstsVK::Remap ( params.mBlendMode->mSourceFactor );
+			VkBlendFactor dstFactor		= MOAIGfxConstsVK::Remap ( params.mBlendMode->mDestFactor );
 
 			blendAttachmentState = MOAIGfxStructVK::pipelineColorBlendAttachmentState (
 				VK_TRUE,
@@ -90,7 +121,7 @@ public:
 			blendAttachmentState = MOAIGfxStructVK::pipelineColorBlendAttachmentState ();
 		}
 
-		VkPipelineInputAssemblyStateCreateInfo inputAssemblyState 	= MOAIGfxStructVK::pipelineInputAssemblyStateCreateInfo ( topology );
+		VkPipelineInputAssemblyStateCreateInfo inputAssemblyState 	= MOAIGfxStructVK::pipelineInputAssemblyStateCreateInfo ( params.mTopology );
 		VkPipelineRasterizationStateCreateInfo rasterizationState 	= MOAIGfxStructVK::pipelineRasterizationStateCreateInfo ();
 		VkPipelineColorBlendStateCreateInfo colorBlendState 		= MOAIGfxStructVK::pipelineColorBlendStateCreateInfo ( &blendAttachmentState, 1 ); // one blend attachment state per color attachment (even if blending is not used)
 		VkPipelineViewportStateCreateInfo viewportState 			= MOAIGfxStructVK::pipelineViewportStateCreateInfo (); // overridden by dynamic state
@@ -111,14 +142,14 @@ public:
 			&colorBlendState,
 			&dynamicState,
 			NULL,
-			renderPass
+			*params.mRenderPass
 		);
 
-		vertexFormat->UpdatePipelineCreateInfo ( pipelineCreateInfo );
-		shader->GetProgram ()->UpdatePipelineCreateInfo ( pipelineCreateInfo );
+		params.mVertexFormat->UpdatePipelineCreateInfo ( pipelineCreateInfo );
+		params.mShader->GetProgram ()->UpdatePipelineCreateInfo ( pipelineCreateInfo );
 
 		// Create rendering pipeline using the specified states
-		VK_CHECK_RESULT ( vkCreateGraphicsPipelines ( logicalDevice, VK_NULL_HANDLE, 1, &pipelineCreateInfo, nullptr, &this->mPipeline ));
+		VK_CHECK_RESULT ( vkCreateGraphicsPipelines ( *params.mLogicalDevice, VK_NULL_HANDLE, 1, &pipelineCreateInfo, nullptr, &this->mPipeline ));
 	}
 
 	//----------------------------------------------------------------//

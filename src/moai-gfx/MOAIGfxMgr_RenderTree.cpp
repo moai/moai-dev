@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx/MOAIDrawable.h>
+#include <moai-gfx/MOAIAbstractDrawable.h>
 #include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIGfxMgr_RenderTree.h>
 

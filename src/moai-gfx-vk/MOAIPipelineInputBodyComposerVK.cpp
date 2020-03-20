@@ -2,18 +2,18 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx-vk/MOAIGfxComposerVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
+#include <moai-gfx-vk/MOAIPipelineInputBodyComposerVK.h>
+#include <moai-gfx-vk/MOAIPipelineInputChunkSchemaVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetVK.h>
+#include <moai-gfx-vk/MOAIPipelineInputChunkVK.h>
 #include <moai-gfx-vk/MOAIFrameBufferVK.h>
 #include <moai-gfx-vk/MOAIGfxBufferSnapshotVK.h>
-#include <moai-gfx-vk/MOAIGfxComposerVK.h>
+#include <moai-gfx-vk/MOAIPipelineInputBodyComposerVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK_GPUCacheVK.h>
 #include <moai-gfx-vk/MOAIGfxStateGPUCacheFrameVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
-#include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
+#include <moai-gfx-vk/MOAIPipelineInputBodySchemaVK.h>
 #include <moai-gfx-vk/MOAIPipelineSnapshotVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
@@ -34,18 +34,18 @@ MOAIGfxComposerTextureCommandVK::MOAIGfxComposerTextureCommandVK ( ZLIndex descr
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxComposerTextureCommandVK::MOAIGfxComposerCommandVK_Apply ( MOAIGfxMgrVK& gfxMgr, MOAIDescriptorSetVK& descriptorSet, MOAICommandBufferVK& commandBuffer ) {
+void MOAIGfxComposerTextureCommandVK::MOAIGfxComposerCommandVK_Apply ( MOAIGfxMgrVK& gfxMgr, MOAIPipelineInputChunkVK& descriptorSet, MOAICommandBufferVK& commandBuffer ) {
 
 	MOAITexture2DVK* texture = MOAICast < MOAITexture2DVK >( gfxMgr.GetTexture ( this->mTextureUnit ));
 	descriptorSet.SetDescriptor ( this->mBindPoint, this->mArrayItem, *texture->GetSnapshot ( commandBuffer ));
 }
 
 //================================================================//
-// MOAIGfxComposerVK
+// MOAIPipelineInputBodyComposerVK
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxComposerVK::ApplyAndBind (  MOAIGfxMgrVK& gfxMgr, MOAICommandBufferVK& commandBuffer, VkPipelineBindPoint pipelineBindPoint ) {
+void MOAIPipelineInputBodyComposerVK::ComposeAndBind (  MOAIGfxMgrVK& gfxMgr, MOAICommandBufferVK& commandBuffer, VkPipelineBindPoint pipelineBindPoint ) {
 
 	gfxMgr.GfxStateWillChange (); // TODO: need to do this only if graphics state will actually change
 
@@ -54,62 +54,36 @@ void MOAIGfxComposerVK::ApplyAndBind (  MOAIGfxMgrVK& gfxMgr, MOAICommandBufferV
 	for ( ZLIndex i = 0; i < this->mCommandCount; ++i ) {
 		MOAIGfxComposerCommandVK* command = this->mCommands [ i ];
 		if ( command ) {
-			MOAIDescriptorSetVK& descriptorSet = this->mDescriptorSets [ command->mDescriptorSetIndex ];
+			MOAIPipelineInputChunkVK& descriptorSet = this->mDescriptorSets [ command->mDescriptorSetIndex ];
 			command->Apply ( gfxMgr, descriptorSet, commandBuffer );
-			commandBuffer.BindDescriptorSet ( pipelineBindPoint, *descriptorSet.GetSnapshot ( commandBuffer ), *this->mPipelineLayout, 0 );
 		}
+	}
+	
+	for ( ZLIndex i = 0; i < this->mDescriptorSets.Size (); ++i ) {
+		MOAIPipelineInputChunkVK& descriptorSet = this->mDescriptorSets [ i ];
+		commandBuffer.BindDescriptorSet ( pipelineBindPoint, *descriptorSet.GetSnapshot ( commandBuffer ), *this->mPipelineLayout, 0 );
 	}
 }
 
 //----------------------------------------------------------------//
-MOAIDescriptorSetVK& MOAIGfxComposerVK::GetDescriptorSet ( ZLIndex index ) {
-
-	return this->mDescriptorSets [ index ];
-}
-
-//----------------------------------------------------------------//
-MOAIPipelineLayoutVK& MOAIGfxComposerVK::GetPipelineLayout () {
-
-	assert ( this->mPipelineLayout );
-	return *this->mPipelineLayout;
-}
-
-//----------------------------------------------------------------//
-MOAIGfxComposerVK::MOAIGfxComposerVK () :
+MOAIPipelineInputBodyComposerVK::MOAIPipelineInputBodyComposerVK () :
 	mCommandCount ( 0 ) {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxComposerVK::~MOAIGfxComposerVK () {
+MOAIPipelineInputBodyComposerVK::~MOAIPipelineInputBodyComposerVK () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxComposerVK::PushTextureCommand ( ZLIndex descriptorSetIndex, ZLIndex bindPoint, ZLIndex arrayItem, ZLIndex textureUnit ) {
+void MOAIPipelineInputBodyComposerVK::PushTextureCommand ( ZLIndex descriptorSetIndex, ZLIndex bindPoint, ZLIndex arrayItem, ZLIndex textureUnit ) {
 
 	this->mCommands [ this->mCommandCount++ ] = new MOAIGfxComposerTextureCommandVK ( descriptorSetIndex, bindPoint, arrayItem, textureUnit );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxComposerVK::Reserve ( ZLSize size ) {
+void MOAIPipelineInputBodyComposerVK::Reserve ( ZLSize size ) {
 
 	this->mCommands.Init ( size );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxComposerVK::SetPipelineLayout ( MOAIPipelineLayoutVK& pipelineLayout ) {
-
-	this->Finalize ();
-	
-	pipelineLayout.AffirmPipelineLayout ();
-	this->mPipelineLayout = &pipelineLayout;
-	
-	ZLSize nLayouts = this->mPipelineLayout->mDescriptorSetLayouts.Size ();
-	this->mDescriptorSets.Init ( nLayouts );
-	
-	for ( ZLIndex i = 0; i < nLayouts; ++i ) {
-		MOAIDescriptorSetVK& descriptorSet = this->mDescriptorSets [ i ];
-		descriptorSet.Initialize ( this->mPipelineLayout->GetDescriptorSetLayout ( i ));
-	}
 }
 
 //================================================================//

@@ -97,7 +97,7 @@ private:
 	ZLLeanStack < MOAIMaterialStackFrame, 8 >		mStack;
 
 	//----------------------------------------------------------------//
-	void				SetGlobal					( MOAIMaterialGlobal& global, void* ptr );
+	void						SetGlobal					( MOAIMaterialGlobal& global, void* ptr );
 
 	//----------------------------------------------------------------//
 	void						MOAIAbstractMaterial_ApplyGlobals					( MOAIAbstractMaterialInterface& dest );

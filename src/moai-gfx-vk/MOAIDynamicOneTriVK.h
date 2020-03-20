@@ -7,11 +7,11 @@
 #include <moai-gfx-vk/MOAIGfxBufferVK.h>
 
 class MOAICommandBufferVK;
-class MOAIDescriptorSetLayoutVK;
-class MOAIDescriptorSetVK;
+class MOAIPipelineInputChunkSchemaVK;
+class MOAIPipelineInputChunkVK;
 class MOAIGfxBufferSnapshotVK;
 class MOAIIndexBufferVK;
-class MOAIPipelineLayoutVK;
+class MOAIPipelineInputBodySchemaVK;
 class MOAIShaderProgramVK;
 class MOAIShaderVK;
 class MOAITexture2DVK;
@@ -21,7 +21,7 @@ class MOAIVertexBufferVK;
 // MOAIDynamicOneTriVK
 //================================================================//
 class MOAIDynamicOneTriVK :
-	public virtual MOAIDrawable {
+	public virtual MOAIAbstractDrawable {
 private:
 
 	struct Vertex {

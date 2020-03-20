@@ -267,8 +267,8 @@ void MOAIGfxResourceGL::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILua
 	
 	state.SetField ( -1, "GFX_EVENT_CREATED",					( u32 )MOAIGfxResourceGL::GFX_EVENT_CREATED );
 	
-	state.SetField ( -1, "DRAWING_QUEUE",					( u32 )MOAIGfxMgrGL_DisplayListClerkGL::DRAWING_QUEUE );
-	state.SetField ( -1, "LOADING_QUEUE",					( u32 )MOAIGfxMgrGL_DisplayListClerkGL::LOADING_QUEUE );
+	state.SetField ( -1, "DRAWING_QUEUE",						( u32 )MOAIGfxMgrGL_DisplayListClerkGL::DRAWING_QUEUE );
+	state.SetField ( -1, "LOADING_QUEUE",						( u32 )MOAIGfxMgrGL_DisplayListClerkGL::LOADING_QUEUE );
 }
 
 //----------------------------------------------------------------//
@@ -278,10 +278,10 @@ void MOAIGfxResourceGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILua
 	luaL_Reg regTable [] = {
 		{ "clear",						_destroy }, // TODO: deprecate
 		{ "destroy",					_destroy },
-		{ "getAge",					_getAge },
-		{ "getResourceState",		_getResourceState },
+		{ "getAge",						_getAge },
+		{ "getResourceState",			_getResourceState },
 		{ "release",					_destroy }, // TODO: deprecate
-		{ "purge",					_purge },
+		{ "purge",						_purge },
 		{ "scheduleFlush",				_scheduleForGPUUpdate },
 		{ "scheduleForGPUUpdate",		_scheduleForGPUUpdate },
 		{ NULL, NULL }

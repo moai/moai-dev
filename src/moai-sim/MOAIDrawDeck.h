@@ -10,7 +10,7 @@
 // MOAIDrawDeck
 //================================================================//
 /**	@lua MOAIDrawDeck
-	@text Scriptable deck objectf for immediate mode drawing with MOAIDraw.
+	@text Scriptable deck object for immediate mode drawing with MOAIDraw.
 */
 class MOAIDrawDeck :
 	public MOAIStretchDeck {

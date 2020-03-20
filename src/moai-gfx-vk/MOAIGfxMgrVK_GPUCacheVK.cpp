@@ -3,12 +3,12 @@
 
 #include "pch.h"
 
-#include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
+#include <moai-gfx-vk/MOAIPipelineInputChunkSchemaVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetVK.h>
+#include <moai-gfx-vk/MOAIPipelineInputChunkVK.h>
 #include <moai-gfx-vk/MOAIFrameBufferVK.h>
 #include <moai-gfx-vk/MOAIGfxBufferSnapshotVK.h>
-#include <moai-gfx-vk/MOAIGfxComposerVK.h>
+#include <moai-gfx-vk/MOAIPipelineInputBodyComposerVK.h>
 #include <moai-gfx-vk/MOAIGfxConstsVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK_GPUCacheVK.h>
@@ -16,7 +16,7 @@
 #include <moai-gfx-vk/MOAIGfxStateGPUCacheFrameVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAIIndexBufferVK.h>
-#include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
+#include <moai-gfx-vk/MOAIPipelineInputBodySchemaVK.h>
 #include <moai-gfx-vk/MOAIPipelineSnapshotVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
@@ -58,6 +58,18 @@ MOAIGfxMgrVK_GPUCacheVK::~MOAIGfxMgrVK_GPUCacheVK () {
 //================================================================//
 // virtual
 //================================================================//
+
+//----------------------------------------------------------------//
+MOAIPipelineSnapshotVK* MOAIGfxMgrVK_GPUCacheVK::AffirmPipeline ( MOAIPipelineParamsVK& params ) {
+
+	ZLStrongPtr < MOAIPipelineSnapshotVK > pipeline = this->mPipelinePool [ params ];
+	if ( !pipeline ) {
+		pipeline = new MOAIPipelineSnapshotVK ();
+		pipeline->Initialize ( params );
+		this->mPipelinePool [ params ] = pipeline;
+	}
+	return pipeline;
+}
 
 //----------------------------------------------------------------//
 void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_ApplyStateChanges () {
@@ -146,13 +158,12 @@ void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_DrawPrims ( MOAIGfxTopologyEnu
 	MOAIShaderVK* shader					= MOAICast < MOAIShaderVK >( this->GetShader ());
 	MOAITexture2DVK* texture				= MOAICast < MOAITexture2DVK >( this->GetTexture ()); // TODO: obviously, fix this
 	MOAIVertexFormatVK* vertexFormat 		= MOAICast < MOAIVertexFormatVK >( this->GetVertexFormat ());
-		
+
 	assert ( shader && texture && vertexFormat );
 	
 	MOAIGfxStateGPUCacheFrame& activeState	= *this->mActiveState;
 	
-	MOAIPipelineSnapshotVK* pipeline = new MOAIPipelineSnapshotVK ();
-	pipeline->Initialize (
+	MOAIPipelineParamsVK pipelinesParams (
 		logicalDevice,
 		gfxMgr.GetRenderPass (),
 		primTypeVK,
@@ -160,13 +171,15 @@ void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_DrawPrims ( MOAIGfxTopologyEnu
 		shader,
 		activeState.mBlendEnabled ? &activeState.mBlendMode : NULL
 	);
+	
+	MOAIPipelineSnapshotVK* pipeline = this->AffirmPipeline ( pipelinesParams );
 	commandBuffer.BindPipeline ( VK_PIPELINE_BIND_POINT_GRAPHICS, *pipeline );
 	commandBuffer.Pin ( *pipeline );
 
 	// compose
 	// TODO: need to detect changes and signal gfx state change
-	MOAIGfxComposerVK& composer = shader->GetGfxComposer ();
-	composer.ApplyAndBind ( gfxMgr, commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS );
+	MOAIPipelineInputBodyComposerVK& composer = shader->GetGfxComposer ();
+	composer.ComposeAndBind ( gfxMgr, commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS );
 
 	// set the viewport and scissor
 	VkViewport viewport			= MOAIGfxStructVK::viewport ( activeState.mViewRect, 0.0, 1.0 );

@@ -383,10 +383,6 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushShader () {
 	MOAIShaderProgramGL* program = nextShader ? nextShader->GetProgram () : 0;
 	nextShader = program ? nextShader : 0;
 	
-	if ( nextShader ) {
-		nextShader->ComposeUniforms ();
-	}
-	
 	bool applyUniforms	= ( nextShader && nextShader->HasDirtyUniforms ());
 	bool changeShader	= ( nextShader != prevShader );
 
@@ -696,10 +692,6 @@ void MOAIGfxMgrGL_GPUCacheGL::StoreGPUState ( MOAIGfxStateGPUCacheFrame& frame )
 void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_ApplyStateChanges () {
 
 	if ( !this->mApplyingStateChanges ) {
-	
-		if ( this->mPendingState->mShader ) {
-			this->mPendingState->mShader->SelectTextures ();
-		}
 
 		if ( this->mDirtyFlags || this->mTextureDirtyFlags ) {
 			

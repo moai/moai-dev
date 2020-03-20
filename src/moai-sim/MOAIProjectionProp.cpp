@@ -41,7 +41,7 @@ MOAIProjectionProp::MOAIProjectionProp () :
 	
 	RTTI_BEGIN ( MOAIProjectionProp )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIProjectionProp >)
-		RTTI_EXTEND ( MOAIDrawable )
+		RTTI_EXTEND ( MOAIAbstractDrawable )
 		RTTI_EXTEND ( MOAIPartitionHull )
 	RTTI_END
 }

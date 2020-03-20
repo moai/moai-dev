@@ -48,7 +48,7 @@ void MOAIGfxMgrGL_RenderTreeGL::MOAIGfxMgr_RenderTree_Render () {
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		state.Push ( this->mRenderRoot );
 		
-		MOAIDrawable::Draw ( state, -1 );
+		MOAIAbstractDrawable::Draw ( state, -1 );
 	}
 	
 	this->mRenderCounter++;

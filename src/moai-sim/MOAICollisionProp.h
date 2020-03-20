@@ -60,7 +60,7 @@ private:
 // TODO: doxygen
 class MOAICollisionProp :
 	public virtual MOAIAbstractProp,
-	public virtual MOAIDrawable,
+	public virtual MOAIAbstractDrawable,
 	public virtual MOAIHasDeckAndIndex {
 private:
 	
