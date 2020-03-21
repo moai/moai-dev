@@ -8,7 +8,6 @@
 
 #include <moai-gfx/MOAIAbstractDrawable.h>
 #include <moai-gfx/MOAIAbstractGfxComposerCallable.h>
-#include <moai-gfx/MOAIAbstractMaterialBatchInterface.h>
 #include <moai-gfx/MOAIAbstractMaterialInterface.h>
 #include <moai-gfx/MOAIAbstractUniformBuffer.h>
 #include <moai-gfx/MOAIBlendMode.h>
@@ -23,21 +22,22 @@
 #include <moai-gfx/MOAIGfxMgr_GPUCache.h>
 #include <moai-gfx/MOAIGfxMgr_RenderTree.h>
 #include <moai-gfx/MOAIGfxMgr_VertexCache.h>
+#include <moai-gfx/MOAIGfxComposerBatch.h>
+#include <moai-gfx/MOAIGfxComposerBatchInterface.h>
 #include <moai-gfx/MOAIGfxMgrComponents.h>
 #include <moai-gfx/MOAIGfxPresetEnum.h>
+#include <moai-gfx/MOAIGfxResource.h>
 #include <moai-gfx/MOAIGfxStateCPUCacheFrame.h>
 #include <moai-gfx/MOAIGfxStateCPUConsts.h>
 #include <moai-gfx/MOAIGfxStateGPUCacheFrame.h>
 #include <moai-gfx/MOAIHasGfxComposer.h>
+#include <moai-gfx/MOAIHasGfxComposerBatch.h>
 #include <moai-gfx/MOAIImageTexture.h>
 #include <moai-gfx/MOAIIndexBuffer.h>
 #include <moai-gfx/MOAILight.h>
 #include <moai-gfx/MOAILightFormat.h>
 #include <moai-gfx/MOAIMaterial.h>
-#include <moai-gfx/MOAIMaterialBatch.h>
-#include <moai-gfx/MOAIHasMaterialBatch.h>
 #include <moai-gfx/MOAIMaterialMgr.h>
-#include <moai-gfx/MOAIGfxResource.h>
 #include <moai-gfx/MOAIShader.h>
 #include <moai-gfx/MOAITexture.h>
 #include <moai-gfx/MOAITexture2D.h>

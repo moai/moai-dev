@@ -22,8 +22,8 @@ protected:
 	static int		_setStretchFactor						( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void			_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
 	
 public:
 		

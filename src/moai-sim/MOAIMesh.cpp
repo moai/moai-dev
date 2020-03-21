@@ -515,63 +515,65 @@ u32 MOAIMesh::CountPrims () const {
 
 //----------------------------------------------------------------//
 void MOAIMesh::DrawIndex ( ZLIndex idx, MOAIMeshSpan* span ) {
+	UNUSED ( idx );
+	UNUSED ( span );
 
-	MOAIMaterialMgr& materialMgr = MOAIMaterialMgr::Get ();
-	materialMgr.Push ( this->GetMaterial ( idx ));
-	materialMgr.SetShader ( MOAIShaderPresetEnum::MESH_SHADER );
-	materialMgr.LoadGfxState ();
-	materialMgr.Pop ();
-
-	//if ( !this->LoadGfxState ( materials, idx, MOAIShaderPresetEnum::MESH_SHADER )) return;
-
-	// TODO: make use of offset and scale
-
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	if ( this->mVertexArray->IsReadyForUse ()) {
-	
-		gfxMgr.SetVertexArray ( this->mVertexArray );
-
-		// I am super lazy, so set this up here instead of adding if's below
-		MOAIMeshSpan defaultSpan;
-		if ( !span ) {
-			defaultSpan.mBase = 0;
-			defaultSpan.mTop = this->mTotalElements;
-			defaultSpan.mNext = 0;
-			span = &defaultSpan;
-		}
-		
-		gfxMgr.SetPenWidth ( this->mPenWidth );
-		
-		if ( this->mIndexBuffer ) {
-			
-			// TODO: turns out we can bind this inside the VAO as well. so there.
-			if ( this->mIndexBuffer->IsReadyForUse ()) {
-			
-				gfxMgr.SetIndexBuffer ( this->mIndexBuffer );
-			
-				for ( ; span; span = span->mNext ) {
-				
-					if ( span->mBase == span->mTop ) continue;
-					assert (( span->mBase < span->mTop ) && ( span->mTop <= this->mTotalElements ));
-				
-					gfxMgr.DrawPrims ( this->mPrimType, span->mBase, ( u32 )( span->mTop - span->mBase ));
-				}
-
-				gfxMgr.SetIndexBuffer ();
-			}
-		}
-		else {
-		
-			for ( ; span; span = span->mNext ) {
-			
-				if ( span->mBase == span->mTop ) continue;
-				assert (( span->mBase < span->mTop ) && ( span->mTop <= this->mTotalElements ));
-			
-				gfxMgr.DrawPrims ( this->mPrimType, span->mBase, ( u32 )( span->mTop - span->mBase ));
-			}
-		}
-		gfxMgr.SetVertexArray ();
-	}
+//	MOAIMaterialMgr& materialMgr = MOAIMaterialMgr::Get ();
+//	materialMgr.Push ( this->GetMaterial ( idx ));
+//	materialMgr.SetShader ( MOAIShaderPresetEnum::MESH_SHADER );
+//	materialMgr.LoadGfxState ();
+//	materialMgr.Pop ();
+//
+//	//if ( !this->LoadGfxState ( materials, idx, MOAIShaderPresetEnum::MESH_SHADER )) return;
+//
+//	// TODO: make use of offset and scale
+//
+//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+//	if ( this->mVertexArray->IsReadyForUse ()) {
+//
+//		gfxMgr.SetVertexArray ( this->mVertexArray );
+//
+//		// I am super lazy, so set this up here instead of adding if's below
+//		MOAIMeshSpan defaultSpan;
+//		if ( !span ) {
+//			defaultSpan.mBase = 0;
+//			defaultSpan.mTop = this->mTotalElements;
+//			defaultSpan.mNext = 0;
+//			span = &defaultSpan;
+//		}
+//
+//		gfxMgr.SetPenWidth ( this->mPenWidth );
+//
+//		if ( this->mIndexBuffer ) {
+//
+//			// TODO: turns out we can bind this inside the VAO as well. so there.
+//			if ( this->mIndexBuffer->IsReadyForUse ()) {
+//
+//				gfxMgr.SetIndexBuffer ( this->mIndexBuffer );
+//
+//				for ( ; span; span = span->mNext ) {
+//
+//					if ( span->mBase == span->mTop ) continue;
+//					assert (( span->mBase < span->mTop ) && ( span->mTop <= this->mTotalElements ));
+//
+//					gfxMgr.DrawPrims ( this->mPrimType, span->mBase, ( u32 )( span->mTop - span->mBase ));
+//				}
+//
+//				gfxMgr.SetIndexBuffer ();
+//			}
+//		}
+//		else {
+//
+//			for ( ; span; span = span->mNext ) {
+//
+//				if ( span->mBase == span->mTop ) continue;
+//				assert (( span->mBase < span->mTop ) && ( span->mTop <= this->mTotalElements ));
+//
+//				gfxMgr.DrawPrims ( this->mPrimType, span->mBase, ( u32 )( span->mTop - span->mBase ));
+//			}
+//		}
+//		gfxMgr.SetVertexArray ();
+//	}
 }
 
 //----------------------------------------------------------------//
@@ -592,7 +594,7 @@ MOAIMesh::MOAIMesh () :
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIMesh >)
 		RTTI_VISITOR ( MOAIAbstractLuaSerializationVisitor, MOAILuaSerializationVisitor < MOAIMesh >)
 		RTTI_EXTEND ( MOAIDeck )
-		RTTI_EXTEND ( MOAIHasMaterialBatch )
+		RTTI_EXTEND ( MOAIHasGfxComposerBatch )
 		RTTI_EXTEND ( MOAIVertexArray )
 	RTTI_END
 

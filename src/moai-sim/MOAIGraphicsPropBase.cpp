@@ -224,7 +224,7 @@ MOAIGraphicsPropBase::MOAIGraphicsPropBase () :
 		RTTI_EXTEND ( MOAIAbstractProp )
 		RTTI_EXTEND ( MOAIColor )
 		RTTI_EXTEND ( MOAIAbstractDrawable )
-		RTTI_EXTEND ( MOAIHasMaterialBatch )
+		RTTI_EXTEND ( MOAIHasGfxComposerBatch )
 	RTTI_END
 	
 	this->mDisplayFlags = DEFAULT_FLAGS;
@@ -239,8 +239,6 @@ MOAIGraphicsPropBase::~MOAIGraphicsPropBase () {
 
 //----------------------------------------------------------------//
 void MOAIGraphicsPropBase::PopGfxState () {
-
-	MOAIMaterialMgr::Get ().Pop ();
 }
 
 //----------------------------------------------------------------//
@@ -249,8 +247,6 @@ void MOAIGraphicsPropBase::PushGfxState () {
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	gfxMgr.SetPenColor ( this->mColor );
-
-	MOAIMaterialMgr::Get ().Push ( this->GetMaterial ());
 	
 	if ( this->mScissorRect ) {
 		ZLRect scissorRect = this->mScissorRect->GetScissorRect ( gfxMgr.GetWorldToWndMtx ());

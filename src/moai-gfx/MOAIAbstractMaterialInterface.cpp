@@ -422,7 +422,7 @@ void MOAIAbstractMaterialInterface::LoadGfxState () {
 	else {
 	
 		gfxMgr.SetBlendMode ( MOAIBlendMode ());
-		gfxMgr.SetCullFunc (  );
+		gfxMgr.SetCullFunc ();
 		gfxMgr.SetDepthMask ( false );
 		gfxMgr.SetDepthFunc ( MOAIDepthFuncEnum::NONE );
 		gfxMgr.SetTexture ();

@@ -430,14 +430,6 @@ MOAIDeck* MOAISpriteDeck2D::AffirmDeck ( MOAILuaState& state, int idx ) {
 			0
 		);
 		
-		spriteDeck->PushShaderCmd (
-			MOAIGfxComposerAddrModeEnum::FROM_OBJECT,
-			MOAIGfxComposerAddrModeEnum::TO_GFX_STATE,
-			MOAIGfxMgr::Get ().GetShaderPreset ( MOAIShaderPresetEnum::DECK2D_SHADER )
-		);
-		
-		spriteDeck->PushCallCmd ();
-		
 		int hWidth = ( int )( texture->GetWidth () / 2 );
 		int hHeight = ( int )( texture->GetHeight () / 2 );
 		
@@ -470,7 +462,7 @@ MOAIDeck* MOAISpriteDeck2D::AffirmDeck ( MOAILuaState& state, int idx ) {
 //}
 
 //----------------------------------------------------------------//
-//bool MOAISpriteDeck2D::Inside ( u32 idx, MOAIMaterialBatch* materials, u32 granularity, ZLVec3D vec, float pad ) {
+//bool MOAISpriteDeck2D::Inside ( u32 idx, MOAIGfxComposerBatch* materials, u32 granularity, ZLVec3D vec, float pad ) {
 //	UNUSED ( pad );
 //
 //	u32 size = ( u32 )this->mSpriteLists.Size (); // TODO: cast
@@ -658,13 +650,13 @@ ZLBounds MOAISpriteDeck2D::MOAIDeck_ComputeMaxAABB () {
 //----------------------------------------------------------------//
 void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 
-	MOAIMaterialMgr& materialMgr = MOAIMaterialMgr::Get ();
-
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	MOAIQuadBrush::BindVertexFormat ();
 	
 	gfxMgr.SetVertexTransform ( MOAIGfxMgr::MODEL_TO_DISPLAY_MTX );
 	gfxMgr.SetUVTransform ( MOAIGfxMgr::UV_TO_MODEL_MTX );
+	gfxMgr.SetBlendMode ( MOAIBlendMode ());
+	gfxMgr.SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
 
 	ZLSize totalSprites			= this->mSprites.Size ();
 	ZLSize totalSpriteLists		= this->mSpriteLists.Size ();
@@ -686,11 +678,7 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 			base =  ZLIndexOp::Wrap ( idx, totalSprites );
 			top = base + ( ZLSize )1;
 		}
-		
-		ZLIndex materialID = ZLIndexOp::INVALID;
-//		materialMgr.Push (); // push an empty stack frame to facilitate "swap" below
-		materialMgr.LoadGfxState ();
-		
+				
 		for ( ZLIndex i = base; i < top; ++i ) {
 			
 			MOAISprite spritePair = this->mSprites [  ZLIndexOp::Wrap ( i, totalSprites )];
@@ -702,10 +690,8 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 			callable.mBrush.mUVQuad = this->mUVQuads [ spritePair.mUVQuadID ];
 			callable.mBrush.mModelQuad = this->mQuads [ spritePair.mQuadID ];
 			
-			composer->Execute ( callable );
+			composer->Execute ( callable, MOAIGfxComposerCmdEnum::CALL_FROM_SHADER );
 		}
-		
-//		materialMgr.Pop ();
 	}
 	else {
 		
@@ -713,12 +699,10 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 		if ( !composer ) return;
 		
 		MOAISpriteDeck2DCallable callable;
-		MOAIMaterial* material = 0;
 		
 		if ( totalQuads ) {
 		
 			ZLIndex itemIdx =  ZLIndexOp::Wrap ( idx, totalQuads );
-//			material = this->GetMaterial ( itemIdx );
 
 			callable.mBrush.mModelQuad = this->mQuads [ itemIdx ];
 
@@ -735,10 +719,7 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 			callable.mBrush.mModelQuad.Init ( -0.5f, -0.5f, 0.5f, 0.5f );
 		}
 		
-//		materialMgr.Push ();
-		materialMgr.LoadGfxState ();
-		composer->Execute ( callable );
-//		materialMgr.Pop ();
+		composer->Execute ( callable, MOAIGfxComposerCmdEnum::CALL_FROM_SHADER );
 	}
 }
 

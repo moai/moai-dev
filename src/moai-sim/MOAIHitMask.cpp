@@ -118,11 +118,11 @@ int MOAIGraphicsPropBase::_getDepthTest ( lua_State* L ) {
 /**	@lua	getIndexBatchSize
 	@text	Get the index batch size.
 	
-	@in		MOAIMaterialBatch self
+	@in		MOAIGfxComposerBatch self
 	@out	number indexBatchSize
 */
-int MOAIMaterialBatch::_getIndexBatchSize ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" );
+int MOAIGfxComposerBatch::_getIndexBatchSize ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxComposerBatch, "U" );
 	state.Push ( self->mIndexBatchSize );
 	return 1;
 }
@@ -132,12 +132,12 @@ int MOAIMaterialBatch::_getIndexBatchSize ( lua_State* L ) {
 	@text	Get the shader for the given index. Index batch size
 			is ignored.
 	
-	@in		MOAIMaterialBatch self
+	@in		MOAIGfxComposerBatch self
 	@opt	number idx					Default value is 1.
 	@out	MOAIShader shader
 */
-int MOAIMaterialBatch::_getShader ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
+int MOAIGfxComposerBatch::_getShader ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxComposerBatch, "U" )
 	state.Push ( self->RawGetShader ( state.GetValue < u32 >( 2, 1 ) - 1 ));
 	return 0;
 }
@@ -147,12 +147,12 @@ int MOAIMaterialBatch::_getShader ( lua_State* L ) {
 	@text	Get the texture for the given index. Index batch size
 			is ignored.
 	
-	@in		MOAIMaterialBatch self
+	@in		MOAIGfxComposerBatch self
 	@opt	number idx		Default value is 1.
 	@out	MOAITexture 	texture
 */
-int MOAIMaterialBatch::_getTexture ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
+int MOAIGfxComposerBatch::_getTexture ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxComposerBatch, "U" )
 	state.Push ( self->RawGetTexture ( state.GetValue < u32 >( 2, 1 ) - 1 ));
 	return 1;
 }
@@ -161,12 +161,12 @@ int MOAIMaterialBatch::_getTexture ( lua_State* L ) {
 /**	@lua	reserveMaterials
 	@text	Reserve material indices.
 	
-	@in		MOAIMaterialBatch self
+	@in		MOAIGfxComposerBatch self
 	@opt	number count
 	@out	nil
 */
-int MOAIMaterialBatch::_reserveMaterials ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
+int MOAIGfxComposerBatch::_reserveMaterials ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxComposerBatch, "U" )
 	self->Reserve ( state.GetValue ( 2, 0 ));
 	return 1;
 }
@@ -289,8 +289,8 @@ int MOAIGraphicsPropBase::_setDepthTest ( lua_State* L ) {
 	@in		variant mask		A MOAIImage or a path to an image file
 	@out	MOAIImage mask
 */
-int MOAIMaterialBatch::_setHitMask ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
+int MOAIGfxComposerBatch::_setHitMask ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxComposerBatch, "U" )
 	state.Push ( self->SetHitMask ( state, 2 ));
 	return 1;
 }
@@ -320,8 +320,8 @@ int MOAIMaterialBatch::_setHitMask ( lua_State* L ) {
 		@in		number a
 		@out	nil
 */
-int MOAIMaterialBatch::_setHitMaskScalar ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
+int MOAIGfxComposerBatch::_setHitMaskScalar ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxComposerBatch, "U" )
 	self->SetHitMaskScalar ( state, 2 );
 	return 0;
 }
@@ -351,8 +351,8 @@ int MOAIMaterialBatch::_setHitMaskScalar ( lua_State* L ) {
 		@in		number a
 		@out	nil
 */
-int MOAIMaterialBatch::_setHitMaskThreshold ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
+int MOAIGfxComposerBatch::_setHitMaskThreshold ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxComposerBatch, "U" )
 	self->SetHitMaskThreshold ( state, 2 );
 	return 0;
 }
@@ -368,12 +368,12 @@ int MOAIMaterialBatch::_setHitMaskThreshold ( lua_State* L ) {
 			size of 1 would create a 1 to 1 mapping between deck indices
 			and materials.
 	
-	@in		MOAIMaterialBatch self
+	@in		MOAIGfxComposerBatch self
 	@opt	number indexBatchSize		Default value is 1.
 	@out	nil
 */
-int MOAIMaterialBatch::_setIndexBatchSize ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
+int MOAIGfxComposerBatch::_setIndexBatchSize ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxComposerBatch, "U" )
 	self->mIndexBatchSize = state.GetValue < u32 >( 2, 1 );
 	return 0;
 }
@@ -387,19 +387,19 @@ int MOAIMaterialBatch::_setIndexBatchSize ( lua_State* L ) {
 	
 	@overload
 	
-		@in		MOAIMaterialBatch self
+		@in		MOAIGfxComposerBatch self
 		@in		number idx
 		@in		variant shader			Overloaded to accept a MOAIShader or a shader preset.
 		@out	MOAIShader shader		The shader that was set or created.
 	
 	@overload
 	
-		@in		MOAIMaterialBatch self
+		@in		MOAIGfxComposerBatch self
 		@in		variant shader			Overloaded to accept a MOAIShader or a shader preset.
 		@out	MOAIShader shader		The shader that was set or created.
 */
-int MOAIMaterialBatch::_setShader ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
+int MOAIGfxComposerBatch::_setShader ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxComposerBatch, "U" )
 	state.Push ( self->SetShader ( state, 2 ));
 	return 1;
 }
@@ -413,36 +413,36 @@ int MOAIMaterialBatch::_setShader ( lua_State* L ) {
 	
 	@overload
 	
-		@in		MOAIMaterialBatch self
+		@in		MOAIGfxComposerBatch self
 		@in		number idx
 		@in		variant texture			Overloaded to accept a filename, MOAITexture, MOAIImage, MOAIStream or MOAIDataBuffer.
 		@out	MOAITexture texture		The texture that was set or created.
 	
 	@overload
 	
-		@in		MOAIMaterialBatch self
+		@in		MOAIGfxComposerBatch self
 		@in		variant texture			Overloaded to accept a filename, MOAITexture, MOAIImage, MOAIStream or MOAIDataBuffer.
 		@out	MOAITexture texture		The texture that was set or created.
 */
-int MOAIMaterialBatch::_setTexture ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIMaterialBatch, "U" )
+int MOAIGfxComposerBatch::_setTexture ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxComposerBatch, "U" )
 	state.Push ( self->SetTexture ( state, 2 ));
 	return 1;
 }
 
 //================================================================//
-// MOAIMaterialBatch
+// MOAIGfxComposerBatch
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIMaterial& MOAIMaterialBatch::AffirmMaterial ( u32 idx ) {
+MOAIMaterial& MOAIGfxComposerBatch::AffirmMaterial ( u32 idx ) {
 
 	this->mMaterials.Grow ( idx, 1 );
 	return this->mMaterials [ idx ];
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::Clear () {
+void MOAIGfxComposerBatch::Clear () {
 
 	for ( u32 i = 0; i < this->mMaterials.Size (); ++i ) {
 		MOAIMaterial& material = this->mMaterials [ i ];
@@ -455,13 +455,13 @@ void MOAIMaterialBatch::Clear () {
 }
 
 //----------------------------------------------------------------//
-MOAIMaterial* MOAIMaterialBatch::GetMaterial ( u32 idx ) {
+MOAIMaterial* MOAIGfxComposerBatch::GetMaterial ( u32 idx ) {
 
 	return this->RawGetMaterial ( this->GetRawIndex ( idx ));
 }
 
 //----------------------------------------------------------------//
-MOAIMaterial* MOAIMaterialBatch::GetMaterial ( u32 materialID, u32 deckIndex ) {
+MOAIMaterial* MOAIGfxComposerBatch::GetMaterial ( u32 materialID, u32 deckIndex ) {
 
 	if ( materialID == UNKNOWN ) {
 		return this->GetMaterial ( deckIndex );
@@ -470,13 +470,13 @@ MOAIMaterial* MOAIMaterialBatch::GetMaterial ( u32 materialID, u32 deckIndex ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIMaterialBatch::LoadGfxState ( MOAIMaterialBatch* override, u32 idx, u32 defaultShader ) {
+bool MOAIGfxComposerBatch::LoadGfxState ( MOAIGfxComposerBatch* override, u32 idx, u32 defaultShader ) {
 
 	return this->LoadGfxState ( override, UNKNOWN, idx, defaultShader );
 }
 
 //----------------------------------------------------------------//
-bool MOAIMaterialBatch::LoadGfxState ( MOAIMaterialBatch* override, u32 materialID, u32 deckIndex, u32 defaultShader ) {
+bool MOAIGfxComposerBatch::LoadGfxState ( MOAIGfxComposerBatch* override, u32 materialID, u32 deckIndex, u32 defaultShader ) {
 
 	MOAIMaterial* primary = ( override && ( this != override )) ? override->GetMaterial ( materialID, deckIndex ) : 0;
 	MOAIMaterial* secondary = this->GetMaterial ( materialID, deckIndex );
@@ -495,23 +495,23 @@ bool MOAIMaterialBatch::LoadGfxState ( MOAIMaterialBatch* override, u32 material
 }
 
 //----------------------------------------------------------------//
-MOAIMaterialBatch::MOAIMaterialBatch () :
+MOAIGfxComposerBatch::MOAIGfxComposerBatch () :
 	mIndexBatchSize ( 1 ) {
 	
-	RTTI_BEGIN ( MOAIMaterialBatch )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIMaterialBatch >)
+	RTTI_BEGIN ( MOAIGfxComposerBatch )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIGfxComposerBatch >)
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }
 
 //----------------------------------------------------------------//
-MOAIMaterialBatch::~MOAIMaterialBatch () {
+MOAIGfxComposerBatch::~MOAIGfxComposerBatch () {
 
 	this->Clear ();
 }
 
 //----------------------------------------------------------------//
-MOAIMaterial* MOAIMaterialBatch::RawGetMaterial ( u32 idx ) {
+MOAIMaterial* MOAIGfxComposerBatch::RawGetMaterial ( u32 idx ) {
 
 	//return ( idx < this->mMaterials.Size ()) ? &this->mMaterials [ idx ] : 0;
 	size_t size = this->mMaterials.Size ();
@@ -519,7 +519,7 @@ MOAIMaterial* MOAIMaterialBatch::RawGetMaterial ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-MOAIShader* MOAIMaterialBatch::RawGetShader ( u32 idx ) {
+MOAIShader* MOAIGfxComposerBatch::RawGetShader ( u32 idx ) {
 
 	if ( idx < this->mMaterials.Size ()) {
 		return this->mMaterials [ idx ].mShader;
@@ -528,7 +528,7 @@ MOAIShader* MOAIMaterialBatch::RawGetShader ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-MOAITexture* MOAIMaterialBatch::RawGetTexture ( u32 idx ) {
+MOAITexture* MOAIGfxComposerBatch::RawGetTexture ( u32 idx ) {
 
 	if ( idx < this->mMaterials.Size ()) {
 		return this->mMaterials [ idx ].mTexture;
@@ -537,7 +537,7 @@ MOAITexture* MOAIMaterialBatch::RawGetTexture ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::SetHitMask ( u32 idx, MOAIImage* mask ) {
+void MOAIGfxComposerBatch::SetHitMask ( u32 idx, MOAIImage* mask ) {
 
 	MOAIMaterial& material = this->AffirmMaterial ( idx );
 	
@@ -550,7 +550,7 @@ void MOAIMaterialBatch::SetHitMask ( u32 idx, MOAIImage* mask ) {
 }
 
 //----------------------------------------------------------------//
-MOAIImage* MOAIMaterialBatch::SetHitMask ( MOAILuaState& state, u32 idx ) {
+MOAIImage* MOAIGfxComposerBatch::SetHitMask ( MOAILuaState& state, u32 idx ) {
 
 	u32 materialIdx = 0;
 	if ( state.IsType ( idx, LUA_TNUMBER )) {
@@ -563,13 +563,13 @@ MOAIImage* MOAIMaterialBatch::SetHitMask ( MOAILuaState& state, u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::SetHitMaskScalar ( u32 idx, u32 scalar ) {
+void MOAIGfxComposerBatch::SetHitMaskScalar ( u32 idx, u32 scalar ) {
 
 	this->AffirmMaterial ( idx ).mHitColorScalar = scalar;
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::SetHitMaskScalar ( MOAILuaState& state, u32 idx ) {
+void MOAIGfxComposerBatch::SetHitMaskScalar ( MOAILuaState& state, u32 idx ) {
 
 	u32 materialIdx = 0;
 	if ( state.CheckParams ( idx, "NNNNN", false )) {
@@ -581,13 +581,13 @@ void MOAIMaterialBatch::SetHitMaskScalar ( MOAILuaState& state, u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::SetHitMaskThreshold ( u32 idx, u32 threshold ) {
+void MOAIGfxComposerBatch::SetHitMaskThreshold ( u32 idx, u32 threshold ) {
 
 	this->AffirmMaterial ( idx ).mHitColorThreshold = threshold;
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::SetHitMaskThreshold ( MOAILuaState& state, u32 idx ) {
+void MOAIGfxComposerBatch::SetHitMaskThreshold ( MOAILuaState& state, u32 idx ) {
 
 	u32 materialIdx = 0;
 	if ( state.CheckParams ( idx, "NNNNN", false )) {
@@ -599,7 +599,7 @@ void MOAIMaterialBatch::SetHitMaskThreshold ( MOAILuaState& state, u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-//void MOAIMaterialBatch::RawLoadGfxState ( u32 idx, u32 defaultShader ) {
+//void MOAIGfxComposerBatch::RawLoadGfxState ( u32 idx, u32 defaultShader ) {
 //
 //	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 //	
@@ -618,20 +618,20 @@ void MOAIMaterialBatch::SetHitMaskThreshold ( MOAILuaState& state, u32 idx ) {
 //}
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::Reserve ( u32 n ) {
+void MOAIGfxComposerBatch::Reserve ( u32 n ) {
 
 	this->Clear ();
 	this->mMaterials.Init ( n );
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::SetShader ( u32 idx, u32 shaderID ) {
+void MOAIGfxComposerBatch::SetShader ( u32 idx, u32 shaderID ) {
 
 	this->SetShader ( idx, MOAIGfxMgr::Get ().GetShaderPreset ( shaderID ));
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::SetShader ( u32 idx, MOAIShader* shader ) {
+void MOAIGfxComposerBatch::SetShader ( u32 idx, MOAIShader* shader ) {
 
 	MOAIMaterial& material = this->AffirmMaterial ( idx );
 	if ( material.mShader != shader ) {
@@ -643,7 +643,7 @@ void MOAIMaterialBatch::SetShader ( u32 idx, MOAIShader* shader ) {
 }
 
 //----------------------------------------------------------------//
-MOAIShader* MOAIMaterialBatch::SetShader ( MOAILuaState& state, u32 idx ) {
+MOAIShader* MOAIGfxComposerBatch::SetShader ( MOAILuaState& state, u32 idx ) {
 	
 	u32 materialIdx = 0;
 	if ( state.IsType ( idx, LUA_TNUMBER ) && ( state.AbsIndex ( idx ) < state.GetTop ())) {
@@ -656,7 +656,7 @@ MOAIShader* MOAIMaterialBatch::SetShader ( MOAILuaState& state, u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::SetTexture ( u32 idx, MOAITexture* texture ) {
+void MOAIGfxComposerBatch::SetTexture ( u32 idx, MOAITexture* texture ) {
 
 	MOAIMaterial& material = this->AffirmMaterial ( idx );
 	if ( material.mTexture != texture ) {
@@ -668,7 +668,7 @@ void MOAIMaterialBatch::SetTexture ( u32 idx, MOAITexture* texture ) {
 }
 
 //----------------------------------------------------------------//
-MOAITexture* MOAIMaterialBatch::SetTexture ( MOAILuaState& state, u32 idx ) {
+MOAITexture* MOAIGfxComposerBatch::SetTexture ( MOAILuaState& state, u32 idx ) {
 	
 	u32 materialIdx = 0;
 	if ( state.IsType ( idx, LUA_TNUMBER )) {
@@ -681,19 +681,19 @@ MOAITexture* MOAIMaterialBatch::SetTexture ( MOAILuaState& state, u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-size_t MOAIMaterialBatch::Size () {
+size_t MOAIGfxComposerBatch::Size () {
 
 	return this->mMaterials.Size ();
 }
 
 //----------------------------------------------------------------//
-bool MOAIMaterialBatch::TestHit ( MOAIMaterialBatch* override, u32 idx, float x, float y ) {
+bool MOAIGfxComposerBatch::TestHit ( MOAIGfxComposerBatch* override, u32 idx, float x, float y ) {
 
 	return this->TestHit ( override, UNKNOWN, idx, x, y );
 }
 
 //----------------------------------------------------------------//
-bool MOAIMaterialBatch::TestHit ( MOAIMaterialBatch* override, u32 materialID, u32 deckIndex, float x, float y ) {
+bool MOAIGfxComposerBatch::TestHit ( MOAIGfxComposerBatch* override, u32 materialID, u32 deckIndex, float x, float y ) {
 
 	MOAIMaterial* primary = ( override && ( this != override )) ? override->GetMaterial ( materialID, deckIndex ) : 0;
 	if ( primary && primary->mHitMask ) {
@@ -709,13 +709,13 @@ bool MOAIMaterialBatch::TestHit ( MOAIMaterialBatch* override, u32 materialID, u
 }
 
 //----------------------------------------------------------------//
-bool MOAIMaterialBatch::TestHit ( MOAIMaterialBatch* override, u32 idx, u32 granularity, const ZLQuad& modelQuad, const ZLQuad& uvQuad, float x, float y ) {
+bool MOAIGfxComposerBatch::TestHit ( MOAIGfxComposerBatch* override, u32 idx, u32 granularity, const ZLQuad& modelQuad, const ZLQuad& uvQuad, float x, float y ) {
 
 	return this->TestHit ( override, UNKNOWN, idx, granularity, modelQuad, uvQuad, x, y );
 }
 
 //----------------------------------------------------------------//
-bool MOAIMaterialBatch::TestHit ( MOAIMaterialBatch* override, u32 materialID, u32 deckIndex, u32 granularity, const ZLQuad& modelQuad, const ZLQuad& uvQuad, float x, float y ) {
+bool MOAIGfxComposerBatch::TestHit ( MOAIGfxComposerBatch* override, u32 materialID, u32 deckIndex, u32 granularity, const ZLQuad& modelQuad, const ZLQuad& uvQuad, float x, float y ) {
 
 	if ( granularity == MOAIPartitionHull::HIT_TEST_COARSE ) return true;
 
@@ -737,13 +737,13 @@ bool MOAIMaterialBatch::TestHit ( MOAIMaterialBatch* override, u32 materialID, u
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIGfxComposerBatch::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
 	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIMaterialBatch::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIGfxComposerBatch::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {

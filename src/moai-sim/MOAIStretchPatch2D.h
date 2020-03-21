@@ -27,7 +27,8 @@ private:
 */
 class MOAIStretchPatch2D :
 	public MOAIStretchDeck,
-	public MOAIHasMaterialBatch {
+	public MOAIHasGfxComposerBatch,
+	public MOAIAbstractGfxComposerCallable {
 private:
 
 	ZLLeanArray < MOAIStretchPatchSpan >	mRows;
@@ -60,16 +61,17 @@ private:
 	void			UpdateParams			();
 
 	//----------------------------------------------------------------//
-	void					_RegisterLuaClass				( RTTIVisitorHistory& history, MOAILuaState& state );
-	void					_RegisterLuaFuncs				( RTTIVisitorHistory& history, MOAILuaState& state );
-	void					_SerializeIn					( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
-	void					_SerializeOut					( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
-	ZLBounds				MOAIDeck_ComputeMaxAABB			();
-	void					MOAIDeck_Draw					( ZLIndex idx );
-	ZLBounds				MOAIDeck_GetBounds				( ZLIndex idx );
-	MOAICollisionShape*		MOAIDeck_GetCollisionShape		( ZLIndex idx );
-	bool					MOAIDeck_Overlap				( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result );
-	bool					MOAIDeck_Overlap				( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result );
+	void					_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
+	void					_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
+	void					_SerializeIn							( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
+	void					_SerializeOut							( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
+	void 					MOAIAbstractGfxComposerCallable_Call	();
+	ZLBounds				MOAIDeck_ComputeMaxAABB					();
+	void					MOAIDeck_Draw							( ZLIndex idx );
+	ZLBounds				MOAIDeck_GetBounds						( ZLIndex idx );
+	MOAICollisionShape*		MOAIDeck_GetCollisionShape				( ZLIndex idx );
+	bool					MOAIDeck_Overlap						( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result );
+	bool					MOAIDeck_Overlap						( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result );
 
 public:
 	

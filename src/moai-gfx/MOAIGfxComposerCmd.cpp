@@ -6,6 +6,7 @@
 #include <moai-gfx/MOAIGfxComposer.h>
 #include <moai-gfx/MOAIGfxComposerCmd.h>
 #include <moai-gfx/MOAIGfxMgr.h>
+#include <moai-gfx/MOAIMaterialMgr.h>
 #include <moai-gfx/MOAIShader.h>
 #include <moai-gfx/MOAITexture.h>
 
@@ -14,29 +15,16 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxComposerCmd::Execute ( MOAIAbstractGfxComposerCallable& callable ) {
+bool MOAIGfxComposerCmd::Execute ( MOAIAbstractGfxComposerCallable& callable ) {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	switch ( this->mType ) {
 	
 		case MOAIGfxComposerCmdEnum::CALL:
-			callable.Call ();
-			break;
-		
-		case MOAIGfxComposerCmdEnum::CALL_FROM_SHADER: {
-		
-			MOAIShader* shader = gfxMgr.GetShader ();
-			MOAIGfxComposer* composer = shader ? shader->GetComposer () : NULL;
-		
-			if ( composer ) {
-				composer->Execute ( callable );
-			}
-			else {
-				callable.Call ();
-			}
-			break;
-		}
+		case MOAIGfxComposerCmdEnum::CALL_FROM_SHADER:
+			MOAIGfxComposerCmd::ExecuteCall ( callable, this->mType );
+			return true;
 		
 		case MOAIGfxComposerCmdEnum::SHADER:
 			gfxMgr.SetShader ( this->mShader );
@@ -49,6 +37,34 @@ void MOAIGfxComposerCmd::Execute ( MOAIAbstractGfxComposerCallable& callable ) {
 		case MOAIGfxComposerCmdEnum::UNIFORM:
 			this->ExecuteUniform ();
 			break;
+	}
+	return false;
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxComposerCmd::ExecuteCall ( MOAIAbstractGfxComposerCallable& callable, MOAIGfxComposerCmdEnum::_ callCommand ) {
+
+	switch ( callCommand ) {
+	
+		case MOAIGfxComposerCmdEnum::CALL:
+			callable.Call ();
+			break;
+		
+		case MOAIGfxComposerCmdEnum::CALL_FROM_SHADER: {
+			
+//			MOAIMaterialMgr::Get ().LoadGfxState ();
+		
+			MOAIShader* shader = MOAIGfxMgr::Get ().GetShader ();
+			MOAIGfxComposer* composer = shader ? shader->GetComposer () : NULL;
+		
+			if ( composer ) {
+				composer->Execute ( callable, MOAIGfxComposerCmdEnum::CALL );
+			}
+			else {
+				callable.Call ();
+			}
+			break;
+		}
 	}
 }
 

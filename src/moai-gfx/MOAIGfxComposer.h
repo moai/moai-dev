@@ -33,9 +33,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIGfxComposer )
 
 	//----------------------------------------------------------------//
-	void			Compose						() const;
-//	void			Compose						( const MOAIUniformSchema& schema, MOAIAbstractUniformBuffer& buffer ) const;
-	void 			Execute 					( MOAIAbstractGfxComposerCallable& callable );
+	void 			Execute 					( MOAIAbstractGfxComposerCallable& callable, MOAIGfxComposerCmdEnum::_ callCommand );
 					MOAIGfxComposer				();
 					~MOAIGfxComposer			();
 };

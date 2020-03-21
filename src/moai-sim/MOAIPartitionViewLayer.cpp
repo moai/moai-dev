@@ -223,13 +223,8 @@ void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition ) {
 	
 	buffer.Sort ( this->mSortMode );
 	
-	MOAIMaterialMgr& materialMgr = MOAIMaterialMgr::Get ();
-	materialMgr.Push ( this->GetMaterial ());
-	
 	this->DrawProps ( buffer );
-	
-	materialMgr.Pop ();
-	
+		
 	if ( MOAIDebugLinesMgr::Get ().IsVisible () && this->mShowDebugLines ) {
 		
 		partition.DrawDebugBack ();

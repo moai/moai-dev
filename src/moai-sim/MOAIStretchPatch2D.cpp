@@ -294,7 +294,7 @@ MOAIStretchPatch2D::MOAIStretchPatch2D () :
 	RTTI_BEGIN ( MOAIStretchPatch2D )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIStretchPatch2D >)
 		RTTI_EXTEND ( MOAIStretchDeck )
-		RTTI_EXTEND ( MOAIHasMaterialBatch )
+		RTTI_EXTEND ( MOAIHasGfxComposerBatch )
 	RTTI_END
 }
 
@@ -387,6 +387,13 @@ void MOAIStretchPatch2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILu
 }
 
 //----------------------------------------------------------------//
+void MOAIStretchPatch2D::MOAIAbstractGfxComposerCallable_Call () {
+
+//	ZLVec3D stretch = this->BindStretchVertexTransform ();
+//	this->DrawStretch ( 0, stretch.mX, stretch.mY );
+}
+
+//----------------------------------------------------------------//
 ZLBounds MOAIStretchPatch2D::MOAIDeck_ComputeMaxAABB () {
 
 	return this->GetBounds ( 0 );
@@ -394,24 +401,20 @@ ZLBounds MOAIStretchPatch2D::MOAIDeck_ComputeMaxAABB () {
 
 //----------------------------------------------------------------//
 void MOAIStretchPatch2D::MOAIDeck_Draw ( ZLIndex idx ) {
+	UNUSED ( idx );
 	
-	this->UpdateParams ();
-	
-	MOAIGfxMgr& gfxState = MOAIGfxMgr::Get ();
-	
-	ZLVec3D stretch = this->BindStretchVertexTransform ();
-	gfxState.SetUVTransform ( MOAIGfxMgr::UV_TO_MODEL_MTX );
-	
-	MOAIQuadBrush::BindVertexFormat ();
-	
-	MOAIMaterialMgr& materialMgr = MOAIMaterialMgr::Get ();
-	materialMgr.Push ( this->GetMaterial ( idx ));
-	materialMgr.SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
-	materialMgr.LoadGfxState ();
-	
-	this->DrawStretch ( idx, stretch.mX, stretch.mY );
-	
-	materialMgr.Pop ();
+//	MOAIGfxComposer* composer = this->GetComposer ();
+//	if ( !composer ) return;
+//
+//	this->UpdateParams ();
+//
+//	MOAIQuadBrush::BindVertexFormat ();
+//
+//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+//	gfxMgr.SetUVTransform ( MOAIGfxMgr::UV_TO_MODEL_MTX );
+//	gfxMgr.SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
+//
+//	composer->Execute ( *this );
 }
 
 //----------------------------------------------------------------//

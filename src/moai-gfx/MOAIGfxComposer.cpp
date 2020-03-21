@@ -35,15 +35,16 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxComposer::Compose () const {
-}
+void MOAIGfxComposer::Execute ( MOAIAbstractGfxComposerCallable& callable, MOAIGfxComposerCmdEnum::_ callCommand ) {
 
-//----------------------------------------------------------------//
-void MOAIGfxComposer::Execute ( MOAIAbstractGfxComposerCallable& callable ) {
-
+	bool didCall = false;
 	ZLSize size = this->mCommands.GetTop ();
 	for ( ZLIndex index = 0; index < size; ++index ) {
 		this->mCommands [ index ]->Execute ( callable );
+	}
+	
+	if ( !didCall ) {
+		MOAIGfxComposerCmd::ExecuteCall ( callable, callCommand );
 	}
 }
 

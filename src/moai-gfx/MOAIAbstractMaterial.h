@@ -31,7 +31,7 @@ class MOAIAbstractMaterial :
 protected:
 
 	friend class MOAIAbstractMaterial;
-	friend class MOAIMaterialBatch;
+	friend class MOAIGfxComposerBatch;
 	friend class MOAIAbstractMaterialInterface;
 	friend class MOAIMaterialMgr;
 		
@@ -49,16 +49,16 @@ protected:
 	static const u32	DRAW_FLAGS	= BLEND_MODE_FLAG | CULL_MODE_FLAG | DEPTH_MASK_FLAG | DEPTH_TEST_FLAG;
 	static const u32	ALL_FLAGS	= MAX_FLAG - 1;
 	
-	ZLStrongPtr < MOAIShader >	mShader;
-	ZLStrongPtr < MOAITexture >	mTexture;
+	ZLStrongPtr < MOAIShader >		mShader;
+	ZLStrongPtr < MOAITexture >		mTexture;
 	
-	MOAIBlendMode			mBlendMode;
-	MOAICullFuncEnum::_		mCullMode;
-	MOAIDepthFuncEnum::_	mDepthTest;
-	bool					mDepthMask;
+	MOAIBlendMode					mBlendMode;
+	MOAICullFuncEnum::_				mCullMode;
+	MOAIDepthFuncEnum::_			mDepthTest;
+	bool							mDepthMask;
 
-	u32						mFlags;
-	bool					mOverwrite;
+	u32								mFlags;
+	bool							mOverwrite;
 	
 	//----------------------------------------------------------------//
 	virtual void				MOAIAbstractMaterial_ApplyGlobals					( MOAIAbstractMaterialInterface& dest ) = 0;

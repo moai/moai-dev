@@ -103,8 +103,8 @@ public:
 	//----------------------------------------------------------------//
 	static MOAIDeck*	AffirmDeck					( MOAILuaState& state, int idx );
 	bool				Contains					( ZLIndex idx, const ZLVec2D& vec );
-	void				DrawIndex					( ZLIndex idx, MOAIMaterialBatch* materials, ZLVec3D offset, ZLVec3D scale );
-	bool				Inside						( ZLIndex idx, MOAIMaterialBatch* materials, u32 granularity, ZLVec3D vec, float pad );
+	void				DrawIndex					( ZLIndex idx, MOAIGfxComposerBatch* materials, ZLVec3D offset, ZLVec3D scale );
+	bool				Inside						( ZLIndex idx, MOAIGfxComposerBatch* materials, u32 granularity, ZLVec3D vec, float pad );
 						MOAISpriteDeck2D			();
 						~MOAISpriteDeck2D			();
 	void				ReserveLists				( ZLSize total );

@@ -46,6 +46,7 @@ class MOAIGfxComposerCmd :
 	public virtual ZLRefCountedObject {
 protected:
 
+	friend class MOAIGfxComposer;
 	friend class MOAIGfxComposerInterface;
 
 	// this is a nasty omnibus object because I am too lazy to piece it out right now.
@@ -66,12 +67,13 @@ protected:
 	MOAIGfxComposerAddrModeEnum::_ 	mAddressingModeTo;
 
 	//----------------------------------------------------------------//
+	static void 	ExecuteCall 					( MOAIAbstractGfxComposerCallable& callable, MOAIGfxComposerCmdEnum::_ callCommand );
 	void			ExecuteUniform 					();
 
 public:
 
 	//----------------------------------------------------------------//
-	void			Execute							( MOAIAbstractGfxComposerCallable& callable );
+	bool			Execute							( MOAIAbstractGfxComposerCallable& callable );
 					MOAIGfxComposerCmd 				();
 					MOAIGfxComposerCmd 				( MOAIGfxComposerCmdEnum::_ type, MOAIGfxComposerAddrModeEnum::_ from, MOAIGfxComposerAddrModeEnum::_ to );
 					~MOAIGfxComposerCmd 			();
