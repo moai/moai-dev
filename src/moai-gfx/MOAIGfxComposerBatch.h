@@ -4,29 +4,29 @@
 #ifndef	MOAIGFXCOMPOSERBATCH_H
 #define	MOAIGFXCOMPOSERBATCH_H
 
-#include <moai-gfx/MOAIGfxComposerBatchInterface.h>
+#include <moai-gfx/MOAIAbstractGfxComposerBatchInterface.h>
 
-class MOAIGfxComposer;
+class MOAIGfxComposerRetained;
 
 //================================================================//
 // MOAIGfxComposerBatch
 //================================================================//
 // TODO: doxygen
 class MOAIGfxComposerBatch :
-	public virtual MOAIGfxComposerBatchInterface {
+	public virtual MOAIAbstractGfxComposerBatchInterface {
 private:
 
 	friend class MOAIHasComposerBatch;
-	friend class MOAIGfxComposerBatchInterface;
+	friend class MOAIAbstractGfxComposerBatchInterface;
 
-	ZLSize												mIndexBatchSize;
-	ZLLeanArray < ZLStrongPtr < MOAIGfxComposer > >		mComposers;
+	ZLSize														mIndexBatchSize;
+	ZLLeanArray < ZLStrongPtr < MOAIAbstractGfxComposer > >		mComposers;
 
 	//----------------------------------------------------------------//
-	MOAIGfxComposer&			MOAIGfxComposerBatchInterface_AffirmComposer			( ZLIndex index );
-	MOAIGfxComposerBatch&		MOAIGfxComposerBatchInterface_AffirmComposerBatch		();
-	MOAIGfxComposer*			MOAIGfxComposerBatchInterface_GetComposer				( ZLIndex index );
-	MOAIGfxComposerBatch*		MOAIGfxComposerBatchInterface_GetComposerBatch			();
+	MOAIAbstractGfxComposer&		MOAIAbstractGfxComposerBatchInterface_AffirmComposer			( ZLIndex index );
+	MOAIGfxComposerBatch&			MOAIAbstractGfxComposerBatchInterface_AffirmComposerBatch		();
+	MOAIAbstractGfxComposer*		MOAIAbstractGfxComposerBatchInterface_GetComposer				( ZLIndex index );
+	MOAIGfxComposerBatch*			MOAIAbstractGfxComposerBatchInterface_GetComposerBatch			();
 
 	//----------------------------------------------------------------//
 	inline ZLIndex GetRawIndex ( ZLIndex idx ) {
@@ -43,12 +43,12 @@ public:
 	DECL_LUA_FACTORY ( MOAIGfxComposerBatch )
 
 	//----------------------------------------------------------------//
-	void				Clear						();
-						MOAIGfxComposerBatch		();
-	virtual				~MOAIGfxComposerBatch		();
-	MOAIGfxComposer*	RawGetComposer				( ZLIndex idx );
-	void				Reserve						( ZLSize n );
-	size_t				Size						();
+	void							Clear						();
+									MOAIGfxComposerBatch		();
+	virtual							~MOAIGfxComposerBatch		();
+	MOAIAbstractGfxComposer*		RawGetComposer				( ZLIndex idx );
+	void							Reserve						( ZLSize n );
+	size_t							Size						();
 };
 
 #endif

@@ -4,29 +4,29 @@
 #ifndef	MOAIHASGFXCOMPOSER_H
 #define	MOAIHASGFXCOMPOSER_H
 
-#include <moai-gfx/MOAIGfxComposerInterface.h>
+#include <moai-gfx/MOAIAbstractGfxComposerInterface.h>
 
 //================================================================//
 // MOAIHasGfxComposer
 //================================================================//
 // TODO: doxygen
 class MOAIHasGfxComposer :
-	public virtual MOAIGfxComposerInterface {
+	public virtual MOAIAbstractGfxComposerInterface {
 protected:
 
 	MOAI_LUA_OBJECT_VISITOR_FRIEND
 
-	ZLStrongPtr < MOAIGfxComposer >		mComposer;
+	ZLStrongPtr < MOAIAbstractGfxComposer > mComposer;
 	
 	//----------------------------------------------------------------//
 	static int				_getComposer				( lua_State* L );
 	static int				_setComposer				( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void					_RegisterLuaClass								( RTTIVisitorHistory& history, MOAILuaState& state );
-	void					_RegisterLuaFuncs								( RTTIVisitorHistory& history, MOAILuaState& state );
-	MOAIGfxComposer&		MOAIGfxComposerInterface_AffirmComposer			();
-	MOAIGfxComposer*		MOAIGfxComposerInterface_GetComposer			();
+	void						_RegisterLuaClass									( RTTIVisitorHistory& history, MOAILuaState& state );
+	void						_RegisterLuaFuncs									( RTTIVisitorHistory& history, MOAILuaState& state );
+	MOAIAbstractGfxComposer&	MOAIAbstractGfxComposerInterface_AffirmComposer		();
+	MOAIAbstractGfxComposer*	MOAIAbstractGfxComposerInterface_GetComposer		();
 
 public:
 

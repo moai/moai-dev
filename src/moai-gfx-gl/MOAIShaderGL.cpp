@@ -98,9 +98,9 @@ const MOAIUniformSchema* MOAIShaderGL::MOAIAbstractUniformBuffer_GetSchema () co
 }
 
 //----------------------------------------------------------------//
-MOAIGfxComposer* MOAIShaderGL::MOAIGfxComposerInterface_GetComposer	() {
+MOAIAbstractGfxComposer* MOAIShaderGL::MOAIAbstractGfxComposerInterface_GetComposer	() {
 
-	MOAIGfxComposer* composer = this->MOAIHasGfxComposer::MOAIGfxComposerInterface_GetComposer ();
+	MOAIAbstractGfxComposer* composer = this->MOAIHasGfxComposer::MOAIAbstractGfxComposerInterface_GetComposer ();
 	return composer ? composer : ( this->mProgram ? this->mProgram->GetComposer () : NULL );
 }
 

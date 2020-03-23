@@ -111,8 +111,9 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					program->DeclareUniform ( 0, "xSnap", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT );
 					program->DeclareUniform ( 1, "ySnap", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT );
 					
-					program->PushUniformCmd ( MOAIGfxComposerAddrModeEnum::FROM_PIPELINE_GLOBALS, MOAIGfxComposerAddrModeEnum::TO_SHADER_BODY, MOAIGfxMgrGL::VIEW_HALF_WIDTH, 0, 0 );
-					program->PushUniformCmd ( MOAIGfxComposerAddrModeEnum::FROM_PIPELINE_GLOBALS, MOAIGfxComposerAddrModeEnum::TO_SHADER_BODY, MOAIGfxMgrGL::VIEW_HALF_HEIGHT, 1, 0 );
+					program->SetUniform ( MOAIGfxMgrGL::VIEW_HALF_WIDTH, 0, 0 );
+					program->SetUniform ( MOAIGfxMgrGL::VIEW_HALF_HEIGHT, 1, 0 );
+					program->Optimize ();
 					
 					program->Load ( _deck2DSnappingShaderVSH, _deck2DSnappingShaderFSH );
 					break;
@@ -136,8 +137,9 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					program->DeclareUniform ( 0, "xSnap", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT );
 					program->DeclareUniform ( 1, "ySnap", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT );
 					
-					program->PushUniformCmd ( MOAIGfxComposerAddrModeEnum::FROM_PIPELINE_GLOBALS, MOAIGfxComposerAddrModeEnum::TO_SHADER_BODY, MOAIGfxMgrGL::VIEW_HALF_WIDTH, 0, 0 );
-					program->PushUniformCmd ( MOAIGfxComposerAddrModeEnum::FROM_PIPELINE_GLOBALS, MOAIGfxComposerAddrModeEnum::TO_SHADER_BODY, MOAIGfxMgrGL::VIEW_HALF_HEIGHT, 1, 0 );
+					program->SetUniform ( MOAIGfxMgrGL::VIEW_HALF_WIDTH, 0, 0 );
+					program->SetUniform ( MOAIGfxMgrGL::VIEW_HALF_HEIGHT, 1, 0 );
+					program->Optimize ();
 					
 					program->Load ( _fontSnappingShaderVSH, _fontSnappingShaderFSH );
 					break;
@@ -158,8 +160,9 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					program->DeclareUniform ( 0, "transform", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT, MOAIUniformDescriptor::UNIFORM_WIDTH_MATRIX_4X4 );
 					program->DeclareUniform ( 1, "ucolor", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT, MOAIUniformDescriptor::UNIFORM_WIDTH_VEC_4 );
 					
-					program->PushUniformCmd ( MOAIGfxComposerAddrModeEnum::FROM_PIPELINE_GLOBALS, MOAIGfxComposerAddrModeEnum::TO_SHADER_BODY, MOAIGfxMgrGL::MODEL_TO_CLIP_MTX, 0, 0 );
-					program->PushUniformCmd ( MOAIGfxComposerAddrModeEnum::FROM_PIPELINE_GLOBALS, MOAIGfxComposerAddrModeEnum::TO_SHADER_BODY, MOAIGfxMgrGL::PEN_COLOR, 1, 0 );
+					program->SetUniform ( MOAIGfxMgrGL::MODEL_TO_CLIP_MTX, 0, 0 );
+					program->SetUniform ( MOAIGfxMgrGL::PEN_COLOR, 1, 0 );
+					program->Optimize ();
 					
 					program->Load ( _lineShader3DVSH, _lineShader3DFSH );
 					
@@ -175,8 +178,8 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					program->DeclareUniform ( 0, "transform", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT, MOAIUniformDescriptor::UNIFORM_WIDTH_MATRIX_4X4 );
 					program->DeclareUniform ( 1, "ucolor", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT, MOAIUniformDescriptor::UNIFORM_WIDTH_VEC_4 );
 					
-					program->PushUniformCmd ( MOAIGfxComposerAddrModeEnum::FROM_PIPELINE_GLOBALS, MOAIGfxComposerAddrModeEnum::TO_SHADER_BODY, MOAIGfxMgrGL::MODEL_TO_CLIP_MTX, 0, 0 );
-					program->PushUniformCmd ( MOAIGfxComposerAddrModeEnum::FROM_PIPELINE_GLOBALS, MOAIGfxComposerAddrModeEnum::TO_SHADER_BODY, MOAIGfxMgrGL::PEN_COLOR, 1, 0 );
+					program->SetUniform ( MOAIGfxMgrGL::MODEL_TO_CLIP_MTX, 0, 0 );
+					program->SetUniform ( MOAIGfxMgrGL::PEN_COLOR, 1, 0 );
 					
 					program->Load ( _meshShaderVSH, _meshShaderFSH );
 					

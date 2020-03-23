@@ -1,15 +1,8 @@
-all resources - bound to command buffer resource set
-    track and free once buffer is submitted
-
-descriptor sets
-    pools for each layout
-    pools are fixed size (i.e. 8 or 16 per pool)
-    allocate more pools as needed
 
 SHADERS/MATERIALS specify LAYOUTS (descriptor and pipeline)
     this makes sense, since shaders ultimately consume bound resources
 
-LAYOUTS determing pipeline creation
+LAYOUTS determine pipeline creation
     this makes sense, since pipelines are specified based on layouts
     pipelines don't need to be re-created based on bindings
 
@@ -21,8 +14,6 @@ when MOAI GFX STATE MGR resources change, a new DESCRIPTOR SET is required
 
 UNIFORM BUFFERs need to be cached and bound with command buffers
     reallocate if changed
-
-individual DESCRIPTORS live with resources
 
 possible to cache DESCRIPTOR SETS (and bindings) across multiple frames
     i.e. don't reuse DESCRIPTOR SETS if their bindings haven't changed
@@ -53,7 +44,7 @@ vk buffers - uniform, texture, vertex, etc.
         factory may be configured without cache - manual update required
         must always snapshot if dirty possible
 
-SnapshotSignature - unique identifier of subject; raw memory or resource descritor
+SnapshotSignature - unique identifier of subject; raw memory or resource descriptor
 SnapshotSubject - contains buffer; a thing that is snapshotted
 SnapshotCache - caches snapshots for command list
 Snapshot - vk resource cached in command list
@@ -100,3 +91,52 @@ DescriptorSet can pull textures from virtual texture units
     "layer" basically a subpass? as we get into multi-pass, should we cache scene query results during drawing?
 
     think about moving away from thread-local statics, or at least provide an opt-out.
+
+2020-03-12
+    need text script for multi-pass
+    need to verify draw caching (expose draw prim per-frame metrics)
+
+------
+
+pipeline
+descriptor set
+
+pipeline layout                 - MOAIPipelineInputBodySchemaVK
+descriptor set layout           - MOAIPipelineInputChunkSchemaVK - describes what kind of buffers get bound
+
+composer                        - MOAIPipelineInputBodyVK
+descriptor set                  - MOAIPipelineInputChunkVK
+
+MOAIPipelineInputBodyComposer
+
+SET UP RENDER STATE
+    named textures
+    uniforms
+    rendering options
+    shaders
+GATHER STATE AND UPDATE BUFFERS
+    -> composition (before gfx state cache evaluation)
+    -> composition (after gfx state cache evaluation?)
+    -> evaluate and apply (double buffer; graphics cahe)
+    -> evaluate and apply (single objects?)
+CHECK FOR CHANGE AND FLUSH
+DRAW PRIMS or BUFFER GEOMETRY
+
+------
+
+draw - some items set ad hoc during sim and drawing ("globals")
+
+DrawPrims
+compose - set local and global (CPU) state - ad hoc, per-implementation
+diff - check to see if gfx state (CPU) has changed
+apply - flush prims and move gfx state to GPU
+
+composition
+- textures
+- uniforms
+
+should shaders be composed? or are shaders composers? seems like the latter. OK to decouple shaders, uniform buffers and composers?
+
+buffer - texture, uniform, vertex, index - have changed? create snapshot?
+in GL these are: uniforms are buffered by shader program; textures are global texture units
+in VK these are: configurations of buffers shared by multiple shaders 

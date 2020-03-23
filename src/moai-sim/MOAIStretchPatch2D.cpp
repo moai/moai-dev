@@ -403,7 +403,7 @@ ZLBounds MOAIStretchPatch2D::MOAIDeck_ComputeMaxAABB () {
 void MOAIStretchPatch2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	UNUSED ( idx );
 	
-//	MOAIGfxComposer* composer = this->GetComposer ();
+//	MOAIGfxComposerRetained* composer = this->GetComposer ();
 //	if ( !composer ) return;
 //
 //	this->UpdateParams ();

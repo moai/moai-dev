@@ -423,12 +423,8 @@ MOAIDeck* MOAISpriteDeck2D::AffirmDeck ( MOAILuaState& state, int idx ) {
 		MOAISpriteDeck2D* spriteDeck = new MOAISpriteDeck2D ();
 		assert ( spriteDeck );
 
-		spriteDeck->PushTextureCmd (
-			MOAIGfxComposerAddrModeEnum::FROM_OBJECT,
-			MOAIGfxComposerAddrModeEnum::TO_GFX_STATE,
-			texture,
-			0
-		);
+		spriteDeck->SetTexture ( texture, 0 );
+		spriteDeck->Optimize ();
 		
 		int hWidth = ( int )( texture->GetWidth () / 2 );
 		int hHeight = ( int )( texture->GetHeight () / 2 );
@@ -683,7 +679,7 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 			
 			MOAISprite spritePair = this->mSprites [  ZLIndexOp::Wrap ( i, totalSprites )];
 			
-			MOAIGfxComposer* composer = this->GetComposer ();
+			MOAIAbstractGfxComposer* composer = this->GetComposer ();
 			if ( !composer ) continue;
 			
 			MOAISpriteDeck2DCallable callable;
@@ -695,7 +691,7 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	}
 	else {
 		
-		MOAIGfxComposer* composer = this->GetComposer ();
+		MOAIAbstractGfxComposer* composer = this->GetComposer ();
 		if ( !composer ) return;
 		
 		MOAISpriteDeck2DCallable callable;

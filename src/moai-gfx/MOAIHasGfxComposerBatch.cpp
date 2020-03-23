@@ -61,7 +61,7 @@ MOAIHasGfxComposerBatch::MOAIHasGfxComposerBatch () {
 
 	RTTI_BEGIN ( MOAIHasGfxComposerBatch )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIHasGfxComposerBatch >)
-		RTTI_EXTEND ( MOAIGfxComposerBatchInterface )
+		RTTI_EXTEND ( MOAIAbstractGfxComposerBatchInterface )
 	RTTI_END
 }
 
@@ -96,13 +96,13 @@ void MOAIHasGfxComposerBatch::_RegisterLuaFuncs ( RTTIVisitorHistory& history, M
 }
 
 //----------------------------------------------------------------//
-MOAIGfxComposer& MOAIHasGfxComposerBatch::MOAIGfxComposerBatchInterface_AffirmComposer ( ZLIndex index ) {
+MOAIAbstractGfxComposer& MOAIHasGfxComposerBatch::MOAIAbstractGfxComposerBatchInterface_AffirmComposer ( ZLIndex index ) {
 
 	return this->AffirmComposerBatch ().AffirmComposer ( index );
 }
 
 //----------------------------------------------------------------//
-MOAIGfxComposerBatch& MOAIHasGfxComposerBatch::MOAIGfxComposerBatchInterface_AffirmComposerBatch () {
+MOAIGfxComposerBatch& MOAIHasGfxComposerBatch::MOAIAbstractGfxComposerBatchInterface_AffirmComposerBatch () {
 
 	if ( !this->mComposerBatch ) {
 		this->mComposerBatch.Set ( *this, new MOAIGfxComposerBatch ());
@@ -111,14 +111,13 @@ MOAIGfxComposerBatch& MOAIHasGfxComposerBatch::MOAIGfxComposerBatchInterface_Aff
 }
 
 //----------------------------------------------------------------//
-MOAIGfxComposer* MOAIHasGfxComposerBatch::MOAIGfxComposerBatchInterface_GetComposer ( ZLIndex index ) {
+MOAIAbstractGfxComposer* MOAIHasGfxComposerBatch::MOAIAbstractGfxComposerBatchInterface_GetComposer ( ZLIndex index ) {
 
 	return this->mComposerBatch ? this->mComposerBatch->GetComposer ( index ) : NULL;
 }
 
 //----------------------------------------------------------------//
-MOAIGfxComposerBatch* MOAIHasGfxComposerBatch::MOAIGfxComposerBatchInterface_GetComposerBatch () {
+MOAIGfxComposerBatch* MOAIHasGfxComposerBatch::MOAIAbstractGfxComposerBatchInterface_GetComposerBatch () {
 
 	return this->mComposerBatch;
 }
-

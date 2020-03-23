@@ -3,7 +3,7 @@
 
 #include "pch.h"
 
-#include <moai-gfx/MOAIGfxComposer.h>
+#include <moai-gfx/MOAIGfxComposerRetained.h>
 #include <moai-gfx/MOAIGfxComposerBatch.h>
 
 //================================================================//
@@ -21,7 +21,7 @@ MOAIGfxComposerBatch::MOAIGfxComposerBatch () :
 	mIndexBatchSize ( 1 ) {
 	
 	RTTI_BEGIN ( MOAIGfxComposerBatch )
-		RTTI_EXTEND ( MOAIGfxComposerBatchInterface )
+		RTTI_EXTEND ( MOAIAbstractGfxComposerBatchInterface )
 	RTTI_END
 }
 
@@ -52,32 +52,32 @@ size_t MOAIGfxComposerBatch::Size () {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIGfxComposer& MOAIGfxComposerBatch::MOAIGfxComposerBatchInterface_AffirmComposer ( ZLIndex index ) {
+MOAIAbstractGfxComposer& MOAIGfxComposerBatch::MOAIAbstractGfxComposerBatchInterface_AffirmComposer ( ZLIndex index ) {
 
 	this->mComposers.Grow (( ZLSize )index + 1 );
 
-	MOAIGfxComposer* composer = this->mComposers [ index ];
+	MOAIAbstractGfxComposer* composer = this->mComposers [ index ];
 	if ( !composer ) {
-		composer = new MOAIGfxComposer ();
+		composer = new MOAIGfxComposerRetained ();
 		this->mComposers [ index ] = composer;
 	}
 	return *composer;
 }
 
 //----------------------------------------------------------------//
-MOAIGfxComposerBatch& MOAIGfxComposerBatch::MOAIGfxComposerBatchInterface_AffirmComposerBatch () {
+MOAIGfxComposerBatch& MOAIGfxComposerBatch::MOAIAbstractGfxComposerBatchInterface_AffirmComposerBatch () {
 
 	return *this;
 }
 
 //----------------------------------------------------------------//
-MOAIGfxComposer* MOAIGfxComposerBatch::MOAIGfxComposerBatchInterface_GetComposer ( ZLIndex index ) {
+MOAIAbstractGfxComposer* MOAIGfxComposerBatch::MOAIAbstractGfxComposerBatchInterface_GetComposer ( ZLIndex index ) {
 
-	return ( index < this->mComposers.Size ()) ? ( MOAIGfxComposer* )this->mComposers [ index ] : NULL;
+	return ( index < this->mComposers.Size ()) ? ( MOAIAbstractGfxComposer* )this->mComposers [ index ] : NULL;
 }
 
 //----------------------------------------------------------------//
-MOAIGfxComposerBatch* MOAIGfxComposerBatch::MOAIGfxComposerBatchInterface_GetComposerBatch () {
+MOAIGfxComposerBatch* MOAIGfxComposerBatch::MOAIAbstractGfxComposerBatchInterface_GetComposerBatch () {
 
 	return this;
 }

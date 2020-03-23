@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx/MOAIGfxComposer.h>
+#include <moai-gfx/MOAIGfxComposerRetained.h>
 #include <moai-gfx/MOAIHasGfxComposer.h>
 
 //================================================================//
@@ -14,7 +14,7 @@
 int MOAIHasGfxComposer::_getComposer ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHasGfxComposer, "U" )
 	
-	state.Push (( MOAIGfxComposer* )self->mComposer );
+	state.Push (( MOAIAbstractGfxComposer* )self->mComposer );
 	return 1;
 }
 
@@ -23,7 +23,7 @@ int MOAIHasGfxComposer::_getComposer ( lua_State* L ) {
 int MOAIHasGfxComposer::_setComposer ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHasGfxComposer, "U" )
 
-	self->mComposer = state.GetLuaObject < MOAIGfxComposer >( 2, true );
+	self->mComposer = state.GetLuaObject < MOAIAbstractGfxComposer >( 2, true );
 	return 0;
 }
 
@@ -42,7 +42,7 @@ MOAIHasGfxComposer::MOAIHasGfxComposer () {
 
 	RTTI_BEGIN ( MOAIHasGfxComposer )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIHasGfxComposer >)
-		RTTI_EXTEND ( MOAIGfxComposerInterface )
+		RTTI_EXTEND ( MOAIAbstractGfxComposerInterface )
 	RTTI_END
 }
 
@@ -72,16 +72,16 @@ void MOAIHasGfxComposer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILu
 }
 
 //----------------------------------------------------------------//
-MOAIGfxComposer& MOAIHasGfxComposer::MOAIGfxComposerInterface_AffirmComposer () {
+MOAIAbstractGfxComposer& MOAIHasGfxComposer::MOAIAbstractGfxComposerInterface_AffirmComposer () {
 
 	if ( !this->mComposer ) {
-		this->mComposer = new MOAIGfxComposer ();
+		this->mComposer = new MOAIGfxComposerRetained ();
 	}
 	return *this->mComposer;
 }
 
 //----------------------------------------------------------------//
-MOAIGfxComposer* MOAIHasGfxComposer::MOAIGfxComposerInterface_GetComposer () {
+MOAIAbstractGfxComposer* MOAIHasGfxComposer::MOAIAbstractGfxComposerInterface_GetComposer () {
 
 	return this->mComposer;
 }

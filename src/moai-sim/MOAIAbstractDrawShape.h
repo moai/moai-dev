@@ -18,7 +18,6 @@ private:
 
 protected:
 
-
 	//----------------------------------------------------------------//
 	virtual void		MOAIAbstractDrawShape_DrawLine				( float x0, float y0, float z0, float x1, float y1, float z1 ) = 0;
 	virtual void		MOAIAbstractDrawShape_DrawPoint				( float x, float y, float z = 0.0f ) = 0;

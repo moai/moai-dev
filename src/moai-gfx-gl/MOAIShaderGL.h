@@ -29,15 +29,15 @@ protected:
 	ZLStrongPtr < MOAIShaderProgramGL >	mProgram;
 
 	//----------------------------------------------------------------//
-	static int					_setProgram					( lua_State* L );
+	static int				_setProgram					( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void						_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
-	void						_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
-	const MOAIUniformSchema*	MOAIAbstractUniformBuffer_GetSchema		() const;
-	MOAIGfxComposer*			MOAIGfxComposerInterface_GetComposer	();
-	MOAIUniformHandle			MOAIShader_GetUniformHandle				( ZLIndex uniformID, ZLIndex index );
-	bool						MOAIShader_IsReadyForUse				() const;
+	void							_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
+	void							_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
+	const MOAIUniformSchema*		MOAIAbstractUniformBuffer_GetSchema		() const;
+	MOAIAbstractGfxComposer*	MOAIAbstractGfxComposerInterface_GetComposer		();
+	MOAIUniformHandle				MOAIShader_GetUniformHandle				( ZLIndex uniformID, ZLIndex index );
+	bool							MOAIShader_IsReadyForUse				() const;
 
 public:
 
