@@ -2,8 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx/MOAIGfxComposerRetained.h>
-#include <moai-gfx/MOAIHasGfxComposer.h>
+#include <moai-gfx/MOAIGfxScript.h>
+#include <moai-gfx/MOAIHasGfxScript.h>
 
 //================================================================//
 // lua
@@ -11,43 +11,43 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIHasGfxComposer::_getComposer ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIHasGfxComposer, "U" )
+int MOAIHasGfxScript::_getComposer ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHasGfxScript, "U" )
 	
-	state.Push (( MOAIAbstractGfxComposer* )self->mComposer );
+	state.Push (( MOAIAbstractGfxScript* )self->mComposer );
 	return 1;
 }
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIHasGfxComposer::_setComposer ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIHasGfxComposer, "U" )
+int MOAIHasGfxScript::_setComposer ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHasGfxScript, "U" )
 
-	self->mComposer = state.GetLuaObject < MOAIAbstractGfxComposer >( 2, true );
+	self->mComposer = state.GetLuaObject < MOAIAbstractGfxScript >( 2, true );
 	return 0;
 }
 
 //================================================================//
-// MOAIHasGfxComposer
+// MOAIHasGfxScript
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIHasGfxComposer::HasComposer () {
+bool MOAIHasGfxScript::HasComposer () {
 
 	return ( this->GetComposer () != NULL );
 }
 
 //----------------------------------------------------------------//
-MOAIHasGfxComposer::MOAIHasGfxComposer () {
+MOAIHasGfxScript::MOAIHasGfxScript () {
 
-	RTTI_BEGIN ( MOAIHasGfxComposer )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIHasGfxComposer >)
-		RTTI_EXTEND ( MOAIAbstractGfxComposerInterface )
+	RTTI_BEGIN ( MOAIHasGfxScript )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIHasGfxScript >)
+		RTTI_EXTEND ( MOAIAbstractGfxScriptInterface )
 	RTTI_END
 }
 
 //----------------------------------------------------------------//
-MOAIHasGfxComposer::~MOAIHasGfxComposer () {
+MOAIHasGfxScript::~MOAIHasGfxScript () {
 }
 
 //================================================================//
@@ -55,12 +55,12 @@ MOAIHasGfxComposer::~MOAIHasGfxComposer () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIHasGfxComposer::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIHasGfxScript::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIHasGfxComposer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIHasGfxScript::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
@@ -72,16 +72,16 @@ void MOAIHasGfxComposer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILu
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractGfxComposer& MOAIHasGfxComposer::MOAIAbstractGfxComposerInterface_AffirmComposer () {
+MOAIAbstractGfxScript& MOAIHasGfxScript::MOAIAbstractGfxScriptInterface_AffirmComposer () {
 
 	if ( !this->mComposer ) {
-		this->mComposer = new MOAIGfxComposerRetained ();
+		this->mComposer = new MOAIGfxScript ();
 	}
 	return *this->mComposer;
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractGfxComposer* MOAIHasGfxComposer::MOAIAbstractGfxComposerInterface_GetComposer () {
+MOAIAbstractGfxScript* MOAIHasGfxScript::MOAIAbstractGfxScriptInterface_GetComposer () {
 
 	return this->mComposer;
 }

@@ -30,7 +30,7 @@ bool MOAIShader::IsReadyForUse () const {
 MOAIShader::MOAIShader () {
 	
 	RTTI_BEGIN ( MOAIShader )
-		RTTI_EXTEND ( MOAIHasGfxComposer )
+		RTTI_EXTEND ( MOAIHasGfxScript )
 	RTTI_END
 }
 

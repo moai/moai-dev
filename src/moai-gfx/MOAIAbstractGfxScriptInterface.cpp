@@ -2,8 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx/MOAIGfxComposerRetained.h>
-#include <moai-gfx/MOAIAbstractGfxComposerInterface.h>
+#include <moai-gfx/MOAIGfxScript.h>
+#include <moai-gfx/MOAIAbstractGfxScriptInterface.h>
 #include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIShader.h>
 #include <moai-gfx/MOAITexture.h>
@@ -13,22 +13,22 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-int MOAIAbstractGfxComposerInterface::_call ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractGfxComposerInterface, "U" )
+int MOAIAbstractGfxScriptInterface::_call ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractGfxScriptInterface, "U" )
 	self->Call ();
 	return 0;
 }
 
 //----------------------------------------------------------------//
-int MOAIAbstractGfxComposerInterface::_callFromShader ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractGfxComposerInterface, "U" )
+int MOAIAbstractGfxScriptInterface::_callFromShader ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractGfxScriptInterface, "U" )
 	self->CallFromShader ();
 	return 0;
 }
 
 //----------------------------------------------------------------//
-int MOAIAbstractGfxComposerInterface::_setShader ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractGfxComposerInterface, "U" )
+int MOAIAbstractGfxScriptInterface::_setShader ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractGfxScriptInterface, "U" )
 	
 	MOAIShader* shader		= MOAIGfxMgr::Get ().AffirmShader ( state, 2 );
 
@@ -37,8 +37,8 @@ int MOAIAbstractGfxComposerInterface::_setShader ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIAbstractGfxComposerInterface::_setTexture ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractGfxComposerInterface, "U" )
+int MOAIAbstractGfxScriptInterface::_setTexture ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractGfxScriptInterface, "U" )
 	
 	MOAITexture* texture	= MOAIGfxMgr::Get ().AffirmTexture ( state, 2 );
 	ZLIndex textureUnit		= state.GetValue < ZLIndex >( 3, 0 );
@@ -48,8 +48,8 @@ int MOAIAbstractGfxComposerInterface::_setTexture ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIAbstractGfxComposerInterface::_setUniform ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractGfxComposerInterface, "U" )
+int MOAIAbstractGfxScriptInterface::_setUniform ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractGfxScriptInterface, "U" )
 	
 	ZLIndex globalID		= state.GetValue < ZLIndex >( 3, 0 );
 	ZLIndex uniformID		= state.GetValue < ZLIndex >( 3, 0 );
@@ -60,94 +60,94 @@ int MOAIAbstractGfxComposerInterface::_setUniform ( lua_State* L ) {
 }
 
 //================================================================//
-// MOAIAbstractGfxComposerInterface
+// MOAIAbstractGfxScriptInterface
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIAbstractGfxComposer& MOAIAbstractGfxComposerInterface::AffirmComposer () {
+MOAIAbstractGfxScript& MOAIAbstractGfxScriptInterface::AffirmComposer () {
 
-	return this->MOAIAbstractGfxComposerInterface_AffirmComposer ();
+	return this->MOAIAbstractGfxScriptInterface_AffirmComposer ();
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractGfxComposerInterface::Call () {
+void MOAIAbstractGfxScriptInterface::Call () {
 
-	this->AffirmComposer ().MOAIAbstractGfxComposer_SubmitCommand ( MOAIGfxComposerCmdEnum::CALL, 0, 0 );
+	this->AffirmComposer ().MOAIAbstractGfxScript_SubmitCommand ( MOAIGfxScriptCmdEnum::CALL, 0, 0 );
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractGfxComposerInterface::CallFromShader() {
+void MOAIAbstractGfxScriptInterface::CallFromShader() {
 
-	this->AffirmComposer ().MOAIAbstractGfxComposer_SubmitCommand ( MOAIGfxComposerCmdEnum::CALL_FROM_SHADER, 0, 0 );
+	this->AffirmComposer ().MOAIAbstractGfxScript_SubmitCommand ( MOAIGfxScriptCmdEnum::CALL_FROM_SHADER, 0, 0 );
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractGfxComposer* MOAIAbstractGfxComposerInterface::GetComposer () {
+MOAIAbstractGfxScript* MOAIAbstractGfxScriptInterface::GetComposer () {
 
-	return this->MOAIAbstractGfxComposerInterface_GetComposer ();
+	return this->MOAIAbstractGfxScriptInterface_GetComposer ();
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractGfxComposerInterface::MOAIAbstractGfxComposerInterface () {
+MOAIAbstractGfxScriptInterface::MOAIAbstractGfxScriptInterface () {
 	
-	RTTI_BEGIN ( MOAIAbstractGfxComposerInterface )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractGfxComposerInterface >)
+	RTTI_BEGIN ( MOAIAbstractGfxScriptInterface )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractGfxScriptInterface >)
 		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractGfxComposerInterface::~MOAIAbstractGfxComposerInterface () {
+MOAIAbstractGfxScriptInterface::~MOAIAbstractGfxScriptInterface () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractGfxComposerInterface::Optimize () {
+void MOAIAbstractGfxScriptInterface::Optimize () {
 
-	MOAIAbstractGfxComposer* composer = this->GetComposer ();
+	MOAIAbstractGfxScript* composer = this->GetComposer ();
 	if ( composer ) {
 		composer->Optimize ();
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractGfxComposerInterface::RetainObject ( ZLRefCountedObject* object ) {
+void MOAIAbstractGfxScriptInterface::RetainObject ( ZLRefCountedObject* object ) {
 
-	this->AffirmComposer ().MOAIAbstractGfxComposer_RetainObject ( object );
+	this->AffirmComposer ().MOAIAbstractGfxScript_RetainObject ( object );
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractGfxComposerInterface::SetShader ( MOAIShader* shader ) {
+void MOAIAbstractGfxScriptInterface::SetShader ( MOAIShader* shader ) {
 
-	MOAIAbstractGfxComposer& composer = this->AffirmComposer ();
+	MOAIAbstractGfxScript& composer = this->AffirmComposer ();
 
-	MOAIGfxComposerParam::SetShader param;
+	MOAIGfxScriptParam::SetShader param;
 	param.mShader = shader;
-	composer.SubmitCommand < MOAIGfxComposerParam::SetShader >( MOAIGfxComposerCmdEnum::SET_SHADER, param );
+	composer.SubmitCommand < MOAIGfxScriptParam::SetShader >( MOAIGfxScriptCmdEnum::SET_SHADER, param );
 	composer.RetainObject ( shader );
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractGfxComposerInterface::SetTexture ( MOAITexture* texture, ZLIndex textureUnit ) {
+void MOAIAbstractGfxScriptInterface::SetTexture ( MOAITexture* texture, ZLIndex textureUnit ) {
 
-	MOAIAbstractGfxComposer& composer = this->AffirmComposer ();
+	MOAIAbstractGfxScript& composer = this->AffirmComposer ();
 
-	MOAIGfxComposerParam::SetTexture param;
+	MOAIGfxScriptParam::SetTexture param;
 	param.mTexture = texture;
 	param.mTextureUnit = textureUnit;
-	composer.SubmitCommand < MOAIGfxComposerParam::SetTexture >( MOAIGfxComposerCmdEnum::SET_TEXTURE, param );
+	composer.SubmitCommand < MOAIGfxScriptParam::SetTexture >( MOAIGfxScriptCmdEnum::SET_TEXTURE, param );
 	composer.RetainObject ( texture );
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractGfxComposerInterface::SetUniform ( ZLIndex globalID, ZLIndex uniformID, ZLIndex index ) {
+void MOAIAbstractGfxScriptInterface::SetUniform ( ZLIndex globalID, ZLIndex uniformID, ZLIndex index ) {
 
-	MOAIAbstractGfxComposer& composer = this->AffirmComposer ();
+	MOAIAbstractGfxScript& composer = this->AffirmComposer ();
 
-	MOAIGfxComposerParam::SetUniform param;
+	MOAIGfxScriptParam::SetUniform param;
 	param.mPipelineGlobalID = globalID;
 	param.mTargetUniformID = uniformID;
 	param.mTargetUniformIndex = index;
-	composer.SubmitCommand < MOAIGfxComposerParam::SetUniform >( MOAIGfxComposerCmdEnum::SET_UNIFORM, param );
+	composer.SubmitCommand < MOAIGfxScriptParam::SetUniform >( MOAIGfxScriptCmdEnum::SET_UNIFORM, param );
 }
 
 //================================================================//
@@ -155,7 +155,7 @@ void MOAIAbstractGfxComposerInterface::SetUniform ( ZLIndex globalID, ZLIndex un
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAbstractGfxComposerInterface::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIAbstractGfxScriptInterface::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
 	if ( history.DidVisit ( *this )) return;
 	
@@ -237,7 +237,7 @@ void MOAIAbstractGfxComposerInterface::_RegisterLuaClass ( RTTIVisitorHistory& h
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractGfxComposerInterface::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIAbstractGfxScriptInterface::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
 	if ( history.DidVisit ( *this )) return;
 

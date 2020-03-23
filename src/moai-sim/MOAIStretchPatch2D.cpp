@@ -294,7 +294,7 @@ MOAIStretchPatch2D::MOAIStretchPatch2D () :
 	RTTI_BEGIN ( MOAIStretchPatch2D )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIStretchPatch2D >)
 		RTTI_EXTEND ( MOAIStretchDeck )
-		RTTI_EXTEND ( MOAIHasGfxComposerBatch )
+		RTTI_EXTEND ( MOAIHasGfxScriptBatch )
 	RTTI_END
 }
 
@@ -387,7 +387,7 @@ void MOAIStretchPatch2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILu
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch2D::MOAIAbstractGfxComposerCallable_Call () {
+void MOAIStretchPatch2D::MOAIAbstractGfxScriptCallable_Call () {
 
 //	ZLVec3D stretch = this->BindStretchVertexTransform ();
 //	this->DrawStretch ( 0, stretch.mX, stretch.mY );
@@ -403,7 +403,7 @@ ZLBounds MOAIStretchPatch2D::MOAIDeck_ComputeMaxAABB () {
 void MOAIStretchPatch2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	UNUSED ( idx );
 	
-//	MOAIGfxComposerRetained* composer = this->GetComposer ();
+//	MOAIGfxScript* composer = this->GetComposer ();
 //	if ( !composer ) return;
 //
 //	this->UpdateParams ();

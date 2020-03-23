@@ -47,7 +47,7 @@ public:
 //	void					ApplyUniforms				();
 //	void					BindUniforms				();
 //	void					Bless						();
-	MOAIPipelineInputBodyComposerVK&		GetGfxComposer				();
+	MOAIPipelineInputBodyComposerVK&		GetGfxScript				();
 //	bool					HasDirtyUniforms			();
 							MOAIShaderVK				();
 							~MOAIShaderVK				();

@@ -11,7 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAISpriteDeck2DCallable::MOAIAbstractGfxComposerCallable_Call () {
+void MOAISpriteDeck2DCallable::MOAIAbstractGfxScriptCallable_Call () {
 
 	this->mBrush.Draw ();
 }
@@ -458,7 +458,7 @@ MOAIDeck* MOAISpriteDeck2D::AffirmDeck ( MOAILuaState& state, int idx ) {
 //}
 
 //----------------------------------------------------------------//
-//bool MOAISpriteDeck2D::Inside ( u32 idx, MOAIGfxComposerBatch* materials, u32 granularity, ZLVec3D vec, float pad ) {
+//bool MOAISpriteDeck2D::Inside ( u32 idx, MOAIGfxScriptBatch* materials, u32 granularity, ZLVec3D vec, float pad ) {
 //	UNUSED ( pad );
 //
 //	u32 size = ( u32 )this->mSpriteLists.Size (); // TODO: cast
@@ -482,7 +482,7 @@ MOAISpriteDeck2D::MOAISpriteDeck2D () {
 	RTTI_BEGIN ( MOAISpriteDeck2D )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAISpriteDeck2D >)
 		RTTI_EXTEND ( MOAIDeck )
-		RTTI_EXTEND ( MOAIHasGfxComposer )
+		RTTI_EXTEND ( MOAIHasGfxScript )
 	RTTI_END
 }
 
@@ -679,19 +679,19 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 			
 			MOAISprite spritePair = this->mSprites [  ZLIndexOp::Wrap ( i, totalSprites )];
 			
-			MOAIAbstractGfxComposer* composer = this->GetComposer ();
+			MOAIAbstractGfxScript* composer = this->GetComposer ();
 			if ( !composer ) continue;
 			
 			MOAISpriteDeck2DCallable callable;
 			callable.mBrush.mUVQuad = this->mUVQuads [ spritePair.mUVQuadID ];
 			callable.mBrush.mModelQuad = this->mQuads [ spritePair.mQuadID ];
 			
-			composer->Execute ( callable, MOAIGfxComposerCmdEnum::CALL_FROM_SHADER );
+			composer->Execute ( callable, MOAIGfxScriptCmdEnum::CALL_FROM_SHADER );
 		}
 	}
 	else {
 		
-		MOAIAbstractGfxComposer* composer = this->GetComposer ();
+		MOAIAbstractGfxScript* composer = this->GetComposer ();
 		if ( !composer ) return;
 		
 		MOAISpriteDeck2DCallable callable;
@@ -715,7 +715,7 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 			callable.mBrush.mModelQuad.Init ( -0.5f, -0.5f, 0.5f, 0.5f );
 		}
 		
-		composer->Execute ( callable, MOAIGfxComposerCmdEnum::CALL_FROM_SHADER );
+		composer->Execute ( callable, MOAIGfxScriptCmdEnum::CALL_FROM_SHADER );
 	}
 }
 

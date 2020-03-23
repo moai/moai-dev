@@ -594,7 +594,7 @@ MOAIMesh::MOAIMesh () :
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIMesh >)
 		RTTI_VISITOR ( MOAIAbstractLuaSerializationVisitor, MOAILuaSerializationVisitor < MOAIMesh >)
 		RTTI_EXTEND ( MOAIDeck )
-		RTTI_EXTEND ( MOAIHasGfxComposerBatch )
+		RTTI_EXTEND ( MOAIHasGfxScriptBatch )
 		RTTI_EXTEND ( MOAIVertexArray )
 	RTTI_END
 

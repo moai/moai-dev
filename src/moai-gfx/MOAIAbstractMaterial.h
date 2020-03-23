@@ -31,7 +31,7 @@ class MOAIAbstractMaterial :
 protected:
 
 	friend class MOAIAbstractMaterial;
-	friend class MOAIGfxComposerBatch;
+	friend class MOAIGfxScriptBatch;
 	friend class MOAIAbstractMaterialInterface;
 	friend class MOAIMaterialMgr;
 		

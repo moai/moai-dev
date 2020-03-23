@@ -2,10 +2,10 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx/MOAIAbstractGfxComposer.h>
-#include <moai-gfx/MOAIAbstractGfxComposerCallable.h>
+#include <moai-gfx/MOAIAbstractGfxScript.h>
+#include <moai-gfx/MOAIAbstractGfxScriptCallable.h>
 #include <moai-gfx/MOAIAbstractUniformBuffer.h>
-#include <moai-gfx/MOAIGfxComposerCommand.h>
+#include <moai-gfx/MOAIGfxScriptCommand.h>
 #include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIMaterialMgr.h>
 #include <moai-gfx/MOAIShader.h>
@@ -13,27 +13,27 @@
 #include <moai-gfx/MOAIUniformSchema.h>
 
 //================================================================//
-// MOAIGfxComposerCommand
+// MOAIGfxScriptCommand
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxComposerCommand::Execute ( MOAIAbstractGfxComposerCallable& callable, MOAIGfxComposerCmdEnum::_ cmd, const void* rawParam ) {
+void MOAIGfxScriptCommand::Execute ( MOAIAbstractGfxScriptCallable& callable, MOAIGfxScriptCmdEnum::_ cmd, const void* rawParam ) {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	switch ( cmd ) {
 	
-		case MOAIGfxComposerCmdEnum::CALL:
+		case MOAIGfxScriptCmdEnum::CALL:
 			callable.Call ();
 			break;
 		
-		case MOAIGfxComposerCmdEnum::CALL_FROM_SHADER: {
+		case MOAIGfxScriptCmdEnum::CALL_FROM_SHADER: {
 		
 			MOAIShader* shader = gfxMgr.GetShader ();
-			MOAIAbstractGfxComposer* composer = shader ? shader->GetComposer () : NULL;
+			MOAIAbstractGfxScript* composer = shader ? shader->GetComposer () : NULL;
 		
 			if ( composer ) {
-				composer->Execute ( callable, MOAIGfxComposerCmdEnum::CALL );
+				composer->Execute ( callable, MOAIGfxScriptCmdEnum::CALL );
 			}
 			else {
 				callable.Call ();
@@ -41,28 +41,28 @@ void MOAIGfxComposerCommand::Execute ( MOAIAbstractGfxComposerCallable& callable
 			break;
 		}
 		
-		case MOAIGfxComposerCmdEnum::SET_SHADER: {
-			const MOAIGfxComposerParam::SetShader* param = ( const MOAIGfxComposerParam::SetShader* )rawParam;
+		case MOAIGfxScriptCmdEnum::SET_SHADER: {
+			const MOAIGfxScriptParam::SetShader* param = ( const MOAIGfxScriptParam::SetShader* )rawParam;
 			gfxMgr.SetShader ( param->mShader );
 			break;
 		}
 		
-		case MOAIGfxComposerCmdEnum::SET_TEXTURE: {
-			const MOAIGfxComposerParam::SetTexture* param = ( const MOAIGfxComposerParam::SetTexture* )rawParam;
+		case MOAIGfxScriptCmdEnum::SET_TEXTURE: {
+			const MOAIGfxScriptParam::SetTexture* param = ( const MOAIGfxScriptParam::SetTexture* )rawParam;
 			gfxMgr.SetTexture ( param->mTexture, param->mTextureUnit );
 			break;
 		}
 		
-		case MOAIGfxComposerCmdEnum::SET_UNIFORM: {
-			const MOAIGfxComposerParam::SetUniform* param = ( const MOAIGfxComposerParam::SetUniform* )rawParam;
-			MOAIGfxComposerCommand::ExecuteUniform ( *param );
+		case MOAIGfxScriptCmdEnum::SET_UNIFORM: {
+			const MOAIGfxScriptParam::SetUniform* param = ( const MOAIGfxScriptParam::SetUniform* )rawParam;
+			MOAIGfxScriptCommand::ExecuteUniform ( *param );
 			break;
 		}
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxComposerCommand::ExecuteUniform ( const MOAIGfxComposerParam::SetUniform& param ) {
+void MOAIGfxScriptCommand::ExecuteUniform ( const MOAIGfxScriptParam::SetUniform& param ) {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	MOAIShader* shader = gfxMgr.GetShader ();

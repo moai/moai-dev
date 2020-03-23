@@ -36,7 +36,7 @@ private:
 // MOAISpriteDeck2DCallable
 //================================================================//
 class MOAISpriteDeck2DCallable :
-	public MOAIAbstractGfxComposerCallable {
+	public MOAIAbstractGfxScriptCallable {
 private:
 
 	friend class MOAISpriteDeck2D;
@@ -44,7 +44,7 @@ private:
 	MOAIQuadBrush	mBrush;
 
 	//----------------------------------------------------------------//
-	void 		MOAIAbstractGfxComposerCallable_Call 		();
+	void 		MOAIAbstractGfxScriptCallable_Call 		();
 };
 
 //================================================================//
@@ -58,7 +58,7 @@ private:
 */
 class MOAISpriteDeck2D :
 	public MOAIDeck,
-	public MOAIHasGfxComposer {
+	public MOAIHasGfxScript {
 private:
 	
 	ZLLeanArray < ZLQuad >				mUVQuads;
@@ -103,8 +103,8 @@ public:
 	//----------------------------------------------------------------//
 	static MOAIDeck*	AffirmDeck					( MOAILuaState& state, int idx );
 	bool				Contains					( ZLIndex idx, const ZLVec2D& vec );
-	void				DrawIndex					( ZLIndex idx, MOAIGfxComposerBatch* materials, ZLVec3D offset, ZLVec3D scale );
-	bool				Inside						( ZLIndex idx, MOAIGfxComposerBatch* materials, u32 granularity, ZLVec3D vec, float pad );
+	void				DrawIndex					( ZLIndex idx, MOAIGfxScriptBatch* materials, ZLVec3D offset, ZLVec3D scale );
+	bool				Inside						( ZLIndex idx, MOAIGfxScriptBatch* materials, u32 granularity, ZLVec3D vec, float pad );
 						MOAISpriteDeck2D			();
 						~MOAISpriteDeck2D			();
 	void				ReserveLists				( ZLSize total );

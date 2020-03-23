@@ -3,8 +3,8 @@
 
 #include "pch.h"
 
-#include <moai-gfx/MOAIGfxComposerBatch.h>
-#include <moai-gfx/MOAIHasGfxComposerBatch.h>
+#include <moai-gfx/MOAIGfxScriptBatch.h>
+#include <moai-gfx/MOAIHasGfxScriptBatch.h>
 
 //================================================================//
 // lua
@@ -12,8 +12,8 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIHasGfxComposerBatch::_affirmComposerBatch ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIHasGfxComposerBatch, "U" )
+int MOAIHasGfxScriptBatch::_affirmComposerBatch ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHasGfxScriptBatch, "U" )
 	
 	state.Push ( &self->AffirmComposerBatch ());
 	return 1;
@@ -23,11 +23,11 @@ int MOAIHasGfxComposerBatch::_affirmComposerBatch ( lua_State* L ) {
 /**	@name	getComposerBatch
 	@text	Return the material batch attached to the prop.
 	
-	@in		MOAIHasGfxComposerBatch self
-	@out	MOAIGfxComposerBatch materialBatch
+	@in		MOAIHasGfxScriptBatch self
+	@out	MOAIGfxScriptBatch materialBatch
 */
-int MOAIHasGfxComposerBatch::_getComposerBatch ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIHasGfxComposerBatch, "U" )
+int MOAIHasGfxScriptBatch::_getComposerBatch ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHasGfxScriptBatch, "U" )
 	
 	if ( self->mComposerBatch ) {
 		self->mComposerBatch.PushRef ( state );
@@ -40,33 +40,33 @@ int MOAIHasGfxComposerBatch::_getComposerBatch ( lua_State* L ) {
 /**	@lua	setComposerBatch
 	@text	Sets the prop's material batch.
 	
-	@in		MOAIHasGfxComposerBatch self
-	@opt	MOAIGfxComposerBatch materialBatch
+	@in		MOAIHasGfxScriptBatch self
+	@opt	MOAIGfxScriptBatch materialBatch
 	@out	nil
 */
-int MOAIHasGfxComposerBatch::_setComposerBatch ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIHasGfxComposerBatch, "U" )
+int MOAIHasGfxScriptBatch::_setComposerBatch ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHasGfxScriptBatch, "U" )
 	
-	self->mComposerBatch.Set ( *self, state.GetLuaObject < MOAIGfxComposerBatch >( 2, true ));
+	self->mComposerBatch.Set ( *self, state.GetLuaObject < MOAIGfxScriptBatch >( 2, true ));
 	
 	return 0;
 }
 
 //================================================================//
-// MOAIHasGfxComposerBatch
+// MOAIHasGfxScriptBatch
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIHasGfxComposerBatch::MOAIHasGfxComposerBatch () {
+MOAIHasGfxScriptBatch::MOAIHasGfxScriptBatch () {
 
-	RTTI_BEGIN ( MOAIHasGfxComposerBatch )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIHasGfxComposerBatch >)
-		RTTI_EXTEND ( MOAIAbstractGfxComposerBatchInterface )
+	RTTI_BEGIN ( MOAIHasGfxScriptBatch )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIHasGfxScriptBatch >)
+		RTTI_EXTEND ( MOAIAbstractGfxScriptBatchInterface )
 	RTTI_END
 }
 
 //----------------------------------------------------------------//
-MOAIHasGfxComposerBatch::~MOAIHasGfxComposerBatch () {
+MOAIHasGfxScriptBatch::~MOAIHasGfxScriptBatch () {
 
 	this->mComposerBatch.Set ( *this, 0 );
 }
@@ -76,13 +76,13 @@ MOAIHasGfxComposerBatch::~MOAIHasGfxComposerBatch () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIHasGfxComposerBatch::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIHasGfxScriptBatch::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
 	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIHasGfxComposerBatch::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIHasGfxScriptBatch::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
@@ -96,28 +96,28 @@ void MOAIHasGfxComposerBatch::_RegisterLuaFuncs ( RTTIVisitorHistory& history, M
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractGfxComposer& MOAIHasGfxComposerBatch::MOAIAbstractGfxComposerBatchInterface_AffirmComposer ( ZLIndex index ) {
+MOAIAbstractGfxScript& MOAIHasGfxScriptBatch::MOAIAbstractGfxScriptBatchInterface_AffirmComposer ( ZLIndex index ) {
 
 	return this->AffirmComposerBatch ().AffirmComposer ( index );
 }
 
 //----------------------------------------------------------------//
-MOAIGfxComposerBatch& MOAIHasGfxComposerBatch::MOAIAbstractGfxComposerBatchInterface_AffirmComposerBatch () {
+MOAIGfxScriptBatch& MOAIHasGfxScriptBatch::MOAIAbstractGfxScriptBatchInterface_AffirmComposerBatch () {
 
 	if ( !this->mComposerBatch ) {
-		this->mComposerBatch.Set ( *this, new MOAIGfxComposerBatch ());
+		this->mComposerBatch.Set ( *this, new MOAIGfxScriptBatch ());
 	}
 	return *this->mComposerBatch;
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractGfxComposer* MOAIHasGfxComposerBatch::MOAIAbstractGfxComposerBatchInterface_GetComposer ( ZLIndex index ) {
+MOAIAbstractGfxScript* MOAIHasGfxScriptBatch::MOAIAbstractGfxScriptBatchInterface_GetComposer ( ZLIndex index ) {
 
 	return this->mComposerBatch ? this->mComposerBatch->GetComposer ( index ) : NULL;
 }
 
 //----------------------------------------------------------------//
-MOAIGfxComposerBatch* MOAIHasGfxComposerBatch::MOAIAbstractGfxComposerBatchInterface_GetComposerBatch () {
+MOAIGfxScriptBatch* MOAIHasGfxScriptBatch::MOAIAbstractGfxScriptBatchInterface_GetComposerBatch () {
 
 	return this->mComposerBatch;
 }

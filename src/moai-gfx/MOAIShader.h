@@ -4,7 +4,7 @@
 #ifndef	MOAISHADER_H
 #define	MOAISHADER_H
 
-#include <moai-gfx/MOAIHasGfxComposer.h>
+#include <moai-gfx/MOAIHasGfxScript.h>
 #include <moai-gfx/MOAIUniformHandle.h>
 
 // uniform buffer - attach statically (like a texture)
@@ -21,7 +21,7 @@
 // MOAIShader
 //================================================================//
 class MOAIShader :
-	public virtual MOAIHasGfxComposer {
+	public virtual MOAIHasGfxScript {
 protected:
 
 	//----------------------------------------------------------------//

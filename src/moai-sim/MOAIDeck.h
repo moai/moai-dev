@@ -10,7 +10,7 @@ class MOAICollisionShape;
 class MOAIColor;
 class MOAIGrid;
 class MOAIImage;
-class MOAIGfxComposerBatch;
+class MOAIGfxScriptBatch;
 class MOAIQuadBrush;
 class MOAIShader;
 class MOAISurfaceSampler2D;

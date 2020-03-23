@@ -7,7 +7,7 @@
 #include <moai-sim/MOAIGridSpace.h>
 #include <moai-sim/MOAIDeck.h>
 
-class MOAIGfxComposerBatch;
+class MOAIGfxScriptBatch;
 
 //================================================================//
 // MOAIGrid

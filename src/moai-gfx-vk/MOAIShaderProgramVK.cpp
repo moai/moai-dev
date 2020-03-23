@@ -37,7 +37,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIPipelineInputBodyComposerVK& MOAIShaderProgramVK::GetGfxComposer () {
+MOAIPipelineInputBodyComposerVK& MOAIShaderProgramVK::GetGfxScript () {
 
 	assert ( this->mComposer );
 	return *this->mComposer;
@@ -46,7 +46,7 @@ MOAIPipelineInputBodyComposerVK& MOAIShaderProgramVK::GetGfxComposer () {
 //----------------------------------------------------------------//
 MOAIPipelineInputBodySchemaVK& MOAIShaderProgramVK::GetPipelineLayout () {
 
-	return this->GetGfxComposer ().GetPipelineLayout ();
+	return this->GetGfxScript ().GetPipelineLayout ();
 }
 
 //----------------------------------------------------------------//
@@ -96,7 +96,7 @@ MOAIShaderProgramVK::~MOAIShaderProgramVK () {
 }
 
 //----------------------------------------------------------------//
-void MOAIShaderProgramVK::SetGfxComposer ( MOAIPipelineInputBodyComposerVK& composer ) {
+void MOAIShaderProgramVK::SetGfxScript ( MOAIPipelineInputBodyComposerVK& composer ) {
 
 	this->mComposer = &composer;
 }

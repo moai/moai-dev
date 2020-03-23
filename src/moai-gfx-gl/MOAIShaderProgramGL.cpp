@@ -208,7 +208,7 @@ MOAIShaderProgramGL::MOAIShaderProgramGL () :
 	RTTI_BEGIN ( MOAIShaderProgramGL )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIShaderProgramGL >)
 		RTTI_EXTEND ( MOAIGfxResourceGL )
-		RTTI_EXTEND ( MOAIHasGfxComposer )
+		RTTI_EXTEND ( MOAIHasGfxScript )
 	RTTI_END
 }
 

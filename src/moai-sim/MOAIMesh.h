@@ -90,7 +90,7 @@ public:
 */
 class MOAIMesh :
 	public MOAIDeck,
-	public MOAIHasGfxComposerBatch {
+	public MOAIHasGfxScriptBatch {
 protected:
 
 	friend class MOAIMeshPrimReader;

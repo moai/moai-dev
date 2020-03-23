@@ -1,17 +1,17 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGFXCOMPOSERSOMMAND_H
-#define	MOAIGFXCOMPOSERSOMMAND_H
+#ifndef	MOAIGFXSCRIPTSOMMAND_H
+#define	MOAIGFXSCRIPTSOMMAND_H
 
-class MOAIAbstractGfxComposerCallable;
+class MOAIAbstractGfxScriptCallable;
 class MOAIShader;
 class MOAITexture;
 
 //================================================================//
-// MOAIGfxComposerCmdEnum
+// MOAIGfxScriptCmdEnum
 //================================================================//
-struct MOAIGfxComposerCmdEnum {
+struct MOAIGfxScriptCmdEnum {
 	enum _ {
 		NONE,
 		
@@ -36,9 +36,9 @@ struct MOAIGfxComposerCmdEnum {
 };
 
 //================================================================//
-// MOAIGfxComposerParam
+// MOAIGfxScriptParam
 //================================================================//
-namespace MOAIGfxComposerParam {
+namespace MOAIGfxScriptParam {
 
 	//----------------------------------------------------------------//
 	struct DrawBox {
@@ -128,16 +128,16 @@ namespace MOAIGfxComposerParam {
 };
 
 //================================================================//
-// MOAIGfxComposerCommand
+// MOAIGfxScriptCommand
 //================================================================//
-struct MOAIGfxComposerCommand {
+struct MOAIGfxScriptCommand {
 
-	MOAIGfxComposerCmdEnum::_ 	mType;
+	MOAIGfxScriptCmdEnum::_ 	mType;
 	ZLSize 						mParamSize;
 	
 	//----------------------------------------------------------------//
-	static void		Execute				( MOAIAbstractGfxComposerCallable& callable, MOAIGfxComposerCmdEnum::_ cmd, const void* rawParam );
-	static void		ExecuteUniform		( const MOAIGfxComposerParam::SetUniform& param );
+	static void		Execute				( MOAIAbstractGfxScriptCallable& callable, MOAIGfxScriptCmdEnum::_ cmd, const void* rawParam );
+	static void		ExecuteUniform		( const MOAIGfxScriptParam::SetUniform& param );
 };
 
 #endif

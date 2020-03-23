@@ -54,13 +54,13 @@ public:
 	DECL_LUA_FACTORY ( MOAIShaderProgramVK )
 
 	//----------------------------------------------------------------//
-	MOAIPipelineInputBodyComposerVK&			GetGfxComposer						();
+	MOAIPipelineInputBodyComposerVK&			GetGfxScript						();
 	MOAIPipelineInputBodySchemaVK&		GetPipelineLayout					();
 	void						Initialize							( MOAILogicalDeviceVK& logicalDevice );
 	void						LoadModule							( ModuleID moduleID, const void* shaderCode, size_t shaderSize );
 								MOAIShaderProgramVK					();
 								~MOAIShaderProgramVK				();
-	void						SetGfxComposer						( MOAIPipelineInputBodyComposerVK& composer );
+	void						SetGfxScript						( MOAIPipelineInputBodyComposerVK& composer );
 	void						UpdatePipelineCreateInfo			( VkGraphicsPipelineCreateInfo& info );
 };
 

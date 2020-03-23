@@ -1,20 +1,20 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIHASGFXCOMPOSERBATCH_H
-#define	MOAIHASGFXCOMPOSERBATCH_H
+#ifndef	MOAIHASGFXSCRIPTBATCH_H
+#define	MOAIHASGFXSCRIPTBATCH_H
 
-#include <moai-gfx/MOAIAbstractGfxComposerBatchInterface.h>
+#include <moai-gfx/MOAIAbstractGfxScriptBatchInterface.h>
 
 //================================================================//
 // MOAIHasComposerBatch
 //================================================================//
 // TODO: doxygen
-class MOAIHasGfxComposerBatch :
-	public virtual MOAIAbstractGfxComposerBatchInterface {
+class MOAIHasGfxScriptBatch :
+	public virtual MOAIAbstractGfxScriptBatchInterface {
 protected:
 
-	MOAILuaSharedPtr < MOAIGfxComposerBatch > mComposerBatch;
+	MOAILuaSharedPtr < MOAIGfxScriptBatch > mComposerBatch;
 
 	//----------------------------------------------------------------//
 	static int					_affirmComposerBatch		( lua_State* L );
@@ -24,18 +24,18 @@ protected:
 	//----------------------------------------------------------------//
 	void						_RegisterLuaClass											( RTTIVisitorHistory& history, MOAILuaState& state );
 	void						_RegisterLuaFuncs											( RTTIVisitorHistory& history, MOAILuaState& state );
-	MOAIAbstractGfxComposer&	MOAIAbstractGfxComposerBatchInterface_AffirmComposer		( ZLIndex index );
-	MOAIGfxComposerBatch&		MOAIAbstractGfxComposerBatchInterface_AffirmComposerBatch	();
-	MOAIAbstractGfxComposer*	MOAIAbstractGfxComposerBatchInterface_GetComposer			( ZLIndex index );
-	MOAIGfxComposerBatch*		MOAIAbstractGfxComposerBatchInterface_GetComposerBatch 		();
+	MOAIAbstractGfxScript&		MOAIAbstractGfxScriptBatchInterface_AffirmComposer			( ZLIndex index );
+	MOAIGfxScriptBatch&			MOAIAbstractGfxScriptBatchInterface_AffirmComposerBatch		();
+	MOAIAbstractGfxScript*		MOAIAbstractGfxScriptBatchInterface_GetComposer				( ZLIndex index );
+	MOAIGfxScriptBatch*			MOAIAbstractGfxScriptBatchInterface_GetComposerBatch 		();
 
 public:
 
-	DECL_LUA_FACTORY ( MOAIHasGfxComposerBatch )
+	DECL_LUA_FACTORY ( MOAIHasGfxScriptBatch )
 
 	//----------------------------------------------------------------//
-								MOAIHasGfxComposerBatch		();
-								~MOAIHasGfxComposerBatch	();
+								MOAIHasGfxScriptBatch		();
+								~MOAIHasGfxScriptBatch		();
 };
 
 #endif

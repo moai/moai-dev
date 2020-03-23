@@ -235,7 +235,7 @@ MOAITileDeck2D::MOAITileDeck2D () {
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAITileDeck2D >)
 		RTTI_VISITOR ( MOAIAbstractLuaSerializationVisitor, MOAILuaSerializationVisitor < MOAITileDeck2D >)
 		RTTI_EXTEND ( MOAIDeck )
-		RTTI_EXTEND ( MOAIHasGfxComposerBatch )
+		RTTI_EXTEND ( MOAIHasGfxScriptBatch )
 		RTTI_EXTEND ( MOAIGridSpace )
 	RTTI_END
 	
@@ -312,26 +312,26 @@ void MOAITileDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	
 //	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 //	MOAIQuadBrush::BindVertexFormat ();
-//	
+//
 //	gfxMgr.SetVertexTransform ( MOAIGfxMgr::MODEL_TO_CLIP_MTX );
 //	gfxMgr.SetUVTransform ( MOAIGfxMgr::UV_TO_MODEL_MTX );
-//	
+//
 //	MOAICellCoord coord = this->GetCellCoord ( idx );
 //	ZLRect uvRect = this->GetTileRect ( coord );
-//	
+//
 //	float uScale = ( uvRect.mXMax - uvRect.mXMin );
 //	float vScale = -( uvRect.mYMax - uvRect.mYMin );
-//	
+//
 //	float uOff = uvRect.mXMin + ( 0.5f * uScale );
 //	float vOff = uvRect.mYMin - ( 0.5f * vScale );
-//	
+//
 //	MOAIMaterialMgr& materialMgr = MOAIMaterialMgr::Get ();
 //	materialMgr.Push ( this->GetMaterial ( idx ));
 //	materialMgr.SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
 //	materialMgr.LoadGfxState ();
-//	
+//
 //	this->mQuad.Draw ( 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, uOff, vOff, uScale, vScale );
-//	
+//
 //	materialMgr.Pop ();
 }
 

@@ -3,36 +3,36 @@
 
 #include "pch.h"
 
-#include <moai-gfx/MOAIGfxComposerRetained.h>
-#include <moai-gfx/MOAIGfxComposerBatch.h>
+#include <moai-gfx/MOAIGfxScript.h>
+#include <moai-gfx/MOAIGfxScriptBatch.h>
 
 //================================================================//
-// MOAIGfxComposerBatch
+// MOAIGfxScriptBatch
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxComposerBatch::Clear () {
+void MOAIGfxScriptBatch::Clear () {
 
 	this->mComposers.Clear ();
 }
 
 //----------------------------------------------------------------//
-MOAIGfxComposerBatch::MOAIGfxComposerBatch () :
+MOAIGfxScriptBatch::MOAIGfxScriptBatch () :
 	mIndexBatchSize ( 1 ) {
 	
-	RTTI_BEGIN ( MOAIGfxComposerBatch )
-		RTTI_EXTEND ( MOAIAbstractGfxComposerBatchInterface )
+	RTTI_BEGIN ( MOAIGfxScriptBatch )
+		RTTI_EXTEND ( MOAIAbstractGfxScriptBatchInterface )
 	RTTI_END
 }
 
 //----------------------------------------------------------------//
-MOAIGfxComposerBatch::~MOAIGfxComposerBatch () {
+MOAIGfxScriptBatch::~MOAIGfxScriptBatch () {
 
 	this->Clear ();
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxComposerBatch::Reserve ( ZLSize n ) {
+void MOAIGfxScriptBatch::Reserve ( ZLSize n ) {
 
 	// TODO: this was ZGL_FIRST_FLAG; unclear why
 	assert ( n < 0x70000000 ); // probably don't need more than 0x70000000 materials...
@@ -42,7 +42,7 @@ void MOAIGfxComposerBatch::Reserve ( ZLSize n ) {
 }
 
 //----------------------------------------------------------------//
-size_t MOAIGfxComposerBatch::Size () {
+size_t MOAIGfxScriptBatch::Size () {
 
 	return this->mComposers.Size ();
 }
@@ -52,32 +52,32 @@ size_t MOAIGfxComposerBatch::Size () {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIAbstractGfxComposer& MOAIGfxComposerBatch::MOAIAbstractGfxComposerBatchInterface_AffirmComposer ( ZLIndex index ) {
+MOAIAbstractGfxScript& MOAIGfxScriptBatch::MOAIAbstractGfxScriptBatchInterface_AffirmComposer ( ZLIndex index ) {
 
 	this->mComposers.Grow (( ZLSize )index + 1 );
 
-	MOAIAbstractGfxComposer* composer = this->mComposers [ index ];
+	MOAIAbstractGfxScript* composer = this->mComposers [ index ];
 	if ( !composer ) {
-		composer = new MOAIGfxComposerRetained ();
+		composer = new MOAIGfxScript ();
 		this->mComposers [ index ] = composer;
 	}
 	return *composer;
 }
 
 //----------------------------------------------------------------//
-MOAIGfxComposerBatch& MOAIGfxComposerBatch::MOAIAbstractGfxComposerBatchInterface_AffirmComposerBatch () {
+MOAIGfxScriptBatch& MOAIGfxScriptBatch::MOAIAbstractGfxScriptBatchInterface_AffirmComposerBatch () {
 
 	return *this;
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractGfxComposer* MOAIGfxComposerBatch::MOAIAbstractGfxComposerBatchInterface_GetComposer ( ZLIndex index ) {
+MOAIAbstractGfxScript* MOAIGfxScriptBatch::MOAIAbstractGfxScriptBatchInterface_GetComposer ( ZLIndex index ) {
 
-	return ( index < this->mComposers.Size ()) ? ( MOAIAbstractGfxComposer* )this->mComposers [ index ] : NULL;
+	return ( index < this->mComposers.Size ()) ? ( MOAIAbstractGfxScript* )this->mComposers [ index ] : NULL;
 }
 
 //----------------------------------------------------------------//
-MOAIGfxComposerBatch* MOAIGfxComposerBatch::MOAIAbstractGfxComposerBatchInterface_GetComposerBatch () {
+MOAIGfxScriptBatch* MOAIGfxScriptBatch::MOAIAbstractGfxScriptBatchInterface_GetComposerBatch () {
 
 	return this;
 }

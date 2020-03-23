@@ -178,7 +178,7 @@ void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_DrawPrims ( MOAIGfxTopologyEnu
 
 	// compose
 	// TODO: need to detect changes and signal gfx state change
-	MOAIPipelineInputBodyComposerVK& composer = shader->GetGfxComposer ();
+	MOAIPipelineInputBodyComposerVK& composer = shader->GetGfxScript ();
 	composer.ComposeAndBind ( gfxMgr, commandBuffer, VK_PIPELINE_BIND_POINT_GRAPHICS );
 
 	// set the viewport and scissor

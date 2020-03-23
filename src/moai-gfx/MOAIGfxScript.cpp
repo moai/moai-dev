@@ -2,9 +2,9 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx/MOAIAbstractGfxComposerCallable.h>
+#include <moai-gfx/MOAIAbstractGfxScriptCallable.h>
 #include <moai-gfx/MOAIAbstractUniformBuffer.h>
-#include <moai-gfx/MOAIGfxComposerRetained.h>
+#include <moai-gfx/MOAIGfxScript.h>
 #include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIMaterialMgr.h>
 #include <moai-gfx/MOAIShader.h>
@@ -12,11 +12,11 @@
 #include <moai-gfx/MOAIUniformSchema.h>
 
 //================================================================//
-// MOAIGfxComposerRetained
+// MOAIGfxScript
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxComposerRetained::ExecuteBytecode ( MOAIAbstractGfxComposerCallable& callable, MOAIGfxComposerCmdEnum::_ callCommand ) {
+void MOAIGfxScript::ExecuteBytecode ( MOAIAbstractGfxScriptCallable& callable, MOAIGfxScriptCmdEnum::_ callCommand ) {
 
 	bool didCall = false;
 
@@ -25,54 +25,54 @@ void MOAIGfxComposerRetained::ExecuteBytecode ( MOAIAbstractGfxComposerCallable&
 
 	while ( bytecode < top ) {
 		
-		const MOAIGfxComposerCommand& command = *( const MOAIGfxComposerCommand* )bytecode;
-		bytecode = ( const void* )(( uintptr )bytecode + sizeof ( MOAIGfxComposerCommand ));
+		const MOAIGfxScriptCommand& command = *( const MOAIGfxScriptCommand* )bytecode;
+		bytecode = ( const void* )(( uintptr )bytecode + sizeof ( MOAIGfxScriptCommand ));
 		
-		MOAIGfxComposerCommand::Execute ( callable, command.mType, bytecode );
+		MOAIGfxScriptCommand::Execute ( callable, command.mType, bytecode );
 		bytecode = ( const void* )(( uintptr )bytecode + sizeof ( command.mParamSize ));
 		
-		didCall = didCall || ( command.mType >= MOAIGfxComposerCmdEnum::CALL );
+		didCall = didCall || ( command.mType >= MOAIGfxScriptCmdEnum::CALL );
 	}
 
 	if ( !didCall ) {
-		MOAIGfxComposerCommand::Execute ( callable, callCommand, 0 );
+		MOAIGfxScriptCommand::Execute ( callable, callCommand, 0 );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxComposerRetained::ExecuteMemStream ( MOAIAbstractGfxComposerCallable& callable, MOAIGfxComposerCmdEnum::_ callCommand ) {
+void MOAIGfxScript::ExecuteMemStream ( MOAIAbstractGfxScriptCallable& callable, MOAIGfxScriptCmdEnum::_ callCommand ) {
 
 	bool didCall = false;
 
 	this->mCommandStream.Seek ( 0 );
 	while ( !this->mCommandStream.IsAtEnd ()) {
 	
-		MOAIGfxComposerCommand command = this->mCommandStream.Read < MOAIGfxComposerCommand >();
+		MOAIGfxScriptCommand command = this->mCommandStream.Read < MOAIGfxScriptCommand >();
 		void* buffer = command.mParamSize > 0 ? alloca ( command.mParamSize ) : NULL;
 		this->mCommandStream.ReadBytes ( buffer, command.mParamSize );
-		MOAIGfxComposerCommand::Execute ( callable, command.mType, buffer );
+		MOAIGfxScriptCommand::Execute ( callable, command.mType, buffer );
 		
-		didCall = didCall || ( command.mType >= MOAIGfxComposerCmdEnum::CALL );
+		didCall = didCall || ( command.mType >= MOAIGfxScriptCmdEnum::CALL );
 	}
 	
 	if ( !didCall ) {
-		MOAIGfxComposerCommand::Execute ( callable, callCommand, 0 );
+		MOAIGfxScriptCommand::Execute ( callable, callCommand, 0 );
 	}
 }
 
 //----------------------------------------------------------------//
-MOAIGfxComposerRetained::MOAIGfxComposerRetained () {
+MOAIGfxScript::MOAIGfxScript () {
 
-	RTTI_BEGIN ( MOAIGfxComposerRetained )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIGfxComposerRetained >)
-		RTTI_EXTEND ( MOAIAbstractGfxComposerInterface )
+	RTTI_BEGIN ( MOAIGfxScript )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIGfxScript >)
+		RTTI_EXTEND ( MOAIAbstractGfxScriptInterface )
 	RTTI_END
 
 	this->mCommandStream.SetChunkSize ( 256 );
 }
 
 //----------------------------------------------------------------//
-MOAIGfxComposerRetained::~MOAIGfxComposerRetained () {
+MOAIGfxScript::~MOAIGfxScript () {
 }
 
 //================================================================//
@@ -80,7 +80,7 @@ MOAIGfxComposerRetained::~MOAIGfxComposerRetained () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxComposerRetained::MOAIAbstractGfxComposer_Execute ( MOAIAbstractGfxComposerCallable& callable, MOAIGfxComposerCmdEnum::_ callCommand ) {
+void MOAIGfxScript::MOAIAbstractGfxScript_Execute ( MOAIAbstractGfxScriptCallable& callable, MOAIGfxScriptCmdEnum::_ callCommand ) {
 
 	if ( this->mBytecode.Size () > 0 ) {
 		this->ExecuteBytecode ( callable, callCommand );
@@ -91,7 +91,7 @@ void MOAIGfxComposerRetained::MOAIAbstractGfxComposer_Execute ( MOAIAbstractGfxC
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxComposerRetained::MOAIAbstractGfxComposer_Optimize () {
+void MOAIGfxScript::MOAIAbstractGfxScript_Optimize () {
 
 	ZLSize size = this->mCommandStream.GetCursor ();
 	if ( size > 0 ) {
@@ -104,7 +104,7 @@ void MOAIGfxComposerRetained::MOAIAbstractGfxComposer_Optimize () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxComposerRetained::MOAIAbstractGfxComposer_RetainObject ( ZLRefCountedObject* object ) {
+void MOAIGfxScript::MOAIAbstractGfxScript_RetainObject ( ZLRefCountedObject* object ) {
 
 	if ( object ) {
 		this->mRetainedObjects.Push ( object );
@@ -112,24 +112,24 @@ void MOAIGfxComposerRetained::MOAIAbstractGfxComposer_RetainObject ( ZLRefCounte
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxComposerRetained::MOAIAbstractGfxComposer_SubmitCommand ( MOAIGfxComposerCmdEnum::_ cmd, const void* param, ZLSize size ) {
+void MOAIGfxScript::MOAIAbstractGfxScript_SubmitCommand ( MOAIGfxScriptCmdEnum::_ cmd, const void* param, ZLSize size ) {
 
-	MOAIGfxComposerCommand command;
+	MOAIGfxScriptCommand command;
 	command.mType = cmd;
 	command.mParamSize = size;
 	
-	this->mCommandStream.Write < MOAIGfxComposerCommand >( command );
+	this->mCommandStream.Write < MOAIGfxScriptCommand >( command );
 	this->mCommandStream.WriteBytes ( param, size );
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractGfxComposer& MOAIGfxComposerRetained::MOAIAbstractGfxComposerInterface_AffirmComposer () {
+MOAIAbstractGfxScript& MOAIGfxScript::MOAIAbstractGfxScriptInterface_AffirmComposer () {
 
 	return *this;
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractGfxComposer* MOAIGfxComposerRetained::MOAIAbstractGfxComposerInterface_GetComposer () {
+MOAIAbstractGfxScript* MOAIGfxScript::MOAIAbstractGfxScriptInterface_GetComposer () {
 
 	return this;
 }
