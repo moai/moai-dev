@@ -115,11 +115,14 @@ private:
 	static int				_dumpStack				( lua_State* L );
 	static int				_forceGC				( lua_State* L );
 	static int				_getHistogram			( lua_State* L );
+	static int				_getObjectCount			( lua_State* L );
 	static int				_getRef					( lua_State* L );
 	static int				_panic					( lua_State* L );
 	static int				_reportGC				( lua_State* L );
 	static int				_reportHistogram		( lua_State* L );
 	static int				_reportLeaks			( lua_State* L );
+	static int				_setTraceback			( lua_State* L );
+	static int				_setAllocLogEnabled		( lua_State* L );
 	static int				_setTrackingFlags		( lua_State* L );
 	static void*			_trackingAlloc			( void *ud, void *ptr, size_t osize, size_t nsize );
 	static int				_traceback				( lua_State *L );

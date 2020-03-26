@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIAnimCurveBone.h>
+#include <moai-core/MOAIAnimCurveBone.h>
 
 //================================================================//
 // lua
@@ -198,6 +198,7 @@ void MOAIAnimCurveBone::SetSampleScale ( ZLIndex idx, float x, float y, float z 
 
 //----------------------------------------------------------------//
 void MOAIAnimCurveBone::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	UNUSED ( state );
 	if ( history.DidVisit ( *this )) return;
 }
 

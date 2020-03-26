@@ -4,7 +4,6 @@
 #ifndef MOAIINPUTMGR_H
 #define MOAIINPUTMGR_H
 
-#include <moai-sim/MOAIAction.h>
 #include <moai-sim/MOAIInputDevice.h>
 #include <moai-sim/MOAISensor.h>
 

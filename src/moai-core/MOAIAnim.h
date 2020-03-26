@@ -4,7 +4,7 @@
 #ifndef	MOAIANIM_H
 #define	MOAIANIM_H
 
-#include <moai-sim/MOAITimer.h>
+#include <moai-core/MOAITimer.h>
 
 class MOAIAnimCurve;
 

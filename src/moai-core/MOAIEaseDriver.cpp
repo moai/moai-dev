@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIEaseDriver.h>
+#include <moai-core/MOAIEaseDriver.h>
 
 //================================================================//
 // lua
@@ -237,6 +237,7 @@ void MOAIEaseDriver::SetLink ( ZLIndex idx, MOAINode* dest, ZLAttrID destAttrID,
 
 //----------------------------------------------------------------//
 void MOAIEaseDriver::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	UNUSED ( state );
 	if ( history.DidVisit ( *this )) return;
 }
 

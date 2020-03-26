@@ -4,7 +4,6 @@
 #ifndef	MOAITEXTLABEL_H
 #define	MOAITEXTLABEL_H
 
-#include <moai-sim/MOAIAction.h>
 #include <moai-sim/MOAIGraphicsPropBase.h>
 #include <moai-sim/MOAITextLayoutRules.h>
 #include <moai-sim/MOAITextLayout.h>

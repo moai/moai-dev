@@ -1,31 +1,31 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIANIMCURVEQUAT_H
-#define	MOAIANIMCURVEQUAT_H
+#ifndef	MOAIANIMCURVEVEC_H
+#define	MOAIANIMCURVEVEC_H
 
-#include <moai-sim/MOAIAnimCurve.h>
+#include <moai-core/MOAIAnimCurve.h>
 
 //================================================================//
-// MOAIAnimCurveQuat
+// MOAIAnimCurveVec
 //================================================================//
-/**	@lua	MOAIAnimCurveQuat
-	@text	Implementation of animation curve for rotation (via quaternion) values.
+/**	@lua	MOAIAnimCurveVec
+	@text	Implementation of animation curve for 3D vector values.
 */
-class MOAIAnimCurveQuat :
+class MOAIAnimCurveVec :
 	public virtual MOAIAnimCurve {
 private:
 
-	ZLLeanArray < ZLQuaternion > mSamples;
-	ZLQuaternion mValue;
+	ZLLeanArray < ZLVec3D > mSamples;
+	ZLVec3D mValue;
 
 	//----------------------------------------------------------------//
 	static int		_getValueAtTime		( lua_State* L );
 	static int		_setKey				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	ZLQuaternion	GetCurveDelta		() const;
-	ZLQuaternion	GetValue			( const MOAIAnimKeySpan& span ) const;
+	ZLVec3D			GetCurveDelta		() const;
+	ZLVec3D			GetValue			( const MOAIAnimKeySpan& span ) const;
 
 	//----------------------------------------------------------------//
 	void			_RegisterLuaClass					( RTTIVisitorHistory& history, MOAILuaState& state );
@@ -39,14 +39,14 @@ private:
 
 public:
 	
-	DECL_LUA_FACTORY ( MOAIAnimCurveQuat )
+	DECL_LUA_FACTORY ( MOAIAnimCurveVec )
 	
 	//----------------------------------------------------------------//
-	ZLQuaternion	GetValue				( float time ) const;
-					MOAIAnimCurveQuat		();
-					~MOAIAnimCurveQuat		();
+	ZLVec3D			GetValue				( float time ) const;
+					MOAIAnimCurveVec		();
+					~MOAIAnimCurveVec		();
 	void			ReserveSamples			( u32 total );
-	void			SetSample				( ZLIndex idx, float x, float y, float z );
+	void			SetSample				( ZLIndex idx, const ZLVec3D& value );
 };
 
 #endif

@@ -4,7 +4,7 @@
 #ifndef	MOAIACTIONTREE_H
 #define	MOAIACTIONTREE_H
 
-#include <moai-sim/MOAIAction.h>
+#include <moai-core/MOAIAction.h>
 
 // TODO: finish out for general purpose use
 
@@ -21,10 +21,10 @@ protected:
 
 	static const u32 RESET_PASS	= 0xffffffff;
 
-	bool mProfilingEnabled;
-	bool mThreadInfoEnabled;
+	bool				mProfilingEnabled;
+	bool				mThreadInfoEnabled;
 
-	MOAIAction* mRoot;
+	MOAIAction* 		mDefaultRoot; // this is one of the action tree's children designated as the default root
 
 	//----------------------------------------------------------------//
 	static int			_getRoot				( lua_State* L );

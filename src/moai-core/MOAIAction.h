@@ -4,7 +4,8 @@
 #ifndef	MOAIACTION_H
 #define	MOAIACTION_H
 
-#include <moai-sim/MOAIBlocker.h>
+#include <moai-core/MOAIBlocker.h>
+#include <moai-core/MOAIEventSource.h>
 
 class MOAIAction;
 class MOAIActionTree;
@@ -84,7 +85,7 @@ protected:
 public:
 	
 	friend class MOAIActionTree;
-	friend class MOAIActionStackMgr;
+	friend class MOAIActionMgr;
 	
 	DECL_LUA_FACTORY ( MOAIAction )
 	

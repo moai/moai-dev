@@ -5,7 +5,6 @@
 #define	MOAIPARTICLESYSTEM_H
 
 #include <moai-sim/host_particles.h>
-#include <moai-sim/MOAIAction.h>
 #include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIParticle.h>
 

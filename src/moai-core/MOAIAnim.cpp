@@ -2,8 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIAnim.h>
-#include <moai-sim/MOAIAnimCurve.h>
+#include <moai-core/MOAIAnim.h>
+#include <moai-core/MOAIAnimCurve.h>
 
 //================================================================//
 // lua
@@ -224,6 +224,7 @@ void MOAIAnim::SetLink ( ZLIndex linkID, MOAIAnimCurve* curve, MOAINode* target,
 
 //----------------------------------------------------------------//
 void MOAIAnim::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	UNUSED ( state );
 	if ( history.DidVisit ( *this )) return;
 }
 

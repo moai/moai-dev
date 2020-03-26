@@ -1,37 +1,38 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIANIMCURVEINDEX_H
-#define	MOAIANIMCURVEINDEX_H
+#ifndef	MOAIANIMCURVEFLOAT_H
+#define	MOAIANIMCURVEFLOAT_H
 
-#include <moai-sim/MOAIAnimCurve.h>
+#include <moai-core/MOAIAnimCurve.h>
 
 //================================================================//
-// MOAIAnimCurveIndex
+// MOAIAnimCurveFloat
 //================================================================//
-/**	@lua	MOAIAnimCurveIndex
-	@text	Implementation of animation curve for integer index values.
+/**	@lua	MOAIAnimCurveFloat
+	@text	Implementation of animation curve for floating point values.
 */
-class MOAIAnimCurveIndex :
+class MOAIAnimCurveFloat :
 	public virtual MOAIAnimCurve {
 private:
 
-	ZLLeanArray < ZLIndex > mSamples;
-	ZLIndex mValue;
+	ZLLeanArray < float > mSamples;
+	float mValue;
 
 	//----------------------------------------------------------------//
 	static int		_getValueAtTime		( lua_State* L );
+	static int		_getValueRange		( lua_State* L );
 	static int		_setKey				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	ZLIndex			GetValue			( const MOAIAnimKeySpan& span ) const;
+	float			GetCurveDelta		() const;
+	float			GetValue			( const MOAIAnimKeySpan& span ) const;
 	
 	//----------------------------------------------------------------//
 	void			_RegisterLuaClass					( RTTIVisitorHistory& history, MOAILuaState& state );
 	void			_RegisterLuaFuncs					( RTTIVisitorHistory& history, MOAILuaState& state );
 	void			MOAIAnimCurve_ApplyValueAttrOp		( ZLAttribute& attr, u32 op );
 	void			MOAIAnimCurve_GetDelta				( ZLAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const;
-	float			MOAIAnimCurve_GetFloatForTime		( float t ) const;
 	void			MOAIAnimCurve_GetValue				( ZLAttribute& attr, const MOAIAnimKeySpan& span ) const;
 	void			MOAIAnimCurve_GetZero				( ZLAttribute& attr ) const;
 	void			MOAIAnimCurve_ReserveSamples		( u32 total );
@@ -39,13 +40,15 @@ private:
 
 public:
 	
-	DECL_LUA_FACTORY ( MOAIAnimCurveIndex )
+	DECL_LUA_FACTORY ( MOAIAnimCurveFloat )
 	
 	//----------------------------------------------------------------//
-	ZLIndex			GetValue				( float time ) const;
-					MOAIAnimCurveIndex		();
-					~MOAIAnimCurveIndex		();
-	void			SetSample				( ZLIndex idx, ZLIndex value );
+	float			GetSample				( ZLIndex id );
+	float			GetValue				( float time ) const;
+	void			GetValueRange			( float t0, float t1, float &min, float &max );
+					MOAIAnimCurveFloat		();
+					~MOAIAnimCurveFloat		();
+	void			SetSample				( ZLIndex idx, float value );
 };
 
 #endif

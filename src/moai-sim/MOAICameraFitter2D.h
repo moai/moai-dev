@@ -4,8 +4,6 @@
 #ifndef MOAICAMERAFITTER2D_H
 #define MOAICAMERAFITTER2D_H
 
-#include <moai-sim/MOAIAction.h>
-
 class MOAICameraAnchor2D;
 class MOAITransform;
 class MOAIViewport;

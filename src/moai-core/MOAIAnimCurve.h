@@ -1,8 +1,10 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIAnimCurve_H
-#define	MOAIAnimCurve_H
+#ifndef	MOAIANIMCURVE_H
+#define	MOAIANIMCURVE_H
+
+#include <moai-core/MOAINode.h>
 
 //================================================================//
 // MOAIAnimKey
@@ -75,9 +77,7 @@ protected:
 
 	//----------------------------------------------------------------//
 	virtual void		MOAIAnimCurve_ApplyValueAttrOp		( ZLAttribute& attr, u32 op ) = 0;
-	virtual void		MOAIAnimCurve_Draw					( u32 resolution ) const;
 	virtual void		MOAIAnimCurve_GetDelta				( ZLAttribute& attr, const MOAIAnimKeySpan& span0, const MOAIAnimKeySpan& span1 ) const = 0;
-	virtual ZLReal		MOAIAnimCurve_GetFloatForTime		( ZLReal t ) const;
 	virtual void		MOAIAnimCurve_GetValue				( ZLAttribute& attr, const MOAIAnimKeySpan& span ) const = 0;
 	virtual void		MOAIAnimCurve_GetZero				( ZLAttribute& attr ) const = 0;
 	virtual void		MOAIAnimCurve_ReserveSamples		( u32 total ) = 0;
@@ -105,20 +105,19 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-	void				Clear					();
-	void				Draw					( u32 resolution ) const;
-	ZLIndex				FindKeyID				( ZLReal time ) const;
-	void				GetDelta				( ZLAttribute& attr, ZLReal t0, ZLReal t1 );
-	const MOAIAnimKey&	GetKey					( ZLIndex idx ) const;
-	ZLReal				GetLength				() const;
-	MOAIAnimKeySpan		GetSpan					( ZLReal time ) const;
-	void				GetValue				( ZLAttribute& attr, ZLReal time );
-						MOAIAnimCurve			();
-						~MOAIAnimCurve			();
-	void				ReserveKeys				( u32 total );
-	void				SetKey					( ZLIndex idx, ZLReal time, u32 mode, ZLReal weight = 1.0f );
-	u32					Size					() const;
-	ZLReal				WrapTime				( ZLReal t, ZLReal &repeat ) const;
+	void					Clear					();
+	ZLIndex					FindKeyID				( ZLReal time ) const;
+	void					GetDelta				( ZLAttribute& attr, ZLReal t0, ZLReal t1 );
+	const MOAIAnimKey&		GetKey					( ZLIndex idx ) const;
+	ZLReal					GetLength				() const;
+	MOAIAnimKeySpan			GetSpan					( ZLReal time ) const;
+	void					GetValue				( ZLAttribute& attr, ZLReal time );
+							MOAIAnimCurve			();
+							~MOAIAnimCurve			();
+	void					ReserveKeys				( u32 total );
+	void					SetKey					( ZLIndex idx, ZLReal time, u32 mode, ZLReal weight = 1.0f );
+	u32						Size					() const;
+	ZLReal					WrapTime				( ZLReal t, ZLReal &repeat ) const;
 };
 
 #endif

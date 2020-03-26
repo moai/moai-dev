@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIAnimCurveVec.h>
+#include <moai-core/MOAIAnimCurveVec.h>
 
 //================================================================//
 // lua
@@ -149,6 +149,7 @@ void MOAIAnimCurveVec::SetSample ( ZLIndex idx, const ZLVec3D& value ) {
 
 //----------------------------------------------------------------//
 void MOAIAnimCurveVec::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	UNUSED ( state );
 	if ( history.DidVisit ( *this )) return;
 }
 

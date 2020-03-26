@@ -323,28 +323,20 @@ void AKUSimAppInitialize () {
 //----------------------------------------------------------------//
 void AKUSimContextInitialize () {
 
-	MOAINodeMgr::Affirm ();
-	MOAIActionStackMgr::Affirm ();
-	
-	MOAIDraw::Affirm ();
 	MOAIDebugLinesMgr::Affirm ();
 	MOAIPartitionResultMgr::Affirm ();
 	MOAIInputMgr::Affirm ();
-	MOAISim::Affirm ();
+	MOAIDraw::Affirm ();
 	
-	MOAIEaseType::Affirm ();
+	// this is a stopgap; eventuall MOAISim will be split up.
+	// right now it's just a bag of legacy.
+	MOAISim::Affirm ();
+	MOAISim::RegisterAlias < MOAIUpdateMgr >();
+	
 	MOAIGeometryWriter::Affirm ();
 	MOAIKeyCode::Affirm ();
 	
 	// MOAI
-	REGISTER_LUA_CLASS ( MOAIAction )
-	REGISTER_LUA_CLASS ( MOAIActionTree )
-	REGISTER_LUA_CLASS ( MOAIAnim )
-	REGISTER_LUA_CLASS ( MOAIAnimCurveBone )
-	REGISTER_LUA_CLASS ( MOAIAnimCurveFloat )
-	REGISTER_LUA_CLASS ( MOAIAnimCurveIndex )
-	REGISTER_LUA_CLASS ( MOAIAnimCurveQuat )
-	REGISTER_LUA_CLASS ( MOAIAnimCurveVec )
 	REGISTER_LUA_CLASS ( MOAIButtonSensor )
 	REGISTER_LUA_CLASS ( MOAICamera )
 	REGISTER_LUA_CLASS ( MOAICameraAnchor2D )
@@ -358,8 +350,6 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIDebugLinesMgr )
 	REGISTER_LUA_CLASS ( MOAIDeckRemapper )
 	REGISTER_LUA_CLASS ( MOAIDrawDeck )
-	REGISTER_LUA_CLASS ( MOAIEaseDriver )
-	REGISTER_LUA_CLASS ( MOAIEaseType )
 	REGISTER_LUA_CLASS ( MOAIFancyGrid )
 	REGISTER_LUA_CLASS ( MOAIGeometryWriter )
 	REGISTER_LUA_CLASS ( MOAIGraphicsProp )
@@ -379,8 +369,6 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIMesh )
 	REGISTER_LUA_CLASS ( MOAIMetaTileDeck2D )
 	REGISTER_LUA_CLASS ( MOAIMotionSensor )
-	REGISTER_LUA_CLASS ( MOAINode )
-	REGISTER_LUA_CLASS ( MOAINodeMgr )
 	REGISTER_LUA_CLASS ( MOAIParticleCallbackPlugin )
 	REGISTER_LUA_CLASS ( MOAIParticleDistanceEmitter )
 	REGISTER_LUA_CLASS ( MOAIParticleForce )
@@ -407,7 +395,6 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAITableLayer )
 	REGISTER_LUA_CLASS ( MOAITableViewLayer )
 	REGISTER_LUA_CLASS ( MOAITileDeck2D )
-	REGISTER_LUA_CLASS ( MOAITimer )
 	REGISTER_LUA_CLASS ( MOAITouchSensor )
 	REGISTER_LUA_CLASS ( MOAITransform )
 	REGISTER_LUA_CLASS ( MOAIVecPathGraph )

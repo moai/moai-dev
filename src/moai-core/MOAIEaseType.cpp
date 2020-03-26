@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIEaseType.h>
+#include <moai-core/MOAIEaseType.h>
 
 //================================================================//
 // MOAIEaseType

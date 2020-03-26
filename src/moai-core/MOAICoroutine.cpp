@@ -2,8 +2,10 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAICoroutine.h>
-#include <moai-sim/MOAISim.h>
+#include <moai-core/MOAIActionMgr.h>
+#include <moai-core/MOAIActionTree.h>
+#include <moai-core/MOAICoroutine.h>
+#include <moai-core/MOAIUpdateMgr.h>
 
 //================================================================//
 // lua
@@ -22,7 +24,7 @@ int MOAICoroutine::_blockOnAction ( lua_State* L ) {
 	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "U" )) return 0;
 
-	MOAIAction* current = MOAIActionStackMgr::Get ().GetCurrent ();
+	MOAIAction* current = MOAIActionMgr::Get ().GetCurrent ();
 	if ( !current ) return 0;
 	
 	MOAIAction* blocker = state.GetLuaObject < MOAIAction >( 1, true );
@@ -42,7 +44,7 @@ int MOAICoroutine::_blockOnAction ( lua_State* L ) {
 int MOAICoroutine::_currentThread ( lua_State* L ) {
 	MOAILuaState state ( L );
 
-	MOAIAction* current = MOAIActionStackMgr::Get ().GetCurrent ();
+	MOAIAction* current = MOAIActionMgr::Get ().GetCurrent ();
 	if ( !current ) return 0;
 	
 	current->PushLuaUserdata ( state );
@@ -101,7 +103,7 @@ int MOAICoroutine::_reportLeaks ( lua_State* L ) {
 int MOAICoroutine::_run ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICoroutine, "U" )
 
-	if ( !MOAISim::IsValid ()) return 0;
+	if ( !MOAIUpdateMgr::IsValid ()) return 0;
 
 	bool defer = false;
 	int baseParam = 2;
@@ -109,7 +111,7 @@ int MOAICoroutine::_run ( lua_State* L ) {
 		defer = state.GetValue < bool >( baseParam++, false );
 	}
 
-	if ( MOAISim::Get ().GetActionMgr ().GetThreadInfoEnabled ()) {
+	if ( MOAIActionMgr::Get ().GetActionTree ().GetThreadInfoEnabled ()) {
 
 		// Get a copy of the function's debug info and store it so we can
 		// refer to it in any debugging info regarding this thread.
@@ -176,7 +178,7 @@ int MOAICoroutine::_setTrackingGroup ( lua_State* L ) {
 	
 	self->mTrackingGroup = state.GetValue < cc8* >( 2, "" );
 	
-	if ( MOAIActionStackMgr::Get ().GetCurrent () == self ) {
+	if ( MOAIActionMgr::Get ().GetCurrent () == self ) {
 		MOAILuaRuntime::Get ().SetTrackingGroup ( self->mTrackingGroup );
 	}
 	return 0;
@@ -250,7 +252,7 @@ int MOAICoroutine::Resume ( float step ) {
 			narg = 1;
 		}
 		
-		MOAIActionStackMgr& coroutineMgr = MOAIActionStackMgr::Get ();
+		MOAIActionMgr& coroutineMgr = MOAIActionMgr::Get ();
 		coroutineMgr.Push ( *this );
 		
 		#if LUA_VERSION_NUM < 502
@@ -371,8 +373,8 @@ void MOAICoroutine::MOAIAction_Stop () {
 	MOAIAction::MOAIAction_Stop ();
 	
 	// if we're stopping the thread from outside of its coroutine, clear out the ref
-	if ( MOAIActionStackMgr::IsValid ()) {
-		if ( MOAIActionStackMgr::Get ().GetCurrent () != this ) {
+	if ( MOAIActionMgr::IsValid ()) {
+		if ( MOAIActionMgr::Get ().GetCurrent () != this ) {
 			this->mRef.Clear ();
 			this->mState = 0;
 		}

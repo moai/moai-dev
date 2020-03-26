@@ -305,31 +305,42 @@ AKUContextID AKUCreateContext () {
 	ZLContext* context = ZLContextMgr::Create ();
 
 	AKUContext::Affirm ();
-	
-//	sContextID = ++sContextIDCounter;
-//	( *sContextMap )[ sContextID ] = sContext;
-//
-//	ZLContextMgr::Set ( sContext->mGlobals );
 
 	MOAILuaRuntime::Affirm ();
 	MOAITrace::Affirm ();
 	MOAILogMgr::Affirm ();
 	MOAITestMgr::Affirm ();
-	MOAIFooMgr::Affirm ();
 	
 	MOAILuaRuntime& luaRuntime = MOAILuaRuntime::Get ();
 	luaRuntime.Open ();
 	luaRuntime.LoadLibs ();
 	
+	MOAIActionMgr::Affirm ();
+	MOAIFooMgr::Affirm ();
+	MOAIEaseType::Affirm ();
 	MOAIEnvironment::Affirm ();
+	MOAINodeMgr::Affirm ();
 	
+	REGISTER_LUA_CLASS ( MOAIAction )
+	REGISTER_LUA_CLASS ( MOAIActionTree )
+	REGISTER_LUA_CLASS ( MOAIAnim )
+	REGISTER_LUA_CLASS ( MOAIAnimCurveBone )
+	REGISTER_LUA_CLASS ( MOAIAnimCurveFloat )
+	REGISTER_LUA_CLASS ( MOAIAnimCurveIndex )
+	REGISTER_LUA_CLASS ( MOAIAnimCurveQuat )
+	REGISTER_LUA_CLASS ( MOAIAnimCurveVec )
 	REGISTER_LUA_CLASS ( MOAICanary )
+	REGISTER_LUA_CLASS ( MOAIEaseDriver )
+	REGISTER_LUA_CLASS ( MOAIEaseType )
 	REGISTER_LUA_CLASS ( MOAIFoo )
 	REGISTER_LUA_CLASS ( MOAILuaRuntime )
 	REGISTER_LUA_CLASS ( MOAIEnvironment )
 	REGISTER_LUA_CLASS ( MOAIDeserializer )
 	REGISTER_LUA_CLASS ( MOAILogMgr )
+	REGISTER_LUA_CLASS ( MOAINode )
+	REGISTER_LUA_CLASS ( MOAINodeMgr )
 	REGISTER_LUA_CLASS ( MOAISerializer )
+	REGISTER_LUA_CLASS ( MOAITimer )
 	REGISTER_LUA_CLASS ( MOAITrace )
 	REGISTER_LUA_CLASS ( MOAITestMgr )
 

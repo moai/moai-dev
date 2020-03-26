@@ -4,6 +4,8 @@
 #ifndef	MOAIEASETYPE_H
 #define	MOAIEASETYPE_H
 
+#include <moai-core/MOAILua.h>
+
 //================================================================//
 // MOAIEaseType
 //================================================================//

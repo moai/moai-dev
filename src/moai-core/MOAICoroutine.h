@@ -4,7 +4,7 @@
 #ifndef	MOAICOROUTINE_H
 #define	MOAICOROUTINE_H
 
-#include <moai-sim/MOAIAction.h>
+#include <moai-core/MOAIAction.h>
 
 class MOAICoroutine;
 

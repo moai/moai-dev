@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIAnimCurveQuat.h>
+#include <moai-core/MOAIAnimCurveQuat.h>
 
 //================================================================//
 // lua
@@ -148,6 +148,7 @@ void MOAIAnimCurveQuat::SetSample ( ZLIndex idx, float x, float y, float z ) {
 
 //----------------------------------------------------------------//
 void MOAIAnimCurveQuat::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	UNUSED ( state );
 	if ( history.DidVisit ( *this )) return;
 }
 

@@ -281,6 +281,18 @@ int MOAILuaRuntime::_getHistogram ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+/**	@lua	_getObjectCount
+	@text	Gets the total number of objects in memory that inherit MOAILuaObject. Count includes
+			objects that are not bound to the Lua runtime.
+
+	@out	number count
+*/
+int MOAILuaRuntime::_getObjectCount ( lua_State* L ) {
+	lua_pushnumber ( L, ( lua_Number )MOAILuaRuntime::Get ().GetObjectCount ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
 int MOAILuaRuntime::_getRef ( lua_State* L ) {
 	MOAILuaState state ( L );
 
@@ -348,6 +360,34 @@ int MOAILuaRuntime::_reportLeaks ( lua_State* L ) {
 	cc8* trackingGroup		= state.GetValue < cc8* >( 2, 0 );
 	
 	MOAILuaRuntime::Get ().ReportLeaksFormatted ( filename, trackingGroup );
+	
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	setAllocLogEnabled
+	@text	Toggles log messages from Lua allocator.
+
+	@opt	boolean enable			Default value is 'false.'
+	@out	nil
+*/
+int MOAILuaRuntime::_setAllocLogEnabled ( lua_State* L ) {
+	MOAILuaState state ( L );
+	MOAILuaRuntime::Get ().SetAllocLogEnabled ( state.GetValue < bool >( 1, false ));
+	return 0;
+}
+
+//----------------------------------------------------------------//
+/**	@lua	setTraceback
+	@text	Sets the function to call when a traceback occurs in Lua
+ 
+	@in		function callback		Function to execute when the traceback occurs
+	@out	nil
+*/
+int MOAILuaRuntime::_setTraceback ( lua_State* L ) {
+	UNUSED ( L );
+	
+	MOAILuaRuntime::Get ().GetTracebackRef ().SetRef ( MOAILuaRuntime::Get ().GetMainState(), 1 );
 	
 	return 0;
 }
@@ -1213,10 +1253,13 @@ void MOAILuaRuntime::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaSta
 		{ "dumpStack",				_dumpStack },
 		{ "forceGC",				_forceGC },
 		{ "getHistogram",			_getHistogram },
+		{ "getObjectCount",			_getObjectCount },
 		{ "getRef",					_getRef },
 		{ "reportGC",				_reportGC },
 		{ "reportHistogram",		_reportHistogram },
 		{ "reportLeaks",			_reportLeaks },
+		{ "setAllocLogEnabled",		_setAllocLogEnabled },
+		{ "setTraceback",			_setTraceback },
 		{ "setTrackingFlags",		_setTrackingFlags },
 		{ "traceback",				_traceback },
 		{ NULL, NULL }

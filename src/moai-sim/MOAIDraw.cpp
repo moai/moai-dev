@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIAbstractChildTransform.h>
-#include <moai-sim/MOAIAnimCurveFloat.h>
 #include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAIViewport.h>

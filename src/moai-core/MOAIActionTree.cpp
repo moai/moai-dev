@@ -2,8 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIAction.h>
-#include <moai-sim/MOAIActionTree.h>
+#include <moai-core/MOAIAction.h>
+#include <moai-core/MOAIActionTree.h>
 
 //================================================================//
 // lua
@@ -79,17 +79,17 @@ int MOAIActionTree::_setThreadInfoEnabled ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIAction* MOAIActionTree::AffirmRoot () {
 
-	if ( !this->mRoot ) {
+	if ( !this->mDefaultRoot ) {
 		this->SetRoot ( new MOAIAction ());
 	}
-	return this->mRoot;
+	return this->mDefaultRoot;
 }
 
 //----------------------------------------------------------------//
 MOAIActionTree::MOAIActionTree () :
-	mRoot ( 0 ),
 	mProfilingEnabled ( false ),
-	mThreadInfoEnabled ( false ) {
+	mThreadInfoEnabled ( false ),
+	mDefaultRoot ( NULL ) {
 		
 	RTTI_BEGIN ( MOAIActionTree )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIActionTree >)
@@ -104,14 +104,14 @@ MOAIActionTree::~MOAIActionTree () {
 //----------------------------------------------------------------//
 void MOAIActionTree::SetRoot ( MOAIAction* root ) {
 
-	if ( this->mRoot ) {
-		this->mRoot->Detach ();
+	if ( this->mDefaultRoot ) {
+		this->mDefaultRoot->Detach ();
 	}
 
-	this->mRoot = root;
+	this->mDefaultRoot = root;
 
-	if ( this->mRoot ) {
-		this->mRoot->Attach ( this, false );
+	if ( this->mDefaultRoot ) {
+		this->mDefaultRoot->Attach ( this, false );
 	}
 }
 
@@ -148,8 +148,8 @@ void MOAIActionTree::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaSta
 
 //----------------------------------------------------------------//
 void MOAIActionTree::MOAIAction_DidLoseChild ( MOAIAction* child ) {
-	if ( this->mRoot == child ) {
-		this->mRoot = 0;
+	if ( this->mDefaultRoot == child ) {
+		this->mDefaultRoot = NULL;
 	}
 }
 

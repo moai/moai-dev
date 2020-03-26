@@ -46,7 +46,7 @@ protected:
 	
 	u32									mVtxSize;
 
-	MOAIGfxTopologyEnum::_			mPrimType;
+	MOAIGfxTopologyEnum::_				mPrimType;
 	bool								mFlushOnPrimEnd;
 	bool								mFlushAlways;
 	bool								mUseIdxBuffer;

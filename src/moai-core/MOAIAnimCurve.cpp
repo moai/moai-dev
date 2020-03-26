@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIAnimCurve.h>
+#include <moai-core/MOAIAnimCurve.h>
 
 //================================================================//
 // lua
@@ -83,11 +83,6 @@ int	MOAIAnimCurve::_setWrapMode	( lua_State* L ) {
 void MOAIAnimCurve::Clear () {
 
 	this->mKeys.Clear ();
-}
-
-//----------------------------------------------------------------//
-void MOAIAnimCurve::Draw ( u32 resolution ) const {
-	this->MOAIAnimCurve_Draw ( resolution );
 }
 
 //----------------------------------------------------------------//
@@ -295,44 +290,6 @@ void MOAIAnimCurve::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaStat
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIAnimCurve::MOAIAnimCurve_Draw ( u32 resolution ) const {
-
-	// TODO: this isn't entirely correct. the value of each key frame should be drawn
-	// and then the spans between keys should be filled in with an approximation of
-	// the resolution.
-	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	
-	ZLReal length = this->GetLength ();
-	ZLReal step = length / ( ZLReal )resolution;
-	
-	gfxMgr.BeginPrim ( MOAIGfxTopologyEnum::LINE_STRIP, resolution );
-	
-	for ( ZLSize i = 0; i < resolution; ++i ) {
-		
-		ZLReal t = step * ( ZLReal )i;
-		ZLReal v = this->MOAIAnimCurve_GetFloatForTime ( t );
-		
-		gfxMgr.WriteVtx ( t, v, 0.0 );
-		gfxMgr.WritePenColor4b ();
-	}
-	
-	ZLReal t = length;
-	ZLReal v = this->MOAIAnimCurve_GetFloatForTime ( t );
-	
-	gfxMgr.WriteVtx ( t, v, 0.0 );
-	gfxMgr.WritePenColor4b ();
-	
-	gfxMgr.EndPrim ();
-}
-
-//----------------------------------------------------------------//
-ZLReal MOAIAnimCurve::MOAIAnimCurve_GetFloatForTime ( ZLReal t ) const {
-
-	return 0.0;
 }
 
 //----------------------------------------------------------------//

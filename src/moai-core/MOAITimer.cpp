@@ -2,9 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIAnimCurveFloat.h>
-#include <moai-sim/MOAISim.h>
-#include <moai-sim/MOAITimer.h>
+#include <moai-core/MOAIAnimCurveFloat.h>
+#include <moai-core/MOAITimer.h>
 
 //================================================================//
 // lua
@@ -354,7 +353,7 @@ void MOAITimer::GenerateKeyframeCallbacks ( float t0, float t1, bool end ) {
 			const MOAIAnimKey& key = this->mCurve->GetKey ( keyID );
 			
 			if (( end && ( key.mTime >= t1 )) || (( key.mTime >= t0 ) && ( key.mTime < t1 ))) {
-				this->OnKeyframe ( keyID, key.mTime, this->mCurve->GetSample ( keyID ));
+				this->OnKeyframe (( u32 )keyID, key.mTime, this->mCurve->GetSample ( keyID ));
 			}
 			
 			if ( key.mTime >= t1 ) break;
@@ -366,7 +365,7 @@ void MOAITimer::GenerateKeyframeCallbacks ( float t0, float t1, bool end ) {
 			const MOAIAnimKey& key = this->mCurve->GetKey ( keyID );
 		
 			if (( end && ( key.mTime <= t1 )) || (( key.mTime <= t0 ) && ( key.mTime > t1 ))) {
-				this->OnKeyframe ( keyID, key.mTime, this->mCurve->GetSample ( keyID ));
+				this->OnKeyframe (( u32 )keyID, key.mTime, this->mCurve->GetSample ( keyID ));
 			}
 			
 			if ( key.mTime <= t1 ) break;

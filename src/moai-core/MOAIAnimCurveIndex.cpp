@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIAnimCurveIndex.h>
+#include <moai-core/MOAIAnimCurveIndex.h>
 
 //================================================================//
 // lua
@@ -107,6 +107,7 @@ void MOAIAnimCurveIndex::SetSample ( ZLIndex idx, ZLIndex value ) {
 
 //----------------------------------------------------------------//
 void MOAIAnimCurveIndex::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	UNUSED ( state );
 	if ( history.DidVisit ( *this )) return;
 }
 
@@ -136,12 +137,6 @@ void MOAIAnimCurveIndex::MOAIAnimCurve_GetDelta ( ZLAttribute& attr, const MOAIA
 	ZLIndex v1 = this->GetValue ( span1 );
 	
 	attr.SetValue ( v1 - v0 );
-}
-
-//----------------------------------------------------------------//
-float MOAIAnimCurveIndex::MOAIAnimCurve_GetFloatForTime ( float t ) const {
-
-	return ( float )(( ZLSize )this->GetValue ( t ));
 }
 
 //----------------------------------------------------------------//

@@ -2,10 +2,10 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIAction.h>
-#include <moai-sim/MOAIActionTree.h>
-#include <moai-sim/MOAISim.h>
-#include <moai-sim/strings.h>
+#include <moai-core/MOAIAction.h>
+#include <moai-core/MOAIActionMgr.h>
+#include <moai-core/MOAIActionTree.h>
+#include <moai-core/MOAIUpdateMgr.h>
 
 //================================================================//
 // lua
@@ -301,7 +301,7 @@ int MOAIAction::_throttle ( lua_State* L ) {
 int MOAIAction::_update ( lua_State* L ) {
     MOAI_LUA_SETUP ( MOAIAction, "U" )
     
-    double step = state.GetValue < double >( 2, MOAISim::Get ().GetStep ());
+    double step = state.GetValue < double >( 2, MOAIUpdateMgr::Get ().GetStep ());
     self->MOAIAction_Update ( step );
     
     return 0;
@@ -469,7 +469,7 @@ void MOAIAction::Update ( MOAIActionTree& tree, double step ) {
 
 	if ( this->IsPaused () || this->IsBlocked ()) return;
 
-	MOAIActionStackMgr::Get ().Push ( *this );
+	MOAIActionMgr::Get ().Push ( *this );
 
 	double t0 = 0.0;
 	bool profilingEnabled = false;
@@ -498,7 +498,7 @@ void MOAIAction::Update ( MOAIActionTree& tree, double step ) {
 		double elapsed = ZLDeviceTime::GetTimeInSeconds () - t0;
 		if ( elapsed >= 0.005 ) {
 			STLString debugInfo = this->MOAIAction_GetDebugInfo ();
-			MOAILogF ( 0, ZLLog::LOG_STATUS, MOAISTRING_MOAIAction_Profile_PSFF, this, this->TypeName (), debugInfo.c_str(), step * 1000, elapsed * 1000 );
+			MOAILogF ( 0, ZLLog::LOG_STATUS, "MOAIAction::Update(%p: %s [%s]) step %.2f ms took %.2f ms\n", this, this->TypeName (), debugInfo.c_str(), step * 1000, elapsed * 1000 );
 		}
 	}
 	
@@ -541,13 +541,13 @@ void MOAIAction::Update ( MOAIActionTree& tree, double step ) {
 		this->Detach ();
 	}
 	
-	MOAIActionStackMgr::Get ().Pop ();
+	MOAIActionMgr::Get ().Pop ();
 }
 
 //----------------------------------------------------------------//
 void MOAIAction::Start ( MOAIAction* parent, bool defer ) {
 
-	parent = parent ? parent : MOAIActionStackMgr::Get ().GetDefaultParent ();
+	parent = parent ? parent : MOAIActionMgr::Get ().GetDefaultParent ();
 	this->Attach ( parent, defer );
 	this->mActionFlags &= ~FLAGS_IS_PAUSED;
 }
@@ -615,7 +615,7 @@ STLString MOAIAction::MOAIAction_GetDebugInfo () const {
 //----------------------------------------------------------------//
 MOAIAction* MOAIAction::MOAIAction_GetDefaultParent () {
 
-	return 0;
+	return NULL;
 }
 
 //----------------------------------------------------------------//

@@ -1,36 +1,31 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIANIMCURVEBONE_H
-#define	MOAIANIMCURVEBONE_H
+#ifndef	MOAIANIMCURVEINDEX_H
+#define	MOAIANIMCURVEINDEX_H
 
-#include <moai-sim/MOAIAnimCurve.h>
+#include <moai-core/MOAIAnimCurve.h>
 
 //================================================================//
-// MOAIAnimCurveBone
+// MOAIAnimCurveIndex
 //================================================================//
-// TODO: doxygen
-class MOAIAnimCurveBone :
+/**	@lua	MOAIAnimCurveIndex
+	@text	Implementation of animation curve for integer index values.
+*/
+class MOAIAnimCurveIndex :
 	public virtual MOAIAnimCurve {
 private:
 
-	ZLLeanArray < ZLVec3D >			mPositionSamples;
-	ZLLeanArray < ZLQuaternion >	mRotationSamples;
-	ZLLeanArray < ZLVec3D >			mScaleSamples;
-	
-	ZLAffine3D mValue;
+	ZLLeanArray < ZLIndex > mSamples;
+	ZLIndex mValue;
 
 	//----------------------------------------------------------------//
 	static int		_getValueAtTime		( lua_State* L );
 	static int		_setKey				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	static ZLAffine3D		Compose				( const ZLVec3D& pos, const ZLQuaternion& rot, const ZLVec3D& scl );
-	void					GetCurveDelta		( ZLVec3D& pos, ZLQuaternion& rot, ZLVec3D& scl ) const;
-	ZLAffine3D				GetValue			( const MOAIAnimKeySpan& span ) const;
-	void					GetValue			( const MOAIAnimKeySpan& span, ZLVec3D& pos, ZLQuaternion& rot, ZLVec3D& scl ) const;
-	void					ReserveSamples		( u32 total );
-
+	ZLIndex			GetValue			( const MOAIAnimKeySpan& span ) const;
+	
 	//----------------------------------------------------------------//
 	void			_RegisterLuaClass					( RTTIVisitorHistory& history, MOAILuaState& state );
 	void			_RegisterLuaFuncs					( RTTIVisitorHistory& history, MOAILuaState& state );
@@ -43,15 +38,13 @@ private:
 
 public:
 	
-	DECL_LUA_FACTORY ( MOAIAnimCurveBone )
+	DECL_LUA_FACTORY ( MOAIAnimCurveIndex )
 	
 	//----------------------------------------------------------------//
-	ZLAffine3D		GetValue				( float time ) const;
-					MOAIAnimCurveBone		();
-					~MOAIAnimCurveBone		();
-	void			SetSamplePosition		( ZLIndex idx, float x, float y, float z );
-	void			SetSampleRotation		( ZLIndex idx, float x, float y, float z, float w );
-	void			SetSampleScale			( ZLIndex idx, float x, float y, float z );
+	ZLIndex			GetValue				( float time ) const;
+					MOAIAnimCurveIndex		();
+					~MOAIAnimCurveIndex		();
+	void			SetSample				( ZLIndex idx, ZLIndex value );
 };
 
 #endif

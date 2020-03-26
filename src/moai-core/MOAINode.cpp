@@ -2,7 +2,6 @@
 // http://getmoai.com
 
 #include "pch.h"
-//#include <moai-sim/MOAIEaseDriver.h>
 #include <moai-core/MOAINode.h>
 #include <moai-core/MOAINodeMgr.h>
 #include <moai-core/strings.h>

@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIBlocker.h>
+#include <moai-core/MOAIBlocker.h>
 
 //================================================================//
 // MOAIBlocker

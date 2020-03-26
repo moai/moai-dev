@@ -1,31 +1,31 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIANIMCURVEVEC_H
-#define	MOAIANIMCURVEVEC_H
+#ifndef	MOAIANIMCURVEQUAT_H
+#define	MOAIANIMCURVEQUAT_H
 
-#include <moai-sim/MOAIAnimCurve.h>
+#include <moai-core/MOAIAnimCurve.h>
 
 //================================================================//
-// MOAIAnimCurveVec
+// MOAIAnimCurveQuat
 //================================================================//
-/**	@lua	MOAIAnimCurveVec
-	@text	Implementation of animation curve for 3D vector values.
+/**	@lua	MOAIAnimCurveQuat
+	@text	Implementation of animation curve for rotation (via quaternion) values.
 */
-class MOAIAnimCurveVec :
+class MOAIAnimCurveQuat :
 	public virtual MOAIAnimCurve {
 private:
 
-	ZLLeanArray < ZLVec3D > mSamples;
-	ZLVec3D mValue;
+	ZLLeanArray < ZLQuaternion > mSamples;
+	ZLQuaternion mValue;
 
 	//----------------------------------------------------------------//
 	static int		_getValueAtTime		( lua_State* L );
 	static int		_setKey				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	ZLVec3D			GetCurveDelta		() const;
-	ZLVec3D			GetValue			( const MOAIAnimKeySpan& span ) const;
+	ZLQuaternion	GetCurveDelta		() const;
+	ZLQuaternion	GetValue			( const MOAIAnimKeySpan& span ) const;
 
 	//----------------------------------------------------------------//
 	void			_RegisterLuaClass					( RTTIVisitorHistory& history, MOAILuaState& state );
@@ -39,14 +39,14 @@ private:
 
 public:
 	
-	DECL_LUA_FACTORY ( MOAIAnimCurveVec )
+	DECL_LUA_FACTORY ( MOAIAnimCurveQuat )
 	
 	//----------------------------------------------------------------//
-	ZLVec3D			GetValue				( float time ) const;
-					MOAIAnimCurveVec		();
-					~MOAIAnimCurveVec		();
+	ZLQuaternion	GetValue				( float time ) const;
+					MOAIAnimCurveQuat		();
+					~MOAIAnimCurveQuat		();
 	void			ReserveSamples			( u32 total );
-	void			SetSample				( ZLIndex idx, const ZLVec3D& value );
+	void			SetSample				( ZLIndex idx, float x, float y, float z );
 };
 
 #endif

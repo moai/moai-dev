@@ -12,16 +12,6 @@
 #include <moai-sim/MOAIAbstractLayer.h>
 #include <moai-sim/MOAIAbstractProp.h>
 #include <moai-sim/MOAIAbstractViewLayer.h>
-#include <moai-sim/MOAIAction.h>
-#include <moai-sim/MOAIActionStackMgr.h>
-#include <moai-sim/MOAIActionTree.h>
-#include <moai-sim/MOAIAnim.h>
-#include <moai-sim/MOAIAnimCurve.h>
-#include <moai-sim/MOAIAnimCurveBone.h>
-#include <moai-sim/MOAIAnimCurveFloat.h>
-#include <moai-sim/MOAIAnimCurveIndex.h>
-#include <moai-sim/MOAIAnimCurveQuat.h>
-#include <moai-sim/MOAIAnimCurveVec.h>
 //#include <moai-sim/MOAIBoundsDeck.h>
 //#include <moai-sim/MOAIBspBuilder2D.h>
 #include <moai-sim/MOAIButtonSensor.h>
@@ -36,7 +26,6 @@
 #include <moai-sim/MOAICollisionWorld.h>
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAICompassSensor.h>
-#include <moai-sim/MOAICoroutine.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDraw.h>
@@ -47,8 +36,6 @@
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIDrawDeck.h>
-#include <moai-sim/MOAIEaseDriver.h>
-#include <moai-sim/MOAIEaseType.h>
 #include <moai-sim/MOAIFancyGrid.h>
 #include <moai-sim/MOAIGeometryWriter.h>
 #include <moai-sim/MOAIGraphicsProp.h>
@@ -114,7 +101,6 @@
 #include <moai-sim/MOAITableViewLayer.h>
 #include <moai-sim/MOAITileDeck2D.h>
 #include <moai-sim/MOAITileFlags.h>
-#include <moai-sim/MOAITimer.h>
 #include <moai-sim/MOAITouchSensor.h>
 #include <moai-sim/MOAITransform.h>
 #include <moai-sim/MOAIVecPathGraph.h>

@@ -157,6 +157,39 @@ void MOAIDrawingCommand::Execute ( MOAIAbstractDrawingAPICallback* callback, MOA
 	}
 }
 
+////----------------------------------------------------------------//
+//void MOAIAnimCurve::MOAIAnimCurve_Draw ( u32 resolution ) const {
+//	UNUSED ( resolution );
+//
+//	// TODO: this isn't entirely correct. the value of each key frame should be drawn
+//	// and then the spans between keys should be filled in with an approximation of
+//	// the resolution.
+//
+//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+//
+//	ZLReal length = this->GetLength ();
+//	ZLReal step = length / ( ZLReal )resolution;
+//
+//	gfxMgr.BeginPrim ( MOAIGfxTopologyEnum::LINE_STRIP, resolution );
+//
+//	for ( ZLSize i = 0; i < resolution; ++i ) {
+//
+//		ZLReal t = step * ( ZLReal )i;
+//		ZLReal v = this->MOAIAnimCurve_GetFloatForTime ( t );
+//
+//		gfxMgr.WriteVtx ( t, v, 0.0 );
+//		gfxMgr.WritePenColor4b ();
+//	}
+//
+//	ZLReal t = length;
+//	ZLReal v = this->MOAIAnimCurve_GetFloatForTime ( t );
+//
+//	gfxMgr.WriteVtx ( t, v, 0.0 );
+//	gfxMgr.WritePenColor4b ();
+//
+//	gfxMgr.EndPrim ();
+//}
+
 //----------------------------------------------------------------//
 void MOAIDrawingCommand::ExecuteDrawAxis2D ( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawAxis2D& param ) {
 

@@ -5,7 +5,6 @@
 #define	MOAITRANSFORM_H
 
 #include <moai-sim/MOAIAbstractChildTransform.h>
-#include <moai-sim/MOAIEaseDriver.h>
 
 //================================================================//
 // MOAITransform

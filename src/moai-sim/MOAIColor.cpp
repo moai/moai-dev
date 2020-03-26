@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIColor.h>
-#include <moai-sim/MOAIEaseDriver.h>
 #include <moai-sim/MOAISim.h>
 
 //================================================================//

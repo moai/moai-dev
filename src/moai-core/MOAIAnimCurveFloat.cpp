@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIAnimCurveFloat.h>
+#include <moai-core/MOAIAnimCurveFloat.h>
 
 //================================================================//
 // lua
@@ -212,6 +212,7 @@ void MOAIAnimCurveFloat::SetSample ( ZLIndex idx, float value ) {
 
 //----------------------------------------------------------------//
 void MOAIAnimCurveFloat::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	UNUSED ( state );
 	if ( history.DidVisit ( *this )) return;
 }
 
@@ -242,12 +243,6 @@ void MOAIAnimCurveFloat::MOAIAnimCurve_GetDelta ( ZLAttribute& attr, const MOAIA
 	float v1 = this->GetValue ( span1 );
 	
 	attr.SetValue ( v1 - v0 );
-}
-
-//----------------------------------------------------------------//
-float MOAIAnimCurveFloat::MOAIAnimCurve_GetFloatForTime ( float t ) const {
-
-	return this->GetValue ( t );
 }
 
 //----------------------------------------------------------------//

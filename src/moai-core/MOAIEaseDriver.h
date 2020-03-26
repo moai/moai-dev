@@ -4,7 +4,7 @@
 #ifndef MOAIEASEDRIVER_H
 #define MOAIEASEDRIVER_H
 
-#include <moai-sim/MOAITimer.h>
+#include <moai-core/MOAITimer.h>
 
 class MOAINode;
 

@@ -18,7 +18,6 @@
 
 #include <moai-sim/MOAIMesh.h>
 #include <moai-sim/MOAICamera.h>
-#include <moai-sim/MOAIAnim.h>
 
 //================================================================//
 // lua

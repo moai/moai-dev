@@ -4,6 +4,8 @@
 #ifndef	MOAIBLOCKER_H
 #define	MOAIBLOCKER_H
 
+#include <moai-core/MOAILua.h>
+
 //================================================================//
 // MOAIBlocker
 //================================================================//
