@@ -7,7 +7,6 @@
 #include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIHasDeck.h>
 #include <moai-sim/MOAIPartitionHull.h>
-#include <moai-sim/MOAITransform.h>
 #include <moai-core/MOAILuaSharedPtr.h>
 
 class MOAICellCoord;

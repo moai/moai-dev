@@ -7,15 +7,12 @@
 #include <moai-sim/pch.h>
 #include <moai-sim/strings.h>
 
-#include <moai-sim/MOAIAbstractBaseTransform.h>
-#include <moai-sim/MOAIAbstractChildTransform.h>
 #include <moai-sim/MOAIAbstractLayer.h>
 #include <moai-sim/MOAIAbstractProp.h>
 #include <moai-sim/MOAIAbstractViewLayer.h>
 //#include <moai-sim/MOAIBoundsDeck.h>
 //#include <moai-sim/MOAIBspBuilder2D.h>
 #include <moai-sim/MOAIButtonSensor.h>
-#include <moai-sim/MOAICamera.h>
 #include <moai-sim/MOAICameraAnchor2D.h>
 #include <moai-sim/MOAICameraFitter2D.h>
 #include <moai-sim/MOAICollisionConsts.h>
@@ -51,7 +48,6 @@
 #include <moai-sim/MOAIKeyboardSensor.h>
 #include <moai-sim/MOAILayoutFrame.h>
 #include <moai-sim/MOAILocationSensor.h>
-#include <moai-sim/MOAIMatrix.h>
 #include <moai-sim/MOAIMesh.h>
 #include <moai-sim/MOAIMeshPartition.h>
 #include <moai-sim/MOAIMeshSparseQuadTree.h>
@@ -102,7 +98,6 @@
 #include <moai-sim/MOAITileDeck2D.h>
 #include <moai-sim/MOAITileFlags.h>
 #include <moai-sim/MOAITouchSensor.h>
-#include <moai-sim/MOAITransform.h>
 #include <moai-sim/MOAIVecPathGraph.h>
 #include <moai-sim/MOAIVectorCombo.h>
 #include <moai-sim/MOAIVectorEllipse.h>
@@ -114,7 +109,6 @@
 #include <moai-sim/MOAIVectorStyle.h>
 #include <moai-sim/MOAIVectorTesselator.h>
 #include <moai-sim/MOAIVectorUtil.h>
-#include <moai-sim/MOAIViewport.h>
 #include <moai-sim/MOAIWheelSensor.h>
 
 // text stuff here for now

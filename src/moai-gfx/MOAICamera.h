@@ -4,8 +4,9 @@
 #ifndef	MOAICAMERA_H
 #define	MOAICAMERA_H
 
-#include <moai-sim/MOAITransform.h>
+#include <moai-gfx/MOAITransform.h>
 
+class MOAIAbstractDrawingAPI;
 class MOAIViewport;
 
 //================================================================//
@@ -61,7 +62,7 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-	void			DrawDebug 				();
+	void			DrawDebug 				( MOAIAbstractDrawingAPI& draw );
 					MOAICamera				();
 					~MOAICamera				();
 };

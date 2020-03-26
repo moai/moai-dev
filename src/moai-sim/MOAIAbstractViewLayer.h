@@ -7,9 +7,6 @@
 #include <moai-sim/MOAIAbstractLayer.h>
 #include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIPartitionHolder.h>
-#include <moai-sim/MOAIViewport.h>
-
-class MOAICamera;
 
 //================================================================//
 // MOAIAbstractViewLayer

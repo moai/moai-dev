@@ -2,7 +2,6 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIAbstractChildTransform.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAISpriteDeck2D.h>
 

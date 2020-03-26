@@ -2,10 +2,10 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAICamera.h>
-#include <moai-sim/MOAIDebugLines.h>
-#include <moai-sim/MOAIDraw.h>
-#include <moai-sim/MOAIViewport.h>
+#include <moai-gfx/MOAIAbstractDrawingAPI.h>
+#include <moai-gfx/MOAICamera.h>
+#include <moai-gfx/MOAIGfxMgr.h>
+#include <moai-gfx/MOAIViewport.h>
 
 #define DEFAULT_HFOV			60.0f
 #define DEFAULT_NEAR_PLANE		1.0f
@@ -314,37 +314,37 @@ int MOAICamera::_setType ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAICamera::DrawDebug () {
+void MOAICamera::DrawDebug ( MOAIAbstractDrawingAPI& draw ) {
+	UNUSED ( draw );
+	
+	// TODO: move this to draw command; shouldn't involve MOAIDebugLinesMgr, either
 
-	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
-	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAICamera >())) return;
-	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	
-	MOAIDraw& draw = MOAIDraw::Get ();
-	UNUSED ( draw ); // mystery warning in vs2008
-	
-	draw.BindVectorDrawing ();
-	
-	ZLRect viewRect = gfxMgr.GetViewRect ();
-	//float aspect = viewRect.Width () / viewRect.Height ();
-	
-	ZLMatrix4x4 mtx = gfxMgr.GetMtx ( MOAIGfxMgr::CLIP_TO_DISPLAY_MTX );
-	
-	gfxMgr.SetVertexTransform ( mtx ); // draw in device space
-	
-	if ( debugLines.Bind ( DEBUG_DRAW_FRAME )) {
-		draw.DrawRectOutline ( -1.0f, -1.0f, 1.0f, 1.0f );
-	}
-	
-	mtx.m [ ZLMatrix4x4::C1_R1 ] *= viewRect.Width () / viewRect.Height ();
-	gfxMgr.SetVertexTransform ( mtx );
-	
-	if ( debugLines.Bind ( DEBUG_DRAW_RETICLE )) {
-		draw.DrawEllipseOutline ( 0.0f, 0.0f, RETICLE_RADIUS, RETICLE_RADIUS, 64 );
-		draw.DrawLine ( -RETICLE_RADIUS, 0.0f, RETICLE_RADIUS, 0.0f );
-		draw.DrawLine ( 0.0f, -RETICLE_RADIUS, 0.0f, RETICLE_RADIUS );
-	}
+//	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
+//	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAICamera >())) return;
+//
+//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+//
+//	draw.BindVectorDrawing ();
+//
+//	ZLRect viewRect = gfxMgr.GetViewRect ();
+//	//float aspect = viewRect.Width () / viewRect.Height ();
+//
+//	ZLMatrix4x4 mtx = gfxMgr.GetMtx ( MOAIGfxMgr::CLIP_TO_DISPLAY_MTX );
+//
+//	gfxMgr.SetVertexTransform ( mtx ); // draw in device space
+//
+//	if ( debugLines.Bind ( DEBUG_DRAW_FRAME )) {
+//		draw.DrawRectOutline ( -1.0f, -1.0f, 1.0f, 1.0f );
+//	}
+//
+//	mtx.m [ ZLMatrix4x4::C1_R1 ] *= viewRect.Width () / viewRect.Height ();
+//	gfxMgr.SetVertexTransform ( mtx );
+//
+//	if ( debugLines.Bind ( DEBUG_DRAW_RETICLE )) {
+//		draw.DrawEllipseOutline ( 0.0f, 0.0f, RETICLE_RADIUS, RETICLE_RADIUS, 64 );
+//		draw.DrawLine ( -RETICLE_RADIUS, 0.0f, RETICLE_RADIUS, 0.0f );
+//		draw.DrawLine ( 0.0f, -RETICLE_RADIUS, 0.0f, RETICLE_RADIUS );
+//	}
 }
 
 //----------------------------------------------------------------//
@@ -397,11 +397,12 @@ MOAICamera::~MOAICamera () {
 void MOAICamera::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
-	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAICamera >( TOTAL_DEBUG_LINE_STYLES );
-	
-	state.SetField ( -1, "DEBUG_DRAW_CAMERA_MASTER",			MOAIDebugLinesMgr::Pack < MOAICamera >( (u32) -1 ));
-	state.SetField ( -1, "DEBUG_DRAW_FRAME",					MOAIDebugLinesMgr::Pack < MOAICamera >( DEBUG_DRAW_FRAME ));
-	state.SetField ( -1, "DEBUG_DRAW_RETICLE",					MOAIDebugLinesMgr::Pack < MOAICamera >( DEBUG_DRAW_RETICLE ));
+	// TODO: MOAIDebugLinesMgr stuff should go somewhere else
+//	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAICamera >( TOTAL_DEBUG_LINE_STYLES );
+//
+//	state.SetField ( -1, "DEBUG_DRAW_CAMERA_MASTER",			MOAIDebugLinesMgr::Pack < MOAICamera >( (u32) -1 ));
+//	state.SetField ( -1, "DEBUG_DRAW_FRAME",					MOAIDebugLinesMgr::Pack < MOAICamera >( DEBUG_DRAW_FRAME ));
+//	state.SetField ( -1, "DEBUG_DRAW_RETICLE",					MOAIDebugLinesMgr::Pack < MOAICamera >( DEBUG_DRAW_RETICLE ));
 	
 	state.SetField ( -1, "ATTR_FOV",			AttrID::Pack ( ATTR_FOV ).ToRaw ());
 	

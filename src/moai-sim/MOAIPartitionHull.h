@@ -4,8 +4,6 @@
 #ifndef	MOAIPARTITIONHULL_H
 #define	MOAIPARTITIONHULL_H
 
-#include <moai-sim/MOAITransform.h>
-
 class MOAICellCoord;
 class MOAICollisionProp;
 class MOAIDeck;

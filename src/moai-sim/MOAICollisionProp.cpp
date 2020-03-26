@@ -2,7 +2,6 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAICamera.h>
 #include <moai-sim/MOAICollisionProp.h>
 #include <moai-sim/MOAICollisionShape.h>
 #include <moai-sim/MOAICollisionWorld.h>
@@ -19,7 +18,6 @@
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAIScissorRect.h>
 #include <moai-sim/MOAISurfaceSampler2D.h>
-#include <moai-sim/MOAIViewport.h>
 
 // uncomment me to debug log
 //#define MOAICOLLISIONPROP_DEBUG

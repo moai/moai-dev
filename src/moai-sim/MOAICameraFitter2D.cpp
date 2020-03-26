@@ -5,8 +5,6 @@
 
 #include <moai-sim/MOAICameraAnchor2D.h>
 #include <moai-sim/MOAICameraFitter2D.h>
-#include <moai-sim/MOAITransform.h>
-#include <moai-sim/MOAIViewport.h>
 
 //----------------------------------------------------------------//
 /**	@lua	clearAnchors

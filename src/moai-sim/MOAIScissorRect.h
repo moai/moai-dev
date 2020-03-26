@@ -4,7 +4,7 @@
 #ifndef MOAISCISSORRECT_H
 #define MOAISCISSORRECT_H
 
-#include <moai-sim/MOAITransform.h>
+#include <moai-gfx/MOAITransform.h>
 
 //================================================================//
 // MOAIScissorRect

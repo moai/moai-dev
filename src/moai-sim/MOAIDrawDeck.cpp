@@ -6,7 +6,6 @@
 #include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAISurfaceSampler2D.h>
-#include <moai-sim/MOAITransform.h>
 
 //================================================================//
 // lua

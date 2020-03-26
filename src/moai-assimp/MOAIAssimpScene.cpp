@@ -17,7 +17,6 @@
 #include <moai-gfx/MOAITexture.h>
 
 #include <moai-sim/MOAIMesh.h>
-#include <moai-sim/MOAICamera.h>
 
 //================================================================//
 // lua

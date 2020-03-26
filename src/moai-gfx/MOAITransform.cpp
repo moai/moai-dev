@@ -2,8 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAITransform.h>
-#include <moai-sim/MOAISim.h>
+#include <moai-gfx/MOAITransform.h>
 
 //================================================================//
 // lua

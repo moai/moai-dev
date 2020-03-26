@@ -4,8 +4,6 @@
 #ifndef	MOAIPARTICLEFORCE_H
 #define	MOAIPARTICLEFORCE_H
 
-#include <moai-sim/MOAITransform.h>
-
 class MOAIParticle;
 class MOAIParticleSystem;
 

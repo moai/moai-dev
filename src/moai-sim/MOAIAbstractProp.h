@@ -5,7 +5,6 @@
 #define	MOAIABSTRACTPROP_H
 
 #include <moai-sim/MOAIPartitionHull.h>
-#include <moai-sim/MOAITransform.h>
 
 //================================================================//
 // MOAIAbstractProp

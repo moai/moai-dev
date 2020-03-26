@@ -1,6 +1,5 @@
 #include "pch.h"
 #include <moai-sim/MOAISurfaceSampler2D.h>
-#include <moai-sim/MOAITransform.h>
 
 //================================================================//
 // MOAISurfaceSampler2D

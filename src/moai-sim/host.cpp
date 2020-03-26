@@ -338,7 +338,6 @@ void AKUSimContextInitialize () {
 	
 	// MOAI
 	REGISTER_LUA_CLASS ( MOAIButtonSensor )
-	REGISTER_LUA_CLASS ( MOAICamera )
 	REGISTER_LUA_CLASS ( MOAICameraAnchor2D )
 	REGISTER_LUA_CLASS ( MOAICameraFitter2D )
 	REGISTER_LUA_CLASS ( MOAICollisionDeck )
@@ -364,8 +363,6 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIKeyCode )
 	REGISTER_LUA_CLASS ( MOAIKeyboardSensor )
 	REGISTER_LUA_CLASS ( MOAILocationSensor )
-	REGISTER_LUA_CLASS ( MOAIGfxScriptBatch )
-	REGISTER_LUA_CLASS ( MOAIMatrix )
 	REGISTER_LUA_CLASS ( MOAIMesh )
 	REGISTER_LUA_CLASS ( MOAIMetaTileDeck2D )
 	REGISTER_LUA_CLASS ( MOAIMotionSensor )
@@ -396,10 +393,8 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAITableViewLayer )
 	REGISTER_LUA_CLASS ( MOAITileDeck2D )
 	REGISTER_LUA_CLASS ( MOAITouchSensor )
-	REGISTER_LUA_CLASS ( MOAITransform )
 	REGISTER_LUA_CLASS ( MOAIVecPathGraph )
 	REGISTER_LUA_CLASS ( MOAIVectorTesselator )
-	REGISTER_LUA_CLASS ( MOAIViewport )
 	REGISTER_LUA_CLASS ( MOAIWheelSensor )
 	
 	// text stuff here for now

@@ -7,7 +7,6 @@
 #include <moai-sim/MOAIAbstractViewLayer.h>
 #include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIPartitionHolder.h>
-#include <moai-sim/MOAIViewport.h>
 
 //================================================================//
 // MOAIPartitionViewLayer

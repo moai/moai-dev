@@ -4,7 +4,7 @@
 #ifndef	MOAIABSTRACTCHILDTRANSFORM_H
 #define	MOAIABSTRACTCHILDTRANSFORM_H
 
-#include <moai-sim/MOAIAbstractBaseTransform.h>
+#include <moai-gfx/MOAIAbstractBaseTransform.h>
 
 //================================================================//
 // MOAIAbstractChildTransform

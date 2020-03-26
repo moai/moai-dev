@@ -4,8 +4,6 @@
 #ifndef	MOAIPARTICLEEMITTER_H
 #define	MOAIPARTICLEEMITTER_H
 
-#include <moai-sim/MOAITransform.h>
-
 class MOAIParticleSystem;
 class MOAIPartitionHull;
 

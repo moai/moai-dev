@@ -8,7 +8,6 @@
 #define MOAIASSIMPCAMERA_H
 
 #include <moai-assimp/MOAIAssimpSceneMember.h>
-#include <moai-sim/MOAICamera.h>
 
 //================================================================//
 // MOAIAssimpCamera

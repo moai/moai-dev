@@ -4,7 +4,7 @@
 #ifndef	MOAIMATRIX_H
 #define	MOAIMATRIX_H
 
-#include <moai-sim/MOAIAbstractChildTransform.h>
+#include <moai-gfx/MOAIAbstractChildTransform.h>
 
 //================================================================//
 // MOAIMatrix

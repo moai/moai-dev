@@ -3,13 +3,11 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIAbstractViewLayer.h>
-#include <moai-sim/MOAICamera.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIPartition.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAIPartitionResultMgr.h>
-#include <moai-sim/MOAITransform.h>
 
 //================================================================//
 // lua
@@ -496,9 +494,10 @@ void MOAIAbstractViewLayer::MOAIDrawable_Draw ( int subPrimID ) {
 	this->MOAIAbstractViewLayer_Draw ();
 	
 	if ( MOAIDebugLinesMgr::Get ().IsVisible () && this->mShowDebugLines ) {
-		if ( this->mCamera ) {
-			this->mCamera->DrawDebug ();
-		}
+		// TODO: fix camera debug lines
+//		if ( this->mCamera ) {
+//			this->mCamera->DrawDebug ();
+//		}
 	}
 	gfxMgr.SetFrameBuffer ( this->GetFrameBuffer ());
 }

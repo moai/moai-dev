@@ -4,8 +4,6 @@
 #ifndef	MOAILAYOUTFRAME_H
 #define	MOAILAYOUTFRAME_H
 
-#include <moai-sim/MOAITransform.h>
-
 //================================================================//
 // MOAILayoutFrame
 //================================================================//

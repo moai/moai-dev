@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIAbstractChildTransform.h>
+#include <moai-gfx/MOAIAbstractChildTransform.h>
 
 //================================================================//
 // MOAIAbstractChildTransform

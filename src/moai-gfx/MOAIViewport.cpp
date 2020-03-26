@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIViewport.h>
+#include <moai-gfx/MOAIViewport.h>
 
 //================================================================//
 // lua

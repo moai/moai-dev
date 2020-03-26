@@ -5,7 +5,6 @@
 #include <moai-sim/MOAICollisionShape.h>
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAISurfaceSampler2D.h>
-#include <moai-sim/MOAITransform.h>
 
 //================================================================//
 // lua

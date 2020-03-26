@@ -8,7 +8,6 @@
 #include <moai-sim/MOAIPartitionHolder.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAIPartitionResultMgr.h>
-#include <moai-sim/MOAITransform.h>
 
 //================================================================//
 // lua
