@@ -122,7 +122,7 @@ void MOAIDrawDeck::MOAIDeck_Draw ( ZLIndex idx ) {
 	
 	if ( this->mOnDraw ) {
 	
-		MOAIDraw::Get ().Bind ();
+		MOAIDraw::Get ().BindVectorDrawing ();
 	
 		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 		ZLVec3D stretch = this->BindStretchVertexTransform ();

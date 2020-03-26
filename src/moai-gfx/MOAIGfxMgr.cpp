@@ -30,6 +30,20 @@ MOAITexture* MOAIGfxMgr::AffirmTexture ( MOAILuaState& state, int idx ) const {
 }
 
 //----------------------------------------------------------------//
+MOAIVertexFormat* MOAIGfxMgr::AffirmVertexFormat ( MOAILuaState& state, int idx ) const {
+
+	switch ( lua_type ( state, idx )) {
+	
+		case LUA_TUSERDATA:
+			return state.GetLuaObject < MOAIVertexFormat >( idx, true );
+		
+		case LUA_TNUMBER:
+			return this->GetVertexFormatPreset (( MOAIVertexFormatPresetEnum )state.GetValue < u32 >( idx, ( u32 )MOAIVertexFormatPresetEnum::XYZWC ));
+	}
+	return NULL;
+}
+
+//----------------------------------------------------------------//
 MOAIImageTexture* MOAIGfxMgr::CreateImageTexture () const {
 
 	return this->MOAIGfxMgr_CreateImageTexture ();

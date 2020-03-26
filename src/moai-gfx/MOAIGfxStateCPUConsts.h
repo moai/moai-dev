@@ -9,9 +9,9 @@
 #define PRIMARY_TO_FULL_MASK(mask) (( mask ) | (( mask ) << MATRIX_SET_SIZE ) | (( mask ) << ( MATRIX_SET_SIZE * 2 )) | (( mask ) << ( MATRIX_SET_SIZE * 3 )))
 
 //================================================================//
-// MOAIGfxStateConstsCPU
+// MOAIGfxStateCPUConsts
 //================================================================//
-class MOAIGfxStateConstsCPU {
+class MOAIGfxStateCPUConsts {
 public:
 
 	// MUST NOT EXCEED 64 GLOBALS FOR NOW

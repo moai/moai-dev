@@ -29,12 +29,12 @@
 
 //----------------------------------------------------------------//
 MOAIGfxScriptTextureCommandVK::MOAIGfxScriptTextureCommandVK ( ZLIndex descriptorSetIndex, ZLIndex bindPoint, ZLIndex arrayItem, ZLIndex textureUnit ) :
-	MOAIGfxScriptCommandVK ( descriptorSetIndex, bindPoint, arrayItem ),
+	MOAIDrawingCommandVK ( descriptorSetIndex, bindPoint, arrayItem ),
 	mTextureUnit ( textureUnit ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxScriptTextureCommandVK::MOAIGfxScriptCommandVK_Apply ( MOAIGfxMgrVK& gfxMgr, MOAIPipelineInputChunkVK& descriptorSet, MOAICommandBufferVK& commandBuffer ) {
+void MOAIGfxScriptTextureCommandVK::MOAIDrawingCommandVK_Apply ( MOAIGfxMgrVK& gfxMgr, MOAIPipelineInputChunkVK& descriptorSet, MOAICommandBufferVK& commandBuffer ) {
 
 	MOAITexture2DVK* texture = MOAICast < MOAITexture2DVK >( gfxMgr.GetTexture ( this->mTextureUnit ));
 	descriptorSet.SetDescriptor ( this->mBindPoint, this->mArrayItem, *texture->GetSnapshot ( commandBuffer ));
@@ -52,7 +52,7 @@ void MOAIPipelineInputBodyComposerVK::ComposeAndBind (  MOAIGfxMgrVK& gfxMgr, MO
 	// TODO: pass in listener to detect changes (to invalidate graphics cache)
 
 	for ( ZLIndex i = 0; i < this->mCommandCount; ++i ) {
-		MOAIGfxScriptCommandVK* command = this->mCommands [ i ];
+		MOAIDrawingCommandVK* command = this->mCommands [ i ];
 		if ( command ) {
 			MOAIPipelineInputChunkVK& descriptorSet = this->mDescriptorSets [ command->mDescriptorSetIndex ];
 			command->Apply ( gfxMgr, descriptorSet, commandBuffer );

@@ -92,16 +92,16 @@ void MOAIShaderGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState
 }
 
 //----------------------------------------------------------------//
-const MOAIUniformSchema* MOAIShaderGL::MOAIAbstractUniformBuffer_GetSchema () const {
+MOAIAbstractGfxScript* MOAIShaderGL::MOAIAbstractHasGfxScript_GetGfxScript	() {
 
-	return this->mProgram;
+	MOAIAbstractGfxScript* gfxScript = this->MOAIHasGfxScript::MOAIAbstractHasGfxScript_GetGfxScript ();
+	return gfxScript ? gfxScript : ( this->mProgram ? this->mProgram->GetGfxScript () : NULL );
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractGfxScript* MOAIShaderGL::MOAIAbstractGfxScriptInterface_GetComposer	() {
+const MOAIUniformSchema* MOAIShaderGL::MOAIAbstractUniformBuffer_GetSchema () const {
 
-	MOAIAbstractGfxScript* composer = this->MOAIHasGfxScript::MOAIAbstractGfxScriptInterface_GetComposer ();
-	return composer ? composer : ( this->mProgram ? this->mProgram->GetComposer () : NULL );
+	return this->mProgram;
 }
 
 //----------------------------------------------------------------//

@@ -13,9 +13,9 @@ class MOAIGfxMgrVK;
 class MOAIPipelineInputBodySchemaVK;
 
 //================================================================//
-// MOAIGfxScriptCommandVK
+// MOAIDrawingCommandVK
 //================================================================//
-class MOAIGfxScriptCommandVK :
+class MOAIDrawingCommandVK :
 	public ZLRefCountedObject {
 protected:
 
@@ -26,10 +26,10 @@ protected:
 	ZLIndex 		mArrayItem;
 
 	//----------------------------------------------------------------//
-	virtual void		MOAIGfxScriptCommandVK_Apply			( MOAIGfxMgrVK& gfxMgr, MOAIPipelineInputChunkVK& descriptorSet, MOAICommandBufferVK& commandBuffer ) = 0;
+	virtual void		MOAIDrawingCommandVK_Apply			( MOAIGfxMgrVK& gfxMgr, MOAIPipelineInputChunkVK& descriptorSet, MOAICommandBufferVK& commandBuffer ) = 0;
 
 	//----------------------------------------------------------------//
-	MOAIGfxScriptCommandVK ( ZLIndex descriptorSetIndex, ZLIndex bindPoint, ZLIndex arrayItem ) :
+	MOAIDrawingCommandVK ( ZLIndex descriptorSetIndex, ZLIndex bindPoint, ZLIndex arrayItem ) :
 		mDescriptorSetIndex ( descriptorSetIndex ),
 		mBindPoint ( bindPoint ),
 		mArrayItem ( arrayItem ) {
@@ -38,13 +38,13 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-	virtual ~MOAIGfxScriptCommandVK () {
+	virtual ~MOAIDrawingCommandVK () {
 	}
 	
 	//----------------------------------------------------------------//
 	void Apply ( MOAIGfxMgrVK& gfxMgr, MOAIPipelineInputChunkVK& descriptorSet, MOAICommandBufferVK& commandBuffer ) {
 	
-		this->MOAIGfxScriptCommandVK_Apply ( gfxMgr, descriptorSet, commandBuffer );
+		this->MOAIDrawingCommandVK_Apply ( gfxMgr, descriptorSet, commandBuffer );
 	}
 };
 
@@ -52,7 +52,7 @@ public:
 // MOAIGfxScriptTextureCommandVK
 //================================================================//
 class MOAIGfxScriptTextureCommandVK :
-	public MOAIGfxScriptCommandVK {
+	public MOAIDrawingCommandVK {
 protected:
 
 	friend class MOAIPipelineInputBodyComposerVK;
@@ -60,7 +60,7 @@ protected:
 	ZLIndex		mTextureUnit;
 
 	//----------------------------------------------------------------//
-	void		MOAIGfxScriptCommandVK_Apply		( MOAIGfxMgrVK& gfxMgr, MOAIPipelineInputChunkVK& descriptorSet, MOAICommandBufferVK& commandBuffer );
+	void		MOAIDrawingCommandVK_Apply		( MOAIGfxMgrVK& gfxMgr, MOAIPipelineInputChunkVK& descriptorSet, MOAICommandBufferVK& commandBuffer );
 	
 	//----------------------------------------------------------------//
 				MOAIGfxScriptTextureCommandVK 	( ZLIndex descriptorSetIndex, ZLIndex bindPoint, ZLIndex arrayItem, ZLIndex textureUnit );
@@ -73,7 +73,7 @@ class MOAIPipelineInputBodyComposerVK :
 	public virtual MOAIPipelineInputBodyVK {
 protected:
 
-	ZLLeanArray < ZLStrongPtr < MOAIGfxScriptCommandVK > >	mCommands;
+	ZLLeanArray < ZLStrongPtr < MOAIDrawingCommandVK > >	mCommands;
 	ZLSize														mCommandCount;
 
 public:

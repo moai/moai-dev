@@ -387,7 +387,7 @@ void MOAIStretchPatch2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILu
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch2D::MOAIAbstractGfxScriptCallable_Call () {
+void MOAIStretchPatch2D::MOAIAbstractDrawingAPICallback_Call () {
 
 //	ZLVec3D stretch = this->BindStretchVertexTransform ();
 //	this->DrawStretch ( 0, stretch.mX, stretch.mY );
@@ -403,7 +403,7 @@ ZLBounds MOAIStretchPatch2D::MOAIDeck_ComputeMaxAABB () {
 void MOAIStretchPatch2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	UNUSED ( idx );
 	
-//	MOAIGfxScript* composer = this->GetComposer ();
+//	MOAIGfxScriptRetained* composer = this->GetComposer ();
 //	if ( !composer ) return;
 //
 //	this->UpdateParams ();

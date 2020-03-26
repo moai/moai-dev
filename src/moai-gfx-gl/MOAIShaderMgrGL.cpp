@@ -113,7 +113,7 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					
 					program->SetUniform ( MOAIGfxMgrGL::VIEW_HALF_WIDTH, 0, 0 );
 					program->SetUniform ( MOAIGfxMgrGL::VIEW_HALF_HEIGHT, 1, 0 );
-					program->Optimize ();
+					program->AffirmGfxScript ().Optimize ();
 					
 					program->Load ( _deck2DSnappingShaderVSH, _deck2DSnappingShaderFSH );
 					break;
@@ -139,7 +139,7 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					
 					program->SetUniform ( MOAIGfxMgrGL::VIEW_HALF_WIDTH, 0, 0 );
 					program->SetUniform ( MOAIGfxMgrGL::VIEW_HALF_HEIGHT, 1, 0 );
-					program->Optimize ();
+					program->AffirmGfxScript ().Optimize ();
 					
 					program->Load ( _fontSnappingShaderVSH, _fontSnappingShaderFSH );
 					break;
@@ -162,7 +162,7 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					
 					program->SetUniform ( MOAIGfxMgrGL::MODEL_TO_CLIP_MTX, 0, 0 );
 					program->SetUniform ( MOAIGfxMgrGL::PEN_COLOR, 1, 0 );
-					program->Optimize ();
+					program->AffirmGfxScript ().Optimize ();
 					
 					program->Load ( _lineShader3DVSH, _lineShader3DFSH );
 					

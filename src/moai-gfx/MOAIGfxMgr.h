@@ -67,6 +67,7 @@ public:
 	//----------------------------------------------------------------//
 	MOAIShader*				AffirmShader				( MOAILuaState& state, int idx ) const;
 	MOAITexture*			AffirmTexture				( MOAILuaState& state, int idx ) const;
+	MOAIVertexFormat*		AffirmVertexFormat			( MOAILuaState& state, int idx ) const;
 	MOAIImageTexture*		CreateImageTexture			() const;
 	MOAIIndexBuffer*		CreateIndexBuffer			() const;
 	MOAITexture2D*			CreateTexture2D				() const;

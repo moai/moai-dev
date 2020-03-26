@@ -17,7 +17,7 @@ protected:
 	
 	u64						mDirtyFlags;
 	
-	ZLMatrix4x4				mMatrices [ MOAIGfxStateConstsCPU::TOTAL_MATRICES ];
+	ZLMatrix4x4				mMatrices [ MOAIGfxStateCPUConsts::TOTAL_MATRICES ];
 	
 	ZLFrustum				mViewVolume;
 	

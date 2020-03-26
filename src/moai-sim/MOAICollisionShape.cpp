@@ -44,7 +44,7 @@ void MOAICollisionShape::Draw ( const ZLAffine3D& localToWorldMtx ) {
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
 	
-	draw.Bind ();
+	draw.BindVectorDrawing ();
 	
 	for ( ZLIndex i = 0; i < this->mShapes.Size (); ++i ) {
 	

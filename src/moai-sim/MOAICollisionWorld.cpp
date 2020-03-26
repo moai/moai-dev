@@ -271,7 +271,6 @@ MOAICollisionWorld::MOAICollisionWorld () :
 	RTTI_BEGIN ( MOAICollisionWorld )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAICollisionWorld >)
 		RTTI_EXTEND ( MOAIAction )
-		RTTI_EXTEND ( MOAIAbstractDrawable )
 		RTTI_EXTEND ( MOAIPartition )
 	RTTI_END
 }
@@ -411,17 +410,17 @@ bool MOAICollisionWorld::MOAIAction_IsDone () {
 void MOAICollisionWorld::MOAIAction_Update ( double step ) {
 	UNUSED ( step );
 
-	this->ResetShapeStream ();
+	this->mDebugDraw.Reset ();
 	this->ProcessOverlaps ();
 }
 
 //----------------------------------------------------------------//
 void MOAICollisionWorld::MOAIPartition_DrawDebugFront () {
 	
-	if ( this->GetShapeStreamSize ()) {
+	if ( this->mDebugDraw.HasContent ()) {
 	
 		MOAIGfxMgr::Get ().SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX );
-		this->DrawShapeStream ();
+		this->mDebugDraw.RunScript ();
 	}
 }
 

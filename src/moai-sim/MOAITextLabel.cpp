@@ -1177,9 +1177,6 @@ void MOAITextLabel::MOAIDrawable_Draw ( int subPrimID ) {
 		this->PushGfxState ();
 		this->LoadVertexTransform ();
 		this->LoadUVTransform ();
-		
-		MOAIMaterialMgr& materialMgr = MOAIMaterialMgr::Get ();
-		materialMgr.LoadGfxState ();
 	
 		gfxMgr.SetVertexTransform ( MOAIGfxMgr::MODEL_TO_CLIP_MTX );
 		gfxMgr.SetUVTransform ( MOAIGfxMgr::UV_TO_MODEL_MTX );
@@ -1212,7 +1209,7 @@ void MOAITextLabel::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
-	draw.Bind ();
+	draw.BindVectorDrawing ();
 	
 	if (( this->mLayout.mLayoutFrame.Area () > 0.0f ) && debugLines.Bind ( DEBUG_DRAW_TEXT_LABEL_LAYOUT_BOUNDS )) {
 		

@@ -109,7 +109,7 @@ void MOAICollisionProp::ClearOverlapLink ( MOAIPropOverlap& overlap ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionProp::DrawContactPoints ( MOAIAbstractDrawShape& draw, const MOAIMoveConstraint2D* contacts, u32 nContacts ) {
+void MOAICollisionProp::DrawContactPoints ( MOAIAbstractDrawingAPI& draw, const MOAIMoveConstraint2D* contacts, u32 nContacts ) {
 
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAICollisionProp >())) return;
@@ -365,7 +365,8 @@ void MOAICollisionProp::Move ( ZLVec3D move, u32 detach, u32 maxSteps ) {
 		}
 	}
 	
-	MOAICollisionProp::DrawContactPoints ( *this->mCollisionWorld, contacts, contactAccumulator.Top ());
+	MOAIAbstractDrawingAPI& draw = this->mCollisionWorld->mDebugDraw;
+	MOAICollisionProp::DrawContactPoints ( draw, contacts, contactAccumulator.Top ());
 	
 	// resolve overlaps
 	MOAIOverlapResolver overlapResolver;
@@ -375,8 +376,6 @@ void MOAICollisionProp::Move ( ZLVec3D move, u32 detach, u32 maxSteps ) {
 	
 	this->mLoc.Add ( resolveOverlaps );
 	this->ScheduleUpdate ();
-
-	MOAIDrawShapeRetained& draw = *this->mCollisionWorld;
 
 	if ( drawDebug && debugLines.Bind ( DEBUG_DRAW_COLLISION_MOVE_RETICLE, draw )) {
 
@@ -490,7 +489,7 @@ void MOAICollisionProp::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
 	
-	draw.Bind ();
+	draw.BindVectorDrawing ();
 
 	if ( debugLines.Bind ( MOAICollisionProp::DEBUG_DRAW_COLLISION_WORLD_BOUNDS )) {
 		gfxMgr.SetVertexTransform ( MOAIGfxMgr::WORLD_TO_CLIP_MTX );

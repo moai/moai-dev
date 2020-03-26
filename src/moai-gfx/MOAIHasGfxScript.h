@@ -4,36 +4,28 @@
 #ifndef	MOAIHASGFXSCRIPT_H
 #define	MOAIHASGFXSCRIPT_H
 
-#include <moai-gfx/MOAIAbstractGfxScriptInterface.h>
+#include <moai-gfx/MOAIAbstractHasGfxScript.h>
 
 //================================================================//
 // MOAIHasGfxScript
 //================================================================//
 // TODO: doxygen
 class MOAIHasGfxScript :
-	public virtual MOAIAbstractGfxScriptInterface {
+	public virtual MOAIAbstractHasGfxScript {
 protected:
 
-	MOAI_LUA_OBJECT_VISITOR_FRIEND
-
-	ZLStrongPtr < MOAIAbstractGfxScript > mComposer;
+	ZLStrongPtr < MOAIAbstractGfxScript > mGfxScript;
 	
 	//----------------------------------------------------------------//
-	static int					_getComposer				( lua_State* L );
-	static int					_setComposer				( lua_State* L );
-	
-	//----------------------------------------------------------------//
-	void						_RegisterLuaClass									( RTTIVisitorHistory& history, MOAILuaState& state );
-	void						_RegisterLuaFuncs									( RTTIVisitorHistory& history, MOAILuaState& state );
-	MOAIAbstractGfxScript&		MOAIAbstractGfxScriptInterface_AffirmComposer		();
-	MOAIAbstractGfxScript*		MOAIAbstractGfxScriptInterface_GetComposer			();
+	MOAIGfxScriptRetained&		MOAIAbstractHasGfxScript_AffirmGfxScript	();
+	MOAIAbstractGfxScript*		MOAIAbstractHasGfxScript_GetGfxScript		();
+	void						MOAIAbstractHasGfxScript_SetGfxScript		( MOAIAbstractGfxScript* gfxScript );
 
 public:
 
 	//----------------------------------------------------------------//
-	bool						HasComposer					();
-								MOAIHasGfxScript			();
-								~MOAIHasGfxScript			();
+				MOAIHasGfxScript			();
+				~MOAIHasGfxScript			();
 };
 
 #endif

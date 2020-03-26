@@ -16,7 +16,7 @@ class ZLViewport;
 //================================================================//
 class MOAIGfxMgr_CPUCache :
 	public virtual MOAIGfxMgrComponents,
- 	public MOAIGfxStateConstsCPU {
+ 	public MOAIGfxStateCPUConsts {
 protected:
 	
 	MOAIGfxStateCPUCacheFrame	mStateFrameCPU;
@@ -45,7 +45,7 @@ public:
 	const ZLMatrix4x4&		GetVertexTransform			( u32 id );
 	const ZLFrustum&		GetViewVolume				();
 	
-	bool					IsInputMtx					( u32 mtxID );
+	static bool				IsInputMtx					( u32 mtxID );
 	
 							MOAIGfxMgr_CPUCache			();
 	virtual					~MOAIGfxMgr_CPUCache		();

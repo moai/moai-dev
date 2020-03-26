@@ -6,7 +6,6 @@
 
 #include <moai-sim/MOAIAction.h>
 #include <moai-sim/MOAICollisionProp.h>
-#include <moai-sim/MOAIDrawShapeRetained.h>
 #include <moai-sim/MOAIOverlap.h>
 #include <moai-sim/MOAIPartition.h>
 
@@ -18,7 +17,6 @@ class MOAICollisionWorld;
 //================================================================//
 class MOAICollisionWorld :
 	public virtual MOAIAction,
-	public virtual MOAIDrawShapeRetained,
 	public virtual MOAIPartition {
 protected:
 
@@ -28,15 +26,17 @@ protected:
 	bool	mUpdated;
 	u32		mOverlapPass;
 
+	MOAIGfxScriptRetained					mDebugDraw;
+
 	typedef ZLLeanList < MOAICollisionProp* >::Iterator ActiveListIt;
-	ZLLeanList < MOAICollisionProp* > mActiveList;
+	ZLLeanList < MOAICollisionProp* >		mActiveList;
 	
 	typedef ZLLeanList < MOAIPropOverlap* >::Iterator OverlapListIt;
-	ZLLeanList < MOAIPropOverlap* > mOverlapList;
+	ZLLeanList < MOAIPropOverlap* >			mOverlapList;
 	
-	ZLLeanPool < MOAIPropOverlap > mOverlapPool;
+	ZLLeanPool < MOAIPropOverlap >			mOverlapPool;
 
-	MOAILuaStrongRef mCallback;
+	MOAILuaStrongRef						mCallback;
 
 	//----------------------------------------------------------------//
 	static int		_insertProp				( lua_State* L );

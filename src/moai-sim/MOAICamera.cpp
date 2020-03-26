@@ -324,7 +324,7 @@ void MOAICamera::DrawDebug () {
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
 	
-	draw.Bind ();
+	draw.BindVectorDrawing ();
 	
 	ZLRect viewRect = gfxMgr.GetViewRect ();
 	//float aspect = viewRect.Width () / viewRect.Height ();

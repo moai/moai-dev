@@ -801,7 +801,7 @@ void MOAIRegion::DrawDebug () const {
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	MOAIDraw& draw = MOAIDraw::Get ();
-	draw.Bind ();
+	draw.BindVectorDrawing ();
 
 	ZLSize nPolys = this->mPolygons.Size ();
 	for ( ZLIndex i = 0; i < nPolys; ++i ) {

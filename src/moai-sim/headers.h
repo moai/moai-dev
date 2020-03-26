@@ -9,7 +9,6 @@
 
 #include <moai-sim/MOAIAbstractBaseTransform.h>
 #include <moai-sim/MOAIAbstractChildTransform.h>
-#include <moai-sim/MOAIAbstractDrawShape.h>
 #include <moai-sim/MOAIAbstractLayer.h>
 #include <moai-sim/MOAIAbstractProp.h>
 #include <moai-sim/MOAIAbstractViewLayer.h>
@@ -40,6 +39,7 @@
 #include <moai-sim/MOAICoroutine.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIDeck.h>
+#include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIHasDeck.h>
 #include <moai-sim/MOAIHasDeckAndGrid.h>
 #include <moai-sim/MOAIHasDeckAndIndex.h>
@@ -47,8 +47,6 @@
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIDrawDeck.h>
-#include <moai-sim/MOAIDrawShapeImmediate.h>
-#include <moai-sim/MOAIDrawShapeRetained.h>
 #include <moai-sim/MOAIEaseDriver.h>
 #include <moai-sim/MOAIEaseType.h>
 #include <moai-sim/MOAIFancyGrid.h>

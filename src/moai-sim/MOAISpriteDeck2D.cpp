@@ -11,7 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAISpriteDeck2DCallable::MOAIAbstractGfxScriptCallable_Call () {
+void MOAISpriteDeck2DCallable::MOAIAbstractDrawingAPICallback_Call () {
 
 	this->mBrush.Draw ();
 }
@@ -424,7 +424,7 @@ MOAIDeck* MOAISpriteDeck2D::AffirmDeck ( MOAILuaState& state, int idx ) {
 		assert ( spriteDeck );
 
 		spriteDeck->SetTexture ( texture, 0 );
-		spriteDeck->Optimize ();
+		spriteDeck->AffirmGfxScript ().Optimize ();
 		
 		int hWidth = ( int )( texture->GetWidth () / 2 );
 		int hHeight = ( int )( texture->GetHeight () / 2 );
@@ -679,20 +679,20 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 			
 			MOAISprite spritePair = this->mSprites [  ZLIndexOp::Wrap ( i, totalSprites )];
 			
-			MOAIAbstractGfxScript* composer = this->GetComposer ();
-			if ( !composer ) continue;
+			MOAIAbstractGfxScript* gfxScript = this->GetGfxScript ();
+			if ( !gfxScript ) continue;
 			
 			MOAISpriteDeck2DCallable callable;
 			callable.mBrush.mUVQuad = this->mUVQuads [ spritePair.mUVQuadID ];
 			callable.mBrush.mModelQuad = this->mQuads [ spritePair.mQuadID ];
 			
-			composer->Execute ( callable, MOAIGfxScriptCmdEnum::CALL_FROM_SHADER );
+			gfxScript->RunScript ( &callable, MOAIDrawingCmdEnum::CALL_FROM_SHADER );
 		}
 	}
 	else {
 		
-		MOAIAbstractGfxScript* composer = this->GetComposer ();
-		if ( !composer ) return;
+		MOAIAbstractGfxScript* gfxScript = this->GetGfxScript ();
+		if ( !gfxScript ) return;
 		
 		MOAISpriteDeck2DCallable callable;
 		
@@ -715,7 +715,7 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 			callable.mBrush.mModelQuad.Init ( -0.5f, -0.5f, 0.5f, 0.5f );
 		}
 		
-		composer->Execute ( callable, MOAIGfxScriptCmdEnum::CALL_FROM_SHADER );
+		gfxScript->RunScript ( &callable, MOAIDrawingCmdEnum::CALL_FROM_SHADER );
 	}
 }
 

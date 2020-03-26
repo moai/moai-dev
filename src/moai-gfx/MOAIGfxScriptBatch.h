@@ -4,35 +4,32 @@
 #ifndef	MOAIGFXSCRIPTBATCH_H
 #define	MOAIGFXSCRIPTBATCH_H
 
-#include <moai-gfx/MOAIAbstractGfxScriptBatchInterface.h>
-
-class MOAIGfxScript;
+#include <moai-gfx/MOAIAbstractGfxScriptBatch.h>
 
 //================================================================//
 // MOAIGfxScriptBatch
 //================================================================//
 // TODO: doxygen
 class MOAIGfxScriptBatch :
-	public virtual MOAIAbstractGfxScriptBatchInterface {
+	public virtual MOAIAbstractGfxScriptBatch {
 private:
 
-	friend class MOAIHasComposerBatch;
-	friend class MOAIAbstractGfxScriptBatchInterface;
-
-	ZLSize														mIndexBatchSize;
-	ZLLeanArray < ZLStrongPtr < MOAIAbstractGfxScript > >		mComposers;
+	ZLSize													mIndexBatchSize;
+	ZLLeanArray < ZLStrongPtr < MOAIAbstractGfxScript > >	mGfxScripts;
 
 	//----------------------------------------------------------------//
-	MOAIAbstractGfxScript&		MOAIAbstractGfxScriptBatchInterface_AffirmComposer			( ZLIndex index );
-	MOAIGfxScriptBatch&			MOAIAbstractGfxScriptBatchInterface_AffirmComposerBatch		();
-	MOAIAbstractGfxScript*		MOAIAbstractGfxScriptBatchInterface_GetComposer				( ZLIndex index );
-	MOAIGfxScriptBatch*			MOAIAbstractGfxScriptBatchInterface_GetComposerBatch		();
+	MOAIGfxScriptRetained&		MOAIAbstractGfxScriptBatch_AffirmGfxScript		( ZLIndex index );
+	MOAIAbstractGfxScript*		MOAIAbstractGfxScriptBatch_GetGfxScript			( ZLIndex index );
+	ZLSize						MOAIAbstractGfxScriptBatch_GetIndexBatchSize	();
+	void						MOAIAbstractGfxScriptBatch_ReserveGfxScripts	( ZLSize size );
+	void						MOAIAbstractGfxScriptBatch_SetGfxScript			( ZLSize size, MOAIAbstractGfxScript* gfxScript );
+	void						MOAIAbstractGfxScriptBatch_SetIndexBatchSize	( ZLSize size );
 
 	//----------------------------------------------------------------//
 	inline ZLIndex GetRawIndex ( ZLIndex idx ) {
 	
-		ZLSize totalComposers = this->mComposers.Size ();
-		ZLSize rawIndex = ( totalComposers && ( this->mIndexBatchSize > 0 )) ? (( idx / this->mIndexBatchSize ) % totalComposers ) : 0;
+		ZLSize totalGfxScripts = this->mGfxScripts.Size ();
+		ZLSize rawIndex = ( totalGfxScripts && ( this->mIndexBatchSize > 0 )) ? (( idx / this->mIndexBatchSize ) % totalGfxScripts ) : 0;
 		return rawIndex;
 	}
 
@@ -43,12 +40,9 @@ public:
 	DECL_LUA_FACTORY ( MOAIGfxScriptBatch )
 
 	//----------------------------------------------------------------//
-	void						Clear						();
 								MOAIGfxScriptBatch			();
 	virtual						~MOAIGfxScriptBatch			();
-	MOAIAbstractGfxScript*		RawGetComposer				( ZLIndex idx );
-	void						Reserve						( ZLSize n );
-	size_t						Size						();
+	MOAIAbstractGfxScript*		RawGetGfxScript				( ZLIndex idx );
 };
 
 #endif

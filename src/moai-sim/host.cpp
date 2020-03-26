@@ -325,8 +325,6 @@ void AKUSimContextInitialize () {
 
 	MOAINodeMgr::Affirm ();
 	MOAIActionStackMgr::Affirm ();
-
-	MOAIMaterialMgr::Affirm ();
 	
 	MOAIDraw::Affirm ();
 	MOAIDebugLinesMgr::Affirm ();
@@ -359,7 +357,6 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAICoroutine )
 	REGISTER_LUA_CLASS ( MOAIDebugLinesMgr )
 	REGISTER_LUA_CLASS ( MOAIDeckRemapper )
-	REGISTER_LUA_CLASS ( MOAIDraw )
 	REGISTER_LUA_CLASS ( MOAIDrawDeck )
 	REGISTER_LUA_CLASS ( MOAIEaseDriver )
 	REGISTER_LUA_CLASS ( MOAIEaseType )
@@ -376,8 +373,6 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIJoystickSensor )
 	REGISTER_LUA_CLASS ( MOAIKeyCode )
 	REGISTER_LUA_CLASS ( MOAIKeyboardSensor )
-	REGISTER_LUA_CLASS ( MOAILight )
-	REGISTER_LUA_CLASS ( MOAILightFormat )
 	REGISTER_LUA_CLASS ( MOAILocationSensor )
 	REGISTER_LUA_CLASS ( MOAIGfxScriptBatch )
 	REGISTER_LUA_CLASS ( MOAIMatrix )

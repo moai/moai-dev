@@ -7,17 +7,18 @@
 #include <moai-gfx/pch.h>
 
 #include <moai-gfx/MOAIAbstractDrawable.h>
+#include <moai-gfx/MOAIAbstractDrawingAPI.h>
+#include <moai-gfx/MOAIAbstractDrawingAPICallback.h>
+#include <moai-gfx/MOAIAbstractDrawingAPIObject.h>
 #include <moai-gfx/MOAIAbstractGfxScript.h>
-#include <moai-gfx/MOAIAbstractGfxScriptBatchInterface.h>
-#include <moai-gfx/MOAIAbstractGfxScriptCallable.h>
-#include <moai-gfx/MOAIAbstractGfxScriptInterface.h>
-#include <moai-gfx/MOAIAbstractMaterialInterface.h>
+#include <moai-gfx/MOAIAbstractGfxScriptBatch.h>
+#include <moai-gfx/MOAIAbstractHasGfxScript.h>
 #include <moai-gfx/MOAIAbstractUniformBuffer.h>
 #include <moai-gfx/MOAIBlendMode.h>
 #include <moai-gfx/MOAIFrameBuffer.h>
 #include <moai-gfx/MOAIGfxBuffer.h>
-#include <moai-gfx/MOAIGfxScriptCommand.h>
-#include <moai-gfx/MOAIGfxScript.h>
+#include <moai-gfx/MOAIDrawingCommand.h>
+#include <moai-gfx/MOAIGfxScriptRetained.h>
 #include <moai-gfx/MOAIGfxConsts.h>
 #include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIGfxMgr_CPUCache.h>
@@ -27,8 +28,9 @@
 #include <moai-gfx/MOAIGfxMgrComponents.h>
 #include <moai-gfx/MOAIGfxPresetEnum.h>
 #include <moai-gfx/MOAIGfxResource.h>
-#include <moai-gfx/MOAIGfxScript.h>
 #include <moai-gfx/MOAIGfxScriptBatch.h>
+#include <moai-gfx/MOAIGfxScriptRetained.h>
+#include <moai-gfx/MOAIGfxScriptImmediate.h>
 #include <moai-gfx/MOAIGfxStateCPUCacheFrame.h>
 #include <moai-gfx/MOAIGfxStateCPUConsts.h>
 #include <moai-gfx/MOAIGfxStateGPUCacheFrame.h>
@@ -36,10 +38,6 @@
 #include <moai-gfx/MOAIHasGfxScriptBatch.h>
 #include <moai-gfx/MOAIImageTexture.h>
 #include <moai-gfx/MOAIIndexBuffer.h>
-#include <moai-gfx/MOAILight.h>
-#include <moai-gfx/MOAILightFormat.h>
-#include <moai-gfx/MOAIMaterial.h>
-#include <moai-gfx/MOAIMaterialMgr.h>
 #include <moai-gfx/MOAIShader.h>
 #include <moai-gfx/MOAITexture.h>
 #include <moai-gfx/MOAITexture2D.h>

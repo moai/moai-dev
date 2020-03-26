@@ -1,33 +1,50 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGFXSCRIPTSOMMAND_H
-#define	MOAIGFXSCRIPTSOMMAND_H
+#ifndef	MOAIDRAWINGCOMMAND_H
+#define	MOAIDRAWINGCOMMAND_H
 
-class MOAIAbstractGfxScriptCallable;
+#include <moai-gfx/MOAIGfxConsts.h>
+
+class MOAIAbstractDrawingAPICallback;
+class MOAIGfxMgr;
 class MOAIShader;
 class MOAITexture;
 
 //================================================================//
-// MOAIGfxScriptCmdEnum
+// MOAIDrawingCmdEnum
 //================================================================//
-struct MOAIGfxScriptCmdEnum {
+struct MOAIDrawingCmdEnum {
 	enum _ {
 		NONE,
 		
-		DRAW_BOX,
-		DRAW_ELLIPSE,
+		CLEAR_SURFACE,
+		
+		DRAW_AXIS_2D,
 		DRAW_LINE,
 		DRAW_POINT,
-		DRAW_POLY,
-		DRAW_QUAD,
-		DRAW_RECT,
 		DRAW_TRIANGLE,
+		
+		POP_GFX_STATE,
+		PUSH_GFX_STATE,
+		
+		SET_BLEND_MODE,
+		SET_CULL_FUNC,
+		SET_DEPTH_FUNC,
+		SET_DEPTH_MASK,
+		SET_FRAME_BUFFER,
+		SET_INDEX_BUFFER,
+		SET_MATRIX,
 		SET_PEN_COLOR,
 		SET_PEN_WIDTH,
+		SET_SCISSOR_RECT,
 		SET_SHADER,
 		SET_TEXTURE,
 		SET_UNIFORM,
+		SET_VERTEX_ARRAY,
+		SET_VERTEX_BUFFER,
+		SET_VERTEX_FORMAT,
+		SET_VIEW_RECT,
 		
 		// keep these last
 		CALL, // keep this first of call commands
@@ -36,23 +53,21 @@ struct MOAIGfxScriptCmdEnum {
 };
 
 //================================================================//
-// MOAIGfxScriptParam
+// MOAIDrawingParam
 //================================================================//
-namespace MOAIGfxScriptParam {
+namespace MOAIDrawingParam {
 
 	//----------------------------------------------------------------//
-	struct DrawBox {
-		ZLBox 				mBox;
-		u32					mStyle;
+	struct DrawAxis2D {
+		ZLVec2D 			mV0;
+		ZLVec2D 			mD;
 	};
-
+	
 	//----------------------------------------------------------------//
-	struct DrawEllipse {
-		ZLVec3D 			mCenter;
-		float 				mXRad;
-		float 				mYRad;
-		u32 				mSteps;
-		u32 				mStyle;
+	struct DrawAxisGrid2D {
+		ZLVec2D 			mV0;
+		ZLVec2D 			mD;
+		float				mSize;
 	};
 
 	//----------------------------------------------------------------//
@@ -62,40 +77,16 @@ namespace MOAIGfxScriptParam {
 	};
 
 	//----------------------------------------------------------------//
-	struct DrawPoint {
-		ZLVec3D 			mPoint;
-	};
-
-	//----------------------------------------------------------------//
-	struct DrawQuad {
-		ZLQuad 				mQuad;
-		u32 				mStyle;
-	};
-
-	//----------------------------------------------------------------//
-	struct DrawRect {
-		ZLRect 				mRect;
-		u32 				mStyle;
-		u32 				mEdges;
-	};
-
-	//----------------------------------------------------------------//
-	struct DrawRoundedRect {
-		ZLRect 				mRect;
-		u32 				mStyle;
-		u32					mSteps;
-		float 				mXRad;
-		float 				mYRad;
-		float 				mStroke;
-		float				mOffset;
-	};
-
-	//----------------------------------------------------------------//
 	struct DrawTriangle {
 		ZLVec3D 			mV0;
 		ZLVec3D 			mV1;
 		ZLVec3D 			mV2;
-		u32 				mStyle;
+	};
+
+	//----------------------------------------------------------------//
+	struct SetMatrix {
+		u32 				mMatrixID;
+		ZLMatrix4x4 		mMatrix;
 	};
 
 	//----------------------------------------------------------------//
@@ -106,11 +97,6 @@ namespace MOAIGfxScriptParam {
 	//----------------------------------------------------------------//
 	struct SetPenWidth {
 		float 				mWidth;
-	};
-
-	//----------------------------------------------------------------//
-	struct SetShader {
-		MOAIShader* 		mShader;
 	};
 	
 	//----------------------------------------------------------------//
@@ -128,16 +114,21 @@ namespace MOAIGfxScriptParam {
 };
 
 //================================================================//
-// MOAIGfxScriptCommand
+// MOAIDrawingCommand
 //================================================================//
-struct MOAIGfxScriptCommand {
+struct MOAIDrawingCommand {
 
-	MOAIGfxScriptCmdEnum::_ 	mType;
+	MOAIDrawingCmdEnum::_ 		mType;
 	ZLSize 						mParamSize;
-	
+
 	//----------------------------------------------------------------//
-	static void		Execute				( MOAIAbstractGfxScriptCallable& callable, MOAIGfxScriptCmdEnum::_ cmd, const void* rawParam );
-	static void		ExecuteUniform		( const MOAIGfxScriptParam::SetUniform& param );
+	static void		Execute					( MOAIAbstractDrawingAPICallback* callable, MOAIDrawingCmdEnum::_ cmd, const void* rawParam );
+	static void 	ExecuteDrawAxis2D 		( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawAxis2D& param );
+	static void 	ExecuteDrawAxisGrid2D	( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawAxisGrid2D& param );
+	static void 	ExecuteDrawLine 		( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawLine& param );
+	static void 	ExecuteDrawPoint 		( MOAIGfxMgr& gfxMgr, const ZLVec3D& param );
+	static void 	ExecuteDrawTriangle		( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawTriangle& param );
+	static void		ExecuteSetUniform		( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::SetUniform& param );
 };
 
 #endif
