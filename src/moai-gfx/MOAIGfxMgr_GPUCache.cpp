@@ -11,6 +11,7 @@
 #include <moai-gfx/MOAIVertexArray.h>
 #include <moai-gfx/MOAIVertexBuffer.h>
 #include <moai-gfx/MOAIVertexFormat.h>
+#include <moai-gfx/MOAIViewport.h>
 
 //================================================================//
 // MOAIGfxMgr_GPUCache
@@ -412,6 +413,17 @@ void MOAIGfxMgr_GPUCache::SetViewRect ( ZLRect rect ) {
 	
 	this->mPendingState->mViewRect = rect;
 	this->SetFlag ( this->mActiveState->mViewRect.IsEqual ( rect ), VIEW_RECT );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxMgr_GPUCache::SetViewRect ( MOAIViewport* viewport ) {
+
+	if ( viewport ) {
+		this->SetViewRect ( *viewport );
+	}
+	else {
+		this->SetViewRect ();
+	}
 }
 
 //----------------------------------------------------------------//

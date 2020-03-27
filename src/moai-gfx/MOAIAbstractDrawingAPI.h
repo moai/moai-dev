@@ -51,6 +51,7 @@ public:
 	void				Call						();
 	void				CallFromShader				();
 	void				ClearSurface				();
+	void				DrawAnimCurve				( MOAIAnimCurve& curve, u32 resolution );
 	void				DrawAxis2D					( float x, float y, float dx, float dy );
 	void				DrawBezierCurve				( const ZLCubicBezier2D& bezier );
 	void				DrawBoxAxis					( const ZLBox& box );
@@ -93,6 +94,7 @@ public:
 	void				SetFrameBuffer				( MOAIFrameBuffer* frameBuffer );
 	void				SetIndexBuffer				( MOAIIndexBuffer* indexBuffer );
 	void 				SetMatrix					( u32 matrixID, const ZLMatrix4x4& mtx );
+	void 				SetMatrixFromTransform		( u32 matrixID, MOAIAbstractChildTransform& transform );
 	void				SetPenColor					( u32 color );
 	void				SetPenWidth					( float width );
 	void				SetScissorRect				( const ZLRect& rect );
@@ -102,7 +104,9 @@ public:
 	void				SetVertexArray				( MOAIVertexArray* vertexArray );
 	void				SetVertexBuffer				( MOAIVertexBuffer* vertexBuffer );
 	void				SetVertexFormat				( MOAIVertexFormat* vertexFormat );
+	void				SetViewProj					( MOAIViewport* viewport, MOAICamera* camera );
 	void				SetViewRect					( const ZLRect& rect );
+	void				SetViewRect					( MOAIViewport* viewport );
 };
 
 #endif

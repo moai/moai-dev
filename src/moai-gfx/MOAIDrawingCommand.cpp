@@ -6,11 +6,13 @@
 #include <moai-gfx/MOAIAbstractDrawingAPICallback.h>
 #include <moai-gfx/MOAIAbstractUniformBuffer.h>
 #include <moai-gfx/MOAIBlendMode.h>
+#include <moai-gfx/MOAICamera.h>
 #include <moai-gfx/MOAIDrawingCommand.h>
 #include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIShader.h>
 #include <moai-gfx/MOAITexture.h>
 #include <moai-gfx/MOAIUniformSchema.h>
+#include <moai-gfx/MOAIViewport.h>
 
 //================================================================//
 // MOAIDrawingCommand
@@ -48,6 +50,12 @@ void MOAIDrawingCommand::Execute ( MOAIAbstractDrawingAPICallback* callback, MOA
 		
 		case MOAIDrawingCmdEnum::CLEAR_SURFACE:
 			break;
+		
+		case MOAIDrawingCmdEnum::DRAW_ANIM_CURVE: {
+			MOAIDrawingParam::DrawAnimCurve param = *( const MOAIDrawingParam::DrawAnimCurve* )rawParam;
+			MOAIDrawingCommand::ExecuteDrawAnimCurve ( gfxMgr, param );
+			break;
+		}
 		
 		case MOAIDrawingCmdEnum::DRAW_AXIS_2D: {
 			MOAIDrawingParam::DrawAxis2D param = *( const MOAIDrawingParam::DrawAxis2D* )rawParam;
@@ -111,6 +119,12 @@ void MOAIDrawingCommand::Execute ( MOAIAbstractDrawingAPICallback* callback, MOA
 			break;
 		}
 		
+		case MOAIDrawingCmdEnum::SET_MATRIX_FROM_TRANSFORM: {
+			const MOAIDrawingParam::SetMatrixFromTransform* param = ( const MOAIDrawingParam::SetMatrixFromTransform* )rawParam;
+			gfxMgr.SetMtx ( param->mMatrixID, param->mTransform->GetLocalToWorldMtx ());
+			break;
+		}
+		
 		case MOAIDrawingCmdEnum::SET_PEN_COLOR:
 			gfxMgr.SetPenColor ( *( u32* )rawParam );
 			break;
@@ -151,44 +165,53 @@ void MOAIDrawingCommand::Execute ( MOAIAbstractDrawingAPICallback* callback, MOA
 			gfxMgr.SetVertexFormat ( *( MOAIVertexFormat** )rawParam );
 			break;
 		
+		case MOAIDrawingCmdEnum::SET_VIEW_PROJ: {
+			const MOAIDrawingParam::SetViewProj* param = ( const MOAIDrawingParam::SetViewProj* )rawParam;
+			gfxMgr.SetViewProj ( param->mViewport, param->mCamera );
+			break;
+		}
+		
 		case MOAIDrawingCmdEnum::SET_VIEW_RECT:
 			gfxMgr.SetViewRect ( *( ZLRect* )rawParam );
+			break;
+		
+		case MOAIDrawingCmdEnum::SET_VIEW_RECT_FROM_VIEWPORT:
+			gfxMgr.SetViewRect ( *( MOAIViewport** )rawParam );
 			break;
 	}
 }
 
-////----------------------------------------------------------------//
-//void MOAIAnimCurve::MOAIAnimCurve_Draw ( u32 resolution ) const {
-//	UNUSED ( resolution );
-//
-//	// TODO: this isn't entirely correct. the value of each key frame should be drawn
-//	// and then the spans between keys should be filled in with an approximation of
-//	// the resolution.
-//
-//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-//
-//	ZLReal length = this->GetLength ();
-//	ZLReal step = length / ( ZLReal )resolution;
-//
-//	gfxMgr.BeginPrim ( MOAIGfxTopologyEnum::LINE_STRIP, resolution );
-//
-//	for ( ZLSize i = 0; i < resolution; ++i ) {
-//
-//		ZLReal t = step * ( ZLReal )i;
-//		ZLReal v = this->MOAIAnimCurve_GetFloatForTime ( t );
-//
-//		gfxMgr.WriteVtx ( t, v, 0.0 );
-//		gfxMgr.WritePenColor4b ();
-//	}
-//
-//	ZLReal t = length;
-//	ZLReal v = this->MOAIAnimCurve_GetFloatForTime ( t );
-//
-//	gfxMgr.WriteVtx ( t, v, 0.0 );
-//	gfxMgr.WritePenColor4b ();
-//
-//	gfxMgr.EndPrim ();
-//}
+//----------------------------------------------------------------//
+void MOAIDrawingCommand::ExecuteDrawAnimCurve ( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawAnimCurve& param ) {
+
+	u32 resolution = param.mResolution;
+	MOAIAnimCurve* animCurve = param.mAnimCurve;
+
+	MOAIAnimCurveFloat* animCurveFloat = MOAICast < MOAIAnimCurveFloat >( animCurve );
+	MOAIAnimCurveIndex* animCurveIndex = MOAICast < MOAIAnimCurveIndex >( animCurve );
+
+	if ( !( animCurveFloat || animCurveIndex )) return;
+
+	// TODO: this isn't entirely correct. the value of each key frame should be drawn
+	// and then the spans between keys should be filled in with an approximation of
+	// the resolution.
+
+	ZLReal length = animCurve->GetLength ();
+	ZLReal step = length / ( ZLReal )resolution;
+
+	gfxMgr.BeginPrim ( MOAIGfxTopologyEnum::LINE_STRIP, resolution );
+
+	for ( ZLSize i = 0; i < ( resolution + 1 ); ++i ) {
+
+		ZLReal t = step * ( ZLReal )i;
+		ZLReal v = animCurveFloat ? animCurveFloat->GetValue ( t ) : ( float )animCurveIndex->GetValue ( t );
+
+		gfxMgr.WriteVtx ( t, v, 0.0 );
+		gfxMgr.WritePenColor4b ();
+	}
+	
+	gfxMgr.EndPrim ();
+}
 
 //----------------------------------------------------------------//
 void MOAIDrawingCommand::ExecuteDrawAxis2D ( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawAxis2D& param ) {

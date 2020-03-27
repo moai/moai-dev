@@ -6,10 +6,13 @@
 
 #include <moai-gfx/MOAIGfxConsts.h>
 
+class MOAIAbstractChildTransform;
 class MOAIAbstractDrawingAPICallback;
+class MOAICamera;
 class MOAIGfxMgr;
 class MOAIShader;
 class MOAITexture;
+class MOAIViewport;
 
 //================================================================//
 // MOAIDrawingCmdEnum
@@ -20,6 +23,7 @@ struct MOAIDrawingCmdEnum {
 		
 		CLEAR_SURFACE,
 		
+		DRAW_ANIM_CURVE,
 		DRAW_AXIS_2D,
 		DRAW_LINE,
 		DRAW_POINT,
@@ -35,6 +39,7 @@ struct MOAIDrawingCmdEnum {
 		SET_FRAME_BUFFER,
 		SET_INDEX_BUFFER,
 		SET_MATRIX,
+		SET_MATRIX_FROM_TRANSFORM,
 		SET_PEN_COLOR,
 		SET_PEN_WIDTH,
 		SET_SCISSOR_RECT,
@@ -44,7 +49,9 @@ struct MOAIDrawingCmdEnum {
 		SET_VERTEX_ARRAY,
 		SET_VERTEX_BUFFER,
 		SET_VERTEX_FORMAT,
+		SET_VIEW_PROJ,
 		SET_VIEW_RECT,
+		SET_VIEW_RECT_FROM_VIEWPORT,
 		
 		// keep these last
 		CALL, // keep this first of call commands
@@ -61,6 +68,12 @@ namespace MOAIDrawingParam {
 	struct DrawAxis2D {
 		ZLVec2D 			mV0;
 		ZLVec2D 			mD;
+	};
+	
+	//----------------------------------------------------------------//
+	struct DrawAnimCurve {
+		MOAIAnimCurve*		mAnimCurve;
+		u32					mResolution;
 	};
 	
 	//----------------------------------------------------------------//
@@ -90,6 +103,12 @@ namespace MOAIDrawingParam {
 	};
 
 	//----------------------------------------------------------------//
+	struct SetMatrixFromTransform {
+		u32 							mMatrixID;
+		MOAIAbstractChildTransform*		mTransform;
+	};
+
+	//----------------------------------------------------------------//
 	struct SetPenColor {
 		u32 				mColor;
 	};
@@ -111,6 +130,12 @@ namespace MOAIDrawingParam {
 		ZLIndex				mTargetUniformID;
 		ZLIndex				mTargetUniformIndex;
 	};
+	
+	//----------------------------------------------------------------//
+	struct SetViewProj {
+		MOAICamera*			mCamera;
+		MOAIViewport*		mViewport;
+	};
 };
 
 //================================================================//
@@ -123,6 +148,7 @@ struct MOAIDrawingCommand {
 
 	//----------------------------------------------------------------//
 	static void		Execute					( MOAIAbstractDrawingAPICallback* callable, MOAIDrawingCmdEnum::_ cmd, const void* rawParam );
+	static void		ExecuteDrawAnimCurve	( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawAnimCurve& param );
 	static void 	ExecuteDrawAxis2D 		( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawAxis2D& param );
 	static void 	ExecuteDrawAxisGrid2D	( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawAxisGrid2D& param );
 	static void 	ExecuteDrawLine 		( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawLine& param );

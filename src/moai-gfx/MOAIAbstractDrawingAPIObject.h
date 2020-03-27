@@ -23,6 +23,7 @@ protected:
 	static int			_call						( lua_State* L );
 	static int			_callFromShader				( lua_State* L );
 	static int			_clearSurface				( lua_State* L );
+	static int			_drawAnimCurve				( lua_State* L );
 	static int			_drawBezierCurve			( lua_State* L );
 	static int			_drawBoxOutline				( lua_State* L );
 	static int			_drawCircle					( lua_State* L );
@@ -59,6 +60,7 @@ protected:
 	static int			_setVertexArray				( lua_State* L );
 	static int			_setVertexBuffer			( lua_State* L );
 	static int			_setVertexFormat			( lua_State* L );
+	static int			_setViewProj				( lua_State* L );
 	static int			_setViewRect				( lua_State* L );
 	static int			_strokeRoundedRect			( lua_State* L );
 

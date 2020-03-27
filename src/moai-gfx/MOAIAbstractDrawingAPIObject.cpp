@@ -2,8 +2,10 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-gfx/MOAIAbstractChildTransform.h>
 #include <moai-gfx/MOAIAbstractDrawingAPIObject.h>
 #include <moai-gfx/MOAIBlendMode.h>
+#include <moai-gfx/MOAICamera.h>
 #include <moai-gfx/MOAIFrameBuffer.h>
 #include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIIndexBuffer.h>
@@ -12,6 +14,7 @@
 #include <moai-gfx/MOAIVertexArray.h>
 #include <moai-gfx/MOAIVertexBuffer.h>
 #include <moai-gfx/MOAIVertexFormat.h>
+#include <moai-gfx/MOAIViewport.h>
 
 //================================================================//
 // lua
@@ -49,6 +52,21 @@ int MOAIAbstractDrawingAPIObject::_callFromShader ( lua_State* L ) {
 	self->CallFromShader ();
 	return 0;
 }
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIAbstractDrawingAPIObject::_drawAnimCurve ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIAbstractDrawingAPIObject, "U" )
+
+	MOAIAnimCurve* curve	= state.GetLuaObject < MOAIAnimCurve >( 1, true );
+	u32 resolution			= state.GetValue < u32 >( 2, 1 );
+
+	if ( curve ) {
+		self->DrawAnimCurve ( *curve, resolution );
+	}
+	return 0;
+}
+
 
 //----------------------------------------------------------------//
 /**	@lua	drawAxis2D
@@ -524,37 +542,21 @@ int MOAIAbstractDrawingAPIObject::_setMatrix ( lua_State* L ) {
 
 	if ( MOAIGfxMgr::IsInputMtx ( matrixID )) {
 	
-		int size = state.GetTop () - 3;
-		ZLMatrix4x4 mtx = state.GetMatrix ( 3, size );
-		self->SetMatrix ( matrixID, mtx );
+		if ( state.IsType ( 2, LUA_TUSERDATA )) {
+		
+			MOAIAbstractChildTransform* transform = state.GetLuaObject < MOAIAbstractChildTransform >( 2, true );
+			if ( transform ) {
+				self->SetMatrix ( matrixID, transform->GetLocalToWorldMtx ());
+			}
+		}
+		else {
+			int size = state.GetTop () - 3;
+			ZLMatrix4x4 mtx = state.GetMatrix ( 3, size );
+			self->SetMatrix ( matrixID, mtx );
+		}
 	}
 	return 0;
 }
-
-//int MOAIDraw::_setMatrix ( lua_State* L ) {
-//	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
-//
-//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-//	
-//	u32 matrixID = state.GetValue < u32 >( 1, MOAIGfxMgr::MODEL_TO_WORLD_MTX );
-//
-//	if ( gfxMgr.IsInputMtx( matrixID )) {
-//	
-//		if ( state.IsType ( 2, LUA_TUSERDATA )) {
-//		
-//			MOAIAbstractChildTransform* transform = state.GetLuaObject < MOAIAbstractChildTransform >( 2, true );
-//			if ( transform ) {
-//				gfxMgr.SetMtx ( matrixID, transform->GetLocalToWorldMtx ());
-//			}
-//		}
-//		else {
-//			int size = state.GetTop () - 2;
-//			ZLMatrix4x4 mtx = state.GetMatrix ( 2, size );
-//			gfxMgr.SetMtx ( matrixID, mtx );
-//		}
-//	}
-//	return 0;
-//}
 
 //----------------------------------------------------------------//
 /**	@lua	setPenColor
@@ -661,45 +663,31 @@ int MOAIAbstractDrawingAPIObject::_setVertexFormat ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-//int MOAIDraw::_setViewProj ( lua_State* L ) {
-//	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
-//	
-//	MOAIViewport* viewport = state.GetLuaObject < MOAIViewport >( 1, false );
-//	MOAICamera* camera = state.GetLuaObject < MOAICamera >( 2, false );
-//	
-//	MOAIGfxMgr::Get ().SetViewProj ( viewport, camera );
-//	return 0;
-//}
+int MOAIAbstractDrawingAPIObject::_setViewProj ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIAbstractDrawingAPIObject, "" )
+	
+	MOAIViewport* viewport = state.GetLuaObject < MOAIViewport >( 1, false );
+	MOAICamera* camera = state.GetLuaObject < MOAICamera >( 2, false );
+	
+	self->SetViewProj ( viewport, camera );
+	return 0;
+}
 
 //----------------------------------------------------------------//
 int MOAIAbstractDrawingAPIObject::_setViewRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractDrawingAPIObject, "U" )
 	
-	ZLRect rect ( 0.0, 0.0, 0.0, 0.0 );
-	rect = state.GetValue < ZLRect >( 2, rect );
-	self->SetViewRect ( rect );
+	if ( state.IsType ( 2, LUA_TUSERDATA )) {
+		MOAIViewport* viewport = state.GetLuaObject < MOAIViewport >( 1, true );
+		self->SetViewRect ( viewport );
+	}
+	else {
+		ZLRect rect ( 0.0, 0.0, 0.0, 0.0 );
+		rect = state.GetValue < ZLRect >( 2, rect );
+		self->SetViewRect ( rect );
+	}
 	return 0;
 }
-
-//int MOAIDraw::_setViewRect ( lua_State* L ) {
-//	MOAI_LUA_SETUP_SINGLE ( MOAIDraw, "" )
-//
-//	// TODO: fix this code duplication from _setScissorRect
-//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-//	
-//	if ( state.IsType ( 1, LUA_TUSERDATA )) {
-//		MOAIViewport* viewport = state.GetLuaObject < MOAIViewport >( 1, true );
-//		if ( viewport ) {
-//			gfxMgr.SetViewRect ( *viewport );
-//		}
-//	}
-//	else {
-//		ZLRect rect ( 0.0, 0.0, ( float )gfxMgr.GetBufferWidth (), ( float )gfxMgr.GetBufferHeight ());
-//		rect = state.GetValue < ZLRect >( 1, rect );
-//		gfxMgr.SetViewRect ( rect );
-//	}
-//	return 0;
-//}
 
 //================================================================//
 // MOAIAbstractDrawingAPIObject
@@ -812,6 +800,7 @@ void MOAIAbstractDrawingAPIObject::_RegisterLuaFuncs ( RTTIVisitorHistory& histo
 		{ "call",						_call },
 		{ "callFromShader",				_callFromShader },
 		{ "clearSurface",				_clearSurface },
+		{ "drawAnimCurve",				_drawAnimCurve },
 		{ "drawBezierCurve",			_drawBezierCurve },
 		{ "drawBoxOutline",				_drawBoxOutline },
 		{ "drawCircle",					_drawCircle },
@@ -848,6 +837,7 @@ void MOAIAbstractDrawingAPIObject::_RegisterLuaFuncs ( RTTIVisitorHistory& histo
 		{ "setVertexArray",				_setVertexArray },
 		{ "setVertexBuffer",			_setVertexBuffer },
 		{ "setVertexFormat",			_setVertexFormat },
+		{ "setViewProj",				_setViewProj },
 		{ "setViewRect",				_setViewRect },
 		{ "strokeRoundedRect",			_strokeRoundedRect },
 		{ NULL, NULL }

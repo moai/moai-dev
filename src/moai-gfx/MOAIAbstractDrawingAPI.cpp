@@ -2,8 +2,10 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-gfx/MOAIAbstractChildTransform.h>
 #include <moai-gfx/MOAIAbstractDrawingAPI.h>
 #include <moai-gfx/MOAIBlendMode.h>
+#include <moai-gfx/MOAICamera.h>
 #include <moai-gfx/MOAIFrameBuffer.h>
 #include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIIndexBuffer.h>
@@ -12,6 +14,7 @@
 #include <moai-gfx/MOAIVertexArray.h>
 #include <moai-gfx/MOAIVertexBuffer.h>
 #include <moai-gfx/MOAIVertexFormat.h>
+#include <moai-gfx/MOAIViewport.h>
 
 //================================================================//
 // MOAIAbstractDrawShapeVertexLineStripWriter2D
@@ -98,6 +101,16 @@ void MOAIAbstractDrawingAPI::CallFromShader() {
 void MOAIAbstractDrawingAPI::ClearSurface () {
 
 	this->SubmitCommand ( MOAIDrawingCmdEnum::CLEAR_SURFACE );
+}
+
+//----------------------------------------------------------------//
+void MOAIAbstractDrawingAPI::DrawAnimCurve ( MOAIAnimCurve& curve, u32 resolution ) {
+
+	MOAIDrawingParam::DrawAnimCurve param;
+	param.mAnimCurve = &curve;
+	param.mResolution = resolution;
+	this->SubmitCommand < MOAIDrawingParam::DrawAnimCurve >( MOAIDrawingCmdEnum::DRAW_ANIM_CURVE, param );
+	this->RetainObject ( &curve );
 }
 
 //----------------------------------------------------------------//
@@ -677,6 +690,16 @@ void MOAIAbstractDrawingAPI::SetMatrix ( u32 matrixID, const ZLMatrix4x4& mtx ) 
 }
 
 //----------------------------------------------------------------//
+void MOAIAbstractDrawingAPI::SetMatrixFromTransform ( u32 matrixID, MOAIAbstractChildTransform& transform ) {
+
+	MOAIDrawingParam::SetMatrixFromTransform param;
+	param.mMatrixID = matrixID;
+	param.mTransform = &transform;
+	this->SubmitCommand < MOAIDrawingParam::SetMatrixFromTransform >( MOAIDrawingCmdEnum::SET_MATRIX_FROM_TRANSFORM, param );
+	this->RetainObject ( &transform );
+}
+
+//----------------------------------------------------------------//
 void MOAIAbstractDrawingAPI::SetPenColor ( u32 color ) {
 
 	this->SubmitCommand < u32 >( MOAIDrawingCmdEnum::SET_PEN_COLOR, color );
@@ -743,9 +766,27 @@ void MOAIAbstractDrawingAPI::SetVertexFormat ( MOAIVertexFormat* vertexFormat ) 
 }
 
 //----------------------------------------------------------------//
+void MOAIAbstractDrawingAPI::SetViewProj ( MOAIViewport* viewport, MOAICamera* camera ) {
+
+	MOAIDrawingParam::SetViewProj param;
+	param.mViewport = viewport;
+	param.mCamera = camera;
+	this->SubmitCommand < MOAIDrawingParam::SetViewProj >( MOAIDrawingCmdEnum::SET_VIEW_PROJ, param );
+	this->RetainObject ( viewport );
+	this->RetainObject ( camera );
+}
+
+//----------------------------------------------------------------//
 void MOAIAbstractDrawingAPI::SetViewRect ( const ZLRect& rect ) {
 
 	this->SubmitCommand < ZLRect >( MOAIDrawingCmdEnum::SET_VIEW_RECT, rect );
+}
+
+//----------------------------------------------------------------//
+void MOAIAbstractDrawingAPI::SetViewRect ( MOAIViewport* viewport ) {
+	
+	this->SubmitCommand < MOAIViewport* >( MOAIDrawingCmdEnum::SET_VIEW_RECT_FROM_VIEWPORT, viewport );
+	this->RetainObject ( viewport );
 }
 
 //----------------------------------------------------------------//

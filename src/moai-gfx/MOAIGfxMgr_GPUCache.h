@@ -17,6 +17,7 @@ class MOAIIndexBuffer;
 class MOAIVertexArray;
 class MOAIVertexBuffer;
 class MOAIVertexFormat;
+class MOAIViewport;
 
 //================================================================//
 // MOAIGfxMgr_GPUCache
@@ -124,6 +125,7 @@ public:
 	void					SetVertexFormat				( MOAIVertexFormatPresetEnum preset );
 	void					SetViewRect					();
 	void					SetViewRect					( ZLRect rect );
+	void					SetViewRect					( MOAIViewport* viewport );
 	void					UnbindAll					();
 };
 
