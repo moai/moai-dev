@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-gfx-gl/MOAIGfxMgrGL.h>
+#include <moai-gfx-gl/MOAIGfxScriptRetainedGL.h>
 #include <moai-gfx-gl/MOAIShaderGL.h>
 #include <moai-gfx-gl/MOAIShaderMgrGL.h>
 #include <moai-gfx-gl/MOAIShaderProgramGL.h>
@@ -101,7 +102,7 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					program->Load ( _deck2DShaderVSH, _deck2DShaderFSH );
 					break;
 				
-				case MOAIShaderPresetEnum::DECK2D_SNAPPING_SHADER:
+				case MOAIShaderPresetEnum::DECK2D_SNAPPING_SHADER: {
 					
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
@@ -111,12 +112,14 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					program->DeclareUniform ( 0, "xSnap", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT );
 					program->DeclareUniform ( 1, "ySnap", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT );
 					
-					program->SetUniform ( MOAIGfxMgrGL::VIEW_HALF_WIDTH, 0, 0 );
-					program->SetUniform ( MOAIGfxMgrGL::VIEW_HALF_HEIGHT, 1, 0 );
-					program->AffirmGfxScript ().Optimize ();
+					MOAIGfxScriptRetainedGL& gfxScript = program->AffirmGfxScriptWithType < MOAIGfxScriptRetainedGL >();
+					gfxScript.LoadShaderUniformGL ( MOAIGfxMgrGL::VIEW_HALF_WIDTH, 0, 0 );
+					gfxScript.LoadShaderUniformGL ( MOAIGfxMgrGL::VIEW_HALF_HEIGHT, 1, 0 );
+					gfxScript.Optimize ();
 					
 					program->Load ( _deck2DSnappingShaderVSH, _deck2DSnappingShaderFSH );
 					break;
+				}
 				
 				case MOAIShaderPresetEnum::FONT_SHADER:
 					
@@ -127,7 +130,7 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					program->Load ( _fontShaderVSH, _fontShaderFSH );
 					break;
 				
-				case MOAIShaderPresetEnum::FONT_SNAPPING_SHADER:
+				case MOAIShaderPresetEnum::FONT_SNAPPING_SHADER: {
 					
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
@@ -137,12 +140,14 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					program->DeclareUniform ( 0, "xSnap", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT );
 					program->DeclareUniform ( 1, "ySnap", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT );
 					
-					program->SetUniform ( MOAIGfxMgrGL::VIEW_HALF_WIDTH, 0, 0 );
-					program->SetUniform ( MOAIGfxMgrGL::VIEW_HALF_HEIGHT, 1, 0 );
-					program->AffirmGfxScript ().Optimize ();
+					MOAIGfxScriptRetainedGL& gfxScript = program->AffirmGfxScriptWithType < MOAIGfxScriptRetainedGL >();
+					gfxScript.LoadShaderUniformGL ( MOAIGfxMgrGL::VIEW_HALF_WIDTH, 0, 0 );
+					gfxScript.LoadShaderUniformGL ( MOAIGfxMgrGL::VIEW_HALF_HEIGHT, 1, 0 );
+					gfxScript.Optimize ();
 					
 					program->Load ( _fontSnappingShaderVSH, _fontSnappingShaderFSH );
 					break;
+				}
 				
 				case MOAIShaderPresetEnum::LINE_SHADER:
 					
@@ -151,7 +156,7 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					program->Load ( _lineShaderVSH, _lineShaderFSH );
 					break;
 				
-				case MOAIShaderPresetEnum::LINE_SHADER_3D:
+				case MOAIShaderPresetEnum::LINE_SHADER_3D: {
 					
 					program->SetVertexAttribute ( 0, "position" );
 					program->SetVertexAttribute ( 1, "color" );
@@ -160,15 +165,17 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					program->DeclareUniform ( 0, "transform", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT, MOAIUniformDescriptor::UNIFORM_WIDTH_MATRIX_4X4 );
 					program->DeclareUniform ( 1, "ucolor", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT, MOAIUniformDescriptor::UNIFORM_WIDTH_VEC_4 );
 					
-					program->SetUniform ( MOAIGfxMgrGL::MODEL_TO_CLIP_MTX, 0, 0 );
-					program->SetUniform ( MOAIGfxMgrGL::PEN_COLOR, 1, 0 );
-					program->AffirmGfxScript ().Optimize ();
+					MOAIGfxScriptRetainedGL& gfxScript = program->AffirmGfxScriptWithType < MOAIGfxScriptRetainedGL >();
+					gfxScript.LoadShaderUniformGL ( MOAIGfxMgrGL::MODEL_TO_CLIP_MTX, 0, 0 );
+					gfxScript.LoadShaderUniformGL ( MOAIGfxMgrGL::PEN_COLOR, 1, 0 );
+					gfxScript.Optimize ();
 					
 					program->Load ( _lineShader3DVSH, _lineShader3DFSH );
 					
 					break;
+				}
 
-				case MOAIShaderPresetEnum::MESH_SHADER:
+				case MOAIShaderPresetEnum::MESH_SHADER: {
 
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_POSITION, "position" );
 					program->SetVertexAttribute ( MOAIVertexFormatMgr::XYZWUVC_TEXCOORD, "uv" );
@@ -178,12 +185,15 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					program->DeclareUniform ( 0, "transform", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT, MOAIUniformDescriptor::UNIFORM_WIDTH_MATRIX_4X4 );
 					program->DeclareUniform ( 1, "ucolor", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT, MOAIUniformDescriptor::UNIFORM_WIDTH_VEC_4 );
 					
-					program->SetUniform ( MOAIGfxMgrGL::MODEL_TO_CLIP_MTX, 0, 0 );
-					program->SetUniform ( MOAIGfxMgrGL::PEN_COLOR, 1, 0 );
+					MOAIGfxScriptRetainedGL& gfxScript = program->AffirmGfxScriptWithType < MOAIGfxScriptRetainedGL >();
+					gfxScript.LoadShaderUniformGL ( MOAIGfxMgrGL::MODEL_TO_CLIP_MTX, 0, 0 );
+					gfxScript.LoadShaderUniformGL ( MOAIGfxMgrGL::PEN_COLOR, 1, 0 );
+					gfxScript.Optimize ();
 					
 					program->Load ( _meshShaderVSH, _meshShaderFSH );
 					
 					break;
+				}
 			}
 			
 			this->mPrograms [ shaderID ] = program;

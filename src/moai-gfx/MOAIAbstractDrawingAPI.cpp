@@ -735,16 +735,6 @@ void MOAIAbstractDrawingAPI::SetTexture ( MOAITexture* texture, ZLIndex textureU
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractDrawingAPI::SetUniform ( ZLIndex globalID, ZLIndex uniformID, ZLIndex index ) {
-
-	MOAIDrawingParam::SetUniform param;
-	param.mPipelineGlobalID = globalID;
-	param.mTargetUniformID = uniformID;
-	param.mTargetUniformIndex = index;
-	this->SubmitCommand < MOAIDrawingParam::SetUniform >( MOAIDrawingCmdEnum::SET_UNIFORM, param );
-}
-
-//----------------------------------------------------------------//
 void MOAIAbstractDrawingAPI::SetVertexArray ( MOAIVertexArray* vertexArray ) {
 
 	this->SubmitCommand < MOAIVertexArray* >( MOAIDrawingCmdEnum::SET_VERTEX_ARRAY, vertexArray );

@@ -18,7 +18,16 @@ class MOAIViewport;
 // MOAIDrawingCmdEnum
 //================================================================//
 struct MOAIDrawingCmdEnum {
-	enum _ {
+
+	typedef int _; // is this too gross?
+
+	enum {
+	
+		// keep these first
+		CALL						= ( _ )0,
+		CALL_FROM_SHADER,
+		TOTAL_CALL_COMMANDS,
+	
 		NONE,
 		
 		CLEAR_SURFACE,
@@ -45,7 +54,6 @@ struct MOAIDrawingCmdEnum {
 		SET_SCISSOR_RECT,
 		SET_SHADER,
 		SET_TEXTURE,
-		SET_UNIFORM,
 		SET_VERTEX_ARRAY,
 		SET_VERTEX_BUFFER,
 		SET_VERTEX_FORMAT,
@@ -53,9 +61,7 @@ struct MOAIDrawingCmdEnum {
 		SET_VIEW_RECT,
 		SET_VIEW_RECT_FROM_VIEWPORT,
 		
-		// keep these last
-		CALL, // keep this first of call commands
-		CALL_FROM_SHADER,
+		TOTAL_BASE_COMMANDS,
 	};
 };
 
@@ -154,7 +160,6 @@ struct MOAIDrawingCommand {
 	static void 	ExecuteDrawLine 		( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawLine& param );
 	static void 	ExecuteDrawPoint 		( MOAIGfxMgr& gfxMgr, const ZLVec3D& param );
 	static void 	ExecuteDrawTriangle		( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawTriangle& param );
-	static void		ExecuteSetUniform		( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::SetUniform& param );
 };
 
 #endif

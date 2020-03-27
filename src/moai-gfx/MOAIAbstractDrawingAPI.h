@@ -100,7 +100,6 @@ public:
 	void				SetScissorRect				( const ZLRect& rect );
 	void				SetShader					( MOAIShader* shader );
 	void				SetTexture					( MOAITexture* texture, ZLIndex textureUnit );
-	void				SetUniform					( ZLIndex globalID, ZLIndex uniformID, ZLIndex index );
 	void				SetVertexArray				( MOAIVertexArray* vertexArray );
 	void				SetVertexBuffer				( MOAIVertexBuffer* vertexBuffer );
 	void				SetVertexFormat				( MOAIVertexFormat* vertexFormat );

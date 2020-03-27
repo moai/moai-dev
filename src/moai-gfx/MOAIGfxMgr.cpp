@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include <moai-gfx/MOAIGfxMgr.h>
+#include <moai-gfx/MOAIGfxScriptRetained.h>
 #include <moai-gfx/MOAIImageTexture.h>
 #include <moai-gfx/MOAITexture2D.h>
 #include <moai-gfx/MOAIVertexFormatMgr.h>
@@ -41,6 +42,12 @@ MOAIVertexFormat* MOAIGfxMgr::AffirmVertexFormat ( MOAILuaState& state, int idx 
 			return this->GetVertexFormatPreset (( MOAIVertexFormatPresetEnum )state.GetValue < u32 >( idx, ( u32 )MOAIVertexFormatPresetEnum::XYZWC ));
 	}
 	return NULL;
+}
+
+//----------------------------------------------------------------//
+MOAIGfxScriptRetained* MOAIGfxMgr::CreateGfxScriptRetained () const {
+
+	return this->MOAIGfxMgr_CreateGfxScriptRetained ();
 }
 
 //----------------------------------------------------------------//

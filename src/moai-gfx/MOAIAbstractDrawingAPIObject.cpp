@@ -625,18 +625,6 @@ int MOAIAbstractDrawingAPIObject::_setTexture ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIAbstractDrawingAPIObject::_setUniform ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractDrawingAPIObject, "U" )
-	
-	ZLIndex globalID		= state.GetValue < ZLIndex >( 3, 0 );
-	ZLIndex uniformID		= state.GetValue < ZLIndex >( 3, 0 );
-	ZLIndex index			= state.GetValue < ZLIndex >( 3, 0 );
-	
-	self->SetUniform ( globalID, uniformID, index );
-	return 0;
-}
-
-//----------------------------------------------------------------//
 int MOAIAbstractDrawingAPIObject::_setVertexArray ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractDrawingAPIObject, "U" )
 	
@@ -793,6 +781,7 @@ void MOAIAbstractDrawingAPIObject::_RegisterLuaClass ( RTTIVisitorHistory& histo
 
 //----------------------------------------------------------------//
 void MOAIAbstractDrawingAPIObject::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	printf ( "MOAIAbstractDrawingAPIObject::_RegisterLuaFuncs\n" );
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
@@ -833,7 +822,6 @@ void MOAIAbstractDrawingAPIObject::_RegisterLuaFuncs ( RTTIVisitorHistory& histo
 		{ "setScissorRect",				_setScissorRect },
 		{ "setShader",					_setShader },
 		{ "setTexture",					_setTexture },
-		{ "setUniform",					_setUniform },
 		{ "setVertexArray",				_setVertexArray },
 		{ "setVertexBuffer",			_setVertexBuffer },
 		{ "setVertexFormat",			_setVertexFormat },

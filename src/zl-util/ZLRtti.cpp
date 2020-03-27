@@ -76,7 +76,7 @@ void RTTIRecord::GatherSupers ( RTTIRecord& record, void* ptr, ptrdiff_t offset,
 	
 		// bail if already inherited
 		for ( ZLIndex i = 0; i < this->mSupers.size (); ++i ) {
-			if ( this->mSupers [ i ].mRecord == &record ) {
+			if ( this->mSupers [ i ].mRecord->mTypeID == record.mTypeID ) {
 				return; // TODO: warn about this
 			}
 		}

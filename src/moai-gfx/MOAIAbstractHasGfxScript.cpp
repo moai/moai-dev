@@ -95,19 +95,6 @@ int MOAIAbstractHasGfxScript::_setTexture ( lua_State* L ) {
 	return 0;
 }
 
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIAbstractHasGfxScript::_setUniform ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractHasGfxScript, "U" )
-
-	ZLIndex globalID		= state.GetValue < ZLIndex >( 3, 0 );
-	ZLIndex uniformID		= state.GetValue < ZLIndex >( 3, 0 );
-	ZLIndex index			= state.GetValue < ZLIndex >( 3, 0 );
-	
-	self->SetUniform ( globalID, uniformID, index );
-	return 0;
-}
-
 //================================================================//
 // MOAIAbstractHasGfxScript
 //================================================================//
@@ -177,12 +164,6 @@ void MOAIAbstractHasGfxScript::SetShader ( MOAIShader* shader ) {
 void MOAIAbstractHasGfxScript::SetTexture ( MOAITexture* texture, ZLIndex textureUnit ) {
 
 	this->AffirmGfxScript ().SetTexture ( texture, textureUnit );
-}
-
-//----------------------------------------------------------------//
-void MOAIAbstractHasGfxScript::SetUniform ( ZLIndex globalID, ZLIndex uniformID, ZLIndex index ) {
-
-	this->AffirmGfxScript ().SetUniform ( globalID, uniformID, index );
 }
 
 //================================================================//

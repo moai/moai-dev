@@ -22,14 +22,14 @@ void MOAIGfxScriptRetained::ExecuteBytecode ( MOAIAbstractDrawingAPICallback* ca
 		const MOAIDrawingCommand& command = *( const MOAIDrawingCommand* )bytecode;
 		bytecode = ( const void* )(( uintptr )bytecode + sizeof ( MOAIDrawingCommand ));
 		
-		MOAIDrawingCommand::Execute ( callable, command.mType, bytecode );
+		this->MOAIGfxScriptRetained_Execute ( callable, command.mType, bytecode );
 		bytecode = ( const void* )(( uintptr )bytecode + sizeof ( command.mParamSize ));
 		
-		didCall = didCall || ( command.mType >= MOAIDrawingCmdEnum::CALL );
+		didCall = didCall || ( command.mType < MOAIDrawingCmdEnum::TOTAL_CALL_COMMANDS );
 	}
 
 	if ( !didCall ) {
-		MOAIDrawingCommand::Execute ( callable, callCommand, 0 );
+		this->MOAIGfxScriptRetained_Execute ( callable, callCommand, 0 );
 	}
 }
 
@@ -44,13 +44,13 @@ void MOAIGfxScriptRetained::ExecuteMemStream ( MOAIAbstractDrawingAPICallback* c
 		MOAIDrawingCommand command = this->mCommandStream.Read < MOAIDrawingCommand >();
 		void* buffer = command.mParamSize > 0 ? alloca ( command.mParamSize ) : NULL;
 		this->mCommandStream.ReadBytes ( buffer, command.mParamSize );
-		MOAIDrawingCommand::Execute ( callable, command.mType, buffer );
+		this->MOAIGfxScriptRetained_Execute ( callable, command.mType, buffer );
 		
-		didCall = didCall || ( command.mType >= MOAIDrawingCmdEnum::CALL );
+		didCall = didCall || ( command.mType < MOAIDrawingCmdEnum::TOTAL_CALL_COMMANDS );
 	}
 	
 	if ( callable && ( !didCall )) {
-		MOAIDrawingCommand::Execute ( callable, callCommand, 0 );
+		this->MOAIGfxScriptRetained_Execute ( callable, callCommand, 0 );
 	}
 }
 
@@ -64,8 +64,8 @@ bool MOAIGfxScriptRetained::HasContent () {
 MOAIGfxScriptRetained::MOAIGfxScriptRetained () {
 
 	RTTI_BEGIN ( MOAIGfxScriptRetained )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIGfxScriptRetained >)
 		RTTI_EXTEND ( MOAIAbstractGfxScript )
+		RTTI_EXTEND ( MOAIAbstractDrawingAPIObject )
 	RTTI_END
 
 	this->mCommandStream.SetChunkSize ( 256 );
@@ -128,4 +128,10 @@ void MOAIGfxScriptRetained::MOAIAbstractGfxScript_RunScript ( MOAIAbstractDrawin
 	else {
 		this->ExecuteMemStream ( callable, callCommand );
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxScriptRetained::MOAIGfxScriptRetained_Execute ( MOAIAbstractDrawingAPICallback* callable, MOAIDrawingCmdEnum::_ cmd, const void* rawParam ) const {
+
+	MOAIDrawingCommand::Execute ( callable, cmd, rawParam );
 }

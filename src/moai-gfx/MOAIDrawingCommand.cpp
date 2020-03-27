@@ -147,12 +147,6 @@ void MOAIDrawingCommand::Execute ( MOAIAbstractDrawingAPICallback* callback, MOA
 			break;
 		}
 		
-		case MOAIDrawingCmdEnum::SET_UNIFORM: {
-			const MOAIDrawingParam::SetUniform* param = ( const MOAIDrawingParam::SetUniform* )rawParam;
-			MOAIDrawingCommand::ExecuteSetUniform ( gfxMgr, *param );
-			break;
-		}
-		
 		case MOAIDrawingCmdEnum::SET_VERTEX_ARRAY:
 			gfxMgr.SetVertexArray ( *( MOAIVertexArray** )rawParam );
 			break;
@@ -419,51 +413,6 @@ void MOAIDrawingCommand::ExecuteDrawTriangle ( MOAIGfxMgr& gfxMgr, const MOAIDra
 		gfxMgr.WritePenColor4b ();
 
 	gfxMgr.EndPrim ();
-}
-
-//----------------------------------------------------------------//
-void MOAIDrawingCommand::ExecuteSetUniform ( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::SetUniform& param ) {
-
-	MOAIShader* shader = gfxMgr.GetShader ();
-	if ( !shader ) return;
-	
-	MOAIUniformHandle uniform = shader->GetUniformHandle ( param.mTargetUniformID, param.mTargetUniformIndex );
-	if ( !uniform.IsValid ()) return;
-
-	if ( param.mPipelineGlobalID < MOAIGfxMgr::TOTAL_MATRICES ) {
-
-		uniform.SetValue ( gfxMgr.GetMtx ( param.mPipelineGlobalID ));
-	}
-	else {
-
-		switch (( ZLSize )param.mPipelineGlobalID ) {
-
-			case MOAIGfxMgr::PEN_COLOR:
-
-				uniform.SetValue ( gfxMgr.GetFinalColor ());
-				break;
-
-			case MOAIGfxMgr::VIEW_HALF_HEIGHT:
-
-				uniform.SetValue ( gfxMgr.GetViewRect ().Height () * 0.5f );
-				break;
-
-			case MOAIGfxMgr::VIEW_HALF_WIDTH: {
-
-				uniform.SetValue ( gfxMgr.GetViewRect ().Width () * 0.5f );
-				break;
-			}
-			case MOAIGfxMgr::VIEW_HEIGHT:
-
-				uniform.SetValue ( gfxMgr.GetViewRect ().Height ());
-				break;
-
-			case MOAIGfxMgr::VIEW_WIDTH:
-
-				uniform.SetValue ( gfxMgr.GetViewRect ().Width ());
-				break;
-		}
-	}
 }
 
 ////----------------------------------------------------------------//

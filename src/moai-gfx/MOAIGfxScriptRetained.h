@@ -28,16 +28,15 @@ protected:
 	//----------------------------------------------------------------//
 	void 				ExecuteBytecode				( MOAIAbstractDrawingAPICallback* callable, MOAIDrawingCmdEnum::_ callCommand );
 	void				ExecuteMemStream			( MOAIAbstractDrawingAPICallback* callable, MOAIDrawingCmdEnum::_ callCommand );
-	
+		
 	//----------------------------------------------------------------//
 //	void				MOAIAbstractDrawingAPI_Call				();
 	void				MOAIAbstractDrawingAPI_RetainObject		( ZLRefCountedObject* object );
 	void				MOAIAbstractDrawingAPI_SubmitCommand	( MOAIDrawingCmdEnum::_ cmd, const void* param, ZLSize size );
 	void				MOAIAbstractGfxScript_RunScript			( MOAIAbstractDrawingAPICallback* callable, MOAIDrawingCmdEnum::_ callCommand );
+	virtual void		MOAIGfxScriptRetained_Execute			( MOAIAbstractDrawingAPICallback* callable, MOAIDrawingCmdEnum::_ cmd, const void* rawParam ) const;
 
 public:
-
-	DECL_LUA_FACTORY ( MOAIGfxScriptRetained )
 
 	//----------------------------------------------------------------//
 	bool				HasContent					();

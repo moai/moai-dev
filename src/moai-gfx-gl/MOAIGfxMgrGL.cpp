@@ -5,6 +5,7 @@
 
 #include <moai-gfx-gl/MOAIFrameBufferGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL.h>
+#include <moai-gfx-gl/MOAIGfxScriptRetainedGL.h>
 #include <moai-gfx-gl/MOAIImageTextureGL.h>
 #include <moai-gfx-gl/MOAIIndexBufferGL.h>
 #include <moai-gfx-gl/MOAIShaderGL.h>
@@ -310,6 +311,12 @@ MOAITexture* MOAIGfxMgrGL::MOAIGfxMgr_AffirmTexture ( MOAILuaState& state, int i
 		texture = 0;
 	}
 	return texture;
+}
+
+//----------------------------------------------------------------//
+MOAIGfxScriptRetained* MOAIGfxMgrGL::MOAIGfxMgr_CreateGfxScriptRetained () const {
+
+	return new MOAIGfxScriptRetainedGL ();
 }
 
 //----------------------------------------------------------------//

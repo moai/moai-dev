@@ -55,7 +55,20 @@ public:
 	void						SetGfxScript				( MOAIAbstractGfxScript* gfxScript );
 	void						SetShader					( MOAIShader* shader );
 	void						SetTexture					( MOAITexture* texture, ZLIndex textureUnit );
-	void						SetUniform					( ZLIndex globalID, ZLIndex uniformID, ZLIndex index );
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	TYPE& AffirmGfxScriptWithType () {
+	
+		MOAIAbstractGfxScript* gfxScript = this->GetGfxScript ();
+		TYPE* gfxScriptWithType = MOAICast < TYPE >( gfxScript );
+		if ( !gfxScriptWithType ) {
+			gfxScriptWithType = new TYPE ();
+			this->SetGfxScript ( gfxScriptWithType );
+		}
+		assert ( gfxScriptWithType );
+		return *gfxScriptWithType;
+	}
 };
 
 #endif

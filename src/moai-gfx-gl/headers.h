@@ -16,6 +16,7 @@
 #include <moai-gfx-gl/MOAIGfxMgrGL_VertexCacheGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGLComponents.h>
 #include <moai-gfx-gl/MOAIGfxResourceGL.h>
+#include <moai-gfx-gl/MOAIGfxScriptRetainedGL.h>
 #include <moai-gfx-gl/MOAIGfxStateGPUCacheFrameGL.h>
 #include <moai-gfx-gl/MOAIImageTextureGL.h>
 #include <moai-gfx-gl/MOAIIndexBufferGL.h>

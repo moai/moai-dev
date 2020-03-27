@@ -56,7 +56,6 @@ protected:
 	static int			_setScissorRect				( lua_State* L );
 	static int			_setShader					( lua_State* L );
 	static int			_setTexture					( lua_State* L );
- 	static int			_setUniform					( lua_State* L );
 	static int			_setVertexArray				( lua_State* L );
 	static int			_setVertexBuffer			( lua_State* L );
 	static int			_setVertexFormat			( lua_State* L );
