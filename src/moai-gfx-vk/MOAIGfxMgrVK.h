@@ -107,6 +107,7 @@ protected:
 	//----------------------------------------------------------------//
 	MOAIShader*						MOAIGfxMgr_AffirmShader						( MOAILuaState& state, int idx ) const;
 	MOAITexture*					MOAIGfxMgr_AffirmTexture					( MOAILuaState& state, int idx ) const;
+	MOAIGfxScriptRetained*			MOAIGfxMgr_CreateGfxScriptRetained			() const;
 	MOAIImageTexture*				MOAIGfxMgr_CreateImageTexture				() const;
 	MOAIIndexBuffer*				MOAIGfxMgr_CreateIndexBuffer				() const;
 	MOAITexture2D*					MOAIGfxMgr_CreateTexture2D					() const;

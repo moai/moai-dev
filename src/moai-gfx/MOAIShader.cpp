@@ -9,12 +9,6 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIUniformHandle MOAIShader::GetUniformHandle ( ZLIndex uniformID, ZLIndex index ) {
-
-	return this->MOAIShader_GetUniformHandle ( uniformID, index );
-}
-
-//----------------------------------------------------------------//
 bool MOAIShader::HasProgram () const {
 
 	return true;

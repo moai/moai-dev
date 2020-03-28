@@ -57,8 +57,6 @@ private:
 
 public:
 
-	DECL_LUA_FACTORY ( MOAIGfxMgrOneTriVK )
-
 	//----------------------------------------------------------------//
 					MOAIGfxMgrOneTriVK			();
 					~MOAIGfxMgrOneTriVK			();

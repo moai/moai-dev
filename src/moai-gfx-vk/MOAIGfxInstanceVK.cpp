@@ -40,6 +40,7 @@ VkResult MOAIGfxInstanceVK::GetPhysicalDeviceSurfaceSupportKHR ( VkPhysicalDevic
 //----------------------------------------------------------------//
 void MOAIGfxInstanceVK::Init ( cc8* name, uint32_t apiVersion, cc8** hostInstanceExtensions, bool enableValidation ) {
 
+	printf ( "VULKAN_SDK: %s\n", getenv ( "VULKAN_SDK" ));
 	printf ( "VK_LAYER_PATH: %s\n", getenv ( "VK_LAYER_PATH" ));
 	printf ( "VK_ICD_FILENAMES: %s\n", getenv ( "VK_ICD_FILENAMES" ));
 
@@ -104,6 +105,10 @@ MOAIGfxInstanceVK::MOAIGfxInstanceVK () :
 	mGetPhysicalDeviceSurfaceSupportKHR ( 0 ),
 	mInstance ( VK_NULL_HANDLE ),
 	mEnableValidation ( false ) {
+	
+	setenv ( "VULKAN_SDK", VULKAN_SDK, 0 );
+	setenv ( "VK_ICD_FILENAMES", VK_ICD_FILENAMES, 0 );
+	setenv ( "VK_LAYER_PATH", VK_LAYER_PATH, 0 );
 }
 
 //----------------------------------------------------------------//

@@ -7,6 +7,7 @@
 #include <moai-gfx-vk/MOAIFrameBufferVK.h>
 #include <moai-gfx-vk/MOAIPhysicalDeviceVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
+#include <moai-gfx-vk/MOAIGfxScriptRetainedVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAIImageTextureVK.h>
 #include <moai-gfx-vk/MOAIIndexBufferVK.h>
@@ -508,6 +509,12 @@ MOAITexture* MOAIGfxMgrVK::MOAIGfxMgr_AffirmTexture ( MOAILuaState& state, int i
 		texture = NULL;
 	}
 	return texture;
+}
+
+//----------------------------------------------------------------//
+MOAIGfxScriptRetained* MOAIGfxMgrVK::MOAIGfxMgr_CreateGfxScriptRetained () const {
+
+	return new MOAIGfxScriptRetainedVK ();
 }
 
 //----------------------------------------------------------------//

@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-gfx-gl/MOAIDrawingCommandGL.h>
+#include <moai-gfx-gl/MOAIShaderGL.h>
 
 //================================================================//
 // MOAIDrawingCommand
@@ -31,7 +32,7 @@ void MOAIDrawingCommandGL::Execute ( MOAIAbstractDrawingAPICallback* callback, M
 //----------------------------------------------------------------//
 void MOAIDrawingCommandGL::ExecuteSetUniformGL ( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::SetUniform& param ) {
 
-	MOAIShader* shader = gfxMgr.GetShader ();
+	MOAIShaderGL* shader = MOAICast < MOAIShaderGL >( gfxMgr.GetShader ());
 	if ( !shader ) return;
 	
 	MOAIUniformHandle uniform = shader->GetUniformHandle ( param.mTargetUniformID, param.mTargetUniformIndex );

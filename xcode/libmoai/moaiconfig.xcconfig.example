@@ -1,0 +1,4 @@
+
+VULKAN_SDK="/vulkansdk-macos-1.1.92.1"
+VK_ICD_FILENAMES="/vulkansdk-macos-1.1.92.1/macOS/etc/vulkan/icd.d/MoltenVK_icd.json"
+VK_LAYER_PATH="/vulkansdk-macos-1.1.92.1/macOS/etc/vulkan/explicit_layer.d"

@@ -52,8 +52,8 @@ private:
 		float viewMatrix [ 16 ];
 	} mMatrixUniforms;
 
-	ZLStrongPtr < MOAIPipelineInputBodySchemaVK >			mPipelineLayout;
-	ZLStrongPtr < MOAIPipelineInputChunkVK >	mDescriptorSet;
+	ZLStrongPtr < MOAIPipelineInputBodySchemaVK >	mPipelineLayout;
+	ZLStrongPtr < MOAIPipelineInputChunkVK >		mDescriptorSet;
 	VkPipeline										mPipeline;
 
 	//----------------------------------------------------------------//
@@ -67,8 +67,6 @@ private:
 	void			MOAIDrawable_DrawDebug		( int subPrimID );
 
 public:
-
-	DECL_LUA_FACTORY ( MOAIOneTriVK )
 
 	//----------------------------------------------------------------//
 					MOAIOneTriVK				();

@@ -3589,6 +3589,14 @@
 		CD9182C6242E05220048A646 /* MOAIDrawingCommandGL.h in Headers */ = {isa = PBXBuildFile; fileRef = CD9182C0242E05220048A646 /* MOAIDrawingCommandGL.h */; };
 		CD9182CA242E0DAB0048A646 /* MOAIGfxScriptRetainedGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD9182C8242E0DAB0048A646 /* MOAIGfxScriptRetainedGL.cpp */; };
 		CD9182CB242E0DAB0048A646 /* MOAIGfxScriptRetainedGL.h in Headers */ = {isa = PBXBuildFile; fileRef = CD9182C9242E0DAB0048A646 /* MOAIGfxScriptRetainedGL.h */; };
+		CD9182D3242F08C60048A646 /* MOAIAbstractDrawingAPIObjectVK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD9182CD242F08C60048A646 /* MOAIAbstractDrawingAPIObjectVK.cpp */; };
+		CD9182D4242F08C60048A646 /* MOAIAbstractDrawingAPIObjectVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CD9182CE242F08C60048A646 /* MOAIAbstractDrawingAPIObjectVK.h */; };
+		CD9182D5242F08C60048A646 /* MOAIAbstractDrawingAPIVK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD9182CF242F08C60048A646 /* MOAIAbstractDrawingAPIVK.cpp */; };
+		CD9182D6242F08C60048A646 /* MOAIAbstractDrawingAPIVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CD9182D0242F08C60048A646 /* MOAIAbstractDrawingAPIVK.h */; };
+		CD9182D7242F08C60048A646 /* MOAIDrawingCommandVK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD9182D1242F08C60048A646 /* MOAIDrawingCommandVK.cpp */; };
+		CD9182D8242F08C60048A646 /* MOAIDrawingCommandVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CD9182D2242F08C60048A646 /* MOAIDrawingCommandVK.h */; };
+		CD9182DC242F08EF0048A646 /* MOAIGfxScriptRetainedVK.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD9182DA242F08EF0048A646 /* MOAIGfxScriptRetainedVK.cpp */; };
+		CD9182DD242F08EF0048A646 /* MOAIGfxScriptRetainedVK.h in Headers */ = {isa = PBXBuildFile; fileRef = CD9182DB242F08EF0048A646 /* MOAIGfxScriptRetainedVK.h */; };
 		CD9238871E2609A200D5048D /* MOAISpriteDeck2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6F67173AD0CA00DFE837 /* MOAISpriteDeck2D.cpp */; };
 		CD9238881E2609A200D5048D /* MOAISpriteDeck2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6F68173AD0CA00DFE837 /* MOAISpriteDeck2D.h */; };
 		CD9238891E2609A900D5048D /* MOAISpriteDeck2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6F67173AD0CA00DFE837 /* MOAISpriteDeck2D.cpp */; };
@@ -7308,6 +7316,15 @@
 		CD9182C0242E05220048A646 /* MOAIDrawingCommandGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIDrawingCommandGL.h; path = "moai-gfx-gl/MOAIDrawingCommandGL.h"; sourceTree = "<group>"; };
 		CD9182C8242E0DAB0048A646 /* MOAIGfxScriptRetainedGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIGfxScriptRetainedGL.cpp; path = "moai-gfx-gl/MOAIGfxScriptRetainedGL.cpp"; sourceTree = "<group>"; };
 		CD9182C9242E0DAB0048A646 /* MOAIGfxScriptRetainedGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxScriptRetainedGL.h; path = "moai-gfx-gl/MOAIGfxScriptRetainedGL.h"; sourceTree = "<group>"; };
+		CD9182CD242F08C60048A646 /* MOAIAbstractDrawingAPIObjectVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIAbstractDrawingAPIObjectVK.cpp; path = "moai-gfx-vk/MOAIAbstractDrawingAPIObjectVK.cpp"; sourceTree = "<group>"; };
+		CD9182CE242F08C60048A646 /* MOAIAbstractDrawingAPIObjectVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIAbstractDrawingAPIObjectVK.h; path = "moai-gfx-vk/MOAIAbstractDrawingAPIObjectVK.h"; sourceTree = "<group>"; };
+		CD9182CF242F08C60048A646 /* MOAIAbstractDrawingAPIVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIAbstractDrawingAPIVK.cpp; path = "moai-gfx-vk/MOAIAbstractDrawingAPIVK.cpp"; sourceTree = "<group>"; };
+		CD9182D0242F08C60048A646 /* MOAIAbstractDrawingAPIVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIAbstractDrawingAPIVK.h; path = "moai-gfx-vk/MOAIAbstractDrawingAPIVK.h"; sourceTree = "<group>"; };
+		CD9182D1242F08C60048A646 /* MOAIDrawingCommandVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIDrawingCommandVK.cpp; path = "moai-gfx-vk/MOAIDrawingCommandVK.cpp"; sourceTree = "<group>"; };
+		CD9182D2242F08C60048A646 /* MOAIDrawingCommandVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIDrawingCommandVK.h; path = "moai-gfx-vk/MOAIDrawingCommandVK.h"; sourceTree = "<group>"; };
+		CD9182DA242F08EF0048A646 /* MOAIGfxScriptRetainedVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIGfxScriptRetainedVK.cpp; path = "moai-gfx-vk/MOAIGfxScriptRetainedVK.cpp"; sourceTree = "<group>"; };
+		CD9182DB242F08EF0048A646 /* MOAIGfxScriptRetainedVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxScriptRetainedVK.h; path = "moai-gfx-vk/MOAIGfxScriptRetainedVK.h"; sourceTree = "<group>"; };
+		CD918303242F26500048A646 /* moaiconfig.xcconfig */ = {isa = PBXFileReference; lastKnownFileType = text.xcconfig; path = moaiconfig.xcconfig; sourceTree = "<group>"; };
 		CD9238651E24B11800D5048D /* MOAIHitMask.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIHitMask.cpp; sourceTree = "<group>"; };
 		CD9238661E24B11800D5048D /* MOAIHitMask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIHitMask.h; sourceTree = "<group>"; };
 		CD94BAE91E486F39003A0CFF /* MOAICollisionConsts.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAICollisionConsts.h; sourceTree = "<group>"; };
@@ -8866,6 +8883,7 @@
 		29B97314FDCFA39411CA2CEA /* CustomTemplate */ = {
 			isa = PBXGroup;
 			children = (
+				CD918303242F26500048A646 /* moaiconfig.xcconfig */,
 				032409EE13564CAF000ADC60 /* 3rd party */,
 				0324E4F113564BC7000ADC60 /* src */,
 				038DB6D7101FAA6700ECA0BF /* Products */,
@@ -12945,16 +12963,40 @@
 			name = script;
 			sourceTree = "<group>";
 		};
+		CD9182CC242F08940048A646 /* drawing */ = {
+			isa = PBXGroup;
+			children = (
+				CD9182CD242F08C60048A646 /* MOAIAbstractDrawingAPIObjectVK.cpp */,
+				CD9182CE242F08C60048A646 /* MOAIAbstractDrawingAPIObjectVK.h */,
+				CD9182CF242F08C60048A646 /* MOAIAbstractDrawingAPIVK.cpp */,
+				CD9182D0242F08C60048A646 /* MOAIAbstractDrawingAPIVK.h */,
+				CD9182D1242F08C60048A646 /* MOAIDrawingCommandVK.cpp */,
+				CD9182D2242F08C60048A646 /* MOAIDrawingCommandVK.h */,
+			);
+			name = drawing;
+			sourceTree = "<group>";
+		};
+		CD9182D9242F08D70048A646 /* script */ = {
+			isa = PBXGroup;
+			children = (
+				CD9182DA242F08EF0048A646 /* MOAIGfxScriptRetainedVK.cpp */,
+				CD9182DB242F08EF0048A646 /* MOAIGfxScriptRetainedVK.h */,
+			);
+			name = script;
+			sourceTree = "<group>";
+		};
 		CD9AB4EB22C41BB80061A87F /* moai-gfx-vk */ = {
 			isa = PBXGroup;
 			children = (
 				CDF51D922391E011003D7F71 /* command-buffer */,
 				CD9AB4EC22C41BCE0061A87F /* buffer */,
+				CD9182CC242F08940048A646 /* drawing */,
 				CD9AB4ED22C41BD40061A87F /* manager */,
 				CD9AB4EE22C41BE10061A87F /* mesh */,
 				CDF51DA123962A63003D7F71 /* onetri */,
 				CDF51D9323934FC6003D7F71 /* pipeline */,
 				CD9AB4F222C41C010061A87F /* resource */,
+				CD9182D9242F08D70048A646 /* script */,
 				CD9AB4EF22C41BE80061A87F /* shader */,
 				CDF51D962394B9A6003D7F71 /* snapshot */,
 				CD9AB4F022C41BEE0061A87F /* texture */,
@@ -15884,6 +15926,7 @@
 			files = (
 				CD9AB58E22C41C7C0061A87F /* MOAIGfxMgrVKComponents.h in Headers */,
 				CD9AB5A422C41C7C0061A87F /* MOAIVertexBufferVK.h in Headers */,
+				CD9182DD242F08EF0048A646 /* MOAIGfxScriptRetainedVK.h in Headers */,
 				CDF51D95239354CE003D7F71 /* MOAIPipelineSnapshotVK.h in Headers */,
 				CDBF98ED23409246003F430D /* MOAIFenceVK.h in Headers */,
 				CD9AB59222C41C7C0061A87F /* MOAIImageTextureVK.h in Headers */,
@@ -15900,9 +15943,11 @@
 				CD062537233C7DFB0039EC8F /* MOAIPipelineInputChunkSchemaVK.h in Headers */,
 				CD9AB5AA22C41C7C0061A87F /* pch.h in Headers */,
 				CD9AB58B22C41C7C0061A87F /* MOAIGfxMgrVK_VertexCacheVK.h in Headers */,
+				CD9182D4242F08C60048A646 /* MOAIAbstractDrawingAPIObjectVK.h in Headers */,
 				CDBF990A23421CA7003F430D /* MOAIAbstractSnapshotVK.h in Headers */,
 				CDD8555F22C9439000F78DF0 /* MOAIPhysicalDeviceVK.h in Headers */,
 				CDF51DA523963D30003D7F71 /* MOAIGfxMgrOneTriVK.h in Headers */,
+				CD9182D8242F08C60048A646 /* MOAIDrawingCommandVK.h in Headers */,
 				CDD8555022C5ABDD00F78DF0 /* MOAISwapChainVK.h in Headers */,
 				CD9AB57B22C41C7C0061A87F /* host.h in Headers */,
 				CDF51DA0239627DB003D7F71 /* MOAIDeckShaderOneTriVK.h in Headers */,
@@ -15932,6 +15977,7 @@
 				CD9AB59E22C41C7C0061A87F /* MOAITexture2DVK.h in Headers */,
 				CDBF991423422413003F430D /* MOAIDescriptorSetSnapshotVK.h in Headers */,
 				CDD8554F22C5ABDD00F78DF0 /* MOAIGfxStructVK.h in Headers */,
+				CD9182D6242F08C60048A646 /* MOAIAbstractDrawingAPIVK.h in Headers */,
 				CD06252D233C328F0039EC8F /* MOAICommandBufferVK.h in Headers */,
 				CDF51D9A2394BCC4003D7F71 /* MOAITextureSnapshot2DVK.h in Headers */,
 				CDD8555222C67FF500F78DF0 /* MOAIGfxUtilVK.h in Headers */,
@@ -19866,6 +19912,7 @@
 				CD9AB58022C41C7C0061A87F /* MOAIGfxBufferVK.cpp in Sources */,
 				CD9AB57E22C41C7C0061A87F /* MOAIFrameBufferTextureVK.cpp in Sources */,
 				CD062530233C7DEC0039EC8F /* MOAIPipelineInputBodySchemaVK.cpp in Sources */,
+				CD9182D3242F08C60048A646 /* MOAIAbstractDrawingAPIObjectVK.cpp in Sources */,
 				CDBF990923421CA7003F430D /* MOAIAbstractSnapshotVK.cpp in Sources */,
 				CD062538233C7DFB0039EC8F /* MOAIPipelineInputChunkVK.cpp in Sources */,
 				CD9AB58A22C41C7C0061A87F /* MOAIGfxMgrVK_VertexCacheVK.cpp in Sources */,
@@ -19874,8 +19921,10 @@
 				CDBF98F0234098F2003F430D /* MOAISemaphoreVK.cpp in Sources */,
 				CDD8556622CAA28300F78DF0 /* MOAILogicalDeviceVK.cpp in Sources */,
 				CD9AB58222C41C7C0061A87F /* MOAIGfxMgrVK_GPUCacheVK.cpp in Sources */,
+				CD9182D5242F08C60048A646 /* MOAIAbstractDrawingAPIVK.cpp in Sources */,
 				CD9AB5A322C41C7C0061A87F /* MOAIVertexBufferVK.cpp in Sources */,
 				CD9AB58C22C41C7C0061A87F /* MOAIGfxMgrVK.cpp in Sources */,
+				CD9182D7242F08C60048A646 /* MOAIDrawingCommandVK.cpp in Sources */,
 				CDF51D992394BCC4003D7F71 /* MOAITextureSnapshot2DVK.cpp in Sources */,
 				CD9AB57A22C41C7C0061A87F /* host.cpp in Sources */,
 				CDD8555A22C7E4D100F78DF0 /* MOAIGfxUtilVK.cpp in Sources */,
@@ -19885,6 +19934,7 @@
 				CD1711C122F17C9C00381882 /* MOAIGfxStateGPUCacheFrameVK.cpp in Sources */,
 				CD9AB59722C41C7C0061A87F /* MOAIShaderMgrVK.cpp in Sources */,
 				CD9AB59522C41C7C0061A87F /* MOAIShaderVK.cpp in Sources */,
+				CD9182DC242F08EF0048A646 /* MOAIGfxScriptRetainedVK.cpp in Sources */,
 				CDBF98EC23409246003F430D /* MOAIFenceVK.cpp in Sources */,
 				CD9AB58622C41C7C0061A87F /* MOAIGfxMgrVK_RenderTreeVK.cpp in Sources */,
 				CDF51DA423963D30003D7F71 /* MOAIGfxMgrOneTriVK.cpp in Sources */,
@@ -20563,6 +20613,7 @@
 		};
 		03B080970F708135005CD8E5 /* Release */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CD918303242F26500048A646 /* moaiconfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -21057,25 +21108,7 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
 				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-sim";
 				SDKROOT = macosx;
@@ -21093,25 +21126,7 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
 				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-sim";
 				SDKROOT = macosx;
@@ -21129,25 +21144,7 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
 				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = "$(inherited)";
 				PRODUCT_NAME = "moai-osx-sim";
 				SDKROOT = macosx;
@@ -21784,6 +21781,7 @@
 		};
 		C01FCF4F08A954540054247B /* Debug */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CD918303242F26500048A646 /* moaiconfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
@@ -26064,6 +26062,9 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 					VK_USE_PLATFORM_MACOS_MVK,
+					"VULKAN_SDK=\"${VULKAN_SDK}\"",
+					"VK_ICD_FILENAMES=\"${VK_ICD_FILENAMES}\"",
+					"VK_LAYER_PATH=\"${VK_LAYER_PATH}\"",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -26086,7 +26087,7 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(VULKAN_SDK)/include",
+					"$(VULKAN_SDK)/macOS/include",
 				);
 				PRODUCT_NAME = "moai-osx-gfx-vk";
 				SDKROOT = macosx;
@@ -26104,6 +26105,9 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 					VK_USE_PLATFORM_MACOS_MVK,
+					"VULKAN_SDK=\"${VULKAN_SDK}\"",
+					"VK_ICD_FILENAMES=\"${VK_ICD_FILENAMES}\"",
+					"VK_LAYER_PATH=\"${VK_LAYER_PATH}\"",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -26126,7 +26130,7 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(VULKAN_SDK)/include",
+					"$(VULKAN_SDK)/macOS/include",
 				);
 				PRODUCT_NAME = "moai-osx-gfx-vk";
 				SDKROOT = macosx;
@@ -26144,6 +26148,9 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 					VK_USE_PLATFORM_MACOS_MVK,
+					"VULKAN_SDK=\"${VULKAN_SDK}\"",
+					"VK_ICD_FILENAMES=\"${VK_ICD_FILENAMES}\"",
+					"VK_LAYER_PATH=\"${VK_LAYER_PATH}\"",
 				);
 				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
 				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
@@ -26166,7 +26173,7 @@
 				GCC_WARN_UNUSED_VARIABLE = NO;
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(VULKAN_SDK)/include",
+					"$(VULKAN_SDK)/macOS/include",
 				);
 				PRODUCT_NAME = "moai-osx-gfx-vk";
 				SDKROOT = macosx;
@@ -27184,6 +27191,7 @@
 		};
 		E90D02BF14D5E12700DD75AA /* Release-NoSymbols */ = {
 			isa = XCBuildConfiguration;
+			baseConfigurationReference = CD918303242F26500048A646 /* moaiconfig.xcconfig */;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
 				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;

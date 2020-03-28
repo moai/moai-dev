@@ -29,7 +29,7 @@
 
 //----------------------------------------------------------------//
 MOAIGfxScriptTextureCommandVK::MOAIGfxScriptTextureCommandVK ( ZLIndex descriptorSetIndex, ZLIndex bindPoint, ZLIndex arrayItem, ZLIndex textureUnit ) :
-	MOAIDrawingCommandVK ( descriptorSetIndex, bindPoint, arrayItem ),
+	MOAIAbstractDrawingCommandVK ( descriptorSetIndex, bindPoint, arrayItem ),
 	mTextureUnit ( textureUnit ) {
 }
 
@@ -52,7 +52,7 @@ void MOAIPipelineInputBodyComposerVK::ComposeAndBind (  MOAIGfxMgrVK& gfxMgr, MO
 	// TODO: pass in listener to detect changes (to invalidate graphics cache)
 
 	for ( ZLIndex i = 0; i < this->mCommandCount; ++i ) {
-		MOAIDrawingCommandVK* command = this->mCommands [ i ];
+		MOAIAbstractDrawingCommandVK* command = this->mCommands [ i ];
 		if ( command ) {
 			MOAIPipelineInputChunkVK& descriptorSet = this->mDescriptorSets [ command->mDescriptorSetIndex ];
 			command->Apply ( gfxMgr, descriptorSet, commandBuffer );

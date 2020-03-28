@@ -6,6 +6,9 @@
 
 #include <moai-gfx-vk/pch.h>
 
+#include <moai-gfx-vk/MOAIAbstractDrawingAPIObjectVK.h>
+#include <moai-gfx-vk/MOAIAbstractDrawingAPIVK.h>
+#include <moai-gfx-vk/MOAIDrawingCommandVK.h>
 #include <moai-gfx-vk/MOAIFrameBufferVK.h>
 #include <moai-gfx-vk/MOAIFrameBufferTextureVK.h>
 #include <moai-gfx-vk/MOAIGfxBufferVK.h>
@@ -16,6 +19,7 @@
 #include <moai-gfx-vk/MOAIGfxMgrVK_VertexCacheVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVKComponents.h>
 #include <moai-gfx-vk/MOAIGfxResourceVK.h>
+#include <moai-gfx-vk/MOAIGfxScriptRetainedVK.h>
 #include <moai-gfx-vk/MOAIGfxStateGPUCacheFrameVK.h>
 #include <moai-gfx-vk/MOAIImageTextureVK.h>
 #include <moai-gfx-vk/MOAIIndexBufferVK.h>

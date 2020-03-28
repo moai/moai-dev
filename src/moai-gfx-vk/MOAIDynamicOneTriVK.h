@@ -58,8 +58,6 @@ private:
 
 public:
 
-	DECL_LUA_FACTORY ( MOAIDynamicOneTriVK )
-
 	//----------------------------------------------------------------//
 					MOAIDynamicOneTriVK			();
 					~MOAIDynamicOneTriVK		();

@@ -40,6 +40,12 @@ void MOAIShaderGL::BindUniforms () {
 }
 
 //----------------------------------------------------------------//
+MOAIUniformHandle MOAIShaderGL::GetUniformHandle ( ZLIndex uniformID, ZLIndex index ) {
+
+	return this->mProgram->GetUniformHandle ( this->mUniforms.GetBuffer (), uniformID, index );
+}
+
+//----------------------------------------------------------------//
 bool MOAIShaderGL::HasDirtyUniforms () {
 
 	return !this->mProgram->mUniformBuffer.IsIdentical ( this->mUniforms );
@@ -102,12 +108,6 @@ MOAIAbstractGfxScript* MOAIShaderGL::MOAIAbstractHasGfxScript_GetGfxScript	() {
 const MOAIUniformSchema* MOAIShaderGL::MOAIAbstractUniformBuffer_GetSchema () const {
 
 	return this->mProgram;
-}
-
-//----------------------------------------------------------------//
-MOAIUniformHandle MOAIShaderGL::MOAIShader_GetUniformHandle ( ZLIndex uniformID, ZLIndex index ) {
-
-	return this->mProgram->GetUniformHandle ( this->mUniforms.GetBuffer (), uniformID, index );
 }
 
 //----------------------------------------------------------------//

@@ -12,10 +12,12 @@ class MOAIPipelineInputBodyComposerVK;
 class MOAIGfxMgrVK;
 class MOAIPipelineInputBodySchemaVK;
 
+// TODO: all this goes away! hooray!
+
 //================================================================//
-// MOAIDrawingCommandVK
+// MOAIAbstractDrawingCommandVK
 //================================================================//
-class MOAIDrawingCommandVK :
+class MOAIAbstractDrawingCommandVK :
 	public ZLRefCountedObject {
 protected:
 
@@ -29,7 +31,7 @@ protected:
 	virtual void		MOAIDrawingCommandVK_Apply			( MOAIGfxMgrVK& gfxMgr, MOAIPipelineInputChunkVK& descriptorSet, MOAICommandBufferVK& commandBuffer ) = 0;
 
 	//----------------------------------------------------------------//
-	MOAIDrawingCommandVK ( ZLIndex descriptorSetIndex, ZLIndex bindPoint, ZLIndex arrayItem ) :
+	MOAIAbstractDrawingCommandVK ( ZLIndex descriptorSetIndex, ZLIndex bindPoint, ZLIndex arrayItem ) :
 		mDescriptorSetIndex ( descriptorSetIndex ),
 		mBindPoint ( bindPoint ),
 		mArrayItem ( arrayItem ) {
@@ -38,7 +40,7 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-	virtual ~MOAIDrawingCommandVK () {
+	virtual ~MOAIAbstractDrawingCommandVK () {
 	}
 	
 	//----------------------------------------------------------------//
@@ -52,7 +54,7 @@ public:
 // MOAIGfxScriptTextureCommandVK
 //================================================================//
 class MOAIGfxScriptTextureCommandVK :
-	public MOAIDrawingCommandVK {
+	public MOAIAbstractDrawingCommandVK {
 protected:
 
 	friend class MOAIPipelineInputBodyComposerVK;
@@ -73,8 +75,8 @@ class MOAIPipelineInputBodyComposerVK :
 	public virtual MOAIPipelineInputBodyVK {
 protected:
 
-	ZLLeanArray < ZLStrongPtr < MOAIDrawingCommandVK > >	mCommands;
-	ZLSize														mCommandCount;
+	ZLLeanArray < ZLStrongPtr < MOAIAbstractDrawingCommandVK > >	mCommands;
+	ZLSize															mCommandCount;
 
 public:
 	

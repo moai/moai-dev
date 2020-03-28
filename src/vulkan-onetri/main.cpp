@@ -40,6 +40,10 @@ int main ( int argc, char** argv ) {
 	UNUSED ( argc );
 	UNUSED ( argv );
 	
+	setenv ( "VULKAN_SDK", VULKAN_SDK, 0 );
+	setenv ( "VK_ICD_FILENAMES", VK_ICD_FILENAMES, 0 );
+	setenv ( "VK_LAYER_PATH", VK_LAYER_PATH, 0 );
+	
 	SDL_LogSetOutputFunction ( _SDL_LogOutputFunction, 0 );
 	SDL_LogSetPriority ( SDL_LOG_CATEGORY_APPLICATION, SDL_LOG_PRIORITY_VERBOSE );
 

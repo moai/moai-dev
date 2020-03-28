@@ -25,13 +25,11 @@ class MOAIShader :
 protected:
 
 	//----------------------------------------------------------------//
-	virtual MOAIUniformHandle		MOAIShader_GetUniformHandle		( ZLIndex uniformID, ZLIndex index ) = 0;
-	virtual bool					MOAIShader_IsReadyForUse		() const = 0;
+	virtual bool			MOAIShader_IsReadyForUse		() const = 0;
 	
 public:
 
 	//----------------------------------------------------------------//
-	MOAIUniformHandle 		GetUniformHandle 		( ZLIndex uniformID, ZLIndex index );
 	bool					HasProgram				() const;
 	bool					IsReadyForUse			() const;
 							MOAIShader				();

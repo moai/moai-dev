@@ -36,7 +36,6 @@ protected:
 	void							_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
 	MOAIAbstractGfxScript*			MOAIAbstractHasGfxScript_GetGfxScript	();
 	const MOAIUniformSchema*		MOAIAbstractUniformBuffer_GetSchema		() const;
-	MOAIUniformHandle				MOAIShader_GetUniformHandle				( ZLIndex uniformID, ZLIndex index );
 	bool							MOAIShader_IsReadyForUse				() const;
 
 public:
@@ -49,6 +48,7 @@ public:
 	void					ApplyUniforms				();
 	void					BindUniforms				();
 	void					Bless						();
+	MOAIUniformHandle		GetUniformHandle			( ZLIndex uniformID, ZLIndex index );
 	bool					HasDirtyUniforms			();
 							MOAIShaderGL				();
 							~MOAIShaderGL				();
