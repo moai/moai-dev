@@ -131,13 +131,6 @@ namespace MOAIDrawingParam {
 	};
 	
 	//----------------------------------------------------------------//
-	struct SetUniform {
-		ZLIndex				mPipelineGlobalID;
-		ZLIndex				mTargetUniformID;
-		ZLIndex				mTargetUniformIndex;
-	};
-	
-	//----------------------------------------------------------------//
 	struct SetViewProj {
 		MOAICamera*			mCamera;
 		MOAIViewport*		mViewport;

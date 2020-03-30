@@ -6,9 +6,8 @@
 
 #include <moai-gfx-vk/MOAIGfxResourceVK.h>
 
-class MOAIPipelineInputBodyComposerVK;
 class MOAILogicalDeviceVK;
-class MOAIPipelineInputBodySchemaVK;
+class MOAIPipelineLayoutVK;
 class MOAIShaderVK;
 class MOAITextureVK;
 
@@ -24,7 +23,8 @@ class MOAITextureVK;
 */
 class MOAIShaderProgramVK :
 	public ZLFinalizable_DependsOn < MOAILogicalDeviceVK >,
-	public virtual MOAIGfxResourceVK {
+	public virtual MOAIGfxResourceVK,
+	public virtual MOAIHasGfxScript {
 public:
 
 	enum ModuleID {
@@ -38,30 +38,29 @@ protected:
 	VkShaderModule	mModules [ TOTAL_MODULES ];
 
 	ZLLeanArray < VkPipelineShaderStageCreateInfo >		mStageInfos;
-	ZLStrongPtr < MOAIPipelineInputBodyComposerVK > 					mComposer;
+	ZLStrongPtr < MOAIPipelineLayoutVK >				mPipelineLayout;
 
 	//----------------------------------------------------------------//
-//	static int					_load						( lua_State* L );
+//	static int						_load								( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	VkShaderStageFlagBits		GetShaderStageBit			( ModuleID moduleID );
+	VkShaderStageFlagBits			GetShaderStageBit					( ModuleID moduleID );
 	
 	//----------------------------------------------------------------//
-	void 						_Finalize 					();
+	void 							_Finalize 							();
 	
 public:
 
 	DECL_LUA_FACTORY ( MOAIShaderProgramVK )
 
+	GET_SET ( MOAIPipelineLayoutVK*, PipelineLayout, mPipelineLayout );
+
 	//----------------------------------------------------------------//
-	MOAIPipelineInputBodyComposerVK&			GetGfxScript						();
-	MOAIPipelineInputBodySchemaVK&		GetPipelineLayout					();
-	void						Initialize							( MOAILogicalDeviceVK& logicalDevice );
-	void						LoadModule							( ModuleID moduleID, const void* shaderCode, size_t shaderSize );
-								MOAIShaderProgramVK					();
-								~MOAIShaderProgramVK				();
-	void						SetGfxScript						( MOAIPipelineInputBodyComposerVK& composer );
-	void						UpdatePipelineCreateInfo			( VkGraphicsPipelineCreateInfo& info );
+	void							Initialize							( MOAILogicalDeviceVK& logicalDevice );
+	void							LoadModule							( ModuleID moduleID, const void* shaderCode, size_t shaderSize );
+									MOAIShaderProgramVK					();
+									~MOAIShaderProgramVK				();
+	void							UpdatePipelineCreateInfo			( VkGraphicsPipelineCreateInfo& info );
 };
 
 #endif

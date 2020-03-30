@@ -2,9 +2,9 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx-vk/MOAIPipelineInputBodyComposerVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
-#include <moai-gfx-vk/MOAIPipelineInputBodySchemaVK.h>
+#include <moai-gfx-vk/MOAIGfxScriptRetainedVK.h>
+#include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAIShaderMgrVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
@@ -81,18 +81,17 @@ void MOAIShaderMgrVK::AffirmAll () {
 
 	MOAILogicalDeviceVK& logicalDevice = MOAIGfxMgrVK::Get ().GetLogicalDevice ();
 
-	this->mOneTexDescriptorSetLayout = new MOAIPipelineInputChunkSchemaVK ();
+	this->mOneTexDescriptorSetLayout = new MOAIDescriptorSetLayoutVK ();
 	this->mOneTexDescriptorSetLayout->Initialize ( logicalDevice, 1 );
 	this->mOneTexDescriptorSetLayout->SetBinding ( 0, VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT );
 	
-	this->mOneTexPipelineLayout = new MOAIPipelineInputBodySchemaVK ();
+	this->mOneTexPipelineLayout = new MOAIPipelineLayoutVK ();
 	this->mOneTexPipelineLayout->Initialize ( logicalDevice, 1 );
 	this->mOneTexPipelineLayout->SetDescriptorSetLayout ( 0, *this->mOneTexDescriptorSetLayout );
 
-	this->mOneTexComposer = new MOAIPipelineInputBodyComposerVK ();
-	this->mOneTexComposer->SetPipelineLayout ( *this->mOneTexPipelineLayout );
-	this->mOneTexComposer->Reserve ( 1 );
-	this->mOneTexComposer->PushTextureCommand ( 0, 0, 0, 0 );
+	this->mOneTexGfxScript = new MOAIGfxScriptRetainedVK ();
+	this->mOneTexGfxScript->LoadDescriptorFromTextureUnitVK ( 0, 0, 0, 0 );
+	this->mOneTexGfxScript->Optimize ();
 
 	for ( u32 i = 0; i < ( u32 )MOAIShaderPresetEnum::TOTAL_SHADERS; ++i ) {
 		this->GetShader (( MOAIShaderPresetEnum )i );
@@ -122,7 +121,8 @@ MOAIShaderProgramVK* MOAIShaderMgrVK::GetProgram ( MOAIShaderPresetEnum shaderID
 					
 					program->LoadModule ( MOAIShaderProgramVK::VERTEX_MODULE, _deck2DShaderVSH, sizeof ( _deck2DShaderVSH ));
 					program->LoadModule ( MOAIShaderProgramVK::FRAGMENT_MODULE, _deck2DShaderFSH, sizeof ( _deck2DShaderFSH ));
-					program->SetGfxScript ( *this->mOneTexComposer );
+					program->SetPipelineLayout ( this->mOneTexPipelineLayout );
+					program->SetGfxScript ( this->mOneTexGfxScript );
 
 //					program->SetVertexAttribute ( MOAIVertexFormatMgrVK::XYZWUVC_POSITION, "position" );
 //					program->SetVertexAttribute ( MOAIVertexFormatMgrVK::XYZWUVC_TEXCOORD, "uv" );
@@ -228,23 +228,22 @@ MOAIShaderProgramVK* MOAIShaderMgrVK::GetProgram ( MOAIShaderPresetEnum shaderID
 
 				case MOAIShaderPresetEnum::ONETRI_SHADER: {
 				
-					MOAIPipelineInputChunkSchemaVK* descriptorSetLayout = new MOAIPipelineInputChunkSchemaVK ();
+					MOAIDescriptorSetLayoutVK* descriptorSetLayout = new MOAIDescriptorSetLayoutVK ();
 					descriptorSetLayout->Initialize ( logicalDevice, 2 );
 					descriptorSetLayout->SetBinding ( 0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT );
 					descriptorSetLayout->SetBinding ( 1, VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT );
 					
-					MOAIPipelineInputBodySchemaVK* pipelineLayout = new MOAIPipelineInputBodySchemaVK ();
+					MOAIPipelineLayoutVK* pipelineLayout = new MOAIPipelineLayoutVK ();
 					pipelineLayout->Initialize ( logicalDevice, 1 );
 					pipelineLayout->SetDescriptorSetLayout ( 0, *descriptorSetLayout );
 					
-					MOAIPipelineInputBodyComposerVK* composer = new MOAIPipelineInputBodyComposerVK ();
-					composer->SetPipelineLayout ( *this->mOneTexPipelineLayout );
-					composer->Reserve ( 1 );
-					composer->PushTextureCommand ( 1, 0, 0, 0 );
+					MOAIGfxScriptRetainedVK* script = new MOAIGfxScriptRetainedVK ();
+					script->LoadDescriptorFromTextureUnitVK ( 0, 0, 0, 0 );
 					
 					program->LoadModule ( MOAIShaderProgramVK::VERTEX_MODULE, _oneTriShaderVSH, sizeof ( _oneTriShaderVSH ));
 					program->LoadModule ( MOAIShaderProgramVK::FRAGMENT_MODULE, _oneTriShaderFSH, sizeof ( _oneTriShaderFSH ));
-					program->SetGfxScript ( *composer );
+					program->SetPipelineLayout ( pipelineLayout );
+					program->SetGfxScript ( script );
 					
 					break;
 				}

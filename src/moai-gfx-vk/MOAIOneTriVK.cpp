@@ -3,13 +3,13 @@
 
 #include "pch.h"
 #include <moai-gfx-vk/MOAICommandBufferVK.h>
-#include <moai-gfx-vk/MOAIPipelineInputChunkSchemaVK.h>
-#include <moai-gfx-vk/MOAIPipelineInputChunkVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAIGfxUtilVK.h>
 #include <moai-gfx-vk/MOAIOneTriVK.h>
-#include <moai-gfx-vk/MOAIPipelineInputBodySchemaVK.h>
+#include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
 #include <moai-gfx-vk/MOAITexture2DVK.h>
@@ -80,18 +80,18 @@ void MOAIOneTriVK::PreparePipeline () {
 	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
 	MOAILogicalDeviceVK& logicalDevice = gfxMgr.GetLogicalDevice ();
 	
-	MOAIPipelineInputChunkSchemaVK* descriptorSetLayout = new MOAIPipelineInputChunkSchemaVK ();
+	MOAIDescriptorSetLayoutVK* descriptorSetLayout = new MOAIDescriptorSetLayoutVK ();
 	descriptorSetLayout->Initialize ( logicalDevice, 2 );
 	descriptorSetLayout->SetBinding ( 0, VK_DESCRIPTOR_TYPE_UNIFORM_BUFFER, VK_SHADER_STAGE_VERTEX_BIT );
 	descriptorSetLayout->SetBinding ( 1, VK_DESCRIPTOR_TYPE_COMBINED_IMAGE_SAMPLER, VK_SHADER_STAGE_FRAGMENT_BIT );
 	
 	// create the pipeline layout
-	this->mPipelineLayout = new MOAIPipelineInputBodySchemaVK ();
+	this->mPipelineLayout = new MOAIPipelineLayoutVK ();
 	this->mPipelineLayout->Initialize ( logicalDevice, 1 );
 	this->mPipelineLayout->SetDescriptorSetLayout ( 0, *descriptorSetLayout );
 	this->mPipelineLayout->AffirmPipelineLayout ();
 	
-	this->mDescriptorSet = new MOAIPipelineInputChunkVK ();
+	this->mDescriptorSet = new MOAIDescriptorSetVK ();
 	this->mDescriptorSet->Initialize ( *descriptorSetLayout );
 
 	VkDynamicState dynamicStateEnables [] = {
@@ -349,12 +349,12 @@ void MOAIOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 	uniforms->Initialize ( logicalDevice, *this->mUniforms );
 
 	// initialize the descriptor set
-	MOAIPipelineInputChunkSchemaVK& descriptorSetLayout = this->mPipelineLayout->GetDescriptorSetLayout ( 0 );
+	MOAIDescriptorSetLayoutVK& descriptorSetLayout = this->mPipelineLayout->GetDescriptorSetLayout ( 0 );
 	
-	MOAIPipelineInputChunkVK* descriptorSetSignature = new MOAIPipelineInputChunkVK ();
-	descriptorSetSignature->Initialize ( descriptorSetLayout );
-	descriptorSetSignature->SetDescriptor ( 0, 0, *uniforms );
-	descriptorSetSignature->SetDescriptor ( 1, 0, &this->mTextureDescriptor );
+	MOAIDescriptorSetVK* descriptorSetSignature = new MOAIDescriptorSetVK ();
+//	descriptorSetSignature->Initialize ( descriptorSetLayout );
+//	descriptorSetSignature->SetDescriptor ( 0, 0, *uniforms );
+//	descriptorSetSignature->SetDescriptor ( 1, 0, &this->mTextureDescriptor );
 	
 	MOAIDescriptorSetSnapshotVK* descriptorSet = descriptorSetLayout.ProcureDescriptorSet ( *descriptorSetSignature );
 	

@@ -7,7 +7,7 @@
 #include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
 #include <moai-gfx-vk/MOAIGfxConstsVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
-#include <moai-gfx-vk/MOAIPipelineInputBodySchemaVK.h>
+#include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAIVertexFormatVK.h>

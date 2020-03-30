@@ -1,25 +1,25 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MOAIPIPELINEINPUTCHUNKSCHEMAVK_H
-#define MOAIPIPELINEINPUTCHUNKSCHEMAVK_H
+#ifndef MOAIDESCRIPTORSETLAYOUTVK_H
+#define MOAIDESCRIPTORSETLAYOUTVK_H
 
 class MOAILogicalDeviceVK;
-class MOAIPipelineInputChunkVK;
+class MOAIDescriptorSetVK;
 class MOAIDescriptorSetSnapshotVK;
 
 //================================================================//
-// MOAIPipelineInputChunkSchemaVK
+// MOAIDescriptorSetLayoutVK
 //================================================================//
-class MOAIPipelineInputChunkSchemaVK :
+class MOAIDescriptorSetLayoutVK :
 	public ZLRefCountedObject,
 	public ZLFinalizable,
 	public ZLFinalizable_DependsOn < MOAILogicalDeviceVK > {
 private:
 
-	friend class MOAIPipelineInputChunkVK;
+	friend class MOAIDescriptorSetVK;
 	friend class MOAIDescriptorSetSnapshotVK;
-	friend class MOAIPipelineInputChunkVK;
+	friend class MOAIDescriptorSetVK;
 
 	static const ZLSize MAX_DESCRIPTOR_SETS = 16;
 
@@ -31,14 +31,14 @@ private:
 	VkDescriptorSetLayout							mLayout;
 
 	STLSet < MOAIDescriptorSetSnapshotVK* >			mSnapshots;
-	STLSet < MOAIDescriptorSetSnapshotVK* >			mUnpinnedSpanshots;
+	STLSet < MOAIDescriptorSetSnapshotVK* >			mUnpinnedSnapshots;
 
 	//----------------------------------------------------------------//
 	void							_Finalize 					();
 
 public:
 
-	IMPLEMENT_DEPENDS_ON ( MOAIPipelineInputChunkSchemaVK )
+	IMPLEMENT_DEPENDS_ON ( MOAIDescriptorSetLayoutVK )
 
 	GET_CONST ( ZLSize, Size, mLayoutBindings.Size ())
 	GET_CONST ( ZLSize, SignatureSize, mSignatureSize )
@@ -50,22 +50,22 @@ public:
 	
 	//----------------------------------------------------------------//
 	operator VkDescriptorSetLayout* () {
-		this->AffirmDescritorSetLayout ();
+		this->AffirmDescriptorSetLayout ();
 		return &this->mLayout;
 	}
 	
 	//----------------------------------------------------------------//
 	operator VkDescriptorSetLayout& () {
-		this->AffirmDescritorSetLayout ();
+		this->AffirmDescriptorSetLayout ();
 		return this->mLayout;
 	}
 	
 	//----------------------------------------------------------------//
-	void							AffirmDescritorSetLayout			();
+	void							AffirmDescriptorSetLayout			();
 	void							Initialize							( MOAILogicalDeviceVK& logicalDevice, ZLSize totalBindings );
-									MOAIPipelineInputChunkSchemaVK			();
-									~MOAIPipelineInputChunkSchemaVK			();
-	MOAIDescriptorSetSnapshotVK*	ProcureDescriptorSet				( const MOAIPipelineInputChunkVK& descriptorSet );
+									MOAIDescriptorSetLayoutVK			();
+									~MOAIDescriptorSetLayoutVK			();
+	MOAIDescriptorSetSnapshotVK*	ProcureDescriptorSet				( const MOAIDescriptorSetVK& descriptorSet );
 	void							RetireDescriptorSet					( MOAIDescriptorSetSnapshotVK& snapshot );
 	void							SetBinding							( ZLIndex index, VkDescriptorType descriptorType, VkShaderStageFlags stageFlags, ZLSize descriptorCount = 1 );
 };

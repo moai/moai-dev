@@ -3,16 +3,16 @@
 
 #include "pch.h"
 #include <moai-gfx-vk/MOAICommandBufferVK.h>
-#include <moai-gfx-vk/MOAIPipelineInputChunkSchemaVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
-#include <moai-gfx-vk/MOAIPipelineInputChunkVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrOneTriVK.h>
 #include <moai-gfx-vk/MOAIGfxBufferSnapshotVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAIGfxUtilVK.h>
 #include <moai-gfx-vk/MOAIIndexBufferVK.h>
-#include <moai-gfx-vk/MOAIPipelineInputBodySchemaVK.h>
+#include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
 #include <moai-gfx-vk/MOAIPipelineSnapshotVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>

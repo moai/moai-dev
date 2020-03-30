@@ -27,17 +27,18 @@ protected:
 	ZLStrongPtr < MOAITextureSnapshot2DVK > mSnapshot;
 
 	//----------------------------------------------------------------//
-	MOAITextureSnapshot2DVK*		MOAIAbstractSnapshotFactoryVK_GetSnapshot		( MOAICommandBufferVK& commandBuffer );
-	bool							MOAIGfxResource_FinishLoading					();
-	bool							MOAIGfxResource_IsReadyForUse					() const;
+	MOAITextureSnapshot2DVK*	MOAIAbstractSnapshotFactoryVK_GetSnapshot		( MOAICommandBufferVK& commandBuffer );
+	void						MOAIAbstractDescriptorElementVK_GetPinnedData	( VkWriteDescriptorSet& writeDescriptorSet, ZLIndex index, MOAICommandBufferVK& commandBuffer );
+	bool						MOAIGfxResource_FinishLoading					();
+	bool						MOAIGfxResource_IsReadyForUse					() const;
 
 public:
 			
 	DECL_LUA_FACTORY ( MOAITexture2DVK )
 	
 	//----------------------------------------------------------------//
-									MOAITexture2DVK			();
-									~MOAITexture2DVK		();
+								MOAITexture2DVK			();
+								~MOAITexture2DVK		();
 };
 
 #endif

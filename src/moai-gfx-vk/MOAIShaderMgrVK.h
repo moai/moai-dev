@@ -4,11 +4,12 @@
 #ifndef	MOAISHADERMGRVK_H
 #define	MOAISHADERMGRVK_H
 
-class MOAIPipelineInputChunkSchemaVK;
+class MOAIDescriptorSetLayoutVK;
+class MOAIGfxScriptRetainedVK;
 class MOAIPipelineInputBodyComposerVK;
 class MOAIShaderVK;
 class MOAIShaderProgramVK;
-class MOAIPipelineInputBodySchemaVK;
+class MOAIPipelineLayoutVK;
 
 //================================================================//
 // MOAIShaderMgrVK
@@ -31,9 +32,9 @@ class MOAIShaderMgrVK :
 private:
 	
 	// common layouts for simple shaders that just use a single texture
-	ZLStrongPtr < MOAIPipelineInputChunkSchemaVK >	mOneTexDescriptorSetLayout;
-	ZLStrongPtr < MOAIPipelineInputBodySchemaVK >		mOneTexPipelineLayout;
-	ZLStrongPtr < MOAIPipelineInputBodyComposerVK >			mOneTexComposer;
+	ZLStrongPtr < MOAIDescriptorSetLayoutVK >	mOneTexDescriptorSetLayout;
+	ZLStrongPtr < MOAIPipelineLayoutVK >		mOneTexPipelineLayout;
+	ZLStrongPtr < MOAIGfxScriptRetainedVK >		mOneTexGfxScript;
 	
 	MOAIShaderProgramVK*	mPrograms [ TOTAL_SHADERS ];
 	MOAIShaderVK*			mShaders [ TOTAL_SHADERS ];

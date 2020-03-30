@@ -2,9 +2,9 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx-vk/MOAIPipelineInputChunkSchemaVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
-#include <moai-gfx-vk/MOAIPipelineInputChunkVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetVK.h>
 #include <moai-gfx-vk/MOAILogicalDeviceVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
@@ -42,11 +42,11 @@ public:
 };
 
 //================================================================//
-// MOAIPipelineInputChunkSchemaVK
+// MOAIDescriptorSetLayoutVK
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIPipelineInputChunkSchemaVK::AffirmDescritorSetLayout () {
+void MOAIDescriptorSetLayoutVK::AffirmDescriptorSetLayout () {
 
 	if ( this->mLayout ) return;
 	
@@ -84,60 +84,59 @@ void MOAIPipelineInputChunkSchemaVK::AffirmDescritorSetLayout () {
 }
 
 //----------------------------------------------------------------//
-void MOAIPipelineInputChunkSchemaVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, ZLSize totalBindings ) {
+void MOAIDescriptorSetLayoutVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, ZLSize totalBindings ) {
 
 	this->SetDependency < MOAILogicalDeviceVK >( logicalDevice );
 	this->mLayoutBindings.Init ( totalBindings );
 }
 
 //----------------------------------------------------------------//
-MOAIPipelineInputChunkSchemaVK::MOAIPipelineInputChunkSchemaVK () :
+MOAIDescriptorSetLayoutVK::MOAIDescriptorSetLayoutVK () :
 	mPool ( VK_NULL_HANDLE ),
 	mLayout ( VK_NULL_HANDLE ),
 	mSignatureSize ( 0 ) {
 }
 
 //----------------------------------------------------------------//
-MOAIPipelineInputChunkSchemaVK::~MOAIPipelineInputChunkSchemaVK () {
+MOAIDescriptorSetLayoutVK::~MOAIDescriptorSetLayoutVK () {
 
 	this->Destruct ();
 }
 
 //----------------------------------------------------------------//
-MOAIDescriptorSetSnapshotVK* MOAIPipelineInputChunkSchemaVK::ProcureDescriptorSet ( const MOAIPipelineInputChunkVK& descriptorSet ) {
+MOAIDescriptorSetSnapshotVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSet ( const MOAIDescriptorSetVK& descriptorSet ) {
 
 	if ( this->mSnapshots.size () >= MAX_DESCRIPTOR_SETS ) return NULL;
 	
 	MOAIDescriptorSetSnapshotVK* snapshot = NULL;
-	if ( this->mUnpinnedSpanshots.size ()) {
-		snapshot = *this->mUnpinnedSpanshots.begin ();
-		this->mUnpinnedSpanshots.erase ( snapshot );
+	if ( this->mUnpinnedSnapshots.size ()) {
+		snapshot = *this->mUnpinnedSnapshots.begin ();
+		this->mUnpinnedSnapshots.erase ( snapshot );
 	}
 	else {
 		snapshot = new MOAIDescriptorSetSnapshotVK ();
 		snapshot->Retain ();
 		
-		snapshot->SetDependency < MOAIPipelineInputChunkSchemaVK >( *this );
+		snapshot->SetDependency < MOAIDescriptorSetLayoutVK >( *this );
 		VkDescriptorSetAllocateInfo allocInfo = MOAIGfxStructVK::descriptorSetAllocateInfo ( this->mPool, &this->mLayout );
 		VK_CHECK_RESULT ( vkAllocateDescriptorSets ( this->GetDependency < MOAILogicalDeviceVK >(), &allocInfo, &snapshot->mDescriptorSet ));
 		
 		this->mSnapshots.insert ( snapshot );
 	}
-	snapshot->Update ( descriptorSet );
 	return snapshot;
 }
 
 //----------------------------------------------------------------//
-void MOAIPipelineInputChunkSchemaVK::RetireDescriptorSet ( MOAIDescriptorSetSnapshotVK& snapshot ) {
+void MOAIDescriptorSetLayoutVK::RetireDescriptorSet ( MOAIDescriptorSetSnapshotVK& snapshot ) {
 
 	if ( snapshot == NULL ) return;
 	if ( !this->mSnapshots.contains ( &snapshot )) return;
 
-	this->mUnpinnedSpanshots.insert ( &snapshot );
+	this->mUnpinnedSnapshots.insert ( &snapshot );
 }
 
 //----------------------------------------------------------------//
-void MOAIPipelineInputChunkSchemaVK::SetBinding ( ZLIndex index, VkDescriptorType descriptorType, VkShaderStageFlags stageFlags, ZLSize descriptorCount ) {
+void MOAIDescriptorSetLayoutVK::SetBinding ( ZLIndex index, VkDescriptorType descriptorType, VkShaderStageFlags stageFlags, ZLSize descriptorCount ) {
 
 	assert ( index < this->mLayoutBindings.Size ());
 	this->mLayoutBindings [ index ] = MOAIGfxStructVK::descriptorSetLayoutBinding (
@@ -154,7 +153,7 @@ void MOAIPipelineInputChunkSchemaVK::SetBinding ( ZLIndex index, VkDescriptorTyp
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIPipelineInputChunkSchemaVK::_Finalize () {
+void MOAIDescriptorSetLayoutVK::_Finalize () {
 
 	if ( this->HasDependency < MOAILogicalDeviceVK >()) {
 		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();

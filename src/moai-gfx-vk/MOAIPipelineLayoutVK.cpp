@@ -5,14 +5,14 @@
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAILogicalDeviceVK.h>
-#include <moai-gfx-vk/MOAIPipelineInputBodySchemaVK.h>
+#include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
 
 //================================================================//
-// MOAIPipelineInputBodySchemaVK
+// MOAIPipelineLayoutVK
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIPipelineInputBodySchemaVK::AffirmPipelineLayout () {
+void MOAIPipelineLayoutVK::AffirmPipelineLayout () {
 
 	if ( this->mPipelineLayout != VK_NULL_HANDLE ) return;
 	
@@ -28,7 +28,7 @@ void MOAIPipelineInputBodySchemaVK::AffirmPipelineLayout () {
 }
 
 //----------------------------------------------------------------//
-MOAIPipelineInputChunkSchemaVK& MOAIPipelineInputBodySchemaVK::GetDescriptorSetLayout ( ZLIndex index ) {
+MOAIDescriptorSetLayoutVK& MOAIPipelineLayoutVK::GetDescriptorSetLayout ( ZLIndex index ) {
 
 	assert ( index < this->mDescriptorSetLayouts.Size ());
 	assert ( this->mDescriptorSetLayouts [ index ]);
@@ -36,7 +36,7 @@ MOAIPipelineInputChunkSchemaVK& MOAIPipelineInputBodySchemaVK::GetDescriptorSetL
 }
 
 //----------------------------------------------------------------//
-void MOAIPipelineInputBodySchemaVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, ZLSize size ) {
+void MOAIPipelineLayoutVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, ZLSize size ) {
 
 	assert ( this->mPipelineLayout == VK_NULL_HANDLE );
 	this->SetDependency < MOAILogicalDeviceVK >( logicalDevice );
@@ -44,25 +44,25 @@ void MOAIPipelineInputBodySchemaVK::Initialize ( MOAILogicalDeviceVK& logicalDev
 }
 
 //----------------------------------------------------------------//
-MOAIPipelineInputBodySchemaVK::MOAIPipelineInputBodySchemaVK () :
+MOAIPipelineLayoutVK::MOAIPipelineLayoutVK () :
 	mPipelineLayout ( VK_NULL_HANDLE ) {
 }
 
 //----------------------------------------------------------------//
-MOAIPipelineInputBodySchemaVK::~MOAIPipelineInputBodySchemaVK () {
+MOAIPipelineLayoutVK::~MOAIPipelineLayoutVK () {
 
 	this->Destruct ();
 }
 
 //----------------------------------------------------------------//
-void MOAIPipelineInputBodySchemaVK::SetDescriptorSetLayout ( ZLIndex index, MOAIPipelineInputChunkSchemaVK& layout ) {
+void MOAIPipelineLayoutVK::SetDescriptorSetLayout ( ZLIndex index, MOAIDescriptorSetLayoutVK& layout ) {
 
 	assert ( this->mPipelineLayout == VK_NULL_HANDLE );
 	assert ( index < this->mDescriptorSetLayouts.Size ());
 	assert ( !this->mDescriptorSetLayouts [ index ]);
 	assert (( const void* )this->GetDependency < MOAILogicalDeviceVK >() == ( const void* )layout.GetDependency < MOAILogicalDeviceVK >());
 	
-	layout.AffirmDescritorSetLayout ();
+	layout.AffirmDescriptorSetLayout ();
 	this->mDescriptorSetLayouts [ index ] = &layout;
 }
 
@@ -71,7 +71,7 @@ void MOAIPipelineInputBodySchemaVK::SetDescriptorSetLayout ( ZLIndex index, MOAI
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIPipelineInputBodySchemaVK::_Finalize () {
+void MOAIPipelineLayoutVK::_Finalize () {
 
 	if ( this->HasDependency < MOAILogicalDeviceVK >()) {
 		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();

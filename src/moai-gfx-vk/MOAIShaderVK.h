@@ -4,7 +4,7 @@
 #ifndef	MOAISHADERVK_H
 #define	MOAISHADERVK_H
 
-class MOAIPipelineInputBodyComposerVK;
+class MOAIDescriptorSetArrayVK;
 class MOAIShaderProgramVK;
 
 //================================================================//
@@ -20,40 +20,36 @@ class MOAIShaderVK :
 	public virtual MOAINode {
 protected:
 
-	ZLStrongPtr < MOAIShaderProgramVK >	mProgram;
+	ZLStrongPtr < MOAIShaderProgramVK >				mProgram;
+	ZLStrongPtr < MOAIDescriptorSetArrayVK >		mDescriptorSetArray;
 
 	//----------------------------------------------------------------//
-//	static int				_getAttributeID				( lua_State* L );
-//	static int				_setProgram					( lua_State* L );
-//	static int				_setUniform					( lua_State* L );
-//	static int				_setUniformArrayItem		( lua_State* L );
+//	static int					_getAttributeID				( lua_State* L );
+//	static int					_setProgram					( lua_State* L );
+//	static int					_setUniform					( lua_State* L );
+//	static int					_setUniformArrayItem		( lua_State* L );
 
 	//----------------------------------------------------------------//
-//	bool					IsDirty						();
+//	bool						IsDirty						();
 
 	//----------------------------------------------------------------//
-	bool					MOAINode_ApplyAttrOp				( ZLAttrID attrID, ZLAttribute& attr, u32 op );
-	void					MOAIShader_ComposeUniforms			();
-	bool					MOAIShader_IsReadyForUse			() const;
-	void					MOAIShader_SelectTextures			();
+	MOAIAbstractGfxScript*		MOAIAbstractHasGfxScript_GetGfxScript		();
+	bool						MOAINode_ApplyAttrOp						( ZLAttrID attrID, ZLAttribute& attr, u32 op );
+	void						MOAIShader_ComposeUniforms					();
+	bool						MOAIShader_IsReadyForUse					() const;
+	void						MOAIShader_SelectTextures					();
 
 public:
 
 	GET ( MOAIShaderProgramVK*, Program, mProgram )
+	GET ( MOAIDescriptorSetArrayVK*, DescriptorSetArray, mDescriptorSetArray )
 
 	DECL_LUA_FACTORY ( MOAIShaderVK )
 
 	//----------------------------------------------------------------//
-//	void					ApplyUniforms				();
-//	void					BindUniforms				();
-//	void					Bless						();
-	MOAIPipelineInputBodyComposerVK&		GetGfxScript				();
-//	bool					HasDirtyUniforms			();
-							MOAIShaderVK				();
-							~MOAIShaderVK				();
-//	void					ResizeUniformArray			( u32 uniformID, u32 count );
-//	void					ScheduleTextures			();
-	void					SetProgram					( MOAIShaderProgramVK* program );
+								MOAIShaderVK				();
+								~MOAIShaderVK				();
+	void						SetProgram					( MOAIShaderProgramVK* program );
 };
 
 #endif

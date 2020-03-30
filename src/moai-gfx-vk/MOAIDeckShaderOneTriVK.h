@@ -7,11 +7,11 @@
 #include <moai-gfx-vk/MOAIGfxBufferVK.h>
 
 class MOAICommandBufferVK;
-class MOAIPipelineInputChunkSchemaVK;
-class MOAIPipelineInputChunkVK;
+class MOAIDescriptorSetLayoutVK;
+class MOAIDescriptorSetVK;
 class MOAIGfxBufferSnapshotVK;
 class MOAIIndexBufferVK;
-class MOAIPipelineInputBodySchemaVK;
+class MOAIPipelineLayoutVK;
 class MOAIShaderProgramVK;
 class MOAIShaderVK;
 class MOAITexture2DVK;

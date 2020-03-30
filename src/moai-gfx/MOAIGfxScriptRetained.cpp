@@ -23,7 +23,7 @@ void MOAIGfxScriptRetained::ExecuteBytecode ( MOAIAbstractDrawingAPICallback* ca
 		bytecode = ( const void* )(( uintptr )bytecode + sizeof ( MOAIDrawingCommand ));
 		
 		this->MOAIGfxScriptRetained_Execute ( callable, command.mType, bytecode );
-		bytecode = ( const void* )(( uintptr )bytecode + sizeof ( command.mParamSize ));
+		bytecode = ( const void* )(( uintptr )bytecode + command.mParamSize );
 		
 		didCall = didCall || ( command.mType < MOAIDrawingCmdEnum::TOTAL_CALL_COMMANDS );
 	}

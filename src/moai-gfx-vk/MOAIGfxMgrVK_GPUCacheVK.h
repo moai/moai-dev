@@ -9,7 +9,7 @@
 class MOAIFrameBufferVK;
 class MOAIIndexBufferVK;
 class MOAIGfxResourceVK;
-class MOAIPipelineInputBodySchemaVK;
+class MOAIPipelineLayoutVK;
 class MOAIPipelineParamsVK;
 class MOAIPipelineSnapshotVK;
 class MOAIShaderProgramVK;

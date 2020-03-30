@@ -4,10 +4,10 @@
 #ifndef MOAIDESCRIPTORSETSNAPSHOTVK_H
 #define MOAIDESCRIPTORSETSNAPSHOTVK_H
 
-#include <moai-gfx-vk/MOAIPipelineInputChunkSchemaVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
 #include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
 
-class MOAIPipelineInputChunkVK;
+class MOAIDescriptorSetVK;
 
 //================================================================//
 // MOAIDescriptorSetSnapshotVK
@@ -15,15 +15,12 @@ class MOAIPipelineInputChunkVK;
 class MOAIDescriptorSetSnapshotVK :
 	public MOAIAbstractSnapshotVK,
 	public ZLFinalizable,
-	public ZLFinalizable_DependsOn < MOAIPipelineInputChunkSchemaVK > {
+	public ZLFinalizable_DependsOn < MOAIDescriptorSetLayoutVK > {
 private:
 
-	friend class MOAIPipelineInputChunkSchemaVK;
+	friend class MOAIDescriptorSetLayoutVK;
 
 	VkDescriptorSet		mDescriptorSet;
-
-	//----------------------------------------------------------------//
-	void		Update								( const MOAIPipelineInputChunkVK& signature );
 
 	//----------------------------------------------------------------//
 	void		MOAIAbstractSnapshotVK_OnUnpin		();

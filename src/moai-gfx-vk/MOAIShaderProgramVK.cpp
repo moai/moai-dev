@@ -2,10 +2,10 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx-vk/MOAIPipelineInputBodyComposerVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
-#include <moai-gfx-vk/MOAIPipelineInputBodySchemaVK.h>
+#include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
 
 //================================================================//
@@ -35,19 +35,6 @@
 //================================================================//
 // MOAIShaderProgramVK
 //================================================================//
-
-//----------------------------------------------------------------//
-MOAIPipelineInputBodyComposerVK& MOAIShaderProgramVK::GetGfxScript () {
-
-	assert ( this->mComposer );
-	return *this->mComposer;
-}
-
-//----------------------------------------------------------------//
-MOAIPipelineInputBodySchemaVK& MOAIShaderProgramVK::GetPipelineLayout () {
-
-	return this->GetGfxScript ().GetPipelineLayout ();
-}
 
 //----------------------------------------------------------------//
 VkShaderStageFlagBits MOAIShaderProgramVK::GetShaderStageBit ( ModuleID moduleID ) {
@@ -88,17 +75,10 @@ MOAIShaderProgramVK::MOAIShaderProgramVK () {
 	memset ( this->mModules, NULL, sizeof ( this->mModules ));
 }
 
-
 //----------------------------------------------------------------//
 MOAIShaderProgramVK::~MOAIShaderProgramVK () {
 
 	this->Destruct ();
-}
-
-//----------------------------------------------------------------//
-void MOAIShaderProgramVK::SetGfxScript ( MOAIPipelineInputBodyComposerVK& composer ) {
-
-	this->mComposer = &composer;
 }
 
 //----------------------------------------------------------------//
@@ -130,7 +110,7 @@ void MOAIShaderProgramVK::UpdatePipelineCreateInfo ( VkGraphicsPipelineCreateInf
 	
 	info.pStages = this->mStageInfos.GetBuffer ();
 	info.stageCount = ( u32 )this->mStageInfos.Size ();
-	info.layout = this->GetPipelineLayout ();
+	info.layout = *this->GetPipelineLayout ();
 }
 
 //================================================================//

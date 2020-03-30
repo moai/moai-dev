@@ -28,5 +28,12 @@ MOAIFrameBufferTextureVK::~MOAIFrameBufferTextureVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIFrameBufferTextureVK::MOAIAbstractDescriptorElementVK_GetPinnedData ( VkWriteDescriptorSet& writeDescriptorSet, ZLIndex index, MOAICommandBufferVK& commandBuffer ) {
+	UNUSED ( writeDescriptorSet );
+	UNUSED ( index );
+	UNUSED ( commandBuffer );
+}
+
+//----------------------------------------------------------------//
 void MOAIFrameBufferTextureVK::MOAIFrameBufferVK_AffirmBuffers () {
 }

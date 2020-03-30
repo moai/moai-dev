@@ -2,6 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-gfx-vk/MOAIDescriptorSetArrayVK.h>
+#include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
 
@@ -66,35 +68,6 @@
 // MOAIShaderVK
 //================================================================//
 
-////----------------------------------------------------------------//
-//void MOAIShaderVK::ApplyUniforms () {
-//
-//	if ( this->mProgram ) {
-//		this->mProgram->ApplyUniforms ( this->mPendingUniformBuffer );
-//	}
-//}
-//
-////----------------------------------------------------------------//
-//void MOAIShaderVK::BindUniforms () {
-//
-//	if ( this->mProgram ) {
-//		this->mProgram->BindUniforms ();
-//	}
-//}
-
-//----------------------------------------------------------------//
-MOAIPipelineInputBodyComposerVK& MOAIShaderVK::GetGfxScript () {
-
-	assert ( this->mProgram );
-	return this->mProgram->GetGfxScript ();
-}
-
-////----------------------------------------------------------------//
-//bool MOAIShaderVK::HasDirtyUniforms () {
-//
-//	return !this->mProgram->mUniformBuffer.IsIdentical ( this->mPendingUniformBuffer );
-//}
-
 //----------------------------------------------------------------//
 MOAIShaderVK::MOAIShaderVK () {
 
@@ -122,23 +95,24 @@ MOAIShaderVK::~MOAIShaderVK () {
 void MOAIShaderVK::SetProgram ( MOAIShaderProgramVK* program ) {
 
 	this->mProgram = program;
+	MOAIPipelineLayoutVK* pipelineLayout = program ? program->GetPipelineLayout () : NULL;
 
-//	if ( program ) {
-//		program->InitUniformBuffer ( this->mPendingUniformBuffer );
-//	}
+	if ( pipelineLayout ) {
+		this->mDescriptorSetArray = new MOAIDescriptorSetArrayVK ();
+		this->mDescriptorSetArray->SetPipelineLayout ( *pipelineLayout );
+	}
 }
-
-////----------------------------------------------------------------//
-//void MOAIShaderVK::UpdateUniforms () {
-//
-//	if ( this->mProgram ) {
-//		this->mProgram->UpdateUniforms ( this->mPendingUniformBuffer );
-//	}
-//}
 
 //================================================================//
 // virtual
 //================================================================//
+
+//----------------------------------------------------------------//
+MOAIAbstractGfxScript* MOAIShaderVK::MOAIAbstractHasGfxScript_GetGfxScript () {
+
+	MOAIAbstractGfxScript* gfxScript = this->MOAIHasGfxScript::MOAIAbstractHasGfxScript_GetGfxScript ();
+	return gfxScript ? gfxScript : ( this->mProgram ? this->mProgram->GetGfxScript () : NULL );
+}
 
 //----------------------------------------------------------------//
 bool MOAIShaderVK::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {

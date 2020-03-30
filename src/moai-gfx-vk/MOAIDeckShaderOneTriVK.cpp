@@ -3,16 +3,16 @@
 
 #include "pch.h"
 #include <moai-gfx-vk/MOAICommandBufferVK.h>
-#include <moai-gfx-vk/MOAIPipelineInputChunkSchemaVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
-#include <moai-gfx-vk/MOAIPipelineInputChunkVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetVK.h>
 #include <moai-gfx-vk/MOAIDeckShaderOneTriVK.h>
 #include <moai-gfx-vk/MOAIGfxBufferSnapshotVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAIGfxUtilVK.h>
 #include <moai-gfx-vk/MOAIIndexBufferVK.h>
-#include <moai-gfx-vk/MOAIPipelineInputBodySchemaVK.h>
+#include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
 #include <moai-gfx-vk/MOAIPipelineSnapshotVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
@@ -84,14 +84,15 @@ void MOAIDeckShaderOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 	vkCmdSetScissor ( commandBuffer, 0, 1, &scissor );
 
 	// get the pipeline layout (should be moved to pipeline object)
-	MOAIPipelineInputBodySchemaVK& pipelineLayout = gfxMgr.GetShaderPresetVK ( DECK2D_SHADER )->GetProgram ()->GetPipelineLayout ();
+	MOAIPipelineLayoutVK& pipelineLayout = *gfxMgr.GetShaderPresetVK ( DECK2D_SHADER )->GetProgram ()->GetPipelineLayout ();
 
 	// initialize the descriptor set
-	MOAIPipelineInputChunkSchemaVK& descriptorSetLayout = pipelineLayout.GetDescriptorSetLayout ( 0 );
+	MOAIDescriptorSetLayoutVK& descriptorSetLayout = pipelineLayout.GetDescriptorSetLayout ( 0 );
 	
-	MOAIPipelineInputChunkVK* descriptorSet = new MOAIPipelineInputChunkVK ();
-	descriptorSet->Initialize ( descriptorSetLayout );
-	descriptorSet->SetDescriptor ( 0, 0, *this->mTexture->GetSnapshot ( commandBuffer ));
+	gfxMgr.GfxStateWillChange ();
+	MOAIDescriptorSetVK* descriptorSet = new MOAIDescriptorSetVK ();
+//	descriptorSet->Initialize ( descriptorSetLayout );
+//	descriptorSet->SetDescriptor ( 0, 0, this->mTexture );
 	
 	commandBuffer.BindDescriptorSet ( VK_PIPELINE_BIND_POINT_GRAPHICS, *descriptorSet->GetSnapshot ( commandBuffer ), pipelineLayout, 0 );
 	
