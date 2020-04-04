@@ -28,24 +28,6 @@ bool MOAIDescriptorVK::UpdateAndPin ( VkWriteDescriptorSet& writeDescriptorSet, 
 // MOAIDescriptorSetVK
 //================================================================//
 
-////----------------------------------------------------------------//
-//VkWriteDescriptorSet* MOAIDescriptorSetVK::GetWriteDescriptorSet ( ZLIndex binding, ZLIndex arrayElement ) {
-//
-//	MOAIDescriptorSetLayoutVK& layout = this->GetDependency < MOAIDescriptorSetLayoutVK >();
-//
-//	if ( binding >= layout.GetSize ()) return NULL;
-//
-//	const VkDescriptorSetLayoutBinding& layoutBinding = layout.mLayoutBindings [ binding ];
-//
-//	if ( arrayElement >= layoutBinding.descriptorCount ) return NULL;
-//
-//	// TODO: add type check as well?
-//
-//	ZLIndex index = layout.mSignatureOffsets [ binding ];
-//
-//	return &( *this )[ index + arrayElement ];
-//}
-
 //----------------------------------------------------------------//
 void MOAIDescriptorSetVK::Initialize ( MOAIDescriptorSetLayoutVK& descriptorSetLayout ) {
 
@@ -109,14 +91,6 @@ void MOAIDescriptorSetVK::Initialize ( MOAIDescriptorSetLayoutVK& descriptorSetL
 		const VkBufferView*              pTexelBufferView;
 		
 		this->mWriteDescriptors [ i ] = writeDescriptorSet;
-		
-//		descriptor.mWriter = MOAIGfxStructVK::writeDescriptorSet (
-//			VK_NULL_HANDLE, // unused by signature
-//			binding.binding,
-//			0,
-//			binding.descriptorType,
-//			binding.descriptorCount
-//		);
 	}
 }
 
@@ -135,30 +109,6 @@ void MOAIDescriptorSetVK::SetDescriptor ( ZLIndex binding, ZLIndex arrayElement,
 
 	this->mDescriptors [ binding ].mElements [ arrayElement ] = descriptor;
 }
-
-////----------------------------------------------------------------//
-//void MOAIDescriptorSetVK::SetDescriptor ( ZLIndex binding, ZLIndex arrayElement, VkBufferView* texelBufferView ) {
-//
-//	VkWriteDescriptorSet* writeDescriptorSet = this->GetWriteDescriptorSet ( binding, arrayElement );
-//	assert ( writeDescriptorSet );
-//	writeDescriptorSet->pTexelBufferView = texelBufferView;
-//}
-//
-////----------------------------------------------------------------//
-//void MOAIDescriptorSetVK::SetDescriptor ( ZLIndex binding, ZLIndex arrayElement, VkDescriptorBufferInfo* bufferInfo ) {
-//
-//	VkWriteDescriptorSet* writeDescriptorSet = this->GetWriteDescriptorSet ( binding, arrayElement );
-//	assert ( writeDescriptorSet );
-//	writeDescriptorSet->pBufferInfo = bufferInfo;
-//}
-//
-////----------------------------------------------------------------//
-//void MOAIDescriptorSetVK::SetDescriptor ( ZLIndex binding, ZLIndex arrayElement, VkDescriptorImageInfo* imageInfo ) {
-//
-//	VkWriteDescriptorSet* writeDescriptorSet = this->GetWriteDescriptorSet ( binding, arrayElement );
-//	assert ( writeDescriptorSet );
-//	writeDescriptorSet->pImageInfo = imageInfo;
-//}
 
 //================================================================//
 // virtual
