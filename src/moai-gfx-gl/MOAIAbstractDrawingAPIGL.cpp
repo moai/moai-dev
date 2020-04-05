@@ -12,11 +12,11 @@
 //----------------------------------------------------------------//
 void MOAIAbstractDrawingAPIGL::LoadShaderUniformGL ( ZLIndex globalID, ZLIndex uniformID, ZLIndex index ) {
 
-	MOAIDrawingParam::SetUniform param;
+	MOAIDrawingParamGL::LoadShaderUniform param;
 	param.mPipelineGlobalID = globalID;
 	param.mTargetUniformID = uniformID;
 	param.mTargetUniformIndex = index;
-	this->SubmitCommand < MOAIDrawingParam::SetUniform >( MOAIDrawingCmdEnumGL::LOAD_SHADER_UNIFORM_GL, param );
+	this->SubmitCommand < MOAIDrawingParamGL::LoadShaderUniform >( MOAIDrawingCmdEnumGL::LOAD_SHADER_UNIFORM_GL, param );
 }
 
 //----------------------------------------------------------------//

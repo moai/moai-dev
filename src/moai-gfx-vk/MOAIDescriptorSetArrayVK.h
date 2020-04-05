@@ -5,7 +5,7 @@
 #define MOAIDESCRIPTORSETARRAYVK_H
 
 class MOAICommandBufferVK;
-class MOAIDescriptorSetVK;
+class MOAIDescriptorSetStateVK;
 class MOAIGfxMgrVK;
 class MOAIPipelineLayoutVK;
 
@@ -18,7 +18,7 @@ class MOAIDescriptorSetArrayVK :
 protected:
 
 	ZLStrongPtr < MOAIPipelineLayoutVK >				mPipelineLayout;
-	ZLLeanArray < MOAIDescriptorSetVK >					mDescriptorSets;
+	ZLLeanArray < MOAIDescriptorSetStateVK >					mDescriptorSets;
 
 public:
 
@@ -26,7 +26,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void							Bind								( MOAICommandBufferVK& commandBuffer, VkPipelineBindPoint pipelineBindPoint );
-	MOAIDescriptorSetVK&			GetDescriptorSet					( ZLIndex index );
+	MOAIDescriptorSetStateVK&			GetDescriptorSet					( ZLIndex index );
 	MOAIPipelineLayoutVK&			GetPipelineLayout					();
 									MOAIDescriptorSetArrayVK			();
 									~MOAIDescriptorSetArrayVK			();

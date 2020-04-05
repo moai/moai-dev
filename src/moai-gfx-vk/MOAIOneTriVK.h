@@ -8,7 +8,7 @@
 
 class MOAICommandBufferVK;
 class MOAIDescriptorSetLayoutVK;
-class MOAIDescriptorSetVK;
+class MOAIDescriptorSetStateVK;
 class MOAIPipelineLayoutVK;
 class MOAIShaderProgramVK;
 class MOAIShaderVK;
@@ -53,7 +53,7 @@ private:
 	} mMatrixUniforms;
 
 	ZLStrongPtr < MOAIPipelineLayoutVK >	mPipelineLayout;
-	ZLStrongPtr < MOAIDescriptorSetVK >		mDescriptorSet;
+	ZLStrongPtr < MOAIDescriptorSetStateVK >		mDescriptorSet;
 	VkPipeline										mPipeline;
 
 	//----------------------------------------------------------------//

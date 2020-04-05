@@ -5,7 +5,7 @@
 #define	MOAITEXTUREVK_H
 
 #include <moai-gfx-vk/MOAIAbstractDescriptorElementVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetStateVK.h>
 #include <moai-gfx-vk/MOAIGfxResourceVK.h>
 
 class ZLImage;

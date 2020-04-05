@@ -18,8 +18,8 @@ protected:
 
 	friend class MOAIDescriptorSetArrayVK;
 
-	VkPipelineLayout													mPipelineLayout;
-	ZLLeanArray < ZLStrongPtr < MOAIDescriptorSetLayoutVK > >			mDescriptorSetLayouts;
+	VkPipelineLayout											mPipelineLayout;
+	ZLLeanArray < ZLStrongPtr < MOAIDescriptorSetLayoutVK > >	mDescriptorSetLayouts;
 
 	//----------------------------------------------------------------//
 	void 							_Finalize							();
@@ -49,12 +49,12 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void							AffirmPipelineLayout				();
-	MOAIDescriptorSetLayoutVK&		GetDescriptorSetLayout				( ZLIndex index );
-	void							Initialize							( MOAILogicalDeviceVK& logicalDevice, ZLSize size );
+	void							AffirmPipelineLayout		();
+	MOAIDescriptorSetLayoutVK&		GetDescriptorSetLayout		( ZLIndex index );
+	void							Initialize					( MOAILogicalDeviceVK& logicalDevice, ZLSize size );
 									MOAIPipelineLayoutVK		();
 									~MOAIPipelineLayoutVK		();
-	void							SetDescriptorSetLayout 				( ZLIndex index, MOAIDescriptorSetLayoutVK& layout );
+	void							SetDescriptorSetLayout		( ZLIndex index, MOAIDescriptorSetLayoutVK& layout );
 };
 
 #endif

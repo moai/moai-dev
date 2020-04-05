@@ -4,8 +4,8 @@
 #include "pch.h"
 #include <moai-gfx-vk/MOAICommandBufferVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetStateVK.h>
 #include <moai-gfx-vk/MOAIDeckShaderOneTriVK.h>
 #include <moai-gfx-vk/MOAIGfxBufferSnapshotVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
@@ -13,7 +13,7 @@
 #include <moai-gfx-vk/MOAIGfxUtilVK.h>
 #include <moai-gfx-vk/MOAIIndexBufferVK.h>
 #include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
-#include <moai-gfx-vk/MOAIPipelineSnapshotVK.h>
+#include <moai-gfx-vk/MOAIPipelineVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAITexture2DVK.h>
@@ -90,7 +90,7 @@ void MOAIDeckShaderOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 	MOAIDescriptorSetLayoutVK& descriptorSetLayout = pipelineLayout.GetDescriptorSetLayout ( 0 );
 	
 	gfxMgr.GfxStateWillChange ();
-	MOAIDescriptorSetVK* descriptorSet = new MOAIDescriptorSetVK ();
+	MOAIDescriptorSetStateVK* descriptorSet = new MOAIDescriptorSetStateVK ();
 //	descriptorSet->Initialize ( descriptorSetLayout );
 //	descriptorSet->SetDescriptor ( 0, 0, this->mTexture );
 	
@@ -104,7 +104,7 @@ void MOAIDeckShaderOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 		gfxMgr.GetShaderPresetVK ( DECK2D_SHADER )
 	);
 	
-	MOAIPipelineSnapshotVK* pipeline = new MOAIPipelineSnapshotVK ();
+	MOAIPipelineVK* pipeline = new MOAIPipelineVK ();
 	pipeline->Initialize ( pipelinesParams );
 	commandBuffer.BindPipeline ( VK_PIPELINE_BIND_POINT_GRAPHICS, *pipeline );
 	commandBuffer.Pin ( *pipeline );

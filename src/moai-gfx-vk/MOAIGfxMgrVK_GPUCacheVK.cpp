@@ -5,8 +5,8 @@
 
 #include <moai-gfx-vk/MOAIDescriptorSetArrayVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetStateVK.h>
 #include <moai-gfx-vk/MOAIFrameBufferVK.h>
 #include <moai-gfx-vk/MOAIGfxBufferSnapshotVK.h>
 #include <moai-gfx-vk/MOAIGfxConstsVK.h>
@@ -17,7 +17,7 @@
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAIIndexBufferVK.h>
 #include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
-#include <moai-gfx-vk/MOAIPipelineSnapshotVK.h>
+#include <moai-gfx-vk/MOAIPipelineVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
 #include <moai-gfx-vk/MOAITexture2DVK.h>
@@ -60,11 +60,11 @@ MOAIGfxMgrVK_GPUCacheVK::~MOAIGfxMgrVK_GPUCacheVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIPipelineSnapshotVK* MOAIGfxMgrVK_GPUCacheVK::AffirmPipeline ( MOAIPipelineParamsVK& params ) {
+MOAIPipelineVK* MOAIGfxMgrVK_GPUCacheVK::AffirmPipeline ( MOAIPipelineParamsVK& params ) {
 
-	ZLStrongPtr < MOAIPipelineSnapshotVK > pipeline = this->mPipelinePool [ params ];
+	ZLStrongPtr < MOAIPipelineVK > pipeline = this->mPipelinePool [ params ];
 	if ( !pipeline ) {
-		pipeline = new MOAIPipelineSnapshotVK ();
+		pipeline = new MOAIPipelineVK ();
 		pipeline->Initialize ( params );
 		this->mPipelinePool [ params ] = pipeline;
 	}
@@ -172,7 +172,7 @@ void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_DrawPrims ( MOAIGfxTopologyEnu
 		activeState.mBlendEnabled ? &activeState.mBlendMode : NULL
 	);
 	
-	MOAIPipelineSnapshotVK* pipeline = this->AffirmPipeline ( pipelinesParams );
+	MOAIPipelineVK* pipeline = this->AffirmPipeline ( pipelinesParams );
 	commandBuffer.BindPipeline ( VK_PIPELINE_BIND_POINT_GRAPHICS, *pipeline );
 	commandBuffer.Pin ( *pipeline );
 

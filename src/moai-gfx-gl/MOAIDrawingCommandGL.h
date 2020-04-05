@@ -36,7 +36,7 @@ struct MOAIDrawingCommandGL {
 
 	//----------------------------------------------------------------//
 	static void		Execute					( MOAIAbstractDrawingAPICallback* callable, MOAIDrawingCmdEnum::_ cmd, const void* rawParam );
-	static void		ExecuteSetUniformGL		( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::SetUniform& param );
+	static void		ExecuteSetUniformGL		( MOAIGfxMgr& gfxMgr, const MOAIDrawingParamGL::LoadShaderUniform& param );
 };
 
 #endif

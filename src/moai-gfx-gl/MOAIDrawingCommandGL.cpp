@@ -22,7 +22,7 @@ void MOAIDrawingCommandGL::Execute ( MOAIAbstractDrawingAPICallback* callback, M
 	switch ( cmd ) {
 	
 		case MOAIDrawingCmdEnumGL::LOAD_SHADER_UNIFORM_GL: {
-			const MOAIDrawingParam::SetUniform* param = ( const MOAIDrawingParam::SetUniform* )rawParam;
+			const MOAIDrawingParamGL::LoadShaderUniform* param = ( const MOAIDrawingParamGL::LoadShaderUniform* )rawParam;
 			MOAIDrawingCommandGL::ExecuteSetUniformGL ( gfxMgr, *param );
 			break;
 		}
@@ -30,7 +30,7 @@ void MOAIDrawingCommandGL::Execute ( MOAIAbstractDrawingAPICallback* callback, M
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawingCommandGL::ExecuteSetUniformGL ( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::SetUniform& param ) {
+void MOAIDrawingCommandGL::ExecuteSetUniformGL ( MOAIGfxMgr& gfxMgr, const MOAIDrawingParamGL::LoadShaderUniform& param ) {
 
 	MOAIShaderGL* shader = MOAICast < MOAIShaderGL >( gfxMgr.GetShader ());
 	if ( !shader ) return;

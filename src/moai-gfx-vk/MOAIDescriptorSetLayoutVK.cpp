@@ -3,8 +3,8 @@
 
 #include "pch.h"
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetStateVK.h>
 #include <moai-gfx-vk/MOAILogicalDeviceVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
@@ -104,17 +104,17 @@ MOAIDescriptorSetLayoutVK::~MOAIDescriptorSetLayoutVK () {
 }
 
 //----------------------------------------------------------------//
-MOAIDescriptorSetSnapshotVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSet ( const MOAIDescriptorSetVK& descriptorSet ) {
+MOAIDescriptorSetVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSet ( const MOAIDescriptorSetStateVK& descriptorSet ) {
 
 	if ( this->mSnapshots.size () >= MAX_DESCRIPTOR_SETS ) return NULL;
 	
-	MOAIDescriptorSetSnapshotVK* snapshot = NULL;
+	MOAIDescriptorSetVK* snapshot = NULL;
 	if ( this->mUnpinnedSnapshots.size ()) {
 		snapshot = *this->mUnpinnedSnapshots.begin ();
 		this->mUnpinnedSnapshots.erase ( snapshot );
 	}
 	else {
-		snapshot = new MOAIDescriptorSetSnapshotVK ();
+		snapshot = new MOAIDescriptorSetVK ();
 		snapshot->Retain ();
 		
 		snapshot->SetDependency < MOAIDescriptorSetLayoutVK >( *this );
@@ -127,7 +127,7 @@ MOAIDescriptorSetSnapshotVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSet ( c
 }
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetLayoutVK::RetireDescriptorSet ( MOAIDescriptorSetSnapshotVK& snapshot ) {
+void MOAIDescriptorSetLayoutVK::RetireDescriptorSet ( MOAIDescriptorSetVK& snapshot ) {
 
 	if ( snapshot == NULL ) return;
 	if ( !this->mSnapshots.contains ( &snapshot )) return;
@@ -162,7 +162,7 @@ void MOAIDescriptorSetLayoutVK::_Finalize () {
 	}
 	
 	// TODO: clean up snapshots
-	STLSet < MOAIDescriptorSetSnapshotVK* >::iterator snapshotIt = this->mSnapshots.begin ();
+	STLSet < MOAIDescriptorSetVK* >::iterator snapshotIt = this->mSnapshots.begin ();
 	for ( ; snapshotIt != this->mSnapshots.end (); ++snapshotIt ) {
 		( *snapshotIt )->Release ();
 	}

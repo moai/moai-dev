@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MOAIPIPELINESNAPSHOTVK_H
-#define MOAIPIPELINESNAPSHOTVK_H
+#ifndef MOAIPIPELINEVK_H
+#define MOAIPIPELINEVK_H
 
 #include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
 #include <moai-gfx-vk/MOAIGfxConstsVK.h>
@@ -50,9 +50,9 @@ public:
 };
 
 //================================================================//
-// MOAIPipelineSnapshotVK
+// MOAIPipelineVK
 //================================================================//
-class MOAIPipelineSnapshotVK :
+class MOAIPipelineVK :
 	public MOAIAbstractSnapshotVK,
 	public ZLFinalizable,
 	public ZLFinalizable_DependsOn < MOAILogicalDeviceVK > {
@@ -72,7 +72,7 @@ protected:
 
 public:
 
-	IMPLEMENT_DEPENDS_ON ( MOAIPipelineSnapshotVK )
+	IMPLEMENT_DEPENDS_ON ( MOAIPipelineVK )
 
 	//----------------------------------------------------------------//
 	operator bool () const {
@@ -153,12 +153,12 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	MOAIPipelineSnapshotVK () :
+	MOAIPipelineVK () :
 		mPipeline ( VK_NULL_HANDLE ) {
 	}
 	
 	//----------------------------------------------------------------//
-	~MOAIPipelineSnapshotVK () {
+	~MOAIPipelineVK () {
 	
 		this->Destruct ();
 	}

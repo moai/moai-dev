@@ -5,8 +5,8 @@
 #define MOAIDESCRIPTORSETLAYOUTVK_H
 
 class MOAILogicalDeviceVK;
+class MOAIDescriptorSetStateVK;
 class MOAIDescriptorSetVK;
-class MOAIDescriptorSetSnapshotVK;
 
 //================================================================//
 // MOAIDescriptorSetLayoutVK
@@ -17,9 +17,9 @@ class MOAIDescriptorSetLayoutVK :
 	public ZLFinalizable_DependsOn < MOAILogicalDeviceVK > {
 private:
 
+	friend class MOAIDescriptorSetStateVK;
 	friend class MOAIDescriptorSetVK;
-	friend class MOAIDescriptorSetSnapshotVK;
-	friend class MOAIDescriptorSetVK;
+	friend class MOAIDescriptorSetStateVK;
 
 	static const ZLSize MAX_DESCRIPTOR_SETS = 16;
 
@@ -30,8 +30,8 @@ private:
 	VkDescriptorPool								mPool; // TODO: need to create more pools on the fly
 	VkDescriptorSetLayout							mLayout;
 
-	STLSet < MOAIDescriptorSetSnapshotVK* >			mSnapshots;
-	STLSet < MOAIDescriptorSetSnapshotVK* >			mUnpinnedSnapshots;
+	STLSet < MOAIDescriptorSetVK* >			mSnapshots;
+	STLSet < MOAIDescriptorSetVK* >			mUnpinnedSnapshots;
 
 	//----------------------------------------------------------------//
 	void							_Finalize 					();
@@ -65,8 +65,8 @@ public:
 	void							Initialize							( MOAILogicalDeviceVK& logicalDevice, ZLSize totalBindings );
 									MOAIDescriptorSetLayoutVK			();
 									~MOAIDescriptorSetLayoutVK			();
-	MOAIDescriptorSetSnapshotVK*	ProcureDescriptorSet				( const MOAIDescriptorSetVK& descriptorSet );
-	void							RetireDescriptorSet					( MOAIDescriptorSetSnapshotVK& snapshot );
+	MOAIDescriptorSetVK*	ProcureDescriptorSet				( const MOAIDescriptorSetStateVK& descriptorSet );
+	void							RetireDescriptorSet					( MOAIDescriptorSetVK& snapshot );
 	void							SetBinding							( ZLIndex index, VkDescriptorType descriptorType, VkShaderStageFlags stageFlags, ZLSize descriptorCount = 1 );
 };
 
