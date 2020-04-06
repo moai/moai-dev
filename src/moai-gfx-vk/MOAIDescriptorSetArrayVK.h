@@ -17,8 +17,8 @@ class MOAIDescriptorSetArrayVK :
 	public virtual ZLFinalizable {
 protected:
 
-	ZLStrongPtr < MOAIPipelineLayoutVK >				mPipelineLayout;
-	ZLLeanArray < MOAIDescriptorSetStateVK >					mDescriptorSets;
+	ZLStrongPtr < MOAIPipelineLayoutVK >		mPipelineLayout;
+	ZLLeanArray < MOAIDescriptorSetStateVK >	mDescriptorSets;
 
 public:
 

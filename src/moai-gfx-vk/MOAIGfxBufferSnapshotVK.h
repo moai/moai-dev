@@ -30,6 +30,7 @@ protected:
 
 	//----------------------------------------------------------------//
 	void 		_Finalize 							();
+	void		MOAIAbstractSnapshotVK_OnPin		( MOAICommandBufferVK& commandBuffer ) { UNUSED ( commandBuffer ); }
 	void		MOAIAbstractSnapshotVK_OnUnpin		() {}
 
 public:

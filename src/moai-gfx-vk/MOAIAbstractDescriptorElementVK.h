@@ -1,36 +1,34 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MOAIABSTRACTDESCRIPTORELEMENT_H
-#define MOAIABSTRACTDESCRIPTORELEMENT_H
+#ifndef MOAIABSTRACTDESCRIPTORELEMENTVK_H
+#define MOAIABSTRACTDESCRIPTORELEMENTVK_H
 
-class MOAICommandBufferVK;
+#include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
+
+class MOAIDescriptorSetVK;
 
 //================================================================//
 // MOAIAbstractDescriptorElementVK
 //================================================================//
 class MOAIAbstractDescriptorElementVK :
-	virtual public ZLRefCountedObject {
+	public virtual MOAIAbstractSnapshotVK {
 protected:
 
+	friend class MOAIDescriptorSetVK;
+
+	STLSet < MOAIDescriptorSetVK* >					mDescriptorSets;
+
 	//----------------------------------------------------------------//
-	virtual void		MOAIAbstractDescriptorElementVK_GetPinnedData		( VkWriteDescriptorSet& writeDescriptorSet, ZLIndex index, MOAICommandBufferVK& commandBuffer ) = 0;
+	void		AffirmDescriptorSet					( MOAIDescriptorSetVK& set );
+	void		Invalidate							();
+	void		RemoveDescriptorSet					( MOAIDescriptorSetVK& set );
 
 public:
 	
 	//----------------------------------------------------------------//
-	void GetPinnedData ( VkWriteDescriptorSet& writeDescriptorSet, ZLIndex index, MOAICommandBufferVK& commandBuffer ) {
-	
-		this->MOAIAbstractDescriptorElementVK_GetPinnedData ( writeDescriptorSet, index, commandBuffer );
-	}
-	
-	//----------------------------------------------------------------//
-	MOAIAbstractDescriptorElementVK () {
-	}
-	
-	//----------------------------------------------------------------//
-	virtual ~MOAIAbstractDescriptorElementVK () {
-	}
+				MOAIAbstractDescriptorElementVK		();
+				~MOAIAbstractDescriptorElementVK	();
 };
 
 #endif

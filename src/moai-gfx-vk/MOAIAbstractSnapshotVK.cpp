@@ -26,10 +26,11 @@ MOAIAbstractSnapshotVK::~MOAIAbstractSnapshotVK () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractSnapshotVK::Pin () {
+void MOAIAbstractSnapshotVK::Pin ( MOAICommandBufferVK& commandBuffer ) {
 
 	this->Retain ();
 	this->mCommandBufferRefCount++;
+	this->MOAIAbstractSnapshotVK_OnPin ( commandBuffer );
 }
 
 //----------------------------------------------------------------//

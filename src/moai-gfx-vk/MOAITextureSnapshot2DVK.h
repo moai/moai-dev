@@ -4,7 +4,7 @@
 #ifndef	MOAITEXTURESNAPSHOT2DVK_H
 #define	MOAITEXTURESNAPSHOT2DVK_H
 
-#include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
+#include <moai-gfx-vk/MOAIAbstractDescriptorElementVK.h>
 #include <moai-gfx-vk/MOAILogicalDeviceVK.h>
 #include <moai-gfx-vk/MOAITextureVK.h>
 
@@ -15,7 +15,7 @@ class ZLTextureFormat;
 // MOAITextureSnapshot2DVK
 //================================================================//
 class MOAITextureSnapshot2DVK :
-	public virtual MOAIAbstractSnapshotVK,
+	public virtual MOAIAbstractDescriptorElementVK,
 	public ZLFinalizable,
 	public ZLFinalizable_DependsOn < MOAILogicalDeviceVK > {
 protected:
@@ -30,6 +30,7 @@ protected:
 
 	//----------------------------------------------------------------//
 	void 		_Finalize 							();
+	void		MOAIAbstractSnapshotVK_OnPin		( MOAICommandBufferVK& commandBuffer ) { UNUSED ( commandBuffer ); }
 	void		MOAIAbstractSnapshotVK_OnUnpin		() {}
 
 public:

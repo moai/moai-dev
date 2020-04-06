@@ -91,6 +91,11 @@ void MOAIDescriptorSetLayoutVK::Initialize ( MOAILogicalDeviceVK& logicalDevice,
 }
 
 //----------------------------------------------------------------//
+void MOAIDescriptorSetLayoutVK::InvalidateDescriptorSet ( MOAIDescriptorSetVK& snapshot ) {
+	UNUSED ( snapshot );
+}
+
+//----------------------------------------------------------------//
 MOAIDescriptorSetLayoutVK::MOAIDescriptorSetLayoutVK () :
 	mPool ( VK_NULL_HANDLE ),
 	mLayout ( VK_NULL_HANDLE ),
@@ -104,14 +109,19 @@ MOAIDescriptorSetLayoutVK::~MOAIDescriptorSetLayoutVK () {
 }
 
 //----------------------------------------------------------------//
-MOAIDescriptorSetVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSet ( const MOAIDescriptorSetStateVK& descriptorSet ) {
+MOAIDescriptorSetVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSet ( const MOAIDescriptorSetStateVK& descriptorSetState ) {
 
-	if ( this->mSnapshots.size () >= MAX_DESCRIPTOR_SETS ) return NULL;
+	if ( this->mAllSnapshots.size () >= MAX_DESCRIPTOR_SETS ) return NULL;
 	
 	MOAIDescriptorSetVK* snapshot = NULL;
-	if ( this->mUnpinnedSnapshots.size ()) {
-		snapshot = *this->mUnpinnedSnapshots.begin ();
-		this->mUnpinnedSnapshots.erase ( snapshot );
+	
+//	MOAIDescriptorSetKeyVK key ( descriptorSetState.mSignature );
+//	if ( this->mActiveSnapshots.contains ( key )) {
+//	}
+	
+	if ( this->mExpiredSnapshots.size ()) {
+		snapshot = *this->mExpiredSnapshots.begin ();
+		this->mExpiredSnapshots.erase ( snapshot );
 	}
 	else {
 		snapshot = new MOAIDescriptorSetVK ();
@@ -121,7 +131,7 @@ MOAIDescriptorSetVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSet ( const MOA
 		VkDescriptorSetAllocateInfo allocInfo = MOAIGfxStructVK::descriptorSetAllocateInfo ( this->mPool, &this->mLayout );
 		VK_CHECK_RESULT ( vkAllocateDescriptorSets ( this->GetDependency < MOAILogicalDeviceVK >(), &allocInfo, &snapshot->mDescriptorSet ));
 		
-		this->mSnapshots.insert ( snapshot );
+		this->mAllSnapshots.insert ( snapshot );
 	}
 	return snapshot;
 }
@@ -130,9 +140,9 @@ MOAIDescriptorSetVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSet ( const MOA
 void MOAIDescriptorSetLayoutVK::RetireDescriptorSet ( MOAIDescriptorSetVK& snapshot ) {
 
 	if ( snapshot == NULL ) return;
-	if ( !this->mSnapshots.contains ( &snapshot )) return;
+	if ( !this->mAllSnapshots.contains ( &snapshot )) return;
 
-	this->mUnpinnedSnapshots.insert ( &snapshot );
+	this->mExpiredSnapshots.insert ( &snapshot );
 }
 
 //----------------------------------------------------------------//
@@ -162,8 +172,8 @@ void MOAIDescriptorSetLayoutVK::_Finalize () {
 	}
 	
 	// TODO: clean up snapshots
-	STLSet < MOAIDescriptorSetVK* >::iterator snapshotIt = this->mSnapshots.begin ();
-	for ( ; snapshotIt != this->mSnapshots.end (); ++snapshotIt ) {
+	STLSet < MOAIDescriptorSetVK* >::iterator snapshotIt = this->mAllSnapshots.begin ();
+	for ( ; snapshotIt != this->mAllSnapshots.end (); ++snapshotIt ) {
 		( *snapshotIt )->Release ();
 	}
 }

@@ -45,43 +45,43 @@ MOAIVertexFormat* MOAIGfxMgr::AffirmVertexFormat ( MOAILuaState& state, int idx 
 }
 
 //----------------------------------------------------------------//
-MOAIGfxScriptRetained* MOAIGfxMgr::CreateGfxScriptRetained () const {
+MOAIGfxScriptRetained* MOAIGfxMgr::CreateGfxScriptRetained () {
 
 	return this->MOAIGfxMgr_CreateGfxScriptRetained ();
 }
 
 //----------------------------------------------------------------//
-MOAIImageTexture* MOAIGfxMgr::CreateImageTexture () const {
+MOAIImageTexture* MOAIGfxMgr::CreateImageTexture () {
 
 	return this->MOAIGfxMgr_CreateImageTexture ();
 }
 
 //----------------------------------------------------------------//
-MOAIIndexBuffer* MOAIGfxMgr::CreateIndexBuffer () const {
+MOAIIndexBuffer* MOAIGfxMgr::CreateIndexBuffer () {
 
 	return this->MOAIGfxMgr_CreateIndexBuffer ();
 }
 
 //----------------------------------------------------------------//
-MOAITexture2D* MOAIGfxMgr::CreateTexture2D () const {
+MOAITexture2D* MOAIGfxMgr::CreateTexture2D () {
 
 	return this->MOAIGfxMgr_CreateTexture2D ();
 }
 
 //----------------------------------------------------------------//
-MOAIVertexArray* MOAIGfxMgr::CreateVertexArray () const {
+MOAIVertexArray* MOAIGfxMgr::CreateVertexArray () {
 
 	return this->MOAIGfxMgr_CreateVertexArray ();
 }
 
 //----------------------------------------------------------------//
-MOAIVertexBuffer* MOAIGfxMgr::CreateVertexBuffer () const {
+MOAIVertexBuffer* MOAIGfxMgr::CreateVertexBuffer () {
 
 	return this->MOAIGfxMgr_CreateVertexBuffer ();
 }
 
 //----------------------------------------------------------------//
-MOAIVertexFormat* MOAIGfxMgr::CreateVertexFormat () const {
+MOAIVertexFormat* MOAIGfxMgr::CreateVertexFormat () {
 
 	return this->MOAIGfxMgr_CreateVertexFormat ();
 }

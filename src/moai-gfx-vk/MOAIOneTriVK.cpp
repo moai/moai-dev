@@ -289,7 +289,7 @@ void MOAIOneTriVK::UpdateMatrices ( u32 width, u32 height ) {
 		MOAILogicalDeviceVK& logicalDevice = gfxMgr.GetLogicalDevice ();
 	
 		this->mUniforms = new MOAIUniformBufferVK ();
-		this->mUniforms->Initialize ( sizeof ( mMatrixUniforms ));
+		this->mUniforms->Initialize ( logicalDevice, sizeof ( mMatrixUniforms ));
 	}
 
 	float aspect		= ( float )width / ( float )height;

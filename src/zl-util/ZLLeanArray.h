@@ -49,7 +49,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	ZLSize BufferSize () {
+	ZLSize BufferSize () const {
 		return this->mSize * sizeof ( TYPE );
 	}
 

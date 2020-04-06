@@ -25,12 +25,14 @@ void MOAICommandBufferVK::Begin () {
 //----------------------------------------------------------------//
 void MOAICommandBufferVK::BindDescriptorSet ( VkPipelineBindPoint pipelineBindPoint, MOAIDescriptorSetVK& descriptorSet, MOAIPipelineLayoutVK& pipelineLayout, u32 firstSet ) {
 
+	this->Pin ( descriptorSet );
 	vkCmdBindDescriptorSets ( this->mCommandBuffer, pipelineBindPoint, pipelineLayout, firstSet, 1, descriptorSet, 0, NULL );
 }
 
 //----------------------------------------------------------------//
 void MOAICommandBufferVK::BindPipeline ( VkPipelineBindPoint pipelineBindPoint, MOAIPipelineVK& pipeline ) {
 
+	this->Pin ( pipeline );
 	vkCmdBindPipeline ( this->mCommandBuffer, pipelineBindPoint, pipeline );
 }
 
@@ -67,7 +69,7 @@ MOAICommandBufferVK::~MOAICommandBufferVK () {
 void MOAICommandBufferVK::Pin ( MOAIAbstractSnapshotVK& snapshot ) {
 
 	if ( !this->mSnapshots.contains ( &snapshot )) {
-		snapshot.Pin ();
+		snapshot.Pin ( *this );
 		this->mSnapshots [ &snapshot ] = &snapshot;
 	}
 }

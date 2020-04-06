@@ -2,28 +2,13 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx-vk/MOAIAbstractDescriptorElementVK.h>
+#include <moai-gfx-vk/MOAIAbstractDescriptorElementStateVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetStateVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
-
-//================================================================//
-// MOAIDescriptorStateVK
-//================================================================//
 	
-//----------------------------------------------------------------//
-bool MOAIDescriptorStateVK::UpdateAndPin ( VkWriteDescriptorSet& writeDescriptorSet, ZLIndex index, MOAICommandBufferVK& commandBuffer ) {
-
-	for ( ZLIndex i = 0; i < this->mElements.Size (); ++i ) {
-		MOAIAbstractDescriptorElementVK* element = this->mElements [ i ];
-		if ( !element ) return false;
-		this->mElements [ i ]->GetPinnedData ( writeDescriptorSet, index, commandBuffer );
-	}
-	return true;
-}
-
 //================================================================//
 // MOAIDescriptorSetStateVK
 //================================================================//
@@ -32,11 +17,13 @@ bool MOAIDescriptorStateVK::UpdateAndPin ( VkWriteDescriptorSet& writeDescriptor
 void MOAIDescriptorSetStateVK::Initialize ( MOAIDescriptorSetLayoutVK& descriptorSetLayout ) {
 
 	this->SetDependency < MOAIDescriptorSetLayoutVK >( descriptorSetLayout );
+	this->mSignature.Resize ( descriptorSetLayout.mSignatureSize, NULL );
 	
 	ZLSize nBindings = descriptorSetLayout.GetSize ();
 
 	this->mDescriptors.Init ( nBindings );
 	this->mWriteDescriptors.Init ( nBindings );
+	this->mMutableWriteDescriptors.Init ( nBindings );
 
 	ZLIndex writeIndex = 0;
 	for ( ZLIndex i = 0; i < nBindings; ++i ) {
@@ -46,8 +33,8 @@ void MOAIDescriptorSetStateVK::Initialize ( MOAIDescriptorSetLayoutVK& descripto
 
 		descriptor.mElements.Init ( binding.descriptorCount );
 		
-		
-		VkWriteDescriptorSet writeDescriptorSet;
+		VkWriteDescriptorSet& writeDescriptorSet = this->mWriteDescriptors [ i ];
+		MOAIMutableWriteDescriptorSetVK& mutableWriteDescriptorSet = this->mMutableWriteDescriptors [ i ];
 		
 		writeDescriptorSet.sType				= VK_STRUCTURE_TYPE_WRITE_DESCRIPTOR_SET;
 		writeDescriptorSet.pNext				= NULL;
@@ -55,6 +42,7 @@ void MOAIDescriptorSetStateVK::Initialize ( MOAIDescriptorSetLayoutVK& descripto
 		writeDescriptorSet.descriptorType		= binding.descriptorType;
 		writeDescriptorSet.dstBinding			= binding.binding;
 		writeDescriptorSet.dstArrayElement		= 0;
+		writeDescriptorSet.descriptorCount		= binding.descriptorCount;
 		writeDescriptorSet.pImageInfo			= NULL;
 		writeDescriptorSet.pBufferInfo			= NULL;
 		writeDescriptorSet.pTexelBufferView		= NULL;
@@ -76,7 +64,8 @@ void MOAIDescriptorSetStateVK::Initialize ( MOAIDescriptorSetLayoutVK& descripto
 			
 				// TODO: obviously, this is wrong - all types are treated as VkDescriptorImageInfo (for now)
 				descriptor.mInfoArray.Init ( binding.descriptorCount * sizeof ( VkDescriptorImageInfo ));
-				writeDescriptorSet.pImageInfo = ( const VkDescriptorImageInfo* )descriptor.mInfoArray.GetBuffer ();
+				mutableWriteDescriptorSet.mImageInfo = ( VkDescriptorImageInfo* )descriptor.mInfoArray.GetBuffer ();
+				writeDescriptorSet.pImageInfo = mutableWriteDescriptorSet.mImageInfo;
 //				VkDescriptorImageInfo
 //				VkDescriptorBufferInfo
 //				VkBufferView
@@ -105,7 +94,7 @@ MOAIDescriptorSetStateVK::~MOAIDescriptorSetStateVK () {
 }
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetStateVK::SetDescriptor ( ZLIndex binding, ZLIndex arrayElement, MOAIAbstractDescriptorElementVK* descriptor ) {
+void MOAIDescriptorSetStateVK::SetDescriptor ( ZLIndex binding, ZLIndex arrayElement, MOAIAbstractDescriptorElementStateVK* descriptor ) {
 
 	this->mDescriptors [ binding ].mElements [ arrayElement ] = descriptor;
 }
@@ -115,26 +104,41 @@ void MOAIDescriptorSetStateVK::SetDescriptor ( ZLIndex binding, ZLIndex arrayEle
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIDescriptorSetVK* MOAIDescriptorSetStateVK::MOAIAbstractSnapshotFactoryVK_GetSnapshot ( MOAICommandBufferVK& commandBuffer ) {
-	UNUSED ( commandBuffer );
+MOAIDescriptorSetVK* MOAIDescriptorSetStateVK::MOAIAbstractSnapshotFactoryVK_GetSnapshot () {
 
 	if ( !this->HasDependency < MOAIDescriptorSetLayoutVK >()) return NULL;
-	
-	MOAIDescriptorSetLayoutVK& descriptorSetLayout = this->GetDependency < MOAIDescriptorSetLayoutVK >();
-	
-	MOAIDescriptorSetVK* snapshot = descriptorSetLayout.ProcureDescriptorSet ( *this );
-	if ( !snapshot ) return NULL;
 
-	MOAILogicalDeviceVK& logicalDevice = descriptorSetLayout.GetDependency < MOAILogicalDeviceVK >();
-
+	// TODO: can skip a lot of this if no pending change
+	ZLSize sigTop = 0;
 	ZLSize totalSets = this->mDescriptors.Size ();
 	for ( ZLIndex i = 0; i < totalSets; ++i ) {
-		VkWriteDescriptorSet& writeDescriptorSet = this->mWriteDescriptors [ i ];
-		bool result = this->mDescriptors [ i ].UpdateAndPin ( writeDescriptorSet, i, commandBuffer );
-		assert ( result );
-		writeDescriptorSet.dstSet = *snapshot;
-	}
-	vkUpdateDescriptorSets ( logicalDevice, ( u32 )totalSets, this->mWriteDescriptors.GetBuffer (), 0, NULL );
 	
-	return snapshot;
+		MOAIMutableWriteDescriptorSetVK& mutableWriteDescriptorSet = this->mMutableWriteDescriptors [ i ];
+		MOAIDescriptorStateVK& descriptorState = this->mDescriptors [ i ];
+		
+		for ( ZLIndex j = 0; j < descriptorState.mElements.Size (); ++j ) {
+			MOAIAbstractDescriptorElementStateVK* elementState = descriptorState.mElements [ i ];
+			assert ( elementState );
+						
+			MOAIAbstractDescriptorElementVK* element = descriptorState.mElements [ i ]->GetElement ( mutableWriteDescriptorSet, j );
+			this->mSignature [ sigTop++ ] = element;
+		}
+	}
+	
+	// TODO: cache this and only invalidate if pending change
+	MOAIDescriptorSetLayoutVK& descriptorSetLayout = this->GetDependency < MOAIDescriptorSetLayoutVK >();
+	MOAIDescriptorSetVK* descriptorSet = descriptorSetLayout.ProcureDescriptorSet ( *this );
+	assert ( descriptorSet );
+	if ( !descriptorSet->IsValid ()) {
+		
+		for ( ZLIndex i = 0; i < totalSets; ++i ) {
+			this->mWriteDescriptors [ i ].dstSet = *descriptorSet;
+		}
+		descriptorSet->mSignature.CloneFrom ( this->mSignature );
+		descriptorSet->mIsValid = true;
+		
+		MOAILogicalDeviceVK& logicalDevice = descriptorSetLayout.GetDependency < MOAILogicalDeviceVK >();
+		vkUpdateDescriptorSets ( logicalDevice, ( u32 )totalSets, this->mWriteDescriptors.GetBuffer (), 0, NULL );
+	}
+	return descriptorSet;
 }

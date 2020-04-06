@@ -150,8 +150,11 @@ void MOAIDynamicOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 	commandBuffer.BindPipeline ( VK_PIPELINE_BIND_POINT_GRAPHICS, *pipeline );
 	commandBuffer.Pin ( *pipeline );
 
-	MOAIGfxBufferSnapshotVK* vertexBuffer = this->mVertices->GetSnapshot ( commandBuffer );
-	MOAIGfxBufferSnapshotVK* indexBuffer = this->mIndices->GetSnapshot ( commandBuffer );
+	MOAIGfxBufferSnapshotVK* vertexBuffer = this->mVertices->GetSnapshot ();
+	MOAIGfxBufferSnapshotVK* indexBuffer = this->mIndices->GetSnapshot ();
+
+	commandBuffer.Pin ( *vertexBuffer );
+	commandBuffer.Pin ( *indexBuffer );
 
 	VkDeviceSize offsets [] = { 0 };
 	vkCmdBindVertexBuffers ( commandBuffer, 0, 1, &vertexBuffer->GetBuffer (), offsets );

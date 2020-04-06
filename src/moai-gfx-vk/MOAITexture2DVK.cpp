@@ -30,16 +30,17 @@ MOAITexture2DVK::~MOAITexture2DVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITexture2DVK::MOAIAbstractDescriptorElementVK_GetPinnedData ( VkWriteDescriptorSet& writeDescriptorSet, ZLIndex index, MOAICommandBufferVK& commandBuffer ) {
+MOAIAbstractDescriptorElementVK* MOAITexture2DVK::MOAIAbstractDescriptorElementStateVK_GetElement ( MOAIMutableWriteDescriptorSetVK& writeDescriptorSet, ZLIndex index ) {
 
-	assert ( writeDescriptorSet.pImageInfo );
-	VkDescriptorImageInfo& imageInfo = *this->GetSnapshot ( commandBuffer );
-	(( VkDescriptorImageInfo* )writeDescriptorSet.pImageInfo )[ index ] = imageInfo; // TODO: casting away const is gross; fix it later
+	assert ( writeDescriptorSet.mImageInfo );
+	MOAITextureSnapshot2DVK* snapshot = this->GetSnapshot ();
+	VkDescriptorImageInfo& imageInfo = *snapshot;
+	writeDescriptorSet.mImageInfo [ index ] = imageInfo;
+	return snapshot;
 }
 
 //----------------------------------------------------------------//
-MOAITextureSnapshot2DVK* MOAITexture2DVK::MOAIAbstractSnapshotFactoryVK_GetSnapshot ( MOAICommandBufferVK& commandBuffer ) {
-	UNUSED ( commandBuffer );
+MOAITextureSnapshot2DVK* MOAITexture2DVK::MOAIAbstractSnapshotFactoryVK_GetSnapshot () {
 
 	if ( !this->mSnapshot && this->mImage && this->mImage->IsOK ()) {
 

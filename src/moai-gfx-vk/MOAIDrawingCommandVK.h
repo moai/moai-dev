@@ -6,7 +6,7 @@
 
 #include <moai-gfx/MOAIGfxConsts.h>
 
-class MOAIAbstractDescriptorElementVK;
+class MOAIAbstractDescriptorElementStateVK;
 
 //================================================================//
 // MOAIDrawingCmdEnumVK
@@ -38,7 +38,7 @@ namespace MOAIDrawingParamVK {
 	struct LoadDescriptorElement :
 		public LoadDescriptor {
 		
-		MOAIAbstractDescriptorElementVK*	mElement;
+		MOAIAbstractDescriptorElementStateVK*	mElement;
 	};
 
 	//----------------------------------------------------------------//

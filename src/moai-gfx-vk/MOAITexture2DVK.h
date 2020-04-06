@@ -4,6 +4,7 @@
 #ifndef	MOAITEXTURE2DVK_H
 #define	MOAITEXTURE2DVK_H
 
+#include <moai-gfx-vk/MOAIAbstractDescriptorElementStateVK.h>
 #include <moai-gfx-vk/MOAIAbstractSnapshotFactoryVK.h>
 #include <moai-gfx-vk/MOAILogicalDeviceVK.h>
 #include <moai-gfx-vk/MOAITextureVK.h>
@@ -21,16 +22,16 @@ class ZLTextureFormat;
 class MOAITexture2DVK :
 	public virtual MOAITexture2D,
 	public virtual MOAITextureVK,
-	public MOAIAbstractSnapshotFactoryVK < MOAITextureSnapshot2DVK > {
+	public virtual MOAIAbstractSnapshotFactoryVK < MOAITextureSnapshot2DVK > {
 protected:
 
 	ZLStrongPtr < MOAITextureSnapshot2DVK > mSnapshot;
 
 	//----------------------------------------------------------------//
-	MOAITextureSnapshot2DVK*	MOAIAbstractSnapshotFactoryVK_GetSnapshot		( MOAICommandBufferVK& commandBuffer );
-	void						MOAIAbstractDescriptorElementVK_GetPinnedData	( VkWriteDescriptorSet& writeDescriptorSet, ZLIndex index, MOAICommandBufferVK& commandBuffer );
-	bool						MOAIGfxResource_FinishLoading					();
-	bool						MOAIGfxResource_IsReadyForUse					() const;
+	MOAITextureSnapshot2DVK*			MOAIAbstractSnapshotFactoryVK_GetSnapshot			();
+	MOAIAbstractDescriptorElementVK*	MOAIAbstractDescriptorElementStateVK_GetElement		( MOAIMutableWriteDescriptorSetVK& writeDescriptorSet, ZLIndex index );
+	bool								MOAIGfxResource_FinishLoading						();
+	bool								MOAIGfxResource_IsReadyForUse						() const;
 
 public:
 			

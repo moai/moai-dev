@@ -30,8 +30,9 @@ private:
 	VkDescriptorPool								mPool; // TODO: need to create more pools on the fly
 	VkDescriptorSetLayout							mLayout;
 
-	STLSet < MOAIDescriptorSetVK* >			mSnapshots;
-	STLSet < MOAIDescriptorSetVK* >			mUnpinnedSnapshots;
+	STLSet < MOAIDescriptorSetVK* >								mAllSnapshots;
+//	STLMap < MOAIDescriptorSetKeyVK, MOAIDescriptorSetVK* >		mActiveSnapshots;
+	STLSet < MOAIDescriptorSetVK* >								mExpiredSnapshots;
 
 	//----------------------------------------------------------------//
 	void							_Finalize 					();
@@ -61,13 +62,14 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	void							AffirmDescriptorSetLayout			();
-	void							Initialize							( MOAILogicalDeviceVK& logicalDevice, ZLSize totalBindings );
-									MOAIDescriptorSetLayoutVK			();
-									~MOAIDescriptorSetLayoutVK			();
-	MOAIDescriptorSetVK*	ProcureDescriptorSet				( const MOAIDescriptorSetStateVK& descriptorSet );
-	void							RetireDescriptorSet					( MOAIDescriptorSetVK& snapshot );
-	void							SetBinding							( ZLIndex index, VkDescriptorType descriptorType, VkShaderStageFlags stageFlags, ZLSize descriptorCount = 1 );
+	void						AffirmDescriptorSetLayout			();
+	void						Initialize							( MOAILogicalDeviceVK& logicalDevice, ZLSize totalBindings );
+	void						InvalidateDescriptorSet				( MOAIDescriptorSetVK& snapshot );
+								MOAIDescriptorSetLayoutVK			();
+								~MOAIDescriptorSetLayoutVK			();
+	MOAIDescriptorSetVK*		ProcureDescriptorSet				( const MOAIDescriptorSetStateVK& descriptorSetState );
+	void						RetireDescriptorSet					( MOAIDescriptorSetVK& snapshot );
+	void						SetBinding							( ZLIndex index, VkDescriptorType descriptorType, VkShaderStageFlags stageFlags, ZLSize descriptorCount = 1 );
 };
 
 #endif

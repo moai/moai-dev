@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx-vk/MOAIAbstractDescriptorElementVK.h>
+#include <moai-gfx-vk/MOAIAbstractDescriptorElementStateVK.h>
 #include <moai-gfx-vk/MOAIAbstractDrawingAPIVK.h>
 #include <moai-gfx-vk/MOAIDrawingCommandVK.h>
 
@@ -11,7 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAbstractDrawingAPIVK::LoadDescriptorElementVK ( ZLIndex descriptorSetID, ZLIndex binding, ZLIndex arrayElement, MOAIAbstractDescriptorElementVK& element ) {
+void MOAIAbstractDrawingAPIVK::LoadDescriptorElementVK ( ZLIndex descriptorSetID, ZLIndex binding, ZLIndex arrayElement, MOAIAbstractDescriptorElementStateVK& element ) {
 	
 	MOAIDrawingParamVK::LoadDescriptorElement param;
 	param.mDescriptorSetID		= descriptorSetID;

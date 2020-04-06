@@ -94,7 +94,7 @@ void MOAIDeckShaderOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 //	descriptorSet->Initialize ( descriptorSetLayout );
 //	descriptorSet->SetDescriptor ( 0, 0, this->mTexture );
 	
-	commandBuffer.BindDescriptorSet ( VK_PIPELINE_BIND_POINT_GRAPHICS, *descriptorSet->GetSnapshot ( commandBuffer ), pipelineLayout, 0 );
+	commandBuffer.BindDescriptorSet ( VK_PIPELINE_BIND_POINT_GRAPHICS, *descriptorSet->GetSnapshot (), pipelineLayout, 0 );
 	
 	MOAIPipelineParamsVK pipelinesParams (
 		logicalDevice,
@@ -109,8 +109,11 @@ void MOAIDeckShaderOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 	commandBuffer.BindPipeline ( VK_PIPELINE_BIND_POINT_GRAPHICS, *pipeline );
 	commandBuffer.Pin ( *pipeline );
 
-	MOAIGfxBufferSnapshotVK* vertexBuffer = this->mVertices->GetSnapshot ( commandBuffer );
-	MOAIGfxBufferSnapshotVK* indexBuffer = this->mIndices->GetSnapshot ( commandBuffer );
+	MOAIGfxBufferSnapshotVK* vertexBuffer = this->mVertices->GetSnapshot ();
+	MOAIGfxBufferSnapshotVK* indexBuffer = this->mIndices->GetSnapshot ();
+
+	commandBuffer.Pin ( *vertexBuffer );
+	commandBuffer.Pin ( *indexBuffer );
 
 	VkDeviceSize offsets [] = { 0 };
 	vkCmdBindVertexBuffers ( commandBuffer, 0, 1, &vertexBuffer->GetBuffer (), offsets );

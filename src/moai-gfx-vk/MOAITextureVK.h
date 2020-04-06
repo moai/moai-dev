@@ -4,7 +4,7 @@
 #ifndef	MOAITEXTUREVK_H
 #define	MOAITEXTUREVK_H
 
-#include <moai-gfx-vk/MOAIAbstractDescriptorElementVK.h>
+#include <moai-gfx-vk/MOAIAbstractDescriptorElementStateVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetStateVK.h>
 #include <moai-gfx-vk/MOAIGfxResourceVK.h>
 
@@ -26,7 +26,7 @@ class ZLImage;
 class MOAITextureVK :
 	public virtual MOAITexture,
 	public virtual MOAIGfxResourceVK,
-	public virtual MOAIAbstractDescriptorElementVK {
+	public virtual MOAIAbstractDescriptorElementStateVK {
 public:
 	
 	//----------------------------------------------------------------//

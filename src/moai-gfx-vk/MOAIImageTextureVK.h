@@ -21,7 +21,7 @@ class MOAIImageTextureVK :
 private:
 
 	//----------------------------------------------------------------//
-	void			MOAIAbstractDescriptorElementVK_GetPinnedData	( VkWriteDescriptorSet& writeDescriptorSet, ZLIndex index, MOAICommandBufferVK& commandBuffer );
+	MOAIAbstractDescriptorElementVK*	MOAIAbstractDescriptorElementStateVK_GetElement		( MOAIMutableWriteDescriptorSetVK& writeDescriptorSet, ZLIndex index );
 
 public:
 	

@@ -17,7 +17,7 @@ void MOAIDescriptorSetArrayVK::Bind ( MOAICommandBufferVK& commandBuffer, VkPipe
 
 	for ( ZLIndex i = 0; i < this->mDescriptorSets.Size (); ++i ) {
 		MOAIDescriptorSetStateVK& descriptorSet = this->mDescriptorSets [ i ];
-		MOAIDescriptorSetVK& snapshot = *descriptorSet.GetSnapshot ( commandBuffer );
+		MOAIDescriptorSetVK& snapshot = *descriptorSet.GetSnapshot ();
 		commandBuffer.BindDescriptorSet ( pipelineBindPoint, snapshot, *this->mPipelineLayout, 0 );
 	}
 }

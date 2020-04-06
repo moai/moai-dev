@@ -16,8 +16,8 @@ class MOAIFrameBufferTextureVK :
 private:
 	
 	//----------------------------------------------------------------//
-	void				MOAIAbstractDescriptorElementVK_GetPinnedData	( VkWriteDescriptorSet& writeDescriptorSet, ZLIndex index, MOAICommandBufferVK& commandBuffer );
-	void				MOAIFrameBufferVK_AffirmBuffers					();
+	MOAIAbstractDescriptorElementVK*	MOAIAbstractDescriptorElementStateVK_GetElement		( MOAIMutableWriteDescriptorSetVK& writeDescriptorSet, ZLIndex index );
+	void								MOAIFrameBufferVK_AffirmBuffers						();
 
 public:
 	

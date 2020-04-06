@@ -18,12 +18,13 @@ private:
 	ZLSize 				mCommandBufferRefCount;
 
 	//----------------------------------------------------------------//
-	void				Pin									();
+	void				Pin									( MOAICommandBufferVK& commandBuffer );
 	void				Unpin								();
 
 protected:
 
 	//----------------------------------------------------------------//
+	virtual void		MOAIAbstractSnapshotVK_OnPin		( MOAICommandBufferVK& commandBuffer ) = 0;
 	virtual void		MOAIAbstractSnapshotVK_OnUnpin		() = 0;
 
 public:

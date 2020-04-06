@@ -512,43 +512,47 @@ MOAITexture* MOAIGfxMgrVK::MOAIGfxMgr_AffirmTexture ( MOAILuaState& state, int i
 }
 
 //----------------------------------------------------------------//
-MOAIGfxScriptRetained* MOAIGfxMgrVK::MOAIGfxMgr_CreateGfxScriptRetained () const {
+MOAIGfxScriptRetained* MOAIGfxMgrVK::MOAIGfxMgr_CreateGfxScriptRetained () {
 
 	return new MOAIGfxScriptRetainedVK ();
 }
 
 //----------------------------------------------------------------//
-MOAIImageTexture* MOAIGfxMgrVK::MOAIGfxMgr_CreateImageTexture () const {
+MOAIImageTexture* MOAIGfxMgrVK::MOAIGfxMgr_CreateImageTexture () {
 
 	return new MOAIImageTextureVK ();
 }
 
 //----------------------------------------------------------------//
-MOAIIndexBuffer* MOAIGfxMgrVK::MOAIGfxMgr_CreateIndexBuffer () const {
-
-	return new MOAIIndexBufferVK ();
+MOAIIndexBuffer* MOAIGfxMgrVK::MOAIGfxMgr_CreateIndexBuffer () {
+	
+	MOAIIndexBufferVK* buffer = new MOAIIndexBufferVK ();
+	buffer->SetDependency < MOAILogicalDeviceVK >( this->mLogicalDevice );
+	return buffer;
 }
 
 //----------------------------------------------------------------//
-MOAITexture2D* MOAIGfxMgrVK::MOAIGfxMgr_CreateTexture2D () const {
+MOAITexture2D* MOAIGfxMgrVK::MOAIGfxMgr_CreateTexture2D () {
 
 	return new MOAITexture2DVK ();
 }
 
 //----------------------------------------------------------------//
-MOAIVertexArray* MOAIGfxMgrVK::MOAIGfxMgr_CreateVertexArray () const {
+MOAIVertexArray* MOAIGfxMgrVK::MOAIGfxMgr_CreateVertexArray () {
 
 	return NULL;
 }
 
 //----------------------------------------------------------------//
-MOAIVertexBuffer* MOAIGfxMgrVK::MOAIGfxMgr_CreateVertexBuffer () const {
+MOAIVertexBuffer* MOAIGfxMgrVK::MOAIGfxMgr_CreateVertexBuffer () {
 
-	return new MOAIVertexBufferVK ();
+	MOAIVertexBufferVK* buffer = new MOAIVertexBufferVK ();
+	buffer->SetDependency < MOAILogicalDeviceVK >( this->mLogicalDevice );
+	return buffer;
 }
 
 //----------------------------------------------------------------//
-MOAIVertexFormat* MOAIGfxMgrVK::MOAIGfxMgr_CreateVertexFormat () const {
+MOAIVertexFormat* MOAIGfxMgrVK::MOAIGfxMgr_CreateVertexFormat () {
 
 	return new MOAIVertexFormatVK ();
 }

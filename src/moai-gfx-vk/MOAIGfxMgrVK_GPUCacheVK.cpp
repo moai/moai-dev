@@ -174,9 +174,7 @@ void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_DrawPrims ( MOAIGfxTopologyEnu
 	
 	MOAIPipelineVK* pipeline = this->AffirmPipeline ( pipelinesParams );
 	commandBuffer.BindPipeline ( VK_PIPELINE_BIND_POINT_GRAPHICS, *pipeline );
-	commandBuffer.Pin ( *pipeline );
 
-	// compose
 	// TODO: need to detect changes and signal gfx state change
 	gfxMgr.GfxStateWillChange ();
 	MOAIDescriptorSetArrayVK& descriptorSetArray = *shader->GetDescriptorSetArray ();
@@ -196,8 +194,11 @@ void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_DrawPrims ( MOAIGfxTopologyEnu
 
 	VkIndexType indexType = idxBuffer->GetIndexSize () == 2 ? VK_INDEX_TYPE_UINT16 : VK_INDEX_TYPE_UINT32;
 
-	MOAIGfxBufferSnapshotVK* vtxBufferSnapshot = vtxBuffer->GetSnapshot ( commandBuffer );
-	MOAIGfxBufferSnapshotVK* idxBufferSnapshot = idxBuffer->GetSnapshot ( commandBuffer );
+	MOAIGfxBufferSnapshotVK* vtxBufferSnapshot = vtxBuffer->GetSnapshot ();
+	MOAIGfxBufferSnapshotVK* idxBufferSnapshot = idxBuffer->GetSnapshot ();
+
+	commandBuffer.Pin ( *vtxBufferSnapshot );
+	commandBuffer.Pin ( *idxBufferSnapshot );
 
 	VkDeviceSize offsets [] = { 0 };
 	vkCmdBindVertexBuffers ( commandBuffer, 0, 1, &vtxBufferSnapshot->GetBuffer (), offsets );

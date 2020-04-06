@@ -4,7 +4,7 @@
 #ifndef	MOAIDRAWINGAPIGL_H
 #define	MOAIDRAWINGAPIGL_H
 
-class MOAIAbstractDescriptorElementVK;
+class MOAIAbstractDescriptorElementStateVK;
 
 //================================================================//
 // MOAIAbstractDrawingAPIVK
@@ -15,7 +15,7 @@ class MOAIAbstractDrawingAPIVK :
 public:
 
 	//----------------------------------------------------------------//
-	void				LoadDescriptorElementVK					( ZLIndex descriptorSetID, ZLIndex binding, ZLIndex arrayElement, MOAIAbstractDescriptorElementVK& element );
+	void				LoadDescriptorElementVK					( ZLIndex descriptorSetID, ZLIndex binding, ZLIndex arrayElement, MOAIAbstractDescriptorElementStateVK& element );
 	void				LoadDescriptorFromTextureUnitVK			( ZLIndex descriptorSetID, ZLIndex binding, ZLIndex arrayElement, ZLIndex textureUnit );
 	void				LoadShaderUniformVK						( ZLIndex globalID, ZLIndex uniformID, ZLIndex index );
 						MOAIAbstractDrawingAPIVK				();

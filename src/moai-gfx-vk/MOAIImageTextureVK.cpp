@@ -27,8 +27,8 @@ MOAIImageTextureVK::~MOAIImageTextureVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIImageTextureVK::MOAIAbstractDescriptorElementVK_GetPinnedData	( VkWriteDescriptorSet& writeDescriptorSet, ZLIndex index, MOAICommandBufferVK& commandBuffer ) {
+MOAIAbstractDescriptorElementVK* MOAIImageTextureVK::MOAIAbstractDescriptorElementStateVK_GetElement ( MOAIMutableWriteDescriptorSetVK& writeDescriptorSet, ZLIndex index ) {
 	UNUSED ( writeDescriptorSet );
 	UNUSED ( index );
-	UNUSED ( commandBuffer );
+	return NULL;
 }
