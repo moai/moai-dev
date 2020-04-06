@@ -8,6 +8,7 @@
 
 class MOAIAbstractDescriptorElementVK;
 class MOAIDescriptorSetLayoutVK;
+class MOAIDescriptorPoolVK;
 class MOAIDescriptorSetStateVK;
 
 //================================================================//
@@ -26,7 +27,7 @@ public:
 		if ( sigSize == otherSigSize ) {
 			return ( memcmp ( this->mSignature.GetBuffer (), other.mSignature.GetBuffer (), sigSize ) < 0 );
 		}
-		return ( sigSize < otherSigSize );
+		return ( sigSize < otherSigSize ); // this should never happen
 	}
 
 	//----------------------------------------------------------------//
@@ -53,6 +54,7 @@ private:
 	ZLLeanArray < MOAIAbstractDescriptorElementVK* >	mSignature;
 	VkDescriptorSet										mDescriptorSet;
 	bool												mIsValid;
+	MOAIDescriptorPoolVK*								mPool;
 
 	//----------------------------------------------------------------//
 	void			Invalidate							();

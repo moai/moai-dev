@@ -71,16 +71,40 @@ void MOAIDescriptorSetLayoutVK::AffirmDescriptorSetLayout () {
 	}
 
 	ZLSize nTypes = histogram.size ();
-	VkDescriptorPoolSize* typeCounts = ( VkDescriptorPoolSize* )alloca ( nTypes * sizeof ( VkDescriptorPoolSize ));
+	this->mTypeCounts.Init ( nTypes );
 
 	STLMap < VkDescriptorType, ZLPrimitiveWithDefault < u32, 0 > >::const_iterator histogramIt = histogram.cbegin ();
 	for ( ZLIndex i = 0; histogramIt != histogram.cend (); ++histogramIt, ++i ) {
-		typeCounts [ i ].type = histogramIt->first;
-		typeCounts [ i ].descriptorCount = histogramIt->second;
+		VkDescriptorPoolSize& poolSize = this->mTypeCounts [ i ];
+		poolSize.type = histogramIt->first;
+		poolSize.descriptorCount = histogramIt->second;
 	}
 
-	VkDescriptorPoolCreateInfo descriptorPoolInfo = MOAIGfxStructVK::descriptorPoolCreateInfo ( typeCounts, ( u32 )nTypes, MAX_DESCRIPTOR_SETS ); // TODO: max sets is hardcoded; need a pool of pools
-	VK_CHECK_RESULT ( vkCreateDescriptorPool ( logicalDevice, &descriptorPoolInfo, NULL, &this->mPool ));
+	this->mPoolCreateInfo = MOAIGfxStructVK::descriptorPoolCreateInfo ( this->mTypeCounts.GetBuffer (), ( u32 )nTypes, POOL_SIZE ); // TODO: max sets is hardcoded; need a pool of pools
+}
+
+//----------------------------------------------------------------//
+void MOAIDescriptorSetLayoutVK::DeletePool ( MOAIDescriptorPoolVK* pool ) {
+
+	if ( !pool ) return;
+	assert ( this->mAllPools.contains ( pool ));
+	
+	if ( this->HasDependency < MOAILogicalDeviceVK >()) {
+		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
+		vkDestroyDescriptorPool ( logicalDevice, pool->mPool, NULL );
+	}
+	
+	// TODO: clean up snapshots
+	STLSet < MOAIDescriptorSetVK* >::iterator snapshotIt = pool->mAllSnapshots.begin ();
+	for ( ; snapshotIt != pool->mAllSnapshots.end (); ++snapshotIt ) {
+		( *snapshotIt )->Release ();
+	}
+	
+	if ( this->mOpenPools.contains ( pool )) {
+		this->mOpenPools.erase ( pool );
+	}
+	this->mAllPools.erase ( pool );
+	delete pool;
 }
 
 //----------------------------------------------------------------//
@@ -92,7 +116,6 @@ void MOAIDescriptorSetLayoutVK::Initialize ( MOAILogicalDeviceVK& logicalDevice,
 
 //----------------------------------------------------------------//
 MOAIDescriptorSetLayoutVK::MOAIDescriptorSetLayoutVK () :
-	mPool ( VK_NULL_HANDLE ),
 	mLayout ( VK_NULL_HANDLE ),
 	mSignatureSize ( 0 ) {
 }
@@ -105,8 +128,8 @@ MOAIDescriptorSetLayoutVK::~MOAIDescriptorSetLayoutVK () {
 
 //----------------------------------------------------------------//
 MOAIDescriptorSetVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSet ( const MOAIDescriptorSetStateVK& descriptorSetState ) {
-
-	if ( this->mAllSnapshots.size () >= MAX_DESCRIPTOR_SETS ) return NULL;
+	
+	this->AffirmDescriptorSetLayout ();
 	
 	MOAIDescriptorSetKeyVK key ( descriptorSetState.mSignature );
 	if ( this->mActiveSnapshots.contains ( key )) {
@@ -115,20 +138,34 @@ MOAIDescriptorSetVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSet ( const MOA
 	
 	MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
 	MOAIDescriptorSetVK* snapshot = NULL;
+	MOAIDescriptorPoolVK* pool = NULL;
 	
-	if ( this->mExpiredSnapshots.size ()) {
-		snapshot = *this->mExpiredSnapshots.begin ();
-		this->mExpiredSnapshots.erase ( snapshot );
+	if ( this->mOpenPools.size ()) {
+		pool = *this->mOpenPools.begin ();
+	}
+	else {
+		pool = new MOAIDescriptorPoolVK ();
+		VK_CHECK_RESULT ( vkCreateDescriptorPool ( logicalDevice, &this->mPoolCreateInfo, NULL, &pool->mPool ));
+		this->mAllPools.insert ( pool );
+		this->mOpenPools.insert ( pool );
+	}
+	
+	if ( pool->mExpiredSnapshots.size ()) {
+		snapshot = *pool->mExpiredSnapshots.begin ();
+		pool->mExpiredSnapshots.erase ( snapshot );
 	}
 	else {
 		snapshot = new MOAIDescriptorSetVK ();
 		snapshot->Retain ();
-		
 		snapshot->SetDependency < MOAIDescriptorSetLayoutVK >( *this );
-		VkDescriptorSetAllocateInfo allocInfo = MOAIGfxStructVK::descriptorSetAllocateInfo ( this->mPool, &this->mLayout );
+		VkDescriptorSetAllocateInfo allocInfo = MOAIGfxStructVK::descriptorSetAllocateInfo ( pool->mPool, &this->mLayout );
 		VK_CHECK_RESULT ( vkAllocateDescriptorSets ( logicalDevice, &allocInfo, &snapshot->mDescriptorSet ));
-		
-		this->mAllSnapshots.insert ( snapshot );
+		pool->mAllSnapshots.insert ( snapshot );
+		snapshot->mPool = pool;
+	}
+	
+	if ( pool->mAllSnapshots.size () >= POOL_SIZE ) {
+		this->mOpenPools.erase ( pool );
 	}
 	
 	ZLSize totalSets = descriptorSetState.mDescriptors.Size ();
@@ -151,13 +188,20 @@ MOAIDescriptorSetVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSet ( const MOA
 //----------------------------------------------------------------//
 void MOAIDescriptorSetLayoutVK::RetireDescriptorSet ( MOAIDescriptorSetVK& snapshot ) {
 
-	if ( !this->mAllSnapshots.contains ( &snapshot )) return;
+	MOAIDescriptorPoolVK* pool = snapshot.mPool;
+	assert ( this->mAllPools.contains ( pool ));
 
 	if ( !snapshot.IsValid ()) {
-		if ( this->mActiveSnapshots.contains ( snapshot )) {
-			this->mActiveSnapshots.erase ( snapshot );
+		assert ( this->mActiveSnapshots.contains ( snapshot ));
+		this->mActiveSnapshots.erase ( snapshot );
+		pool->mExpiredSnapshots.insert ( &snapshot );
+		
+		if ( pool->mExpiredSnapshots.size () >= POOL_SIZE ) {
+			this->DeletePool ( pool );
 		}
-		this->mExpiredSnapshots.insert ( &snapshot );
+		else if ( !this->mOpenPools.contains ( pool )) {
+			this->mOpenPools.insert ( pool );
+		}
 	}
 }
 
@@ -181,15 +225,14 @@ void MOAIDescriptorSetLayoutVK::SetBinding ( ZLIndex index, VkDescriptorType des
 //----------------------------------------------------------------//
 void MOAIDescriptorSetLayoutVK::_Finalize () {
 
+	while ( this->mAllPools.size ()) {
+		this->DeletePool ( *this->mAllPools.begin ());
+	}
+
 	if ( this->HasDependency < MOAILogicalDeviceVK >()) {
 		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
 		vkDestroyDescriptorSetLayout ( logicalDevice, this->mLayout, NULL );
-		vkDestroyDescriptorPool ( logicalDevice, this->mPool, NULL );
 	}
 	
-	// TODO: clean up snapshots
-	STLSet < MOAIDescriptorSetVK* >::iterator snapshotIt = this->mAllSnapshots.begin ();
-	for ( ; snapshotIt != this->mAllSnapshots.end (); ++snapshotIt ) {
-		( *snapshotIt )->Release ();
-	}
+	this->mActiveSnapshots.clear ();
 }

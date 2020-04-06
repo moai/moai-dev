@@ -6,8 +6,22 @@
 
 #include <moai-gfx-vk/MOAIDescriptorSetVK.h>
 
-class MOAILogicalDeviceVK;
+class MOAIDescriptorSetLayoutVK;
 class MOAIDescriptorSetStateVK;
+class MOAILogicalDeviceVK;
+
+//================================================================//
+// MOAIDescriptorPoolVK
+//================================================================//
+class MOAIDescriptorPoolVK {
+private:
+
+	friend class MOAIDescriptorSetLayoutVK;
+
+	STLSet < MOAIDescriptorSetVK* >			mAllSnapshots;
+	STLSet < MOAIDescriptorSetVK* >			mExpiredSnapshots;
+	VkDescriptorPool						mPool;
+};
 
 //================================================================//
 // MOAIDescriptorSetLayoutVK
@@ -22,21 +36,27 @@ private:
 	friend class MOAIDescriptorSetVK;
 	friend class MOAIDescriptorSetStateVK;
 
-	static const ZLSize MAX_DESCRIPTOR_SETS = 16;
+	static const ZLSize POOL_SIZE = 16;
 
 	ZLLeanArray < VkDescriptorSetLayoutBinding >	mLayoutBindings;
 	ZLLeanArray < ZLIndex >							mSignatureOffsets;
 	ZLSize											mSignatureSize;
 
-	VkDescriptorPool								mPool; // TODO: need to create more pools on the fly
+	VkDescriptorPoolCreateInfo						mPoolCreateInfo;
+	ZLLeanArray < VkDescriptorPoolSize >			mTypeCounts;
+
 	VkDescriptorSetLayout							mLayout;
 
-	STLSet < MOAIDescriptorSetVK* >								mAllSnapshots;
-	STLMap < MOAIDescriptorSetKeyVK, MOAIDescriptorSetVK* >		mActiveSnapshots;
-	STLSet < MOAIDescriptorSetVK* >								mExpiredSnapshots;
+	STLSet < MOAIDescriptorPoolVK* >				mAllPools;
+	STLSet < MOAIDescriptorPoolVK* >				mOpenPools;
+
+	STLMap < MOAIDescriptorSetKeyVK, MOAIDescriptorSetVK* > mActiveSnapshots;
 
 	//----------------------------------------------------------------//
-	void							_Finalize 					();
+	void					DeletePool					( MOAIDescriptorPoolVK* pool );
+
+	//----------------------------------------------------------------//
+	void					_Finalize					();
 
 public:
 

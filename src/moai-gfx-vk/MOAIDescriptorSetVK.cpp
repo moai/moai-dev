@@ -34,7 +34,8 @@ void MOAIDescriptorSetVK::Invalidate () {
 MOAIDescriptorSetVK::MOAIDescriptorSetVK () :
 	mKey ( this->mSignature ),
 	mDescriptorSet ( VK_NULL_HANDLE ),
-	mIsValid ( false ) {
+	mIsValid ( false ),
+	mPool ( NULL ) {
 }
 
 //----------------------------------------------------------------//
