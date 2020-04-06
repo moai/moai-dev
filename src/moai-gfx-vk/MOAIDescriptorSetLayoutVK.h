@@ -4,9 +4,10 @@
 #ifndef MOAIDESCRIPTORSETLAYOUTVK_H
 #define MOAIDESCRIPTORSETLAYOUTVK_H
 
+#include <moai-gfx-vk/MOAIDescriptorSetVK.h>
+
 class MOAILogicalDeviceVK;
 class MOAIDescriptorSetStateVK;
-class MOAIDescriptorSetVK;
 
 //================================================================//
 // MOAIDescriptorSetLayoutVK
@@ -31,7 +32,7 @@ private:
 	VkDescriptorSetLayout							mLayout;
 
 	STLSet < MOAIDescriptorSetVK* >								mAllSnapshots;
-//	STLMap < MOAIDescriptorSetKeyVK, MOAIDescriptorSetVK* >		mActiveSnapshots;
+	STLMap < MOAIDescriptorSetKeyVK, MOAIDescriptorSetVK* >		mActiveSnapshots;
 	STLSet < MOAIDescriptorSetVK* >								mExpiredSnapshots;
 
 	//----------------------------------------------------------------//
@@ -64,7 +65,6 @@ public:
 	//----------------------------------------------------------------//
 	void						AffirmDescriptorSetLayout			();
 	void						Initialize							( MOAILogicalDeviceVK& logicalDevice, ZLSize totalBindings );
-	void						InvalidateDescriptorSet				( MOAIDescriptorSetVK& snapshot );
 								MOAIDescriptorSetLayoutVK			();
 								~MOAIDescriptorSetLayoutVK			();
 	MOAIDescriptorSetVK*		ProcureDescriptorSet				( const MOAIDescriptorSetStateVK& descriptorSetState );

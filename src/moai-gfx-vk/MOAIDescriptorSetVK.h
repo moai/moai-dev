@@ -5,10 +5,35 @@
 #define MOAIDESCRIPTORSETVK_H
 
 #include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
 
 class MOAIAbstractDescriptorElementVK;
+class MOAIDescriptorSetLayoutVK;
 class MOAIDescriptorSetStateVK;
+
+//================================================================//
+// MOAIDescriptorSetKeyVK
+//================================================================//
+class MOAIDescriptorSetKeyVK {
+public:
+
+	const ZLLeanArray < MOAIAbstractDescriptorElementVK* >&		mSignature;
+
+	//----------------------------------------------------------------//
+	bool operator < ( const MOAIDescriptorSetKeyVK& other ) const {
+	
+		ZLSize sigSize = this->mSignature.BufferSize ();
+		ZLSize otherSigSize = other.mSignature.BufferSize ();
+		if ( sigSize == otherSigSize ) {
+			return ( memcmp ( this->mSignature.GetBuffer (), other.mSignature.GetBuffer (), sigSize ) < 0 );
+		}
+		return ( sigSize < otherSigSize );
+	}
+
+	//----------------------------------------------------------------//
+	MOAIDescriptorSetKeyVK ( const ZLLeanArray < MOAIAbstractDescriptorElementVK* >& signature ) :
+		mSignature ( signature ) {
+	}
+};
 
 //================================================================//
 // MOAIDescriptorSetVK
@@ -24,6 +49,7 @@ private:
 	friend class MOAIDescriptorSetLayoutVK;
 	friend class MOAIDescriptorSetStateVK;
 
+	MOAIDescriptorSetKeyVK								mKey;
 	ZLLeanArray < MOAIAbstractDescriptorElementVK* >	mSignature;
 	VkDescriptorSet										mDescriptorSet;
 	bool												mIsValid;
@@ -57,33 +83,13 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
+	operator MOAIDescriptorSetKeyVK& () {
+		return this->mKey;
+	}
+	
+	//----------------------------------------------------------------//
 					MOAIDescriptorSetVK					();
 					~MOAIDescriptorSetVK				();
-};
-
-//================================================================//
-// MOAIDescriptorSetKeyVK
-//================================================================//
-class MOAIDescriptorSetKeyVK {
-public:
-
-	const ZLLeanArray < MOAIAbstractDescriptorElementVK* >&		mSignature;
-
-	//----------------------------------------------------------------//
-	bool operator < ( const MOAIDescriptorSetKeyVK& other ) const {
-	
-		ZLSize sigSize = this->mSignature.BufferSize ();
-		ZLSize otherSigSize = other.mSignature.BufferSize ();
-		if ( sigSize == otherSigSize ) {
-			return ( memcmp ( this->mSignature.GetBuffer (), other.mSignature.GetBuffer (), sigSize ) < 0 );
-		}
-		return ( sigSize < otherSigSize );
-	}
-
-	//----------------------------------------------------------------//
-	MOAIDescriptorSetKeyVK ( const ZLLeanArray < MOAIAbstractDescriptorElementVK* >& signature ) :
-		mSignature ( signature ) {
-	}
 };
 
 #endif

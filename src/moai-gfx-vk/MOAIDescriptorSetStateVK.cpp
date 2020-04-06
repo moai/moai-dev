@@ -125,20 +125,5 @@ MOAIDescriptorSetVK* MOAIDescriptorSetStateVK::MOAIAbstractSnapshotFactoryVK_Get
 		}
 	}
 	
-	// TODO: cache this and only invalidate if pending change
-	MOAIDescriptorSetLayoutVK& descriptorSetLayout = this->GetDependency < MOAIDescriptorSetLayoutVK >();
-	MOAIDescriptorSetVK* descriptorSet = descriptorSetLayout.ProcureDescriptorSet ( *this );
-	assert ( descriptorSet );
-	if ( !descriptorSet->IsValid ()) {
-		
-		for ( ZLIndex i = 0; i < totalSets; ++i ) {
-			this->mWriteDescriptors [ i ].dstSet = *descriptorSet;
-		}
-		descriptorSet->mSignature.CloneFrom ( this->mSignature );
-		descriptorSet->mIsValid = true;
-		
-		MOAILogicalDeviceVK& logicalDevice = descriptorSetLayout.GetDependency < MOAILogicalDeviceVK >();
-		vkUpdateDescriptorSets ( logicalDevice, ( u32 )totalSets, this->mWriteDescriptors.GetBuffer (), 0, NULL );
-	}
-	return descriptorSet;
+	return this->GetDependency < MOAIDescriptorSetLayoutVK >().ProcureDescriptorSet ( *this );
 }

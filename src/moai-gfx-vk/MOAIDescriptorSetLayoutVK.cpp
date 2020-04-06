@@ -91,11 +91,6 @@ void MOAIDescriptorSetLayoutVK::Initialize ( MOAILogicalDeviceVK& logicalDevice,
 }
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetLayoutVK::InvalidateDescriptorSet ( MOAIDescriptorSetVK& snapshot ) {
-	UNUSED ( snapshot );
-}
-
-//----------------------------------------------------------------//
 MOAIDescriptorSetLayoutVK::MOAIDescriptorSetLayoutVK () :
 	mPool ( VK_NULL_HANDLE ),
 	mLayout ( VK_NULL_HANDLE ),
@@ -113,11 +108,13 @@ MOAIDescriptorSetVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSet ( const MOA
 
 	if ( this->mAllSnapshots.size () >= MAX_DESCRIPTOR_SETS ) return NULL;
 	
-	MOAIDescriptorSetVK* snapshot = NULL;
+	MOAIDescriptorSetKeyVK key ( descriptorSetState.mSignature );
+	if ( this->mActiveSnapshots.contains ( key )) {
+		return this->mActiveSnapshots [ key ];
+	}
 	
-//	MOAIDescriptorSetKeyVK key ( descriptorSetState.mSignature );
-//	if ( this->mActiveSnapshots.contains ( key )) {
-//	}
+	MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
+	MOAIDescriptorSetVK* snapshot = NULL;
 	
 	if ( this->mExpiredSnapshots.size ()) {
 		snapshot = *this->mExpiredSnapshots.begin ();
@@ -129,20 +126,39 @@ MOAIDescriptorSetVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSet ( const MOA
 		
 		snapshot->SetDependency < MOAIDescriptorSetLayoutVK >( *this );
 		VkDescriptorSetAllocateInfo allocInfo = MOAIGfxStructVK::descriptorSetAllocateInfo ( this->mPool, &this->mLayout );
-		VK_CHECK_RESULT ( vkAllocateDescriptorSets ( this->GetDependency < MOAILogicalDeviceVK >(), &allocInfo, &snapshot->mDescriptorSet ));
+		VK_CHECK_RESULT ( vkAllocateDescriptorSets ( logicalDevice, &allocInfo, &snapshot->mDescriptorSet ));
 		
 		this->mAllSnapshots.insert ( snapshot );
 	}
+	
+	ZLSize totalSets = descriptorSetState.mDescriptors.Size ();
+	
+	VkWriteDescriptorSet* writeDescriptors = ( VkWriteDescriptorSet* )alloca ( totalSets * sizeof ( VkWriteDescriptorSet ));
+	for ( ZLIndex i = 0; i < totalSets; ++i ) {
+		writeDescriptors [ i ] = descriptorSetState.mWriteDescriptors [ i ];
+		writeDescriptors [ i ].dstSet = *snapshot;
+	}
+	snapshot->mSignature.CloneFrom ( descriptorSetState.mSignature );
+	snapshot->mIsValid = true;
+	
+	vkUpdateDescriptorSets ( logicalDevice, ( u32 )totalSets, writeDescriptors, 0, NULL );
+	
+	this->mActiveSnapshots [ *snapshot ] = snapshot;
+	
 	return snapshot;
 }
 
 //----------------------------------------------------------------//
 void MOAIDescriptorSetLayoutVK::RetireDescriptorSet ( MOAIDescriptorSetVK& snapshot ) {
 
-	if ( snapshot == NULL ) return;
 	if ( !this->mAllSnapshots.contains ( &snapshot )) return;
 
-	this->mExpiredSnapshots.insert ( &snapshot );
+	if ( !snapshot.IsValid ()) {
+		if ( this->mActiveSnapshots.contains ( snapshot )) {
+			this->mActiveSnapshots.erase ( snapshot );
+		}
+		this->mExpiredSnapshots.insert ( &snapshot );
+	}
 }
 
 //----------------------------------------------------------------//

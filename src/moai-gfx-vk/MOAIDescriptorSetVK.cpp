@@ -26,12 +26,13 @@ void MOAIDescriptorSetVK::Invalidate () {
 
 	if ( this->HasDependency < MOAIDescriptorSetLayoutVK >()) {
 		MOAIDescriptorSetLayoutVK& descriptorSetLayout = this->GetDependency < MOAIDescriptorSetLayoutVK >();
-		descriptorSetLayout.InvalidateDescriptorSet ( *this );
+		descriptorSetLayout.RetireDescriptorSet ( *this );
 	}
 }
 
 //----------------------------------------------------------------//
 MOAIDescriptorSetVK::MOAIDescriptorSetVK () :
+	mKey ( this->mSignature ),
 	mDescriptorSet ( VK_NULL_HANDLE ),
 	mIsValid ( false ) {
 }
