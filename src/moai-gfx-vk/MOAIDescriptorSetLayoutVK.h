@@ -4,24 +4,12 @@
 #ifndef MOAIDESCRIPTORSETLAYOUTVK_H
 #define MOAIDESCRIPTORSETLAYOUTVK_H
 
+#include <moai-gfx-vk/MOAIDescriptorSetLayoutImplVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetVK.h>
 
 class MOAIDescriptorSetLayoutVK;
 class MOAIDescriptorSetStateVK;
 class MOAILogicalDeviceVK;
-
-//================================================================//
-// MOAIDescriptorPoolVK
-//================================================================//
-class MOAIDescriptorPoolVK {
-private:
-
-	friend class MOAIDescriptorSetLayoutVK;
-
-	STLSet < MOAIDescriptorSetVK* >			mAllSnapshots;
-	STLSet < MOAIDescriptorSetVK* >			mExpiredSnapshots;
-	VkDescriptorPool						mPool;
-};
 
 //================================================================//
 // MOAIDescriptorSetLayoutVK
@@ -36,50 +24,37 @@ private:
 	friend class MOAIDescriptorSetVK;
 	friend class MOAIDescriptorSetStateVK;
 
-	static const ZLSize POOL_SIZE = 16;
-
 	ZLLeanArray < VkDescriptorSetLayoutBinding >	mLayoutBindings;
-	ZLLeanArray < ZLIndex >							mSignatureOffsets;
-	ZLSize											mSignatureSize;
-
-	VkDescriptorPoolCreateInfo						mPoolCreateInfo;
-	ZLLeanArray < VkDescriptorPoolSize >			mTypeCounts;
-
-	VkDescriptorSetLayout							mLayout;
-
-	STLSet < MOAIDescriptorPoolVK* >				mAllPools;
-	STLSet < MOAIDescriptorPoolVK* >				mOpenPools;
-
-	STLMap < MOAIDescriptorSetKeyVK, MOAIDescriptorSetVK* > mActiveSnapshots;
+	ZLStrongPtr < MOAIDescriptorSetLayoutImplVK >	mImpl;
 
 	//----------------------------------------------------------------//
-	void					DeletePool					( MOAIDescriptorPoolVK* pool );
+	void					DeletePool						( MOAIDescriptorPoolVK* pool );
 
 	//----------------------------------------------------------------//
-	void					_Finalize					();
+	void					_Finalize						();
 
 public:
 
 	IMPLEMENT_DEPENDS_ON ( MOAIDescriptorSetLayoutVK )
 
 	GET_CONST ( ZLSize, Size, mLayoutBindings.Size ())
-	GET_CONST ( ZLSize, SignatureSize, mSignatureSize )
+	GET_CONST ( ZLSize, SignatureSize, this->mImpl->mSignatureSize )
 
 	//----------------------------------------------------------------//
 	operator bool () const {
-		return ( this->mLayout != VK_NULL_HANDLE );
+		return ( this->mImpl != NULL );
 	}
 	
 	//----------------------------------------------------------------//
 	operator VkDescriptorSetLayout* () {
 		this->AffirmDescriptorSetLayout ();
-		return &this->mLayout;
+		return &this->mImpl->mLayout;
 	}
 	
 	//----------------------------------------------------------------//
 	operator VkDescriptorSetLayout& () {
 		this->AffirmDescriptorSetLayout ();
-		return this->mLayout;
+		return this->mImpl->mLayout;
 	}
 	
 	//----------------------------------------------------------------//
@@ -88,7 +63,6 @@ public:
 								MOAIDescriptorSetLayoutVK			();
 								~MOAIDescriptorSetLayoutVK			();
 	MOAIDescriptorSetVK*		ProcureDescriptorSet				( const MOAIDescriptorSetStateVK& descriptorSetState );
-	void						RetireDescriptorSet					( MOAIDescriptorSetVK& snapshot );
 	void						SetBinding							( ZLIndex index, VkDescriptorType descriptorType, VkShaderStageFlags stageFlags, ZLSize descriptorCount = 1 );
 };
 

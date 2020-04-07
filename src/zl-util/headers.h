@@ -84,6 +84,7 @@
 #include <zl-util/ZLPolar.h>
 #include <zl-util/ZLPolygon2D.h>
 #include <zl-util/ZLPolyScanner.h>
+#include <zl-util/ZLPrimitiveWithDefault.h>
 #include <zl-util/ZLPrism.h>
 #include <zl-util/ZLQuad.h>
 #include <zl-util/ZLQuadCoord.h>

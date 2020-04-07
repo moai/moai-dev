@@ -32,6 +32,7 @@ class MOAIDescriptorSetStateVK :
 	public MOAIAbstractSnapshotFactoryVK < MOAIDescriptorSetVK > {
 protected:
 
+	friend class MOAIDescriptorSetLayoutImplVK;
 	friend class MOAIDescriptorSetLayoutVK;
 	friend class MOAIDescriptorSetVK;
 

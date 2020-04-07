@@ -17,7 +17,7 @@
 void MOAIDescriptorSetStateVK::Initialize ( MOAIDescriptorSetLayoutVK& descriptorSetLayout ) {
 
 	this->SetDependency < MOAIDescriptorSetLayoutVK >( descriptorSetLayout );
-	this->mSignature.Resize ( descriptorSetLayout.mSignatureSize, NULL );
+	this->mSignature.Resize ( descriptorSetLayout.GetSignatureSize (), NULL );
 	
 	ZLSize nBindings = descriptorSetLayout.GetSize ();
 

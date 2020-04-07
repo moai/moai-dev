@@ -7,6 +7,7 @@
 #include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
 
 class MOAIAbstractDescriptorElementVK;
+class MOAIDescriptorSetLayoutImplVK;
 class MOAIDescriptorSetLayoutVK;
 class MOAIDescriptorPoolVK;
 class MOAIDescriptorSetStateVK;
@@ -42,11 +43,12 @@ public:
 class MOAIDescriptorSetVK :
 	public MOAIAbstractSnapshotVK,
 	public ZLFinalizable,
-	public ZLFinalizable_DependsOn < MOAIDescriptorSetLayoutVK > {
+	public ZLFinalizable_DependsOn < MOAIDescriptorSetLayoutImplVK > {
 private:
 
 	friend class MOAIAbstractDescriptorElementVK;
 	friend class MOAIDescriptorSetKeyVK;
+	friend class MOAIDescriptorSetLayoutImplVK;
 	friend class MOAIDescriptorSetLayoutVK;
 	friend class MOAIDescriptorSetStateVK;
 

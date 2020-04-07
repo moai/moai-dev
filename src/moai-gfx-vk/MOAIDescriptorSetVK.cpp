@@ -7,7 +7,8 @@
 #include <moai-gfx-vk/MOAIDescriptorSetStateVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetLayoutImplVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetLayoutImplVK.h>
 
 //================================================================//
 // MOAIDescriptorSetVK
@@ -24,8 +25,8 @@ void MOAIDescriptorSetVK::Invalidate () {
 	}
 	this->mIsValid = false;
 
-	if ( this->HasDependency < MOAIDescriptorSetLayoutVK >()) {
-		MOAIDescriptorSetLayoutVK& descriptorSetLayout = this->GetDependency < MOAIDescriptorSetLayoutVK >();
+	if ( this->HasDependency < MOAIDescriptorSetLayoutImplVK >()) {
+		MOAIDescriptorSetLayoutImplVK& descriptorSetLayout = this->GetDependency < MOAIDescriptorSetLayoutImplVK >();
 		descriptorSetLayout.RetireDescriptorSet ( *this );
 	}
 }
@@ -62,5 +63,5 @@ void MOAIDescriptorSetVK::MOAIAbstractSnapshotVK_OnPin ( MOAICommandBufferVK& co
 //----------------------------------------------------------------//
 void MOAIDescriptorSetVK::MOAIAbstractSnapshotVK_OnUnpin () {
 
-	this->GetDependency < MOAIDescriptorSetLayoutVK >().RetireDescriptorSet ( *this );
+	this->GetDependency < MOAIDescriptorSetLayoutImplVK >().RetireDescriptorSet ( *this );
 }
