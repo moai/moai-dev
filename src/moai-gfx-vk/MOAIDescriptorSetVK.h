@@ -12,30 +12,7 @@ class MOAIDescriptorSetLayoutVK;
 class MOAIDescriptorPoolVK;
 class MOAIDescriptorSetStateVK;
 
-//================================================================//
-// MOAIDescriptorSetKeyVK
-//================================================================//
-class MOAIDescriptorSetKeyVK {
-public:
-
-	const ZLLeanArray < MOAIAbstractDescriptorElementVK* >&		mSignature;
-
-	//----------------------------------------------------------------//
-	bool operator < ( const MOAIDescriptorSetKeyVK& other ) const {
-	
-		ZLSize sigSize = this->mSignature.BufferSize ();
-		ZLSize otherSigSize = other.mSignature.BufferSize ();
-		if ( sigSize == otherSigSize ) {
-			return ( memcmp ( this->mSignature.GetBuffer (), other.mSignature.GetBuffer (), sigSize ) < 0 );
-		}
-		return ( sigSize < otherSigSize ); // this should never happen
-	}
-
-	//----------------------------------------------------------------//
-	MOAIDescriptorSetKeyVK ( const ZLLeanArray < MOAIAbstractDescriptorElementVK* >& signature ) :
-		mSignature ( signature ) {
-	}
-};
+typedef ZLArrayKey < MOAIAbstractDescriptorElementVK* > MOAIDescriptorSetKeyVK;
 
 //================================================================//
 // MOAIDescriptorSetVK
@@ -47,7 +24,6 @@ class MOAIDescriptorSetVK :
 private:
 
 	friend class MOAIAbstractDescriptorElementVK;
-	friend class MOAIDescriptorSetKeyVK;
 	friend class MOAIDescriptorSetLayoutImplVK;
 	friend class MOAIDescriptorSetLayoutVK;
 	friend class MOAIDescriptorSetStateVK;

@@ -24,7 +24,7 @@ private:
 	friend class MOAIDescriptorSetVK;
 	friend class MOAIDescriptorSetStateVK;
 
-	ZLLeanArray < VkDescriptorSetLayoutBinding >	mLayoutBindings;
+	ZLLeanArray < VkDescriptorSetLayoutBinding >*	mLayoutBindings;
 	ZLStrongPtr < MOAIDescriptorSetLayoutImplVK >	mImpl;
 
 	//----------------------------------------------------------------//
@@ -37,7 +37,7 @@ public:
 
 	IMPLEMENT_DEPENDS_ON ( MOAIDescriptorSetLayoutVK )
 
-	GET_CONST ( ZLSize, Size, mLayoutBindings.Size ())
+	GET_CONST ( ZLSize, Size, mLayoutBindings->Size ())
 	GET_CONST ( ZLSize, SignatureSize, this->mImpl->mSignatureSize )
 
 	//----------------------------------------------------------------//

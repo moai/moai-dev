@@ -10,6 +10,8 @@ class MOAIDescriptorSetLayoutVK;
 class MOAIDescriptorSetStateVK;
 class MOAILogicalDeviceVK;
 
+typedef ZLArrayKey < VkDescriptorSetLayoutBinding > MOAIDescriptorSetLayoutKeyVK;
+
 //================================================================//
 // MOAIDescriptorPoolVK
 //================================================================//
@@ -40,22 +42,25 @@ private:
 	friend class MOAIDescriptorSetStateVK;
 	friend class MOAIDescriptorSetVK;
 
-	ZLLeanArray < ZLIndex >					mSignatureOffsets;
-	ZLSize									mSignatureSize;
+	MOAIDescriptorSetLayoutKeyVK					mKey;
+	ZLLeanArray < VkDescriptorSetLayoutBinding >	mLayoutBindings;
 
-	VkDescriptorPoolCreateInfo				mPoolCreateInfo;
-	ZLLeanArray < VkDescriptorPoolSize >	mTypeCounts;
+	ZLLeanArray < ZLIndex >							mSignatureOffsets;
+	ZLSize											mSignatureSize;
 
-	VkDescriptorSetLayout					mLayout;
+	VkDescriptorPoolCreateInfo						mPoolCreateInfo;
+	ZLLeanArray < VkDescriptorPoolSize >			mTypeCounts;
 
-	STLSet < MOAIDescriptorPoolVK* >		mAllPools;
-	STLSet < MOAIDescriptorPoolVK* >		mOpenPools;
+	VkDescriptorSetLayout							mLayout;
+
+	STLSet < MOAIDescriptorPoolVK* >				mAllPools;
+	STLSet < MOAIDescriptorPoolVK* >				mOpenPools;
 
 	STLMap < MOAIDescriptorSetKeyVK, MOAIDescriptorSetVK* > mActiveSnapshots;
 	
 	//----------------------------------------------------------------//
 	void						DeletePool							( MOAIDescriptorPoolVK* pool );
-	void						Initialize							( MOAILogicalDeviceVK& logicalDevice, VkDescriptorSetLayoutBinding* bindings, ZLSize nBindings );
+	void						Initialize							( MOAILogicalDeviceVK& logicalDevice, const ZLLeanArray < VkDescriptorSetLayoutBinding >& layoutBindings );
 	MOAIDescriptorSetVK*		ProcureDescriptorSet				( const MOAIDescriptorSetStateVK& descriptorSetState );
 	void						RetireDescriptorSet					( MOAIDescriptorSetVK& snapshot );
 
@@ -65,6 +70,11 @@ private:
 public:
 
 	IMPLEMENT_DEPENDS_ON ( MOAIDescriptorSetLayoutVK )
+
+	//----------------------------------------------------------------//
+	operator MOAIDescriptorSetLayoutKeyVK& () {
+		return this->mKey;
+	}
 
 	//----------------------------------------------------------------//
 								MOAIDescriptorSetLayoutImplVK		();

@@ -17,12 +17,15 @@
 void MOAIDescriptorSetLayoutVK::AffirmDescriptorSetLayout () {
 
 	if ( this->mImpl ) return;
+	
+	assert ( this->mLayoutBindings );
+	
 	this->mImpl = new MOAIDescriptorSetLayoutImplVK ();
 	this->mImpl->Initialize (
 		this->GetDependency < MOAILogicalDeviceVK >(),
-		this->mLayoutBindings.GetBuffer (),
-		this->mLayoutBindings.Size ()
+		*this->mLayoutBindings
 	);
+	this->mLayoutBindings = &this->mImpl->mLayoutBindings;
 }
 
 //----------------------------------------------------------------//
@@ -35,13 +38,16 @@ void MOAIDescriptorSetLayoutVK::DeletePool ( MOAIDescriptorPoolVK* pool ) {
 //----------------------------------------------------------------//
 void MOAIDescriptorSetLayoutVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, ZLSize totalBindings ) {
 
+	assert ( !this->mLayoutBindings );
+
 	this->SetDependency < MOAILogicalDeviceVK >( logicalDevice );
-	this->mLayoutBindings.Init ( totalBindings );
+	this->mLayoutBindings = new ZLLeanArray < VkDescriptorSetLayoutBinding >();
+	this->mLayoutBindings->Init ( totalBindings );
 }
 
 //----------------------------------------------------------------//
 MOAIDescriptorSetLayoutVK::MOAIDescriptorSetLayoutVK () :
-	mImpl ( NULL ) {
+	mLayoutBindings ( NULL ) {
 }
 
 //----------------------------------------------------------------//
@@ -60,8 +66,8 @@ MOAIDescriptorSetVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSet ( const MOA
 //----------------------------------------------------------------//
 void MOAIDescriptorSetLayoutVK::SetBinding ( ZLIndex index, VkDescriptorType descriptorType, VkShaderStageFlags stageFlags, ZLSize descriptorCount ) {
 
-	assert ( index < this->mLayoutBindings.Size ());
-	this->mLayoutBindings [ index ] = MOAIGfxStructVK::descriptorSetLayoutBinding (
+	assert ( index < this->mLayoutBindings->Size ());
+	( *this->mLayoutBindings )[ index ] = MOAIGfxStructVK::descriptorSetLayoutBinding (
 		( u32 )index,
 		descriptorType,
 		stageFlags,
@@ -77,5 +83,8 @@ void MOAIDescriptorSetLayoutVK::SetBinding ( ZLIndex index, VkDescriptorType des
 //----------------------------------------------------------------//
 void MOAIDescriptorSetLayoutVK::_Finalize () {
 
+	if ( this->mLayoutBindings && ( this->mImpl == NULL )) {
+		delete this->mLayoutBindings;
+	}
 	this->mImpl = NULL;
 }

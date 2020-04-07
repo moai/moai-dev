@@ -28,7 +28,7 @@ void MOAIDescriptorSetStateVK::Initialize ( MOAIDescriptorSetLayoutVK& descripto
 	ZLIndex writeIndex = 0;
 	for ( ZLIndex i = 0; i < nBindings; ++i ) {
 
-		const VkDescriptorSetLayoutBinding& binding = descriptorSetLayout.mLayoutBindings [ i ];
+		const VkDescriptorSetLayoutBinding& binding = ( *descriptorSetLayout.mLayoutBindings )[ i ];
 		MOAIDescriptorStateVK& descriptor = this->mDescriptors [ i ];
 
 		descriptor.mElements.Init ( binding.descriptorCount );

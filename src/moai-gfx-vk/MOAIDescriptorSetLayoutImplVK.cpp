@@ -38,12 +38,15 @@ void MOAIDescriptorSetLayoutImplVK::DeletePool ( MOAIDescriptorPoolVK* pool ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetLayoutImplVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, VkDescriptorSetLayoutBinding* bindings, ZLSize nBindings ) {
+void MOAIDescriptorSetLayoutImplVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, const ZLLeanArray < VkDescriptorSetLayoutBinding >& layoutBindings ) {
 	
 	this->SetDependency < MOAILogicalDeviceVK >( logicalDevice );
 	
+	this->mLayoutBindings.CloneFrom ( layoutBindings );
+	ZLSize nBindings = this->mLayoutBindings.Size ();
+	
 	// set up the layout
-	VkDescriptorSetLayoutCreateInfo descriptorLayout = MOAIGfxStructVK::descriptorSetLayoutCreateInfo ( bindings, ( u32 )nBindings );
+	VkDescriptorSetLayoutCreateInfo descriptorLayout = MOAIGfxStructVK::descriptorSetLayoutCreateInfo ( this->mLayoutBindings.GetBuffer (), ( u32 )nBindings );
 	VK_CHECK_RESULT ( vkCreateDescriptorSetLayout ( logicalDevice, &descriptorLayout, NULL, &this->mLayout ));
 
 	// do some analysis - build histogram (for pool), find offsets (for write array)
@@ -52,7 +55,7 @@ void MOAIDescriptorSetLayoutImplVK::Initialize ( MOAILogicalDeviceVK& logicalDev
 
 	this->mSignatureSize = 0;
 	for ( ZLIndex i = 0; i < nBindings; ++i ) {
-		const VkDescriptorSetLayoutBinding& binding = bindings [ i ];
+		const VkDescriptorSetLayoutBinding& binding = this->mLayoutBindings [ i ];
 		histogram [ binding.descriptorType ] += binding.descriptorCount;
 		this->mSignatureOffsets [ i ] = this->mSignatureSize;
 		this->mSignatureSize += binding.descriptorCount;
@@ -73,6 +76,7 @@ void MOAIDescriptorSetLayoutImplVK::Initialize ( MOAILogicalDeviceVK& logicalDev
 
 //----------------------------------------------------------------//
 MOAIDescriptorSetLayoutImplVK::MOAIDescriptorSetLayoutImplVK () :
+	mKey ( this->mLayoutBindings ),
 	mLayout ( VK_NULL_HANDLE ),
 	mSignatureSize ( 0 ) {
 }
