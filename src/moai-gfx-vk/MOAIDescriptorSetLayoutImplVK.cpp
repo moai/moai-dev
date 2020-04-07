@@ -38,10 +38,11 @@ void MOAIDescriptorSetLayoutImplVK::DeletePool ( MOAIDescriptorPoolVK* pool ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetLayoutImplVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, const ZLLeanArray < VkDescriptorSetLayoutBinding >& layoutBindings ) {
+void MOAIDescriptorSetLayoutImplVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, const MOAIDescriptorSetLayoutKeyVK& key ) {
 	
 	this->SetDependency < MOAILogicalDeviceVK >( logicalDevice );
 	
+	const ZLLeanArray < VkDescriptorSetLayoutBinding >& layoutBindings = key.mSignature;
 	this->mLayoutBindings.CloneFrom ( layoutBindings );
 	ZLSize nBindings = this->mLayoutBindings.Size ();
 	

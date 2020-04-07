@@ -16,12 +16,14 @@ public:
 	//----------------------------------------------------------------//
 	bool operator < ( const ZLArrayKey& other ) const {
 	
+		if ( this == &other ) return false;
+	
 		ZLSize sigSize = this->mSignature.BufferSize ();
 		ZLSize otherSigSize = other.mSignature.BufferSize ();
 		if ( sigSize == otherSigSize ) {
 			return ( memcmp ( this->mSignature.GetBuffer (), other.mSignature.GetBuffer (), sigSize ) < 0 );
 		}
-		return ( sigSize < otherSigSize ); // this should never happen, but handle it anyway
+		return ( sigSize < otherSigSize );
 	}
 
 	//----------------------------------------------------------------//

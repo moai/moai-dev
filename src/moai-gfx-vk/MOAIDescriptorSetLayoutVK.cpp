@@ -20,11 +20,9 @@ void MOAIDescriptorSetLayoutVK::AffirmDescriptorSetLayout () {
 	
 	assert ( this->mLayoutBindings );
 	
-	this->mImpl = new MOAIDescriptorSetLayoutImplVK ();
-	this->mImpl->Initialize (
-		this->GetDependency < MOAILogicalDeviceVK >(),
-		*this->mLayoutBindings
-	);
+	this->mImpl = MOAIGfxMgrVK::Get ().ProcureDescriptorSetLayoutImpl ( MOAIDescriptorSetLayoutKeyVK ( *this->mLayoutBindings ));
+	
+	delete this->mLayoutBindings;
 	this->mLayoutBindings = &this->mImpl->mLayoutBindings;
 }
 

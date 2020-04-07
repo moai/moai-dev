@@ -8,6 +8,7 @@ class MOAIGfxMgrVK;
 //class MOAIGfxMgrVK_PipelineClerkVK;
 class MOAIGfxMgrVK_GPUCacheVK;
 class MOAIGfxMgrVK_RenderTreeVK;
+class MOAIGfxMgrVK_ResourceCacheVK;
 //class MOAIGfxMgrVK_ResourceClerkVK;
 class MOAIGfxMgrVK_VertexCacheVK;
 
@@ -23,6 +24,7 @@ protected:
 	virtual MOAIGfxMgrVK_GPUCacheVK&			MOAIGfxMgrVKComponents_GetGPUCacheVK			() = 0;
 //	virtual MOAIGfxMgrVK_PipelineClerkVK&		MOAIGfxMgrVKComponents_GetPipelineClerkVK		() = 0;
 	virtual MOAIGfxMgrVK_RenderTreeVK&			MOAIGfxMgrVKComponents_GetRenderTreeVK			() = 0;
+	virtual MOAIGfxMgrVK_ResourceCacheVK&		MOAIGfxMgrVKComponents_GetResourceCacheVK		() = 0;
 //	virtual MOAIGfxMgrVK_ResourceClerkVK&		MOAIGfxMgrVKComponents_GetResourceClerkVK		() = 0;
 	virtual MOAIGfxMgrVK_VertexCacheVK&			MOAIGfxMgrVKComponents_GetVertexCacheVK			() = 0;
 
@@ -46,6 +48,11 @@ public:
 	//----------------------------------------------------------------//
 	inline MOAIGfxMgrVK_RenderTreeVK& GetRenderTreeVK () {
 		return MOAIGfxMgrVKComponents_GetRenderTreeVK ();
+	}
+	
+	//----------------------------------------------------------------//
+	inline MOAIGfxMgrVK_ResourceCacheVK& GetResourceCacheVK () {
+		return MOAIGfxMgrVKComponents_GetResourceCacheVK ();
 	}
 	
 //	//----------------------------------------------------------------//

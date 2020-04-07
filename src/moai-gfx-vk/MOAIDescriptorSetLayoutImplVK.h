@@ -60,7 +60,6 @@ private:
 	
 	//----------------------------------------------------------------//
 	void						DeletePool							( MOAIDescriptorPoolVK* pool );
-	void						Initialize							( MOAILogicalDeviceVK& logicalDevice, const ZLLeanArray < VkDescriptorSetLayoutBinding >& layoutBindings );
 	MOAIDescriptorSetVK*		ProcureDescriptorSet				( const MOAIDescriptorSetStateVK& descriptorSetState );
 	void						RetireDescriptorSet					( MOAIDescriptorSetVK& snapshot );
 
@@ -77,6 +76,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
+	void						Initialize							( MOAILogicalDeviceVK& logicalDevice, const MOAIDescriptorSetLayoutKeyVK& key );
 								MOAIDescriptorSetLayoutImplVK		();
 								~MOAIDescriptorSetLayoutImplVK		();
 };

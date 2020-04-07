@@ -619,6 +619,11 @@ MOAIGfxMgrVK_RenderTreeVK& MOAIGfxMgrVK::MOAIGfxMgrVKComponents_GetRenderTreeVK 
 	return *this;
 }
 
+//----------------------------------------------------------------//
+MOAIGfxMgrVK_ResourceCacheVK& MOAIGfxMgrVK::MOAIGfxMgrVKComponents_GetResourceCacheVK () {
+	return *this;
+}
+
 ////----------------------------------------------------------------//
 //MOAIGfxMgrVK_ResourceClerkVK& MOAIGfxMgrVK::MOAIGfxMgrVKComponents_GetResourceClerkVK () {
 //	return *this;

@@ -11,6 +11,7 @@
 //#include <moai-gfx-vk/MOAIGfxMgrVK_PipelineClerkVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK_GPUCacheVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK_RenderTreeVK.h>
+#include <moai-gfx-vk/MOAIGfxMgrVK_ResourceCacheVK.h>
 //#include <moai-gfx-vk/MOAIGfxMgrVK_ResourceClerkVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK_VertexCacheVK.h>
 #include <moai-gfx-vk/MOAILogicalDeviceVK.h>
@@ -45,6 +46,7 @@ class MOAIGfxMgrVK :
 	public virtual MOAIGfxMgrVK_GPUCacheVK,
 //	public virtual MOAIGfxMgrVK_PipelineClerkVK,
 	public virtual MOAIGfxMgrVK_RenderTreeVK,
+	public virtual MOAIGfxMgrVK_ResourceCacheVK,
 //	public virtual MOAIGfxMgrVK_ResourceClerkVK,
 	public virtual MOAIGfxMgrVK_VertexCacheVK {
 public:
@@ -122,6 +124,7 @@ protected:
 	MOAIGfxMgrVK_GPUCacheVK&		MOAIGfxMgrVKComponents_GetGPUCacheVK		();
 //	MOAIGfxMgrVK_PipelineClerkVK&	MOAIGfxMgrVKComponents_GetPipelineClerkVK	();
 	MOAIGfxMgrVK_RenderTreeVK&		MOAIGfxMgrVKComponents_GetRenderTreeVK		();
+	MOAIGfxMgrVK_ResourceCacheVK&	MOAIGfxMgrVKComponents_GetResourceCacheVK	();
 //	MOAIGfxMgrVK_ResourceClerkVK&	MOAIGfxMgrVKComponents_GetResourceClerkVK	();
 	MOAIGfxMgrVK_VertexCacheVK&		MOAIGfxMgrVKComponents_GetVertexCacheVK		();
 	void							ZLContextClass_Finalize						();
