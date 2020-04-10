@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-gfx-vk/MOAICommandBufferVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetArrayVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetStateVK.h>
@@ -17,7 +18,7 @@ void MOAIDescriptorSetArrayVK::Bind ( MOAICommandBufferVK& commandBuffer, VkPipe
 
 	for ( ZLIndex i = 0; i < this->mDescriptorSets.Size (); ++i ) {
 		MOAIDescriptorSetStateVK& descriptorSet = this->mDescriptorSets [ i ];
-		MOAIDescriptorSetVK& snapshot = *descriptorSet.GetSnapshot ();
+		MOAIDescriptorSetVK& snapshot = *descriptorSet.GetDescriptorSet ();
 		commandBuffer.BindDescriptorSet ( pipelineBindPoint, snapshot, *this->mPipelineLayout, 0 );
 	}
 }

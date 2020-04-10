@@ -94,7 +94,7 @@ void MOAIDeckShaderOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 //	descriptorSet->Initialize ( descriptorSetLayout );
 //	descriptorSet->SetDescriptor ( 0, 0, this->mTexture );
 	
-	commandBuffer.BindDescriptorSet ( VK_PIPELINE_BIND_POINT_GRAPHICS, *descriptorSet->GetSnapshot (), pipelineLayout, 0 );
+	commandBuffer.BindDescriptorSet ( VK_PIPELINE_BIND_POINT_GRAPHICS, *descriptorSet->GetDescriptorSet (), pipelineLayout, 0 );
 	
 	MOAIPipelineParamsVK pipelinesParams (
 		logicalDevice,

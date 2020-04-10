@@ -136,7 +136,3 @@ void MOAIDescriptorSetStateVK::SetDescriptor ( ZLIndex binding, ZLIndex arrayEle
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIDescriptorSetVK* MOAIDescriptorSetStateVK::MOAIAbstractSnapshotFactoryVK_GetSnapshot () {
-
-	return this->GetDescriptorSet ();
-}

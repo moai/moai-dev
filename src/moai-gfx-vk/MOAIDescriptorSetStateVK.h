@@ -5,7 +5,6 @@
 #define MOAIDESCRIPTORSETSTATE_H
 
 #include <moai-gfx-vk/MOAIAbstractDescriptorElementStateVK.h>
-#include <moai-gfx-vk/MOAIAbstractSnapshotFactoryVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
 
 class MOAIDescriptorSetVK;
@@ -28,8 +27,7 @@ protected:
 class MOAIDescriptorSetStateVK :
 	public virtual ZLRefCountedObject,
 	public ZLFinalizable,
-	public ZLFinalizable_DependsOn < MOAIDescriptorSetLayoutVK >,
-	public MOAIAbstractSnapshotFactoryVK < MOAIDescriptorSetVK > {
+	public ZLFinalizable_DependsOn < MOAIDescriptorSetLayoutVK > {
 protected:
 
 	friend class MOAIDescriptorSetLayoutImplVK;
@@ -44,21 +42,18 @@ protected:
 	ZLStrongPtr < MOAIDescriptorSetVK >					mDescriptorSet;
 
 	//----------------------------------------------------------------//
-	MOAIDescriptorSetVK*	GetDescriptorSet								();
-	VkWriteDescriptorSet*	GetWriteDescriptorSet							( ZLIndex binding, ZLIndex arrayElement );
-	
-	//----------------------------------------------------------------//
-	MOAIDescriptorSetVK*	MOAIAbstractSnapshotFactoryVK_GetSnapshot		();
+	VkWriteDescriptorSet*	GetWriteDescriptorSet			( ZLIndex binding, ZLIndex arrayElement );
 	
 public:
 	
 	IMPLEMENT_DEPENDS_ON ( MOAIDescriptorSetStateVK )
 	
 	//----------------------------------------------------------------//
-	void			Initialize						( MOAIDescriptorSetLayoutVK& descriptorSetLayout );
-					MOAIDescriptorSetStateVK		();
-					~MOAIDescriptorSetStateVK		();
-	void			SetDescriptor					( ZLIndex binding, ZLIndex arrayElement, MOAIAbstractDescriptorElementStateVK* descriptor );
+	MOAIDescriptorSetVK*	GetDescriptorSet				();
+	void					Initialize						( MOAIDescriptorSetLayoutVK& descriptorSetLayout );
+							MOAIDescriptorSetStateVK		();
+							~MOAIDescriptorSetStateVK		();
+	void					SetDescriptor					( ZLIndex binding, ZLIndex arrayElement, MOAIAbstractDescriptorElementStateVK* descriptor );
 };
 
 #endif
