@@ -13006,6 +13006,7 @@
 			children = (
 				CDF51D922391E011003D7F71 /* command-buffer */,
 				CD9AB4EC22C41BCE0061A87F /* buffer */,
+				CDFA2362243E19D500B4CECF /* descriptors */,
 				CD9182CC242F08940048A646 /* drawing */,
 				CD9AB4ED22C41BD40061A87F /* manager */,
 				CD9AB4EE22C41BE10061A87F /* mesh */,
@@ -13676,19 +13677,6 @@
 		CDF51D9323934FC6003D7F71 /* pipeline */ = {
 			isa = PBXGroup;
 			children = (
-				CD8269392430DE1D00FF40AD /* MOAIAbstractDescriptorElementStateVK.h */,
-				CD47B97A2439DA0600FDC03B /* MOAIAbstractDescriptorElementVK.cpp */,
-				CD47B97B2439DA0600FDC03B /* MOAIAbstractDescriptorElementVK.h */,
-				CD66A12B241D593E00DB95B4 /* MOAIDescriptorSetArrayVK.cpp */,
-				CD66A12C241D593E00DB95B4 /* MOAIDescriptorSetArrayVK.h */,
-				CD47B97E243C994C00FDC03B /* MOAIDescriptorSetLayoutImplVK.cpp */,
-				CD47B97F243C994C00FDC03B /* MOAIDescriptorSetLayoutImplVK.h */,
-				CD062532233C7DFB0039EC8F /* MOAIDescriptorSetLayoutVK.cpp */,
-				CD062533233C7DFB0039EC8F /* MOAIDescriptorSetLayoutVK.h */,
-				CD062534233C7DFB0039EC8F /* MOAIDescriptorSetStateVK.cpp */,
-				CD062535233C7DFB0039EC8F /* MOAIDescriptorSetStateVK.h */,
-				CDBF990F23422413003F430D /* MOAIDescriptorSetVK.cpp */,
-				CDBF991023422413003F430D /* MOAIDescriptorSetVK.h */,
 				CD06252E233C7DEC0039EC8F /* MOAIPipelineLayoutVK.cpp */,
 				CD06252F233C7DEC0039EC8F /* MOAIPipelineLayoutVK.h */,
 				CDF51D94239354CE003D7F71 /* MOAIPipelineVK.h */,
@@ -13723,6 +13711,26 @@
 				CD1711D222F41DAC00381882 /* MOAIOneTriVK.h */,
 			);
 			name = onetri;
+			sourceTree = "<group>";
+		};
+		CDFA2362243E19D500B4CECF /* descriptors */ = {
+			isa = PBXGroup;
+			children = (
+				CD8269392430DE1D00FF40AD /* MOAIAbstractDescriptorElementStateVK.h */,
+				CD47B97A2439DA0600FDC03B /* MOAIAbstractDescriptorElementVK.cpp */,
+				CD47B97B2439DA0600FDC03B /* MOAIAbstractDescriptorElementVK.h */,
+				CD66A12B241D593E00DB95B4 /* MOAIDescriptorSetArrayVK.cpp */,
+				CD66A12C241D593E00DB95B4 /* MOAIDescriptorSetArrayVK.h */,
+				CD47B97E243C994C00FDC03B /* MOAIDescriptorSetLayoutImplVK.cpp */,
+				CD47B97F243C994C00FDC03B /* MOAIDescriptorSetLayoutImplVK.h */,
+				CD062532233C7DFB0039EC8F /* MOAIDescriptorSetLayoutVK.cpp */,
+				CD062533233C7DFB0039EC8F /* MOAIDescriptorSetLayoutVK.h */,
+				CD062534233C7DFB0039EC8F /* MOAIDescriptorSetStateVK.cpp */,
+				CD062535233C7DFB0039EC8F /* MOAIDescriptorSetStateVK.h */,
+				CDBF990F23422413003F430D /* MOAIDescriptorSetVK.cpp */,
+				CDBF991023422413003F430D /* MOAIDescriptorSetVK.h */,
+			);
+			name = descriptors;
 			sourceTree = "<group>";
 		};
 		E9940D6414B7A217006465CC /* luafilesystem */ = {

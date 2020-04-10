@@ -41,7 +41,10 @@ protected:
 	ZLLeanArray < MOAIMutableWriteDescriptorSetVK >		mMutableWriteDescriptors;
 	ZLLeanArray < MOAIAbstractDescriptorElementVK* >	mSignature;
 
+	ZLStrongPtr < MOAIDescriptorSetVK >					mDescriptorSet;
+
 	//----------------------------------------------------------------//
+	MOAIDescriptorSetVK*	GetDescriptorSet								();
 	VkWriteDescriptorSet*	GetWriteDescriptorSet							( ZLIndex binding, ZLIndex arrayElement );
 	
 	//----------------------------------------------------------------//

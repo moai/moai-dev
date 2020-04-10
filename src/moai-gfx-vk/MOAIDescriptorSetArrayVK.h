@@ -26,7 +26,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void							Bind								( MOAICommandBufferVK& commandBuffer, VkPipelineBindPoint pipelineBindPoint );
-	MOAIDescriptorSetStateVK&			GetDescriptorSet					( ZLIndex index );
+	MOAIDescriptorSetStateVK&		GetDescriptorSet					( ZLIndex index );
 	MOAIPipelineLayoutVK&			GetPipelineLayout					();
 									MOAIDescriptorSetArrayVK			();
 									~MOAIDescriptorSetArrayVK			();
