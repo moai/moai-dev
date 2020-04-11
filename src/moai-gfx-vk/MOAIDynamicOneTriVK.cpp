@@ -145,8 +145,7 @@ void MOAIDynamicOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 		gfxMgr.GetShaderPresetVK ( ONETRI_SHADER )
 	);
 	
-	MOAIPipelineVK* pipeline = new MOAIPipelineVK ();
-	pipeline->Initialize ( pipelineParams );
+	MOAIPipelineVK* pipeline = new MOAIPipelineVK ( pipelineParams );
 	commandBuffer.BindPipeline ( VK_PIPELINE_BIND_POINT_GRAPHICS, *pipeline );
 	commandBuffer.Pin ( *pipeline );
 

@@ -9,9 +9,6 @@
 class MOAIFrameBufferVK;
 class MOAIIndexBufferVK;
 class MOAIGfxResourceVK;
-class MOAIPipelineLayoutVK;
-class MOAIPipelineParamsVK;
-class MOAIPipelineVK;
 class MOAIShaderProgramVK;
 class MOAIShaderVK;
 class MOAITextureVK;
@@ -27,11 +24,6 @@ class MOAIGfxMgrVK_GPUCacheVK :
 protected:
 
 	friend class MOAIGfxMgrVK_VertexCacheVK;
-
-	STLMap < MOAIPipelineParamsVK, ZLStrongPtr < MOAIPipelineVK > >		mPipelinePool; // TODO: VkPipelineCache
-
-	//----------------------------------------------------------------//
-	MOAIPipelineVK* 		AffirmPipeline 			( MOAIPipelineParamsVK& params );
 
 	//----------------------------------------------------------------//
 	void			MOAIGfxMgr_GPUCache_ApplyStateChanges			();

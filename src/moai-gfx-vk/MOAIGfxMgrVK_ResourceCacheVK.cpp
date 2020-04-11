@@ -10,6 +10,19 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+MOAIPipelineVK* MOAIGfxMgrVK_ResourceCacheVK::AffirmPipeline ( const MOAIPipelineParamsVK& params ) {
+
+	MOAIPipelineKeyVK key ( params );
+
+	ZLStrongPtr < MOAIPipelineVK > pipeline = this->mPipelinePool [ key ];
+	if ( !pipeline ) {
+		pipeline = new MOAIPipelineVK ( params );
+		this->mPipelinePool [ *pipeline ] = pipeline;
+	}
+	return pipeline;
+}
+
+//----------------------------------------------------------------//
 MOAIGfxMgrVK_ResourceCacheVK::MOAIGfxMgrVK_ResourceCacheVK () {
 }
 

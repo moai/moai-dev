@@ -122,10 +122,8 @@ protected:
 	void							MOAIGfxMgr_PushState						();
 	MOAIGfxMgrVK&					MOAIGfxMgrVKComponents_GetGfxMgrVK			();
 	MOAIGfxMgrVK_GPUCacheVK&		MOAIGfxMgrVKComponents_GetGPUCacheVK		();
-//	MOAIGfxMgrVK_PipelineClerkVK&	MOAIGfxMgrVKComponents_GetPipelineClerkVK	();
 	MOAIGfxMgrVK_RenderTreeVK&		MOAIGfxMgrVKComponents_GetRenderTreeVK		();
 	MOAIGfxMgrVK_ResourceCacheVK&	MOAIGfxMgrVKComponents_GetResourceCacheVK	();
-//	MOAIGfxMgrVK_ResourceClerkVK&	MOAIGfxMgrVKComponents_GetResourceClerkVK	();
 	MOAIGfxMgrVK_VertexCacheVK&		MOAIGfxMgrVKComponents_GetVertexCacheVK		();
 	void							ZLContextClass_Finalize						();
 	void							ZLContextClass_Initialize					();

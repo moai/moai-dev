@@ -60,18 +60,6 @@ MOAIGfxMgrVK_GPUCacheVK::~MOAIGfxMgrVK_GPUCacheVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIPipelineVK* MOAIGfxMgrVK_GPUCacheVK::AffirmPipeline ( MOAIPipelineParamsVK& params ) {
-
-	ZLStrongPtr < MOAIPipelineVK > pipeline = this->mPipelinePool [ params ];
-	if ( !pipeline ) {
-		pipeline = new MOAIPipelineVK ();
-		pipeline->Initialize ( params );
-		this->mPipelinePool [ params ] = pipeline;
-	}
-	return pipeline;
-}
-
-//----------------------------------------------------------------//
 void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_ApplyStateChanges () {
 
 	if ( !this->mApplyingStateChanges ) {
@@ -172,7 +160,7 @@ void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_DrawPrims ( MOAIGfxTopologyEnu
 		activeState.mBlendEnabled ? &activeState.mBlendMode : NULL
 	);
 	
-	MOAIPipelineVK* pipeline = this->AffirmPipeline ( pipelinesParams );
+	MOAIPipelineVK* pipeline = gfxMgr.AffirmPipeline ( pipelinesParams );
 	commandBuffer.BindPipeline ( VK_PIPELINE_BIND_POINT_GRAPHICS, *pipeline );
 
 	// TODO: need to detect changes and signal gfx state change

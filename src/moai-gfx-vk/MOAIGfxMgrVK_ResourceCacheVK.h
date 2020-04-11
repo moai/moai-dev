@@ -6,6 +6,7 @@
 
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutImplVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVKComponents.h>
+#include <moai-gfx-vk/MOAIPipelineVK.h>
 
 class MOAIGfxMgrVK;
 
@@ -76,6 +77,8 @@ protected:
 
 	DescriptorSetLayoutImpl::Cache mDescriptorLayoutImplCache;
 
+	STLMap < MOAIPipelineKeyVK, ZLStrongPtr < MOAIPipelineVK > > mPipelinePool; // TODO: VkPipelineCache
+
 	//----------------------------------------------------------------//
 	
 public:
@@ -83,6 +86,7 @@ public:
 	friend class MOAIGfxMgr;
 	
 	//----------------------------------------------------------------//
+	MOAIPipelineVK* 								AffirmPipeline 							( const MOAIPipelineParamsVK& params );
 													MOAIGfxMgrVK_ResourceCacheVK			();
 													~MOAIGfxMgrVK_ResourceCacheVK			();
 	ZLStrongPtr < MOAIDescriptorSetLayoutImplVK >	ProcureDescriptorSetLayoutImpl			( MOAIDescriptorSetLayoutKeyVK key );

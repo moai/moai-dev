@@ -95,6 +95,7 @@
 #include <zl-util/ZLRect.h>
 #include <zl-util/ZLRefCountedObject.h>
 #include <zl-util/ZLRefCountedObjectBase.h>
+#include <zl-util/ZLRefKey.h>
 #include <zl-util/ZLResult.h>
 #include <zl-util/ZLRhombus.h>
 #include <zl-util/ZLRingAdapter.h>

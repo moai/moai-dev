@@ -104,8 +104,7 @@ void MOAIDeckShaderOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 		gfxMgr.GetShaderPresetVK ( DECK2D_SHADER )
 	);
 	
-	MOAIPipelineVK* pipeline = new MOAIPipelineVK ();
-	pipeline->Initialize ( pipelinesParams );
+	MOAIPipelineVK* pipeline = new MOAIPipelineVK ( pipelinesParams );
 	commandBuffer.BindPipeline ( VK_PIPELINE_BIND_POINT_GRAPHICS, *pipeline );
 	commandBuffer.Pin ( *pipeline );
 
