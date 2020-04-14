@@ -5,6 +5,7 @@
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAILogicalDeviceVK.h>
+#include <moai-gfx-vk/MOAIPipelineCacheVK.h>
 #include <moai-gfx-vk/MOAIPipelineVK.h>
 
 //================================================================//
@@ -14,6 +15,8 @@
 //----------------------------------------------------------------//
 MOAIPipelineVK::MOAIPipelineVK ( const MOAIPipelineParamsVK& params ) :
 	MOAIPipelineParamsVK ( params ),
+	mCache ( NULL ),
+	mPage ( NULL ),
 	mKey ( *this ),
 	mPipeline ( VK_NULL_HANDLE ) {
 	

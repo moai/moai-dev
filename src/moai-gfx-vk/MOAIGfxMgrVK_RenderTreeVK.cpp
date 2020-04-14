@@ -89,4 +89,5 @@ void MOAIGfxMgrVK_RenderTreeVK::MOAIGfxMgr_RenderTree_Render () {
 	this->mRenderDuration = endTime - startTime;
 	this->mRenderTime += this->mRenderDuration;
 	
+	gfxMgr.UpdatePipelineCache ();
 }

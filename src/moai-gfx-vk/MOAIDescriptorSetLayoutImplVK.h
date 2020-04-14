@@ -6,6 +6,7 @@
 
 #include <moai-gfx-vk/MOAIDescriptorSetVK.h>
 
+class MOAIDescriptorSetLayoutImplCacheVK;
 class MOAIDescriptorSetLayoutVK;
 class MOAIDescriptorSetStateVK;
 class MOAILogicalDeviceVK;
@@ -37,10 +38,13 @@ private:
 
 	static const ZLSize POOL_SIZE = 16;
 
+	friend class MOAIDescriptorSetLayoutImplCacheVK;
 	friend class MOAIDescriptorSetLayoutImplVK;
 	friend class MOAIDescriptorSetLayoutVK;
 	friend class MOAIDescriptorSetStateVK;
 	friend class MOAIDescriptorSetVK;
+
+	MOAIDescriptorSetLayoutImplCacheVK*				mCache;
 
 	MOAIDescriptorSetLayoutKeyVK					mKey;
 	ZLLeanArray < VkDescriptorSetLayoutBinding >	mLayoutBindings;
@@ -76,8 +80,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	void						Initialize							( MOAILogicalDeviceVK& logicalDevice, const MOAIDescriptorSetLayoutKeyVK& key );
-								MOAIDescriptorSetLayoutImplVK		();
+								MOAIDescriptorSetLayoutImplVK		( MOAILogicalDeviceVK& logicalDevice, const MOAIDescriptorSetLayoutKeyVK& key, MOAIDescriptorSetLayoutImplCacheVK* cache = NULL );
 								~MOAIDescriptorSetLayoutImplVK		();
 };
 

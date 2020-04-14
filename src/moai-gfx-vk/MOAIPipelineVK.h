@@ -12,6 +12,8 @@
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAIVertexFormatVK.h>
 
+class MOAIPipelineCachePageVK;
+class MOAIPipelineCacheVK;
 class MOAIPipelineParamsVK;
 
 typedef ZLRefKey < MOAIPipelineParamsVK > MOAIPipelineKeyVK;
@@ -63,11 +65,17 @@ class MOAIPipelineVK :
 	public MOAIPipelineParamsVK {
 protected:
 
-	MOAIPipelineKeyVK	mKey;
-	VkPipeline			mPipeline;
+	friend class MOAIPipelineCacheVK;
+	friend class MOAIPipelineCachePageVK;
+
+	MOAIPipelineCacheVK*		mCache;
+	MOAIPipelineCachePageVK*	mPage;
+
+	MOAIPipelineKeyVK			mKey;
+	VkPipeline					mPipeline;
 
 	//----------------------------------------------------------------//
-	void 			_Finalize ();
+	void 			_Finalize							();
 	void			MOAIAbstractSnapshotVK_OnPin		( MOAICommandBufferVK& commandBuffer );
 	void			MOAIAbstractSnapshotVK_OnUnpin		();
 

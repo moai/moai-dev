@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-gfx-vk/MOAIDescriptorSetLayoutImplCacheVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutImplVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetStateVK.h>
@@ -38,7 +39,11 @@ void MOAIDescriptorSetLayoutImplVK::DeletePool ( MOAIDescriptorPoolVK* pool ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetLayoutImplVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, const MOAIDescriptorSetLayoutKeyVK& key ) {
+MOAIDescriptorSetLayoutImplVK::MOAIDescriptorSetLayoutImplVK ( MOAILogicalDeviceVK& logicalDevice, const MOAIDescriptorSetLayoutKeyVK& key, MOAIDescriptorSetLayoutImplCacheVK* cache ) :
+	mCache ( cache ),
+	mKey ( this->mLayoutBindings ),
+	mLayout ( VK_NULL_HANDLE ),
+	mSignatureSize ( 0 ) {
 	
 	this->SetDependency < MOAILogicalDeviceVK >( logicalDevice );
 	
@@ -73,13 +78,10 @@ void MOAIDescriptorSetLayoutImplVK::Initialize ( MOAILogicalDeviceVK& logicalDev
 	}
 
 	this->mPoolCreateInfo = MOAIGfxStructVK::descriptorPoolCreateInfo ( this->mTypeCounts.GetBuffer (), ( u32 )nTypes, POOL_SIZE ); // TODO: max sets is hardcoded; need a pool of pools
-}
 
-//----------------------------------------------------------------//
-MOAIDescriptorSetLayoutImplVK::MOAIDescriptorSetLayoutImplVK () :
-	mKey ( this->mLayoutBindings ),
-	mLayout ( VK_NULL_HANDLE ),
-	mSignatureSize ( 0 ) {
+	if ( this->mCache ) {
+		this->mCache->InsertDescriptorSetLayoutImpl ( *this );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -171,6 +173,10 @@ void MOAIDescriptorSetLayoutImplVK::RetireDescriptorSet ( MOAIDescriptorSetVK& s
 
 //----------------------------------------------------------------//
 void MOAIDescriptorSetLayoutImplVK::_Finalize () {
+
+	if ( this->mCache ) {
+		this->mCache->RemoveDescriptorSetLayoutImpl ( *this );
+	}
 
 	while ( this->mAllPools.size ()) {
 		this->DeletePool ( *this->mAllPools.begin ());

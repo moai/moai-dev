@@ -160,7 +160,7 @@ void MOAIGfxMgrVK_GPUCacheVK::MOAIGfxMgr_GPUCache_DrawPrims ( MOAIGfxTopologyEnu
 		activeState.mBlendEnabled ? &activeState.mBlendMode : NULL
 	);
 	
-	MOAIPipelineVK* pipeline = gfxMgr.AffirmPipeline ( pipelinesParams );
+	MOAIPipelineVK* pipeline = gfxMgr.ProcurePipeline ( pipelinesParams );
 	commandBuffer.BindPipeline ( VK_PIPELINE_BIND_POINT_GRAPHICS, *pipeline );
 
 	// TODO: need to detect changes and signal gfx state change
