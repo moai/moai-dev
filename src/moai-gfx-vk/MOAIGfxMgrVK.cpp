@@ -130,6 +130,74 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIGfxMgrVK::AffirmRenderPass () {
+
+	if ( this->mRenderPass ) return;
+	this->mRenderPass = new MOAIRenderPassVK;
+	MOAIRenderPassVK& renderPass = *this->mRenderPass;
+
+	renderPass.ReserveAttachments ( 2 );
+
+	renderPass.SetAttachment ( 0, MOAIGfxStructVK::attachmentDescription (
+		this->mSwapChain.GetFormat (),
+		VK_SAMPLE_COUNT_1_BIT,
+		VK_ATTACHMENT_LOAD_OP_CLEAR,
+		VK_ATTACHMENT_STORE_OP_STORE,
+		VK_ATTACHMENT_LOAD_OP_DONT_CARE,
+		VK_ATTACHMENT_STORE_OP_DONT_CARE,
+		VK_IMAGE_LAYOUT_UNDEFINED,
+		VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
+	));
+
+	renderPass.SetAttachment ( 1, MOAIGfxStructVK::attachmentDescription (
+		this->mPhysicalDevice.mDepthFormat,
+		VK_SAMPLE_COUNT_1_BIT,
+		VK_ATTACHMENT_LOAD_OP_CLEAR,
+		VK_ATTACHMENT_STORE_OP_STORE,
+		VK_ATTACHMENT_LOAD_OP_CLEAR,
+		VK_ATTACHMENT_STORE_OP_DONT_CARE,
+		VK_IMAGE_LAYOUT_UNDEFINED,
+		VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL
+	));
+
+	renderPass.ReserveReferenceArrays ( 2 );
+	renderPass.ReserveReferences ( 0, 1 );
+	renderPass.ReserveReferences ( 1, 1 );
+
+	renderPass.SetReference ( 0, 0, MOAIGfxStructVK::attachmentReference ( 0, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL ));
+	renderPass.SetReference ( 1, 0, MOAIGfxStructVK::attachmentReference ( 1, VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL ));
+
+	renderPass.ReserveSubpasses ( 1 );
+	renderPass.SetSubpass ( 0, VK_PIPELINE_BIND_POINT_GRAPHICS, 0 );
+	renderPass.SetSubpassColorReferenceArray ( 0, 0 );
+	renderPass.SetSubpassDepthStencilReference ( 0, 1 );
+
+	renderPass.ReserveDependencies ( 2 );
+
+	renderPass.SetDependency ( 0, MOAIGfxStructVK::subpassDependency (
+		VK_SUBPASS_EXTERNAL,
+		0,
+		VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT,
+		VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
+		VK_ACCESS_MEMORY_READ_BIT,
+		VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
+		VK_DEPENDENCY_BY_REGION_BIT
+	));
+
+	renderPass.SetDependency ( 1, MOAIGfxStructVK::subpassDependency (
+		0,
+		VK_SUBPASS_EXTERNAL,
+		VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
+		VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT,
+		VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
+		VK_ACCESS_MEMORY_READ_BIT,
+		VK_DEPENDENCY_BY_REGION_BIT
+	));
+
+	renderPass.AffirmRenderPass ( this->mLogicalDevice );
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxMgrVK::BeginFrame () {
 
 	VkResult result = this->mSwapChain.AcquireNextImage ( this->mPresentSemaphore );
@@ -173,7 +241,7 @@ void MOAIGfxMgrVK::DetectContext ( u32 width, u32 height, bool enableValidation 
 	this->mLogicalDevice.Initialize ( this->mPhysicalDevice );
 	this->mSwapChain.Initialize ( this->mLogicalDevice, this->mSurface, width, height );
 
-	this->InitRenderPass ();
+	this->AffirmRenderPass ();
 	this->InitDepthStencil ();
 	this->InitFrameBuffers ();
 	this->InitCommandBuffers ();
@@ -229,6 +297,14 @@ void MOAIGfxMgrVK::FinishFrame () {
 	
 //	this->UnbindAll ();
 	this->Reset ();
+}
+
+//----------------------------------------------------------------//
+MOAIRenderPassVK& MOAIGfxMgrVK::GetRenderPass () {
+
+	this->AffirmRenderPass ();
+	assert ( this->mRenderPass );
+	return *this->mRenderPass;
 }
 
 //----------------------------------------------------------------//
@@ -298,7 +374,7 @@ void MOAIGfxMgrVK::InitFrameBuffers () {
     attachments [ 1 ] = this->mDepthStencil.mView;
 
     VkFramebufferCreateInfo framebufferCreateInfo = MOAIGfxStructVK::framebufferCreateInfo (
-    	this->mRenderPass,
+    	*this->mRenderPass,
     	attachments,
     	2,
     	this->mSwapChain.GetWidth (),
@@ -313,74 +389,6 @@ void MOAIGfxMgrVK::InitFrameBuffers () {
         attachments [ 0 ] = this->mSwapChain.GetImageView ( i );
         this->mFrameBuffers [ i ] = this->mLogicalDevice.CreateFramebuffer ( framebufferCreateInfo );
     }
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrVK::InitRenderPass () {
-	
-	VkAttachmentDescription attachments [ 2 ];
-	
-    // Color attachment
-    attachments [ 0 ] = MOAIGfxStructVK::attachmentDescription (
-        this->mSwapChain.GetFormat (),
-        VK_SAMPLE_COUNT_1_BIT,
-        VK_ATTACHMENT_LOAD_OP_CLEAR,
-        VK_ATTACHMENT_STORE_OP_STORE,
-        VK_ATTACHMENT_LOAD_OP_DONT_CARE,
-        VK_ATTACHMENT_STORE_OP_DONT_CARE,
-        VK_IMAGE_LAYOUT_UNDEFINED,
-        VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
-    );
-
-    // Depth attachment
-    attachments [ 1 ] = MOAIGfxStructVK::attachmentDescription (
-        this->mPhysicalDevice.mDepthFormat,
-        VK_SAMPLE_COUNT_1_BIT,
-        VK_ATTACHMENT_LOAD_OP_CLEAR,
-        VK_ATTACHMENT_STORE_OP_STORE,
-        VK_ATTACHMENT_LOAD_OP_CLEAR,
-        VK_ATTACHMENT_STORE_OP_DONT_CARE,
-        VK_IMAGE_LAYOUT_UNDEFINED,
-        VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL
-    );
-
-    VkAttachmentReference colorReference		= MOAIGfxStructVK::attachmentReference ( 0, VK_IMAGE_LAYOUT_COLOR_ATTACHMENT_OPTIMAL );
-    VkAttachmentReference depthReference		= MOAIGfxStructVK::attachmentReference ( 1, VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL );
-    VkSubpassDescription subpassDescription		= MOAIGfxStructVK::subpassDescription ( VK_PIPELINE_BIND_POINT_GRAPHICS, &colorReference, 1, &depthReference );
-
-    // Subpass dependencies for layout transitions
-    VkSubpassDependency dependencies [ 2 ];
-
-    dependencies [ 0 ] = MOAIGfxStructVK::subpassDependency (
-        VK_SUBPASS_EXTERNAL,
-        0,
-        VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT,
-        VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
-        VK_ACCESS_MEMORY_READ_BIT,
-        VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
-        VK_DEPENDENCY_BY_REGION_BIT
-    );
-
-    dependencies [ 1 ] = MOAIGfxStructVK::subpassDependency (
-        0,
-        VK_SUBPASS_EXTERNAL,
-        VK_PIPELINE_STAGE_COLOR_ATTACHMENT_OUTPUT_BIT,
-        VK_PIPELINE_STAGE_BOTTOM_OF_PIPE_BIT,
-        VK_ACCESS_COLOR_ATTACHMENT_READ_BIT | VK_ACCESS_COLOR_ATTACHMENT_WRITE_BIT,
-        VK_ACCESS_MEMORY_READ_BIT,
-        VK_DEPENDENCY_BY_REGION_BIT
-    );
-
-    VkRenderPassCreateInfo renderPassInfo = MOAIGfxStructVK::renderPassCreateInfo (
-        attachments,
-        2,
-        &subpassDescription,
-        1,
-        dependencies,
-        2
-    );
-
- 	this->mRenderPass = this->mLogicalDevice.CreateRenderPass ( renderPassInfo );
 }
 
 ////----------------------------------------------------------------//

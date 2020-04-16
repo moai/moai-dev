@@ -16,6 +16,7 @@
 #include <moai-gfx-vk/MOAIGfxMgrVK_VertexCacheVK.h>
 #include <moai-gfx-vk/MOAILogicalDeviceVK.h>
 #include <moai-gfx-vk/MOAIPhysicalDeviceVK.h>
+#include <moai-gfx-vk/MOAIRenderPassVK.h>
 #include <moai-gfx-vk/MOAISemaphoreVK.h>
 #include <moai-gfx-vk/MOAISwapChainVK.h>
 
@@ -71,7 +72,7 @@ protected:
         VkImageView                     mView;
     } mDepthStencil;
 
-	VkRenderPass                        	mRenderPass; // Global render pass for frame buffer writes
+	ZLStrongPtr < MOAIRenderPassVK >		mRenderPass;
 	ZLLeanArray < MOAICommandBufferVK >		mDrawCommandBuffers;
 	ZLLeanArray < VkFramebuffer >			mFrameBuffers; // Allocate as needed? Bind to command buffer?
 
@@ -101,10 +102,10 @@ protected:
 //	static int						_renewResources				( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void							AffirmRenderPass			();
 	void							InitCommandBuffers			();
 	void							InitDepthStencil			();
 	void							InitFrameBuffers			();
-	void							InitRenderPass				();
 
 	//----------------------------------------------------------------//
 	MOAIShader*						MOAIGfxMgr_AffirmShader						( MOAILuaState& state, int idx ) const;
@@ -140,7 +141,6 @@ public:
 	GET ( VkFramebuffer&, FrameBuffer, this->mFrameBuffers [ this->mSwapChain.GetImageIndex ()]);
 	GET ( MOAILogicalDeviceVK&, LogicalDevice, this->mLogicalDevice );
 	GET ( MOAIPhysicalDeviceVK&, PhysicalDevice, this->mPhysicalDevice );
-	GET ( VkRenderPass&, RenderPass, this->mRenderPass );
 	GET ( MOAISwapChainVK&, SwapChain, this->mSwapChain );
 	
 	GET ( MOAISemaphoreVK&, RenderSemaphore, this->mRenderSemaphore );
@@ -156,6 +156,7 @@ public:
 	void					DetectContext				( u32 width, u32 height, bool enableValidation );
 //	void					DetectFramebuffer			();
 	void					FinishFrame					();
+	MOAIRenderPassVK&		GetRenderPass				();
 	MOAIShaderVK*			GetShaderPresetVK			( MOAIShaderPresetEnum preset ) const;
 	MOAIVertexFormatVK*		GetVertexFormatPresetVK		( MOAIVertexFormatPresetEnum preset ) const;
 //	u32						LogErrors					();

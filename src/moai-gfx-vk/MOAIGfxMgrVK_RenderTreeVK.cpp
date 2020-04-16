@@ -75,7 +75,6 @@ void MOAIGfxMgrVK_RenderTreeVK::MOAIGfxMgr_RenderTree_Render () {
 	// flush any stragglers
 	gfxMgr.FlushToGPU ();
 	
-	
 	vkCmdEndRenderPass ( commandBuffer );
 	commandBuffer.End ();
 
