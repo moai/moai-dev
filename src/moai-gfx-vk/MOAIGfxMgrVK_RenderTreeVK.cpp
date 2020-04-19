@@ -33,7 +33,6 @@ MOAIGfxMgrVK_RenderTreeVK::~MOAIGfxMgrVK_RenderTreeVK () {
 void MOAIGfxMgrVK_RenderTreeVK::MOAIGfxMgr_RenderTree_Render () {
 
 	MOAIGfxMgrVK& gfxMgr = MOAIGfxMgrVK::Get ();
-	MOAICommandBufferVK& commandBuffer = gfxMgr.GetCommandBuffer ();
 
 //	gfxMgr.Update ();
 
@@ -46,9 +45,14 @@ void MOAIGfxMgrVK_RenderTreeVK::MOAIGfxMgr_RenderTree_Render () {
 	
 	gfxMgr.BeginFrame ();
 
+	MOAICommandBufferVK& commandBuffer = gfxMgr.GetCommandBuffer ();
+	commandBuffer.Begin ();
+
 	VkRenderPass renderPass = gfxMgr.GetRenderPass ();
-	VkFramebuffer frameBuffer = gfxMgr.GetFrameBuffer ();
+	MOAIFrameBufferSnapshotVK* frameBuffer = gfxMgr.GetFrameBuffer ().GetSnapshot ();
 	MOAISwapChainVK& swapChain = gfxMgr.GetSwapChain ();
+
+	commandBuffer.Pin ( *frameBuffer );
 
 	// Set clear values for all framebuffer attachments with loadOp set to clear
 	// We use two attachments (color and depth) that are cleared at the start of the subpass and as such we need to set clear values for both
@@ -56,9 +60,14 @@ void MOAIGfxMgrVK_RenderTreeVK::MOAIGfxMgr_RenderTree_Render () {
 		MOAIGfxStructVK::clearValue ( MOAIGfxStructVK::clearColorValueF ( 0.0, 0.0, 0.0, 1.0 )),
 		MOAIGfxStructVK::clearValue ( MOAIGfxStructVK::clearDepthStencilValue ( 1.0, 0 )),
 	};
-	VkRenderPassBeginInfo renderPassBeginInfo = MOAIGfxStructVK::renderPassBeginInfo ( renderPass, frameBuffer, swapChain.GetRect (), clearValues, 2 );
+	VkRenderPassBeginInfo renderPassBeginInfo = MOAIGfxStructVK::renderPassBeginInfo (
+		renderPass,
+		*frameBuffer,
+		swapChain.GetRect (),
+		clearValues,
+		2
+	);
 	
-	commandBuffer.Begin ();
 	vkCmdBeginRenderPass ( commandBuffer, &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE );
 	
 //	if ( !this->mOneTri ) {

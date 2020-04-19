@@ -17,6 +17,8 @@
 #include <moai-gfx-vk/MOAISurfaceVK.h>
 #include <moai-gfx-vk/MOAIPhysicalDeviceVK.h>
 
+class MOAIImageBufferSnapshotVK;
+
 //================================================================//
 // MOAISwapChainVK
 //================================================================//
@@ -26,8 +28,9 @@ class MOAISwapChainVK :
 private:
 
 	VkSwapchainKHR					mSwapChain;
-	ZLLeanArray < VkImage >			mImages;
-	ZLLeanArray < VkImageView >		mViews;
+//	ZLLeanArray < VkImage >			mImages;
+//	ZLLeanArray < VkImageView >		mViews;
+	ZLLeanArray < ZLStrongPtr < MOAIImageBufferSnapshotVK > > mImageViews;
 
 	MOAIFenceVK						mAcquireImageFence;
 
@@ -57,15 +60,15 @@ public:
 	GET_CONST ( ZLIndex, ImageIndex, this->mImageIndex )
 
 	//----------------------------------------------------------------//
-	VkResult		AcquireNextImage			();
-	VkResult		AcquireNextImage			( VkSemaphore presentCompleteSemaphore );
-	VkImageView		GetImageView				( ZLIndex i );
-	VkRect2D		GetRect						() const;
-	void			Initialize					( MOAILogicalDeviceVK& logicalDevice, MOAISurfaceVK& surface, u32 width, u32 height );
-					MOAISwapChainVK				();
-					~MOAISwapChainVK			();
-	VkResult		QueuePresent				( MOAIQueueVK& queue, VkSemaphore waitSemaphore = VK_NULL_HANDLE );
-	ZLSize			Size						() const;
+	VkResult						AcquireNextImage			();
+	VkResult						AcquireNextImage			( VkSemaphore presentCompleteSemaphore );
+	MOAIImageBufferSnapshotVK&		GetImageView				( ZLIndex i );
+	VkRect2D						GetRect						() const;
+	void							Initialize					( MOAILogicalDeviceVK& logicalDevice, MOAISurfaceVK& surface, u32 width, u32 height );
+									MOAISwapChainVK				();
+									~MOAISwapChainVK			();
+	VkResult						QueuePresent				( MOAIQueueVK& queue, VkSemaphore waitSemaphore = VK_NULL_HANDLE );
+	ZLSize							Size						() const;
 };
 
 #endif

@@ -83,10 +83,11 @@ VkMemoryRequirements MOAILogicalDeviceVK::GetImageMemoryRequirements ( VkImage i
 }
 
 //----------------------------------------------------------------//
-void MOAILogicalDeviceVK::GetSwapchainImagesKHR ( VkSwapchainKHR swapchain, ZLSize imageCount, VkImage* images ) {
+ZLSize MOAILogicalDeviceVK::GetSwapchainImagesKHR ( VkSwapchainKHR swapchain, ZLSize imageCount, VkImage* images ) {
 
 	u32 swapchainImageCount = ( u32 )imageCount;
 	VK_CHECK_RESULT ( this->mGetSwapchainImagesKHR ( this->mDevice, swapchain, &swapchainImageCount, images ));
+	return ( ZLSize )swapchainImageCount;
 }
 
 //----------------------------------------------------------------//

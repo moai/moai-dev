@@ -3,7 +3,56 @@
 
 #include "pch.h"
 #include <moai-gfx-vk/MOAIFrameBufferVK.h>
+#include <moai-gfx-vk/MOAIImageBufferVK.h>
+#include <moai-gfx-vk/MOAILogicalDeviceVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
+#include <moai-gfx-vk/MOAIRenderPassVK.h>
+
+//================================================================//
+// MOAIFrameBufferSnapshotVK
+//================================================================//
+	
+//----------------------------------------------------------------//
+MOAIFrameBufferSnapshotVK::MOAIFrameBufferSnapshotVK () {
+
+	RTTI_BEGIN ( MOAIFrameBufferSnapshotVK )
+		RTTI_EXTEND ( ZLFinalizable )
+		RTTI_VISITOR ( ZLAbstractFinalizationVisitor, ZLFinalizationVisitor < MOAIFrameBufferSnapshotVK >)
+	RTTI_END
+}
+
+//----------------------------------------------------------------//
+MOAIFrameBufferSnapshotVK::~MOAIFrameBufferSnapshotVK () {
+
+	this->Destruct ();
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIFrameBufferSnapshotVK::_Finalize () {
+
+	if ( this->mFrameBuffer ) {
+		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
+		vkDestroyFramebuffer ( logicalDevice, this->mFrameBuffer, NULL );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIFrameBufferSnapshotVK::MOAIAbstractSnapshotVK_OnPin ( MOAICommandBufferVK& commandBuffer ) {
+	UNUSED ( commandBuffer );
+	
+	ZLSize nAttachments = this->mAttachmentSnapshots.Size ();
+	for ( ZLSize i = 0; i < nAttachments; ++i ) {
+		commandBuffer.Pin ( *this->mAttachmentSnapshots [ i ]);
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIFrameBufferSnapshotVK::MOAIAbstractSnapshotVK_OnUnpin () {
+}
 
 //================================================================//
 // lua
@@ -86,72 +135,44 @@
 // MOAIFrameBufferVK
 //================================================================//
 
-////----------------------------------------------------------------//
-//void MOAIFrameBufferVK::AffirmBuffers () {
-//
-//	this->MOAIFrameBufferVK_AffirmBuffers ();
-//}
-//
-////----------------------------------------------------------------//
-//void MOAIFrameBufferVK::DetectGLFrameBufferID ( MOAIGfxMgrVK& gfxMgr ) {
-//
-//	this->SetGLFrameBuffer ( gfxMgr, gfxMgr.GetDrawingAPI ().GetCurrentFramebuffer ());
-//}
-//
-////----------------------------------------------------------------//
-//ZLRect MOAIFrameBufferVK::GetBufferRect () const {
-//
-//	ZLRect rect;
-//	rect.mXMin = 0;
-//	rect.mYMin = 0;
-//	rect.mXMax = ( float )this->mBufferWidth;
-//	rect.mYMax = ( float )this->mBufferHeight;
-//
-//	return rect;
-//}
-//
-////----------------------------------------------------------------//
-//void MOAIFrameBufferVK::GrabImage ( MOAIImage* image ) {
-//	UNUSED ( image ); // TODO: doesn't work now?
-//
-//	// TODO: all this is extremely hinky. this assumes that the framebuffer is RGBA_8888, which it
-//	// may not be. it also does two extra allocations and copies. what *should* happen is that we
-//	// grab the pixels directly into the image if the format matches, and create an extra buffer
-//	// only if we need to convert. we should also implement/use a mirror operation inside of MOAIImage
-//	// so we don't have to do it here.
-//
-////	unsigned char* buffer = ( unsigned char* ) malloc ( this->mBufferWidth * this->mBufferHeight * 4 );
-////
-////	zglReadPixels ( 0, 0, this->mBufferWidth, this->mBufferHeight, buffer );
-////
-////	//image is flipped vertically, flip it back
-////	int index,indexInvert;
-////	for ( u32 y = 0; y < ( this->mBufferHeight / 2 ); ++y ) {
-////		for ( u32 x = 0; x < this->mBufferWidth; ++x ) {
-////			for ( u32 i = 0; i < 4; ++i ) {
-////
-////				index = i + ( x * 4 ) + ( y * this->mBufferWidth * 4 );
-////				indexInvert = i + ( x * 4 ) + (( this->mBufferHeight - 1 - y ) * this->mBufferWidth * 4 );
-////
-////				unsigned char temp = buffer [ indexInvert ];
-////				buffer [ indexInvert ] = buffer [ index ];
-////				buffer [ index ] = temp;
-////			}
-////		}
-////	}
-////
-////	image->Init ( buffer, this->mBufferWidth, this->mBufferHeight, ZLColor::RGBA_8888 );
-////	free ( buffer );
-//}
+//----------------------------------------------------------------//
+MOAIFrameBufferSnapshotVK* MOAIFrameBufferVK::GetSnapshot () {
 
-////----------------------------------------------------------------//
-//MOAIFrameBufferVK::MOAIFrameBufferVK () :
-//	mGrabNextFrame ( false ) {
-//
-//	RTTI_BEGIN ( MOAIFrameBufferVK )
-//		RTTI_EXTEND ( MOAIFrameBuffer )
-//	RTTI_END
-//}
+	if ( !this->mSnapshot ) {
+	
+		if ( !this->HasDependency < MOAILogicalDeviceVK >()) return NULL;
+		if ( !this->HasDependency < MOAIRenderPassVK >()) return NULL;
+	
+		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
+		MOAIRenderPassVK& renderPass = this->GetDependency < MOAIRenderPassVK >();
+
+		MOAIFrameBufferSnapshotVK* snapshot = new MOAIFrameBufferSnapshotVK ();
+
+		snapshot->SetDependency < MOAILogicalDeviceVK >( logicalDevice );
+		snapshot->SetDependency < MOAIRenderPassVK >( renderPass );
+
+		ZLSize nAttachments = this->mAttachments.Size ();
+		snapshot->mAttachmentSnapshots.Init ( nAttachments );
+		snapshot->mAttachments.Init ( nAttachments );
+		
+		for ( ZLIndex i = 0; i < nAttachments; ++i ) {
+			assert ( this->mAttachments [ i ]);
+			snapshot->mAttachmentSnapshots [ i ] = this->mAttachments [ i ];
+			snapshot->mAttachments [ i ] = *this->mAttachments [ i ];
+		}
+		
+		VkFramebufferCreateInfo framebufferCreateInfo = MOAIGfxStructVK::framebufferCreateInfo (
+			renderPass,
+			snapshot->mAttachments.GetBuffer (),
+			( u32 )nAttachments,
+			this->mBufferWidth,
+			this->mBufferHeight
+		);
+		snapshot->mFrameBuffer = logicalDevice.CreateFramebuffer ( framebufferCreateInfo );
+		this->mSnapshot = snapshot;
+	}
+	return this->mSnapshot;
+}
 
 //----------------------------------------------------------------//
 MOAIFrameBufferVK::MOAIFrameBufferVK () {
@@ -164,41 +185,37 @@ MOAIFrameBufferVK::MOAIFrameBufferVK () {
 //----------------------------------------------------------------//
 MOAIFrameBufferVK::~MOAIFrameBufferVK () {
 
-//	this->mFrameImage.Set ( *this, 0 );
+	this->Destruct ();
 }
 
-////----------------------------------------------------------------//
-//void MOAIFrameBufferVK::SetGLFrameBuffer ( MOAIGfxMgrVK& gfxMgr, const ZLGfxHandle& frameBuffer ){
-//
-//	gfxMgr.DeleteOrDiscard ( this->mGLFrameBuffer, true );
-//	this->mGLFrameBuffer = frameBuffer;
-//}
+//----------------------------------------------------------------//
+void MOAIFrameBufferVK::ReserveAttachments ( ZLSize count ) {
+
+	this->mAttachments.Init ( count );
+}
+
+//----------------------------------------------------------------//
+void MOAIFrameBufferVK::SetAttachment ( ZLIndex index, MOAIImageBufferSnapshotVK& imageViewSnapshot ) {
+
+	this->mAttachments [ index ] = &imageViewSnapshot;
+}
+
+//----------------------------------------------------------------//
+void MOAIFrameBufferVK::SetLogicalDevice ( MOAILogicalDeviceVK& logicalDevice ) {
+
+	this->SetDependency < MOAILogicalDeviceVK >( logicalDevice );
+}
+
+//----------------------------------------------------------------//
+void MOAIFrameBufferVK::SetRenderPass ( MOAIRenderPassVK& renderPass ) {
+
+	this->SetDependency < MOAIRenderPassVK >( renderPass );
+}
 
 //================================================================//
 // virtual
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIFrameBufferVK::MOAIFrameBufferVK_AffirmBuffers () {
+void MOAIFrameBufferVK::_Finalize () {
 }
-
-////----------------------------------------------------------------//
-//void MOAIFrameBufferVK::ZLGfxListener_OnReadPixels ( const ZLCopyOnWrite& buffer, void * userdata ) {
-//	UNUSED ( userdata );
-//
-//	this->mGrabNextFrame = false;
-//	MOAIImage* image = this->mFrameImage;
-//	
-//	if ( image ) {
-//
-//		image->Init ( buffer.GetConstBuffer (), this->mBufferWidth, this->mBufferHeight, ZLColor::RGBA_8888 );
-//
-//		if ( this->mOnFrameFinish ) {
-//			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-//			if ( this->mOnFrameFinish.PushRef ( state )) {
-//				this->mFrameImage.PushRef ( state );
-//				state.DebugCall ( 1, 0 );
-//			}
-//		}
-//	}
-//}

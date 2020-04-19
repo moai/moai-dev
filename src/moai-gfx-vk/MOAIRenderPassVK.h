@@ -4,7 +4,10 @@
 #ifndef MOAIRENDERPASSVK_H
 #define MOAIRENDERPASSVK_H
 
+#include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
+
 class MOAICommandBufferVK;
+class MOAILogicalDeviceVK;
 
 //================================================================//
 // MOAIRenderPassDescriptionVK

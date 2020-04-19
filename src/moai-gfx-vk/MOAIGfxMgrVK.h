@@ -6,6 +6,7 @@
 
 #include <moai-gfx-vk/MOAICommandBufferVK.h>
 #include <moai-gfx-vk/MOAIFenceVK.h>
+#include <moai-gfx-vk/MOAIFrameBufferVK.h>
 #include <moai-gfx-vk/MOAIGfxInstanceVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVKComponents.h>
 //#include <moai-gfx-vk/MOAIGfxMgrVK_PipelineClerkVK.h>
@@ -14,6 +15,7 @@
 #include <moai-gfx-vk/MOAIGfxMgrVK_ResourceCacheVK.h>
 //#include <moai-gfx-vk/MOAIGfxMgrVK_ResourceClerkVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK_VertexCacheVK.h>
+#include <moai-gfx-vk/MOAIImageBufferVK.h>
 #include <moai-gfx-vk/MOAILogicalDeviceVK.h>
 #include <moai-gfx-vk/MOAIPhysicalDeviceVK.h>
 #include <moai-gfx-vk/MOAIRenderPassVK.h>
@@ -66,15 +68,10 @@ protected:
 	MOAILogicalDeviceVK					mLogicalDevice;
 	MOAISwapChainVK						mSwapChain;
 
-	struct {
-        VkImage                         mImage;
-        VkDeviceMemory                  mMem;
-        VkImageView                     mView;
-    } mDepthStencil;
-
-	ZLStrongPtr < MOAIRenderPassVK >		mRenderPass;
-	ZLLeanArray < MOAICommandBufferVK >		mDrawCommandBuffers;
-	ZLLeanArray < VkFramebuffer >			mFrameBuffers; // Allocate as needed? Bind to command buffer?
+	ZLStrongPtr < MOAIRenderPassVK >					mRenderPass;
+	ZLStrongPtr < MOAIImageBufferSnapshotVK	>			mDepthStencil;
+	ZLLeanArray < MOAICommandBufferVK >					mDrawCommandBuffers;
+	ZLLeanArray < ZLStrongPtr < MOAIFrameBufferVK > >	mFrameBuffers; // Allocate as needed? Bind to command buffer?
 
 	MOAISemaphoreVK						mRenderSemaphore;
 	MOAISemaphoreVK						mPresentSemaphore;
@@ -138,7 +135,7 @@ public:
 //	GET ( u32, RenderCounter, mRenderCounter );
 
 	GET ( MOAICommandBufferVK&, CommandBuffer, this->mDrawCommandBuffers [ this->mSwapChain.GetImageIndex ()]);
-	GET ( VkFramebuffer&, FrameBuffer, this->mFrameBuffers [ this->mSwapChain.GetImageIndex ()]);
+	GET ( MOAIFrameBufferVK&, FrameBuffer, *this->mFrameBuffers [ this->mSwapChain.GetImageIndex ()]);
 	GET ( MOAILogicalDeviceVK&, LogicalDevice, this->mLogicalDevice );
 	GET ( MOAIPhysicalDeviceVK&, PhysicalDevice, this->mPhysicalDevice );
 	GET ( MOAISwapChainVK&, SwapChain, this->mSwapChain );

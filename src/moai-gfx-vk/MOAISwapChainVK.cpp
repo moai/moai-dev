@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
+#include <moai-gfx-vk/MOAIImageBufferVK.h>
 #include <moai-gfx-vk/MOAISwapChainVK.h>
 
 //================================================================//
@@ -33,10 +34,10 @@ VkResult MOAISwapChainVK::AcquireNextImage ( VkSemaphore presentCompleteSemaphor
 }
 
 //----------------------------------------------------------------//
-VkImageView MOAISwapChainVK::GetImageView ( ZLIndex i ) {
+MOAIImageBufferSnapshotVK& MOAISwapChainVK::GetImageView ( ZLIndex i ) {
 
 	assert ( i < this->mImageCount );
-	return this->mViews [ i ];
+	return *this->mImageViews [ i ];
 }
 
 //----------------------------------------------------------------//
@@ -47,6 +48,8 @@ VkRect2D MOAISwapChainVK::GetRect () const {
 
 //----------------------------------------------------------------//
 void MOAISwapChainVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, MOAISurfaceVK& surface, u32 width, u32 height ) {
+
+//	this->Destruct ();
 
 	MOAIPhysicalDeviceVK& physicalDevice = logicalDevice.GetDependency < MOAIPhysicalDeviceVK >();
 	MOAIGfxInstanceVK& instance = physicalDevice.GetDependency < MOAIGfxInstanceVK >();
@@ -111,29 +114,20 @@ void MOAISwapChainVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, MOAISurfa
 
 	this->mSwapChain = logicalDevice.CreateSwapchainKHR ( swapchainCreateInfo );
 
-	// If an existing swap chain is re-created, destroy the old swap chain
-	// This also cleans up all the presentable images
-	if ( oldSwapchain != VK_NULL_HANDLE )  {
-		for ( ZLIndex i = 0; i < this->mImages.Size (); ++i ) {
-			vkDestroyImageView ( logicalDevice, this->mViews [ i ], NULL );
-		}
-		logicalDevice.DestroySwapchainKHR ( oldSwapchain, NULL );
-	}
-	
-	u32 imageCount;
-	logicalDevice.GetSwapchainImagesKHR ( this->mSwapChain, imageCount );
+	ZLSize imageCount = logicalDevice.GetSwapchainImagesKHR ( this->mSwapChain );
 	this->mImageCount = imageCount;
 	
 	// Get the swap chain images
-	this->mImages.Init ( this->mImageCount );
-	logicalDevice.GetSwapchainImagesKHR ( this->mSwapChain, this->mImageCount, this->mImages.GetBuffer ());
+	
+	VkImage* images = ( VkImage* )alloca ( imageCount * sizeof ( VkImage ));
+	logicalDevice.GetSwapchainImagesKHR ( this->mSwapChain, this->mImageCount, images );
 
 	// Create a view for each image
-	this->mViews.Init ( this->mImageCount );
+	this->mImageViews.Init ( this->mImageCount );
 	for ( ZLIndex i = 0; i < this->mImageCount; ++i ) {
 		
-		VkImageViewCreateInfo colorAttachmentView = MOAIGfxStructVK::imageViewCreateInfo (
-			this->mImages [ i ],
+		VkImageViewCreateInfo attachmentViewCreateInfo = MOAIGfxStructVK::imageViewCreateInfo (
+			images [ i ],
 			VK_IMAGE_VIEW_TYPE_2D,
 			this->mSurfaceFormat.format,
 			MOAIGfxStructVK::componentMapping (
@@ -145,7 +139,12 @@ void MOAISwapChainVK::Initialize ( MOAILogicalDeviceVK& logicalDevice, MOAISurfa
 			MOAIGfxStructVK::imageSubresourceRange ( VK_IMAGE_ASPECT_COLOR_BIT )
 		);
 		
-		VK_CHECK_RESULT ( vkCreateImageView ( logicalDevice, &colorAttachmentView, NULL, &this->mViews [ i ]));
+		VkImageView attachmentView;
+		VK_CHECK_RESULT ( vkCreateImageView ( logicalDevice, &attachmentViewCreateInfo, NULL, &attachmentView ));
+		
+		MOAIImageBufferSnapshotVK* imageView = new MOAIImageBufferSnapshotVK ();
+		imageView->Init ( logicalDevice, attachmentView );
+		this->mImageViews [ i ] = imageView;
 	}
 }
 
@@ -203,8 +202,8 @@ void MOAISwapChainVK::_Finalize () {
 		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
 
 		if ( this->mSwapChain != VK_NULL_HANDLE ) {
-			for ( ZLIndex i = 0; i < this->mImages.Size (); ++i ) {
-				vkDestroyImageView ( logicalDevice, this->mViews [ i ], NULL );
+			for ( ZLIndex i = 0; i < this->mImageViews.Size (); ++i ) {
+				this->mImageViews [ i ]->Finalize ();
 			}
 			logicalDevice.DestroySwapchainKHR ( this->mSwapChain, NULL );
 			this->mSwapChain = VK_NULL_HANDLE;

@@ -77,7 +77,7 @@ public:
 	VkSwapchainKHR			CreateSwapchainKHR				( const VkSwapchainCreateInfoKHR& createInfo, const VkAllocationCallbacks* pAllocator = NULL );
 	void					DestroySwapchainKHR				( VkSwapchainKHR swapchain, const VkAllocationCallbacks* pAllocator = NULL );
 	VkMemoryRequirements	GetImageMemoryRequirements		( VkImage image );
-	void					GetSwapchainImagesKHR			( VkSwapchainKHR swapchain, ZLSize imageCount, VkImage* images = NULL );
+	ZLSize					GetSwapchainImagesKHR			( VkSwapchainKHR swapchain, ZLSize imageCount = 0, VkImage* images = NULL );
 	void					Initialize						( MOAIPhysicalDeviceVK& physicalDevice, VkQueueFlags requestedQueueTypes = VK_QUEUE_GRAPHICS_BIT, bool requestPresent = true );
 							MOAILogicalDeviceVK				();
 							~MOAILogicalDeviceVK			();

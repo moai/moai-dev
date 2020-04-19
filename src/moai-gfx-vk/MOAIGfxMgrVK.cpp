@@ -240,6 +240,7 @@ void MOAIGfxMgrVK::DetectContext ( u32 width, u32 height, bool enableValidation 
 	this->mPhysicalDevice.Initialize ( this->mInstance, this->mSurface );
 	this->mLogicalDevice.Initialize ( this->mPhysicalDevice );
 	this->mSwapChain.Initialize ( this->mLogicalDevice, this->mSurface, width, height );
+	assert ( this->mSwapChain.Size ());
 
 	this->AffirmRenderPass ();
 	this->InitDepthStencil ();
@@ -334,60 +335,53 @@ void MOAIGfxMgrVK::InitCommandBuffers () {
 //----------------------------------------------------------------//
 void MOAIGfxMgrVK::InitDepthStencil () {
 
-	VkImageCreateInfo imageCreateInfo = MOAIGfxStructVK::imageCreateInfo (
-		VK_IMAGE_TYPE_2D,
-		this->mPhysicalDevice.mDepthFormat,
-		MOAIGfxStructVK::extent3D ( this->mSwapChain.GetWidth (), this->mSwapChain.GetHeight (), 1 ),
-		VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT
+	this->mDepthStencil = new MOAIImageBufferSnapshotVK ();
+
+	this->mDepthStencil->Init (
+	
+		this->mLogicalDevice,
+		
+		MOAIGfxStructVK::imageCreateInfo (
+			VK_IMAGE_TYPE_2D,
+			this->mPhysicalDevice.mDepthFormat,
+			MOAIGfxStructVK::extent3D ( this->mSwapChain.GetWidth (), this->mSwapChain.GetHeight (), 1 ),
+			VK_IMAGE_USAGE_DEPTH_STENCIL_ATTACHMENT_BIT | VK_IMAGE_USAGE_TRANSFER_SRC_BIT
+		),
+		
+		MOAIGfxStructVK::imageViewCreateInfo (
+			NULL,
+			VK_IMAGE_VIEW_TYPE_2D,
+			this->mPhysicalDevice.mDepthFormat,
+			MOAIGfxStructVK::componentMapping (),
+			MOAIGfxStructVK::imageSubresourceRange ( VK_IMAGE_ASPECT_DEPTH_BIT | VK_IMAGE_ASPECT_STENCIL_BIT )
+		)
 	);
-	this->mDepthStencil.mImage = this->mLogicalDevice.CreateImage ( imageCreateInfo );
-
-	VkImageViewCreateInfo depthStencilImageViewCreateInfo = MOAIGfxStructVK::imageViewCreateInfo (
-		NULL,
-		VK_IMAGE_VIEW_TYPE_2D,
-		this->mPhysicalDevice.mDepthFormat,
-		MOAIGfxStructVK::componentMapping (),
-		MOAIGfxStructVK::imageSubresourceRange ( VK_IMAGE_ASPECT_DEPTH_BIT | VK_IMAGE_ASPECT_STENCIL_BIT )
-	);
-
-	VkMemoryRequirements memReqs;
-	vkGetImageMemoryRequirements ( this->mLogicalDevice, mDepthStencil.mImage, &memReqs );
-
-	u32 memoryTypeIndex;
-	bool didFindMemoryTypeIndex = this->mPhysicalDevice.FindMemoryTypeIndex ( memoryTypeIndex, memReqs.memoryTypeBits );
-	assert ( didFindMemoryTypeIndex );
-
-	VkMemoryAllocateInfo memAllocInfo = MOAIGfxStructVK::memoryAllocateInfo ( memReqs.size, memoryTypeIndex );
-	this->mDepthStencil.mMem = this->mLogicalDevice.AllocateMemory ( memAllocInfo );
-	this->mLogicalDevice.BindImageMemory ( this->mDepthStencil.mImage, this->mDepthStencil.mMem );
-
-	depthStencilImageViewCreateInfo.image = mDepthStencil.mImage;
-	this->mDepthStencil.mView = this->mLogicalDevice.CreateImageView ( depthStencilImageViewCreateInfo );
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxMgrVK::InitFrameBuffers () {
 
-	VkImageView attachments [ 2 ];
+	this->AffirmRenderPass ();
 
-    // Depth/Stencil attachment is the same for all frame buffers
-    attachments [ 1 ] = this->mDepthStencil.mView;
-
-    VkFramebufferCreateInfo framebufferCreateInfo = MOAIGfxStructVK::framebufferCreateInfo (
-    	*this->mRenderPass,
-    	attachments,
-    	2,
-    	this->mSwapChain.GetWidth (),
-    	this->mSwapChain.GetHeight ()
-	);
-
+	u32 width = this->mSwapChain.GetWidth ();
+	u32 height = this->mSwapChain.GetHeight ();
 	ZLSize imageCount = this->mSwapChain.Size ();
 
     // Create frame buffers for every swap chain image
     this->mFrameBuffers.Init ( imageCount );
     for ( ZLIndex i = 0; i < imageCount; ++i ) {
-        attachments [ 0 ] = this->mSwapChain.GetImageView ( i );
-        this->mFrameBuffers [ i ] = this->mLogicalDevice.CreateFramebuffer ( framebufferCreateInfo );
+    
+		MOAIFrameBufferVK* frameBuffer = new MOAIFrameBufferVK ();
+		frameBuffer->SetBufferSize ( width, height );
+    
+		frameBuffer->SetLogicalDevice ( this->mLogicalDevice );
+		frameBuffer->SetRenderPass ( *this->mRenderPass );
+    
+		frameBuffer->ReserveAttachments ( 2 );
+		frameBuffer->SetAttachment ( 0, this->mSwapChain.GetImageView ( i ));
+		frameBuffer->SetAttachment ( 1, *this->mDepthStencil );
+		
+		this->mFrameBuffers [ i ] = frameBuffer;
     }
 }
 

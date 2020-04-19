@@ -33,7 +33,6 @@ public:
 	bool				IsPinned							();
 						MOAIAbstractSnapshotVK				();
 	virtual				~MOAIAbstractSnapshotVK				();
-	
 };
 
 #endif

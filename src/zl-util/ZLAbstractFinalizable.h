@@ -33,13 +33,13 @@ protected:
 	}
 
 	//----------------------------------------------------------------//
+	void 							Destruct				();
 	ZLAbstractFinalizableImpl&		AffirmImpl				();
 	ZLAbstractFinalizableImpl*		GetImpl					();
 
 public:
 
 	//----------------------------------------------------------------//
-	void 						Destruct							();
 	void 						Finalize							();
 								ZLAbstractFinalizable				();
 	virtual 					~ZLAbstractFinalizable				();

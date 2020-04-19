@@ -4,59 +4,90 @@
 #ifndef	MOAIFRAMEBUFFERVK_H
 #define	MOAIFRAMEBUFFERVK_H
 
+#include <moai-gfx-vk/MOAILogicalDeviceVK.h>
+#include <moai-gfx-vk/MOAIRenderPassVK.h>
+
+class MOAIImageBufferSnapshotVK;
+class MOAILogicalDeviceVK;
 class MOAIGfxMgrVK;
+class MOAIRenderPassVK;
+
+//================================================================//
+// MOAIFrameBufferSnapshotVK
+//================================================================//
+// TODO: doxygen
+class MOAIFrameBufferSnapshotVK :
+	public virtual MOAIAbstractSnapshotVK,
+	public virtual ZLFinalizable,
+	public virtual ZLFinalizable_DependsOn < MOAILogicalDeviceVK >,
+	public virtual ZLFinalizable_DependsOn < MOAIRenderPassVK > {
+protected:
+	
+	ZL_FINALIZATION_VISITOR_FRIEND
+	
+	friend class MOAIFrameBufferVK;
+	
+	ZLLeanArray < ZLStrongPtr < MOAIImageBufferSnapshotVK > > mAttachmentSnapshots;
+	ZLLeanArray < VkImageView > mAttachments;
+	VkFramebuffer mFrameBuffer;
+
+	//----------------------------------------------------------------//
+	void 			_Finalize							();
+	void			MOAIAbstractSnapshotVK_OnPin		( MOAICommandBufferVK& commandBuffer );
+	void			MOAIAbstractSnapshotVK_OnUnpin		();
+
+public:
+
+	IMPLEMENT_DEPENDS_ON ( MOAIFrameBufferSnapshotVK )
+
+	//----------------------------------------------------------------//
+	operator bool () const {
+		return ( this->mFrameBuffer != VK_NULL_HANDLE );
+	}
+	
+	//----------------------------------------------------------------//
+	operator VkFramebuffer& () {
+		return this->mFrameBuffer;
+	}
+	
+	//----------------------------------------------------------------//
+					MOAIFrameBufferSnapshotVK			();
+					~MOAIFrameBufferSnapshotVK			();
+};
 
 //================================================================//
 // MOAIFrameBufferVK
 //================================================================//
-/**	@lua	MOAIFrameBufferVK
-	@text	MOAIFrameBufferVK is responsible for drawing a list of MOAIRenderable
-			objects. MOAIRenderable is the base class for any object that can be
-			drawn. This includes MOAIProp and MOAIPartitionViewLayer. To use MOAIFrameBufferVK
-			pass a table of MOAIRenderable objects to setRenderTable ().
-			The table will usually be a stack of MOAIPartitionViewLayer objects. The contents of
-			the table will be rendered the next time a frame is drawn. Note that the
-			table must be an array starting with index 1. Objects will be rendered
-			counting from the base index until 'nil' is encountered. The render
-			table may include other tables as entries. These must also be arrays
-			indexed from 1.
-*/
+// TODO: doxygen
 class MOAIFrameBufferVK :
-	public virtual MOAIFrameBuffer {
+	public virtual MOAIFrameBuffer,
+	public virtual ZLFinalizable,
+	public virtual ZLFinalizable_DependsOn < MOAILogicalDeviceVK >,
+	public virtual ZLFinalizable_DependsOn < MOAIRenderPassVK > {
 protected:
 	
+	ZL_FINALIZATION_VISITOR_FRIEND
+	
 	friend class MOAIGfxMgrVK_GPUCacheVK;
-	
-//	ZLGfxHandle			mGLFrameBuffer;
-//
-//	bool								mGrabNextFrame;
-//	MOAILuaMemberRef					mOnFrameFinish;
-//	MOAILuaSharedPtr < MOAIImage >		mFrameImage;
-//
-//	//----------------------------------------------------------------//
-//	static int			_getGrabbedImage			( lua_State* L );
-//	static int			_grabNextFrame				( lua_State* L );
-//	static int			_isPendingGrab				( lua_State* L );
-//
-//	//----------------------------------------------------------------//
-//	void				AffirmBuffers					();
-	
+
+	ZLLeanArray < ZLStrongPtr < MOAIImageBufferSnapshotVK > > mAttachments;
+	ZLStrongPtr < MOAIFrameBufferSnapshotVK > mSnapshot;
+
 	//----------------------------------------------------------------//
-	virtual void		MOAIFrameBufferVK_AffirmBuffers			();
-//	void				ZLGfxListener_OnReadPixels				( const ZLCopyOnWrite& buffer, void* userdata );
+	void 			_Finalize					();
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAIFrameBufferVK )
 	
 	//----------------------------------------------------------------//
-//	void				DetectGLFrameBufferID		( MOAIGfxMgrVK& gfxMgr );
-//	ZLRect				GetBufferRect				() const;
-//	void				GrabImage					( MOAIImage* image );
-						MOAIFrameBufferVK			();
-						~MOAIFrameBufferVK			();
-//	void				SetGLFrameBuffer			( MOAIGfxMgrVK& gfxMgr, const ZLGfxHandle& frameBuffer );
-//	ZLRect				WndRectToDevice				( ZLRect rect ) const;
+	MOAIFrameBufferSnapshotVK*		GetSnapshot					();
+									MOAIFrameBufferVK			();
+									~MOAIFrameBufferVK			();
+	void							ReserveAttachments			( ZLSize count );
+	void							SetAttachment				( ZLIndex index, MOAIImageBufferSnapshotVK& imageViewSnapshot );
+	void							SetLogicalDevice			( MOAILogicalDeviceVK& logicalDevice );
+	void							SetRenderPass				( MOAIRenderPassVK& renderPass );
 };
 
 #endif
