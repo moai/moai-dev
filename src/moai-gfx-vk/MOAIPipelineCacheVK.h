@@ -4,7 +4,7 @@
 #ifndef MOAIPIPELINECACHEVK_H
 #define MOAIPIPELINECACHEVK_H
 
-#include <moai-gfx-vk/MOAIPipelineVK.h>
+#include <moai-gfx-vk/MOAIPipelineSnapshotVK.h>
 
 //================================================================//
 // MOAIPipelineCachePageVK
@@ -14,12 +14,12 @@ private:
 
 	friend class MOAIPipelineCacheVK;
 
-	STLSet < MOAIPipelineVK* > mPipelineSet;
+	STLSet < MOAIPipelineSnapshotVK* > mPipelineSet;
 
 	//----------------------------------------------------------------//
 	void Clear () {
 	
-		STLSet < MOAIPipelineVK* >::iterator pipelineIt = this->mPipelineSet.begin ();
+		STLSet < MOAIPipelineSnapshotVK* >::iterator pipelineIt = this->mPipelineSet.begin ();
 		for ( ; pipelineIt != this->mPipelineSet.end (); ++pipelineIt ) {
 			( *pipelineIt )->Release ();
 		}
@@ -27,7 +27,7 @@ private:
 	}
 	
 	//----------------------------------------------------------------//
-	void TakePipeline ( MOAIPipelineVK& pipeline ) {
+	void TakePipeline ( MOAIPipelineSnapshotVK& pipeline ) {
 	
 		if ( pipeline.mPage == this ) return;
 	
@@ -59,12 +59,12 @@ public:
 class MOAIPipelineCacheVK {
 protected:
 
-	friend class MOAIPipelineVK;
+	friend class MOAIPipelineSnapshotVK;
 
 	static const ZLSize		DEFAULT_PAGE_COUNT 				= 60; // every minute
 	static const ZLSize		DEFAULT_UPDATE_COUNTER_LIMIT 	= 60; // every second at 60fps
 
-	STLMap < MOAIPipelineKeyVK, MOAIPipelineVK* >	mWeakCache;
+	STLMap < MOAIPipelineKeyVK, MOAIPipelineSnapshotVK* >	mWeakCache;
 	ZLLeanArray < MOAIPipelineCachePageVK >			mPages;
 	
 	ZLIndex				mCurrentPage;
@@ -77,11 +77,11 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-	void				InitializePipelineCache		( ZLSize pageCount, ZLSize updateCounterLimit );
-						MOAIPipelineCacheVK			();
-						~MOAIPipelineCacheVK		();
-	MOAIPipelineVK*		ProcurePipeline				( const MOAIPipelineParamsVK& params );
-	void				UpdatePipelineCache			();
+	void						InitializePipelineCache		( ZLSize pageCount, ZLSize updateCounterLimit );
+								MOAIPipelineCacheVK			();
+								~MOAIPipelineCacheVK		();
+	MOAIPipelineSnapshotVK*		ProcurePipeline				( const MOAIPipelineParamsVK& params );
+	void						UpdatePipelineCache			();
 };
 
 #endif

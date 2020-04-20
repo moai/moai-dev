@@ -4,11 +4,11 @@
 #ifndef MOAIDESCRIPTORSETLAYOUTIMPLVK_H
 #define MOAIDESCRIPTORSETLAYOUTIMPLVK_H
 
-#include <moai-gfx-vk/MOAIDescriptorSetVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
 
 class MOAIDescriptorSetLayoutImplCacheVK;
 class MOAIDescriptorSetLayoutVK;
-class MOAIDescriptorSetStateVK;
+class MOAIDescriptorSetVK;
 class MOAILogicalDeviceVK;
 
 typedef ZLArrayKey < VkDescriptorSetLayoutBinding > MOAIDescriptorSetLayoutKeyVK;
@@ -22,8 +22,8 @@ private:
 	friend class MOAIDescriptorSetLayoutImplVK;
 	friend class MOAIDescriptorSetLayoutVK;
 
-	STLSet < MOAIDescriptorSetVK* >			mAllSnapshots;
-	STLSet < MOAIDescriptorSetVK* >			mExpiredSnapshots;
+	STLSet < MOAIDescriptorSetSnapshotVK* >			mAllSnapshots;
+	STLSet < MOAIDescriptorSetSnapshotVK* >			mExpiredSnapshots;
 	VkDescriptorPool						mPool;
 };
 
@@ -41,8 +41,8 @@ private:
 	friend class MOAIDescriptorSetLayoutImplCacheVK;
 	friend class MOAIDescriptorSetLayoutImplVK;
 	friend class MOAIDescriptorSetLayoutVK;
-	friend class MOAIDescriptorSetStateVK;
 	friend class MOAIDescriptorSetVK;
+	friend class MOAIDescriptorSetSnapshotVK;
 
 	MOAIDescriptorSetLayoutImplCacheVK*				mCache;
 
@@ -60,12 +60,12 @@ private:
 	STLSet < MOAIDescriptorPoolVK* >				mAllPools;
 	STLSet < MOAIDescriptorPoolVK* >				mOpenPools;
 
-	STLMap < MOAIDescriptorSetKeyVK, MOAIDescriptorSetVK* > mActiveSnapshots;
+	STLMap < MOAIDescriptorSetKeyVK, MOAIDescriptorSetSnapshotVK* > mActiveSnapshots;
 	
 	//----------------------------------------------------------------//
-	void						DeletePool							( MOAIDescriptorPoolVK* pool );
-	MOAIDescriptorSetVK*		ProcureDescriptorSet				( const MOAIDescriptorSetStateVK& descriptorSetState );
-	void						RetireDescriptorSet					( MOAIDescriptorSetVK& snapshot );
+	void							DeletePool						( MOAIDescriptorPoolVK* pool );
+	MOAIDescriptorSetSnapshotVK*	ProcureDescriptorSet			( const MOAIDescriptorSetVK& descriptorSetState );
+	void							RetireDescriptorSet				( MOAIDescriptorSetSnapshotVK& snapshot );
 
 	//----------------------------------------------------------------//
 	void						_Finalize							();

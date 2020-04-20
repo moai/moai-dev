@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx-vk/MOAIDescriptorSetStateVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetArrayVK.h>
 #include <moai-gfx-vk/MOAIDrawingCommandVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
@@ -29,7 +29,7 @@ void MOAIDrawingCommandVK::Execute ( MOAIAbstractDrawingAPICallback* callback, M
 		case MOAIDrawingCmdEnumVK::LOAD_DESCRIPTOR_ELEMENT_VK: {
 			if ( descriptorSetArray ) {
 				const MOAIDrawingParamVK::LoadDescriptorElement* param = ( const MOAIDrawingParamVK::LoadDescriptorElement* )rawParam;
-				MOAIDescriptorSetStateVK& descriptorSet = descriptorSetArray->GetDescriptorSet ( param->mDescriptorSetID );
+				MOAIDescriptorSetVK& descriptorSet = descriptorSetArray->GetDescriptorSet ( param->mDescriptorSetID );
 				descriptorSet.SetDescriptor ( param->mBinding, param->mArrayElement, param->mElement );
 			}
 			break;
@@ -39,7 +39,7 @@ void MOAIDrawingCommandVK::Execute ( MOAIAbstractDrawingAPICallback* callback, M
 			if ( descriptorSetArray ) {
 				const MOAIDrawingParamVK::LoadDescriptorFromTextureUnit* param = ( const MOAIDrawingParamVK::LoadDescriptorFromTextureUnit* )rawParam;
 				MOAITextureVK* texture = MOAICast < MOAITextureVK >( gfxMgr.GetTexture ( param->mTextureUnit ));
-				MOAIDescriptorSetStateVK& descriptorSet = descriptorSetArray->GetDescriptorSet ( param->mDescriptorSetID );
+				MOAIDescriptorSetVK& descriptorSet = descriptorSetArray->GetDescriptorSet ( param->mDescriptorSetID );
 				descriptorSet.SetDescriptor ( param->mBinding, param->mArrayElement, texture );
 			}
 			break;

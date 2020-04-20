@@ -5,10 +5,10 @@
 #define MOAIDESCRIPTORSETLAYOUTVK_H
 
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutImplVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
 
 class MOAIDescriptorSetLayoutVK;
-class MOAIDescriptorSetStateVK;
+class MOAIDescriptorSetVK;
 class MOAILogicalDeviceVK;
 
 //================================================================//
@@ -20,9 +20,9 @@ class MOAIDescriptorSetLayoutVK :
 	public ZLFinalizable_DependsOn < MOAILogicalDeviceVK > {
 private:
 
-	friend class MOAIDescriptorSetStateVK;
 	friend class MOAIDescriptorSetVK;
-	friend class MOAIDescriptorSetStateVK;
+	friend class MOAIDescriptorSetSnapshotVK;
+	friend class MOAIDescriptorSetVK;
 
 	ZLLeanArray < VkDescriptorSetLayoutBinding >*	mLayoutBindings;
 	ZLStrongPtr < MOAIDescriptorSetLayoutImplVK >	mImpl;
@@ -62,7 +62,7 @@ public:
 	void						Initialize							( MOAILogicalDeviceVK& logicalDevice, ZLSize totalBindings );
 								MOAIDescriptorSetLayoutVK			();
 								~MOAIDescriptorSetLayoutVK			();
-	MOAIDescriptorSetVK*		ProcureDescriptorSet				( const MOAIDescriptorSetStateVK& descriptorSetState );
+	MOAIDescriptorSetSnapshotVK*		ProcureDescriptorSet				( const MOAIDescriptorSetVK& descriptorSetState );
 	void						SetBinding							( ZLIndex index, VkDescriptorType descriptorType, VkShaderStageFlags stageFlags, ZLSize descriptorCount = 1 );
 };
 

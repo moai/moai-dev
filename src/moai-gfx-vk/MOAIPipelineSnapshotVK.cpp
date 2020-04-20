@@ -6,14 +6,14 @@
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAILogicalDeviceVK.h>
 #include <moai-gfx-vk/MOAIPipelineCacheVK.h>
-#include <moai-gfx-vk/MOAIPipelineVK.h>
+#include <moai-gfx-vk/MOAIPipelineSnapshotVK.h>
 
 //================================================================//
-// MOAIPipelineVK
+// MOAIPipelineSnapshotVK
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIPipelineVK::MOAIPipelineVK ( const MOAIPipelineParamsVK& params ) :
+MOAIPipelineSnapshotVK::MOAIPipelineSnapshotVK ( const MOAIPipelineParamsVK& params ) :
 	MOAIPipelineParamsVK ( params ),
 	mCache ( NULL ),
 	mPage ( NULL ),
@@ -81,7 +81,7 @@ MOAIPipelineVK::MOAIPipelineVK ( const MOAIPipelineParamsVK& params ) :
 }
 
 //----------------------------------------------------------------//
-MOAIPipelineVK::~MOAIPipelineVK () {
+MOAIPipelineSnapshotVK::~MOAIPipelineSnapshotVK () {
 	this->Destruct ();
 }
 
@@ -90,23 +90,23 @@ MOAIPipelineVK::~MOAIPipelineVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIPipelineVK::_Finalize () {
+void MOAIPipelineSnapshotVK::_Finalize () {
 	
 	MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
 	vkDestroyPipeline ( logicalDevice, this->mPipeline, NULL );
 }
 
 //----------------------------------------------------------------//
-void MOAIPipelineVK::MOAIAbstractSnapshotVK_OnPin (
+void MOAIPipelineSnapshotVK::MOAIAbstractSnapshotVK_OnPin (
 	MOAICommandBufferVK& commandBuffer ) { UNUSED ( commandBuffer );
 }
 
 //----------------------------------------------------------------//
-void MOAIPipelineVK::MOAIAbstractSnapshotVK_OnUnpin () {
+void MOAIPipelineSnapshotVK::MOAIAbstractSnapshotVK_OnUnpin () {
 }
 
 //----------------------------------------------------------------//
-MOAIPipelineVK* MOAIPipelineVK::MOAISnapshotFactoryVK_GetSnapshot () {
+MOAIPipelineSnapshotVK* MOAIPipelineSnapshotVK::MOAISnapshotFactoryVK_GetSnapshot () {
 
 	return this;
 }

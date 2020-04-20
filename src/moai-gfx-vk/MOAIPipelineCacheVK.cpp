@@ -35,14 +35,14 @@ MOAIPipelineCacheVK::~MOAIPipelineCacheVK () {
 }
 
 //----------------------------------------------------------------//
-MOAIPipelineVK* MOAIPipelineCacheVK::ProcurePipeline ( const MOAIPipelineParamsVK& params ) {
+MOAIPipelineSnapshotVK* MOAIPipelineCacheVK::ProcurePipeline ( const MOAIPipelineParamsVK& params ) {
 
 	MOAIPipelineKeyVK key ( params );
-	MOAIPipelineVK* pipeline = this->mWeakCache.contains ( key ) ? this->mWeakCache [ key ] : NULL;
+	MOAIPipelineSnapshotVK* pipeline = this->mWeakCache.contains ( key ) ? this->mWeakCache [ key ] : NULL;
 
 	if ( !pipeline ) {
 		this->AffirmPages ();
-		pipeline = new MOAIPipelineVK ( params );
+		pipeline = new MOAIPipelineSnapshotVK ( params );
 		this->mWeakCache [ *pipeline ] = pipeline;
 	}
 	this->mPages [ this->mCurrentPage ].TakePipeline ( *pipeline );

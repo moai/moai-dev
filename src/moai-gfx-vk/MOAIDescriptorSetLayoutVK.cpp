@@ -3,8 +3,8 @@
 
 #include "pch.h"
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetStateVK.h>
 #include <moai-gfx-vk/MOAILogicalDeviceVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
@@ -55,7 +55,7 @@ MOAIDescriptorSetLayoutVK::~MOAIDescriptorSetLayoutVK () {
 }
 
 //----------------------------------------------------------------//
-MOAIDescriptorSetVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSet ( const MOAIDescriptorSetStateVK& descriptorSetState ) {
+MOAIDescriptorSetSnapshotVK* MOAIDescriptorSetLayoutVK::ProcureDescriptorSet ( const MOAIDescriptorSetVK& descriptorSetState ) {
 	
 	this->AffirmDescriptorSetLayout ();
 	return this->mImpl->ProcureDescriptorSet ( descriptorSetState );

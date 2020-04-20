@@ -1,75 +1,60 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MOAIDESCRIPTORSETVK_H
-#define MOAIDESCRIPTORSETVK_H
+#ifndef MOAIDESCRIPTORSET_H
+#define MOAIDESCRIPTORSET_H
 
+#include <moai-gfx-vk/MOAIAbstractDescriptorElementStateVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
 #include <moai-gfx-vk/MOAISnapshotVK.h>
 
-class MOAIAbstractDescriptorElementVK;
-class MOAIDescriptorSetLayoutImplVK;
-class MOAIDescriptorSetLayoutVK;
-class MOAIDescriptorPoolVK;
-class MOAIDescriptorSetStateVK;
+class MOAIDescriptorSetSnapshotVK;
 
-typedef ZLArrayKey < MOAIAbstractDescriptorElementVK* > MOAIDescriptorSetKeyVK;
+//================================================================//
+// MOAIDescriptorVK
+//================================================================//
+class MOAIDescriptorVK {
+protected:
+
+	friend class MOAIDescriptorSetVK;
+
+	ZLLeanArray < ZLWeakPtr < MOAIAbstractDescriptorElementStateVK > > mElements;
+	ZLLeanArray < u8 > mInfoArray;
+};
 
 //================================================================//
 // MOAIDescriptorSetVK
 //================================================================//
 class MOAIDescriptorSetVK :
-	public MOAISnapshotVK < MOAIDescriptorSetVK >,
-	public ZLFinalizable_DependsOn < MOAIDescriptorSetLayoutImplVK > {
-private:
+	public virtual ZLRefCountedObject,
+	public ZLFinalizable,
+	public ZLFinalizable_DependsOn < MOAIDescriptorSetLayoutVK > {
+protected:
 
-	friend class MOAIAbstractDescriptorElementVK;
 	friend class MOAIDescriptorSetLayoutImplVK;
 	friend class MOAIDescriptorSetLayoutVK;
-	friend class MOAIDescriptorSetStateVK;
+	friend class MOAIDescriptorSetSnapshotVK;
 
-	MOAIDescriptorSetKeyVK								mKey;
+	ZLLeanArray < MOAIDescriptorVK >					mDescriptors;
+	ZLLeanArray < VkWriteDescriptorSet >				mWriteDescriptors;
+	ZLLeanArray < MOAIMutableWriteDescriptorSetVK >		mMutableWriteDescriptors;
 	ZLLeanArray < MOAIAbstractDescriptorElementVK* >	mSignature;
-	VkDescriptorSet										mDescriptorSet;
-	bool												mIsValid;
-	MOAIDescriptorPoolVK*								mPool;
+
+	ZLStrongPtr < MOAIDescriptorSetSnapshotVK >			mDescriptorSet;
 
 	//----------------------------------------------------------------//
-	void					Invalidate							();
-
-	//----------------------------------------------------------------//
-	void					MOAIAbstractSnapshotVK_OnPin		( MOAICommandBufferVK& commandBuffer );
-	void					MOAIAbstractSnapshotVK_OnUnpin		();
-	MOAIDescriptorSetVK*	MOAISnapshotFactoryVK_GetSnapshot 	();
-
+	VkWriteDescriptorSet*			GetWriteDescriptorSet		( ZLIndex binding, ZLIndex arrayElement );
+	
 public:
-
+	
 	IMPLEMENT_DEPENDS_ON ( MOAIDescriptorSetVK )
-
-	IS ( Valid, mIsValid, true )
-
-	//----------------------------------------------------------------//
-	operator bool () const {
-		return ( this->mDescriptorSet != VK_NULL_HANDLE );
-	}
 	
 	//----------------------------------------------------------------//
-	operator VkDescriptorSet* () {
-		return &this->mDescriptorSet;
-	}
-	
-	//----------------------------------------------------------------//
-	operator VkDescriptorSet& () {
-		return this->mDescriptorSet;
-	}
-	
-	//----------------------------------------------------------------//
-	operator MOAIDescriptorSetKeyVK& () {
-		return this->mKey;
-	}
-	
-	//----------------------------------------------------------------//
-					MOAIDescriptorSetVK					();
-					~MOAIDescriptorSetVK				();
+	MOAIDescriptorSetSnapshotVK*	GetDescriptorSet			();
+	void							Initialize					( MOAIDescriptorSetLayoutVK& descriptorSetLayout );
+									MOAIDescriptorSetVK			();
+									~MOAIDescriptorSetVK		();
+	void							SetDescriptor				( ZLIndex binding, ZLIndex arrayElement, MOAIAbstractDescriptorElementStateVK* descriptor );
 };
 
 #endif

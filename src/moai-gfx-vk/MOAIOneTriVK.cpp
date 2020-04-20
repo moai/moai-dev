@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <moai-gfx-vk/MOAICommandBufferVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetStateVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAIGfxUtilVK.h>
@@ -91,7 +91,7 @@ void MOAIOneTriVK::PreparePipeline () {
 	this->mPipelineLayout->SetDescriptorSetLayout ( 0, *descriptorSetLayout );
 	this->mPipelineLayout->AffirmPipelineLayout ();
 	
-	this->mDescriptorSet = new MOAIDescriptorSetStateVK ();
+	this->mDescriptorSet = new MOAIDescriptorSetVK ();
 	this->mDescriptorSet->Initialize ( *descriptorSetLayout );
 
 	VkDynamicState dynamicStateEnables [] = {
@@ -351,12 +351,12 @@ void MOAIOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 	// initialize the descriptor set
 	MOAIDescriptorSetLayoutVK& descriptorSetLayout = this->mPipelineLayout->GetDescriptorSetLayout ( 0 );
 	
-	MOAIDescriptorSetStateVK* descriptorSetSignature = new MOAIDescriptorSetStateVK ();
+	MOAIDescriptorSetVK* descriptorSetSignature = new MOAIDescriptorSetVK ();
 //	descriptorSetSignature->Initialize ( descriptorSetLayout );
 //	descriptorSetSignature->SetDescriptor ( 0, 0, *uniforms );
 //	descriptorSetSignature->SetDescriptor ( 1, 0, &this->mTextureDescriptor );
 	
-	MOAIDescriptorSetVK* descriptorSet = descriptorSetLayout.ProcureDescriptorSet ( *descriptorSetSignature );
+	MOAIDescriptorSetSnapshotVK* descriptorSet = descriptorSetLayout.ProcureDescriptorSet ( *descriptorSetSignature );
 	
 	commandBuffer.BindDescriptorSet ( VK_PIPELINE_BIND_POINT_GRAPHICS, *descriptorSet, *this->mPipelineLayout, 0 );
 	

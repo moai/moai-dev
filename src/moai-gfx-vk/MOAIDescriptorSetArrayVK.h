@@ -5,7 +5,7 @@
 #define MOAIDESCRIPTORSETARRAYVK_H
 
 class MOAICommandBufferVK;
-class MOAIDescriptorSetStateVK;
+class MOAIDescriptorSetVK;
 class MOAIGfxMgrVK;
 class MOAIPipelineLayoutVK;
 
@@ -17,20 +17,20 @@ class MOAIDescriptorSetArrayVK :
 	public virtual ZLFinalizable {
 protected:
 
-	ZLStrongPtr < MOAIPipelineLayoutVK >		mPipelineLayout;
-	ZLLeanArray < MOAIDescriptorSetStateVK >	mDescriptorSets;
+	ZLStrongPtr < MOAIPipelineLayoutVK >	mPipelineLayout;
+	ZLLeanArray < MOAIDescriptorSetVK >		mDescriptorSets;
 
 public:
 
 	IMPLEMENT_DEPENDS_ON ( MOAIPipelineInputBodyComposerVK )
 	
 	//----------------------------------------------------------------//
-	void							Bind								( MOAICommandBufferVK& commandBuffer, VkPipelineBindPoint pipelineBindPoint );
-	MOAIDescriptorSetStateVK&		GetDescriptorSet					( ZLIndex index );
-	MOAIPipelineLayoutVK&			GetPipelineLayout					();
-									MOAIDescriptorSetArrayVK			();
-									~MOAIDescriptorSetArrayVK			();
-	void							SetPipelineLayout					( MOAIPipelineLayoutVK& pipelineLayout );
+	void						Bind								( MOAICommandBufferVK& commandBuffer, VkPipelineBindPoint pipelineBindPoint );
+	MOAIDescriptorSetVK&		GetDescriptorSet					( ZLIndex index );
+	MOAIPipelineLayoutVK&		GetPipelineLayout					();
+								MOAIDescriptorSetArrayVK			();
+								~MOAIDescriptorSetArrayVK			();
+	void						SetPipelineLayout					( MOAIPipelineLayoutVK& pipelineLayout );
 };
 
 #endif

@@ -28,6 +28,8 @@ private:
 	ZLLeanArray < VkSubpassDescription >		mSubpasses;
 };
 
+// TODO: separate into render pass object and snapshot
+
 //================================================================//
 // MOAIRenderPassVK
 //================================================================//

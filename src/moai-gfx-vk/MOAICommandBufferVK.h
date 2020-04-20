@@ -7,9 +7,9 @@
 #include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
 #include <moai-gfx-vk/MOAIQueueVK.h>
 
-class MOAIDescriptorSetVK;
+class MOAIDescriptorSetSnapshotVK;
 class MOAIPipelineLayoutVK;
-class MOAIPipelineVK;
+class MOAIPipelineSnapshotVK;
 
 //================================================================//
 // MOAICommandBufferVK
@@ -58,8 +58,8 @@ public:
 	
 	//----------------------------------------------------------------//
 	void					Begin						();
-	void					BindDescriptorSet 			( VkPipelineBindPoint pipelineBindPoint, MOAIDescriptorSetVK& descriptorSet, MOAIPipelineLayoutVK& pipelineLayout, u32 firstSet );
-	void					BindPipeline				( VkPipelineBindPoint pipelineBindPoint, MOAIPipelineVK& pipeline );
+	void					BindDescriptorSet 			( VkPipelineBindPoint pipelineBindPoint, MOAIDescriptorSetSnapshotVK& descriptorSet, MOAIPipelineLayoutVK& pipelineLayout, u32 firstSet );
+	void					BindPipeline				( VkPipelineBindPoint pipelineBindPoint, MOAIPipelineSnapshotVK& pipeline );
 	void					End							();
 	MOAILogicalDeviceVK&	GetLogicalDevice			();
 							MOAICommandBufferVK			();

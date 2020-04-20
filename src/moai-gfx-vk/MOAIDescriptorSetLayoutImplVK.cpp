@@ -4,8 +4,8 @@
 #include "pch.h"
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutImplCacheVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutImplVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetStateVK.h>
 #include <moai-gfx-vk/MOAILogicalDeviceVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
@@ -26,7 +26,7 @@ void MOAIDescriptorSetLayoutImplVK::DeletePool ( MOAIDescriptorPoolVK* pool ) {
 	}
 	
 	// TODO: clean up snapshots
-	STLSet < MOAIDescriptorSetVK* >::iterator snapshotIt = pool->mAllSnapshots.begin ();
+	STLSet < MOAIDescriptorSetSnapshotVK* >::iterator snapshotIt = pool->mAllSnapshots.begin ();
 	for ( ; snapshotIt != pool->mAllSnapshots.end (); ++snapshotIt ) {
 		( *snapshotIt )->Release ();
 	}
@@ -91,7 +91,7 @@ MOAIDescriptorSetLayoutImplVK::~MOAIDescriptorSetLayoutImplVK () {
 }
 
 //----------------------------------------------------------------//
-MOAIDescriptorSetVK* MOAIDescriptorSetLayoutImplVK::ProcureDescriptorSet ( const MOAIDescriptorSetStateVK& descriptorSetState ) {
+MOAIDescriptorSetSnapshotVK* MOAIDescriptorSetLayoutImplVK::ProcureDescriptorSet ( const MOAIDescriptorSetVK& descriptorSetState ) {
 	
 	MOAIDescriptorSetKeyVK key ( descriptorSetState.mSignature );
 	if ( this->mActiveSnapshots.contains ( key )) {
@@ -99,7 +99,7 @@ MOAIDescriptorSetVK* MOAIDescriptorSetLayoutImplVK::ProcureDescriptorSet ( const
 	}
 	
 	MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
-	MOAIDescriptorSetVK* snapshot = NULL;
+	MOAIDescriptorSetSnapshotVK* snapshot = NULL;
 	MOAIDescriptorPoolVK* pool = NULL;
 	
 	if ( this->mOpenPools.size ()) {
@@ -117,7 +117,7 @@ MOAIDescriptorSetVK* MOAIDescriptorSetLayoutImplVK::ProcureDescriptorSet ( const
 		pool->mExpiredSnapshots.erase ( snapshot );
 	}
 	else {
-		snapshot = new MOAIDescriptorSetVK ();
+		snapshot = new MOAIDescriptorSetSnapshotVK ();
 		snapshot->Retain ();
 		snapshot->SetDependency < MOAIDescriptorSetLayoutImplVK >( *this );
 		VkDescriptorSetAllocateInfo allocInfo = MOAIGfxStructVK::descriptorSetAllocateInfo ( pool->mPool, &this->mLayout );
@@ -148,7 +148,7 @@ MOAIDescriptorSetVK* MOAIDescriptorSetLayoutImplVK::ProcureDescriptorSet ( const
 }
 
 //----------------------------------------------------------------//
-void MOAIDescriptorSetLayoutImplVK::RetireDescriptorSet ( MOAIDescriptorSetVK& snapshot ) {
+void MOAIDescriptorSetLayoutImplVK::RetireDescriptorSet ( MOAIDescriptorSetSnapshotVK& snapshot ) {
 
 	MOAIDescriptorPoolVK* pool = snapshot.mPool;
 	assert ( this->mAllPools.contains ( pool ));

@@ -6,7 +6,7 @@
 
 #include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
 
-class MOAIDescriptorSetVK;
+class MOAIDescriptorSetSnapshotVK;
 
 //================================================================//
 // MOAIAbstractDescriptorElementVK
@@ -15,14 +15,14 @@ class MOAIAbstractDescriptorElementVK :
 	public virtual MOAIAbstractSnapshotVK {
 protected:
 
-	friend class MOAIDescriptorSetVK;
+	friend class MOAIDescriptorSetSnapshotVK;
 
-	STLSet < MOAIDescriptorSetVK* >					mDescriptorSets;
+	STLSet < MOAIDescriptorSetSnapshotVK* >					mDescriptorSets;
 
 	//----------------------------------------------------------------//
-	void		AffirmDescriptorSet					( MOAIDescriptorSetVK& set );
+	void		AffirmDescriptorSet					( MOAIDescriptorSetSnapshotVK& set );
 	void		Invalidate							();
-	void		RemoveDescriptorSet					( MOAIDescriptorSetVK& set );
+	void		RemoveDescriptorSet					( MOAIDescriptorSetSnapshotVK& set );
 
 public:
 	

@@ -5,8 +5,8 @@
 #include <moai-gfx-vk/MOAICommandBufferVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetArrayVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetStateVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
 #include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
 
 //================================================================//
@@ -17,14 +17,14 @@
 void MOAIDescriptorSetArrayVK::Bind ( MOAICommandBufferVK& commandBuffer, VkPipelineBindPoint pipelineBindPoint ) {
 
 	for ( ZLIndex i = 0; i < this->mDescriptorSets.Size (); ++i ) {
-		MOAIDescriptorSetStateVK& descriptorSet = this->mDescriptorSets [ i ];
-		MOAIDescriptorSetVK& snapshot = *descriptorSet.GetDescriptorSet ();
+		MOAIDescriptorSetVK& descriptorSet = this->mDescriptorSets [ i ];
+		MOAIDescriptorSetSnapshotVK& snapshot = *descriptorSet.GetDescriptorSet ();
 		commandBuffer.BindDescriptorSet ( pipelineBindPoint, snapshot, *this->mPipelineLayout, 0 );
 	}
 }
 
 //----------------------------------------------------------------//
-MOAIDescriptorSetStateVK& MOAIDescriptorSetArrayVK::GetDescriptorSet ( ZLIndex index ) {
+MOAIDescriptorSetVK& MOAIDescriptorSetArrayVK::GetDescriptorSet ( ZLIndex index ) {
 
 	return this->mDescriptorSets [ index ];
 }
@@ -56,7 +56,7 @@ void MOAIDescriptorSetArrayVK::SetPipelineLayout ( MOAIPipelineLayoutVK& pipelin
 	this->mDescriptorSets.Init ( nLayouts );
 	
 	for ( ZLIndex i = 0; i < nLayouts; ++i ) {
-		MOAIDescriptorSetStateVK& descriptorSet = this->mDescriptorSets [ i ];
+		MOAIDescriptorSetVK& descriptorSet = this->mDescriptorSets [ i ];
 		descriptorSet.Initialize ( this->mPipelineLayout->GetDescriptorSetLayout ( i ));
 	}
 }

@@ -3,14 +3,14 @@
 
 #include "pch.h"
 #include <moai-gfx-vk/MOAIAbstractDescriptorElementVK.h>
-#include <moai-gfx-vk/MOAIDescriptorSetVK.h>
+#include <moai-gfx-vk/MOAIDescriptorSetSnapshotVK.h>
 
 //================================================================//
 // MOAIAbstractDescriptorElementVK
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAbstractDescriptorElementVK::AffirmDescriptorSet ( MOAIDescriptorSetVK& set ) {
+void MOAIAbstractDescriptorElementVK::AffirmDescriptorSet ( MOAIDescriptorSetSnapshotVK& set ) {
 
 	this->mDescriptorSets.affirm ( &set );
 }
@@ -18,9 +18,9 @@ void MOAIAbstractDescriptorElementVK::AffirmDescriptorSet ( MOAIDescriptorSetVK&
 //----------------------------------------------------------------//
 void MOAIAbstractDescriptorElementVK::Invalidate () {
 
-	STLSet < MOAIDescriptorSetVK* >::iterator descriptorSetIt = this->mDescriptorSets.begin ();
+	STLSet < MOAIDescriptorSetSnapshotVK* >::iterator descriptorSetIt = this->mDescriptorSets.begin ();
 	while ( descriptorSetIt != this->mDescriptorSets.end ()) {
-		MOAIDescriptorSetVK* descriptorSet = *descriptorSetIt;
+		MOAIDescriptorSetSnapshotVK* descriptorSet = *descriptorSetIt;
 		++descriptorSetIt;
 		descriptorSet->Invalidate ();
 	}
@@ -38,7 +38,7 @@ MOAIAbstractDescriptorElementVK::~MOAIAbstractDescriptorElementVK () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractDescriptorElementVK::RemoveDescriptorSet ( MOAIDescriptorSetVK& set ) {
+void MOAIAbstractDescriptorElementVK::RemoveDescriptorSet ( MOAIDescriptorSetSnapshotVK& set ) {
 
 	if ( this->mDescriptorSets.contains ( &set )) {
 		this->mDescriptorSets.erase ( &set );
