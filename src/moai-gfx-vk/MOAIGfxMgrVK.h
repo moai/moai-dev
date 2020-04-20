@@ -15,7 +15,7 @@
 #include <moai-gfx-vk/MOAIGfxMgrVK_ResourceCacheVK.h>
 //#include <moai-gfx-vk/MOAIGfxMgrVK_ResourceClerkVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK_VertexCacheVK.h>
-#include <moai-gfx-vk/MOAIImageBufferVK.h>
+#include <moai-gfx-vk/MOAIImageBufferSnapshotVK.h>
 #include <moai-gfx-vk/MOAILogicalDeviceVK.h>
 #include <moai-gfx-vk/MOAIPhysicalDeviceVK.h>
 #include <moai-gfx-vk/MOAIRenderPassVK.h>

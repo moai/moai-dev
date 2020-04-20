@@ -40,7 +40,7 @@ MOAIAbstractDescriptorElementVK* MOAITexture2DVK::MOAIAbstractDescriptorElementS
 }
 
 //----------------------------------------------------------------//
-MOAITextureSnapshot2DVK* MOAITexture2DVK::MOAIAbstractSnapshotFactoryVK_GetSnapshot () {
+MOAITextureSnapshot2DVK* MOAITexture2DVK::MOAISnapshotFactoryVK_GetSnapshot () {
 
 	if ( !this->mSnapshot && this->mImage && this->mImage->IsOK ()) {
 

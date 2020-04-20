@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <moai-gfx-vk/MOAICommandBufferVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
-#include <moai-gfx-vk/MOAIImageBufferVK.h>
+#include <moai-gfx-vk/MOAIImageBufferSnapshotVK.h>
 #include <moai-gfx-vk/MOAILogicalDeviceVK.h>
 #include <moai-gfx-vk/MOAIRenderPassVK.h>
 
@@ -107,4 +107,10 @@ void MOAIImageBufferSnapshotVK::MOAIAbstractSnapshotVK_OnPin ( MOAICommandBuffer
 
 //----------------------------------------------------------------//
 void MOAIImageBufferSnapshotVK::MOAIAbstractSnapshotVK_OnUnpin () {
+}
+
+//----------------------------------------------------------------//
+MOAIImageBufferSnapshotVK* MOAIImageBufferSnapshotVK::MOAISnapshotFactoryVK_GetSnapshot () {
+
+	return this;
 }

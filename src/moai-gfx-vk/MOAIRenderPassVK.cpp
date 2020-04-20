@@ -221,3 +221,9 @@ void MOAIRenderPassVK::MOAIAbstractSnapshotVK_OnPin ( MOAICommandBufferVK& comma
 //----------------------------------------------------------------//
 void MOAIRenderPassVK::MOAIAbstractSnapshotVK_OnUnpin () {
 }
+
+//----------------------------------------------------------------//
+MOAIRenderPassVK* MOAIRenderPassVK::MOAISnapshotFactoryVK_GetSnapshot () {
+
+	return this;
+}

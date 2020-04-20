@@ -4,12 +4,12 @@
 #ifndef MOAIPIPELINEVK_H
 #define MOAIPIPELINEVK_H
 
-#include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
 #include <moai-gfx-vk/MOAIGfxConstsVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
+#include <moai-gfx-vk/MOAISnapshotVK.h>
 #include <moai-gfx-vk/MOAIVertexFormatVK.h>
 
 class MOAIPipelineCachePageVK;
@@ -59,8 +59,7 @@ public:
 // MOAIPipelineVK
 //================================================================//
 class MOAIPipelineVK :
-	public MOAIAbstractSnapshotVK,
-	public ZLFinalizable,
+	public MOAISnapshotVK < MOAIPipelineVK >,
 	public ZLFinalizable_DependsOn < MOAILogicalDeviceVK >,
 	public MOAIPipelineParamsVK {
 protected:
@@ -75,9 +74,10 @@ protected:
 	VkPipeline					mPipeline;
 
 	//----------------------------------------------------------------//
-	void 			_Finalize							();
-	void			MOAIAbstractSnapshotVK_OnPin		( MOAICommandBufferVK& commandBuffer );
-	void			MOAIAbstractSnapshotVK_OnUnpin		();
+	void 				_Finalize							();
+	void				MOAIAbstractSnapshotVK_OnPin		( MOAICommandBufferVK& commandBuffer );
+	void				MOAIAbstractSnapshotVK_OnUnpin		();
+	MOAIPipelineVK*		MOAISnapshotFactoryVK_GetSnapshot	();
 
 public:
 

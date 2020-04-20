@@ -132,3 +132,18 @@ void MOAIGfxBufferSnapshotVK::_Finalize () {
 		vkFreeMemory ( logicalDevice, this->mMemory, NULL );
 	}
 }
+
+//----------------------------------------------------------------//
+void MOAIGfxBufferSnapshotVK::MOAIAbstractSnapshotVK_OnPin ( MOAICommandBufferVK& commandBuffer ) {
+	UNUSED ( commandBuffer );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxBufferSnapshotVK::MOAIAbstractSnapshotVK_OnUnpin () {
+}
+
+//----------------------------------------------------------------//
+MOAIGfxBufferSnapshotVK* MOAIGfxBufferSnapshotVK::MOAISnapshotFactoryVK_GetSnapshot () {
+
+	return this;
+}

@@ -4,7 +4,7 @@
 #ifndef MOAIRENDERPASSVK_H
 #define MOAIRENDERPASSVK_H
 
-#include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
+#include <moai-gfx-vk/MOAISnapshotVK.h>
 
 class MOAICommandBufferVK;
 class MOAILogicalDeviceVK;
@@ -32,8 +32,7 @@ private:
 // MOAIRenderPassVK
 //================================================================//
 class MOAIRenderPassVK :
-	public MOAIAbstractSnapshotVK,
-	public ZLFinalizable,
+	public MOAISnapshotVK < MOAIRenderPassVK >,
 	public ZLFinalizable_DependsOn < MOAILogicalDeviceVK > {
 private:
 
@@ -41,12 +40,13 @@ private:
 	VkRenderPass mRenderPass;
 	
 	//----------------------------------------------------------------//
-	void			AffirmDescription					();
+	void					AffirmDescription					();
 	
 	//----------------------------------------------------------------//
-	void 			_Finalize							();
-	void			MOAIAbstractSnapshotVK_OnPin		( MOAICommandBufferVK& commandBuffer );
-	void			MOAIAbstractSnapshotVK_OnUnpin		();
+	void 					_Finalize							();
+	void					MOAIAbstractSnapshotVK_OnPin		( MOAICommandBufferVK& commandBuffer );
+	void					MOAIAbstractSnapshotVK_OnUnpin		();
+	MOAIRenderPassVK*		MOAISnapshotFactoryVK_GetSnapshot	();
 
 public:
 

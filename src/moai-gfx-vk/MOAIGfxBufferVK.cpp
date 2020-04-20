@@ -40,7 +40,7 @@ MOAIGfxBufferVK::~MOAIGfxBufferVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIGfxBufferSnapshotVK* MOAIGfxBufferVK::MOAIAbstractSnapshotFactoryVK_GetSnapshot () {
+MOAIGfxBufferSnapshotVK* MOAIGfxBufferVK::MOAISnapshotFactoryVK_GetSnapshot () {
 
 	// TODO: re-use snapshot
 	if ( this->HasDependency < MOAILogicalDeviceVK >()) {

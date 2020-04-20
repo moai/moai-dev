@@ -65,3 +65,9 @@ void MOAIDescriptorSetVK::MOAIAbstractSnapshotVK_OnUnpin () {
 
 	this->GetDependency < MOAIDescriptorSetLayoutImplVK >().RetireDescriptorSet ( *this );
 }
+
+//----------------------------------------------------------------//
+MOAIDescriptorSetVK* MOAIDescriptorSetVK::MOAISnapshotFactoryVK_GetSnapshot () {
+
+	return this;
+}

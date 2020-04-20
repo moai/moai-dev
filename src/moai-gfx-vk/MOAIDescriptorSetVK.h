@@ -4,7 +4,7 @@
 #ifndef MOAIDESCRIPTORSETVK_H
 #define MOAIDESCRIPTORSETVK_H
 
-#include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
+#include <moai-gfx-vk/MOAISnapshotVK.h>
 
 class MOAIAbstractDescriptorElementVK;
 class MOAIDescriptorSetLayoutImplVK;
@@ -18,8 +18,7 @@ typedef ZLArrayKey < MOAIAbstractDescriptorElementVK* > MOAIDescriptorSetKeyVK;
 // MOAIDescriptorSetVK
 //================================================================//
 class MOAIDescriptorSetVK :
-	public MOAIAbstractSnapshotVK,
-	public ZLFinalizable,
+	public MOAISnapshotVK < MOAIDescriptorSetVK >,
 	public ZLFinalizable_DependsOn < MOAIDescriptorSetLayoutImplVK > {
 private:
 
@@ -35,11 +34,12 @@ private:
 	MOAIDescriptorPoolVK*								mPool;
 
 	//----------------------------------------------------------------//
-	void			Invalidate							();
+	void					Invalidate							();
 
 	//----------------------------------------------------------------//
-	void			MOAIAbstractSnapshotVK_OnPin		( MOAICommandBufferVK& commandBuffer );
-	void			MOAIAbstractSnapshotVK_OnUnpin		();
+	void					MOAIAbstractSnapshotVK_OnPin		( MOAICommandBufferVK& commandBuffer );
+	void					MOAIAbstractSnapshotVK_OnUnpin		();
+	MOAIDescriptorSetVK*	MOAISnapshotFactoryVK_GetSnapshot 	();
 
 public:
 

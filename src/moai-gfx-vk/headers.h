@@ -13,8 +13,9 @@
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutImplVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetStateVK.h>
-#include <moai-gfx-vk/MOAIFrameBufferVK.h>
+#include <moai-gfx-vk/MOAIFrameBufferSnapshotVK.h>
 #include <moai-gfx-vk/MOAIFrameBufferTextureVK.h>
+#include <moai-gfx-vk/MOAIFrameBufferVK.h>
 #include <moai-gfx-vk/MOAIGfxBufferVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK_GPUCacheVK.h>
@@ -25,6 +26,7 @@
 #include <moai-gfx-vk/MOAIGfxResourceVK.h>
 #include <moai-gfx-vk/MOAIGfxScriptRetainedVK.h>
 #include <moai-gfx-vk/MOAIGfxStateGPUCacheFrameVK.h>
+#include <moai-gfx-vk/MOAIImageBufferSnapshotVK.h>
 #include <moai-gfx-vk/MOAIImageTextureVK.h>
 #include <moai-gfx-vk/MOAIIndexBufferVK.h>
 #include <moai-gfx-vk/MOAIOneTriVK.h>

@@ -2,57 +2,12 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-gfx-vk/MOAIFrameBufferSnapshotVK.h>
 #include <moai-gfx-vk/MOAIFrameBufferVK.h>
-#include <moai-gfx-vk/MOAIImageBufferVK.h>
+#include <moai-gfx-vk/MOAIImageBufferSnapshotVK.h>
 #include <moai-gfx-vk/MOAILogicalDeviceVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIRenderPassVK.h>
-
-//================================================================//
-// MOAIFrameBufferSnapshotVK
-//================================================================//
-	
-//----------------------------------------------------------------//
-MOAIFrameBufferSnapshotVK::MOAIFrameBufferSnapshotVK () {
-
-	RTTI_BEGIN ( MOAIFrameBufferSnapshotVK )
-		RTTI_EXTEND ( ZLFinalizable )
-		RTTI_VISITOR ( ZLAbstractFinalizationVisitor, ZLFinalizationVisitor < MOAIFrameBufferSnapshotVK >)
-	RTTI_END
-}
-
-//----------------------------------------------------------------//
-MOAIFrameBufferSnapshotVK::~MOAIFrameBufferSnapshotVK () {
-
-	this->Destruct ();
-}
-
-//================================================================//
-// virtual
-//================================================================//
-
-//----------------------------------------------------------------//
-void MOAIFrameBufferSnapshotVK::_Finalize () {
-
-	if ( this->mFrameBuffer ) {
-		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
-		vkDestroyFramebuffer ( logicalDevice, this->mFrameBuffer, NULL );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBufferSnapshotVK::MOAIAbstractSnapshotVK_OnPin ( MOAICommandBufferVK& commandBuffer ) {
-	UNUSED ( commandBuffer );
-	
-	ZLSize nAttachments = this->mAttachmentSnapshots.Size ();
-	for ( ZLSize i = 0; i < nAttachments; ++i ) {
-		commandBuffer.Pin ( *this->mAttachmentSnapshots [ i ]);
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBufferSnapshotVK::MOAIAbstractSnapshotVK_OnUnpin () {
-}
 
 //================================================================//
 // lua
@@ -136,45 +91,6 @@ void MOAIFrameBufferSnapshotVK::MOAIAbstractSnapshotVK_OnUnpin () {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIFrameBufferSnapshotVK* MOAIFrameBufferVK::GetSnapshot () {
-
-	if ( !this->mSnapshot ) {
-	
-		if ( !this->HasDependency < MOAILogicalDeviceVK >()) return NULL;
-		if ( !this->HasDependency < MOAIRenderPassVK >()) return NULL;
-	
-		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
-		MOAIRenderPassVK& renderPass = this->GetDependency < MOAIRenderPassVK >();
-
-		MOAIFrameBufferSnapshotVK* snapshot = new MOAIFrameBufferSnapshotVK ();
-
-		snapshot->SetDependency < MOAILogicalDeviceVK >( logicalDevice );
-		snapshot->SetDependency < MOAIRenderPassVK >( renderPass );
-
-		ZLSize nAttachments = this->mAttachments.Size ();
-		snapshot->mAttachmentSnapshots.Init ( nAttachments );
-		snapshot->mAttachments.Init ( nAttachments );
-		
-		for ( ZLIndex i = 0; i < nAttachments; ++i ) {
-			assert ( this->mAttachments [ i ]);
-			snapshot->mAttachmentSnapshots [ i ] = this->mAttachments [ i ];
-			snapshot->mAttachments [ i ] = *this->mAttachments [ i ];
-		}
-		
-		VkFramebufferCreateInfo framebufferCreateInfo = MOAIGfxStructVK::framebufferCreateInfo (
-			renderPass,
-			snapshot->mAttachments.GetBuffer (),
-			( u32 )nAttachments,
-			this->mBufferWidth,
-			this->mBufferHeight
-		);
-		snapshot->mFrameBuffer = logicalDevice.CreateFramebuffer ( framebufferCreateInfo );
-		this->mSnapshot = snapshot;
-	}
-	return this->mSnapshot;
-}
-
-//----------------------------------------------------------------//
 MOAIFrameBufferVK::MOAIFrameBufferVK () {
 	
 	RTTI_BEGIN ( MOAIFrameBufferVK )
@@ -195,7 +111,7 @@ void MOAIFrameBufferVK::ReserveAttachments ( ZLSize count ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIFrameBufferVK::SetAttachment ( ZLIndex index, MOAIImageBufferSnapshotVK& imageViewSnapshot ) {
+void MOAIFrameBufferVK::SetAttachment ( ZLIndex index, MOAIImageBufferSnapshotVK::Factory& imageViewSnapshot ) {
 
 	this->mAttachments [ index ] = &imageViewSnapshot;
 }
@@ -218,4 +134,43 @@ void MOAIFrameBufferVK::SetRenderPass ( MOAIRenderPassVK& renderPass ) {
 
 //----------------------------------------------------------------//
 void MOAIFrameBufferVK::_Finalize () {
+}
+
+//----------------------------------------------------------------//
+MOAIFrameBufferSnapshotVK* MOAIFrameBufferVK::MOAISnapshotFactoryVK_GetSnapshot () {
+
+	if ( !this->mSnapshot ) {
+	
+		if ( !this->HasDependency < MOAILogicalDeviceVK >()) return NULL;
+		if ( !this->HasDependency < MOAIRenderPassVK >()) return NULL;
+	
+		MOAILogicalDeviceVK& logicalDevice = this->GetDependency < MOAILogicalDeviceVK >();
+		MOAIRenderPassVK& renderPass = this->GetDependency < MOAIRenderPassVK >();
+
+		MOAIFrameBufferSnapshotVK* snapshot = new MOAIFrameBufferSnapshotVK ();
+
+		snapshot->SetDependency < MOAILogicalDeviceVK >( logicalDevice );
+		snapshot->SetDependency < MOAIRenderPassVK >( renderPass );
+
+		ZLSize nAttachments = this->mAttachments.Size ();
+		snapshot->mAttachmentSnapshots.Init ( nAttachments );
+		snapshot->mAttachments.Init ( nAttachments );
+		
+		for ( ZLIndex i = 0; i < nAttachments; ++i ) {
+			assert ( this->mAttachments [ i ]);
+			snapshot->mAttachmentSnapshots [ i ] = this->mAttachments [ i ].GetSnapshot ();
+			snapshot->mAttachments [ i ] = *snapshot->mAttachmentSnapshots [ i ];
+		}
+		
+		VkFramebufferCreateInfo framebufferCreateInfo = MOAIGfxStructVK::framebufferCreateInfo (
+			renderPass,
+			snapshot->mAttachments.GetBuffer (),
+			( u32 )nAttachments,
+			this->mBufferWidth,
+			this->mBufferHeight
+		);
+		snapshot->mFrameBuffer = logicalDevice.CreateFramebuffer ( framebufferCreateInfo );
+		this->mSnapshot = snapshot;
+	}
+	return this->mSnapshot;
 }

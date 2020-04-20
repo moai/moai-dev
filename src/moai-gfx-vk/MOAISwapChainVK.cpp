@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
-#include <moai-gfx-vk/MOAIImageBufferVK.h>
+#include <moai-gfx-vk/MOAIImageBufferSnapshotVK.h>
 #include <moai-gfx-vk/MOAISwapChainVK.h>
 
 //================================================================//

@@ -15,23 +15,22 @@ class MOAIVertexFormatVK;
 //================================================================//
 // TODO: doxygen
 class MOAIGfxBufferSnapshotVK :
-	public MOAIAbstractSnapshotVK,
-	public ZLFinalizable,
+	public MOAISnapshotVK < MOAIGfxBufferSnapshotVK >,
 	public ZLFinalizable_DependsOn < MOAILogicalDeviceVK > {
 protected:
 
-	VkBuffer				mBuffer;
-	VkDeviceMemory			mMemory;
-	VkDeviceSize			mAllocationSize;
-	VkBufferUsageFlags		mUsage;
-	VkMemoryPropertyFlags	mMemPropFlags;
-	
-	VkDescriptorBufferInfo	mDescriptor;
+	VkBuffer					mBuffer;
+	VkDeviceMemory				mMemory;
+	VkDeviceSize				mAllocationSize;
+	VkBufferUsageFlags			mUsage;
+	VkMemoryPropertyFlags		mMemPropFlags;
+	VkDescriptorBufferInfo		mDescriptor;
 
 	//----------------------------------------------------------------//
-	void 		_Finalize 							();
-	void		MOAIAbstractSnapshotVK_OnPin		( MOAICommandBufferVK& commandBuffer ) { UNUSED ( commandBuffer ); }
-	void		MOAIAbstractSnapshotVK_OnUnpin		() {}
+	void 						_Finalize 							();
+	void						MOAIAbstractSnapshotVK_OnPin		( MOAICommandBufferVK& commandBuffer );
+	void						MOAIAbstractSnapshotVK_OnUnpin		();
+	MOAIGfxBufferSnapshotVK*	MOAISnapshotFactoryVK_GetSnapshot	();
 
 public:
 	

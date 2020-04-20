@@ -4,8 +4,8 @@
 #ifndef MOAIPIPELINELAYOUTVK_H
 #define MOAIPIPELINELAYOUTVK_H
 
-#include <moai-gfx-vk/MOAIAbstractSnapshotVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetLayoutVK.h>
+#include <moai-gfx-vk/MOAISnapshotVK.h>
 
 //================================================================//
 // MOAIPipelineLayoutVK

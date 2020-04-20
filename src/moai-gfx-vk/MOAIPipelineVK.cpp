@@ -104,3 +104,9 @@ void MOAIPipelineVK::MOAIAbstractSnapshotVK_OnPin (
 //----------------------------------------------------------------//
 void MOAIPipelineVK::MOAIAbstractSnapshotVK_OnUnpin () {
 }
+
+//----------------------------------------------------------------//
+MOAIPipelineVK* MOAIPipelineVK::MOAISnapshotFactoryVK_GetSnapshot () {
+
+	return this;
+}

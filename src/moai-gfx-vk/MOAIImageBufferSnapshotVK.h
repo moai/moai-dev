@@ -1,18 +1,17 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIIMAGEBUFFERVK_H
-#define	MOAIIMAGEBUFFERVK_H
+#ifndef	MOAIIMAGEBUFFERSNAPSHOTVK_H
+#define	MOAIIMAGEBUFFERSNAPSHOTVK_H
 
-#include <moai-gfx-vk/MOAIAbstractSnapshotFactoryVK.h>
+#include <moai-gfx-vk/MOAISnapshotVK.h>
 
 //================================================================//
 // MOAIImageBufferSnapshotVK
 //================================================================//
 // TODO: doxygen
 class MOAIImageBufferSnapshotVK :
-	public virtual MOAIAbstractSnapshotVK,
-	public virtual ZLFinalizable,
+	public virtual MOAISnapshotVK < MOAIImageBufferSnapshotVK >,
 	public virtual ZLFinalizable_DependsOn < MOAILogicalDeviceVK >{
 protected:
 
@@ -23,9 +22,10 @@ protected:
 	VkImageView			mImageView; // assume a primary image view; additional image vies can be added later
 
 	//----------------------------------------------------------------//
-	void		_Finalize							();
-	void		MOAIAbstractSnapshotVK_OnPin		( MOAICommandBufferVK& commandBuffer );
-	void		MOAIAbstractSnapshotVK_OnUnpin		();
+	void							_Finalize								();
+	void							MOAIAbstractSnapshotVK_OnPin			( MOAICommandBufferVK& commandBuffer );
+	void							MOAIAbstractSnapshotVK_OnUnpin			();
+	MOAIImageBufferSnapshotVK*		MOAISnapshotFactoryVK_GetSnapshot		();
 
 public:
 
@@ -64,28 +64,6 @@ public:
 	void		Init								( MOAILogicalDeviceVK& logicalDevice, VkImageView imageView );
 				MOAIImageBufferSnapshotVK			();
 				~MOAIImageBufferSnapshotVK			();
-};
-
-//================================================================//
-// MOAIAbstractImageBufferVK
-//================================================================//
-// TODO: doxygen
-class MOAIAbstractImageBufferVK :
-	public virtual ZLRefCountedObject {
-protected:
-
-	//----------------------------------------------------------------//
-	virtual MOAIImageBufferSnapshotVK*		MOAIAbstractImageBufferVK_GetImageBuffer		() = 0;
-
-public:
-	
-	//----------------------------------------------------------------//
-	MOAIAbstractImageBufferVK () {
-	}
-	
-	//----------------------------------------------------------------//
-	~MOAIAbstractImageBufferVK () {
-	}
 };
 
 #endif

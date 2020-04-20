@@ -4,7 +4,7 @@
 #ifndef	MOAIGFXBUFFERVK_H
 #define	MOAIGFXBUFFERVK_H
 
-#include <moai-gfx-vk/MOAIAbstractSnapshotFactoryVK.h>
+#include <moai-gfx-vk/MOAISnapshotVK.h>
 #include <moai-gfx-vk/MOAIGfxResourceVK.h>
 
 class MOAIGfxBufferSnapshotVK;
@@ -16,10 +16,9 @@ class MOAIVertexFormatVK;
 //================================================================//
 // TODO: doxygen
 class MOAIGfxBufferVK :
-	public MOAIAbstractSnapshotFactoryVK < MOAIGfxBufferSnapshotVK >,
+	public MOAISnapshotFactoryVK < MOAIGfxBufferSnapshotVK >,
 	public virtual MOAIGfxResourceVK,
 	public virtual MOAIGfxBuffer,
-	public virtual ZLFinalizable,
 	public virtual ZLFinalizable_DependsOn < MOAILogicalDeviceVK > {
 protected:
 
@@ -30,7 +29,7 @@ protected:
 	VkBufferUsageFlags		mUsage;
 	
 	//----------------------------------------------------------------//
-	MOAIGfxBufferSnapshotVK*	MOAIAbstractSnapshotFactoryVK_GetSnapshot		();
+	MOAIGfxBufferSnapshotVK*	MOAISnapshotFactoryVK_GetSnapshot		();
 
 public:
 	
