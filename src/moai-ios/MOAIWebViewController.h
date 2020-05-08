@@ -6,6 +6,7 @@
 
 #import <UIKit/UIKit.h>
 
+/*
 class MOAIWebViewIOS;
 
 //================================================================//
@@ -24,3 +25,5 @@ class MOAIWebViewIOS;
 	-( void )						show			:( BOOL )animated;
 
 @end
+ 
+ */

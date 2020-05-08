@@ -4,6 +4,7 @@
 // http://getmoai.com
 //----------------------------------------------------------------//
 
+/*
 #import <moai-ios/MOAIAppIOS.h>
 #import <moai-ios/MOAIWebViewController.h>
 #import <moai-ios/MOAIWebViewIOS.h>
@@ -161,3 +162,5 @@
 	}
 
 @end
+
+*/
