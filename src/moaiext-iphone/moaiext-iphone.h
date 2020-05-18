@@ -1,7 +1,6 @@
 // Copyright (c) 2010-2011 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#import <moaiext-iphone/MOAIAdColonyIOS.h>
 #import <moaiext-iphone/MOAIAppIOS.h>
 #import <moaiext-iphone/MOAICrittercismIOS.h>
 #import <moaiext-iphone/MOAIDialogIOS.h>

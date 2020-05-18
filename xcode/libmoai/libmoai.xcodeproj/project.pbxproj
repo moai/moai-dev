@@ -1971,8 +1971,6 @@
 		E969155F1561B7C1007E977B /* MOAIBoundsDeck.cpp in Sources */ = {isa = PBXBuildFile; fileRef = E969155C1561B7C1007E977B /* MOAIBoundsDeck.cpp */; };
 		E96915601561B7C1007E977B /* MOAIBoundsDeck.h in Headers */ = {isa = PBXBuildFile; fileRef = E969155D1561B7C1007E977B /* MOAIBoundsDeck.h */; };
 		E96915611561B7C1007E977B /* MOAIBoundsDeck.h in Headers */ = {isa = PBXBuildFile; fileRef = E969155D1561B7C1007E977B /* MOAIBoundsDeck.h */; };
-		E98DBDD51537A33100514387 /* AKU-adcolony.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBDD11537A33100514387 /* AKU-adcolony.h */; };
-		E98DBDD61537A33100514387 /* AKU-adcolony.mm in Sources */ = {isa = PBXBuildFile; fileRef = E98DBDD21537A33100514387 /* AKU-adcolony.mm */; };
 		E98DBDD71537A33100514387 /* AKU-chartboost.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBDD31537A33100514387 /* AKU-chartboost.h */; };
 		E98DBDD81537A33100514387 /* AKU-chartboost.mm in Sources */ = {isa = PBXBuildFile; fileRef = E98DBDD41537A33100514387 /* AKU-chartboost.mm */; };
 		E9940D6814B7A217006465CC /* lfs.c in Sources */ = {isa = PBXBuildFile; fileRef = E9940D6514B7A217006465CC /* lfs.c */; };
@@ -2395,7 +2393,6 @@
 		EB9EDE891BE9421B00E8938F /* MOAICrittercismIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = E9A41AB5151AAA5400650276 /* MOAICrittercismIOS.h */; };
 		EB9EDE8F1BE9421B00E8938F /* MOAIEaseSimpleOut.h in Headers */ = {isa = PBXBuildFile; fileRef = 4D49735118725EC400D46882 /* MOAIEaseSimpleOut.h */; };
 		EB9EDE911BE9421B00E8938F /* MOAIKeyboardIOS.h in Headers */ = {isa = PBXBuildFile; fileRef = CD91E3FE15252E2F00AE1883 /* MOAIKeyboardIOS.h */; };
-		EB9EDE921BE9421B00E8938F /* AKU-adcolony.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBDD11537A33100514387 /* AKU-adcolony.h */; };
 		EB9EDE931BE9421B00E8938F /* AKU-chartboost.h in Headers */ = {isa = PBXBuildFile; fileRef = E98DBDD31537A33100514387 /* AKU-chartboost.h */; };
 		EB9EDE941BE9421B00E8938F /* MOAIScissorRect.h in Headers */ = {isa = PBXBuildFile; fileRef = 66C3B18A15587833005C1858 /* MOAIScissorRect.h */; };
 		EB9EDE951BE9421B00E8938F /* MOAIFoo.h in Headers */ = {isa = PBXBuildFile; fileRef = CD06AF93155B443E00EB03C5 /* MOAIFoo.h */; };
@@ -2690,7 +2687,6 @@
 		EB9EDFBA1BE9421B00E8938F /* MOAIRenderMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 077D500D1519A4A1003DFC89 /* MOAIRenderMgr.cpp */; };
 		EB9EDFBC1BE9421B00E8938F /* MOAICrittercismIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = E9A41AB6151AAA5400650276 /* MOAICrittercismIOS.mm */; };
 		EB9EDFC31BE9421B00E8938F /* MOAIKeyboardIOS.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD91E3FF15252E2F00AE1883 /* MOAIKeyboardIOS.mm */; };
-		EB9EDFC41BE9421B00E8938F /* AKU-adcolony.mm in Sources */ = {isa = PBXBuildFile; fileRef = E98DBDD21537A33100514387 /* AKU-adcolony.mm */; };
 		EB9EDFC51BE9421B00E8938F /* AKU-chartboost.mm in Sources */ = {isa = PBXBuildFile; fileRef = E98DBDD41537A33100514387 /* AKU-chartboost.mm */; };
 		EB9EDFC61BE9421B00E8938F /* MOAIFoo.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 667AE739154A09CA00CCE42D /* MOAIFoo.cpp */; };
 		EB9EDFC71BE9421B00E8938F /* MOAIFooMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 667AE73C154A0CAD00CCE42D /* MOAIFooMgr.cpp */; };
@@ -4279,8 +4275,6 @@
 		E969157B1561BB93007E977B /* AKU-fmod-ex.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-fmod-ex.h"; path = "aku/AKU-fmod-ex.h"; sourceTree = "<group>"; };
 		E98DBDC71537A2BF00514387 /* MOAIChartBoostIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIChartBoostIOS.h; path = "moaiext-iphone/MOAIChartBoostIOS.h"; sourceTree = "<group>"; };
 		E98DBDC91537A2CB00514387 /* MOAIChartBoostIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIChartBoostIOS.mm; path = "moaiext-iphone/MOAIChartBoostIOS.mm"; sourceTree = "<group>"; };
-		E98DBDD11537A33100514387 /* AKU-adcolony.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-adcolony.h"; path = "aku/AKU-adcolony.h"; sourceTree = "<group>"; };
-		E98DBDD21537A33100514387 /* AKU-adcolony.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "AKU-adcolony.mm"; path = "aku/AKU-adcolony.mm"; sourceTree = "<group>"; };
 		E98DBDD31537A33100514387 /* AKU-chartboost.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "AKU-chartboost.h"; path = "aku/AKU-chartboost.h"; sourceTree = "<group>"; };
 		E98DBDD41537A33100514387 /* AKU-chartboost.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = "AKU-chartboost.mm"; path = "aku/AKU-chartboost.mm"; sourceTree = "<group>"; };
 		E9940D6514B7A217006465CC /* lfs.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = lfs.c; sourceTree = "<group>"; };
@@ -4344,8 +4338,6 @@
 		E9940DB914B7A4A0006465CC /* USXmlReader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = USXmlReader.h; sourceTree = "<group>"; };
 		E9A41AB5151AAA5400650276 /* MOAICrittercismIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAICrittercismIOS.h; path = "moaiext-iphone/MOAICrittercismIOS.h"; sourceTree = "<group>"; };
 		E9A41AB6151AAA5400650276 /* MOAICrittercismIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAICrittercismIOS.mm; path = "moaiext-iphone/MOAICrittercismIOS.mm"; sourceTree = "<group>"; };
-		E9CA1E00151AE80E005F39B7 /* MOAIAdColonyIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIAdColonyIOS.h; path = "moaiext-iphone/MOAIAdColonyIOS.h"; sourceTree = "<group>"; };
-		E9CA1E01151AE80E005F39B7 /* MOAIAdColonyIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIAdColonyIOS.mm; path = "moaiext-iphone/MOAIAdColonyIOS.mm"; sourceTree = "<group>"; };
 		E9DE457F157EA38800630A7D /* MOAIMoviePlayerIOS.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIMoviePlayerIOS.h; path = "moaiext-iphone/MOAIMoviePlayerIOS.h"; sourceTree = "<group>"; };
 		E9DE4580157EA38800630A7D /* MOAIMoviePlayerIOS.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIMoviePlayerIOS.mm; path = "moaiext-iphone/MOAIMoviePlayerIOS.mm"; sourceTree = "<group>"; };
 		EB665DE91756B13B009A8F29 /* MOAIAnimCurveCustom.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIAnimCurveCustom.cpp; sourceTree = "<group>"; };
@@ -6014,8 +6006,6 @@
 			children = (
 				CDF2C627151B14DD0009D47D /* aku */,
 				CDF2C625151B14970009D47D /* util */,
-				E9CA1E00151AE80E005F39B7 /* MOAIAdColonyIOS.h */,
-				E9CA1E01151AE80E005F39B7 /* MOAIAdColonyIOS.mm */,
 				CDF2C611151B146F0009D47D /* MOAIAppIOS.h */,
 				CDF2C612151B146F0009D47D /* MOAIAppIOS.mm */,
 				E98DBDC71537A2BF00514387 /* MOAIChartBoostIOS.h */,
@@ -6157,8 +6147,6 @@
 		CDF2C627151B14DD0009D47D /* aku */ = {
 			isa = PBXGroup;
 			children = (
-				E98DBDD11537A33100514387 /* AKU-adcolony.h */,
-				E98DBDD21537A33100514387 /* AKU-adcolony.mm */,
 				E98DBDD31537A33100514387 /* AKU-chartboost.h */,
 				E98DBDD41537A33100514387 /* AKU-chartboost.mm */,
 				CD1D0BA213599FD200802A3C /* AKU-iphone.h */,
@@ -7333,7 +7321,6 @@
 				CDF2C61F151B146F0009D47D /* MOAIDialogIOS.h in Headers */,
 				4D49735318725EC400D46882 /* MOAIEaseSimpleOut.h in Headers */,
 				CD91E40015252E2F00AE1883 /* MOAIKeyboardIOS.h in Headers */,
-				E98DBDD51537A33100514387 /* AKU-adcolony.h in Headers */,
 				E98DBDD71537A33100514387 /* AKU-chartboost.h in Headers */,
 				66C3B18B15587833005C1858 /* MOAIScissorRect.h in Headers */,
 				CD06AF95155B443E00EB03C5 /* MOAIFoo.h in Headers */,
@@ -7762,7 +7749,6 @@
 				EB9EDE891BE9421B00E8938F /* MOAICrittercismIOS.h in Headers */,
 				EB9EDE8F1BE9421B00E8938F /* MOAIEaseSimpleOut.h in Headers */,
 				EB9EDE911BE9421B00E8938F /* MOAIKeyboardIOS.h in Headers */,
-				EB9EDE921BE9421B00E8938F /* AKU-adcolony.h in Headers */,
 				EB9EDE931BE9421B00E8938F /* AKU-chartboost.h in Headers */,
 				EB9EDE941BE9421B00E8938F /* MOAIScissorRect.h in Headers */,
 				EB9EDE951BE9421B00E8938F /* MOAIFoo.h in Headers */,
@@ -9319,7 +9305,6 @@
 				CDF2C61C151B146F0009D47D /* MOAIAppIOS.mm in Sources */,
 				CDF2C620151B146F0009D47D /* MOAIDialogIOS.mm in Sources */,
 				CD91E40115252E2F00AE1883 /* MOAIKeyboardIOS.mm in Sources */,
-				E98DBDD61537A33100514387 /* AKU-adcolony.mm in Sources */,
 				E98DBDD81537A33100514387 /* AKU-chartboost.mm in Sources */,
 				667AE73A154A09CA00CCE42D /* MOAIFoo.cpp in Sources */,
 				667AE73D154A0CAD00CCE42D /* MOAIFooMgr.cpp in Sources */,
@@ -9748,7 +9733,6 @@
 				EB9EDFBA1BE9421B00E8938F /* MOAIRenderMgr.cpp in Sources */,
 				EB9EDFBC1BE9421B00E8938F /* MOAICrittercismIOS.mm in Sources */,
 				EB9EDFC31BE9421B00E8938F /* MOAIKeyboardIOS.mm in Sources */,
-				EB9EDFC41BE9421B00E8938F /* AKU-adcolony.mm in Sources */,
 				EB9EDFC51BE9421B00E8938F /* AKU-chartboost.mm in Sources */,
 				EB9EDFC61BE9421B00E8938F /* MOAIFoo.cpp in Sources */,
 				EB9EDFC71BE9421B00E8938F /* MOAIFooMgr.cpp in Sources */,
