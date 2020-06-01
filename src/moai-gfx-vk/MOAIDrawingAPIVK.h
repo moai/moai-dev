@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIDRAWINGCOMMANDVK_H
-#define	MOAIDRAWINGCOMMANDVK_H
+#ifndef	MOAIDRAWINGAPIVK_H
+#define	MOAIDRAWINGAPIVK_H
 
 #include <moai-gfx/MOAIGfxConsts.h>
 
@@ -13,7 +13,7 @@ class MOAIAbstractDescriptorElementStateVK;
 //================================================================//
 struct MOAIDrawingCmdEnumVK {
 	enum {
-		BASE = MOAIDrawingCmdEnum::TOTAL_BASE_COMMANDS,
+		BASE = MOAIDrawingAPIEnum::TOTAL_BASE_COMMANDS,
 		
 		LOAD_DESCRIPTOR_ELEMENT_VK,
 		LOAD_DESCRIPTOR_FROM_TEXTURE_UNIT_VK,
@@ -57,12 +57,12 @@ namespace MOAIDrawingParamVK {
 };
 
 //================================================================//
-// MOAIDrawingCommandVK
+// MOAIDrawingAPIVK
 //================================================================//
-struct MOAIDrawingCommandVK {
+struct MOAIDrawingAPIVK {
 
 	//----------------------------------------------------------------//
-	static void		Execute					( MOAIAbstractDrawingAPICallback* callable, MOAIDrawingCmdEnum::_ cmd, const void* rawParam );
+	static void		Execute					( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ cmd, const void* rawParam );
 	static void		ExecuteSetUniformVK		( MOAIGfxMgr& gfxMgr, const MOAIDrawingParamVK::LoadShaderUniform& param );
 };
 

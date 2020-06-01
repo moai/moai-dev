@@ -387,7 +387,7 @@ void MOAIStretchPatch2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILu
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch2D::MOAIAbstractDrawingAPICallback_Call () {
+void MOAIStretchPatch2D::MOAIAbstractGfxScriptCallback_Call () {
 
 //	ZLVec3D stretch = this->BindStretchVertexTransform ();
 //	this->DrawStretch ( 0, stretch.mX, stretch.mY );

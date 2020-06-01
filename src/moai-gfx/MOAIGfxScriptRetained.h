@@ -5,10 +5,19 @@
 #define	MOAIGFXSCRIPTRETAINED_H
 
 #include <moai-gfx/MOAIAbstractGfxScript.h>
-#include <moai-gfx/MOAIAbstractDrawingAPIObject.h>
+#include <moai-gfx/MOAIAbstractDrawingLuaAPI.h>
 
 class MOAIAbstractUniformBuffer;
 class MOAIUniformSchema;
+
+//================================================================//
+// MOAIGfxScriptCommand
+//================================================================//
+struct MOAIGfxScriptCommand {
+
+	MOAIDrawingAPIEnum::_ 		mType;
+	ZLSize 						mParamSize;
+};
 
 //================================================================//
 // MOAIGfxScriptRetained
@@ -16,29 +25,45 @@ class MOAIUniformSchema;
 // TODO: doxygen
 class MOAIGfxScriptRetained :
 	public virtual MOAIAbstractGfxScript,
-	public virtual MOAIAbstractDrawingAPIObject {
+	public virtual MOAIAbstractDrawingLuaAPI {
 protected:
 
 	friend class MOAIAbstractGfxScriptInterface;
+	
+	MOAI_LUA_OBJECT_VISITOR_FRIEND
 
 	ZLMemStream											mCommandStream;
 	ZLLeanArray < u8 > 									mBytecode;
 	ZLLeanStack < ZLStrongPtr < ZLRefCountedObject > >	mRetainedObjects;
 	
 	//----------------------------------------------------------------//
-	void 				ExecuteBytecode				( MOAIAbstractDrawingAPICallback* callable, MOAIDrawingCmdEnum::_ callCommand );
-	void				ExecuteMemStream			( MOAIAbstractDrawingAPICallback* callable, MOAIDrawingCmdEnum::_ callCommand );
+	static int			_call						( lua_State* L );
+	static int			_callFromShader				( lua_State* L );
+	
+	//----------------------------------------------------------------//
+	void				Execute						( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ cmd, const void* rawParam ) const;
+	void 				ExecuteBytecode				( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ callCommand );
+	void				ExecuteMemStream			( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ callCommand );
 		
 	//----------------------------------------------------------------//
+	void				_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
 //	void				MOAIAbstractDrawingAPI_Call				();
 	void				MOAIAbstractDrawingAPI_RetainObject		( ZLRefCountedObject* object );
-	void				MOAIAbstractDrawingAPI_SubmitCommand	( MOAIDrawingCmdEnum::_ cmd, const void* param, ZLSize size );
-	void				MOAIAbstractGfxScript_RunScript			( MOAIAbstractDrawingAPICallback* callable, MOAIDrawingCmdEnum::_ callCommand );
-	virtual void		MOAIGfxScriptRetained_Execute			( MOAIAbstractDrawingAPICallback* callable, MOAIDrawingCmdEnum::_ cmd, const void* rawParam ) const;
+	void				MOAIAbstractDrawingAPI_SubmitCommand	( MOAIDrawingAPIEnum::_ cmd, const void* param, ZLSize size );
+	void				MOAIAbstractGfxScript_RunScript			( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ callCommand );
+	virtual void		MOAIGfxScriptRetained_Execute			( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ cmd, const void* rawParam ) const;
 
 public:
 
+	enum {
+		CALL						= ( MOAIDrawingAPIEnum::_ )-1,
+		CALL_FROM_SHADER			= ( MOAIDrawingAPIEnum::_ )-2,
+	};
+
 	//----------------------------------------------------------------//
+	void				Call						();
+	void				CallFromShader				();
 	bool				HasContent					();
 						MOAIGfxScriptRetained		();
 						~MOAIGfxScriptRetained		();

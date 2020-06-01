@@ -1,13 +1,13 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIDRAWINGCOMMAND_H
-#define	MOAIDRAWINGCOMMAND_H
+#ifndef	MOAIDRAWINGAPI_H
+#define	MOAIDRAWINGAPI_H
 
 #include <moai-gfx/MOAIGfxConsts.h>
 
 class MOAIAbstractChildTransform;
-class MOAIAbstractDrawingAPICallback;
+class MOAIAbstractGfxScriptCallback;
 class MOAICamera;
 class MOAIGfxMgr;
 class MOAIShader;
@@ -15,20 +15,15 @@ class MOAITexture;
 class MOAIViewport;
 
 //================================================================//
-// MOAIDrawingCmdEnum
+// MOAIDrawingAPIEnum
 //================================================================//
-struct MOAIDrawingCmdEnum {
+struct MOAIDrawingAPIEnum {
 
 	typedef int _; // is this too gross?
 
 	enum {
 	
-		// keep these first
-		CALL						= ( _ )0,
-		CALL_FROM_SHADER,
-		TOTAL_CALL_COMMANDS,
-	
-		NONE,
+		NONE						= ( _ )0,
 		
 		CLEAR_SURFACE,
 		
@@ -138,15 +133,15 @@ namespace MOAIDrawingParam {
 };
 
 //================================================================//
-// MOAIDrawingCommand
+// MOAIDrawingAPI
 //================================================================//
-struct MOAIDrawingCommand {
+struct MOAIDrawingAPI {
 
-	MOAIDrawingCmdEnum::_ 		mType;
+	MOAIDrawingAPIEnum::_ 		mType;
 	ZLSize 						mParamSize;
 
 	//----------------------------------------------------------------//
-	static void		Execute					( MOAIAbstractDrawingAPICallback* callable, MOAIDrawingCmdEnum::_ cmd, const void* rawParam );
+	static void		Execute					( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ cmd, const void* rawParam );
 	static void		ExecuteDrawAnimCurve	( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawAnimCurve& param );
 	static void 	ExecuteDrawAxis2D 		( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawAxis2D& param );
 	static void 	ExecuteDrawAxisGrid2D	( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawAxisGrid2D& param );

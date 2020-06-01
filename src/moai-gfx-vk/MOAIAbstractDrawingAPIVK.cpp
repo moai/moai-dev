@@ -4,7 +4,7 @@
 #include "pch.h"
 #include <moai-gfx-vk/MOAIAbstractDescriptorElementStateVK.h>
 #include <moai-gfx-vk/MOAIAbstractDrawingAPIVK.h>
-#include <moai-gfx-vk/MOAIDrawingCommandVK.h>
+#include <moai-gfx-vk/MOAIDrawingAPIVK.h>
 
 //================================================================//
 // MOAIAbstractDrawingAPIVK

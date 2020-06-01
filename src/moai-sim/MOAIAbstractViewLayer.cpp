@@ -487,8 +487,6 @@ void MOAIAbstractViewLayer::MOAIDrawable_Draw ( int subPrimID ) {
 	
 	gfxMgr.SetViewProj ( this->mViewport, this->mCamera, this->mDebugCamera, this->mParallax );
 	gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX );
-	
-	// set up the ambient color
 	gfxMgr.SetAmbientColor ( this->mColor );
 	
 	this->MOAIAbstractViewLayer_Draw ();

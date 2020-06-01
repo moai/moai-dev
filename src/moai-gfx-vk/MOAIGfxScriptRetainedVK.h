@@ -4,7 +4,7 @@
 #ifndef	MOAIGFXSCRIPTRETAINEDVK_H
 #define	MOAIGFXSCRIPTRETAINEDVK_H
 
-#include <moai-gfx-vk/MOAIAbstractDrawingAPIObjectVK.h>
+#include <moai-gfx-vk/MOAIAbstractDrawingLuaAPIVK.h>
 
 //================================================================//
 // MOAIGfxScriptRetainedVK
@@ -12,11 +12,11 @@
 // TODO: doxygen
 class MOAIGfxScriptRetainedVK :
 	public virtual MOAIGfxScriptRetained,
-	public virtual MOAIAbstractDrawingAPIObjectVK {
+	public virtual MOAIAbstractDrawingLuaAPIVK {
 protected:
 	
 	//----------------------------------------------------------------//
-	void			MOAIGfxScriptRetained_Execute		( MOAIAbstractDrawingAPICallback* callable, MOAIDrawingCmdEnum::_ cmd, const void* rawParam ) const;
+	void			MOAIGfxScriptRetained_Execute		( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ cmd, const void* rawParam ) const;
 
 public:
 

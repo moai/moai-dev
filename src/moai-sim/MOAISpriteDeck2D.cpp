@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAISpriteDeck2DCallable::MOAIAbstractDrawingAPICallback_Call () {
+void MOAISpriteDeck2DCallable::MOAIAbstractGfxScriptCallback_Call () {
 
 	this->mBrush.Draw ();
 }
@@ -685,7 +685,7 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 			callable.mBrush.mUVQuad = this->mUVQuads [ spritePair.mUVQuadID ];
 			callable.mBrush.mModelQuad = this->mQuads [ spritePair.mQuadID ];
 			
-			gfxScript->RunScript ( &callable, MOAIDrawingCmdEnum::CALL_FROM_SHADER );
+			gfxScript->RunScript ( &callable, MOAIGfxScriptRetained::CALL_FROM_SHADER );
 		}
 	}
 	else {
@@ -714,7 +714,7 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 			callable.mBrush.mModelQuad.Init ( -0.5f, -0.5f, 0.5f, 0.5f );
 		}
 		
-		gfxScript->RunScript ( &callable, MOAIDrawingCmdEnum::CALL_FROM_SHADER );
+		gfxScript->RunScript ( &callable, MOAIGfxScriptRetained::CALL_FROM_SHADER );
 	}
 }
 

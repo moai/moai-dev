@@ -28,7 +28,7 @@ private:
 class MOAIStretchPatch2D :
 	public MOAIStretchDeck,
 	public MOAIHasGfxScriptBatch,
-	public MOAIAbstractDrawingAPICallback {
+	public MOAIAbstractGfxScriptCallback {
 private:
 
 	ZLLeanArray < MOAIStretchPatchSpan >	mRows;
@@ -65,7 +65,7 @@ private:
 	void					_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
 	void					_SerializeIn							( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
 	void					_SerializeOut							( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
-	void 					MOAIAbstractDrawingAPICallback_Call		();
+	void 					MOAIAbstractGfxScriptCallback_Call		();
 	ZLBounds				MOAIDeck_ComputeMaxAABB					();
 	void					MOAIDeck_Draw							( ZLIndex idx );
 	ZLBounds				MOAIDeck_GetBounds						( ZLIndex idx );

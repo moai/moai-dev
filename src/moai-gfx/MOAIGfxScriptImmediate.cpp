@@ -43,7 +43,7 @@ void MOAIGfxScriptImmediate::MOAIAbstractGfxScript_Optimize () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxScriptImmediate::MOAIAbstractGfxScript_RunScript ( MOAIAbstractDrawingAPICallback* callable, MOAIDrawingCmdEnum::_ callCommand ) {
+void MOAIGfxScriptImmediate::MOAIAbstractGfxScript_RunScript ( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ callCommand ) {
 	UNUSED ( callable );
 	UNUSED ( callCommand );
 }

@@ -10,8 +10,8 @@
 #include <moai-gfx/MOAIAbstractChildTransform.h>
 #include <moai-gfx/MOAIAbstractDrawable.h>
 #include <moai-gfx/MOAIAbstractDrawingAPI.h>
-#include <moai-gfx/MOAIAbstractDrawingAPICallback.h>
-#include <moai-gfx/MOAIAbstractDrawingAPIObject.h>
+#include <moai-gfx/MOAIAbstractGfxScriptCallback.h>
+#include <moai-gfx/MOAIAbstractDrawingLuaAPI.h>
 #include <moai-gfx/MOAIAbstractGfxScript.h>
 #include <moai-gfx/MOAIAbstractGfxScriptBatch.h>
 #include <moai-gfx/MOAIAbstractHasGfxScript.h>
@@ -20,7 +20,7 @@
 #include <moai-gfx/MOAICamera.h>
 #include <moai-gfx/MOAIFrameBuffer.h>
 #include <moai-gfx/MOAIGfxBuffer.h>
-#include <moai-gfx/MOAIDrawingCommand.h>
+#include <moai-gfx/MOAIDrawingAPI.h>
 #include <moai-gfx/MOAIGfxScriptRetained.h>
 #include <moai-gfx/MOAIGfxConsts.h>
 #include <moai-gfx/MOAIGfxMgr.h>

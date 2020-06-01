@@ -1,11 +1,11 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIDRAWINGAPI_H
-#define	MOAIDRAWINGAPI_H
+#ifndef	MOAIABSTRACTDRAWINGAPI_H
+#define	MOAIABSTRACTDRAWINGAPI_H
 
 #include <moai-gfx/MOAIGfxConsts.h>
-#include <moai-gfx/MOAIDrawingCommand.h>
+#include <moai-gfx/MOAIDrawingAPI.h>
 
 class MOAIBlendMode;
 class MOAIFrameBuffer;
@@ -30,17 +30,16 @@ protected:
 	void				DrawArcStroke				( float x, float y, float xRad, float yRad, float d0, float d1, u32 steps, float stroke, float offset );
 	void				DrawLuaArray				( lua_State* L, MOAIGfxTopologyEnum::_ primType );
 	void				DrawLuaParams				( lua_State* L, MOAIGfxTopologyEnum::_ primType );
-	void				SubmitCommand				( MOAIDrawingCmdEnum::_ cmd );
+	void				SubmitCommand				( MOAIDrawingAPIEnum::_ cmd );
 	void				RetainObject				( ZLRefCountedObject* object );
 
 	//----------------------------------------------------------------//
-//	virtual void		MOAIAbstractDrawingAPI_Call					() = 0;
 	virtual void		MOAIAbstractDrawingAPI_RetainObject			( ZLRefCountedObject* object ) = 0;
-	virtual void		MOAIAbstractDrawingAPI_SubmitCommand		( MOAIDrawingCmdEnum::_ cmd, const void* param, ZLSize size ) = 0;
+	virtual void		MOAIAbstractDrawingAPI_SubmitCommand		( MOAIDrawingAPIEnum::_ cmd, const void* param, ZLSize size ) = 0;
 
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	void SubmitCommand ( MOAIDrawingCmdEnum::_ cmd, const TYPE& param ) {
+	void SubmitCommand ( MOAIDrawingAPIEnum::_ cmd, const TYPE& param ) {
 		this->MOAIAbstractDrawingAPI_SubmitCommand ( cmd, &param, sizeof ( TYPE ));
 	}
 
@@ -48,8 +47,6 @@ public:
 
 	//----------------------------------------------------------------//
 	void 				BindVectorDrawing			();
-	void				Call						();
-	void				CallFromShader				();
 	void				ClearSurface				();
 	void				DrawAnimCurve				( MOAIAnimCurve& curve, u32 resolution );
 	void				DrawAxis2D					( float x, float y, float dx, float dy );

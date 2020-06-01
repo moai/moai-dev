@@ -4,19 +4,19 @@
 #include "pch.h"
 #include <moai-gfx-vk/MOAIDescriptorSetVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetArrayVK.h>
-#include <moai-gfx-vk/MOAIDrawingCommandVK.h>
+#include <moai-gfx-vk/MOAIDrawingAPIVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAITextureVK.h>
 
 //================================================================//
-// MOAIDrawingCommand
+// MOAIDrawingAPI
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDrawingCommandVK::Execute ( MOAIAbstractDrawingAPICallback* callback, MOAIDrawingCmdEnum::_ cmd, const void* rawParam ) {
+void MOAIDrawingAPIVK::Execute ( MOAIAbstractGfxScriptCallback* callback, MOAIDrawingAPIEnum::_ cmd, const void* rawParam ) {
 
 	if ( cmd < MOAIDrawingCmdEnumVK::BASE ) {
-		MOAIDrawingCommand::Execute ( callback, cmd, rawParam );
+		MOAIDrawingAPI::Execute ( callback, cmd, rawParam );
 		return;
 	}
 
@@ -47,14 +47,14 @@ void MOAIDrawingCommandVK::Execute ( MOAIAbstractDrawingAPICallback* callback, M
 	
 		case MOAIDrawingCmdEnumVK::LOAD_SHADER_UNIFORM_VK: {
 			const MOAIDrawingParamVK::LoadShaderUniform* param = ( const MOAIDrawingParamVK::LoadShaderUniform* )rawParam;
-			MOAIDrawingCommandVK::ExecuteSetUniformVK ( gfxMgr, *param );
+			MOAIDrawingAPIVK::ExecuteSetUniformVK ( gfxMgr, *param );
 			break;
 		}
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawingCommandVK::ExecuteSetUniformVK ( MOAIGfxMgr& gfxMgr, const MOAIDrawingParamVK::LoadShaderUniform& param ) {
+void MOAIDrawingAPIVK::ExecuteSetUniformVK ( MOAIGfxMgr& gfxMgr, const MOAIDrawingParamVK::LoadShaderUniform& param ) {
 	UNUSED ( gfxMgr );
 	UNUSED ( param );
 

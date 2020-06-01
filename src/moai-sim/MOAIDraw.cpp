@@ -248,7 +248,7 @@ void MOAIDraw::MOAIAbstractDrawingAPI_RetainObject ( ZLRefCountedObject* object 
 }
 
 //----------------------------------------------------------------//
-void MOAIDraw::MOAIAbstractDrawingAPI_SubmitCommand ( MOAIDrawingCmdEnum::_ cmd, const void* param, ZLSize size ) {
+void MOAIDraw::MOAIAbstractDrawingAPI_SubmitCommand ( MOAIDrawingAPIEnum::_ cmd, const void* param, ZLSize size ) {
 
-	MOAIDrawingCommand::Execute ( 0, cmd, param );
+	MOAIDrawingAPI::Execute ( 0, cmd, param );
 }

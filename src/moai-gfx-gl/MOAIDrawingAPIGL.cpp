@@ -2,18 +2,18 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx-gl/MOAIDrawingCommandGL.h>
+#include <moai-gfx-gl/MOAIDrawingAPIGL.h>
 #include <moai-gfx-gl/MOAIShaderGL.h>
 
 //================================================================//
-// MOAIDrawingCommand
+// MOAIDrawingAPI
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDrawingCommandGL::Execute ( MOAIAbstractDrawingAPICallback* callback, MOAIDrawingCmdEnum::_ cmd, const void* rawParam ) {
+void MOAIDrawingAPIGL::Execute ( MOAIAbstractGfxScriptCallback* callback, MOAIDrawingAPIEnum::_ cmd, const void* rawParam ) {
 
 	if ( cmd < MOAIDrawingCmdEnumGL::BASE ) {
-		MOAIDrawingCommandGL::Execute ( callback, cmd, rawParam );
+		MOAIDrawingAPIGL::Execute ( callback, cmd, rawParam );
 		return;
 	}
 
@@ -23,14 +23,14 @@ void MOAIDrawingCommandGL::Execute ( MOAIAbstractDrawingAPICallback* callback, M
 	
 		case MOAIDrawingCmdEnumGL::LOAD_SHADER_UNIFORM_GL: {
 			const MOAIDrawingParamGL::LoadShaderUniform* param = ( const MOAIDrawingParamGL::LoadShaderUniform* )rawParam;
-			MOAIDrawingCommandGL::ExecuteSetUniformGL ( gfxMgr, *param );
+			MOAIDrawingAPIGL::ExecuteSetUniformGL ( gfxMgr, *param );
 			break;
 		}
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawingCommandGL::ExecuteSetUniformGL ( MOAIGfxMgr& gfxMgr, const MOAIDrawingParamGL::LoadShaderUniform& param ) {
+void MOAIDrawingAPIGL::ExecuteSetUniformGL ( MOAIGfxMgr& gfxMgr, const MOAIDrawingParamGL::LoadShaderUniform& param ) {
 
 	MOAIShaderGL* shader = MOAICast < MOAIShaderGL >( gfxMgr.GetShader ());
 	if ( !shader ) return;

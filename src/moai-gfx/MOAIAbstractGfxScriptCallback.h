@@ -1,32 +1,32 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIABSTRACTDRAWINGAPICALLBACK_H
-#define	MOAIABSTRACTDRAWINGAPICALLBACK_H
+#ifndef	MOAIABSTRACTGFXSCRIPTCALLBACK_H
+#define	MOAIABSTRACTGFXSCRIPTCALLBACK_H
 
 //================================================================//
-// MOAIAbstractDrawingAPICallback
+// MOAIAbstractGfxScriptCallback
 //================================================================//
 // TODO: doxygen
-class MOAIAbstractDrawingAPICallback {
+class MOAIAbstractGfxScriptCallback {
 protected:
 
 	//----------------------------------------------------------------//
-	virtual void MOAIAbstractDrawingAPICallback_Call () = 0;
+	virtual void MOAIAbstractGfxScriptCallback_Call () = 0;
 
 public:
 
 	//----------------------------------------------------------------//
 	void Call () {
-		this->MOAIAbstractDrawingAPICallback_Call ();
+		this->MOAIAbstractGfxScriptCallback_Call ();
 	}
 
 	//----------------------------------------------------------------//
-	MOAIAbstractDrawingAPICallback () {
+	MOAIAbstractGfxScriptCallback () {
 	}
 	
 	//----------------------------------------------------------------//
-	virtual ~MOAIAbstractDrawingAPICallback () {
+	virtual ~MOAIAbstractGfxScriptCallback () {
 	}
 };
 

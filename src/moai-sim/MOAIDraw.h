@@ -20,7 +20,7 @@ private:
 	
 	//----------------------------------------------------------------//
 	void			MOAIAbstractDrawingAPI_RetainObject			( ZLRefCountedObject* object );
-	void			MOAIAbstractDrawingAPI_SubmitCommand		( MOAIDrawingCmdEnum::_ cmd, const void* param, ZLSize size );
+	void			MOAIAbstractDrawingAPI_SubmitCommand		( MOAIDrawingAPIEnum::_ cmd, const void* param, ZLSize size );
 	
 public:
 

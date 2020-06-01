@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIDRAWINGAPIGL_H
-#define	MOAIDRAWINGAPIGL_H
+#ifndef	MOAIABSTRACTDRAWINGAPIGL_H
+#define	MOAIABSTRACTDRAWINGAPIGL_H
 
 //================================================================//
 // MOAIAbstractDrawingAPIGL

@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-gfx-gl/MOAIAbstractDrawingAPIGL.h>
-#include <moai-gfx-gl/MOAIDrawingCommandGL.h>
+#include <moai-gfx-gl/MOAIDrawingAPIGL.h>
 
 //================================================================//
 // MOAIAbstractDrawingAPIGL

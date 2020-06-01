@@ -5,7 +5,7 @@
 #define	MOAIGFXSCRIPTIMMEDIATE_H
 
 #include <moai-gfx/MOAIAbstractGfxScript.h>
-#include <moai-gfx/MOAIDrawingCommand.h>
+#include <moai-gfx/MOAIDrawingAPI.h>
 
 //================================================================//
 // MOAIGfxScriptImmediate
@@ -22,7 +22,7 @@ protected:
 	void			_RegisterLuaClass							( RTTIVisitorHistory& history, MOAILuaState& state );
 	void			_RegisterLuaFuncs							( RTTIVisitorHistory& history, MOAILuaState& state );
 	void			MOAIAbstractGfxScript_Optimize				();
-	void			MOAIAbstractGfxScript_RunScript				( MOAIAbstractDrawingAPICallback* callable, MOAIDrawingCmdEnum::_ callCommand );
+	void			MOAIAbstractGfxScript_RunScript				( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ callCommand );
 
 public:
 

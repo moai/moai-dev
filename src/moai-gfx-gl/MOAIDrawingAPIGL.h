@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIDRAWINGCOMMANDGL_H
-#define	MOAIDRAWINGCOMMANDGL_H
+#ifndef	MOAIDRAWINGAPIGL_H
+#define	MOAIDRAWINGAPIGL_H
 
 #include <moai-gfx/MOAIGfxConsts.h>
 
@@ -11,7 +11,7 @@
 //================================================================//
 struct MOAIDrawingCmdEnumGL {
 	enum {
-		BASE = MOAIDrawingCmdEnum::TOTAL_BASE_COMMANDS,
+		BASE = MOAIDrawingAPIEnum::TOTAL_BASE_COMMANDS,
 		LOAD_SHADER_UNIFORM_GL,
 	};
 };
@@ -30,12 +30,12 @@ namespace MOAIDrawingParamGL {
 };
 
 //================================================================//
-// MOAIDrawingCommandGL
+// MOAIDrawingAPIGL
 //================================================================//
-struct MOAIDrawingCommandGL {
+struct MOAIDrawingAPIGL {
 
 	//----------------------------------------------------------------//
-	static void		Execute					( MOAIAbstractDrawingAPICallback* callable, MOAIDrawingCmdEnum::_ cmd, const void* rawParam );
+	static void		Execute					( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ cmd, const void* rawParam );
 	static void		ExecuteSetUniformGL		( MOAIGfxMgr& gfxMgr, const MOAIDrawingParamGL::LoadShaderUniform& param );
 };
 

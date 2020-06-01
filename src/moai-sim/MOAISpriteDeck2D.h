@@ -36,7 +36,7 @@ private:
 // MOAISpriteDeck2DCallable
 //================================================================//
 class MOAISpriteDeck2DCallable :
-	public MOAIAbstractDrawingAPICallback {
+	public MOAIAbstractGfxScriptCallback {
 private:
 
 	friend class MOAISpriteDeck2D;
@@ -44,7 +44,7 @@ private:
 	MOAIQuadBrush	mBrush;
 
 	//----------------------------------------------------------------//
-	void 		MOAIAbstractDrawingAPICallback_Call 		();
+	void 		MOAIAbstractGfxScriptCallback_Call 		();
 };
 
 //================================================================//

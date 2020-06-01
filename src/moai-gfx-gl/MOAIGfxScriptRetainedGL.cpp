@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx-gl/MOAIDrawingCommandGL.h>
+#include <moai-gfx-gl/MOAIDrawingAPIGL.h>
 #include <moai-gfx-gl/MOAIGfxScriptRetainedGL.h>
 
 //================================================================//
@@ -14,7 +14,7 @@ MOAIGfxScriptRetainedGL::MOAIGfxScriptRetainedGL () {
 
 	RTTI_BEGIN ( MOAIGfxScriptRetainedGL )
 		RTTI_EXTEND ( MOAIGfxScriptRetained )
-		RTTI_EXTEND ( MOAIAbstractDrawingAPIObjectGL )
+		RTTI_EXTEND ( MOAIAbstractDrawingLuaAPIGL )
 	RTTI_END
 }
 
@@ -27,7 +27,7 @@ MOAIGfxScriptRetainedGL::~MOAIGfxScriptRetainedGL () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxScriptRetainedGL::MOAIGfxScriptRetained_Execute ( MOAIAbstractDrawingAPICallback* callable, MOAIDrawingCmdEnum::_ cmd, const void* rawParam ) const {
+void MOAIGfxScriptRetainedGL::MOAIGfxScriptRetained_Execute ( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ cmd, const void* rawParam ) const {
 
-	MOAIDrawingCommandGL::Execute ( callable, cmd, rawParam );
+	MOAIDrawingAPIGL::Execute ( callable, cmd, rawParam );
 }

@@ -3,11 +3,11 @@
 
 #include "pch.h"
 #include <moai-gfx/MOAIAbstractGfxScript.h>
-#include <moai-gfx/MOAIAbstractDrawingAPICallback.h>
+#include <moai-gfx/MOAIAbstractGfxScriptCallback.h>
 #include <moai-gfx/MOAIAbstractUniformBuffer.h>
 #include <moai-gfx/MOAIBlendMode.h>
 #include <moai-gfx/MOAICamera.h>
-#include <moai-gfx/MOAIDrawingCommand.h>
+#include <moai-gfx/MOAIDrawingAPI.h>
 #include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIShader.h>
 #include <moai-gfx/MOAITexture.h>
@@ -15,168 +15,145 @@
 #include <moai-gfx/MOAIViewport.h>
 
 //================================================================//
-// MOAIDrawingCommand
+// MOAIDrawingAPI
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDrawingCommand::Execute ( MOAIAbstractDrawingAPICallback* callback, MOAIDrawingCmdEnum::_ cmd, const void* rawParam ) {
+void MOAIDrawingAPI::Execute ( MOAIAbstractGfxScriptCallback* callback, MOAIDrawingAPIEnum::_ cmd, const void* rawParam ) {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	switch ( cmd ) {
-	
-		case MOAIDrawingCmdEnum::CALL:
 		
-			if ( callback ) {
-				callback->Call ();
-			}
+		case MOAIDrawingAPIEnum::CLEAR_SURFACE:
 			break;
 		
-		case MOAIDrawingCmdEnum::CALL_FROM_SHADER:
-		
-			if ( callback ) {
-				
-				MOAIShader* shader = gfxMgr.GetShader ();
-				MOAIAbstractGfxScript* gfxScript = shader ? shader->GetGfxScript () : NULL;
-			
-				if ( gfxScript ) {
-					gfxScript->RunScript ( callback, MOAIDrawingCmdEnum::CALL );
-				}
-				else {
-					callback->Call ();
-				}
-			}
-			break;
-		
-		case MOAIDrawingCmdEnum::CLEAR_SURFACE:
-			break;
-		
-		case MOAIDrawingCmdEnum::DRAW_ANIM_CURVE: {
+		case MOAIDrawingAPIEnum::DRAW_ANIM_CURVE: {
 			MOAIDrawingParam::DrawAnimCurve param = *( const MOAIDrawingParam::DrawAnimCurve* )rawParam;
-			MOAIDrawingCommand::ExecuteDrawAnimCurve ( gfxMgr, param );
+			MOAIDrawingAPI::ExecuteDrawAnimCurve ( gfxMgr, param );
 			break;
 		}
 		
-		case MOAIDrawingCmdEnum::DRAW_AXIS_2D: {
+		case MOAIDrawingAPIEnum::DRAW_AXIS_2D: {
 			MOAIDrawingParam::DrawAxis2D param = *( const MOAIDrawingParam::DrawAxis2D* )rawParam;
-			MOAIDrawingCommand::ExecuteDrawAxis2D ( gfxMgr, param );
+			MOAIDrawingAPI::ExecuteDrawAxis2D ( gfxMgr, param );
 			break;
 		}
 		
-		case MOAIDrawingCmdEnum::DRAW_LINE: {
+		case MOAIDrawingAPIEnum::DRAW_LINE: {
 			MOAIDrawingParam::DrawLine param = *( const MOAIDrawingParam::DrawLine* )rawParam;
-			MOAIDrawingCommand::ExecuteDrawLine ( gfxMgr, param );
+			MOAIDrawingAPI::ExecuteDrawLine ( gfxMgr, param );
 			break;
 		}
 		
-		case MOAIDrawingCmdEnum::DRAW_POINT: {
+		case MOAIDrawingAPIEnum::DRAW_POINT: {
 			ZLVec3D param = *( const ZLVec3D* )rawParam;
-			MOAIDrawingCommand::ExecuteDrawPoint ( gfxMgr, param );
+			MOAIDrawingAPI::ExecuteDrawPoint ( gfxMgr, param );
 			break;
 		}
 	
-		case MOAIDrawingCmdEnum::DRAW_TRIANGLE: {
+		case MOAIDrawingAPIEnum::DRAW_TRIANGLE: {
 			MOAIDrawingParam::DrawTriangle param = *( const MOAIDrawingParam::DrawTriangle* )rawParam;
-			MOAIDrawingCommand::ExecuteDrawTriangle ( gfxMgr, param );
+			MOAIDrawingAPI::ExecuteDrawTriangle ( gfxMgr, param );
 			break;
 		}
 		
-		case MOAIDrawingCmdEnum::POP_GFX_STATE:
+		case MOAIDrawingAPIEnum::POP_GFX_STATE:
 			gfxMgr.PopState ();
 			break;
 		
-		case MOAIDrawingCmdEnum::PUSH_GFX_STATE:
+		case MOAIDrawingAPIEnum::PUSH_GFX_STATE:
 			gfxMgr.PushState ();
 			break;
 		
-		case MOAIDrawingCmdEnum::SET_BLEND_MODE:
+		case MOAIDrawingAPIEnum::SET_BLEND_MODE:
 			gfxMgr.SetBlendMode ( *( const MOAIBlendMode* )rawParam );
 			break;
 		
-		case MOAIDrawingCmdEnum::SET_CULL_FUNC:
+		case MOAIDrawingAPIEnum::SET_CULL_FUNC:
 			gfxMgr.SetCullFunc ( *( const MOAICullFuncEnum::_* )rawParam );
 			break;
 			
-		case MOAIDrawingCmdEnum::SET_DEPTH_FUNC:
+		case MOAIDrawingAPIEnum::SET_DEPTH_FUNC:
 			gfxMgr.SetDepthFunc ( *( const MOAIDepthFuncEnum::_* )rawParam );
 			break;
 		
-		case MOAIDrawingCmdEnum::SET_DEPTH_MASK:
+		case MOAIDrawingAPIEnum::SET_DEPTH_MASK:
 			gfxMgr.SetDepthMask ( *( const bool* )rawParam );
 			break;
 		
-		case MOAIDrawingCmdEnum::SET_FRAME_BUFFER:
+		case MOAIDrawingAPIEnum::SET_FRAME_BUFFER:
 			gfxMgr.SetFrameBuffer ( *( MOAIFrameBuffer** )rawParam );
 			break;
 		
-		case MOAIDrawingCmdEnum::SET_INDEX_BUFFER:
+		case MOAIDrawingAPIEnum::SET_INDEX_BUFFER:
 			gfxMgr.SetIndexBuffer ( *( MOAIIndexBuffer** )rawParam );
 			break;
 		
-		case MOAIDrawingCmdEnum::SET_MATRIX: {
+		case MOAIDrawingAPIEnum::SET_MATRIX: {
 			const MOAIDrawingParam::SetMatrix* param = ( const MOAIDrawingParam::SetMatrix* )rawParam;
 			gfxMgr.SetMtx ( param->mMatrixID, param->mMatrix );
 			break;
 		}
 		
-		case MOAIDrawingCmdEnum::SET_MATRIX_FROM_TRANSFORM: {
+		case MOAIDrawingAPIEnum::SET_MATRIX_FROM_TRANSFORM: {
 			const MOAIDrawingParam::SetMatrixFromTransform* param = ( const MOAIDrawingParam::SetMatrixFromTransform* )rawParam;
 			gfxMgr.SetMtx ( param->mMatrixID, param->mTransform->GetLocalToWorldMtx ());
 			break;
 		}
 		
-		case MOAIDrawingCmdEnum::SET_PEN_COLOR:
+		case MOAIDrawingAPIEnum::SET_PEN_COLOR:
 			gfxMgr.SetPenColor ( *( u32* )rawParam );
 			break;
 					
-		case MOAIDrawingCmdEnum::SET_PEN_WIDTH:
+		case MOAIDrawingAPIEnum::SET_PEN_WIDTH:
 			gfxMgr.SetPenWidth ( *( float* )rawParam );
 			break;
 		
-		case MOAIDrawingCmdEnum::SET_SCISSOR_RECT:
+		case MOAIDrawingAPIEnum::SET_SCISSOR_RECT:
 			gfxMgr.SetScissorRect ( *( ZLRect* )rawParam );
 			break;
 		
-		case MOAIDrawingCmdEnum::SET_SHADER:
+		case MOAIDrawingAPIEnum::SET_SHADER:
 			gfxMgr.SetShader ( *( MOAIShader** )rawParam );
 			break;
 		
-		case MOAIDrawingCmdEnum::SET_TEXTURE: {
+		case MOAIDrawingAPIEnum::SET_TEXTURE: {
 			const MOAIDrawingParam::SetTexture* param = ( const MOAIDrawingParam::SetTexture* )rawParam;
 			gfxMgr.SetTexture ( param->mTexture, param->mTextureUnit );
 			break;
 		}
 		
-		case MOAIDrawingCmdEnum::SET_VERTEX_ARRAY:
+		case MOAIDrawingAPIEnum::SET_VERTEX_ARRAY:
 			gfxMgr.SetVertexArray ( *( MOAIVertexArray** )rawParam );
 			break;
 		
-		case MOAIDrawingCmdEnum::SET_VERTEX_BUFFER:
+		case MOAIDrawingAPIEnum::SET_VERTEX_BUFFER:
 			gfxMgr.SetVertexBuffer ( *( MOAIVertexBuffer** )rawParam );
 			break;
 		
-		case MOAIDrawingCmdEnum::SET_VERTEX_FORMAT:
+		case MOAIDrawingAPIEnum::SET_VERTEX_FORMAT:
 			gfxMgr.SetVertexFormat ( *( MOAIVertexFormat** )rawParam );
 			break;
 		
-		case MOAIDrawingCmdEnum::SET_VIEW_PROJ: {
+		case MOAIDrawingAPIEnum::SET_VIEW_PROJ: {
 			const MOAIDrawingParam::SetViewProj* param = ( const MOAIDrawingParam::SetViewProj* )rawParam;
 			gfxMgr.SetViewProj ( param->mViewport, param->mCamera );
 			break;
 		}
 		
-		case MOAIDrawingCmdEnum::SET_VIEW_RECT:
+		case MOAIDrawingAPIEnum::SET_VIEW_RECT:
 			gfxMgr.SetViewRect ( *( ZLRect* )rawParam );
 			break;
 		
-		case MOAIDrawingCmdEnum::SET_VIEW_RECT_FROM_VIEWPORT:
+		case MOAIDrawingAPIEnum::SET_VIEW_RECT_FROM_VIEWPORT:
 			gfxMgr.SetViewRect ( *( MOAIViewport** )rawParam );
 			break;
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawingCommand::ExecuteDrawAnimCurve ( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawAnimCurve& param ) {
+void MOAIDrawingAPI::ExecuteDrawAnimCurve ( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawAnimCurve& param ) {
 
 	u32 resolution = param.mResolution;
 	MOAIAnimCurve* animCurve = param.mAnimCurve;
@@ -208,7 +185,7 @@ void MOAIDrawingCommand::ExecuteDrawAnimCurve ( MOAIGfxMgr& gfxMgr, const MOAIDr
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawingCommand::ExecuteDrawAxis2D ( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawAxis2D& param ) {
+void MOAIDrawingAPI::ExecuteDrawAxis2D ( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawAxis2D& param ) {
 
 	ZLVec2D loc = param.mV0;
 	ZLVec2D vec = param.mD;
@@ -247,7 +224,7 @@ void MOAIDrawingCommand::ExecuteDrawAxis2D ( MOAIGfxMgr& gfxMgr, const MOAIDrawi
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawingCommand::ExecuteDrawAxisGrid2D ( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawAxisGrid2D& param ) {
+void MOAIDrawingAPI::ExecuteDrawAxisGrid2D ( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawAxisGrid2D& param ) {
 
 	ZLVec2D loc = param.mV0;
 	ZLVec2D vec = param.mD;
@@ -376,7 +353,7 @@ void MOAIDrawingCommand::ExecuteDrawAxisGrid2D ( MOAIGfxMgr& gfxMgr, const MOAID
 //}
 
 //----------------------------------------------------------------//
-void MOAIDrawingCommand::ExecuteDrawLine ( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawLine& param ) {
+void MOAIDrawingAPI::ExecuteDrawLine ( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawLine& param ) {
 
 	gfxMgr.BeginPrim ( MOAIGfxTopologyEnum::LINE_LIST, 2 );
 	
@@ -390,7 +367,7 @@ void MOAIDrawingCommand::ExecuteDrawLine ( MOAIGfxMgr& gfxMgr, const MOAIDrawing
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawingCommand::ExecuteDrawPoint ( MOAIGfxMgr& gfxMgr, const ZLVec3D& param ) {
+void MOAIDrawingAPI::ExecuteDrawPoint ( MOAIGfxMgr& gfxMgr, const ZLVec3D& param ) {
 
 	gfxMgr.BeginPrim ( MOAIGfxTopologyEnum::POINT_LIST, 1 );
 		gfxMgr.WriteVtx ( param.mX, param.mY, param.mZ );
@@ -399,7 +376,7 @@ void MOAIDrawingCommand::ExecuteDrawPoint ( MOAIGfxMgr& gfxMgr, const ZLVec3D& p
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawingCommand::ExecuteDrawTriangle ( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawTriangle& param ) {
+void MOAIDrawingAPI::ExecuteDrawTriangle ( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawTriangle& param ) {
 
 	gfxMgr.BeginPrim ( MOAIGfxTopologyEnum::TRIANGLE_LIST, 3 );
 	

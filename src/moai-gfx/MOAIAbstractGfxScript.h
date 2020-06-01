@@ -4,7 +4,7 @@
 #ifndef	MOAIABSTRACTGFXSCRIPT_H
 #define	MOAIABSTRACTGFXSCRIPT_H
 
-#include <moai-gfx/MOAIDrawingCommand.h>
+#include <moai-gfx/MOAIDrawingAPI.h>
 
 //================================================================//
 // MOAIAbstractGfxScript
@@ -18,12 +18,12 @@ protected:
 	friend class MOAIAbstractGfxScriptInterface;
 
 	//----------------------------------------------------------------//
-	virtual void		MOAIAbstractGfxScript_RunScript			( MOAIAbstractDrawingAPICallback* callable, MOAIDrawingCmdEnum::_ callCommand ) = 0;
+	virtual void		MOAIAbstractGfxScript_RunScript			( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ callCommand ) = 0;
 	
 public:
 	
 	//----------------------------------------------------------------//
-	void RunScript ( MOAIAbstractDrawingAPICallback* callable = NULL, MOAIDrawingCmdEnum::_ callCommand = MOAIDrawingCmdEnum::NONE ) {
+	void RunScript ( MOAIAbstractGfxScriptCallback* callable = NULL, MOAIDrawingAPIEnum::_ callCommand = MOAIDrawingAPIEnum::NONE ) {
 		this->MOAIAbstractGfxScript_RunScript ( callable, callCommand );
 	}
 };

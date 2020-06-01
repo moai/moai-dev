@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx-vk/MOAIDrawingCommandVK.h>
+#include <moai-gfx-vk/MOAIDrawingAPIVK.h>
 #include <moai-gfx-vk/MOAIGfxScriptRetainedVK.h>
 
 //================================================================//
@@ -14,7 +14,7 @@ MOAIGfxScriptRetainedVK::MOAIGfxScriptRetainedVK () {
 
 	RTTI_BEGIN ( MOAIGfxScriptRetainedVK )
 		RTTI_EXTEND ( MOAIGfxScriptRetained )
-		RTTI_EXTEND ( MOAIAbstractDrawingAPIObjectVK )
+		RTTI_EXTEND ( MOAIAbstractDrawingLuaAPIVK )
 	RTTI_END
 }
 
@@ -27,7 +27,7 @@ MOAIGfxScriptRetainedVK::~MOAIGfxScriptRetainedVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxScriptRetainedVK::MOAIGfxScriptRetained_Execute ( MOAIAbstractDrawingAPICallback* callable, MOAIDrawingCmdEnum::_ cmd, const void* rawParam ) const {
+void MOAIGfxScriptRetainedVK::MOAIGfxScriptRetained_Execute ( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ cmd, const void* rawParam ) const {
 
-	MOAIDrawingCommandVK::Execute ( callable, cmd, rawParam );
+	MOAIDrawingAPIVK::Execute ( callable, cmd, rawParam );
 }

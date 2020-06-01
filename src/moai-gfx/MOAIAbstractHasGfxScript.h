@@ -5,7 +5,7 @@
 #define	MOAIABSTRACTHASGFXSCRIPT_H
 
 #include <moai-gfx/MOAIGfxConsts.h>
-#include <moai-gfx/MOAIDrawingCommand.h>
+#include <moai-gfx/MOAIDrawingAPI.h>
 
 class MOAIAbstractGfxScript;
 class MOAIBlendMode;

@@ -84,23 +84,9 @@ void MOAIAbstractDrawingAPI::BindVectorDrawing () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractDrawingAPI::Call () {
-
-//	this->MOAIAbstractDrawingAPI_Call ();
-	this->SubmitCommand ( MOAIDrawingCmdEnum::CALL );
-}
-
-//----------------------------------------------------------------//
-void MOAIAbstractDrawingAPI::CallFromShader() {
-
-//	this->MOAIAbstractDrawingAPI_FromShader ();
-	this->SubmitCommand ( MOAIDrawingCmdEnum::CALL_FROM_SHADER );
-}
-
-//----------------------------------------------------------------//
 void MOAIAbstractDrawingAPI::ClearSurface () {
 
-	this->SubmitCommand ( MOAIDrawingCmdEnum::CLEAR_SURFACE );
+	this->SubmitCommand ( MOAIDrawingAPIEnum::CLEAR_SURFACE );
 }
 
 //----------------------------------------------------------------//
@@ -109,7 +95,7 @@ void MOAIAbstractDrawingAPI::DrawAnimCurve ( MOAIAnimCurve& curve, u32 resolutio
 	MOAIDrawingParam::DrawAnimCurve param;
 	param.mAnimCurve = &curve;
 	param.mResolution = resolution;
-	this->SubmitCommand < MOAIDrawingParam::DrawAnimCurve >( MOAIDrawingCmdEnum::DRAW_ANIM_CURVE, param );
+	this->SubmitCommand < MOAIDrawingParam::DrawAnimCurve >( MOAIDrawingAPIEnum::DRAW_ANIM_CURVE, param );
 	this->RetainObject ( &curve );
 }
 
@@ -119,7 +105,7 @@ void MOAIAbstractDrawingAPI::DrawAxis2D ( float x, float y, float dx, float dy )
 	MOAIDrawingParam::DrawAxis2D param;
 	param.mV0 .Init ( x, y );
 	param.mD.Init ( dx, dy );
-	this->SubmitCommand < MOAIDrawingParam::DrawAxis2D >( MOAIDrawingCmdEnum::DRAW_AXIS_2D, param );
+	this->SubmitCommand < MOAIDrawingParam::DrawAxis2D >( MOAIDrawingAPIEnum::DRAW_AXIS_2D, param );
 }
 
 //----------------------------------------------------------------//
@@ -370,7 +356,7 @@ void MOAIAbstractDrawingAPI::DrawLine ( float x0, float y0, float z0, float x1, 
 	MOAIDrawingParam::DrawLine param;
 	param.mV0.Init ( x0, y0, z0 );
 	param.mV1.Init ( x1, y1, z1 );
-	this->SubmitCommand < MOAIDrawingParam::DrawLine >( MOAIDrawingCmdEnum::DRAW_LINE, param );
+	this->SubmitCommand < MOAIDrawingParam::DrawLine >( MOAIDrawingAPIEnum::DRAW_LINE, param );
 }
 
 //----------------------------------------------------------------//
@@ -438,7 +424,7 @@ void MOAIAbstractDrawingAPI::DrawPoint ( const ZLVec2D& loc ) {
 //----------------------------------------------------------------//
 void MOAIAbstractDrawingAPI::DrawPoint ( float x, float y, float z ) {
 
-	this->SubmitCommand < ZLVec3D >( MOAIDrawingCmdEnum::DRAW_POINT, ZLVec3D ( x, y, z ));
+	this->SubmitCommand < ZLVec3D >( MOAIDrawingAPIEnum::DRAW_POINT, ZLVec3D ( x, y, z ));
 }
 
 //----------------------------------------------------------------//
@@ -605,7 +591,7 @@ void MOAIAbstractDrawingAPI::DrawTriangleFill ( const ZLVec3D& v0, const ZLVec3D
 	param.mV0 = v0;
 	param.mV1 = v1;
 	param.mV2 = v2;
-	this->SubmitCommand < MOAIDrawingParam::DrawTriangle >( MOAIDrawingCmdEnum::DRAW_TRIANGLE, param );
+	this->SubmitCommand < MOAIDrawingParam::DrawTriangle >( MOAIDrawingAPIEnum::DRAW_TRIANGLE, param );
 }
 
 //----------------------------------------------------------------//
@@ -627,13 +613,13 @@ MOAIAbstractDrawingAPI::~MOAIAbstractDrawingAPI () {
 //----------------------------------------------------------------//
 void MOAIAbstractDrawingAPI::PopGfxState () {
 
-	this->SubmitCommand ( MOAIDrawingCmdEnum::POP_GFX_STATE );
+	this->SubmitCommand ( MOAIDrawingAPIEnum::POP_GFX_STATE );
 }
 
 //----------------------------------------------------------------//
 void MOAIAbstractDrawingAPI::PushGfxState () {
 
-	this->SubmitCommand ( MOAIDrawingCmdEnum::PUSH_GFX_STATE );
+	this->SubmitCommand ( MOAIDrawingAPIEnum::PUSH_GFX_STATE );
 }
 
 //----------------------------------------------------------------//
@@ -645,38 +631,38 @@ void MOAIAbstractDrawingAPI::RetainObject ( ZLRefCountedObject* object ) {
 //----------------------------------------------------------------//
 void MOAIAbstractDrawingAPI::SetBlendMode ( const MOAIBlendMode& blendMode ) {
 
-	this->SubmitCommand < MOAIBlendMode >( MOAIDrawingCmdEnum::SET_BLEND_MODE, blendMode );
+	this->SubmitCommand < MOAIBlendMode >( MOAIDrawingAPIEnum::SET_BLEND_MODE, blendMode );
 }
 
 //----------------------------------------------------------------//
 void MOAIAbstractDrawingAPI::SetCullFunc ( MOAICullFuncEnum::_ cullFunc ) {
 
-	this->SubmitCommand < MOAICullFuncEnum::_ >( MOAIDrawingCmdEnum::SET_CULL_FUNC, cullFunc );
+	this->SubmitCommand < MOAICullFuncEnum::_ >( MOAIDrawingAPIEnum::SET_CULL_FUNC, cullFunc );
 }
 
 //----------------------------------------------------------------//
 void MOAIAbstractDrawingAPI::SetDepthFunc ( MOAIDepthFuncEnum::_ depthFunc ) {
 
-	this->SubmitCommand < MOAIDepthFuncEnum::_  >( MOAIDrawingCmdEnum::SET_DEPTH_FUNC, depthFunc );
+	this->SubmitCommand < MOAIDepthFuncEnum::_  >( MOAIDrawingAPIEnum::SET_DEPTH_FUNC, depthFunc );
 }
 
 //----------------------------------------------------------------//
 void MOAIAbstractDrawingAPI::SetDepthMask ( bool depthMask ) {
 
-	this->SubmitCommand < bool >( MOAIDrawingCmdEnum::SET_DEPTH_MASK, depthMask );
+	this->SubmitCommand < bool >( MOAIDrawingAPIEnum::SET_DEPTH_MASK, depthMask );
 }
 
 //----------------------------------------------------------------//
 void MOAIAbstractDrawingAPI::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 
-	this->SubmitCommand < MOAIFrameBuffer* >( MOAIDrawingCmdEnum::SET_FRAME_BUFFER, frameBuffer );
+	this->SubmitCommand < MOAIFrameBuffer* >( MOAIDrawingAPIEnum::SET_FRAME_BUFFER, frameBuffer );
 	this->RetainObject ( frameBuffer );
 }
 
 //----------------------------------------------------------------//
 void MOAIAbstractDrawingAPI::SetIndexBuffer ( MOAIIndexBuffer* indexBuffer ) {
 
-	this->SubmitCommand < MOAIIndexBuffer* >( MOAIDrawingCmdEnum::SET_INDEX_BUFFER, indexBuffer );
+	this->SubmitCommand < MOAIIndexBuffer* >( MOAIDrawingAPIEnum::SET_INDEX_BUFFER, indexBuffer );
 	this->RetainObject ( indexBuffer );
 }
 
@@ -686,7 +672,7 @@ void MOAIAbstractDrawingAPI::SetMatrix ( u32 matrixID, const ZLMatrix4x4& mtx ) 
 	MOAIDrawingParam::SetMatrix param;
 	param.mMatrixID = matrixID;
 	param.mMatrix = mtx;
-	this->SubmitCommand < MOAIDrawingParam::SetMatrix >( MOAIDrawingCmdEnum::SET_MATRIX, param );
+	this->SubmitCommand < MOAIDrawingParam::SetMatrix >( MOAIDrawingAPIEnum::SET_MATRIX, param );
 }
 
 //----------------------------------------------------------------//
@@ -695,32 +681,32 @@ void MOAIAbstractDrawingAPI::SetMatrixFromTransform ( u32 matrixID, MOAIAbstract
 	MOAIDrawingParam::SetMatrixFromTransform param;
 	param.mMatrixID = matrixID;
 	param.mTransform = &transform;
-	this->SubmitCommand < MOAIDrawingParam::SetMatrixFromTransform >( MOAIDrawingCmdEnum::SET_MATRIX_FROM_TRANSFORM, param );
+	this->SubmitCommand < MOAIDrawingParam::SetMatrixFromTransform >( MOAIDrawingAPIEnum::SET_MATRIX_FROM_TRANSFORM, param );
 	this->RetainObject ( &transform );
 }
 
 //----------------------------------------------------------------//
 void MOAIAbstractDrawingAPI::SetPenColor ( u32 color ) {
 
-	this->SubmitCommand < u32 >( MOAIDrawingCmdEnum::SET_PEN_COLOR, color );
+	this->SubmitCommand < u32 >( MOAIDrawingAPIEnum::SET_PEN_COLOR, color );
 }
 
 //----------------------------------------------------------------//
 void MOAIAbstractDrawingAPI::SetPenWidth ( float width ) {
 
-	this->SubmitCommand < float >( MOAIDrawingCmdEnum::SET_PEN_WIDTH, width );
+	this->SubmitCommand < float >( MOAIDrawingAPIEnum::SET_PEN_WIDTH, width );
 }
 
 //----------------------------------------------------------------//
 void MOAIAbstractDrawingAPI::SetScissorRect ( const ZLRect& rect ) {
 
-	this->SubmitCommand < ZLRect >( MOAIDrawingCmdEnum::SET_SCISSOR_RECT, rect );
+	this->SubmitCommand < ZLRect >( MOAIDrawingAPIEnum::SET_SCISSOR_RECT, rect );
 }
 
 //----------------------------------------------------------------//
 void MOAIAbstractDrawingAPI::SetShader ( MOAIShader* shader ) {
 
-	this->SubmitCommand < MOAIShader* >( MOAIDrawingCmdEnum::SET_SHADER, shader );
+	this->SubmitCommand < MOAIShader* >( MOAIDrawingAPIEnum::SET_SHADER, shader );
 	this->RetainObject ( shader );
 }
 
@@ -730,28 +716,28 @@ void MOAIAbstractDrawingAPI::SetTexture ( MOAITexture* texture, ZLIndex textureU
 	MOAIDrawingParam::SetTexture param;
 	param.mTexture = texture;
 	param.mTextureUnit = textureUnit;
-	this->SubmitCommand < MOAIDrawingParam::SetTexture >( MOAIDrawingCmdEnum::SET_TEXTURE, param );
+	this->SubmitCommand < MOAIDrawingParam::SetTexture >( MOAIDrawingAPIEnum::SET_TEXTURE, param );
 	this->RetainObject ( texture );
 }
 
 //----------------------------------------------------------------//
 void MOAIAbstractDrawingAPI::SetVertexArray ( MOAIVertexArray* vertexArray ) {
 
-	this->SubmitCommand < MOAIVertexArray* >( MOAIDrawingCmdEnum::SET_VERTEX_ARRAY, vertexArray );
+	this->SubmitCommand < MOAIVertexArray* >( MOAIDrawingAPIEnum::SET_VERTEX_ARRAY, vertexArray );
 	this->RetainObject ( vertexArray );
 }
 
 //----------------------------------------------------------------//
 void MOAIAbstractDrawingAPI::SetVertexBuffer ( MOAIVertexBuffer* vertexBuffer ) {
 
-	this->SubmitCommand < MOAIVertexBuffer* >( MOAIDrawingCmdEnum::SET_VERTEX_BUFFER, vertexBuffer );
+	this->SubmitCommand < MOAIVertexBuffer* >( MOAIDrawingAPIEnum::SET_VERTEX_BUFFER, vertexBuffer );
 	this->RetainObject ( vertexBuffer );
 }
 
 //----------------------------------------------------------------//
 void MOAIAbstractDrawingAPI::SetVertexFormat ( MOAIVertexFormat* vertexFormat ) {
 
-	this->SubmitCommand < MOAIVertexFormat* >( MOAIDrawingCmdEnum::SET_VERTEX_FORMAT, vertexFormat );
+	this->SubmitCommand < MOAIVertexFormat* >( MOAIDrawingAPIEnum::SET_VERTEX_FORMAT, vertexFormat );
 	this->RetainObject ( vertexFormat );
 }
 
@@ -761,7 +747,7 @@ void MOAIAbstractDrawingAPI::SetViewProj ( MOAIViewport* viewport, MOAICamera* c
 	MOAIDrawingParam::SetViewProj param;
 	param.mViewport = viewport;
 	param.mCamera = camera;
-	this->SubmitCommand < MOAIDrawingParam::SetViewProj >( MOAIDrawingCmdEnum::SET_VIEW_PROJ, param );
+	this->SubmitCommand < MOAIDrawingParam::SetViewProj >( MOAIDrawingAPIEnum::SET_VIEW_PROJ, param );
 	this->RetainObject ( viewport );
 	this->RetainObject ( camera );
 }
@@ -769,17 +755,17 @@ void MOAIAbstractDrawingAPI::SetViewProj ( MOAIViewport* viewport, MOAICamera* c
 //----------------------------------------------------------------//
 void MOAIAbstractDrawingAPI::SetViewRect ( const ZLRect& rect ) {
 
-	this->SubmitCommand < ZLRect >( MOAIDrawingCmdEnum::SET_VIEW_RECT, rect );
+	this->SubmitCommand < ZLRect >( MOAIDrawingAPIEnum::SET_VIEW_RECT, rect );
 }
 
 //----------------------------------------------------------------//
 void MOAIAbstractDrawingAPI::SetViewRect ( MOAIViewport* viewport ) {
 	
-	this->SubmitCommand < MOAIViewport* >( MOAIDrawingCmdEnum::SET_VIEW_RECT_FROM_VIEWPORT, viewport );
+	this->SubmitCommand < MOAIViewport* >( MOAIDrawingAPIEnum::SET_VIEW_RECT_FROM_VIEWPORT, viewport );
 	this->RetainObject ( viewport );
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractDrawingAPI::SubmitCommand ( MOAIDrawingCmdEnum::_ cmd ) {
+void MOAIAbstractDrawingAPI::SubmitCommand ( MOAIDrawingAPIEnum::_ cmd ) {
 	this->MOAIAbstractDrawingAPI_SubmitCommand ( cmd, NULL, 0 );
 }
