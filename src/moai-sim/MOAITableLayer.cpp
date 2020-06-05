@@ -2,7 +2,6 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAITableLayer.h>
 
 //================================================================//
@@ -83,15 +82,9 @@ void MOAITableLayer::MOAIDrawable_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-
-	gfxMgr.SetFrameBuffer ( this->GetFrameBuffer ());
-	
-	//disable scissor rect for clear
 	gfxMgr.SetScissorRect ();
+	
 	this->ClearSurface ();
 	
 	MOAIAbstractDrawable::Draw ( this->mRenderTable );
-		
-	// restore the frame buffer
-	gfxMgr.SetFrameBuffer ( this->GetFrameBuffer ());
 }

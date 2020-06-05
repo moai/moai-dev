@@ -8,6 +8,7 @@
 #include <moai-gfx-gl/MOAIGfxScriptRetainedGL.h>
 #include <moai-gfx-gl/MOAIImageTextureGL.h>
 #include <moai-gfx-gl/MOAIIndexBufferGL.h>
+#include <moai-gfx-gl/MOAIRenderBatchGL.h>
 #include <moai-gfx-gl/MOAIShaderGL.h>
 #include <moai-gfx-gl/MOAIShaderMgrGL.h>
 #include <moai-gfx-gl/MOAITexture2DGL.h>
@@ -329,6 +330,12 @@ MOAIImageTexture* MOAIGfxMgrGL::MOAIGfxMgr_CreateImageTexture () {
 MOAIIndexBuffer* MOAIGfxMgrGL::MOAIGfxMgr_CreateIndexBuffer () {
 
 	return new MOAIIndexBufferGL ();
+}
+
+//----------------------------------------------------------------//
+MOAIRenderBatch* MOAIGfxMgrGL::MOAIGfxMgr_CreateRenderBatch () {
+
+	return new MOAIRenderBatchGL ();
 }
 
 //----------------------------------------------------------------//

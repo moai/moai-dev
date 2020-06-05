@@ -18,6 +18,7 @@
 #include <moai-gfx/MOAIAbstractUniformBuffer.h>
 #include <moai-gfx/MOAIBlendMode.h>
 #include <moai-gfx/MOAICamera.h>
+#include <moai-gfx/MOAIColor.h>
 #include <moai-gfx/MOAIFrameBuffer.h>
 #include <moai-gfx/MOAIGfxBuffer.h>
 #include <moai-gfx/MOAIDrawingAPI.h>
@@ -42,7 +43,11 @@
 #include <moai-gfx/MOAIImageTexture.h>
 #include <moai-gfx/MOAIIndexBuffer.h>
 #include <moai-gfx/MOAIMatrix.h>
+#include <moai-gfx/MOAIQuadBrush.h>
+#include <moai-gfx/MOAIRenderBatch.h>
+#include <moai-gfx/MOAIScissorRect.h>
 #include <moai-gfx/MOAIShader.h>
+#include <moai-gfx/MOAISurfaceClearColor.h>
 #include <moai-gfx/MOAITexture.h>
 #include <moai-gfx/MOAITexture2D.h>
 #include <moai-gfx/MOAITransform.h>

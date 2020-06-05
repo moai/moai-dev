@@ -4,7 +4,6 @@
 #ifndef	MOAIHASDECK_H
 #define	MOAIHASDECK_H
 
-#include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIPartitionHull.h>
 #include <moai-core/MOAILuaSharedPtr.h>
 

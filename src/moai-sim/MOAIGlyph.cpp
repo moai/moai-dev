@@ -5,7 +5,6 @@
 #include <moai-sim/MOAIGlyph.h>
 #include <moai-sim/MOAIGlyphSet.h>
 #include <moai-sim/MOAIDynamicGlyphCachePage.h>
-#include <moai-sim/MOAIQuadBrush.h>
 
 //================================================================//
 // MOAIGlyph

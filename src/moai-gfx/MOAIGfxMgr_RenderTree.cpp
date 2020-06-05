@@ -5,6 +5,7 @@
 #include <moai-gfx/MOAIAbstractDrawable.h>
 #include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIGfxMgr_RenderTree.h>
+#include <moai-gfx/MOAIRenderBatch.h>
 
 //================================================================//
 // lua
@@ -41,6 +42,10 @@ int MOAIGfxMgr_RenderTree::_setRender ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIGfxMgr_RenderTree::AffirmDefaultBatch () {
+}
+
+//----------------------------------------------------------------//
 MOAIGfxMgr_RenderTree::MOAIGfxMgr_RenderTree () :
 	mRenderCounter ( 0 ),
 	mRenderDuration ( 1.0 / 60.0 ),
@@ -54,14 +59,28 @@ MOAIGfxMgr_RenderTree::~MOAIGfxMgr_RenderTree () {
 //----------------------------------------------------------------//
 void MOAIGfxMgr_RenderTree::PushDrawable ( MOAILuaObject* drawable ) {
 
+	if ( this->mRenderRoot ) {
+		this->PushDrawable ( this->mRenderRoot, drawable );
+	}
+	else {
+		if ( !this->mRenderBatch ) {
+			this->mRenderBatch = MOAIGfxMgr::Get ().CreateRenderBatch ();
+		}
+		this->PushDrawable ( this->mRenderBatch->mRenderRoot, drawable );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxMgr_RenderTree::PushDrawable ( MOAILuaStrongRef& renderRoot, MOAILuaObject* drawable ) {
+
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	
-	state.Push ( this->mRenderRoot );
+
+	state.Push ( renderRoot );
 	
 	if ( !state.IsType ( -1, LUA_TTABLE )) {
 		state.Pop ();
 		lua_newtable ( state );
-		this->mRenderRoot.SetRef ( state, -1 );
+		renderRoot.SetRef ( state, -1 );
 	}
 	
 	int top = ( int )state.GetTableSize ( -1 );

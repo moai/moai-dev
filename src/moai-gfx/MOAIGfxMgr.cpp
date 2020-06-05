@@ -63,6 +63,12 @@ MOAIIndexBuffer* MOAIGfxMgr::CreateIndexBuffer () {
 }
 
 //----------------------------------------------------------------//
+MOAIRenderBatch* MOAIGfxMgr::CreateRenderBatch () {
+
+	return this->MOAIGfxMgr_CreateRenderBatch ();
+}
+
+//----------------------------------------------------------------//
 MOAITexture2D* MOAIGfxMgr::CreateTexture2D () {
 
 	return this->MOAIGfxMgr_CreateTexture2D ();

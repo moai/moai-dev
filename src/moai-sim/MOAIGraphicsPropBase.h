@@ -5,7 +5,6 @@
 #define	MOAIGRAPHICSPROPBASE_H
 
 #include <moai-sim/MOAIAbstractProp.h>
-#include <moai-sim/MOAIColor.h>
 #include <moai-gfx/MOAITransform.h>
 
 class MOAIScissorRect;

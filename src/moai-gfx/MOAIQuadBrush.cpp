@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIQuadBrush.h>
+#include <moai-gfx/MOAIQuadBrush.h>
 
 //================================================================//
 // MOAIQuadBrush

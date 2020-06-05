@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIScissorRect.h>
+#include <moai-gfx/MOAIScissorRect.h>
 
 //================================================================//
 // lua

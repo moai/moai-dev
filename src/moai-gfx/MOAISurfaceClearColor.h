@@ -1,41 +1,39 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIABSTRACTLAYER_H
-#define	MOAIABSTRACTLAYER_H
+#ifndef	MOAISURFACECLEARCOLOR_H
+#define	MOAISURFACECLEARCOLOR_H
 
 class MOAIColor;
-class MOAIFrameBuffer;
-class MOAIPartition;
-class MOAIFrameBuffer;
 
 //================================================================//
-// MOAIAbstractLayer
+// MOAISurfaceClearColor
 //================================================================//
-class MOAIAbstractLayer :
-	public virtual MOAILuaObject,
-	public virtual MOAIAbstractDrawable,
-	public virtual MOAISurfaceClearColor {
-private:
+class MOAISurfaceClearColor :
+	public virtual MOAILuaObject {
+protected:
 
 	MOAI_LUA_OBJECT_VISITOR_FRIEND
 
-	//----------------------------------------------------------------//
-	static int		_draw						( lua_State* L );
-	static int		_pushRenderPass				( lua_State* L );
+	u32								mClearFlags;
+	u32								mClearColor;
+	MOAILuaSharedPtr < MOAIColor >	mClearColorNode;
 
-protected:
+	//----------------------------------------------------------------//
+	static int		_setClearColor				( lua_State* L );
+	static int		_setClearDepth				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void			_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
 	void			_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAIDrawable_DrawDebug		( int subPrimID );
 
 public:
-	
+
 	//----------------------------------------------------------------//
-					MOAIAbstractLayer			();
-					~MOAIAbstractLayer			();
+	void			ClearSurface				() const;
+					MOAISurfaceClearColor		();
+					~MOAISurfaceClearColor		();
+	void			SetClearColor				( MOAIColor* color );
 };
 
 #endif

@@ -13,6 +13,7 @@
 
 class MOAIGfxScriptRetained;
 class MOAIImageTexture;
+class MOAIRenderBatch;
 class MOAITexture2D;
 
 //================================================================//
@@ -41,6 +42,7 @@ protected:
 	virtual MOAIGfxScriptRetained*	MOAIGfxMgr_CreateGfxScriptRetained		() = 0;
 	virtual MOAIImageTexture*		MOAIGfxMgr_CreateImageTexture			() = 0;
 	virtual MOAIIndexBuffer*		MOAIGfxMgr_CreateIndexBuffer			() = 0;
+	virtual MOAIRenderBatch*		MOAIGfxMgr_CreateRenderBatch			() = 0;
 	virtual MOAITexture2D*			MOAIGfxMgr_CreateTexture2D				() = 0;
 	virtual MOAIVertexArray*		MOAIGfxMgr_CreateVertexArray			() = 0;
 	virtual MOAIVertexBuffer*		MOAIGfxMgr_CreateVertexBuffer			() = 0;
@@ -73,6 +75,7 @@ public:
 	MOAIGfxScriptRetained*		CreateGfxScriptRetained		();
 	MOAIImageTexture*			CreateImageTexture			();
 	MOAIIndexBuffer*			CreateIndexBuffer			();
+	MOAIRenderBatch*			CreateRenderBatch			();
 	MOAITexture2D*				CreateTexture2D				();
 	MOAIVertexArray*			CreateVertexArray			();
 	MOAIVertexBuffer*			CreateVertexBuffer			();

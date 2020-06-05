@@ -2,8 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIColor.h>
-#include <moai-sim/MOAISim.h>
+#include <moai-gfx/MOAIColor.h>
 
 //================================================================//
 // lua

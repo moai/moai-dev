@@ -5,7 +5,7 @@
 #include <moai-gfx/MOAIFrameBuffer.h>
 
 //================================================================//
-// ZLShaderGL
+// MOAIFrameBuffer
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -13,8 +13,7 @@ MOAIFrameBuffer::MOAIFrameBuffer () :
 	mBufferWidth ( 0 ),
 	mBufferHeight ( 0 ),
 	mBufferScale ( 1.0 ),
-	mLandscape ( false ),
-	mNeedsClear ( true ) {
+	mLandscape ( false ) {
 	
 	RTTI_BEGIN ( MOAIFrameBuffer )
 		RTTI_EXTEND ( MOAILuaObject )
@@ -23,18 +22,6 @@ MOAIFrameBuffer::MOAIFrameBuffer () :
 
 //----------------------------------------------------------------//
 MOAIFrameBuffer::~MOAIFrameBuffer () {
-}
-
-//----------------------------------------------------------------//
-bool MOAIFrameBuffer::NeedsClear () const {
-
-	return this->mNeedsClear;
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBuffer::NeedsClear ( bool needsClear ) {
-
-	this->mNeedsClear = needsClear;
 }
 
 //----------------------------------------------------------------//

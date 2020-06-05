@@ -4,7 +4,6 @@
 #include "pch.h"
 #include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIFont.h>
-#include <moai-sim/MOAIQuadBrush.h>
 
 //================================================================//
 // text drawing stuff

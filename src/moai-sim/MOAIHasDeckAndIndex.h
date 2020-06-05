@@ -4,7 +4,6 @@
 #ifndef	MOAIHASDECKANDINDEX_H
 #define	MOAIHASDECKANDINDEX_H
 
-#include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAIHasDeck.h>
 #include <moai-sim/MOAIPartitionHull.h>
 

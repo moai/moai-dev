@@ -21,7 +21,6 @@
 #include <moai-sim/MOAICollisionProp.h>
 #include <moai-sim/MOAICollisionShape.h>
 #include <moai-sim/MOAICollisionWorld.h>
-#include <moai-sim/MOAIColor.h>
 #include <moai-sim/MOAICompassSensor.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIDeck.h>
@@ -83,9 +82,7 @@
 #include <moai-sim/MOAIPinTransform.h>
 #include <moai-sim/MOAIPointerSensor.h>
 #include <moai-sim/MOAIProjectionProp.h>
-#include <moai-sim/MOAIQuadBrush.h>
 #include <moai-sim/MOAIRegion.h>
-#include <moai-sim/MOAIScissorRect.h>
 #include <moai-sim/MOAISelectionMesh.h>
 #include <moai-sim/MOAISensor.h>
 #include <moai-sim/MOAISim.h>

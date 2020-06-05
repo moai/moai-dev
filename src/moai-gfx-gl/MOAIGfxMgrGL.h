@@ -66,6 +66,7 @@ protected:
 	MOAIGfxScriptRetained*				MOAIGfxMgr_CreateGfxScriptRetained				();
 	MOAIImageTexture*					MOAIGfxMgr_CreateImageTexture					();
 	MOAIIndexBuffer*					MOAIGfxMgr_CreateIndexBuffer					();
+	MOAIRenderBatch*					MOAIGfxMgr_CreateRenderBatch					();
 	MOAITexture2D*						MOAIGfxMgr_CreateTexture2D						();
 	MOAIVertexArray*					MOAIGfxMgr_CreateVertexArray					();
 	MOAIVertexBuffer*					MOAIGfxMgr_CreateVertexBuffer					();

@@ -16,8 +16,6 @@ protected:
 	float				mBufferScale;
 	bool				mLandscape;
 
-	bool				mNeedsClear;
-
 	//----------------------------------------------------------------//
 
 public:
@@ -30,8 +28,6 @@ public:
 	//----------------------------------------------------------------//
 					MOAIFrameBuffer				();
 					~MOAIFrameBuffer			();
-	bool			NeedsClear					() const;
-	void			NeedsClear					( bool needsClear );
 	void			SetBufferSize				( u32 width, u32 height );
 	ZLRect			WndRectToDevice 			( ZLRect rect ) const;
 };

@@ -4,9 +4,6 @@
 #ifndef	MOAICOLOR_H
 #define	MOAICOLOR_H
 
-class MOAIDeck;
-class MOAIPartitionViewLayer;
-
 //================================================================//
 // MOAIColor
 //================================================================//

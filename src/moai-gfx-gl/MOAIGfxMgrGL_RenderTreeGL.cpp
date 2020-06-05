@@ -31,28 +31,20 @@ void MOAIGfxMgrGL_RenderTreeGL::MOAIGfxMgr_RenderTree_Render () {
 	gfxMgr.ResetDrawingAPIs ();
 	gfxMgr.Update ();
 
-	MOAIFrameBufferGL* frameBuffer = MOAICast < MOAIFrameBufferGL >( gfxMgr.GetDefaultFrameBuffer ());
-	assert ( frameBuffer );
-	frameBuffer->NeedsClear ( true );
-
-	// Measure performance
-	double startTime = ZLDeviceTime::GetTimeInSeconds ();
-	
 	ZLGfx* gfx = gfxMgr.SelectDrawingAPI ( MOAIGfxMgrGL_DisplayListClerkGL::DRAWING_QUEUE );
 	if ( !gfx ) return;
 
 	ZGL_COMMENT ( *gfx, "RENDER MGR RENDER" );
 
-	if ( this->mRenderRoot ) {
+//	MOAIFrameBufferGL* frameBuffer = MOAICast < MOAIFrameBufferGL >( gfxMgr.GetDefaultFrameBuffer ());
+//	assert ( frameBuffer );
+//	frameBuffer->NeedsClear ( true );
+
+	// Measure performance
+	double startTime = ZLDeviceTime::GetTimeInSeconds ();
 	
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		state.Push ( this->mRenderRoot );
+	this->mRenderBatch->Render ();
 		
-		MOAIAbstractDrawable::Draw ( state, -1 );
-	}
-	
-	this->mRenderCounter++;
-	
 	// Measure performance
 	double endTime = ZLDeviceTime::GetTimeInSeconds ();
 	this->mRenderDuration = endTime - startTime;

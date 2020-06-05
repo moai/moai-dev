@@ -471,9 +471,7 @@ void MOAIAbstractViewLayer::MOAIDrawable_Draw ( int subPrimID ) {
 	if ( this->IsClear ()) return;
 	
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	
-	gfxMgr.SetFrameBuffer ( this->GetFrameBuffer ());
-	
+		
 	MOAIViewport& viewport = *this->mViewport;
 	ZLRect viewportRect = viewport;
 
@@ -497,7 +495,6 @@ void MOAIAbstractViewLayer::MOAIDrawable_Draw ( int subPrimID ) {
 //			this->mCamera->DrawDebug ();
 //		}
 	}
-	gfxMgr.SetFrameBuffer ( this->GetFrameBuffer ());
 }
 
 //----------------------------------------------------------------//

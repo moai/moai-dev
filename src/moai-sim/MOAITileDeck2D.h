@@ -5,7 +5,6 @@
 #define	MOAITILEDECK2D_H
 
 #include <moai-sim/MOAIDeck.h>
-#include <moai-sim/MOAIQuadBrush.h>
 
 //================================================================//
 // MOAITileDeck2D

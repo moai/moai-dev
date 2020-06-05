@@ -112,7 +112,6 @@ void MOAIFrameBufferTextureGL::MOAIFrameBufferGL_AffirmBuffers () {
 //----------------------------------------------------------------//
 void MOAIFrameBufferTextureGL::MOAIGfxResourceGL_OnGPUBind () {
 
-	this->NeedsClear ( true );
 	MOAITextureGL::MOAIGfxResourceGL_OnGPUBind ();
 }
 

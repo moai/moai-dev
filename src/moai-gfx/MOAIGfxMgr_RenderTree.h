@@ -4,6 +4,8 @@
 #ifndef	MOAIGFXMGR_RENDERTREE_H
 #define	MOAIGFXMGR_RENDERTREE_H
 
+class MOAIRenderBatch;
+
 //================================================================//
 // MOAIGfxMgr_RenderTree
 //================================================================//
@@ -15,7 +17,8 @@ protected:
 	double			mRenderDuration;
 	double			mRenderTime;
 	
-	MOAILuaStrongRef	mRenderRoot;
+	ZLStrongPtr < MOAIRenderBatch >		mRenderBatch; // this is the default batch
+	MOAILuaStrongRef					mRenderRoot; // this is for user-configured batches
 	
 	//----------------------------------------------------------------//
 	static int		_getRenderCount				( lua_State* L );
@@ -23,6 +26,8 @@ protected:
 	static int		_setRender					( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void			AffirmDefaultBatch			();
+	void			PushDrawable				( MOAILuaStrongRef& renderRoot, MOAILuaObject* drawable );
 	void			RenderTable					( MOAILuaState& state, int idx );
 
 	//----------------------------------------------------------------//
@@ -39,7 +44,7 @@ public:
 	//----------------------------------------------------------------//
 					MOAIGfxMgr_RenderTree		();
 	virtual			~MOAIGfxMgr_RenderTree		();
-	void			PushDrawable				( MOAILuaObject* drawable );
+	void			PushDrawable				( MOAILuaObject* drawable ); // goes into the default batch, if it exists
 	void			Render						();
 };
 

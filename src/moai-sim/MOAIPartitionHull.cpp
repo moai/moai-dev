@@ -10,7 +10,6 @@
 #include <moai-sim/MOAIPartitionHolder.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAIPartitionHull.h>
-#include <moai-sim/MOAIScissorRect.h>
 #include <moai-sim/MOAISurfaceSampler2D.h>
 
 //================================================================//
