@@ -42,6 +42,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIFrameBufferVK )
 	
 	//----------------------------------------------------------------//
+	MOAIRenderPassVK*				GetRenderPass				();
 									MOAIFrameBufferVK			();
 									~MOAIFrameBufferVK			();
 	void							ReserveAttachments			( ZLSize count );

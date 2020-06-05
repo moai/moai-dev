@@ -45,6 +45,12 @@ MOAIVertexFormat* MOAIGfxMgr::AffirmVertexFormat ( MOAILuaState& state, int idx 
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxMgr::BeginFrame () {
+
+	return this->MOAIGfxMgr_BeginFrame ();
+}
+
+//----------------------------------------------------------------//
 MOAIGfxScriptRetained* MOAIGfxMgr::CreateGfxScriptRetained () {
 
 	return this->MOAIGfxMgr_CreateGfxScriptRetained ();
@@ -90,6 +96,12 @@ MOAIVertexBuffer* MOAIGfxMgr::CreateVertexBuffer () {
 MOAIVertexFormat* MOAIGfxMgr::CreateVertexFormat () {
 
 	return this->MOAIGfxMgr_CreateVertexFormat ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxMgr::EndFrame () {
+
+	return this->MOAIGfxMgr_EndFrame ();
 }
 
 //----------------------------------------------------------------//

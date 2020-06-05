@@ -28,7 +28,7 @@ protected:
 	//----------------------------------------------------------------//
 	void			AffirmDefaultBatch			();
 	void			PushDrawable				( MOAILuaStrongRef& renderRoot, MOAILuaObject* drawable );
-	void			RenderTable					( MOAILuaState& state, int idx );
+	void			RenderBatchOrRoot			();
 
 	//----------------------------------------------------------------//
 	void			_RegisterLuaClass				( RTTIVisitorHistory& history, MOAILuaState& state );

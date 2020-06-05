@@ -12,6 +12,7 @@
 #include <moai-gfx-vk/MOAIImageTextureVK.h>
 #include <moai-gfx-vk/MOAIIndexBufferVK.h>
 #include <moai-gfx-vk/MOAIOneTriVK.h>
+#include <moai-gfx-vk/MOAIRenderBatchVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAIShaderMgrVK.h>
 #include <moai-gfx-vk/MOAITexture2DVK.h>
@@ -138,27 +139,35 @@ void MOAIGfxMgrVK::AffirmRenderPass () {
 
 	renderPass.ReserveAttachments ( 2 );
 
-	renderPass.SetAttachment ( 0, MOAIGfxStructVK::attachmentDescription (
-		this->mSwapChain.GetFormat (),
-		VK_SAMPLE_COUNT_1_BIT,
-		VK_ATTACHMENT_LOAD_OP_CLEAR,
-		VK_ATTACHMENT_STORE_OP_STORE,
-		VK_ATTACHMENT_LOAD_OP_DONT_CARE,
-		VK_ATTACHMENT_STORE_OP_DONT_CARE,
-		VK_IMAGE_LAYOUT_UNDEFINED,
-		VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
-	));
+	renderPass.SetAttachment (
+		0,
+		MOAIGfxStructVK::attachmentDescription (
+			this->mSwapChain.GetFormat (),
+			VK_SAMPLE_COUNT_1_BIT,
+			VK_ATTACHMENT_LOAD_OP_CLEAR,
+			VK_ATTACHMENT_STORE_OP_STORE,
+			VK_ATTACHMENT_LOAD_OP_DONT_CARE,
+			VK_ATTACHMENT_STORE_OP_DONT_CARE,
+			VK_IMAGE_LAYOUT_UNDEFINED,
+			VK_IMAGE_LAYOUT_PRESENT_SRC_KHR
+		),
+		MOAIRenderPassVK::CLEAR_COLOR
+	);
 
-	renderPass.SetAttachment ( 1, MOAIGfxStructVK::attachmentDescription (
-		this->mPhysicalDevice.mDepthFormat,
-		VK_SAMPLE_COUNT_1_BIT,
-		VK_ATTACHMENT_LOAD_OP_CLEAR,
-		VK_ATTACHMENT_STORE_OP_STORE,
-		VK_ATTACHMENT_LOAD_OP_CLEAR,
-		VK_ATTACHMENT_STORE_OP_DONT_CARE,
-		VK_IMAGE_LAYOUT_UNDEFINED,
-		VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL
-	));
+	renderPass.SetAttachment (
+		1,
+		MOAIGfxStructVK::attachmentDescription (
+			this->mPhysicalDevice.mDepthFormat,
+			VK_SAMPLE_COUNT_1_BIT,
+			VK_ATTACHMENT_LOAD_OP_CLEAR,
+			VK_ATTACHMENT_STORE_OP_STORE,
+			VK_ATTACHMENT_LOAD_OP_CLEAR,
+			VK_ATTACHMENT_STORE_OP_DONT_CARE,
+			VK_IMAGE_LAYOUT_UNDEFINED,
+			VK_IMAGE_LAYOUT_DEPTH_STENCIL_ATTACHMENT_OPTIMAL
+		),
+		MOAIRenderPassVK::CLEAR_DEPTH_STENCIL
+	);
 
 	renderPass.ReserveReferenceArrays ( 2 );
 	renderPass.ReserveReferences ( 0, 1 );
@@ -195,19 +204,6 @@ void MOAIGfxMgrVK::AffirmRenderPass () {
 	));
 
 	renderPass.AffirmRenderPass ( this->mLogicalDevice );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrVK::BeginFrame () {
-
-	VkResult result = this->mSwapChain.AcquireNextImage ( this->mPresentSemaphore );
-	
-    if (( result == VK_ERROR_OUT_OF_DATE_KHR ) || ( result == VK_SUBOPTIMAL_KHR )) {
-//        windowResize ();
-    }
-    else {
-        VK_CHECK_RESULT ( result );
-    }
 }
 
 ////----------------------------------------------------------------//
@@ -278,27 +274,6 @@ void MOAIGfxMgrVK::DetectContext ( u32 width, u32 height, bool enableValidation 
 //	MOAICast < MOAIFrameBufferVK >( this->GetDefaultFrameBuffer ())->DetectGLFrameBufferID ( *this );
 //	this->SetFrameBuffer ();
 //}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrVK::FinishFrame () {
-
-	MOAIQueueVK& queue = this->GetCommandBuffer ().GetDependency < MOAIQueueVK >();
-    VkResult result = this->mSwapChain.QueuePresent ( queue, this->mRenderSemaphore );
-    
-    if ( !(( result == VK_SUCCESS ) || ( result == VK_SUBOPTIMAL_KHR ))) {
-        if ( result == VK_ERROR_OUT_OF_DATE_KHR ) {
-            // Swap chain is no longer compatible with the surface and needs to be recreated
-//            windowResize();
-            return;
-        } else {
-            VK_CHECK_RESULT ( result );
-        }
-    }
-    VK_CHECK_RESULT ( queue.WaitIdle ());
-	
-//	this->UnbindAll ();
-	this->Reset ();
-}
 
 //----------------------------------------------------------------//
 MOAIRenderPassVK& MOAIGfxMgrVK::GetRenderPass () {
@@ -514,6 +489,20 @@ MOAITexture* MOAIGfxMgrVK::MOAIGfxMgr_AffirmTexture ( MOAILuaState& state, int i
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxMgrVK::MOAIGfxMgr_BeginFrame () {
+
+	VkResult result = this->mSwapChain.AcquireNextImage ( this->mPresentSemaphore );
+	
+	if (( result == VK_ERROR_OUT_OF_DATE_KHR ) || ( result == VK_SUBOPTIMAL_KHR )) {
+//        windowResize ();
+	}
+	else {
+		VK_CHECK_RESULT ( result );
+	}
+	this->GetCommandBuffer ().Begin ();
+}
+
+//----------------------------------------------------------------//
 MOAIGfxScriptRetained* MOAIGfxMgrVK::MOAIGfxMgr_CreateGfxScriptRetained () {
 
 	return new MOAIGfxScriptRetainedVK ();
@@ -532,6 +521,13 @@ MOAIIndexBuffer* MOAIGfxMgrVK::MOAIGfxMgr_CreateIndexBuffer () {
 	buffer->SetDependency < MOAILogicalDeviceVK >( this->mLogicalDevice );
 	return buffer;
 }
+
+//----------------------------------------------------------------//
+MOAIRenderBatch* MOAIGfxMgrVK::MOAIGfxMgr_CreateRenderBatch () {
+
+	return new MOAIRenderBatchVK ();
+}
+
 
 //----------------------------------------------------------------//
 MOAITexture2D* MOAIGfxMgrVK::MOAIGfxMgr_CreateTexture2D () {
@@ -557,6 +553,34 @@ MOAIVertexBuffer* MOAIGfxMgrVK::MOAIGfxMgr_CreateVertexBuffer () {
 MOAIVertexFormat* MOAIGfxMgrVK::MOAIGfxMgr_CreateVertexFormat () {
 
 	return new MOAIVertexFormatVK ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxMgrVK::MOAIGfxMgr_EndFrame () {
+
+	MOAICommandBufferVK& commandBuffer = this->GetCommandBuffer ();
+
+	commandBuffer.End ();
+	commandBuffer.Submit ( this->GetPresentSemaphore (), this->GetRenderSemaphore ());
+
+	MOAIQueueVK& queue = this->GetCommandBuffer ().GetDependency < MOAIQueueVK >();
+	VkResult result = this->mSwapChain.QueuePresent ( queue, this->mRenderSemaphore );
+	
+	if ( !(( result == VK_SUCCESS ) || ( result == VK_SUBOPTIMAL_KHR ))) {
+		if ( result == VK_ERROR_OUT_OF_DATE_KHR ) {
+			// Swap chain is no longer compatible with the surface and needs to be recreated
+//            windowResize();
+			return;
+		} else {
+			VK_CHECK_RESULT ( result );
+		}
+	}
+	VK_CHECK_RESULT ( queue.WaitIdle ());
+	
+//	this->UnbindAll ();
+	this->Reset ();
+	
+	this->UpdatePipelineCache ();
 }
 
 //----------------------------------------------------------------//

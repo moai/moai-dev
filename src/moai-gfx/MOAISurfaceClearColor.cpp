@@ -97,20 +97,20 @@ void MOAISurfaceClearColor::ClearSurface () const {
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	if ( this->mClearFlags & MOAIClearFlagsEnum::COLOR_BUFFER_BIT ) {
-	
-		ZLColorVec clearColor;
-		
-		if ( this->mClearColorNode ) {
-			clearColor = this->mClearColorNode->GetColorTrait ();
-		}
-		else {
-			clearColor.SetRGBA ( this->mClearColor );
-		}
-		gfxMgr.SetClearColor ( clearColor );
+		ZLColorVec colorVec = this->GetClearColorVec ();
+		gfxMgr.SetClearColor ( colorVec );
 	}
-	
 	gfxMgr.SetClearFlags ( this->mClearFlags );
 	gfxMgr.ClearSurface ();
+}
+
+//----------------------------------------------------------------//
+ZLColorVec MOAISurfaceClearColor::GetClearColorVec () const {
+
+	if ( this->mClearColorNode ) {
+		return this->mClearColorNode->GetColorTrait ();
+	}
+	return ZLColorVec ( this->mClearColor );
 }
 
 //----------------------------------------------------------------//

@@ -107,13 +107,16 @@ protected:
 	//----------------------------------------------------------------//
 	MOAIShader*						MOAIGfxMgr_AffirmShader						( MOAILuaState& state, int idx ) const;
 	MOAITexture*					MOAIGfxMgr_AffirmTexture					( MOAILuaState& state, int idx ) const;
+	void							MOAIGfxMgr_BeginFrame						();
 	MOAIGfxScriptRetained*			MOAIGfxMgr_CreateGfxScriptRetained			();
 	MOAIImageTexture*				MOAIGfxMgr_CreateImageTexture				();
 	MOAIIndexBuffer*				MOAIGfxMgr_CreateIndexBuffer				();
+	MOAIRenderBatch*				MOAIGfxMgr_CreateRenderBatch				();
 	MOAITexture2D*					MOAIGfxMgr_CreateTexture2D					();
 	MOAIVertexArray*				MOAIGfxMgr_CreateVertexArray				();
 	MOAIVertexBuffer*				MOAIGfxMgr_CreateVertexBuffer				();
 	MOAIVertexFormat*				MOAIGfxMgr_CreateVertexFormat				();
+	void							MOAIGfxMgr_EndFrame							();
 	MOAIShader*						MOAIGfxMgr_GetShaderPreset					( MOAIShaderPresetEnum preset ) const;
 	size_t							MOAIGfxMgr_GetTextureMemoryUsage			() const;
 	void							MOAIGfxMgr_PopState							();
@@ -147,12 +150,10 @@ public:
 	GET_SET ( HostGetInstanceExtensionsFunc, HostGetInstanceExtensionsFunc, mHostGetInstanceExtensionsFunc );
 
 	//----------------------------------------------------------------//
-	void					BeginFrame					();
 //	void					Clear						();
 //	void					ClearErrors					();
 	void					DetectContext				( u32 width, u32 height, bool enableValidation );
 //	void					DetectFramebuffer			();
-	void					FinishFrame					();
 	MOAIRenderPassVK&		GetRenderPass				();
 	MOAIShaderVK*			GetShaderPresetVK			( MOAIShaderPresetEnum preset ) const;
 	MOAIVertexFormatVK*		GetVertexFormatPresetVK		( MOAIVertexFormatPresetEnum preset ) const;

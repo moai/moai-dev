@@ -63,6 +63,7 @@ protected:
 	void								_RegisterLuaClass								( RTTIVisitorHistory& history, MOAILuaState& state );
 	MOAIShader*							MOAIGfxMgr_AffirmShader							( MOAILuaState& state, int idx ) const;
 	MOAITexture*						MOAIGfxMgr_AffirmTexture						( MOAILuaState& state, int idx ) const;
+	void								MOAIGfxMgr_BeginFrame							();
 	MOAIGfxScriptRetained*				MOAIGfxMgr_CreateGfxScriptRetained				();
 	MOAIImageTexture*					MOAIGfxMgr_CreateImageTexture					();
 	MOAIIndexBuffer*					MOAIGfxMgr_CreateIndexBuffer					();
@@ -71,6 +72,7 @@ protected:
 	MOAIVertexArray*					MOAIGfxMgr_CreateVertexArray					();
 	MOAIVertexBuffer*					MOAIGfxMgr_CreateVertexBuffer					();
 	MOAIVertexFormat*					MOAIGfxMgr_CreateVertexFormat					();
+	void								MOAIGfxMgr_EndFrame								();
 	MOAIShader*							MOAIGfxMgr_GetShaderPreset						( MOAIShaderPresetEnum preset ) const;
 	size_t								MOAIGfxMgr_GetTextureMemoryUsage				() const;
 	void								MOAIGfxMgr_PopState								();
@@ -98,7 +100,6 @@ public:
 	void					ClearErrors					();
 	void					DetectContext				();
 	void					DetectFramebuffer			();
-	void					FinishFrame					();
 	u32						LogErrors					();
 							MOAIGfxMgrGL				();
 							~MOAIGfxMgrGL				();

@@ -27,28 +27,12 @@ MOAIGfxMgrGL_RenderTreeGL::~MOAIGfxMgrGL_RenderTreeGL () {
 void MOAIGfxMgrGL_RenderTreeGL::MOAIGfxMgr_RenderTree_Render () {
 
 	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
-
-	gfxMgr.ResetDrawingAPIs ();
-	gfxMgr.Update ();
-
 	ZLGfx* gfx = gfxMgr.SelectDrawingAPI ( MOAIGfxMgrGL_DisplayListClerkGL::DRAWING_QUEUE );
 	if ( !gfx ) return;
 
 	ZGL_COMMENT ( *gfx, "RENDER MGR RENDER" );
 
-//	MOAIFrameBufferGL* frameBuffer = MOAICast < MOAIFrameBufferGL >( gfxMgr.GetDefaultFrameBuffer ());
-//	assert ( frameBuffer );
-//	frameBuffer->NeedsClear ( true );
-
-	// Measure performance
-	double startTime = ZLDeviceTime::GetTimeInSeconds ();
-	
-	this->mRenderBatch->Render ();
+	this->RenderBatchOrRoot ();
 		
-	// Measure performance
-	double endTime = ZLDeviceTime::GetTimeInSeconds ();
-	this->mRenderDuration = endTime - startTime;
-	this->mRenderTime += this->mRenderDuration;
-	
-	gfxMgr.FinishFrame ();
+	gfxMgr.FlushToGPU (); // TODO: need to do this here?
 }

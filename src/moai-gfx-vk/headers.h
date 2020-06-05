@@ -32,6 +32,7 @@
 #include <moai-gfx-vk/MOAIOneTriVK.h>
 #include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
 #include <moai-gfx-vk/MOAIPipelineSnapshotVK.h>
+#include <moai-gfx-vk/MOAIRenderBatchVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAIShaderMgrVK.h>
 #include <moai-gfx-vk/MOAIShaderProgramVK.h>

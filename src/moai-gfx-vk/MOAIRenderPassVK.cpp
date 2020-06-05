@@ -41,6 +41,18 @@ void MOAIRenderPassVK::AffirmRenderPass ( MOAILogicalDeviceVK& logicalDevice ) {
 }
 
 //----------------------------------------------------------------//
+ZLSize MOAIRenderPassVK::CountAttachments () const {
+
+	return this->mDescription->mAttachments.Size ();
+}
+
+//----------------------------------------------------------------//
+u32 MOAIRenderPassVK::GetAttachmentClearType ( ZLIndex index ) const {
+
+	return this->mDescription->mClearTypes [ index ];
+}
+
+//----------------------------------------------------------------//
 MOAIRenderPassVK::MOAIRenderPassVK () :
 	mDescription ( NULL ),
 	mRenderPass ( VK_NULL_HANDLE )  {
@@ -57,6 +69,7 @@ void MOAIRenderPassVK::ReserveAttachments ( ZLSize count ) {
 
 	this->AffirmDescription ();
 	this->mDescription->mAttachments.Init ( count );
+	this->mDescription->mClearTypes.Init ( count );
 }
 
 //----------------------------------------------------------------//
@@ -102,10 +115,11 @@ void MOAIRenderPassVK::ReserveSubpasses ( ZLSize count ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIRenderPassVK::SetAttachment ( ZLIndex index, const VkAttachmentDescription& description ) {
+void MOAIRenderPassVK::SetAttachment ( ZLIndex index, const VkAttachmentDescription& description, u32 clearType ) {
 
 	assert ( this->mDescription );
 	this->mDescription->mAttachments [ index ] = description;
+	this->mDescription->mClearTypes [ index ] = clearType;
 }
 
 //----------------------------------------------------------------//

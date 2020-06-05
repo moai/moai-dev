@@ -90,7 +90,33 @@ void MOAIGfxMgr_RenderTree::PushDrawable ( MOAILuaStrongRef& renderRoot, MOAILua
 //----------------------------------------------------------------//
 void MOAIGfxMgr_RenderTree::Render () {
 
+	// Measure performance
+	double startTime = ZLDeviceTime::GetTimeInSeconds ();
+
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	gfxMgr.BeginFrame ();
 	this->MOAIGfxMgr_RenderTree_Render ();
+	gfxMgr.EndFrame ();
+	
+	// Measure performance
+	double endTime = ZLDeviceTime::GetTimeInSeconds ();
+	this->mRenderDuration = endTime - startTime;
+	this->mRenderTime += this->mRenderDuration;
+	
+	this->mRenderCounter++;
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxMgr_RenderTree::RenderBatchOrRoot () {
+
+	if ( this->mRenderRoot ) {
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		state.Push ( this->mRenderRoot );
+		MOAIAbstractDrawable::Draw ( state, -1 );
+	}
+	else {
+		this->mRenderBatch->Render ();
+	}
 }
 
 //================================================================//

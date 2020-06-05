@@ -166,14 +166,6 @@ void MOAIGfxMgrGL::DetectFramebuffer () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrGL::FinishFrame () {
-
-	this->FlushToGPU (); // TODO: need to do this here?
-	this->UnbindAll ();
-	this->Reset ();
-}
-
-//----------------------------------------------------------------//
 u32 MOAIGfxMgrGL::LogErrors () {
 
 	// TODO: ZLGfx
@@ -315,6 +307,13 @@ MOAITexture* MOAIGfxMgrGL::MOAIGfxMgr_AffirmTexture ( MOAILuaState& state, int i
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxMgrGL::MOAIGfxMgr_BeginFrame () {
+
+	this->ResetDrawingAPIs ();
+	this->Update ();
+}
+
+//----------------------------------------------------------------//
 MOAIGfxScriptRetained* MOAIGfxMgrGL::MOAIGfxMgr_CreateGfxScriptRetained () {
 
 	return new MOAIGfxScriptRetainedGL ();
@@ -360,6 +359,13 @@ MOAIVertexBuffer* MOAIGfxMgrGL::MOAIGfxMgr_CreateVertexBuffer () {
 MOAIVertexFormat* MOAIGfxMgrGL::MOAIGfxMgr_CreateVertexFormat () {
 
 	return new MOAIVertexFormatGL ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxMgrGL::MOAIGfxMgr_EndFrame () {
+
+	
+	this->UnbindAll ();
 }
 
 //----------------------------------------------------------------//

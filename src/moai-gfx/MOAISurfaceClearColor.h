@@ -31,6 +31,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void			ClearSurface				() const;
+	ZLColorVec		GetClearColorVec			() const;
 					MOAISurfaceClearColor		();
 					~MOAISurfaceClearColor		();
 	void			SetClearColor				( MOAIColor* color );

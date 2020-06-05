@@ -91,6 +91,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+MOAIRenderPassVK* MOAIFrameBufferVK::GetRenderPass () {
+
+	return this->HasDependency < MOAIRenderPassVK >() ? &this->GetDependency < MOAIRenderPassVK >() : NULL;
+}
+
+//----------------------------------------------------------------//
 MOAIFrameBufferVK::MOAIFrameBufferVK () {
 	
 	RTTI_BEGIN ( MOAIFrameBufferVK )
