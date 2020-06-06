@@ -14,7 +14,7 @@ layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 layer:pushRenderPass ()
 
-gfxQuad = MOAIGfxQuad2D.new ()
+gfxQuad = MOAISpriteDeck2D.new ()
 gfxQuad:setTexture ( '../resources/moai.png' )
 gfxQuad:setRect ( -64, -64, 64, 64 )
 gfxQuad:setUVRect ( 0, 0, 1, 1 )
@@ -23,7 +23,7 @@ prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
 prop:setPartition ( layer )
 
-prop:moveRot ( 360, 1.5 )
+prop:moveRot ( 0, 0, 360, 1.5 )
 
 writeSine = function ( stream, hz, sampleRate, length )
 
@@ -80,6 +80,6 @@ buffer:setRawData ( stream:read (), length, 1 )
 
 sound = MOAIUntzSound.new ()
 sound:load ( buffer )
-sound:setVolume ( 1 )
+sound:setVolume ( 0.25 )
 sound:setLooping ( true )
 sound:play ()
