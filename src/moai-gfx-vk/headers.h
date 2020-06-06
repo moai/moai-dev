@@ -20,7 +20,6 @@
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK_GPUCacheVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK_ResourceClerkVK.h>
-#include <moai-gfx-vk/MOAIGfxMgrVK_RenderTreeVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK_VertexCacheVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVKComponents.h>
 #include <moai-gfx-vk/MOAIGfxResourceVK.h>

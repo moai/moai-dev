@@ -7,9 +7,10 @@
 #include <moai-gfx-gl/MOAIGfxMgrGLComponents.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_DisplayListClerkGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_GPUCacheGL.h>
-#include <moai-gfx-gl/MOAIGfxMgrGL_RenderTreeGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_ResourceClerkGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_VertexCacheGL.h>
+
+class MOAIDrawGL;
 
 //================================================================//
 // MOAIGfxStateFrameGL
@@ -29,7 +30,6 @@ class MOAIGfxMgrGL :
 	public virtual MOAIGfxMgr,
 	public virtual MOAIGfxMgrGL_DisplayListClerkGL,
 	public virtual MOAIGfxMgrGL_GPUCacheGL,
-	public virtual MOAIGfxMgrGL_RenderTreeGL,
 	public virtual MOAIGfxMgrGL_ResourceClerkGL,
 	public virtual MOAIGfxMgrGL_VertexCacheGL {
 protected:
@@ -50,14 +50,16 @@ protected:
 	ZLLeanArray < MOAIGfxStateFrameGL* >	mStateStack;
 	ZLIndex									mStateStackTop;
 
+	MOAILuaSharedPtr < MOAIDrawGL >			mDrawingObject;
+
 	//----------------------------------------------------------------//
-	static int						_enablePipelineLogging		( lua_State* L );
-	static int						_getFrameBuffer				( lua_State* L );
-	static int						_getMaxTextureSize			( lua_State* L );
-	static int						_getMaxTextureUnits			( lua_State* L );
-	static int						_getViewSize				( lua_State* L );
-	static int						_purgeResources				( lua_State* L );
-	static int						_renewResources				( lua_State* L );
+	static int							_enablePipelineLogging		( lua_State* L );
+	static int							_getFrameBuffer				( lua_State* L );
+	static int							_getMaxTextureSize			( lua_State* L );
+	static int							_getMaxTextureUnits			( lua_State* L );
+	static int							_getViewSize				( lua_State* L );
+	static int							_purgeResources				( lua_State* L );
+	static int							_renewResources				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void								_RegisterLuaClass								( RTTIVisitorHistory& history, MOAILuaState& state );
@@ -73,6 +75,7 @@ protected:
 	MOAIVertexBuffer*					MOAIGfxMgr_CreateVertexBuffer					();
 	MOAIVertexFormat*					MOAIGfxMgr_CreateVertexFormat					();
 	void								MOAIGfxMgr_EndFrame								();
+	MOAIAbstractDrawingLuaAPI*			MOAIGfxMgr_GetDrawingAPIObject					();
 	MOAIShader*							MOAIGfxMgr_GetShaderPreset						( MOAIShaderPresetEnum preset ) const;
 	size_t								MOAIGfxMgr_GetTextureMemoryUsage				() const;
 	void								MOAIGfxMgr_PopState								();
@@ -80,7 +83,6 @@ protected:
 	MOAIGfxMgrGL_DisplayListClerkGL&	MOAIGfxMgrGLComponents_GetDisplayListClerkGL	();
 	MOAIGfxMgrGL&						MOAIGfxMgrGLComponents_GetGfxMgrGL				();
 	MOAIGfxMgrGL_GPUCacheGL&			MOAIGfxMgrGLComponents_GetGPUCacheGL			();
-	MOAIGfxMgrGL_RenderTreeGL&			MOAIGfxMgrGLComponents_GetRenderTreeGL			();
 	MOAIGfxMgrGL_ResourceClerkGL&		MOAIGfxMgrGLComponents_GetResourceClerkGL		();
 	MOAIGfxMgrGL_VertexCacheGL&			MOAIGfxMgrGLComponents_GetVertexCacheGL			();
 

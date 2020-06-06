@@ -501,6 +501,23 @@ int MOAIFileSystem::_stripPKZipTimestamps ( lua_State* L ) {
 }
 
 //================================================================//
+// MOAIFileSystem
+//================================================================//
+
+//----------------------------------------------------------------//
+MOAIFileSystem::MOAIFileSystem () {
+		
+	RTTI_BEGIN ( MOAIFourier )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIFileSystem >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
+}
+
+//----------------------------------------------------------------//
+MOAIFileSystem::~MOAIFileSystem () {
+}
+
+//================================================================//
 // virtual
 //================================================================//
 

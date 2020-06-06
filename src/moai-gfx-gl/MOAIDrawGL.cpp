@@ -2,24 +2,18 @@
 // http://getmoai.com
 
 #include "pch.h"
-
-#include <moai-gfx-vk/MOAIGfxResourceVK.h>
-#include <moai-gfx-vk/MOAIGfxMgrVK.h>
+#include <moai-gfx-gl/MOAIDrawGL.h>
 
 //================================================================//
-// MOAIGfxResourceVK
+// MOAIAbstractDrawingLuaAPIGL
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIGfxResourceVK::MOAIGfxResourceVK () {
-
-	RTTI_BEGIN ( MOAIGfxResourceVK )
-		RTTI_EXTEND ( MOAIGfxResource )
-	RTTI_END
+MOAIDrawGL::MOAIDrawGL () {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxResourceVK::~MOAIGfxResourceVK () {
+MOAIDrawGL::~MOAIDrawGL () {
 }
 
 //================================================================//
@@ -27,15 +21,12 @@ MOAIGfxResourceVK::~MOAIGfxResourceVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIGfxResourceVK::MOAIGfxResource_IsReadyForUse () const {
-	return true;
+void MOAIDrawGL::MOAIAbstractDrawingAPI_RetainObject ( ZLRefCountedObject* object ) {
+	UNUSED ( object );
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxResourceVK::MOAIGfxResource_ScheduleForGPUDestroy () {
-}
+void MOAIDrawGL::MOAIAbstractDrawingAPI_SubmitCommand ( MOAIDrawingAPIEnum::_ cmd, const void* param, ZLSize size ) {
 
-//----------------------------------------------------------------//
-bool MOAIGfxResourceVK::MOAIGfxResource_ScheduleForGPUUpdate () {
-	return true;
+	MOAIDrawingAPI::Execute ( 0, cmd, param );
 }

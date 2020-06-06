@@ -52,11 +52,15 @@ class MOAIEaseType :
 protected:
 
 	//----------------------------------------------------------------//
-	void				_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
 	
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIEaseType )
+	
+	//----------------------------------------------------------------//
+					MOAIEaseType				();
+					~MOAIEaseType				();
 };
 
 #endif

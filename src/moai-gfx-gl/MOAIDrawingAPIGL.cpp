@@ -13,7 +13,7 @@
 void MOAIDrawingAPIGL::Execute ( MOAIAbstractGfxScriptCallback* callback, MOAIDrawingAPIEnum::_ cmd, const void* rawParam ) {
 
 	if ( cmd < MOAIDrawingCmdEnumGL::BASE ) {
-		MOAIDrawingAPIGL::Execute ( callback, cmd, rawParam );
+		MOAIDrawingAPI::Execute ( callback, cmd, rawParam );
 		return;
 	}
 

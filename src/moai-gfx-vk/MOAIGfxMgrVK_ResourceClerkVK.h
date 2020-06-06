@@ -36,7 +36,6 @@ protected:
 public:
 	
 	friend class MOAIGfxMgr;
-	friend class MOAIGfxMgrVK_RenderTreeVK;
 	
 	friend class MOAIGfxResourceVK;
 	

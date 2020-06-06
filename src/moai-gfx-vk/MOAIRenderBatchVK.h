@@ -16,6 +16,8 @@ protected:
 
 	MOAI_LUA_OBJECT_VISITOR_FRIEND
 
+//	ZLStrongPtr < MOAIAbstractDrawable >	mOneTri;
+
 	MOAILuaSharedPtr < MOAIFrameBufferVK >	mFrameBuffer;
 	MOAILuaSharedPtr < MOAIRenderPassVK >	mRenderPassVK;
 

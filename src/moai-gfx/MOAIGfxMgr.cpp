@@ -105,6 +105,12 @@ void MOAIGfxMgr::EndFrame () {
 }
 
 //----------------------------------------------------------------//
+MOAIAbstractDrawingLuaAPI* MOAIGfxMgr::GetDrawingAPIObject () {
+
+	return this->MOAIGfxMgr_GetDrawingAPIObject ();
+}
+
+//----------------------------------------------------------------//
 ZLMatrix4x4 MOAIGfxMgr::GetNormToWndMtx () {
 
 	return this->GetNormToWndMtx ( this->GetViewRect ());

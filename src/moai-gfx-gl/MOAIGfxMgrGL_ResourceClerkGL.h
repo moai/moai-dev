@@ -36,7 +36,6 @@ protected:
 public:
 	
 	friend class MOAIGfxMgr;
-	friend class MOAIGfxMgrGL_RenderTreeGL;
 	
 	friend class MOAIGfxResourceGL;
 	
@@ -44,7 +43,7 @@ public:
 	void			DeleteOrDiscard						( const ZLGfxHandle& handle, bool shouldDelete );
 	void			DiscardResources					();
 	void			PurgeResources						( u32 age = 0 );
-	void			Update								();
+	void			UpdateResources						();
 					MOAIGfxMgrGL_ResourceClerkGL		();
 					~MOAIGfxMgrGL_ResourceClerkGL		();
 };

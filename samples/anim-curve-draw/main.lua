@@ -36,10 +36,10 @@ table.sort ( curveTypes, function ( a, b ) return a.value < b.value end )
 local prevIndex = 0
 local curveIndex = 1
 
-function onDraw ( index, xOff, yOff, xFlip, yFlip )
+function onDraw ( draw, index, xOff, yOff, xFlip, yFlip )
 
-	MOAIDraw.setPenColor ( 1, 0, 0, 1 )
-	MOAIDraw.drawAnimCurve ( makeCurve ( curveTypes [ curveIndex ].value ), 100 )
+	draw:setPenColor ( 1, 0, 0, 1 )
+    draw:drawAnimCurve ( makeCurve ( curveTypes [ curveIndex ].value ), 100 )
 	if curveIndex ~= prevIndex then
 		print ( string.format ( "%i of %i: %s", curveIndex, #curveTypes, curveTypes [ curveIndex ].name ))
 		prevIndex = curveIndex

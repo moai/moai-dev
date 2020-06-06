@@ -95,7 +95,7 @@ void MOAIGfxMgr_RenderTree::Render () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	gfxMgr.BeginFrame ();
-	this->MOAIGfxMgr_RenderTree_Render ();
+	this->RenderBatchOrRoot ();
 	gfxMgr.EndFrame ();
 	
 	// Measure performance
@@ -114,7 +114,7 @@ void MOAIGfxMgr_RenderTree::RenderBatchOrRoot () {
 		state.Push ( this->mRenderRoot );
 		MOAIAbstractDrawable::Draw ( state, -1 );
 	}
-	else {
+	else if ( this->mRenderBatch ) {
 		this->mRenderBatch->Render ();
 	}
 }

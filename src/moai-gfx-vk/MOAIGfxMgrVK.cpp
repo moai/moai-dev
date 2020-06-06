@@ -641,11 +641,6 @@ MOAIGfxMgrVK_GPUCacheVK& MOAIGfxMgrVK::MOAIGfxMgrVKComponents_GetGPUCacheVK () {
 //}
 
 //----------------------------------------------------------------//
-MOAIGfxMgrVK_RenderTreeVK& MOAIGfxMgrVK::MOAIGfxMgrVKComponents_GetRenderTreeVK () {
-	return *this;
-}
-
-//----------------------------------------------------------------//
 MOAIGfxMgrVK_ResourceCacheVK& MOAIGfxMgrVK::MOAIGfxMgrVKComponents_GetResourceCacheVK () {
 	return *this;
 }
@@ -663,8 +658,6 @@ MOAIGfxMgrVK_VertexCacheVK& MOAIGfxMgrVK::MOAIGfxMgrVKComponents_GetVertexCacheV
 //----------------------------------------------------------------//
 void MOAIGfxMgrVK::ZLContextClass_Finalize () {
 	MOAIGfxMgr::ZLContextClass_Finalize ();
-
-	this->GetRenderTreeVK ().mOneTri = NULL;
 }
 
 //----------------------------------------------------------------//

@@ -23,7 +23,7 @@
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIAbstractDrawingLuaAPI::_bindVectorDrawing ( lua_State* L ) {
-	MOAI_LUA_SETUP_SINGLE ( MOAIAbstractDrawingLuaAPI, "" )
+	MOAI_LUA_SETUP ( MOAIAbstractDrawingLuaAPI, "" )
 	
 	self->BindVectorDrawing ();
 	return 0;
@@ -40,10 +40,10 @@ int MOAIAbstractDrawingLuaAPI::_clearSurface ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIAbstractDrawingLuaAPI::_drawAnimCurve ( lua_State* L ) {
-	MOAI_LUA_SETUP_SINGLE ( MOAIAbstractDrawingLuaAPI, "U" )
+	MOAI_LUA_SETUP ( MOAIAbstractDrawingLuaAPI, "U" )
 
-	MOAIAnimCurve* curve	= state.GetLuaObject < MOAIAnimCurve >( 1, true );
-	u32 resolution			= state.GetValue < u32 >( 2, 1 );
+	MOAIAnimCurve* curve	= state.GetLuaObject < MOAIAnimCurve >( 2, true );
+	u32 resolution			= state.GetValue < u32 >( 3, 1 );
 
 	if ( curve ) {
 		self->DrawAnimCurve ( *curve, resolution );
@@ -63,12 +63,12 @@ int MOAIAbstractDrawingLuaAPI::_drawAnimCurve ( lua_State* L ) {
 	@out	nil
 */
 int MOAIAbstractDrawingLuaAPI::_drawAxis2D ( lua_State* L ) {
-	MOAI_LUA_SETUP_SINGLE ( MOAIAbstractDrawingLuaAPI, "" )
+	MOAI_LUA_SETUP ( MOAIAbstractDrawingLuaAPI, "" )
 	
-	float x		= state.GetValue < float >( 1, 0.0f );
-	float y		= state.GetValue < float >( 2, 0.0f );
-	float dx	= state.GetValue < float >( 3, 0.0f );
-	float dy	= state.GetValue < float >( 4, 0.0f );
+	float x		= state.GetValue < float >( 2, 0.0f );
+	float y		= state.GetValue < float >( 3, 0.0f );
+	float dx	= state.GetValue < float >( 4, 0.0f );
+	float dy	= state.GetValue < float >( 5, 0.0f );
 
 	self->DrawAxis2D ( x, y, dx, dy );
 	return 0;
@@ -89,21 +89,21 @@ int MOAIAbstractDrawingLuaAPI::_drawAxis2D ( lua_State* L ) {
 	@out	nil
 */
 int MOAIAbstractDrawingLuaAPI::_drawBezierCurve ( lua_State* L ) {
-	MOAI_LUA_SETUP_SINGLE ( MOAIAbstractDrawingLuaAPI, "" )
+	MOAI_LUA_SETUP ( MOAIAbstractDrawingLuaAPI, "" )
 	
 	ZLCubicBezier2D bezier;
 	
-	bezier.mP0.mX = state.GetValue < float >( 1, 0.0f );
-	bezier.mP0.mY = state.GetValue < float >( 2, 0.0f );
+	bezier.mP0.mX = state.GetValue < float >( 2, 0.0f );
+	bezier.mP0.mY = state.GetValue < float >( 3, 0.0f );
 	
-	bezier.mP1.mX = state.GetValue < float >( 3, 0.0f );
-	bezier.mP1.mY = state.GetValue < float >( 4, 0.0f );
+	bezier.mP1.mX = state.GetValue < float >( 4, 0.0f );
+	bezier.mP1.mY = state.GetValue < float >( 5, 0.0f );
 	
-	bezier.mP2.mX = state.GetValue < float >( 5, 0.0f );
-	bezier.mP2.mY = state.GetValue < float >( 6, 0.0f );
+	bezier.mP2.mX = state.GetValue < float >( 6, 0.0f );
+	bezier.mP2.mY = state.GetValue < float >( 7, 0.0f );
 	
-	bezier.mP3.mX = state.GetValue < float >( 7, 0.0f );
-	bezier.mP3.mY = state.GetValue < float >( 8, 0.0f );
+	bezier.mP3.mX = state.GetValue < float >( 8, 0.0f );
+	bezier.mP3.mY = state.GetValue < float >( 9, 0.0f );
 	
 	self->DrawBezierCurve ( bezier );
 	return 0;
@@ -122,15 +122,15 @@ int MOAIAbstractDrawingLuaAPI::_drawBezierCurve ( lua_State* L ) {
 	@out	nil
 */
 int MOAIAbstractDrawingLuaAPI::_drawBoxOutline ( lua_State* L ) {
-	MOAI_LUA_SETUP_SINGLE ( MOAIAbstractDrawingLuaAPI, "" )
+	MOAI_LUA_SETUP ( MOAIAbstractDrawingLuaAPI, "" )
 
 	ZLBox box;
-	box.mMin.mX = state.GetValue < float >( 1, 0.0f );
-	box.mMin.mY = state.GetValue < float >( 2, 0.0f );
-	box.mMin.mZ = state.GetValue < float >( 3, 0.0f );
-	box.mMax.mX = state.GetValue < float >( 4, box.mMin.mX );
-	box.mMax.mY = state.GetValue < float >( 5, box.mMin.mY );
-	box.mMax.mZ = state.GetValue < float >( 6, box.mMin.mZ );
+	box.mMin.mX = state.GetValue < float >( 2, 0.0f );
+	box.mMin.mY = state.GetValue < float >( 3, 0.0f );
+	box.mMin.mZ = state.GetValue < float >( 4, 0.0f );
+	box.mMax.mX = state.GetValue < float >( 5, box.mMin.mX );
+	box.mMax.mY = state.GetValue < float >( 6, box.mMin.mY );
+	box.mMax.mZ = state.GetValue < float >( 7, box.mMin.mZ );
 	
 	self->DrawBoxOutline ( box );
 	return 0;
@@ -147,12 +147,12 @@ int MOAIAbstractDrawingLuaAPI::_drawBoxOutline ( lua_State* L ) {
 	@out	nil
 */
 int MOAIAbstractDrawingLuaAPI::_drawCircle ( lua_State* L ) {
-	MOAI_LUA_SETUP_SINGLE ( MOAIAbstractDrawingLuaAPI, "" )
+	MOAI_LUA_SETUP ( MOAIAbstractDrawingLuaAPI, "" )
 	
-	float x0	= state.GetValue < float >( 1, 0.0f );
-	float y0	= state.GetValue < float >( 2, 0.0f );
-	float r		= state.GetValue < float >( 3, 0.0f );
-	u32 steps	= state.GetValue < u32 >( 4, DEFAULT_ELLIPSE_STEPS );
+	float x0	= state.GetValue < float >( 2, 0.0f );
+	float y0	= state.GetValue < float >( 3, 0.0f );
+	float r		= state.GetValue < float >( 4, 0.0f );
+	u32 steps	= state.GetValue < u32 >( 5, DEFAULT_ELLIPSE_STEPS );
 
 	self->DrawEllipseOutline ( x0, y0, r, r, steps );
 	return 0;
@@ -169,12 +169,12 @@ int MOAIAbstractDrawingLuaAPI::_drawCircle ( lua_State* L ) {
 	@out	nil
 */
 int MOAIAbstractDrawingLuaAPI::_drawCircleSpokes ( lua_State* L ) {
-	MOAI_LUA_SETUP_SINGLE ( MOAIAbstractDrawingLuaAPI, "" )
+	MOAI_LUA_SETUP ( MOAIAbstractDrawingLuaAPI, "" )
 	
-	float x0	= state.GetValue < float >( 1, 0.0f );
-	float y0	= state.GetValue < float >( 2, 0.0f );
-	float r		= state.GetValue < float >( 3, 0.0f );
-	u32 steps	= state.GetValue < u32 >( 4, DEFAULT_ELLIPSE_STEPS );
+	float x0	= state.GetValue < float >( 2, 0.0f );
+	float y0	= state.GetValue < float >( 3, 0.0f );
+	float r		= state.GetValue < float >( 4, 0.0f );
+	u32 steps	= state.GetValue < u32 >( 5, DEFAULT_ELLIPSE_STEPS );
 
 	self->DrawEllipseSpokes ( x0, y0, r, r, steps );
 	return 0;
@@ -183,7 +183,7 @@ int MOAIAbstractDrawingLuaAPI::_drawCircleSpokes ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: implement
 int MOAIAbstractDrawingLuaAPI::_drawElements ( lua_State* L ) {
-	MOAI_LUA_SETUP_SINGLE ( MOAIAbstractDrawingLuaAPI, "" )
+	MOAI_LUA_SETUP ( MOAIAbstractDrawingLuaAPI, "" )
 	assert ( false );
 	return 0;
 }
@@ -200,14 +200,14 @@ int MOAIAbstractDrawingLuaAPI::_drawElements ( lua_State* L ) {
 	@out	nil
 */
 int MOAIAbstractDrawingLuaAPI::_drawEllipse ( lua_State* L ) {
-	MOAI_LUA_SETUP_SINGLE ( MOAIAbstractDrawingLuaAPI, "" )
+	MOAI_LUA_SETUP ( MOAIAbstractDrawingLuaAPI, "" )
 	
-	float x		= state.GetValue < float >( 1, 0.0f );
-	float y		= state.GetValue < float >( 2, 0.0f );
-	float xRad	= state.GetValue < float >( 3, 0.0f );
-	float yRad	= state.GetValue < float >( 4, 0.0f );
+	float x		= state.GetValue < float >( 2, 0.0f );
+	float y		= state.GetValue < float >( 3, 0.0f );
+	float xRad	= state.GetValue < float >( 4, 0.0f );
+	float yRad	= state.GetValue < float >( 5, 0.0f );
 	
-	u32 steps = state.GetValue < u32 >( 5, DEFAULT_ELLIPSE_STEPS );
+	u32 steps = state.GetValue < u32 >( 6, DEFAULT_ELLIPSE_STEPS );
 
 	self->DrawEllipseOutline ( x, y, xRad, yRad, steps );
 	return 0;
@@ -225,14 +225,14 @@ int MOAIAbstractDrawingLuaAPI::_drawEllipse ( lua_State* L ) {
 	@out	nil
 */
 int MOAIAbstractDrawingLuaAPI::_drawEllipseSpokes ( lua_State* L ) {
-	MOAI_LUA_SETUP_SINGLE ( MOAIAbstractDrawingLuaAPI, "" )
+	MOAI_LUA_SETUP ( MOAIAbstractDrawingLuaAPI, "" )
 	
-	float x		= state.GetValue < float >( 1, 0.0f );
-	float y		= state.GetValue < float >( 2, 0.0f );
-	float xRad	= state.GetValue < float >( 3, 0.0f );
-	float yRad	= state.GetValue < float >( 4, 0.0f );
+	float x		= state.GetValue < float >( 2, 0.0f );
+	float y		= state.GetValue < float >( 3, 0.0f );
+	float xRad	= state.GetValue < float >( 4, 0.0f );
+	float yRad	= state.GetValue < float >( 5, 0.0f );
 
-	u32 steps = state.GetValue < u32 >( 5, DEFAULT_ELLIPSE_STEPS );
+	u32 steps = state.GetValue < u32 >( 6, DEFAULT_ELLIPSE_STEPS );
 
 	self->DrawEllipseSpokes ( x, y, xRad, yRad, steps );
 	return 0;
@@ -254,7 +254,7 @@ int MOAIAbstractDrawingLuaAPI::_drawGrid ( lua_State* L ) {
 	@out	nil
 */
 int MOAIAbstractDrawingLuaAPI::_drawLine ( lua_State* L ) {
-	MOAI_LUA_SETUP_SINGLE ( MOAIAbstractDrawingLuaAPI, "" )
+	MOAI_LUA_SETUP ( MOAIAbstractDrawingLuaAPI, "" )
 
 	if ( lua_istable ( L, -1 ) ) {
 		self->DrawLuaArray ( L, MOAIGfxTopologyEnum::LINE_STRIP );
@@ -274,7 +274,7 @@ int MOAIAbstractDrawingLuaAPI::_drawLine ( lua_State* L ) {
 	@out	nil
 */
 int MOAIAbstractDrawingLuaAPI::_drawPoints ( lua_State* L ) {
-	MOAI_LUA_SETUP_SINGLE ( MOAIAbstractDrawingLuaAPI, "" )
+	MOAI_LUA_SETUP ( MOAIAbstractDrawingLuaAPI, "" )
 	
 	if ( lua_istable ( L, -1 ) ) {
 		self->DrawLuaArray ( L, MOAIGfxTopologyEnum::POINT_LIST );
@@ -288,7 +288,7 @@ int MOAIAbstractDrawingLuaAPI::_drawPoints ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: implement
 int MOAIAbstractDrawingLuaAPI::_drawRay ( lua_State* L ) {
-	MOAI_LUA_SETUP_SINGLE ( MOAIAbstractDrawingLuaAPI, "" )
+	MOAI_LUA_SETUP ( MOAIAbstractDrawingLuaAPI, "" )
 	assert ( false );
 	return 0;
 }
@@ -304,12 +304,12 @@ int MOAIAbstractDrawingLuaAPI::_drawRay ( lua_State* L ) {
 	@out	nil
 */
 int MOAIAbstractDrawingLuaAPI::_drawRect ( lua_State* L ) {
-	MOAI_LUA_SETUP_SINGLE ( MOAIAbstractDrawingLuaAPI, "" )
+	MOAI_LUA_SETUP ( MOAIAbstractDrawingLuaAPI, "" )
 	
-	float x0 = state.GetValue < float >( 1, 0.0f );
-	float y0 = state.GetValue < float >( 2, 0.0f );
-	float x1 = state.GetValue < float >( 3, 0.0f );
-	float y1 = state.GetValue < float >( 4, 0.0f );
+	float x0 = state.GetValue < float >( 2, 0.0f );
+	float y0 = state.GetValue < float >( 3, 0.0f );
+	float x1 = state.GetValue < float >( 4, 0.0f );
+	float y1 = state.GetValue < float >( 5, 0.0f );
 
 	self->DrawRectOutline ( x0, y0, x1, y1 );
 	return 0;
@@ -326,12 +326,12 @@ int MOAIAbstractDrawingLuaAPI::_drawRect ( lua_State* L ) {
 	@out	nil
 */
 int MOAIAbstractDrawingLuaAPI::_fillCircle ( lua_State* L ) {
-	MOAI_LUA_SETUP_SINGLE ( MOAIAbstractDrawingLuaAPI, "" )
+	MOAI_LUA_SETUP ( MOAIAbstractDrawingLuaAPI, "" )
 	
-	float x0	= state.GetValue < float >( 1, 0.0f );
-	float y0	= state.GetValue < float >( 2, 0.0f );
-	float r		= state.GetValue < float >( 3, 0.0f );
-	u32 steps	= state.GetValue < u32 >( 4, DEFAULT_ELLIPSE_STEPS );
+	float x0	= state.GetValue < float >( 2, 0.0f );
+	float y0	= state.GetValue < float >( 3, 0.0f );
+	float r		= state.GetValue < float >( 4, 0.0f );
+	u32 steps	= state.GetValue < u32 >( 5, DEFAULT_ELLIPSE_STEPS );
 
 	self->DrawEllipseFill ( x0, y0, r, r, steps );
 	return 0;
@@ -349,14 +349,14 @@ int MOAIAbstractDrawingLuaAPI::_fillCircle ( lua_State* L ) {
 	@out	nil
 */
 int MOAIAbstractDrawingLuaAPI::_fillEllipse ( lua_State* L ) {
-	MOAI_LUA_SETUP_SINGLE ( MOAIAbstractDrawingLuaAPI, "" )
+	MOAI_LUA_SETUP ( MOAIAbstractDrawingLuaAPI, "" )
 	
-	float x		= state.GetValue < float >( 1, 0.0f );
-	float y		= state.GetValue < float >( 2, 0.0f );
-	float xRad	= state.GetValue < float >( 3, 0.0f );
-	float yRad	= state.GetValue < float >( 4, 0.0f );
+	float x		= state.GetValue < float >( 2, 0.0f );
+	float y		= state.GetValue < float >( 3, 0.0f );
+	float xRad	= state.GetValue < float >( 4, 0.0f );
+	float yRad	= state.GetValue < float >( 5, 0.0f );
 	
-	u32 steps = state.GetValue < u32 >( 5, DEFAULT_ELLIPSE_STEPS );
+	u32 steps = state.GetValue < u32 >( 6, DEFAULT_ELLIPSE_STEPS );
 
 	self->DrawEllipseFill ( x, y, xRad, yRad, steps );
 	return 0;
@@ -371,7 +371,7 @@ int MOAIAbstractDrawingLuaAPI::_fillEllipse ( lua_State* L ) {
 	@out	nil
 */
 int MOAIAbstractDrawingLuaAPI::_fillFan ( lua_State* L ) {
-	MOAI_LUA_SETUP_SINGLE ( MOAIAbstractDrawingLuaAPI, "" )
+	MOAI_LUA_SETUP ( MOAIAbstractDrawingLuaAPI, "" )
 
 	if ( lua_istable ( L, -1 ) ) {
 		self->DrawLuaArray( L, MOAIGfxTopologyEnum::TRIANGLE_FAN );
@@ -393,12 +393,12 @@ int MOAIAbstractDrawingLuaAPI::_fillFan ( lua_State* L ) {
 	@out	nil
 */
 int MOAIAbstractDrawingLuaAPI::_fillRect ( lua_State* L ) {
-	MOAI_LUA_SETUP_SINGLE ( MOAIAbstractDrawingLuaAPI, "" )
+	MOAI_LUA_SETUP ( MOAIAbstractDrawingLuaAPI, "" )
 	
-	float x0 = state.GetValue < float >( 1, 0.0f );
-	float y0 = state.GetValue < float >( 2, 0.0f );
-	float x1 = state.GetValue < float >( 3, 0.0f );
-	float y1 = state.GetValue < float >( 4, 0.0f );
+	float x0 = state.GetValue < float >( 2, 0.0f );
+	float y0 = state.GetValue < float >( 3, 0.0f );
+	float x1 = state.GetValue < float >( 4, 0.0f );
+	float y1 = state.GetValue < float >( 5, 0.0f );
 
 	self->DrawRectFill ( x0, y0, x1, y1 );
 	return 0;
@@ -407,16 +407,16 @@ int MOAIAbstractDrawingLuaAPI::_fillRect ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIAbstractDrawingLuaAPI::_fillRoundedRect ( lua_State* L ) {
-	MOAI_LUA_SETUP_SINGLE ( MOAIAbstractDrawingLuaAPI, "" )
+	MOAI_LUA_SETUP ( MOAIAbstractDrawingLuaAPI, "" )
 	
-	float x0 = state.GetValue < float >( 1, 0.0f );
-	float y0 = state.GetValue < float >( 2, 0.0f );
-	float x1 = state.GetValue < float >( 3, 0.0f );
-	float y1 = state.GetValue < float >( 4, 0.0f );
+	float x0 = state.GetValue < float >( 2, 0.0f );
+	float y0 = state.GetValue < float >( 3, 0.0f );
+	float x1 = state.GetValue < float >( 4, 0.0f );
+	float y1 = state.GetValue < float >( 5, 0.0f );
 	
-	float xRad		= state.GetValue < float >( 5, 0.0f );
-	float yRad		= state.GetValue < float >( 6, xRad );
-	u32 steps		= state.GetValue < u32 >( 7, DEFAULT_ELLIPSE_STEPS );
+	float xRad		= state.GetValue < float >( 6, 0.0f );
+	float yRad		= state.GetValue < float >( 7, xRad );
+	u32 steps		= state.GetValue < u32 >( 8, DEFAULT_ELLIPSE_STEPS );
 
 	self->DrawRoundedRectFill ( x0, y0, x1, y1, xRad, yRad, steps );
 	return 0;
@@ -425,19 +425,19 @@ int MOAIAbstractDrawingLuaAPI::_fillRoundedRect ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIAbstractDrawingLuaAPI::_strokeRoundedRect ( lua_State* L ) {
-	MOAI_LUA_SETUP_SINGLE ( MOAIAbstractDrawingLuaAPI, "" )
+	MOAI_LUA_SETUP ( MOAIAbstractDrawingLuaAPI, "" )
 	
-	float x0 = state.GetValue < float >( 1, 0.0f );
-	float y0 = state.GetValue < float >( 2, 0.0f );
-	float x1 = state.GetValue < float >( 3, 0.0f );
-	float y1 = state.GetValue < float >( 4, 0.0f );
+	float x0 = state.GetValue < float >( 2, 0.0f );
+	float y0 = state.GetValue < float >( 3, 0.0f );
+	float x1 = state.GetValue < float >( 4, 0.0f );
+	float y1 = state.GetValue < float >( 5, 0.0f );
 	
-	float stroke	= state.GetValue < float >( 5, 0.0f );
-	float offset	= state.GetValue < float >( 6, 0.0f );
+	float stroke	= state.GetValue < float >( 6, 0.0f );
+	float offset	= state.GetValue < float >( 7, 0.0f );
 	
-	float xRad		= state.GetValue < float >( 7, 0.0f );
-	float yRad		= state.GetValue < float >( 8, xRad );
-	u32 steps		= state.GetValue < u32 >( 9, DEFAULT_ELLIPSE_STEPS );
+	float xRad		= state.GetValue < float >( 8, 0.0f );
+	float yRad		= state.GetValue < float >( 9, xRad );
+	u32 steps		= state.GetValue < u32 >( 10, DEFAULT_ELLIPSE_STEPS );
 
 	self->DrawRoundedRectStroke ( x0, y0, x1, y1, xRad, yRad, steps, stroke, offset );
 	return 0;
@@ -554,10 +554,10 @@ int MOAIAbstractDrawingLuaAPI::_setMatrix ( lua_State* L ) {
 int MOAIAbstractDrawingLuaAPI::_setPenColor ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractDrawingLuaAPI, "U" )
 
-	float r = state.GetValue < float >( 1, 1.0f );
-	float g = state.GetValue < float >( 2, 1.0f );
-	float b = state.GetValue < float >( 3, 1.0f );
-	float a = state.GetValue < float >( 4, 1.0f );
+	float r = state.GetValue < float >( 2, 1.0f );
+	float g = state.GetValue < float >( 3, 1.0f );
+	float b = state.GetValue < float >( 4, 1.0f );
+	float a = state.GetValue < float >( 5, 1.0f );
 
 	self->SetPenColor ( ZLColor::PackRGBA ( r, g, b, a ));
 	return 0;
@@ -572,7 +572,7 @@ int MOAIAbstractDrawingLuaAPI::_setPenColor ( lua_State* L ) {
 int MOAIAbstractDrawingLuaAPI::_setPenWidth ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractDrawingLuaAPI, "U" )
 
-	float width = state.GetValue < float >( 1, 1.0f );
+	float width = state.GetValue < float >( 2, 1.0f );
 	self->SetPenWidth ( width );
 	return 0;
 }
@@ -636,10 +636,10 @@ int MOAIAbstractDrawingLuaAPI::_setVertexFormat ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIAbstractDrawingLuaAPI::_setViewProj ( lua_State* L ) {
-	MOAI_LUA_SETUP_SINGLE ( MOAIAbstractDrawingLuaAPI, "" )
+	MOAI_LUA_SETUP ( MOAIAbstractDrawingLuaAPI, "" )
 	
-	MOAIViewport* viewport = state.GetLuaObject < MOAIViewport >( 1, false );
-	MOAICamera* camera = state.GetLuaObject < MOAICamera >( 2, false );
+	MOAIViewport* viewport = state.GetLuaObject < MOAIViewport >( 2, false );
+	MOAICamera* camera = state.GetLuaObject < MOAICamera >( 3, false );
 	
 	self->SetViewProj ( viewport, camera );
 	return 0;
@@ -650,12 +650,12 @@ int MOAIAbstractDrawingLuaAPI::_setViewRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractDrawingLuaAPI, "U" )
 	
 	if ( state.IsType ( 2, LUA_TUSERDATA )) {
-		MOAIViewport* viewport = state.GetLuaObject < MOAIViewport >( 1, true );
+		MOAIViewport* viewport = state.GetLuaObject < MOAIViewport >( 2, true );
 		self->SetViewRect ( viewport );
 	}
 	else {
 		ZLRect rect ( 0.0, 0.0, 0.0, 0.0 );
-		rect = state.GetValue < ZLRect >( 2, rect );
+		rect = state.GetValue < ZLRect >( 3, rect );
 		self->SetViewRect ( rect );
 	}
 	return 0;

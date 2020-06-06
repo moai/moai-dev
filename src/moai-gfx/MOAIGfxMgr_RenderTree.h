@@ -33,7 +33,6 @@ protected:
 	//----------------------------------------------------------------//
 	void			_RegisterLuaClass				( RTTIVisitorHistory& history, MOAILuaState& state );
 	void			_RegisterLuaFuncs				( RTTIVisitorHistory& history, MOAILuaState& state );
-	virtual void	MOAIGfxMgr_RenderTree_Render	() = 0;
 
 public:
 	

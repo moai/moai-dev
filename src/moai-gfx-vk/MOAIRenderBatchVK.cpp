@@ -138,6 +138,11 @@ void MOAIRenderBatchVK::MOAIRenderBatch_Render () {
 	
 	vkCmdBeginRenderPass ( commandBuffer, &renderPassBeginInfo, VK_SUBPASS_CONTENTS_INLINE );
 
+	//	if ( !this->mOneTri ) {
+	//		this->mOneTri = new MOAIGfxMgrOneTriVK ();
+	//	}
+	//	this->mOneTri->Draw ();
+
 	this->DrawRenderRoot ();
 	gfxMgr.FlushToGPU ();
 	

@@ -4,6 +4,7 @@
 #include "pch.h"
 
 #include <moai-gfx-gl/MOAIFrameBufferGL.h>
+#include <moai-gfx-gl/MOAIDrawGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL.h>
 #include <moai-gfx-gl/MOAIGfxScriptRetainedGL.h>
 #include <moai-gfx-gl/MOAIImageTextureGL.h>
@@ -201,6 +202,7 @@ MOAIGfxMgrGL::MOAIGfxMgrGL () :
 		RTTI_EXTEND ( MOAIGfxMgr )
 	RTTI_END
 	
+	this->mDrawingObject.Set ( *this, new MOAIDrawGL ());
 	this->SetDefaultFrameBuffer ( new MOAIFrameBufferGL ());
 }
 
@@ -215,6 +217,8 @@ MOAIGfxMgrGL::~MOAIGfxMgrGL () {
 	
 	this->SetDefaultFrameBuffer ( 0 );
 	this->SetDefaultTexture ( 0 );
+	
+	this->mDrawingObject.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -310,7 +314,13 @@ MOAITexture* MOAIGfxMgrGL::MOAIGfxMgr_AffirmTexture ( MOAILuaState& state, int i
 void MOAIGfxMgrGL::MOAIGfxMgr_BeginFrame () {
 
 	this->ResetDrawingAPIs ();
-	this->Update ();
+	this->UpdateResources ();
+	
+	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
+	ZLGfx* gfx = this->SelectDrawingAPI ( MOAIGfxMgrGL_DisplayListClerkGL::DRAWING_QUEUE );
+	if ( gfx ) {
+		ZGL_COMMENT ( *gfx, "RENDER MGR RENDER" );
+	}
 }
 
 //----------------------------------------------------------------//
@@ -364,8 +374,14 @@ MOAIVertexFormat* MOAIGfxMgrGL::MOAIGfxMgr_CreateVertexFormat () {
 //----------------------------------------------------------------//
 void MOAIGfxMgrGL::MOAIGfxMgr_EndFrame () {
 
-	
+	this->FlushToGPU (); // TODO: need to do this here?
 	this->UnbindAll ();
+}
+
+//----------------------------------------------------------------//
+MOAIAbstractDrawingLuaAPI* MOAIGfxMgrGL::MOAIGfxMgr_GetDrawingAPIObject () {
+
+	return this->mDrawingObject;
 }
 
 //----------------------------------------------------------------//
@@ -421,11 +437,6 @@ MOAIGfxMgrGL& MOAIGfxMgrGL::MOAIGfxMgrGLComponents_GetGfxMgrGL () {
 
 //----------------------------------------------------------------//
 MOAIGfxMgrGL_GPUCacheGL& MOAIGfxMgrGL::MOAIGfxMgrGLComponents_GetGPUCacheGL () {
-	return *this;
-}
-
-//----------------------------------------------------------------//
-MOAIGfxMgrGL_RenderTreeGL& MOAIGfxMgrGL::MOAIGfxMgrGLComponents_GetRenderTreeGL () {
 	return *this;
 }
 

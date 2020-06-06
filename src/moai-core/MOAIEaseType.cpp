@@ -9,6 +9,23 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+MOAIEaseType::MOAIEaseType () {
+
+	RTTI_BEGIN ( MOAIEaseDriver )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIEaseType >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
+}
+
+//----------------------------------------------------------------//
+MOAIEaseType::~MOAIEaseType () {
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
 void MOAIEaseType::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 	

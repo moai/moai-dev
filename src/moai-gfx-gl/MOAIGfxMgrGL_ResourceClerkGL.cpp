@@ -134,7 +134,7 @@ void MOAIGfxMgrGL_ResourceClerkGL::ScheduleGPUAffirm ( MOAIGfxResourceGL& resour
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrGL_ResourceClerkGL::Update () {
+void MOAIGfxMgrGL_ResourceClerkGL::UpdateResources () {
 
 	MOAIGfxMgrGL_DisplayListClerkGL& pipelineClerk = this->GetDisplayListClerkGL ();
 

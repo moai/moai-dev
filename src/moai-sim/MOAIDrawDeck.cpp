@@ -129,11 +129,13 @@ void MOAIDrawDeck::MOAIDeck_Draw ( ZLIndex idx ) {
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		this->mOnDraw.PushRef ( state );
 
+		state.Push ( gfxMgr.GetDrawingAPIObject ());
+		
 		state.Push ( MOAILuaIndex ( idx ));
 		state.Push ( stretch.mX );
 		state.Push ( stretch.mY );
 		state.Push ( stretch.mZ );
-		state.DebugCall ( 4, 0 );
+		state.DebugCall ( 5, 0 );
 	}
 }
 

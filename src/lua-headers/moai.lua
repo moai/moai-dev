@@ -212,6 +212,7 @@ end
 -- renames
 --============================================================--
 
+MOAIAnimCurve       = MOAIAnimCurveFloat
 MOAIHashWriter		= MOAIHashWriterCrypto or MOAIHashWriter
 MOAIProp			= MOAIGraphicsProp
 
@@ -280,8 +281,6 @@ end
 local wrapGlobal = function ( obj, func )
 	return function ( ... ) return func ( obj, ... ) end
 end
-
-MOAIActionMgr = MOAISim.getActionMgr ()
 
 MOAIActionMgr.getRoot					= wrapGlobal ( MOAIActionMgr, MOAIActionMgr.getRoot )
 MOAIActionMgr.setProfilingEnabled		= wrapGlobal ( MOAIActionMgr, MOAIActionMgr.setProfilingEnabled )

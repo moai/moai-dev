@@ -15,9 +15,9 @@ protected:
 
 	MOAI_LUA_OBJECT_VISITOR_FRIEND
 
-	u32								mClearFlags;
-	u32								mClearColor;
-	MOAILuaSharedPtr < MOAIColor >	mClearColorNode;
+	u32									mClearFlags;
+	u32									mClearColor;
+	MOAILuaSharedPtr < MOAIColor >		mClearColorNode;
 
 	//----------------------------------------------------------------//
 	static int		_setClearColor				( lua_State* L );

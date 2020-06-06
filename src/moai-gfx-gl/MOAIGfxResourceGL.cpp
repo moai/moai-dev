@@ -6,7 +6,6 @@
 #include <moai-gfx-gl/MOAIGfxResourceGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_DisplayListClerkGL.h>
-#include <moai-gfx-gl/MOAIGfxMgrGL_RenderTreeGL.h>
 
 //================================================================//
 // lua
@@ -41,7 +40,7 @@ int	MOAIGfxResourceGL::_destroy ( lua_State* L ) {
 int MOAIGfxResourceGL::_getAge ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxResourceGL, "U" )
 
-	u32 age = MOAIGfxMgrGL_RenderTreeGL::Get ().GetRenderCounter () - self->GetLastRenderCount ();
+	u32 age = MOAIGfxMgr::Get ().GetRenderCounter () - self->GetLastRenderCount ();
 	lua_pushnumber ( state, age );
 
 	return 1;

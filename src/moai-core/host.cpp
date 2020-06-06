@@ -322,6 +322,7 @@ AKUContextID AKUCreateContext () {
 	MOAINodeMgr::Affirm ();
 	
 	REGISTER_LUA_CLASS ( MOAIAction )
+	REGISTER_LUA_CLASS ( MOAIActionMgr )
 	REGISTER_LUA_CLASS ( MOAIActionTree )
 	REGISTER_LUA_CLASS ( MOAIAnim )
 	REGISTER_LUA_CLASS ( MOAIAnimCurveBone )

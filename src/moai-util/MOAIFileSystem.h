@@ -40,11 +40,15 @@ private:
 	static int		_stripPKZipTimestamps		( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
 
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIFileSystem )
+	
+	
+					MOAIFileSystem				();
+					~MOAIFileSystem				();
 };
 
 #endif
