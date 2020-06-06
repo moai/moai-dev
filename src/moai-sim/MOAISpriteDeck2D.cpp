@@ -423,7 +423,6 @@ MOAIDeck* MOAISpriteDeck2D::AffirmDeck ( MOAILuaState& state, int idx ) {
 		assert ( spriteDeck );
 
 		spriteDeck->SetTexture ( texture, 0 );
-		spriteDeck->AffirmGfxScript ().Optimize ();
 		
 		int hWidth = ( int )( texture->GetWidth () / 2 );
 		int hHeight = ( int )( texture->GetHeight () / 2 );

@@ -16,6 +16,7 @@ MOAIGfxScriptBatch::MOAIGfxScriptBatch () :
 	
 	RTTI_BEGIN ( MOAIGfxScriptBatch )
 		RTTI_EXTEND ( MOAIAbstractGfxScriptBatch )
+		RTTI_EXTEND ( MOAIAbstractDrawingLuaAPI )
 	RTTI_END
 }
 
@@ -26,6 +27,26 @@ MOAIGfxScriptBatch::~MOAIGfxScriptBatch () {
 //================================================================//
 // virtual
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAIGfxScriptBatch::MOAIAbstractDrawingAPI_RetainObject ( ZLRefCountedObject* object ) {
+
+	if ( object ) {
+		MOAIGfxScriptRetained* gfxScript = this->AffirmGfxScript ( 0 ).AsType < MOAIGfxScriptRetained >();
+		if ( gfxScript ) {
+			gfxScript->RetainObject ( object );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxScriptBatch::MOAIAbstractDrawingAPI_SubmitCommand ( MOAIDrawingAPIEnum::_ cmd, const void* param, ZLSize size ) {
+
+	MOAIGfxScriptRetained* gfxScript = this->AffirmGfxScript ( 0 ).AsType < MOAIGfxScriptRetained >();
+	if ( gfxScript ) {
+		gfxScript->SubmitCommand ( cmd, param, size );
+	}
+}
 
 //----------------------------------------------------------------//
 MOAIGfxScriptRetained& MOAIGfxScriptBatch::MOAIAbstractGfxScriptBatch_AffirmGfxScript ( ZLIndex index ) {

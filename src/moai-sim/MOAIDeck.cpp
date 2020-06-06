@@ -15,7 +15,7 @@
 int MOAIDeck::_draw ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDeck, "U" )
 
-	ZLIndex index					= state.GetValue < ZLIndex >( 2, 0 );
+	ZLIndex index					= state.GetValue < u32 >( 2, 0 );
 	//MOAIGfxScriptBatch* materials	= state.GetLuaObject < MOAIGfxScriptBatch >( 3, false );
 	//ZLVec3D offset					= state.GetValue < ZLVec3D >( 4, ZLVec3D::ORIGIN );
 	//ZLVec3D scale					= state.GetValue < ZLVec3D >( 7, ZLVec3D::AXIS );

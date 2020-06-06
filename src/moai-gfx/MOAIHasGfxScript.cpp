@@ -13,8 +13,8 @@
 MOAIHasGfxScript::MOAIHasGfxScript () {
 
 	RTTI_BEGIN ( MOAIHasGfxScript )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIHasGfxScript >)
-		RTTI_EXTEND ( MOAILuaObject )
+		RTTI_EXTEND ( MOAIAbstractHasGfxScript )
+		RTTI_EXTEND ( MOAIAbstractDrawingLuaAPI )
 	RTTI_END
 }
 
@@ -25,6 +25,26 @@ MOAIHasGfxScript::~MOAIHasGfxScript () {
 //================================================================//
 // virtual
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAIHasGfxScript::MOAIAbstractDrawingAPI_RetainObject ( ZLRefCountedObject* object ) {
+
+	if ( object ) {
+		MOAIGfxScriptRetained* gfxScript = this->AffirmGfxScript ().AsType < MOAIGfxScriptRetained >();
+		if ( gfxScript ) {
+			gfxScript->RetainObject ( object );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIHasGfxScript::MOAIAbstractDrawingAPI_SubmitCommand ( MOAIDrawingAPIEnum::_ cmd, const void* param, ZLSize size ) {
+
+	MOAIGfxScriptRetained* gfxScript = this->AffirmGfxScript ().AsType < MOAIGfxScriptRetained >();
+	if ( gfxScript ) {
+		gfxScript->SubmitCommand ( cmd, param, size );
+	}
+}
 
 //----------------------------------------------------------------//
 MOAIGfxScriptRetained& MOAIHasGfxScript::MOAIAbstractHasGfxScript_AffirmGfxScript () {

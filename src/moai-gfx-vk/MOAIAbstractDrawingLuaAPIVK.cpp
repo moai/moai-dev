@@ -12,9 +12,9 @@
 int MOAIAbstractDrawingLuaAPIVK::_loadShaderUniformVK ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractDrawingLuaAPIVK, "U" )
 	
-	ZLIndex globalID		= state.GetValue < ZLIndex >( 3, 0 );
-	ZLIndex uniformID		= state.GetValue < ZLIndex >( 3, 0 );
-	ZLIndex index			= state.GetValue < ZLIndex >( 3, 0 );
+	ZLIndex globalID		= state.GetValue < u32 >( 3, 0 );
+	ZLIndex uniformID		= state.GetValue < u32 >( 3, 0 );
+	ZLIndex index			= state.GetValue < u32 >( 3, 0 );
 	
 	self->LoadShaderUniformVK ( globalID, uniformID, index );
 	return 0;

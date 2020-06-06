@@ -11,7 +11,8 @@
 //================================================================//
 // TODO: doxygen
 class MOAIHasGfxScriptBatch :
-	public virtual MOAIAbstractGfxScriptBatch {
+	public virtual MOAIAbstractGfxScriptBatch,
+	public virtual MOAIAbstractDrawingLuaAPI {
 protected:
 
 	ZLStrongPtr < MOAIGfxScriptBatch > mGfxScriptBatch;
@@ -24,6 +25,8 @@ protected:
 	//----------------------------------------------------------------//
 	void						_RegisterLuaClass								( RTTIVisitorHistory& history, MOAILuaState& state );
 	void						_RegisterLuaFuncs								( RTTIVisitorHistory& history, MOAILuaState& state );
+	void						MOAIAbstractDrawingAPI_RetainObject				( ZLRefCountedObject* object );
+	void						MOAIAbstractDrawingAPI_SubmitCommand			( MOAIDrawingAPIEnum::_ cmd, const void* param, ZLSize size );
 	MOAIGfxScriptRetained&		MOAIAbstractGfxScriptBatch_AffirmGfxScript		( ZLIndex index );
 	MOAIAbstractGfxScript*		MOAIAbstractGfxScriptBatch_GetGfxScript			( ZLIndex index );
 	ZLSize						MOAIAbstractGfxScriptBatch_GetIndexBatchSize	();

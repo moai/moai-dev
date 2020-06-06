@@ -37,13 +37,13 @@ protected:
 	ZLLeanStack < ZLStrongPtr < ZLRefCountedObject > >	mRetainedObjects;
 	
 	//----------------------------------------------------------------//
+	static int			_affirmBytecode				( lua_State* L );
 	static int			_call						( lua_State* L );
 	static int			_callFromShader				( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void				Execute						( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ cmd, const void* rawParam ) const;
 	void 				ExecuteBytecode				( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ callCommand );
-	void				ExecuteMemStream			( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ callCommand );
 		
 	//----------------------------------------------------------------//
 	void				_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
@@ -62,12 +62,12 @@ public:
 	};
 
 	//----------------------------------------------------------------//
+	void				AffirmBytecode				();
 	void				Call						();
 	void				CallFromShader				();
 	bool				HasContent					();
 						MOAIGfxScriptRetained		();
 						~MOAIGfxScriptRetained		();
-	void				Optimize					();
 	void				Reset						();
 };
 

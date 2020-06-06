@@ -84,7 +84,7 @@ void MOAITableLayer::MOAIDrawable_Draw ( int subPrimID ) {
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	gfxMgr.SetScissorRect ();
 	
-	this->ClearSurface ();
+	this->MOAISurfaceClearColor::ClearSurface ();
 	
 	MOAIAbstractDrawable::Draw ( this->mRenderTable );
 }

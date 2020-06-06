@@ -769,3 +769,8 @@ void MOAIAbstractDrawingAPI::SetViewRect ( MOAIViewport* viewport ) {
 void MOAIAbstractDrawingAPI::SubmitCommand ( MOAIDrawingAPIEnum::_ cmd ) {
 	this->MOAIAbstractDrawingAPI_SubmitCommand ( cmd, NULL, 0 );
 }
+
+//----------------------------------------------------------------//
+void MOAIAbstractDrawingAPI::SubmitCommand ( MOAIDrawingAPIEnum::_ cmd, const void* param, ZLSize size ) {
+	this->MOAIAbstractDrawingAPI_SubmitCommand ( cmd, param, size );
+}

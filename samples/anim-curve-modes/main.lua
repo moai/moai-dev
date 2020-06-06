@@ -15,7 +15,7 @@ layer:setViewport ( viewport )
 layer:pushRenderPass ()
 
 gfxQuad = MOAISpriteDeck2D.new ()
-gfxQuad:setTexture ( "moai.png" )
+gfxQuad:setTexture ( "../resources/moai.png" )
 gfxQuad:setRect ( -64, -64, 64, 64 )
 
 prop = MOAIProp.new ()

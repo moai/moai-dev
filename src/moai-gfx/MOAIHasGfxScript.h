@@ -11,12 +11,15 @@
 //================================================================//
 // TODO: doxygen
 class MOAIHasGfxScript :
-	public virtual MOAIAbstractHasGfxScript {
+	public virtual MOAIAbstractHasGfxScript,
+	public virtual MOAIAbstractDrawingLuaAPI {
 protected:
 
 	ZLStrongPtr < MOAIAbstractGfxScript > mGfxScript;
 	
 	//----------------------------------------------------------------//
+	void						MOAIAbstractDrawingAPI_RetainObject			( ZLRefCountedObject* object );
+	void						MOAIAbstractDrawingAPI_SubmitCommand		( MOAIDrawingAPIEnum::_ cmd, const void* param, ZLSize size );
 	MOAIGfxScriptRetained&		MOAIAbstractHasGfxScript_AffirmGfxScript	();
 	MOAIAbstractGfxScript*		MOAIAbstractHasGfxScript_GetGfxScript		();
 	void						MOAIAbstractHasGfxScript_SetGfxScript		( MOAIAbstractGfxScript* gfxScript );

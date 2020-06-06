@@ -602,7 +602,7 @@ int MOAIAbstractDrawingLuaAPI::_setTexture ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractDrawingLuaAPI, "U" )
 	
 	MOAITexture* texture	= MOAIGfxMgr::Get ().AffirmTexture ( state, 2 );
-	ZLIndex textureUnit		= state.GetValue < ZLIndex >( 3, 0 );
+	ZLIndex textureUnit		= state.GetValue < u32 >( 3, 0 );
 
 	self->SetTexture ( texture, textureUnit );
 	return 0;

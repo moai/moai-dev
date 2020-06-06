@@ -77,6 +77,7 @@ MOAIHasGfxScriptBatch::MOAIHasGfxScriptBatch () {
 	RTTI_BEGIN ( MOAIHasGfxScriptBatch )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIHasGfxScriptBatch >)
 		RTTI_EXTEND ( MOAIAbstractGfxScriptBatch )
+		RTTI_EXTEND ( MOAIAbstractDrawingLuaAPI )
 	RTTI_END
 }
 
@@ -112,6 +113,22 @@ void MOAIHasGfxScriptBatch::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOA
 	};
 	
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIHasGfxScriptBatch::MOAIAbstractDrawingAPI_RetainObject ( ZLRefCountedObject* object ) {
+
+	if ( object && this->mGfxScriptBatch ) {
+		this->mGfxScriptBatch->RetainObject ( object );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIHasGfxScriptBatch::MOAIAbstractDrawingAPI_SubmitCommand ( MOAIDrawingAPIEnum::_ cmd, const void* param, ZLSize size ) {
+
+	if ( this->mGfxScriptBatch ) {
+		this->mGfxScriptBatch->SubmitCommand ( cmd, param, size );
+	}
 }
 
 //----------------------------------------------------------------//

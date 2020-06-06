@@ -30,8 +30,6 @@ protected:
 	void				DrawArcStroke				( float x, float y, float xRad, float yRad, float d0, float d1, u32 steps, float stroke, float offset );
 	void				DrawLuaArray				( lua_State* L, MOAIGfxTopologyEnum::_ primType );
 	void				DrawLuaParams				( lua_State* L, MOAIGfxTopologyEnum::_ primType );
-	void				SubmitCommand				( MOAIDrawingAPIEnum::_ cmd );
-	void				RetainObject				( ZLRefCountedObject* object );
 
 	//----------------------------------------------------------------//
 	virtual void		MOAIAbstractDrawingAPI_RetainObject			( ZLRefCountedObject* object ) = 0;
@@ -84,6 +82,7 @@ public:
 	virtual				~MOAIAbstractDrawingAPI		();
 	void 				PopGfxState					();
 	void				PushGfxState				();
+	void				RetainObject				( ZLRefCountedObject* object );
 	void				SetBlendMode				( const MOAIBlendMode& blendMode );
 	void				SetCullFunc					( MOAICullFuncEnum::_ cullFunc );
 	void				SetDepthFunc				( MOAIDepthFuncEnum::_ depthFunc );
@@ -103,6 +102,8 @@ public:
 	void				SetViewProj					( MOAIViewport* viewport, MOAICamera* camera );
 	void				SetViewRect					( const ZLRect& rect );
 	void				SetViewRect					( MOAIViewport* viewport );
+	void				SubmitCommand				( MOAIDrawingAPIEnum::_ cmd );
+	void				SubmitCommand				( MOAIDrawingAPIEnum::_ cmd, const void* param, ZLSize size );
 };
 
 #endif

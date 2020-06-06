@@ -14,6 +14,14 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIGfxScriptRetained::_affirmBytecode ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIGfxScriptRetained, "U" )
+	self->AffirmBytecode ();
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIGfxScriptRetained::_call ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxScriptRetained, "U" )
 	self->Call ();
@@ -31,6 +39,18 @@ int MOAIGfxScriptRetained::_callFromShader ( lua_State* L ) {
 //================================================================//
 // MOAIGfxScriptRetained
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAIGfxScriptRetained::AffirmBytecode () {
+
+	ZLSize size = this->mCommandStream.GetCursor ();
+	if ( size > 0 ) {
+		this->mBytecode.Init ( size );
+		this->mCommandStream.Seek ( 0 );
+		this->mCommandStream.ReadBytes ( this->mBytecode.GetBuffer (), size );
+		this->mCommandStream.Clear ();
+	}
+}
 
 //----------------------------------------------------------------//
 void MOAIGfxScriptRetained::Call () {
@@ -103,27 +123,6 @@ void MOAIGfxScriptRetained::ExecuteBytecode ( MOAIAbstractGfxScriptCallback* cal
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxScriptRetained::ExecuteMemStream ( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ callCommand ) {
-
-	bool didCall = false;
-
-	this->mCommandStream.Seek ( 0 );
-	while ( !this->mCommandStream.IsAtEnd ()) {
-	
-		MOAIGfxScriptCommand command = this->mCommandStream.Read < MOAIGfxScriptCommand >();
-		void* buffer = command.mParamSize > 0 ? alloca ( command.mParamSize ) : NULL;
-		this->mCommandStream.ReadBytes ( buffer, command.mParamSize );
-		this->Execute ( callable, command.mType, buffer );
-		
-		didCall = didCall || ( command.mType == CALL ) || ( command.mType == CALL_FROM_SHADER );
-	}
-	
-	if ( callable && ( !didCall )) {
-		this->Execute ( callable, callCommand, 0 );
-	}
-}
-
-//----------------------------------------------------------------//
 bool MOAIGfxScriptRetained::HasContent () {
 
 	return (( this->mCommandStream.GetCursor () > 0 ) || ( this->mBytecode.Size () > 0 ));
@@ -143,19 +142,6 @@ MOAIGfxScriptRetained::MOAIGfxScriptRetained () {
 
 //----------------------------------------------------------------//
 MOAIGfxScriptRetained::~MOAIGfxScriptRetained () {
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxScriptRetained::Optimize () {
-
-	ZLSize size = this->mCommandStream.GetCursor ();
-	if ( size > 0 ) {
-	
-		this->mBytecode.Init ( size );
-		this->mCommandStream.Seek ( 0 );
-		this->mCommandStream.ReadBytes ( this->mBytecode.GetBuffer (), size );
-		this->mCommandStream.Clear ();
-	}
 }
 
 //----------------------------------------------------------------//
@@ -180,6 +166,7 @@ void MOAIGfxScriptRetained::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOA
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
+		{ "affirmBytecode",				_affirmBytecode },
 		{ "call",						_call },
 		{ "callFromShader",				_callFromShader },
 		{ NULL, NULL }
@@ -210,12 +197,8 @@ void MOAIGfxScriptRetained::MOAIAbstractDrawingAPI_SubmitCommand ( MOAIDrawingAP
 //----------------------------------------------------------------//
 void MOAIGfxScriptRetained::MOAIAbstractGfxScript_RunScript ( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ callCommand ) {
 
-	if ( this->mBytecode.Size () > 0 ) {
-		this->ExecuteBytecode ( callable, callCommand );
-	}
-	else {
-		this->ExecuteMemStream ( callable, callCommand );
-	}
+	this->AffirmBytecode ();
+	this->ExecuteBytecode ( callable, callCommand );
 }
 
 //----------------------------------------------------------------//

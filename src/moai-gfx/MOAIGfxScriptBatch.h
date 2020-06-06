@@ -11,13 +11,16 @@
 //================================================================//
 // TODO: doxygen
 class MOAIGfxScriptBatch :
-	public virtual MOAIAbstractGfxScriptBatch {
+	public virtual MOAIAbstractGfxScriptBatch,
+	public virtual MOAIAbstractDrawingLuaAPI {
 private:
 
 	ZLSize													mIndexBatchSize;
 	ZLLeanArray < ZLStrongPtr < MOAIAbstractGfxScript > >	mGfxScripts;
 
 	//----------------------------------------------------------------//
+	void						MOAIAbstractDrawingAPI_RetainObject				( ZLRefCountedObject* object );
+	void						MOAIAbstractDrawingAPI_SubmitCommand			( MOAIDrawingAPIEnum::_ cmd, const void* param, ZLSize size );
 	MOAIGfxScriptRetained&		MOAIAbstractGfxScriptBatch_AffirmGfxScript		( ZLIndex index );
 	MOAIAbstractGfxScript*		MOAIAbstractGfxScriptBatch_GetGfxScript			( ZLIndex index );
 	ZLSize						MOAIAbstractGfxScriptBatch_GetIndexBatchSize	();

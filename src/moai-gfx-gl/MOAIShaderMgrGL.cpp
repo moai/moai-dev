@@ -115,7 +115,6 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					MOAIGfxScriptRetainedGL& gfxScript = program->AffirmGfxScriptWithType < MOAIGfxScriptRetainedGL >();
 					gfxScript.LoadShaderUniformGL ( MOAIGfxMgrGL::VIEW_HALF_WIDTH, 0, 0 );
 					gfxScript.LoadShaderUniformGL ( MOAIGfxMgrGL::VIEW_HALF_HEIGHT, 1, 0 );
-					gfxScript.Optimize ();
 					
 					program->Load ( _deck2DSnappingShaderVSH, _deck2DSnappingShaderFSH );
 					break;
@@ -143,7 +142,6 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					MOAIGfxScriptRetainedGL& gfxScript = program->AffirmGfxScriptWithType < MOAIGfxScriptRetainedGL >();
 					gfxScript.LoadShaderUniformGL ( MOAIGfxMgrGL::VIEW_HALF_WIDTH, 0, 0 );
 					gfxScript.LoadShaderUniformGL ( MOAIGfxMgrGL::VIEW_HALF_HEIGHT, 1, 0 );
-					gfxScript.Optimize ();
 					
 					program->Load ( _fontSnappingShaderVSH, _fontSnappingShaderFSH );
 					break;
@@ -168,10 +166,8 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					MOAIGfxScriptRetainedGL& gfxScript = program->AffirmGfxScriptWithType < MOAIGfxScriptRetainedGL >();
 					gfxScript.LoadShaderUniformGL ( MOAIGfxMgrGL::MODEL_TO_CLIP_MTX, 0, 0 );
 					gfxScript.LoadShaderUniformGL ( MOAIGfxMgrGL::PEN_COLOR, 1, 0 );
-					gfxScript.Optimize ();
 					
 					program->Load ( _lineShader3DVSH, _lineShader3DFSH );
-					
 					break;
 				}
 
@@ -188,10 +184,8 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					MOAIGfxScriptRetainedGL& gfxScript = program->AffirmGfxScriptWithType < MOAIGfxScriptRetainedGL >();
 					gfxScript.LoadShaderUniformGL ( MOAIGfxMgrGL::MODEL_TO_CLIP_MTX, 0, 0 );
 					gfxScript.LoadShaderUniformGL ( MOAIGfxMgrGL::PEN_COLOR, 1, 0 );
-					gfxScript.Optimize ();
 					
 					program->Load ( _meshShaderVSH, _meshShaderFSH );
-					
 					break;
 				}
 			}
