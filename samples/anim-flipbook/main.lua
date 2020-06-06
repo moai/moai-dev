@@ -15,7 +15,7 @@ layer:setViewport ( viewport )
 layer:pushRenderPass ()
 
 tileLib = MOAITileDeck2D.new ()
-tileLib:setTexture ( "numbers.png" )
+tileLib:setTexture ( "../resources/numbers.png" )
 tileLib:setSize ( 8, 8 )
 tileLib:setRect ( -16, -16, 16, 16 )
 

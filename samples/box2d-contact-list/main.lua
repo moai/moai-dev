@@ -52,7 +52,7 @@ fixture2:setFilter ( 0x02 )
 fixture2:setCollisionHandler ( onCollide, MOAIBox2DArbiter.BEGIN + MOAIBox2DArbiter.END, 0x00 )
 
 deck = MOAISpriteDeck2D.new ()
-deck:setTexture ( 'moai.png' )
+deck:setTexture ( '../resources/moai.png' )
 deck:setRect ( -25/2, -25/2, 25/2, 25/2 )
 
 sensorBody = world:addBody ( MOAIBox2DBody.KINEMATIC )

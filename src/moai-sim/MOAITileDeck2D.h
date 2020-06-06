@@ -7,6 +7,27 @@
 #include <moai-sim/MOAIDeck.h>
 
 //================================================================//
+// MOAITileDeck2DCallable
+//================================================================//
+class MOAITileDeck2DCallable :
+	public MOAIAbstractGfxScriptCallback {
+public:
+
+	friend class MOAISpriteDeck2D;
+
+	float			mUScale;
+	float			mVScale;
+
+	float			mUOff;
+	float			mVOff;
+
+	MOAIQuadBrush	mBrush;
+
+	//----------------------------------------------------------------//
+	void 		MOAIAbstractGfxScriptCallback_Call 		();
+};
+
+//================================================================//
 // MOAITileDeck2D
 //================================================================//
 /**	@lua	MOAITileDeck2D
@@ -15,11 +36,11 @@
 */
 class MOAITileDeck2D :
 	public MOAIDeck,
-	public MOAIHasGfxScriptBatch,
+	public MOAIHasGfxScript,
 	public MOAIGridSpace {
 private:
 	
-	MOAIQuadBrush mQuad;
+	MOAIQuadBrush 	mQuad;
 	
 	//----------------------------------------------------------------//
 	static int		_setQuad				( lua_State* L );
@@ -31,16 +52,17 @@ private:
 	static int		_transformUV			( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void					_RegisterLuaClass				( RTTIVisitorHistory& history, MOAILuaState& state );
-	void					_RegisterLuaFuncs				( RTTIVisitorHistory& history, MOAILuaState& state );
-	void					_SerializeIn					( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
-	void					_SerializeOut					( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
-	ZLBounds				MOAIDeck_ComputeMaxAABB			();
-	void					MOAIDeck_Draw					( ZLIndex idx );
-	ZLBounds				MOAIDeck_GetBounds				( ZLIndex idx );
-	MOAICollisionShape*		MOAIDeck_GetCollisionShape		( ZLIndex idx );
-	bool					MOAIDeck_Overlap				( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result );
-	bool					MOAIDeck_Overlap				( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result );
+	void					_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
+	void					_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
+	void					_SerializeIn							( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
+	void					_SerializeOut							( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
+	void 					MOAIAbstractGfxScriptCallback_Call 		();
+	ZLBounds				MOAIDeck_ComputeMaxAABB					();
+	void					MOAIDeck_Draw							( ZLIndex idx );
+	ZLBounds				MOAIDeck_GetBounds						( ZLIndex idx );
+	MOAICollisionShape*		MOAIDeck_GetCollisionShape				( ZLIndex idx );
+	bool					MOAIDeck_Overlap						( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result );
+	bool					MOAIDeck_Overlap						( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result );
 	
 public:
 	

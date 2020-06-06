@@ -14,8 +14,8 @@ layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 layer:pushRenderPass ()
 
-gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( "moai.png" )
+gfxQuad = MOAISpriteDeck2D.new ()
+gfxQuad:setTexture ( "../resources/moai.png" )
 gfxQuad:setRect ( -128, -128, 128, 128 )
 
 prop = MOAIProp.new ()

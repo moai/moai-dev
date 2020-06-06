@@ -26,7 +26,7 @@ layer:pushRenderPass ()
 worldBody = world:addBody ( MOAIBox2DBody.STATIC )
 
 deck = MOAISpriteDeck2D.new ()
-deck:setTexture ( 'moai.png' )
+deck:setTexture ( '../resources/moai.png' )
 deck:setRect ( -25/2, -25/2, 25/2, 25/2 )
 
 function addSprite()
