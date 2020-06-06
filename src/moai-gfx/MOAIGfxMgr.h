@@ -11,7 +11,7 @@
 #include <moai-gfx/MOAIGfxMgrComponents.h>
 #include <moai-gfx/MOAIGfxPresetEnum.h>
 
-class MOAIAbstractDrawingLuaAPI;
+class MOAIAbstractDrawingObject;
 class MOAIGfxScriptRetained;
 class MOAIImageTexture;
 class MOAIRenderBatch;
@@ -50,7 +50,7 @@ protected:
 	virtual MOAIVertexBuffer*			MOAIGfxMgr_CreateVertexBuffer			() = 0;
 	virtual MOAIVertexFormat*			MOAIGfxMgr_CreateVertexFormat			() = 0;
 	virtual void						MOAIGfxMgr_EndFrame						() = 0;
-	virtual MOAIAbstractDrawingLuaAPI*	MOAIGfxMgr_GetDrawingAPIObject			() = 0;
+	virtual MOAIAbstractDrawingObject*	MOAIGfxMgr_GetDrawingObject				() = 0;
 	virtual MOAIShader*					MOAIGfxMgr_GetShaderPreset				( MOAIShaderPresetEnum preset ) const = 0;
 	virtual size_t						MOAIGfxMgr_GetTextureMemoryUsage		() const = 0;
 	virtual void						MOAIGfxMgr_PopState						() = 0;
@@ -86,7 +86,7 @@ public:
 	MOAIVertexBuffer*				CreateVertexBuffer			();
 	MOAIVertexFormat*				CreateVertexFormat			();
 	void							EndFrame					();
-	MOAIAbstractDrawingLuaAPI*		GetDrawingAPIObject			();
+	MOAIAbstractDrawingObject*		GetDrawingObject			();
 	ZLMatrix4x4						GetNormToWndMtx				();
 	ZLMatrix4x4						GetNormToWndMtx				( const ZLRect& wndRect );
 	MOAIShader*						GetShaderPreset				( MOAIShaderPresetEnum preset ) const;

@@ -75,7 +75,7 @@ protected:
 	MOAIVertexBuffer*					MOAIGfxMgr_CreateVertexBuffer					();
 	MOAIVertexFormat*					MOAIGfxMgr_CreateVertexFormat					();
 	void								MOAIGfxMgr_EndFrame								();
-	MOAIAbstractDrawingLuaAPI*			MOAIGfxMgr_GetDrawingAPIObject					();
+	MOAIAbstractDrawingObject*			MOAIGfxMgr_GetDrawingObject						();
 	MOAIShader*							MOAIGfxMgr_GetShaderPreset						( MOAIShaderPresetEnum preset ) const;
 	size_t								MOAIGfxMgr_GetTextureMemoryUsage				() const;
 	void								MOAIGfxMgr_PopState								();

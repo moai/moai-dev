@@ -4,7 +4,7 @@
 #ifndef	MOAIGFXSCRIPTRETAINEDGL_H
 #define	MOAIGFXSCRIPTRETAINEDGL_H
 
-#include <moai-gfx-gl/MOAIAbstractDrawingLuaAPIGL.h>
+#include <moai-gfx-gl/MOAIAbstractDrawingObjectGL.h>
 
 //================================================================//
 // MOAIGfxScriptRetainedGL
@@ -12,7 +12,7 @@
 // TODO: doxygen
 class MOAIGfxScriptRetainedGL :
 	public virtual MOAIGfxScriptRetained,
-	public virtual MOAIAbstractDrawingLuaAPIGL {
+	public virtual MOAIAbstractDrawingObjectGL {
 protected:
 	
 	//----------------------------------------------------------------//

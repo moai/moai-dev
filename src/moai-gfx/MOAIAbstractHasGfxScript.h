@@ -4,7 +4,7 @@
 #ifndef	MOAIABSTRACTHASGFXSCRIPT_H
 #define	MOAIABSTRACTHASGFXSCRIPT_H
 
-#include <moai-gfx/MOAIAbstractDrawingLuaAPI.h>
+#include <moai-gfx/MOAIAbstractDrawingObject.h>
 #include <moai-gfx/MOAIGfxConsts.h>
 #include <moai-gfx/MOAIDrawingAPI.h>
 

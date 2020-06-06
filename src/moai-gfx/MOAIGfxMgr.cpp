@@ -105,9 +105,9 @@ void MOAIGfxMgr::EndFrame () {
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractDrawingLuaAPI* MOAIGfxMgr::GetDrawingAPIObject () {
+MOAIAbstractDrawingObject* MOAIGfxMgr::GetDrawingObject () {
 
-	return this->MOAIGfxMgr_GetDrawingAPIObject ();
+	return this->MOAIGfxMgr_GetDrawingObject ();
 }
 
 //----------------------------------------------------------------//

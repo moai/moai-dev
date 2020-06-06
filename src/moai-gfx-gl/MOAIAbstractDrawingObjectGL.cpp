@@ -2,39 +2,39 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx-vk/MOAIAbstractDrawingLuaAPIVK.h>
+#include <moai-gfx-gl/MOAIAbstractDrawingObjectGL.h>
 
 //================================================================//
 // lua
 //================================================================//
 
 //----------------------------------------------------------------//
-int MOAIAbstractDrawingLuaAPIVK::_loadShaderUniformVK ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractDrawingLuaAPIVK, "U" )
+int MOAIAbstractDrawingObjectGL::_loadShaderUniformGL ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractDrawingObjectGL, "U" )
 	
 	ZLIndex globalID		= state.GetValue < u32 >( 3, 0 );
 	ZLIndex uniformID		= state.GetValue < u32 >( 3, 0 );
 	ZLIndex index			= state.GetValue < u32 >( 3, 0 );
 	
-	self->LoadShaderUniformVK ( globalID, uniformID, index );
+	self->LoadShaderUniformGL ( globalID, uniformID, index );
 	return 0;
 }
 
 //================================================================//
-// MOAIAbstractDrawingLuaAPIVK
+// MOAIAbstractDrawingObjectGL
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIAbstractDrawingLuaAPIVK::MOAIAbstractDrawingLuaAPIVK () {
+MOAIAbstractDrawingObjectGL::MOAIAbstractDrawingObjectGL () {
 
-	RTTI_BEGIN ( MOAIAbstractDrawingLuaAPIVK )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractDrawingLuaAPIVK >)
-		RTTI_EXTEND ( MOAIAbstractDrawingLuaAPI )
+	RTTI_BEGIN ( MOAIAbstractDrawingObjectGL )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractDrawingObjectGL >)
+		RTTI_EXTEND ( MOAIAbstractDrawingObject )
 	RTTI_END
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractDrawingLuaAPIVK::~MOAIAbstractDrawingLuaAPIVK () {
+MOAIAbstractDrawingObjectGL::~MOAIAbstractDrawingObjectGL () {
 }
 
 //================================================================//
@@ -42,17 +42,17 @@ MOAIAbstractDrawingLuaAPIVK::~MOAIAbstractDrawingLuaAPIVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAbstractDrawingLuaAPIVK::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIAbstractDrawingObjectGL::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
 	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractDrawingLuaAPIVK::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIAbstractDrawingObjectGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
-		{ "loadShaderUniformVK",		_loadShaderUniformVK },
+		{ "loadShaderUniformGL",		_loadShaderUniformGL },
 		{ NULL, NULL }
 	};
 

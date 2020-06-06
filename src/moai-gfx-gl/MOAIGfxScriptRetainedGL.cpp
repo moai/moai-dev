@@ -14,7 +14,7 @@ MOAIGfxScriptRetainedGL::MOAIGfxScriptRetainedGL () {
 
 	RTTI_BEGIN ( MOAIGfxScriptRetainedGL )
 		RTTI_EXTEND ( MOAIGfxScriptRetained )
-		RTTI_EXTEND ( MOAIAbstractDrawingLuaAPIGL )
+		RTTI_EXTEND ( MOAIAbstractDrawingObjectGL )
 	RTTI_END
 }
 

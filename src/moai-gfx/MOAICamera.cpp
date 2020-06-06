@@ -324,7 +324,7 @@ void MOAICamera::DrawDebug ( MOAIAbstractDrawingAPI& draw ) {
 //
 //	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 //
-//	draw.BindVectorDrawing ();
+//	draw.BindVectorPresets ();
 //
 //	ZLRect viewRect = gfxMgr.GetViewRect ();
 //	//float aspect = viewRect.Width () / viewRect.Height ();

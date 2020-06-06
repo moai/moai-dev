@@ -6,7 +6,7 @@
 
 #include <moai-gfx-vk/pch.h>
 
-#include <moai-gfx-vk/MOAIAbstractDrawingLuaAPIVK.h>
+#include <moai-gfx-vk/MOAIAbstractDrawingObjectVK.h>
 #include <moai-gfx-vk/MOAIAbstractDrawingAPIVK.h>
 #include <moai-gfx-vk/MOAIDrawingAPIVK.h>
 #include <moai-gfx-vk/MOAIDescriptorSetArrayVK.h>

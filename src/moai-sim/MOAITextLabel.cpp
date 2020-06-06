@@ -1206,7 +1206,7 @@ void MOAITextLabel::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
-	draw.BindVectorDrawing ();
+	draw.BindVectorPresets ();
 	
 	if (( this->mLayout.mLayoutFrame.Area () > 0.0f ) && debugLines.Bind ( DEBUG_DRAW_TEXT_LABEL_LAYOUT_BOUNDS )) {
 		

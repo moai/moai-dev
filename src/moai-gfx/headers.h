@@ -11,7 +11,7 @@
 #include <moai-gfx/MOAIAbstractDrawable.h>
 #include <moai-gfx/MOAIAbstractDrawingAPI.h>
 #include <moai-gfx/MOAIAbstractGfxScriptCallback.h>
-#include <moai-gfx/MOAIAbstractDrawingLuaAPI.h>
+#include <moai-gfx/MOAIAbstractDrawingObject.h>
 #include <moai-gfx/MOAIAbstractGfxScript.h>
 #include <moai-gfx/MOAIAbstractGfxScriptBatch.h>
 #include <moai-gfx/MOAIAbstractHasGfxScript.h>

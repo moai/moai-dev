@@ -44,7 +44,7 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-	void 				BindVectorDrawing			();
+	void 				BindVectorPresets			();
 	void				ClearSurface				();
 	void				DrawAnimCurve				( MOAIAnimCurve& curve, u32 resolution );
 	void				DrawAxis2D					( float x, float y, float dx, float dy );

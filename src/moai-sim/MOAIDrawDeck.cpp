@@ -121,7 +121,7 @@ void MOAIDrawDeck::MOAIDeck_Draw ( ZLIndex idx ) {
 	
 	if ( this->mOnDraw ) {
 	
-		MOAIDraw::Get ().BindVectorDrawing ();
+		MOAIDraw::Get ().BindVectorPresets ();
 	
 		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 		ZLVec3D stretch = this->BindStretchVertexTransform ();
@@ -129,7 +129,7 @@ void MOAIDrawDeck::MOAIDeck_Draw ( ZLIndex idx ) {
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		this->mOnDraw.PushRef ( state );
 
-		state.Push ( gfxMgr.GetDrawingAPIObject ());
+		state.Push ( gfxMgr.GetDrawingObject ());
 		
 		state.Push ( MOAILuaIndex ( idx ));
 		state.Push ( stretch.mX );

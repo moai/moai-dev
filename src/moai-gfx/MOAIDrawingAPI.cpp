@@ -25,6 +25,18 @@ void MOAIDrawingAPI::Execute ( MOAIAbstractGfxScriptCallback* callback, MOAIDraw
 
 	switch ( cmd ) {
 		
+		case MOAIDrawingAPIEnum::BIND_VECTOR_PRESETS:
+			
+			gfxMgr.SetTexture ();
+			gfxMgr.SetShader ( MOAIShaderPresetEnum::LINE_SHADER );
+			gfxMgr.SetVertexFormat ( MOAIVertexFormatPresetEnum::XYZWC );
+			
+			gfxMgr.SetVertexTransform ( MOAIGfxMgr::MODEL_TO_CLIP_MTX );
+			gfxMgr.SetUVTransform ( MOAIGfxMgr::UV_TO_MODEL_MTX );
+
+			gfxMgr.SetCullFunc ();
+			break;
+		
 		case MOAIDrawingAPIEnum::CLEAR_SURFACE:
 			break;
 		

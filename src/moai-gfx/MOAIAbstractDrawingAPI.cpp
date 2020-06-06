@@ -69,18 +69,9 @@ public:
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAbstractDrawingAPI::BindVectorDrawing () {
+void MOAIAbstractDrawingAPI::BindVectorPresets () {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	
-	gfxMgr.SetTexture ();
-	gfxMgr.SetShader ( MOAIShaderPresetEnum::LINE_SHADER );
-	gfxMgr.SetVertexFormat ( MOAIVertexFormatPresetEnum::XYZWC );
-	
-	gfxMgr.SetVertexTransform ( MOAIGfxMgr::MODEL_TO_CLIP_MTX );
-	gfxMgr.SetUVTransform ( MOAIGfxMgr::UV_TO_MODEL_MTX );
-
-	gfxMgr.SetCullFunc (); // no culling in immediate mode drawing
+	this->SubmitCommand ( MOAIDrawingAPIEnum::BIND_VECTOR_PRESETS );
 }
 
 //----------------------------------------------------------------//

@@ -16,7 +16,7 @@ MOAIGfxScriptBatch::MOAIGfxScriptBatch () :
 	
 	RTTI_BEGIN ( MOAIGfxScriptBatch )
 		RTTI_EXTEND ( MOAIAbstractGfxScriptBatch )
-		RTTI_EXTEND ( MOAIAbstractDrawingLuaAPI )
+		RTTI_EXTEND ( MOAIAbstractDrawingObject )
 	RTTI_END
 }
 

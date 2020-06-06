@@ -14,7 +14,7 @@ MOAIGfxScriptRetainedVK::MOAIGfxScriptRetainedVK () {
 
 	RTTI_BEGIN ( MOAIGfxScriptRetainedVK )
 		RTTI_EXTEND ( MOAIGfxScriptRetained )
-		RTTI_EXTEND ( MOAIAbstractDrawingLuaAPIVK )
+		RTTI_EXTEND ( MOAIAbstractDrawingObjectVK )
 	RTTI_END
 }
 

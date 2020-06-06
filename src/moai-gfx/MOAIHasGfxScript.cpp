@@ -14,7 +14,7 @@ MOAIHasGfxScript::MOAIHasGfxScript () {
 
 	RTTI_BEGIN ( MOAIHasGfxScript )
 		RTTI_EXTEND ( MOAIAbstractHasGfxScript )
-		RTTI_EXTEND ( MOAIAbstractDrawingLuaAPI )
+		RTTI_EXTEND ( MOAIAbstractDrawingObject )
 	RTTI_END
 }
 

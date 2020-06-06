@@ -12,7 +12,7 @@
 // TODO: doxygen
 class MOAIHasGfxScript :
 	public virtual MOAIAbstractHasGfxScript,
-	public virtual MOAIAbstractDrawingLuaAPI {
+	public virtual MOAIAbstractDrawingObject {
 protected:
 
 	ZLStrongPtr < MOAIAbstractGfxScript > mGfxScript;

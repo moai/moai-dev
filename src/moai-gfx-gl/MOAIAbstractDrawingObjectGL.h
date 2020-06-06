@@ -1,18 +1,18 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIABSTRACTDRAWINGLUAAPIGL_H
-#define	MOAIABSTRACTDRAWINGLUAAPIGL_H
+#ifndef	MOAIABSTRACTDRAWINGOBJECTGL_H
+#define	MOAIABSTRACTDRAWINGOBJECTGL_H
 
 #include <moai-gfx-gl/MOAIAbstractDrawingAPIGL.h>
 
 //================================================================//
-// MOAIAbstractDrawingLuaAPIGL
+// MOAIAbstractDrawingObjectGL
 //================================================================//
 // TODO: doxygen
-class MOAIAbstractDrawingLuaAPIGL :
+class MOAIAbstractDrawingObjectGL :
 	public virtual MOAIAbstractDrawingAPIGL,
-	public virtual MOAIAbstractDrawingLuaAPI {
+	public virtual MOAIAbstractDrawingObject {
 protected:
 
 	MOAI_LUA_OBJECT_VISITOR_FRIEND
@@ -27,8 +27,8 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-						MOAIAbstractDrawingLuaAPIGL			();
-	virtual				~MOAIAbstractDrawingLuaAPIGL		();
+						MOAIAbstractDrawingObjectGL			();
+	virtual				~MOAIAbstractDrawingObjectGL		();
 };
 
 #endif

@@ -77,7 +77,7 @@ MOAIHasGfxScriptBatch::MOAIHasGfxScriptBatch () {
 	RTTI_BEGIN ( MOAIHasGfxScriptBatch )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIHasGfxScriptBatch >)
 		RTTI_EXTEND ( MOAIAbstractGfxScriptBatch )
-		RTTI_EXTEND ( MOAIAbstractDrawingLuaAPI )
+		RTTI_EXTEND ( MOAIAbstractDrawingObject )
 	RTTI_END
 }
 

@@ -5,7 +5,7 @@
 #define	MOAIGFXSCRIPTRETAINED_H
 
 #include <moai-gfx/MOAIAbstractGfxScript.h>
-#include <moai-gfx/MOAIAbstractDrawingLuaAPI.h>
+#include <moai-gfx/MOAIAbstractDrawingObject.h>
 
 class MOAIAbstractUniformBuffer;
 class MOAIUniformSchema;
@@ -25,7 +25,7 @@ struct MOAIGfxScriptCommand {
 // TODO: doxygen
 class MOAIGfxScriptRetained :
 	public virtual MOAIAbstractGfxScript,
-	public virtual MOAIAbstractDrawingLuaAPI {
+	public virtual MOAIAbstractDrawingObject {
 protected:
 
 	friend class MOAIAbstractGfxScriptInterface;

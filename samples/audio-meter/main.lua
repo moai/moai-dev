@@ -84,9 +84,9 @@ sampler:start ()
 startTime = MOAISim.getDeviceTime ()
 elapsedFrames = 0
 
-onDraw = function ()
+onDraw = function ( draw )
 
-    MOAIDraw.bind ()
+    draw:bindVectorPresets ()
 
 	meter:seek ( 0 )
 
@@ -97,8 +97,8 @@ onDraw = function ()
 		local x = (( i - 1 ) * span ) - ( 1024 / 2 )
 		local y = ( meter:readFloat () * 64 ) - 256
 
-		MOAIDraw.setPenColor ( 1, 0, 0, 1 )
-		MOAIDraw.fillRect ( x, y, x + span, -256 )
+		draw:setPenColor ( 1, 0, 0, 1 )
+		draw:fillRect ( x, y, x + span, -256 )
 	end
 end
 

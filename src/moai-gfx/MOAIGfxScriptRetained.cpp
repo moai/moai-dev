@@ -134,7 +134,7 @@ MOAIGfxScriptRetained::MOAIGfxScriptRetained () {
 	RTTI_BEGIN ( MOAIGfxScriptRetained )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIGfxScriptRetained >)
 		RTTI_EXTEND ( MOAIAbstractGfxScript )
-		RTTI_EXTEND ( MOAIAbstractDrawingLuaAPI )
+		RTTI_EXTEND ( MOAIAbstractDrawingObject )
 	RTTI_END
 
 	this->mCommandStream.SetChunkSize ( 256 );

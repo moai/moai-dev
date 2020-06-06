@@ -12,7 +12,7 @@
 // TODO: doxygen
 class MOAIGfxScriptBatch :
 	public virtual MOAIAbstractGfxScriptBatch,
-	public virtual MOAIAbstractDrawingLuaAPI {
+	public virtual MOAIAbstractDrawingObject {
 private:
 
 	ZLSize													mIndexBatchSize;

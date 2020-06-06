@@ -14,7 +14,7 @@ layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 layer:pushRenderPass ()
 
-gfxQuad = MOAIGfxQuad2D.new ()
+gfxQuad = MOAISpriteDeck2D.new ()
 gfxQuad:setTexture ( "../resources/moai.png" )
 gfxQuad:setRect ( -128, -128, 128, 128 )
 gfxQuad:setUVRect ( 0, 0, 1, 1 )
@@ -23,7 +23,7 @@ prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
 prop:setPartition ( layer )
 
-local action = prop:moveRot ( 360, 5, MOAIEaseType.SMOOTH )
+local action = prop:moveRot ( 0, 0, 360, 5, MOAIEaseType.SMOOTH )
 
 ----------------------------------------------------------------
 function onMouseLeftEvent ( down )

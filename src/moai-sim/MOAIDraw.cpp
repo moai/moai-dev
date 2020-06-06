@@ -214,7 +214,7 @@ void MOAIDraw::EndDrawString () {
 	}
 
 	// Restore render state
-	MOAIDraw::BindVectorDrawing ();
+	MOAIDraw::BindVectorPresets ();
 
 	//gfxMgr.SetVertexTransform ( MOAIGfxMgr::VTX_WORLD_TRANSFORM, orgWorldTransform );
 	//gfxMgr.SetBlendMode ( orgSrcBlend, orgDestBlend ); // TODO

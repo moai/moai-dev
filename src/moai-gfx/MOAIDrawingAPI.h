@@ -25,6 +25,7 @@ struct MOAIDrawingAPIEnum {
 	
 		NONE						= ( _ )0,
 		
+		BIND_VECTOR_PRESETS,
 		CLEAR_SURFACE,
 		
 		DRAW_ANIM_CURVE,

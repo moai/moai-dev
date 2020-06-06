@@ -3,6 +3,8 @@
 
 #include "pch.h"
 #include <moai-gfx/MOAIAbstractDrawable.h>
+#include <moai-gfx/MOAIAbstractDrawingObject.h>
+#include <moai-gfx/MOAIGfxMgr.h>
 
 //================================================================//
 // MOAIAbstractDrawable
@@ -62,9 +64,10 @@ void MOAIAbstractDrawable::Draw ( MOAILuaState& state, int idx, bool debug ) {
 		}
 		
 		case LUA_TFUNCTION: {
-		
+				
 			state.CopyToTop ( idx ); // copy the function to the top
-			state.DebugCall ( 0, 0 );
+			state.Push ( MOAIGfxMgr::Get ().GetDrawingObject ());
+			state.DebugCall ( 1, 0 );
 			break;
 		}
 	}

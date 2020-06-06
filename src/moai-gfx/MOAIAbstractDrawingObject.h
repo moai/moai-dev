@@ -1,25 +1,25 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIABSTRACTDRAWINGLUAAPI_H
-#define	MOAIABSTRACTDRAWINGLUAAPI_H
+#ifndef	MOAIABSTRACTDRAWINGOBJECT_H
+#define	MOAIABSTRACTDRAWINGOBJECT_H
 
 #include <moai-gfx/MOAIAbstractDrawingAPI.h>
 #include <moai-gfx/MOAIGfxConsts.h>
 
 //================================================================//
-// MOAIAbstractDrawingLuaAPI
+// MOAIAbstractDrawingObject
 //================================================================//
 // TODO: doxygen
-class MOAIAbstractDrawingLuaAPI :
-	public virtual MOAIAbstractDrawingAPI,
-	public virtual MOAILuaObject {
+class MOAIAbstractDrawingObject :
+	public virtual MOAILuaObject,
+	public virtual MOAIAbstractDrawingAPI {
 protected:
 
 	MOAI_LUA_OBJECT_VISITOR_FRIEND
 
 	//----------------------------------------------------------------//
-	static int			_bindVectorDrawing			( lua_State* L );
+	static int			_bindVectorPresets			( lua_State* L );
 	static int			_clearSurface				( lua_State* L );
 	static int			_drawAnimCurve				( lua_State* L );
 	static int			_drawBezierCurve			( lua_State* L );
@@ -68,8 +68,8 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-						MOAIAbstractDrawingLuaAPI		();
-	virtual				~MOAIAbstractDrawingLuaAPI		();
+						MOAIAbstractDrawingObject		();
+	virtual				~MOAIAbstractDrawingObject		();
 };
 
 #endif

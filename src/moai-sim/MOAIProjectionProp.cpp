@@ -110,7 +110,7 @@ void MOAIProjectionProp::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
 	
-	draw.BindVectorDrawing ();
+	draw.BindVectorPresets ();
 	draw.DrawBoxOutline ( this->GetWorldBounds ().mAABB );
 }
 

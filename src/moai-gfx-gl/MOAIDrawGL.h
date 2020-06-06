@@ -4,13 +4,13 @@
 #ifndef	MOAIDRAWGL_H
 #define	MOAIDRAWGL_H
 
-#include <moai-gfx-gl/MOAIAbstractDrawingLuaAPIGL.h>
+#include <moai-gfx-gl/MOAIAbstractDrawingObjectGL.h>
 
 //================================================================//
 // MOAIDrawGL
 //================================================================//
 class MOAIDrawGL :
-	public virtual MOAIAbstractDrawingLuaAPIGL {
+	public virtual MOAIAbstractDrawingObjectGL {
 protected:
 
 	//----------------------------------------------------------------//

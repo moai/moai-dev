@@ -1294,7 +1294,7 @@ void MOAIBox2DWorld::MOAIDrawable_Draw ( int subPrimID ) {
 
 	if ( this->mDebugDraw ) {
 		
-		MOAIDraw::Get ().BindVectorDrawing ();
+		MOAIDraw::Get ().BindVectorPresets ();
 		
 		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 		
