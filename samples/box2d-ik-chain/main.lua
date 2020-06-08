@@ -53,7 +53,7 @@ function addSprite ( x, y, r, density, type )
 	--body:applyAngularImpulse ( 80 )
 
 	local sprite = MOAIProp.new ()
-	sprite:setBounds ( -r, -r, 0, r, r, 0 )
+	sprite:setModelBounds ( -r, -r, 0, r, r, 0 )
 	sprite.body = body
 	sprite:setParent ( body )
 	sprite:setPartition ( layer )

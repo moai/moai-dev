@@ -237,7 +237,7 @@ fixture4.mud = true
 deck = createTexturePackerDeckRaw ( "squish" )
 
 function makeAnimCurve ( t )
-	local animcurve = MOAIAnimCurve.new ()
+	local animcurve = MOAIAnimCurveIndex.new ()
 	animcurve:reserveKeys ( #t )
 
 	for i = 1, #t do
