@@ -607,15 +607,15 @@ MOAIMesh* MOAIGeometryWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream
 	
 	MOAIMesh* mesh = new MOAIMesh ();
 
-	mesh->GetVertexArray ().SetVertexBuffer ( 0, vtxBuffer, ( MOAIVertexFormat* )&format ); // not ideal, but we're gonna do it
-	mesh->SetIndexBuffer ( idxBuffer );
-
-	mesh->SetPrimType ( MOAIGfxTopologyEnum::TRIANGLE_LIST );
-	mesh->SetTotalElements ( totalElements );
-	
-	ZLBox aabb;
-	format.ComputeAABB ( aabb, vtxBuffer->GetConstBuffer (), vtxBuffer->GetSize ());
-	mesh->SetBounds ( aabb );
+//	mesh->GetVertexArray ().SetVertexBuffer ( 0, vtxBuffer, ( MOAIVertexFormat* )&format ); // not ideal, but we're gonna do it
+//	mesh->SetIndexBuffer ( idxBuffer );
+//
+//	mesh->SetPrimType ( MOAIGfxTopologyEnum::TRIANGLE_LIST );
+//	mesh->SetTotalElements ( totalElements );
+//	
+//	ZLBox aabb;
+//	format.ComputeAABB ( aabb, vtxBuffer->GetConstBuffer (), vtxBuffer->GetSize ());
+//	mesh->SetBounds ( aabb );
 	
 	return mesh;
 }

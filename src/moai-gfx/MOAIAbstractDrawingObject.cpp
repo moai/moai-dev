@@ -423,27 +423,6 @@ int MOAIAbstractDrawingObject::_fillRoundedRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIAbstractDrawingObject::_strokeRoundedRect ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractDrawingObject, "" )
-	
-	float x0 = state.GetValue < float >( 2, 0.0f );
-	float y0 = state.GetValue < float >( 3, 0.0f );
-	float x1 = state.GetValue < float >( 4, 0.0f );
-	float y1 = state.GetValue < float >( 5, 0.0f );
-	
-	float stroke	= state.GetValue < float >( 6, 0.0f );
-	float offset	= state.GetValue < float >( 7, 0.0f );
-	
-	float xRad		= state.GetValue < float >( 8, 0.0f );
-	float yRad		= state.GetValue < float >( 9, xRad );
-	u32 steps		= state.GetValue < u32 >( 10, DEFAULT_ELLIPSE_STEPS );
-
-	self->DrawRoundedRectStroke ( x0, y0, x1, y1, xRad, yRad, steps, stroke, offset );
-	return 0;
-}
-
-//----------------------------------------------------------------//
 int MOAIAbstractDrawingObject::_popGfxState ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractDrawingObject, "U" )
 	
@@ -658,6 +637,27 @@ int MOAIAbstractDrawingObject::_setViewRect ( lua_State* L ) {
 		rect = state.GetValue < ZLRect >( 3, rect );
 		self->SetViewRect ( rect );
 	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIAbstractDrawingObject::_strokeRoundedRect ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractDrawingObject, "" )
+	
+	float x0 = state.GetValue < float >( 2, 0.0f );
+	float y0 = state.GetValue < float >( 3, 0.0f );
+	float x1 = state.GetValue < float >( 4, 0.0f );
+	float y1 = state.GetValue < float >( 5, 0.0f );
+	
+	float stroke	= state.GetValue < float >( 6, 0.0f );
+	float offset	= state.GetValue < float >( 7, 0.0f );
+	
+	float xRad		= state.GetValue < float >( 8, 0.0f );
+	float yRad		= state.GetValue < float >( 9, xRad );
+	u32 steps		= state.GetValue < u32 >( 10, DEFAULT_ELLIPSE_STEPS );
+
+	self->DrawRoundedRectStroke ( x0, y0, x1, y1, xRad, yRad, steps, stroke, offset );
 	return 0;
 }
 

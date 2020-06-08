@@ -53,8 +53,9 @@ private:
 
 	friend class MOAIMesh;
 
-	MOAIMesh*					mMesh;
 	MOAIVertexFormat*			mVertexFormat;
+	MOAIGfxTopologyEnum::_		mPrimType;
+	ZLSize						mTotalElements;
 	ZLSize						mTotalPrims;
 	
 	const MOAIVertexAttribute*	mAttribute;
@@ -62,7 +63,7 @@ private:
 	MOAIIndexBuffer*			mIndexBuffer;
 
 	//----------------------------------------------------------------//
-	bool		Init			( MOAIMesh& mesh, ZLIndex vertexBufferIndex );
+	bool		Init			( MOAIVertexFormat& vertexFormat, MOAIVertexBuffer& vertexBuffer, MOAIGfxTopologyEnum::_ primType, u32 totalElements, MOAIIndexBuffer* indexBuffer = NULL );
 	ZLVec3D		ReadCoord		( u32 idx ) const;
 
 public:
@@ -95,9 +96,6 @@ protected:
 
 	friend class MOAIMeshPrimReader;
 
-	ZLStrongPtr < MOAIIndexBuffer >	mIndexBuffer;
-	ZLStrongPtr < MOAIVertexArray >	mVertexArray;
-
 	u32								mTotalElements;
 	ZLBounds						mBounds;
 	MOAIGfxTopologyEnum::_			mPrimType;
@@ -113,7 +111,6 @@ protected:
 	static int			_printPartition				( lua_State* L );
 	static int			_readPrimCoords				( lua_State* L );
 	static int			_setBounds					( lua_State* L );
-	static int			_setIndexBuffer				( lua_State* L );
 	static int			_setPenWidth				( lua_State* L );
 	static int			_setPrimType				( lua_State* L );
 	static int			_setTotalElements			( lua_State* L );
@@ -138,13 +135,9 @@ public:
 	void				ClearBounds					();
 	u32					CountPrims					() const;
 	void				DrawIndex					( ZLIndex idx, MOAIMeshSpan* span );
-	MOAIVertexArray&	GetVertexArray				();
 						MOAIMesh					();
 						~MOAIMesh					();
-	void				ReserveVAOs					( u32 total );
-	void				ReserveVertexBuffers		( u32 total );
 	void				SetBounds					( const ZLBox& aabb );
-	void				SetIndexBuffer				( MOAIIndexBuffer* indexBuffer );
 };
 
 #endif
