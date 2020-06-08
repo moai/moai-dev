@@ -95,8 +95,8 @@ protected:
 
 public:
 
-	DECL_ATTR_HELPER ( MOAIGraphicsPropBase )
 	DECL_LUA_ABSTRACT ( MOAIGraphicsPropBase )
+	DECL_ATTR_HELPER ( MOAIGraphicsPropBase );
 
 	enum {
 		DEBUG_DRAW_PARTITION_CELLS,
@@ -118,6 +118,13 @@ public:
 	};
 
 	enum {
+		FLAGS_LOCAL_VISIBLE			= 0x01,
+		FLAGS_VISIBLE				= 0x02, // this is a composite of FLAGS_LOCAL_VISIBLE plus the parent's ATTR_VISIBLE
+	};
+
+	static const u32 DEFAULT_FLAGS = FLAGS_LOCAL_VISIBLE | FLAGS_VISIBLE;
+
+	enum {
 		ATTR_SCISSOR_RECT,
 		
 		ATTR_LOCAL_VISIBLE,		// direct access to the prop's 'local' visbility setting
@@ -130,12 +137,14 @@ public:
 		TOTAL_ATTR,
 	};
 
-	enum {
-		FLAGS_LOCAL_VISIBLE			= 0x01,
-		FLAGS_VISIBLE				= 0x02, // this is a composite of FLAGS_LOCAL_VISIBLE plus the parent's ATTR_VISIBLE
-	};
-
-	static const u32 DEFAULT_FLAGS = FLAGS_LOCAL_VISIBLE | FLAGS_VISIBLE;;
+	DECL_ATTR_ID ( ATTR_SCISSOR_RECT )
+	
+	DECL_ATTR_ID ( ATTR_LOCAL_VISIBLE )
+	DECL_ATTR_ID ( ATTR_VISIBLE )
+	DECL_ATTR_ID ( INHERIT_VISIBLE )
+	
+	DECL_ATTR_ID ( INHERIT_FRAME )
+	DECL_ATTR_ID ( FRAME_TRAIT )
 
 	//----------------------------------------------------------------//
 	ZLMatrix4x4				GetWorldDrawingMtx			() const;

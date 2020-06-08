@@ -1141,13 +1141,13 @@ bool MOAIBox2DBody::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u
 		
 			case MOAITransform::ATTR_X_LOC: {
 				float x = attr.Apply ( xform.p.x, op, ZLAttribute::ATTR_READ_WRITE ) * this->GetUnitsToMeters ();
-				mBody->SetTransform ( b2Vec2( x, xform.p.y), xform.q.GetAngle() );
+				mBody->SetTransform ( b2Vec2 ( x, xform.p.y), xform.q.GetAngle ());
 				return true;
 			}
 				
 			case MOAITransform::ATTR_Y_LOC: {
 				float y = attr.Apply ( xform.p.y, op, ZLAttribute::ATTR_READ_WRITE ) * this->GetUnitsToMeters ();
-				mBody->SetTransform ( b2Vec2( xform.p.x, y ), xform.q.GetAngle() );
+				mBody->SetTransform ( b2Vec2 ( xform.p.x, y ), xform.q.GetAngle ());
 				return true;
 			}
 				

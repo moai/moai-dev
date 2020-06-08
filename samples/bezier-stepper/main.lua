@@ -10,7 +10,7 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )
 viewport:setScale ( 320, 480 )
 
-layer = MOAIPartitionViewLayer.new ()
+layer = MOAITableViewLayer.new ()
 layer:setViewport ( viewport )
 layer:pushRenderPass ()
 
@@ -39,22 +39,24 @@ while stepper:more () do
 	table.insert ( points, { x = x, y = y })
 end
 
-function onDraw ()
+function onDraw ( draw )
 
-	MOAIGfxMgr.setPenColor ( 1, 0, 1, 1 )
+    draw:bindVectorPresets ()
+    
+	draw:setPenColor ( 1, 0, 1, 1 )
 
 	local v1 = points [ 1 ]
 	for i = 2, #points do
 		local v2 = points [ i ]
-		MOAIDraw.drawLine ( v1.x, v1.y, v2.x, v2.y )
+		draw:drawLine ( v1.x, v1.y, v2.x, v2.y )
 		v1 = v2
 	end
 
-	MOAIGfxMgr.setPenColor ( 1, 0, 0, 1 )
+	draw:setPenColor ( 1, 0, 0, 1 )
 
 	for i, v in ipairs ( points ) do
-		MOAIDraw.drawCircle ( v.x, v.y, 2, 8 )
+		draw:drawCircle ( v.x, v.y, 2, 8 )
 	end
 end
 
-layer:setOverlayTable ({ onDraw })
+layer:setRenderTable ({ onDraw })

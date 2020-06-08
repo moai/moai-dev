@@ -14,7 +14,7 @@ layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 layer:pushRenderPass ()
 
-gfxQuad = MOAIGfxQuad2D.new ()
+gfxQuad = MOAISpriteDeck2D.new ()
 gfxQuad:setTexture ( "../resources/moai.png" )
 gfxQuad:setRect ( -64, -64, 64, 64 )
 
@@ -26,20 +26,19 @@ function threadFunc ()
  
     local action
  
-    action = prop:moveRot ( 180, 3 )
-    MOAIThread.blockOnAction ( action )
+    action = prop:moveRot ( 0, 0, 180, 3 )
+    MOAICoroutine.blockOnAction ( action )
  
-    action = prop:moveLoc ( 64, 0, 2 ) 
-    MOAIThread.blockOnAction ( action )
+    action = prop:moveLoc ( 64, 0, 0, 2 ) 
+    MOAICoroutine.blockOnAction ( action )
  
-    action = prop:moveScl ( -0.5, -0.5, 1 ) 
-    MOAIThread.blockOnAction ( action )
+    action = prop:moveScl ( -0.5, -0.5, 0, 1 ) 
+    MOAICoroutine.blockOnAction ( action )
 
-	action = prop:moveRot ( -180, 3 )
-    MOAIThread.blockOnAction ( action )
+	action = prop:moveRot ( 0, 0, -180, 3 )
+    MOAICoroutine.blockOnAction ( action )
 	
 end
 
-thread = MOAIThread.new ()
+thread = MOAICoroutine.new ()
 thread:run ( threadFunc )
-

@@ -388,13 +388,13 @@ void MOAIAbstractDrawingAPI::DrawLuaParams ( lua_State* L, MOAIGfxTopologyEnum::
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	MOAILuaState state ( L );
 
-	u32 total = state.GetTop () >> 1;
+	u32 total = ( state.GetTop () - 1 ) >> 1;
 	
 	gfxMgr.BeginPrim ( primType, total );
 	
 	for ( u32 i = 0; i < total; ++i ) {
 		
-		u32 idx = ( i << 1 ) + 1;
+		u32 idx = ( i << 1 ) + 2;
 		
 		float x = state.GetValue < float >( idx, 0.0f );
 		float y = state.GetValue < float >( idx + 1, 0.0f );

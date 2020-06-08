@@ -7,15 +7,15 @@
 #include <moai-core/MOAIEventSource.h>
 #include <moai-core/MOAILua.h>
 
-#define DECL_ATTR_HELPER(type)																									\
-	class AttrID {																												\
-	public:																														\
-		static inline bool			Check		( ZLAttrID attrID ) { return MOAINode::CheckAttrID < type >( attrID ); }		\
+#define DECL_ATTR_HELPER(type)																								\
+	class AttrID {																											\
+	public:																													\
+		static inline bool		Check		( ZLAttrID attrID ) { return MOAINode::CheckAttrID < type >( attrID ); }		\
 		static inline ZLAttrID	Pack		( u32 rawID ) { return MOAINode::PackAttrID < type >( rawID ); }				\
 	};
 
-#define DECL_ATTR_ID(name)																										\
-	static inline ZLAttrID	AttrID_##name		() { return AttrID::Pack ( name ); }
+#define DECL_ATTR_ID(name)																									\
+	static inline ZLAttrID	AttrID_##name			() { return AttrID::Pack ( name ); }
 
 class MOAINode;
 class MOAIDepLink;

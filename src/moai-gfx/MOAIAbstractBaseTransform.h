@@ -55,6 +55,8 @@ public:
 	
 	DECL_ATTR_HELPER ( MOAIAbstractBaseTransform )
 	
+	GET ( ZLVec3D, WorldLoc, mLocalToWorldMtx.GetTranslation ())
+	
 	enum {
 		ATTR_WORLD_X_LOC,
 		ATTR_WORLD_Y_LOC,
@@ -71,7 +73,17 @@ public:
 		TOTAL_ATTR,
 	};
 	
-	GET ( ZLVec3D, WorldLoc, mLocalToWorldMtx.GetTranslation ())
+	DECL_ATTR_ID ( ATTR_WORLD_X_LOC )
+	DECL_ATTR_ID ( ATTR_WORLD_Y_LOC )
+	DECL_ATTR_ID ( ATTR_WORLD_Z_LOC )
+	
+	DECL_ATTR_ID ( ATTR_WORLD_Z_ROT )
+	
+	DECL_ATTR_ID ( ATTR_WORLD_X_SCL )
+	DECL_ATTR_ID ( ATTR_WORLD_Y_SCL )
+	DECL_ATTR_ID ( ATTR_WORLD_Z_SCL )
+	
+	DECL_ATTR_ID ( TRANSFORM_TRAIT )
 	
 	//----------------------------------------------------------------//
 	const ZLAffine3D&		GetLocalToWorldMtx			() const;

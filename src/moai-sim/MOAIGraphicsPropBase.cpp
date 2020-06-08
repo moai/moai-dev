@@ -118,12 +118,10 @@ int MOAIGraphicsPropBase::_setParent ( lua_State* L ) {
 
 	MOAINode* parent = state.GetLuaObject < MOAINode >( 2, true );
 	
-	self->SetAttrLink ( MOAIColor::AttrID_INHERIT_COLOR (), parent, MOAIColor::AttrID_COLOR_TRAIT ());
-	self->SetAttrLink ( MOAIAbstractChildTransform::AttrID::Pack ( MOAIAbstractChildTransform::INHERIT_TRANSFORM ), parent, MOAIAbstractChildTransform::AttrID::Pack ( MOAIAbstractChildTransform::TRANSFORM_TRAIT ));
-	self->SetAttrLink ( AttrID::Pack ( INHERIT_VISIBLE ), parent, AttrID::Pack ( ATTR_VISIBLE ));
-	
-	//MOAILogF ( state, MOAISTRING_FunctionDeprecated_S, "setParent" );
-	
+	self->SetAttrLink ( MOAIColor::AttrID_INHERIT_COLOR (),							parent, MOAIColor::AttrID_COLOR_TRAIT ());
+	self->SetAttrLink ( MOAIAbstractChildTransform::AttrID_INHERIT_TRANSFORM (),	parent, MOAIAbstractBaseTransform::AttrID_TRANSFORM_TRAIT ());
+	self->SetAttrLink ( AttrID_INHERIT_VISIBLE (),									parent, AttrID_ATTR_VISIBLE ());
+		
 	return 0;
 }
 

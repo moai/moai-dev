@@ -40,15 +40,17 @@ public:
 	
 	DECL_ATTR_HELPER ( MOAIAbstractChildTransform )
 	
+	GET ( ZLVec3D, WorldLoc, mLocalToWorldMtx.GetTranslation ())
+	
 	enum {
-		
 		INHERIT_LOC,
 		INHERIT_TRANSFORM,
 		
 		TOTAL_ATTR,
 	};
 	
-	GET ( ZLVec3D, WorldLoc, mLocalToWorldMtx.GetTranslation ())
+	DECL_ATTR_ID ( INHERIT_LOC )
+	DECL_ATTR_ID ( INHERIT_TRANSFORM )
 	
 	//----------------------------------------------------------------//
 				MOAIAbstractChildTransform			();
