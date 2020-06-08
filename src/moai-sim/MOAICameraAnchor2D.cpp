@@ -20,7 +20,7 @@ int MOAICameraAnchor2D::_setParent ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICameraAnchor2D, "U" )
 	
 	MOAIAbstractChildTransform* parent = state.GetLuaObject < MOAIAbstractChildTransform >( 2, true );
-	self->SetAttrLink ( AttrID::Pack ( INHERIT_LOC ), parent, MOAIAbstractChildTransform::AttrID::Pack ( MOAIAbstractChildTransform::TRANSFORM_TRAIT ));
+	self->SetAttrLink ( AttrID_INHERIT_LOC (), parent, MOAIAbstractBaseTransform::AttrID_TRANSFORM_TRAIT ());
 	
 	return 0;
 }

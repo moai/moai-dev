@@ -41,6 +41,8 @@ public:
 		INHERIT_LOC,
 		TOTAL_ATTR,
 	};
+	
+	DECL_ATTR_ID ( INHERIT_LOC );
 
 	//----------------------------------------------------------------//
 					MOAICameraAnchor2D		();
