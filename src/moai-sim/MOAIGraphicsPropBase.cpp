@@ -221,7 +221,7 @@ MOAIGraphicsPropBase::MOAIGraphicsPropBase () :
 		RTTI_EXTEND ( MOAIAbstractProp )
 		RTTI_EXTEND ( MOAIColor )
 		RTTI_EXTEND ( MOAIAbstractDrawable )
-		RTTI_EXTEND ( MOAIHasGfxScriptBatch )
+		RTTI_EXTEND ( MOAIHasGfxScript )
 	RTTI_END
 	
 	this->mDisplayFlags = DEFAULT_FLAGS;

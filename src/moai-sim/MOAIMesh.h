@@ -90,7 +90,7 @@ public:
 */
 class MOAIMesh :
 	public MOAIDeck,
-	public MOAIHasGfxScriptBatch {
+	public MOAIHasGfxScript {
 protected:
 
 	friend class MOAIMeshPrimReader;
@@ -100,7 +100,7 @@ protected:
 
 	u32								mTotalElements;
 	ZLBounds						mBounds;
-	MOAIGfxTopologyEnum::_	mPrimType;
+	MOAIGfxTopologyEnum::_			mPrimType;
 	float							mPenWidth;
 	MOAIMeshPartition*				mPartition;
 

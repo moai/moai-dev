@@ -21,7 +21,7 @@ int MOAIAbstractChildTransform::_setParent ( lua_State* L ) {
 
 	MOAIAbstractBaseTransform* parent = state.GetLuaObject < MOAIAbstractBaseTransform >( 2, true );
 	
-	self->SetAttrLink ( AttrID::Pack ( INHERIT_TRANSFORM ), parent, MOAIAbstractBaseTransform::AttrID::Pack ( MOAIAbstractBaseTransform::TRANSFORM_TRAIT ));
+	self->SetAttrLink ( AttrID_INHERIT_TRANSFORM (), parent, MOAIAbstractBaseTransform::AttrID_TRANSFORM_TRAIT ());
 	
 	return 0;
 }

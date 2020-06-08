@@ -54,7 +54,7 @@ class MOAIGraphicsPropBase :
 	public virtual MOAIAbstractProp,
 	public virtual MOAIColor,
 	public virtual MOAIAbstractDrawable,
-	public virtual MOAIHasGfxScriptBatch {
+	public virtual MOAIHasGfxScript {
 protected:
 	
 	//----------------------------------------------------------------//

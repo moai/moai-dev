@@ -143,7 +143,7 @@ bool MOAIGfxResourceGL::DoGPUCreate () {
 	
 		// set this now; in immediate mode we'll go straight to STATE_READY_TO_BIND on success
 		// otherwise we'll go there later when we get GFX_EVENT_CREATED
-		// why can't we set STATE_READY_TO_BIND? becausein multi-threaded mode, it might be
+		// why can't we set STATE_READY_TO_BIND? because in multi-threaded mode, it might be
 		// a few more frames before we get GFX_EVENT_CREATED
 		
 		this->mState = STATE_PENDING;

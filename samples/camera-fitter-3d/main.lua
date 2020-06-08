@@ -11,7 +11,7 @@ require ( 'cube' )
 
 MOAISim.openWindow ( "test", 960, 480 )
 
-MOAIGfxMgr.getFrameBuffer ():setClearDepth ( true )
+-- MOAIGfxMgr.getFrameBuffer ():setClearDepth ( true )
 
 XMIN = 20
 XMAX = 940
@@ -36,6 +36,7 @@ layer:setViewport ( viewport )
 layer:pushRenderPass ()
 
 camera = MOAICamera.new ()
+camera:setType ( MOAICamera.CAMERA_TYPE_3D )
 camera:setFieldOfView ( 45 )
 camera:setLoc ( 0, 0, 200 )
 layer:setCamera ( camera )
@@ -46,8 +47,8 @@ makeProp = function ( x, y, z )
 
 	local prop = MOAIProp.new ()
 	prop:setDeck ( cube )
-	prop:setCullMode ( MOAIGraphicsProp.CULL_BACK )
-	prop:setDepthTest ( MOAIGraphicsProp.DEPTH_TEST_LESS )
+	prop:setCullFunc ( MOAIGraphicsProp.CULL_BACK )
+	prop:setDepthFunc ( MOAIGraphicsProp.DEPTH_TEST_LESS )
 	prop:setLoc ( x, y, z )
 	prop:setPartition ( layer )
 
