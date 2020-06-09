@@ -47,8 +47,6 @@ makeProp = function ( x, y, z )
 
 	local prop = MOAIProp.new ()
 	prop:setDeck ( cube )
-	prop:setCullFunc ( MOAIGraphicsProp.CULL_BACK )
-	prop:setDepthFunc ( MOAIGraphicsProp.DEPTH_TEST_LESS )
 	prop:setLoc ( x, y, z )
 	prop:setPartition ( layer )
 

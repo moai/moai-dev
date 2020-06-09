@@ -103,14 +103,17 @@ makeCube = function ( size )
 
 	local mesh = MOAIMesh.new ()
 
-	mesh:setVertexBuffer ( vbo, vertexFormat )
+    mesh:setVertexFormat ( vertexFormat )
+	mesh:setVertexBuffer ( vbo )
 	mesh:setIndexBuffer ( ibo )
 
 	mesh:setTotalElements ( 36 )
 	mesh:setBounds ( vbo:computeBounds ( vertexFormat ))
 
 	mesh:setPrimType ( MOAIMesh.GL_TRIANGLES )
-	mesh:setShader ( MOAIShaderMgr.getShader ( MOAIShaderMgr.LINE_SHADER_3D ))
+    mesh:setCullFunc ( MOAIGraphicsProp.CULL_BACK )
+    mesh:setDepthFunc ( MOAIGraphicsProp.DEPTH_TEST_LESS )
+	mesh:setShader ( MOAIShaderMgr.LINE_SHADER_3D )
 	
 	return mesh
 end

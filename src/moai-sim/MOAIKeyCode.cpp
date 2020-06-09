@@ -7,6 +7,19 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+MOAIKeyCode::MOAIKeyCode () {
+
+	RTTI_BEGIN ( MOAIKeyCode )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIKeyCode >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
+}
+
+//----------------------------------------------------------------//
+MOAIKeyCode::~MOAIKeyCode () {
+}
+
+//----------------------------------------------------------------//
 void MOAIKeyCode::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 

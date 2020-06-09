@@ -120,5 +120,9 @@ protected:
 public:
 	
 	DECL_LUA_SINGLETON ( MOAIKeyCode )
+	
+	//----------------------------------------------------------------//
+						MOAIKeyCode				();
+						~MOAIKeyCode			();
 };
 #endif
