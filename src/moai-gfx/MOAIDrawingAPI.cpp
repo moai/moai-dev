@@ -64,6 +64,12 @@ void MOAIDrawingAPI::Execute ( MOAIAbstractGfxScriptCallback* callback, MOAIDraw
 			break;
 		}
 	
+		case MOAIDrawingAPIEnum::DRAW_RAY: {
+			MOAIDrawingParam::DrawRay param = *( const MOAIDrawingParam::DrawRay* )rawParam;
+			MOAIDrawingAPI::ExecuteDrawRay ( gfxMgr, param );
+			break;
+		}
+	
 		case MOAIDrawingAPIEnum::DRAW_TRIANGLE: {
 			MOAIDrawingParam::DrawTriangle param = *( const MOAIDrawingParam::DrawTriangle* )rawParam;
 			MOAIDrawingAPI::ExecuteDrawTriangle ( gfxMgr, param );
@@ -385,6 +391,49 @@ void MOAIDrawingAPI::ExecuteDrawPoint ( MOAIGfxMgr& gfxMgr, const ZLVec3D& param
 		gfxMgr.WriteVtx ( param.mX, param.mY, param.mZ );
 		gfxMgr.WritePenColor4b ();
 	gfxMgr.EndPrim ();
+}
+
+//----------------------------------------------------------------//
+void MOAIDrawingAPI::ExecuteDrawRay ( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawRay& param ) {
+
+	float x = param.mLoc.mX;
+	float y = param.mLoc.mY;
+
+	float dx = param.mVec.mX;
+	float dy = param.mVec.mY;
+
+	ZLVec2D loc ( x, y );
+	ZLVec2D vec ( dx, dy );
+
+	ZLMatrix4x4 mtx = gfxMgr.GetMtx ( MOAIGfxMgr::WORLD_TO_CLIP_MTX );
+
+	ZLMatrix4x4 invMtx;
+	invMtx.Inverse ( mtx );
+
+	mtx.Transform ( loc );
+	mtx.TransformVec ( vec );
+
+	ZLRect viewRect;
+	viewRect.Init ( -1.0f, -1.0f, 1.0f, 1.0f );
+
+	ZLVec2D p0;
+	ZLVec2D p1;
+
+	if ( viewRect.GetIntersection ( loc, vec, p0, p1 )) {
+
+		invMtx.Transform ( p0 );
+		invMtx.Transform ( p1 );
+
+		gfxMgr.BeginPrim ( MOAIGfxTopologyEnum::LINE_LIST, 2 );
+
+			gfxMgr.WriteVtx ( p0.mX, p0.mY, 0.0f );
+			gfxMgr.WritePenColor4b ();
+
+			gfxMgr.WriteVtx ( p1.mX, p1.mY, 0.0f );
+			gfxMgr.WritePenColor4b ();
+
+		gfxMgr.EndPrim ();
+	}
 }
 
 //----------------------------------------------------------------//

@@ -34,7 +34,7 @@ int MOAIAbstractProp::_getModelBounds ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractProp, "U" )
 	
 	ZLBounds bounds = self->GetModelBounds ();
-	if ( bounds.mStatus != ZLBounds::ZL_BOUNDS_OK ) return 0;
+	if ( !bounds.HasGeometry ()) return 0;
 	state.Push ( bounds.mAABB );
 	return 6;
 }
@@ -52,7 +52,7 @@ int MOAIAbstractProp::_getModelBoundsSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractProp, "U" )
 
 	ZLBounds bounds = self->GetModelBounds ();
-	if ( bounds.mStatus != ZLBounds::ZL_BOUNDS_OK ) return 0;
+	if ( !bounds.HasGeometry ()) return 0;
 	
 	state.Push ( bounds.mAABB.mMax.mX - bounds.mAABB.mMin.mX );
 	state.Push ( bounds.mAABB.mMax.mY - bounds.mAABB.mMin.mY );
@@ -174,7 +174,7 @@ ZLBounds MOAIAbstractProp::GetModelBounds () {
 		bounds = this->MOAIAbstractProp_GetModelBounds ();
 	}
 	
-	if ( bounds.mStatus == ZLBounds::ZL_BOUNDS_OK ) {
+	if ( bounds.HasGeometry ()) {
 		bounds.mAABB.Pad ( this->mModelBoundsPad.mX, this->mModelBoundsPad.mY, this->mModelBoundsPad.mZ );
 	}
 
@@ -186,8 +186,8 @@ bool MOAIAbstractProp::InsideModelBounds ( const ZLVec3D& vec, float pad ) {
 
 	ZLBounds bounds = this->GetModelBounds ();
 	
-	if ( bounds.mStatus == ZLBounds::ZL_BOUNDS_EMPTY ) return false;
-	if ( bounds.mStatus == ZLBounds::ZL_BOUNDS_GLOBAL ) return true;
+	if ( bounds.IsEmpty ()) return false;
+	if ( bounds.IsGlobal ()) return true;
 	
 	bounds.mAABB.Inflate ( pad );
 	bounds.mAABB.Bless ();
@@ -256,12 +256,13 @@ void MOAIAbstractProp::MOAINode_Update () {
 	ZLBounds bounds = this->GetModelBounds ();
 	
 	// update the prop location in the partition
-	if ( bounds.mStatus == ZLBounds::ZL_BOUNDS_OK ) {
+	if ( !bounds.IsEmpty ()) {
 	
-		ZLPrism obb = bounds.mOBB;
-		obb.Transform ( this->mLocalToWorldMtx );
-	
-		bounds.Init ( obb );
+		if ( bounds.HasGeometry ()) {
+			ZLPrism obb = bounds.mOBB;
+			obb.Transform ( this->mLocalToWorldMtx );
+			bounds.Init ( obb );
+		}
 		this->UpdateWorldBounds ( bounds );
 	}
 	else {

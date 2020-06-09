@@ -47,7 +47,6 @@ function onDraw ( draw, index, xOff, yOff, xFlip, yFlip )
 end
 
 drawDeck = MOAIDrawDeck.new ()
-drawDeck:setBounds ( -128, -128, 128, 128 )
 drawDeck:setDrawCallback ( onDraw )
 
 prop = MOAIProp.new ()

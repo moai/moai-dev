@@ -635,10 +635,9 @@ ZLBounds MOAISpriteDeck2D::MOAIDeck_ComputeMaxAABB () {
 		
 		ZLBounds bounds;
 		bounds.Init ( frame );
-		bounds.mStatus = ZLBounds::ZL_BOUNDS_OK;
 		return bounds;
 	}
-	return ZLBounds::ZL_BOUNDS_EMPTY;
+	return ZLBounds::EMPTY;
 }
 
 //----------------------------------------------------------------//

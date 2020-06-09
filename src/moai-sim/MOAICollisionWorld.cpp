@@ -193,7 +193,7 @@ void MOAICollisionWorld::DoCallback ( u32 eventID, MOAICollisionProp& prop0, MOA
 		state.Push ( &prop0 );
 		state.Push ( &prop1 );
 		
-		if ( bounds.mStatus == ZLBounds::ZL_BOUNDS_OK ) {
+		if ( bounds.HasGeometry ()) {
 		
 			state.Push ( bounds.mAABB.mMin.mX );
 			state.Push ( bounds.mAABB.mMin.mY );

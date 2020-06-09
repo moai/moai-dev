@@ -1140,7 +1140,7 @@ void MOAITextLabel::MOAIDrawable_Draw ( int subPrimID ) {
 	
 		ZLBounds fitBounds = this->mDeck->GetBounds ( this->mIndex );
 		
-		if ( fitBounds.mStatus == ZLBounds::ZL_BOUNDS_OK ) {
+		if ( fitBounds.HasGeometry ()) {
 	
 			float width = fitBounds.mAABB.Width ();
 			float height = fitBounds.mAABB.Height ();

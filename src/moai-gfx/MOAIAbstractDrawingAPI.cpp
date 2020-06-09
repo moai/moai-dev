@@ -440,9 +440,12 @@ void MOAIAbstractDrawingAPI::DrawQuadOutline ( const ZLQuad& quad ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractDrawingAPI::DrawRay ( float x, float y, float dx, float dy, float length ) {
+void MOAIAbstractDrawingAPI::DrawRay ( float x, float y, float dx, float dy ) {
 
-	this->DrawLine ( x, y, x + ( dx * length ), y + ( dy * length ));
+	MOAIDrawingParam::DrawRay param;
+	param.mLoc = ZLVec2D ( x, y );
+	param.mVec = ZLVec2D ( dx, dy );
+	this->SubmitCommand < MOAIDrawingParam::DrawRay >( MOAIDrawingAPIEnum::DRAW_RAY, param );
 }
 
 //----------------------------------------------------------------//
@@ -591,6 +594,18 @@ void MOAIAbstractDrawingAPI::DrawTriangleOutline ( const ZLVec3D& v0, const ZLVe
 	this->DrawLine ( v0, v1 );
 	this->DrawLine ( v1, v2 );
 	this->DrawLine ( v2, v0 );
+}
+
+//----------------------------------------------------------------//
+void MOAIAbstractDrawingAPI::DrawVec ( float x, float y, float dx, float dy, float t ) {
+
+	this->DrawVec ( x, y, 0, dx, dy, 0, t );
+}
+
+//----------------------------------------------------------------//
+void MOAIAbstractDrawingAPI::DrawVec ( float x, float y, float z, float dx, float dy, float dz, float t ) {
+
+	this->DrawLine ( x, y, z, x + ( dx * t ), y + ( dy * t ), z + ( dz * t ));
 }
 
 //----------------------------------------------------------------//

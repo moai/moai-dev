@@ -41,19 +41,14 @@ void ZLBounds::Init ( float left, float top, float right, float bottom, float ba
 }
 
 //----------------------------------------------------------------//
-bool ZLBounds::IsOK () const {
-
-	return ( this->mStatus == ZL_BOUNDS_OK );
-}
-
-//----------------------------------------------------------------//
 void ZLBounds::UpdateStatus () {
 
-	this->mStatus = this->mAABB.IsPoint () ? ZLBounds::ZL_BOUNDS_EMPTY : ZLBounds::ZL_BOUNDS_OK;
+	this->mStatus = this->mAABB.IsPoint () ? ZLBounds::ZL_BOUNDS_EMPTY : ZLBounds::ZL_BOUNDS_FITTED;
 }
 
 //----------------------------------------------------------------//
-ZLBounds::ZLBounds () {
+ZLBounds::ZLBounds () :
+	mStatus ( ZL_BOUNDS_EMPTY ) {
 }
 
 //----------------------------------------------------------------//

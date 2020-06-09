@@ -639,8 +639,6 @@ void MOAIMesh::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, 
 		
 		this->mBounds.Init ( aabb );
 		
-		this->mBounds.UpdateStatus ();
-		
 		state.Pop ();
 	}
 	

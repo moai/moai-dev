@@ -124,7 +124,7 @@ void MOAICollisionProp::DrawContactPoints ( MOAIAbstractDrawingAPI& draw, const 
 		
 		
 		if ( debugLines.Bind ( DEBUG_DRAW_COLLISION_CONTACT_NORMAL, draw )) {
-			draw.DrawRay ( point.mX, point.mY, normal.mX, normal.mY, 32.0f );
+			draw.DrawVec ( point.mX, point.mY, normal.mX, normal.mY, 32.0f );
 		}
 		
 		bool drawPoint = false;
@@ -134,11 +134,11 @@ void MOAICollisionProp::DrawContactPoints ( MOAIAbstractDrawingAPI& draw, const 
 			case MOAIMoveConstraint2D::CORNER:
 				
 				if ( debugLines.Bind ( DEBUG_DRAW_COLLISION_CONTACT_POINT_CORNER_EDGE_NORMAL, draw )) {
-					draw.DrawRay ( point.mX, point.mY, edgeNormal.mX, edgeNormal.mY, 32.0f );
+					draw.DrawVec ( point.mX, point.mY, edgeNormal.mX, edgeNormal.mY, 32.0f );
 				}
 				
 				if ( debugLines.Bind ( DEBUG_DRAW_COLLISION_CONTACT_POINT_CORNER_TANGENT, draw )) {
-					draw.DrawRay ( point.mX, point.mY, cornerTangent.mX, cornerTangent.mY, 48.0f );
+					draw.DrawVec ( point.mX, point.mY, cornerTangent.mX, cornerTangent.mY, 48.0f );
 				}
 			
 				drawPoint = debugLines.Bind ( DEBUG_DRAW_COLLISION_CONTACT_POINT_CORNER, draw );
@@ -544,7 +544,7 @@ void MOAICollisionProp::MOAIDrawable_DrawDebug ( int subPrimID ) {
 		MOAIPropOverlapLink* overlapLinkIt = this->mOverlapLinks;
 		for ( ; overlapLinkIt; overlapLinkIt = overlapLinkIt->mNext ) {
 			const ZLBounds& bounds = overlapLinkIt->mOverlap->mBounds;
-			if ( bounds.mStatus == ZLBounds::ZL_BOUNDS_OK ) {
+			if ( bounds.HasGeometry ()) {
 				draw.DrawBoxOutline ( bounds.mAABB );
 			}
 		}

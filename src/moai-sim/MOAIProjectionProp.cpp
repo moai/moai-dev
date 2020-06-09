@@ -99,7 +99,7 @@ void MOAIProjectionProp::MOAIDrawable_Draw ( int subPrimID ) {
 void MOAIProjectionProp::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	UNUSED ( subPrimID );
 	
-	if ( this->GetWorldBounds ().mStatus == ZLBounds::ZL_BOUNDS_EMPTY ) return;
+	if ( this->GetWorldBounds ().IsEmpty ()) return;
 
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAIProjectionProp >())) return;
@@ -129,7 +129,7 @@ void MOAIProjectionProp::MOAINode_Update () {
 
 	ZLReal front = 0.0;
 
-	if ( sourceBounds.IsOK ()) {
+	if ( sourceBounds.HasGeometry ()) {
 	
 		// get the corners of the source AABB and project them
 		ZLBoxCorners corners ( sourceBounds.mAABB );

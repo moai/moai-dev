@@ -14,18 +14,18 @@ layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 layer:pushRenderPass ()
 
-function onDraw ( index )
+function onDraw ( draw, index )
 
-	MOAIDraw.setPenColor ( 1, 0, 0, 1 )
-	MOAIDraw.fillCircle ( 0, 0, 64, 32 )
+	draw:setPenColor ( 1, 0, 0, 1 )
+	draw:fillCircle ( 0, 0, 64, 32 )
 
-	MOAIDraw.setPenColor ( 1, 1, 1, 1 )
-	MOAIDraw.setPenWidth ( 2 )
-	MOAIDraw.drawEllipse ( 0, 0, 64, 64, 32 )
+	draw:setPenColor ( 1, 1, 1, 1 )
+	draw:setPenWidth ( 2 )
+	draw:drawEllipse ( 0, 0, 64, 64, 32 )
 	
-	MOAIDraw.drawRay ( 0, 0, 0, 1 )
+	draw:drawRay ( 0, 0, 0, 1 )
 
-	MOAIDraw.drawLine (
+	draw:drawLine (
 		-64, 64,
 		64, 64,
 		64, -64,
@@ -33,18 +33,16 @@ function onDraw ( index )
 		-64, 64
 	)
 
-	MOAIDraw.setPenColor ( 1, 1, 0, 1 )
+	draw:setPenColor ( 1, 1, 0, 1 )
 	
-	MOAIDraw.fillFan (
+	draw:fillFan (
 		-32, -64,
 		0, 64,
 		32, -64
 	)
-	
 end
 
 drawDeck = MOAIDrawDeck.new ()
-drawDeck:setBounds ()
 drawDeck:setDrawCallback ( onDraw )
 
 prop = MOAIGraphicsProp.new ()

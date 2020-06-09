@@ -357,7 +357,7 @@ void MOAIGraphicsPropBase::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAI
 void MOAIGraphicsPropBase::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
-	if ( this->GetWorldBounds ().mStatus == ZLBounds::ZL_BOUNDS_EMPTY ) return;
+	if ( this->GetWorldBounds ().IsEmpty ()) return;
 
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAIGraphicsPropBase >())) return;

@@ -289,7 +289,13 @@ int MOAIAbstractDrawingObject::_drawPoints ( lua_State* L ) {
 // TODO: implement
 int MOAIAbstractDrawingObject::_drawRay ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractDrawingObject, "" )
-	assert ( false );
+	
+	float x		= state.GetValue < float >( 2, 0.0f );
+	float y		= state.GetValue < float >( 3, 0.0f );
+	float dx	= state.GetValue < float >( 4, 0.0f );
+	float dy	= state.GetValue < float >( 5, 0.0f );
+
+	self->DrawRay ( x, y, dx, dy );
 	return 0;
 }
 

@@ -640,15 +640,13 @@ void MOAIPartition::UpdateHull ( MOAIPartitionHull& hull ) {
 	// also: hull.mLevel is *only* for debug drawing 
 	hull.mLevel = 0;
 	
-	u32 status = hull.mWorldBounds.mStatus;
-
 	// status is not 'OK' so hull is either global or empty
-	if ( status == ZLBounds::ZL_BOUNDS_GLOBAL ) {
+	if ( hull.mWorldBounds.IsGlobal ()) {
 		this->mGlobals.InsertHull ( hull );
 		return;
 	}
 	
-	if ( status == ZLBounds::ZL_BOUNDS_EMPTY ) {
+	if ( hull.mWorldBounds.IsEmpty ()) {
 		this->mEmpties.InsertHull ( hull );
 		return;
 	}

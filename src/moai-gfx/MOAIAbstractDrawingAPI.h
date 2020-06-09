@@ -68,7 +68,7 @@ public:
 	void				DrawPoint					( float x, float y, float z = 0.0f );
 	void				DrawPolyOutline				( const ZLPolygon2D& poly );
 	void				DrawQuadOutline				( const ZLQuad& quad );
-	void				DrawRay						( float x, float y, float dx, float dy, float length );
+	void				DrawRay						( float x, float y, float dx, float dy );
 	void				DrawRectEdges				( ZLRect rect, u32 edges );
 	void				DrawRectFill				( ZLRect rect );
 	void				DrawRectFill				( float left, float top, float right, float bottom );
@@ -78,6 +78,8 @@ public:
 	void				DrawRoundedRectStroke		( float left, float top, float right, float bottom, float xRad, float yRad, u32 steps, float stroke, float offset );
 	void				DrawTriangleFill			( const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2 );
 	void				DrawTriangleOutline			( const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2 );
+	void				DrawVec						( float x, float y, float dx, float dy, float t );
+	void				DrawVec						( float x, float y, float z, float dx, float dy, float dz, float t );
 						MOAIAbstractDrawingAPI		();
 	virtual				~MOAIAbstractDrawingAPI		();
 	void 				PopGfxState					();

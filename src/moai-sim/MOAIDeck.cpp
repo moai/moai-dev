@@ -189,7 +189,7 @@ bool MOAIDeck::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec2D& vec, u32 granulari
 	UNUSED ( granularity );
 	
 	ZLBounds bounds = this->GetBounds ( idx );
-	return (( bounds.mStatus == ZLBounds::ZL_BOUNDS_OK ) && bounds.mAABB.Contains ( ZLVec3D ( vec.mY, vec.mY, 0.0f ), ZLBox::PLANE_XY ));
+	return (( bounds.HasGeometry ()) && bounds.mAABB.Contains ( ZLVec3D ( vec.mY, vec.mY, 0.0f ), ZLBox::PLANE_XY ));
 }
 
 //----------------------------------------------------------------//
@@ -198,5 +198,5 @@ bool MOAIDeck::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 granulari
 	UNUSED ( granularity );
 	
 	ZLBounds bounds = this->GetBounds ( idx );
-	return (( bounds.mStatus == ZLBounds::ZL_BOUNDS_OK ) && bounds.mAABB.Contains ( vec ));
+	return (( bounds.HasGeometry ()) && bounds.mAABB.Contains ( vec ));
 }

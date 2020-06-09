@@ -32,6 +32,7 @@ struct MOAIDrawingAPIEnum {
 		DRAW_AXIS_2D,
 		DRAW_LINE,
 		DRAW_POINT,
+		DRAW_RAY,
 		DRAW_TRIANGLE,
 		
 		POP_GFX_STATE,
@@ -89,6 +90,12 @@ namespace MOAIDrawingParam {
 	struct DrawLine {
 		ZLVec3D 			mV0;
 		ZLVec3D 			mV1;
+	};
+	
+	//----------------------------------------------------------------//
+	struct DrawRay {
+		ZLVec2D 			mLoc;
+		ZLVec2D 			mVec;
 	};
 
 	//----------------------------------------------------------------//
@@ -148,6 +155,7 @@ struct MOAIDrawingAPI {
 	static void 	ExecuteDrawAxisGrid2D	( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawAxisGrid2D& param );
 	static void 	ExecuteDrawLine 		( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawLine& param );
 	static void 	ExecuteDrawPoint 		( MOAIGfxMgr& gfxMgr, const ZLVec3D& param );
+	static void 	ExecuteDrawRay 			( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawRay& param );
 	static void 	ExecuteDrawTriangle		( MOAIGfxMgr& gfxMgr, const MOAIDrawingParam::DrawTriangle& param );
 };
 

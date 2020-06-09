@@ -332,10 +332,6 @@ void MOAIPartitionHull::UpdateWorldBounds ( const ZLBounds& bounds ) {
 
 	this->mWorldBounds = bounds;
 
-	if ( bounds.mStatus == ZLBounds::ZL_BOUNDS_OK ) {
-		this->mWorldBounds.UpdateStatus ();
-	}
-
 	if ( this->mPartition ) {
 		
 		this->mPartition->UpdateHull ( *this );
@@ -425,8 +421,8 @@ bool MOAIPartitionHull::MOAIPartitionHull_Inside ( ZLVec3D vec, float pad ) {
 	
 	ZLBounds bounds = this->mWorldBounds;
 	
-	if ( bounds.mStatus == ZLBounds::ZL_BOUNDS_EMPTY ) return false;
-	if ( bounds.mStatus == ZLBounds::ZL_BOUNDS_GLOBAL ) return true;
+	if ( bounds.IsEmpty ()) return false;
+	if ( bounds.IsGlobal ()) return true;
 	
 	bounds.mAABB.Inflate ( pad );
 	bounds.mAABB.Bless ();
