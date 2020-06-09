@@ -128,10 +128,9 @@ int MOAIAbstractViewLayer::_getFitting3D ( lua_State* L ) {
 			
 				MOAIPartitionHull* hull = state.GetLuaObject < MOAIPartitionHull >( -1, true );
 		
-				if ( hull ) {					
-					ZLVec3D center;
-					hull->GetWorldBounds ().mAABB.GetCenter ( center );
-					fitter.FitBox ( center, 0.0f );
+				if ( hull ) {
+					ZLBounds bounds = hull->GetWorldBounds ();
+					fitter.FitBox ( bounds.mOBB, 0.0f );
 				}
 				break;
 			}

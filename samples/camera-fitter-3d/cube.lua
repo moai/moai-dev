@@ -113,6 +113,7 @@ makeCube = function ( size )
 	mesh:setPrimType ( MOAIMesh.GL_TRIANGLES )
     mesh:setCullFunc ( MOAIGraphicsProp.CULL_BACK )
     mesh:setDepthFunc ( MOAIGraphicsProp.DEPTH_TEST_LESS )
+    mesh:setDepthMask ( true )
 	mesh:setShader ( MOAIShaderMgr.LINE_SHADER_3D )
 	
 	return mesh
