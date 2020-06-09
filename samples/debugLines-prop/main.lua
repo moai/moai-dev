@@ -6,8 +6,8 @@
 
 MOAISim.openWindow ( "test", 320, 480 )
 
-MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_MODEL_BOUNDS, 2, 1, 1, 1 )
-MOAIDebugLines.setStyle ( MOAIDebugLines.PROP_WORLD_BOUNDS, 2, 0.75, 0.75, 0.75 )
+MOAIDebugLinesMgr.setStyle ( MOAIGraphicsProp.DEBUG_DRAW_MODEL_BOUNDS, 2, 1, 1, 1 )
+MOAIDebugLinesMgr.setStyle ( MOAIGraphicsProp.DEBUG_DRAW_WORLD_BOUNDS, 2, 0.75, 0.75, 0.75 )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 320, 480 )

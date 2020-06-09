@@ -426,6 +426,8 @@ void MOAICameraFitter2D::AddAnchor ( MOAICameraAnchor2D& anchor ) {
 //----------------------------------------------------------------//
 void MOAICameraFitter2D::Clear () {
 
+	this->mTrackingNode.Set ( *this, NULL );
+
 	while ( this->mAnchors.size ()) {
 		AnchorIt anchorIt = this->mAnchors.begin ();
 		MOAICameraAnchor2D* anchor = *anchorIt;

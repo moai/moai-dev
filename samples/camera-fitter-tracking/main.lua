@@ -5,13 +5,14 @@
 -- while the prop keeps moving off the screen center.
 ----------------------------------------------------------------
 
-function drawBackground()
-	MOAIGfxDevice.setPenColor(1,1,1)
-	MOAIDraw.drawLine(-1000, -1000, 1000, 1000)
-	MOAIDraw.drawLine(1000, -1000, -1000, 1000)
+function drawBackground ( draw )
+    draw:bindVectorPresets ()
+	draw:setPenColor ( 1, 1, 1 )
+	draw:drawLine ( -1000, -1000, 1000, 1000 )
+	draw:drawLine ( 1000, -1000, -1000, 1000 )
 end
 
-MOAIDebugLines.setStyle(MOAIDebugLines.PROP_WORLD_BOUNDS)
+MOAIDebugLinesMgr.setStyle ( MOAIGraphicsProp.DEBUG_DRAW_WORLD_BOUNDS, 2, 0.75, 0.75, 0.75 )
 
 MOAISim.openWindow ( "test", 640, 480 )
 
@@ -19,23 +20,33 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 640, 480 )
 viewport:setScale ( 640, 480 )
 
-camera = MOAICamera2D.new ()
+camera = MOAICamera.new ()
 
-layer = MOAILayer.new ()
+background = MOAITableViewLayer.new ()
+background:setViewport ( viewport )
+background:setCamera ( camera )
+background:setRenderTable ({ drawBackground })
+background:pushRenderPass ()
+
+layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 layer:setCamera ( camera )
-MOAISim.pushRenderPass ( layer )
-
+layer:pushRenderPass ()
 layer:showDebugLines ( true )
 
--- add a background to make the tracking more visible
-backgroundDeck = MOAIScriptDeck.new ()
-backgroundDeck:setRect ( 0, 0, 1000, 1000 )
-backgroundDeck:setDrawCallback ( drawBackground )
+gfxQuad = MOAISpriteDeck2D.new ()
+gfxQuad:setTexture ( '../resources/moai.png' )
+gfxQuad:setRect ( -64, -64, 64, 64 )
 
-backgroundProp = MOAIProp.new ()
-backgroundProp:setDeck ( backgroundDeck )
-backgroundProp:setPartition ( layer )
+prop0 = MOAIProp.new ()
+prop0:setDeck ( gfxQuad )
+prop0:moveLoc ( 256, 0, 0, 3 )
+prop0:setPartition ( layer )
+
+prop1 = MOAIProp.new ()
+prop1:setDeck ( gfxQuad )
+prop1:moveLoc ( -256, 0, 0, 3 )
+prop1:setPartition ( layer )
 
 fitter = MOAICameraFitter2D.new ()
 fitter:setViewport ( viewport )
@@ -44,20 +55,5 @@ fitter:setBounds ( -500, -128, 500, 1000 )
 fitter:setMin ( 256 )
 fitter:start ()
 
-gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( "moai.png" )
-gfxQuad:setRect ( -64, -64, 64, 64 )
-
--- this prop will be tracked while it is going to the right
-prop = MOAIProp.new ()
-prop:setDeck ( gfxQuad )
-prop:moveLoc ( 256, 0, 3 )
-prop:setPartition ( layer )
-
-fitter:setFitMode(MOAICameraFitter2D.FITTING_MODE_APPLY_BOUNDS)
-fitter:startTrackingNode(prop)
-
-prop = MOAIProp.new ()
-prop:setDeck ( gfxQuad )
-prop:moveLoc ( -256, 0, 3 )
-prop:setPartition ( layer )
+fitter:setFitMode ( MOAICameraFitter2D.FITTING_MODE_APPLY_BOUNDS )
+fitter:startTrackingNode ( prop0 )
