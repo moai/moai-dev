@@ -10,24 +10,26 @@ viewport = MOAIViewport.new ()
 viewport:setSize ( 512, 512 )
 viewport:setScale ( 512, 512 )
 
-layer = MOAIPartitionViewLayer.new ()
+layer = MOAITableViewLayer.new ()
 layer:setViewport ( viewport )
 layer:setClearColor ( 1, 1, 1, 1 )
 layer:pushRenderPass ()
 
-drawPoints = function ( stream )
+drawPoints = function ( draw, stream )
+
+    draw:bindVectorPresets ()
 
 	local total = stream:getLength () / 8
 	stream:seek ( 0 )
 
-	MOAIGfxMgr.setPenColor ( 0, 0, 1, 1 )
+	draw:setPenColor ( 0, 0, 1, 1 )
 
 	for i = 1, total do
 
 		local x = stream:readFloat ()
 		local y = stream:readFloat ()
 
-		MOAIDraw.fillCircle ( x, y, 2 )
+		draw:fillCircle ( x, y, 2 )
 	end
 end
 
@@ -60,9 +62,9 @@ generateHull = function ()
 	region:convexHull ( points )
 end
 
-onDraw = function ()
+onDraw = function ( draw )
 
-	drawPoints ( points )
+	drawPoints ( draw, points )
 	region:drawDebug ()
 end
 
@@ -84,4 +86,4 @@ MOAIInputMgr.device.mouseRight:setCallback ( onMouseRightEvent )
 
 generateHull ()
 
-layer:setOverlayTable ({ onDraw })
+layer:setRenderTable ({ onDraw })

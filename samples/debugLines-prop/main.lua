@@ -17,12 +17,12 @@ layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 layer:pushRenderPass ()
 
-gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( "moai.png" )
+gfxQuad = MOAISpriteDeck2D.new ()
+gfxQuad:setTexture ( '../resources/moai.png' )
 gfxQuad:setRect ( -64, -64, 64, 64 )
 
 prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
 prop:setPartition ( layer )
 
-prop:moveRot ( 360, 1.5 )
+prop:moveRot ( 0, 0, 360, 1.5 )
