@@ -553,9 +553,6 @@ void MOAIGfxStateGPUCache::FlushShader ( MOAIShader* shader ) {
 	bool applyUniforms	= ( shader && shader->HasDirtyUniforms ());
 	bool changeShader	= ( shader != this->mActiveState.mShader );
 
-	applyUniforms = true;
-	changeShader = true;
-
 	if ( applyUniforms || changeShader ) {
 	
 		this->GfxStateWillChange ();

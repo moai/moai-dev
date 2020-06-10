@@ -132,7 +132,7 @@ public:
 	bool IsIdentical ( const ZLLeanArray < TYPE >& array ) {
 	
 		if ( this->mSize == array.mSize ) {
-			return ( memcmp ( this->mData, array.mData, this->mSize ) == 0 );
+			return ( this->mSize > 0 ) ? ( memcmp ( this->mData, array.mData, this->mSize ) == 0 ) : true;
 		}
 		return false;
 	}

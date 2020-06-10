@@ -154,6 +154,9 @@ void MOAIGfxStateVertexCache::FlushVertexCache () {
 			gfxState.FlushVertexBuffer ( this->mVtxBuffer );
 			
 			gfxState.DrawPrims ( this->mPrimType, offset, count );
+			
+			gfxState.FlushIndexBuffer ( NULL );
+			gfxState.FlushVertexBuffer ( NULL );
 		}
 		
 		this->mIsDrawing = false;
