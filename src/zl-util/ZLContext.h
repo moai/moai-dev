@@ -11,6 +11,33 @@
 #include <zl-vfs/ZLThreadLocalPtr.h>
 
 //================================================================//
+// ZLThreadLocal
+//================================================================//
+template < typename TYPE >
+class ZLLocalPtr {
+private:
+
+	TYPE*	mPtr;
+
+public:
+
+	//----------------------------------------------------------------//
+	TYPE* Get () {
+		return this->mPtr;
+	}
+
+	//----------------------------------------------------------------//
+	void Set ( TYPE* assign ) {
+		this->mPtr = assign;
+	}
+	
+	//----------------------------------------------------------------//
+	ZLLocalPtr () :
+		mPtr ( NULL ) {
+	}
+};
+
+//================================================================//
 // ZLContextClassIDBase
 //================================================================//
 class ZLContextClassIDBase {
@@ -191,9 +218,14 @@ private:
 
 	// TODO: sGlobalsSet needs to be shared across all threads and wrapped in a mutex.
 	// should no longer be a ZLThreadLocalPtr.
-	static ZLThreadLocalPtr < GlobalsSet >		sGlobalsSet;
 	
-	static ZLThreadLocalPtr < ZLContext >		sInstance;
+	#ifdef ZL_USE_CONTEXT_THREADLOCAL
+		static ZLThreadLocalPtr < GlobalsSet >		sGlobalsSet;
+		static ZLThreadLocalPtr < ZLContext >		sInstance;
+	#else
+		static ZLLocalPtr < GlobalsSet >			sGlobalsSet;
+		static ZLLocalPtr < ZLContext >				sInstance;
+	#endif
 
 	//----------------------------------------------------------------//
 							ZLContextMgr			();

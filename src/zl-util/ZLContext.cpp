@@ -102,8 +102,13 @@ ZLContext::~ZLContext () {
 // ZLContextMgr
 //================================================================//
 
-ZLThreadLocalPtr < ZLContextMgr::GlobalsSet >		ZLContextMgr::sGlobalsSet;
-ZLThreadLocalPtr < ZLContext >						ZLContextMgr::sInstance;
+#ifdef ZL_USE_CONTEXT_THREADLOCAL
+	ZLThreadLocalPtr < ZLContextMgr::GlobalsSet >		ZLContextMgr::sGlobalsSet;
+	ZLThreadLocalPtr < ZLContext >						ZLContextMgr::sInstance;
+#else
+	ZLLocalPtr < ZLContextMgr::GlobalsSet >				ZLContextMgr::sGlobalsSet;
+	ZLLocalPtr < ZLContext >							ZLContextMgr::sInstance;
+#endif
 
 //----------------------------------------------------------------//
 bool ZLContextMgr::Check ( ZLContext* globals ) {
