@@ -82,10 +82,10 @@ private:
 				global = new MOAIMaterialNamedGlobal < TYPE >();
 				
 				global->mName = name;
-				global->mValue = value;
 				global->mNext = list;
 				list = global;
 			}
+			global->mValue = value;
 			return global;
 		}
 		else {
