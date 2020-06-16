@@ -357,24 +357,3 @@ MOAICollisionShape* MOAITileDeck2D::MOAIDeck_GetCollisionShape ( ZLIndex idx ) {
 
 	return 0;
 }
-
-//----------------------------------------------------------------//
-bool MOAITileDeck2D::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
-	UNUSED ( idx );
-	UNUSED ( vec );
-	UNUSED ( granularity );
-	UNUSED ( result );
-
-	return false;
-}
-
-//----------------------------------------------------------------//
-bool MOAITileDeck2D::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
-	UNUSED ( idx );
-	UNUSED ( vec );
-	UNUSED ( granularity );
-	UNUSED ( result );
-
-	//return this->TestHit ( materials, idx, granularity, this->mQuad.mModelQuad, this->mQuad.mUVQuad, vec.mX, vec.mY );
-	return false;
-}

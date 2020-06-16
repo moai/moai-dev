@@ -9,6 +9,8 @@
 
 #include <moai-sim/MOAIAbstractLayer.h>
 #include <moai-sim/MOAIAbstractProp.h>
+#include <moai-sim/MOAIAbstractPropWithDeckAndGrid.h>
+#include <moai-sim/MOAIAbstractPropWithDeckAndIndex.h>
 #include <moai-sim/MOAIAbstractViewLayer.h>
 //#include <moai-sim/MOAIBoundsDeck.h>
 //#include <moai-sim/MOAIBspBuilder2D.h>
@@ -28,6 +30,8 @@
 #include <moai-sim/MOAIHasDeck.h>
 #include <moai-sim/MOAIHasDeckAndGrid.h>
 #include <moai-sim/MOAIHasDeckAndIndex.h>
+#include <moai-sim/MOAIHitMask.h>
+#include <moai-sim/MOAIHitMaskBatch.h>
 #include <moai-sim/MOAIDeckProxy.h>
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIDraw.h>

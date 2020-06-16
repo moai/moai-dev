@@ -61,7 +61,7 @@ void MOAIPartitionCell::GatherHulls ( MOAIPartitionResultBuffer& results, const 
 		
 		if ( hull->AcceptQuery ( ignore, typeID, queryMask )) {
 			if ( hull->mWorldBounds.mAABB.Contains ( point )) {
-				if ( hull->Inside ( point, 0.0f )) {
+				if ( hull->PickByPoint ( point ).mPicked ) {
 					hull->AddToSortBuffer ( results );
 				}
 			}

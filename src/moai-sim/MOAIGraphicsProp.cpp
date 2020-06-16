@@ -56,12 +56,6 @@ void MOAIGraphicsProp::MOAIDrawable_Draw ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
-ZLBounds MOAIGraphicsProp::MOAIAbstractProp_GetModelBounds () {
-	
-	return this->mDeck ? this->mDeck->GetBounds ( this->mIndex ) : ZLBounds::EMPTY;
-}
-
-//----------------------------------------------------------------//
 bool MOAIGraphicsProp::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 	
 	if ( MOAIHasDeckAndIndex::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
@@ -73,22 +67,4 @@ bool MOAIGraphicsProp::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr
 void MOAIGraphicsProp::MOAINode_Update () {
 	
 	MOAIGraphicsPropBase::MOAINode_Update ();
-}
-
-//----------------------------------------------------------------//
-bool MOAIGraphicsProp::MOAIPartitionHull_Inside ( ZLVec3D vec, float pad ) {
-
-	ZLAffine3D worldToLocal = this->GetWorldToLocalMtx ();
-	worldToLocal.Transform ( vec );
-
-	bool passTrivial = this->InsideModelBounds ( vec, pad );
-	
-	// TODO: handle grids
-	// TODO: handle padding
-	if ( passTrivial && this->mDeck && ( this->mHitGranularity > HIT_TEST_COARSE )) {
-	
-		//return this->mDeck->Inside ( this->mIndex, this->mMaterialBatch, this->mHitGranularity, vec, pad );
-		return this->mDeck->Overlap ( this->mIndex, vec.Vec2D(), this->mHitGranularity, 0 );
-	}
-	return passTrivial;
 }

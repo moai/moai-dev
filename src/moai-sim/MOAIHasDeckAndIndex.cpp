@@ -86,6 +86,18 @@ void MOAIHasDeckAndIndex::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAIL
 }
 
 //----------------------------------------------------------------//
+MOAIPickResult MOAIHasDeckAndIndex::MOAIAbstractPickable_PickByPoint ( ZLVec3D loc ) {
+
+	this->mDeck ? this->mDeck->PickByPoint ( this->mIndex, loc ) : MOAIPickResult ();
+}
+
+//----------------------------------------------------------------//
+MOAIPickResult MOAIHasDeckAndIndex::MOAIAbstractPickable_PickByRay ( ZLVec3D loc, ZLVec3D normal ) {
+
+	this->mDeck ? this->mDeck->PickByRay ( this->mIndex, loc, normal ) : MOAIPickResult ();
+}
+
+//----------------------------------------------------------------//
 bool MOAIHasDeckAndIndex::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 
 	if ( AttrID::Check ( attrID )) {

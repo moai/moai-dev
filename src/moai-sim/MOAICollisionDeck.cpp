@@ -200,32 +200,3 @@ MOAICollisionShape* MOAICollisionDeck::MOAIDeck_GetCollisionShape ( ZLIndex idx 
 	}
 	return 0;
 }
-
-//----------------------------------------------------------------//
-bool MOAICollisionDeck::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
-	UNUSED ( idx );
-	UNUSED ( vec );
-	UNUSED ( granularity );
-	UNUSED ( result );
-
-	//	u32 size = ( u32 )this->mQuads.Size ();
-	//	if ( size ) {
-	//		idx = ( idx - 1 ) % size;
-	//		const MOAIQuadBrush& quadBrush = this->mQuads [ idx ];
-	//		return this->TestHit ( materials, idx, granularity, quadBrush.mModelQuad, quadBrush.mUVQuad, vec.mX, vec.mY );
-	//	}
-	//	return false;
-
-	return false;
-}
-
-//----------------------------------------------------------------//
-bool MOAICollisionDeck::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
-	UNUSED ( idx );
-	UNUSED ( vec );
-	UNUSED ( granularity );
-	UNUSED ( result );
-
-	//return this->TestHit ( materials, idx, granularity, this->mQuad.mModelQuad, this->mQuad.mUVQuad, vec.mX, vec.mY );
-	return false;
-}

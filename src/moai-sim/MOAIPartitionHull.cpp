@@ -105,21 +105,21 @@ int MOAIPartitionHull::_getWorldBoundsCenter ( lua_State* L ) {
 	@opt	number pad			Pad the hit bounds (in the prop's local space)
 	@out	boolean isInside
 */
-int	MOAIPartitionHull::_inside ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPartitionHull, "U" )
-
-	ZLVec3D vec;
-	vec.mX	= state.GetValue < float >( 2, 0.0f );
-	vec.mY	= state.GetValue < float >( 3, 0.0f );
-	vec.mZ	= state.GetValue < float >( 4, 0.0f );
-
-	float pad = state.GetValue < float >( 5, 0.0f );
-
-	bool result = self->Inside ( vec, pad );
-	lua_pushboolean ( state, result );
-	
-	return 1;
-}
+//int	MOAIPartitionHull::_inside ( lua_State* L ) {
+//	MOAI_LUA_SETUP ( MOAIPartitionHull, "U" )
+//
+//	ZLVec3D vec;
+//	vec.mX	= state.GetValue < float >( 2, 0.0f );
+//	vec.mY	= state.GetValue < float >( 3, 0.0f );
+//	vec.mZ	= state.GetValue < float >( 4, 0.0f );
+//
+//	float pad = state.GetValue < float >( 5, 0.0f );
+//
+//	bool result = self->Inside ( vec, pad );
+//	lua_pushboolean ( state, result );
+//	
+//	return 1;
+//}
 
 //----------------------------------------------------------------//
 /**	@lua	setHitGranularity
@@ -134,12 +134,12 @@ int	MOAIPartitionHull::_inside ( lua_State* L ) {
 	@opt	int granularity		One of MOAIPartitionHull.HIT_TEST_COARSE, MOAIPartitionHull.HIT_TEST_MEDIUM, MOAIPartitionHull.HIT_TEST_FINE. Default is MOAIPartitionHull.HIT_TEST_COARSE.
 	@out	nil
 */
-int MOAIPartitionHull::_setHitGranularity ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPartitionHull, "U" )
-
-	self->mHitGranularity = state.GetValue < u32 >( 2, HIT_TEST_COARSE );
-	return 0;
-}
+//int MOAIPartitionHull::_setHitGranularity ( lua_State* L ) {
+//	MOAI_LUA_SETUP ( MOAIPartitionHull, "U" )
+//
+//	self->mHitGranularity = state.GetValue < u32 >( 2, HIT_TEST_COARSE );
+//	return 0;
+//}
 
 //----------------------------------------------------------------//
 // TODO: doxygen
@@ -271,11 +271,11 @@ MOAIPartition* MOAIPartitionHull::GetPartitionTrait () {
 	return this->mPartition;
 }
 
-//----------------------------------------------------------------//
-bool MOAIPartitionHull::Inside ( ZLVec3D vec, float pad ) {
-	
-	return this->MOAIPartitionHull_Inside ( vec, pad );
-}
+////----------------------------------------------------------------//
+//bool MOAIPartitionHull::Inside ( ZLVec3D vec, float pad ) {
+//
+//	return this->MOAIPartitionHull_Inside ( vec, pad );
+//}
 
 //----------------------------------------------------------------//
 MOAIPartitionHull::MOAIPartitionHull () :
@@ -285,8 +285,7 @@ MOAIPartitionHull::MOAIPartitionHull () :
 	mNextResult ( 0 ),
 	mQueryMask ( 0xffffffff ),
 	mPriority ( UNKNOWN_PRIORITY ),
-	mWorldBounds ( ZLBounds::EMPTY ),
-	mHitGranularity ( HIT_TEST_COARSE ) {
+	mWorldBounds ( ZLBounds::EMPTY ) {
 	
 	RTTI_BEGIN ( MOAIPartitionHull )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIPartitionHull >)
@@ -358,10 +357,6 @@ void MOAIPartitionHull::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILua
 	
 	state.SetField ( -1, "ATTR_PARTITION",				AttrID::Pack ( ATTR_PARTITION ).ToRaw ());
 	state.SetField ( -1, "ATTR_WORLD_BOUNDS_TRAIT",		AttrID::Pack ( ATTR_WORLD_BOUNDS_TRAIT ).ToRaw ());
-	
-	state.SetField ( -1, "HIT_TEST_COARSE",				( u32 )HIT_TEST_COARSE );
-	state.SetField ( -1, "HIT_TEST_MEDIUM",				( u32 )HIT_TEST_MEDIUM );
-	state.SetField ( -1, "HIT_TEST_FINE",				( u32 )HIT_TEST_FINE );
 }
 
 //----------------------------------------------------------------//
@@ -373,8 +368,6 @@ void MOAIPartitionHull::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILua
 		{ "getPriority",			_getPriority },
 		{ "getWorldBounds",			_getWorldBounds },
 		{ "getWorldBoundsCenter",	_getWorldBoundsCenter },
-		{ "inside",					_inside },
-		{ "setHitGranularity",		_setHitGranularity },
 		{ "setPartition",			_setPartition },
 		{ "setPriority",			_setPriority },
 		{ "setQueryMask",			_setQueryMask },
@@ -382,6 +375,18 @@ void MOAIPartitionHull::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILua
 	};
 	
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+MOAIPickResult MOAIPartitionHull::MOAIAbstractPickable_PickByPoint ( ZLVec3D loc ) {
+
+	return MOAIAbstractPickable::PickByPointHelper ( this->mWorldBounds, loc );
+}
+
+//----------------------------------------------------------------//
+MOAIPickResult MOAIPartitionHull::MOAIAbstractPickable_PickByRay ( ZLVec3D loc, ZLVec3D normal ) {
+
+	return MOAIAbstractPickable::PickByRayHelper ( this->mWorldBounds, loc, normal );
 }
 
 //----------------------------------------------------------------//
@@ -414,19 +419,6 @@ void MOAIPartitionHull::MOAIPartitionHull_AddToSortBuffer ( MOAIPartitionResultB
 
 //----------------------------------------------------------------//
 void MOAIPartitionHull::MOAIPartitionHull_BoundsDidChange () {
-}
-
-//----------------------------------------------------------------//
-bool MOAIPartitionHull::MOAIPartitionHull_Inside ( ZLVec3D vec, float pad ) {
-	
-	ZLBounds bounds = this->mWorldBounds;
-	
-	if ( bounds.IsEmpty ()) return false;
-	if ( bounds.IsGlobal ()) return true;
-	
-	bounds.mAABB.Inflate ( pad );
-	bounds.mAABB.Bless ();
-	return bounds.mAABB.Contains ( vec );
 }
 
 //----------------------------------------------------------------//

@@ -190,19 +190,6 @@ MOAIGraphicsGridProp::~MOAIGraphicsGridProp () {
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLBounds MOAIGraphicsGridProp::MOAIAbstractProp_GetModelBounds () {
-	
-	if ( this->mGrid ) {
-	
-		if ( this->mGrid->GetRepeat ()) {
-			return ZLBounds::GLOBAL;
-		}
-		return ZLBounds ( this->mGrid->GetFrame ());
-	}
-	return ZLBounds::EMPTY;
-}
-
-//----------------------------------------------------------------//
 void MOAIGraphicsGridProp::MOAIDrawable_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
 

@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-sim/MOAIAbstractPickable.h>
 #include <moai-sim/MOAICollisionShape.h>
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAISurfaceSampler2D.h>
@@ -123,10 +124,22 @@ MOAIDeck::MOAIDeck () :
 MOAIDeck::~MOAIDeck () {
 }
 
-//----------------------------------------------------------------//
-bool MOAIDeck::Overlap ( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
+////----------------------------------------------------------------//
+//bool MOAIDeck::Overlap ( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
+//
+//	return this->MOAIDeck_Overlap ( idx, vec, granularity, result );
+//}
 
-	return this->MOAIDeck_Overlap ( idx, vec, granularity, result );
+//----------------------------------------------------------------//
+MOAIPickResult MOAIDeck::PickByPoint ( ZLIndex idx, ZLVec3D loc ) {
+
+	return this->MOAIDeck_PickByPoint ( idx, loc );
+}
+
+//----------------------------------------------------------------//
+MOAIPickResult MOAIDeck::PickByRay ( ZLIndex idx, ZLVec3D loc, ZLVec3D normal ) {
+
+	return this->MOAIDeck_PickByRay ( idx, loc, normal );
 }
 
 //----------------------------------------------------------------//
@@ -184,19 +197,31 @@ MOAICollisionShape* MOAIDeck::MOAIDeck_GetCollisionShape ( ZLIndex idx ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIDeck::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
-	UNUSED ( result );
-	UNUSED ( granularity );
-	
-	ZLBounds bounds = this->GetBounds ( idx );
-	return (( bounds.HasGeometry ()) && bounds.mAABB.Contains ( ZLVec3D ( vec.mY, vec.mY, 0.0f ), ZLBox::PLANE_XY ));
+MOAIPickResult MOAIDeck::MOAIDeck_PickByPoint ( ZLIndex idx, ZLVec3D loc ) {
+
+	return MOAIAbstractPickable::PickByPointHelper ( this->GetBounds ( idx ), loc );
 }
 
 //----------------------------------------------------------------//
-bool MOAIDeck::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
-	UNUSED ( result );
-	UNUSED ( granularity );
+MOAIPickResult MOAIDeck::MOAIDeck_PickByRay ( ZLIndex idx, ZLVec3D loc, ZLVec3D normal ) {
 	
-	ZLBounds bounds = this->GetBounds ( idx );
-	return (( bounds.HasGeometry ()) && bounds.mAABB.Contains ( vec ));
+	return MOAIAbstractPickable::PickByRayHelper ( this->GetBounds ( idx ), loc, normal );
 }
+
+////----------------------------------------------------------------//
+//bool MOAIDeck::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
+//	UNUSED ( result );
+//	UNUSED ( granularity );
+//
+//	ZLBounds bounds = this->GetBounds ( idx );
+//	return (( bounds.HasGeometry ()) && bounds.mAABB.Contains ( ZLVec3D ( vec.mY, vec.mY, 0.0f ), ZLBox::PLANE_XY ));
+//}
+//
+////----------------------------------------------------------------//
+//bool MOAIDeck::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
+//	UNUSED ( result );
+//	UNUSED ( granularity );
+//
+//	ZLBounds bounds = this->GetBounds ( idx );
+//	return (( bounds.HasGeometry ()) && bounds.mAABB.Contains ( vec ));
+//}

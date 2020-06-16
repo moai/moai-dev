@@ -1,24 +1,26 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIHITMASK_H
-#define	MOAIHITMASK_H
+#ifndef	MOAIHITMASKBATCH_H
+#define	MOAIHITMASKBATCH_H
+
+class MOAIHitMask;
 
 //================================================================//
-// MOAIHitMask
+// MOAIHitMaskBatch
 //================================================================//
-class MOAIHitMask :
+class MOAIHitMaskBatch :
 	public virtual MOAILuaObject {
 protected:
 
 	MOAI_LUA_OBJECT_VISITOR_FRIEND
 
-	ZLStrongPtr < ZLImage > mImage;
-
-	u32				mHitColorScalar;
-	u32				mHitColorThreshold;
+	ZLLeanArray < ZLStrongPtr < MOAIHitMask > >	mHitMasks;
 
 	//----------------------------------------------------------------//
+	static int		_getHitMask				( lua_State* L );
+	static int		_reserveHitMasks		( lua_State* L );
+	static int		_setHitMask				( lua_State* L );
 	static int		_setImage				( lua_State* L );
 	static int		_setScalar				( lua_State* L );
 	static int		_setThreshold			( lua_State* L );
@@ -31,13 +33,13 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-					MOAIHitMask				();
-					~MOAIHitMask			();
+					MOAIHitMaskBatch		();
+					~MOAIHitMaskBatch		();
 	void			SetImage				( ZLImage* image );
-	void			SetScalar				( u32 scalar );
-	void			SetThreshold			( u32 threshold );
-	bool			TestHit					( float x, float y ); // in local (uv) space of the mask
-	bool			TestHit					( const ZLQuad& modelQuad, const ZLQuad& uvQuad, float x, float y ); // in local (model) space of the quad
+	void			SetScalar				( u32 idx, u32 scalar );
+	void			SetThreshold			( u32 idx, u32 threshold );
+	bool			TestHit					( u32 idx, float x, float y );
+	bool			TestHit					( u32 idx, const ZLQuad& modelQuad, const ZLQuad& uvQuad, float x, float y );
 };
 
 #endif

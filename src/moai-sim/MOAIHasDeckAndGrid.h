@@ -39,10 +39,12 @@ protected:
 	static int			_setGridScale			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				_SerializeIn			( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
-	void				_SerializeOut			( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
+	void				_RegisterLuaClass					( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaFuncs					( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_SerializeIn						( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
+	void				_SerializeOut						( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
+	MOAIPickResult		MOAIAbstractPickable_PickByPoint	( ZLVec3D loc );
+	MOAIPickResult		MOAIAbstractPickable_PickByRay		( ZLVec3D loc, ZLVec3D normal );
 
 public:
 

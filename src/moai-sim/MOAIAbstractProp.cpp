@@ -182,19 +182,6 @@ ZLBounds MOAIAbstractProp::GetModelBounds () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIAbstractProp::InsideModelBounds ( const ZLVec3D& vec, float pad ) {
-
-	ZLBounds bounds = this->GetModelBounds ();
-	
-	if ( bounds.IsEmpty ()) return false;
-	if ( bounds.IsGlobal ()) return true;
-	
-	bounds.mAABB.Inflate ( pad );
-	bounds.mAABB.Bless ();
-	return bounds.mAABB.Contains ( vec );
-}
-
-//----------------------------------------------------------------//
 MOAIAbstractProp::MOAIAbstractProp () :
 		mFlags ( 0 ),
 		mModelBoundsOverride ( ZLBox::EMPTY ),
@@ -241,6 +228,41 @@ void MOAIAbstractProp::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaS
 }
 
 //----------------------------------------------------------------//
+MOAIPickResult MOAIAbstractProp::MOAIAbstractPickable_PickByPoint ( ZLVec3D loc ) {
+
+	// TODO: handle pad in local space
+
+	ZLAffine3D worldToLocal = this->GetWorldToLocalMtx ();
+	worldToLocal.Transform ( loc );
+
+	return this->MOAIAbstractProp_PickByPoint ( loc );
+}
+
+//----------------------------------------------------------------//
+MOAIPickResult MOAIAbstractProp::MOAIAbstractPickable_PickByRay ( ZLVec3D loc, ZLVec3D normal ) {
+
+	// TODO: handle pad in local space
+
+	ZLAffine3D worldToLocal = this->GetWorldToLocalMtx ();
+	worldToLocal.Transform ( loc );
+	worldToLocal.TransformVec ( normal );
+	
+	return this->MOAIAbstractProp_PickByRay ( loc, normal );
+}
+
+//----------------------------------------------------------------//
+MOAIPickResult MOAIAbstractProp::MOAIAbstractProp_PickByPoint ( ZLVec3D loc ) {
+
+	return MOAIAbstractPickable::PickByPointHelper ( this->GetModelBounds (), loc );
+}
+
+//----------------------------------------------------------------//
+MOAIPickResult MOAIAbstractProp::MOAIAbstractProp_PickByRay ( ZLVec3D loc, ZLVec3D normal ) {
+
+	return MOAIAbstractPickable::PickByRayHelper ( this->GetModelBounds (), loc, normal );
+}
+
+//----------------------------------------------------------------//
 bool MOAIAbstractProp::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 	
 	if ( MOAITransform::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
@@ -274,13 +296,4 @@ void MOAIAbstractProp::MOAINode_Update () {
 void MOAIAbstractProp::MOAIPartitionHull_AddToSortBuffer ( MOAIPartitionResultBuffer& buffer, u32 key ) {
 
 	buffer.PushResult ( *this, key, NO_SUBPRIM_ID, this->GetPriority (), this->GetWorldLoc (), this->GetWorldBounds ().mAABB, this->GetPiv ());
-}
-
-//----------------------------------------------------------------//
-bool MOAIAbstractProp::MOAIPartitionHull_Inside ( ZLVec3D vec, float pad ) {
-
-	ZLAffine3D worldToLocal = this->GetWorldToLocalMtx ();
-	worldToLocal.Transform ( vec );
-	
-	return this->InsideModelBounds ( vec, pad );
 }

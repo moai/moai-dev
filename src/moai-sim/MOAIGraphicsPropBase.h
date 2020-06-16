@@ -56,22 +56,6 @@ class MOAIGraphicsPropBase :
 	public virtual MOAIAbstractDrawable,
 	public virtual MOAIHasGfxScript {
 protected:
-	
-	//----------------------------------------------------------------//
-	static int		_draw					( lua_State* L );
-	static int		_getBillboard			( lua_State* L );
-	static int		_getScissorRect			( lua_State* L );
-	static int		_isVisible				( lua_State* L );
-	static int		_setBillboard			( lua_State* L );
-	static int		_setParent				( lua_State* L );
-	static int		_setScissorRect			( lua_State* L );
-	static int		_setUVTransform			( lua_State* L );
-	static int		_setVisible				( lua_State* L );
-
-	//----------------------------------------------------------------//
-	void			MOAIDrawable_DrawDebug				( int subPrimID );
-
-protected:
 
 	u32										mBillboard;
 	u32										mDisplayFlags;
@@ -79,6 +63,17 @@ protected:
 	// TODO: should be attributes?
 	MOAILuaSharedPtr < MOAIAbstractChildTransform >		mUVTransform;
 	MOAILuaSharedPtr < MOAIScissorRect >				mScissorRect;
+
+	//----------------------------------------------------------------//
+	static int				_draw						( lua_State* L );
+	static int				_getBillboard				( lua_State* L );
+	static int				_getScissorRect				( lua_State* L );
+	static int				_isVisible					( lua_State* L );
+	static int				_setBillboard				( lua_State* L );
+	static int				_setParent					( lua_State* L );
+	static int				_setScissorRect				( lua_State* L );
+	static int				_setUVTransform				( lua_State* L );
+	static int				_setVisible					( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void					LoadUVTransform				();
@@ -89,6 +84,7 @@ protected:
 	//----------------------------------------------------------------//
 	void					_RegisterLuaClass							( RTTIVisitorHistory& history, MOAILuaState& state );
 	void					_RegisterLuaFuncs							( RTTIVisitorHistory& history, MOAILuaState& state );
+	void					MOAIDrawable_DrawDebug						( int subPrimID );
 	virtual ZLMatrix4x4		MOAIGraphicsPropBase_GetWorldDrawingMtx		() const; // factors in billboard flags
 	bool					MOAINode_ApplyAttrOp						( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	void					MOAINode_Update								();

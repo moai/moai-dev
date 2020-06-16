@@ -30,15 +30,18 @@ protected:
 	static int			_setModelBoundsPad			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	virtual ZLBounds	MOAIAbstractProp_GetModelBounds			() = 0; // get the prop bounds in model space
+	virtual ZLBounds			MOAIAbstractProp_GetModelBounds			() = 0; // get the prop bounds in model space
+	virtual MOAIPickResult		MOAIAbstractProp_PickByPoint			( ZLVec3D loc );
+	virtual MOAIPickResult		MOAIAbstractProp_PickByRay				( ZLVec3D loc, ZLVec3D normal );
 
 	//----------------------------------------------------------------//
 	void				_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
 	void				_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
+	MOAIPickResult		MOAIAbstractPickable_PickByPoint		( ZLVec3D loc );
+	MOAIPickResult		MOAIAbstractPickable_PickByRay			( ZLVec3D loc, ZLVec3D normal );
 	bool				MOAINode_ApplyAttrOp					( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	void				MOAINode_Update							();
 	void				MOAIPartitionHull_AddToSortBuffer		( MOAIPartitionResultBuffer& buffer, u32 key );
-	bool				MOAIPartitionHull_Inside				( ZLVec3D vec, float pad );
 
 public:
 

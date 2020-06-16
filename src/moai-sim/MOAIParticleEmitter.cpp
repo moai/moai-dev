@@ -243,7 +243,7 @@ ZLVec3D MOAIParticleEmitter::GetRandomVec ( float minAngle, float maxAngle, floa
 //----------------------------------------------------------------//
 bool MOAIParticleEmitter::MaskParticle ( const ZLVec3D& loc ) {
 
-	return this->mMaskProp ? this->mMaskProp->Inside ( loc, 0.0f ) : true;
+	return this->mMaskProp ? this->mMaskProp->PickByPoint ( loc ).mPicked : true;
 }
 
 //----------------------------------------------------------------//

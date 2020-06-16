@@ -152,3 +152,17 @@ void MOAIHasDeckAndGrid::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaSta
 	state.SetField ( -1, "mGrid", serializer.AffirmMemberID ( this->mGrid ));
 }
 
+//----------------------------------------------------------------//
+MOAIPickResult MOAIHasDeckAndGrid::MOAIAbstractPickable_PickByPoint ( ZLVec3D loc ) {
+	UNUSED ( loc );
+
+	return MOAIPickResult ();
+}
+
+//----------------------------------------------------------------//
+MOAIPickResult MOAIHasDeckAndGrid::MOAIAbstractPickable_PickByRay ( ZLVec3D loc, ZLVec3D normal ) {
+	UNUSED ( loc );
+	UNUSED ( normal );
+
+	return MOAIPickResult ();
+}

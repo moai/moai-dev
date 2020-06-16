@@ -4,8 +4,8 @@
 #ifndef	MOAIHASDECK_H
 #define	MOAIHASDECK_H
 
+#include <moai-sim/MOAIAbstractPickable.h>
 #include <moai-sim/MOAIPartitionHull.h>
-#include <moai-core/MOAILuaSharedPtr.h>
 
 class MOAIDeck;
 
@@ -14,7 +14,8 @@ class MOAIDeck;
 //================================================================//
 // TODO: doxygen
 class MOAIHasDeck :
-	public virtual MOAINode {
+	public virtual MOAINode,
+	public virtual MOAIAbstractPickable {
 protected:
 	
 	MOAI_LUA_OBJECT_VISITOR_FRIEND
@@ -24,7 +25,6 @@ protected:
 	//----------------------------------------------------------------//
 	static int			_getDeck				( lua_State* L );
 	static int			_setDeck				( lua_State* L );
-
 
 	//----------------------------------------------------------------//
 	void				_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );

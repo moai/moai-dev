@@ -88,15 +88,15 @@ MOAICollisionShape* MOAIDeckProxy::MOAIDeck_GetCollisionShape ( ZLIndex idx ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIDeckProxy::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
+MOAIPickResult MOAIDeckProxy::MOAIDeck_PickByPoint ( ZLIndex idx, ZLVec3D loc ) {
 
-	return this->mDeck ? this->mDeck->MOAIDeck_Overlap ( this->MOAIDeckProxy_Remap ( idx ), vec, granularity, result ) : false;
+	return this->mDeck ? this->mDeck->MOAIDeck_PickByPoint ( this->MOAIDeckProxy_Remap ( idx ), loc ) : false;
 }
 
 //----------------------------------------------------------------//
-bool MOAIDeckProxy::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
+MOAIPickResult MOAIDeckProxy::MOAIDeck_PickByRay ( ZLIndex idx, ZLVec3D loc, ZLVec3D normal ) {
 
-	return this->mDeck ? this->mDeck->MOAIDeck_Overlap ( this->MOAIDeckProxy_Remap ( idx ), vec, granularity, result ) : false;
+	return this->mDeck ? this->mDeck->MOAIDeck_PickByRay ( this->MOAIDeckProxy_Remap ( idx ), loc, normal ) : false;
 }
 
 //----------------------------------------------------------------//

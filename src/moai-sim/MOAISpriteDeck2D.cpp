@@ -671,7 +671,7 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 			base =  ZLIndexOp::Wrap ( idx, totalSprites );
 			top = base + ( ZLSize )1;
 		}
-				
+		
 		for ( ZLIndex i = base; i < top; ++i ) {
 			
 			MOAISprite spritePair = this->mSprites [  ZLIndexOp::Wrap ( i, totalSprites )];
@@ -694,7 +694,7 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 		MOAISpriteDeck2DCallable callable;
 		
 		if ( totalQuads ) {
-		
+			
 			ZLIndex itemIdx =  ZLIndexOp::Wrap ( idx, totalQuads );
 
 			callable.mBrush.mModelQuad = this->mQuads [ itemIdx ];
@@ -707,7 +707,7 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 			}
 		}
 		else {
-				
+			
 			callable.mBrush.mUVQuad.Init ( 0.0f, 1.0f, 1.0f, 0.0f );
 			callable.mBrush.mModelQuad.Init ( -0.5f, -0.5f, 0.5f, 0.5f );
 		}
@@ -771,25 +771,4 @@ ZLBounds MOAISpriteDeck2D::MOAIDeck_GetBounds ( ZLIndex idx ) {
 MOAICollisionShape* MOAISpriteDeck2D::MOAIDeck_GetCollisionShape ( ZLIndex idx ) {
 	UNUSED(idx);
 	return 0;
-}
-
-//----------------------------------------------------------------//
-bool MOAISpriteDeck2D::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
-
-	// TODO: handle granularity
-
-	//return this->GetMaterialBatch ()->TestHit ( this, idx, granularity, this->mQuad.mModelQuad, this->mQuad.mUVQuad, vec.mX, vec.mY );
-	UNUSED(result);
-	UNUSED(granularity);
-	UNUSED(vec);
-	UNUSED(idx);
-	return true;
-}
-
-//----------------------------------------------------------------//
-bool MOAISpriteDeck2D::MOAIDeck_Overlap ( ZLIndex idx, const ZLVec3D& vec, u32 granularity, ZLBounds* result ) {
-
-	// TODO: handle granularity
-
-	return (( vec.mZ == 0.0f ) && this->MOAIDeck_Overlap ( idx, vec, granularity, result ));
 }
