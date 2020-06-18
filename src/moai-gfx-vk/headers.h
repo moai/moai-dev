@@ -23,7 +23,7 @@
 #include <moai-gfx-vk/MOAIGfxMgrVK_VertexCacheVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVKComponents.h>
 #include <moai-gfx-vk/MOAIGfxResourceVK.h>
-#include <moai-gfx-vk/MOAIGfxScriptRetainedVK.h>
+#include <moai-gfx-vk/MOAIGfxScriptVK.h>
 #include <moai-gfx-vk/MOAIGfxStateGPUCacheFrameVK.h>
 #include <moai-gfx-vk/MOAIImageBufferSnapshotVK.h>
 #include <moai-gfx-vk/MOAIImageTextureVK.h>

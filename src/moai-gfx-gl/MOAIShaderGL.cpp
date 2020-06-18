@@ -100,7 +100,7 @@ void MOAIShaderGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState
 //----------------------------------------------------------------//
 MOAIAbstractGfxScript* MOAIShaderGL::MOAIAbstractHasGfxScript_GetGfxScript	() {
 
-	MOAIAbstractGfxScript* gfxScript = this->MOAIHasGfxScript::MOAIAbstractHasGfxScript_GetGfxScript ();
+	MOAIAbstractGfxScript* gfxScript = this->GetGfxScript ();
 	return gfxScript ? gfxScript : ( this->mProgram ? this->mProgram->GetGfxScript () : NULL );
 }
 

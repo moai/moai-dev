@@ -7,7 +7,7 @@
 #include <moai-gfx-vk/MOAIFrameBufferVK.h>
 #include <moai-gfx-vk/MOAIPhysicalDeviceVK.h>
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
-#include <moai-gfx-vk/MOAIGfxScriptRetainedVK.h>
+#include <moai-gfx-vk/MOAIGfxScriptVK.h>
 #include <moai-gfx-vk/MOAIGfxStructVK.h>
 #include <moai-gfx-vk/MOAIImageTextureVK.h>
 #include <moai-gfx-vk/MOAIIndexBufferVK.h>
@@ -503,9 +503,9 @@ void MOAIGfxMgrVK::MOAIGfxMgr_BeginFrame () {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxScriptRetained* MOAIGfxMgrVK::MOAIGfxMgr_CreateGfxScriptRetained () {
+MOAIGfxScript* MOAIGfxMgrVK::MOAIGfxMgr_CreateGfxScriptRetained () {
 
-	return new MOAIGfxScriptRetainedVK ();
+	return new MOAIGfxScriptVK ();
 }
 
 //----------------------------------------------------------------//

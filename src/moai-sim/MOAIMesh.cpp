@@ -540,7 +540,7 @@ void MOAIMesh::DrawIndex ( ZLIndex idx, MOAIMeshSpan* span ) {
 	callable.mPrimType 			= this->mPrimType;
 	callable.mSpan	 			= span;
 	callable.mTotalElements		= this->mTotalElements;
-	gfxScript->RunScript ( &callable, MOAIGfxScriptRetained::CALL_FROM_SHADER );
+	gfxScript->RunScript ( &callable, MOAIGfxScript::CALL_FROM_SHADER );
 }
 
 //----------------------------------------------------------------//

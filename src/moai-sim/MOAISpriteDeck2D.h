@@ -67,9 +67,9 @@ public:
 			UV/model quad indices if geometry is used in multiple lists.
 */
 class MOAISpriteDeck2D :
-	public MOAIDeck,
-	public MOAIHasGfxScript,
-	public MOAIHasHitMaskBatch {
+	public virtual MOAIDeck,
+	public virtual MOAIHasGfxScriptBatch,
+	public virtual MOAIHasHitMaskBatch {
 private:
 	
 	ZLLeanArray < ZLQuad >				mUVQuads;

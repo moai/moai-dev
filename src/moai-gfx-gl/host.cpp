@@ -35,7 +35,7 @@ void AKUGfxGLContextInitialize () {
 	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIFrameBufferGL, 			"MOAIFrameBuffer" )
 	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIFrameBufferTextureGL, 	"MOAIFrameBufferTexture" )
 	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIGfxMgrGL, 				"MOAIGfxMgr" )
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIGfxScriptRetainedGL,	"MOAIGfxScriptRetained" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIGfxScriptGL,	"MOAIGfxScript" )
 	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIImageTextureGL, 		"MOAIImageTexture" )
 	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIIndexBufferGL, 			"MOAIIndexBuffer" )
 	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIRenderBatchGL,			"MOAIShader" )

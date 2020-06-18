@@ -3,23 +3,23 @@
 
 #include "pch.h"
 #include <moai-gfx-gl/MOAIDrawingAPIGL.h>
-#include <moai-gfx-gl/MOAIGfxScriptRetainedGL.h>
+#include <moai-gfx-gl/MOAIGfxScriptGL.h>
 
 //================================================================//
-// MOAIGfxScriptRetainedGL
+// MOAIGfxScriptGL
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIGfxScriptRetainedGL::MOAIGfxScriptRetainedGL () {
+MOAIGfxScriptGL::MOAIGfxScriptGL () {
 
-	RTTI_BEGIN ( MOAIGfxScriptRetainedGL )
-		RTTI_EXTEND ( MOAIGfxScriptRetained )
+	RTTI_BEGIN ( MOAIGfxScriptGL )
+		RTTI_EXTEND ( MOAIGfxScript )
 		RTTI_EXTEND ( MOAIAbstractDrawingObjectGL )
 	RTTI_END
 }
 
 //----------------------------------------------------------------//
-MOAIGfxScriptRetainedGL::~MOAIGfxScriptRetainedGL () {
+MOAIGfxScriptGL::~MOAIGfxScriptGL () {
 }
 
 //================================================================//
@@ -27,7 +27,7 @@ MOAIGfxScriptRetainedGL::~MOAIGfxScriptRetainedGL () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxScriptRetainedGL::MOAIGfxScriptRetained_Execute ( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ cmd, const void* rawParam ) const {
+void MOAIGfxScriptGL::MOAIGfxScript_Execute ( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ cmd, const void* rawParam ) const {
 
 	MOAIDrawingAPIGL::Execute ( callable, cmd, rawParam );
 }

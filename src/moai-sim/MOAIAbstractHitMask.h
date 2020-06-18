@@ -10,8 +10,8 @@
 // MOAIHitMask
 //================================================================//
 class MOAIAbstractHitMask :
-	public virtual MOAILuaObject,
-	public virtual MOAIAbstractHasHitMask {
+	public virtual MOAIAbstractHasHitMask,
+	public virtual MOAILuaObject {
 protected:
 
 	friend class MOAIAbstractHasHitMask;
@@ -26,8 +26,12 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-					MOAIAbstractHitMask		();
-					~MOAIAbstractHitMask	();
+	MOAIAbstractHitMask () {
+	}
+
+	//----------------------------------------------------------------//
+	~MOAIAbstractHitMask () {
+	}
 };
 
 #endif

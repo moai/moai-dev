@@ -332,7 +332,7 @@ void MOAITileDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 
 	callable.mBrush = this->mQuad;
 	
-	gfxScript->RunScript ( &callable, MOAIGfxScriptRetained::CALL_FROM_SHADER );
+	gfxScript->RunScript ( &callable, MOAIGfxScript::CALL_FROM_SHADER );
 }
 
 //----------------------------------------------------------------//

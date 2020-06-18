@@ -7,24 +7,24 @@
 #include <moai-gfx-vk/MOAIAbstractDrawingObjectVK.h>
 
 //================================================================//
-// MOAIGfxScriptRetainedVK
+// MOAIGfxScriptVK
 //================================================================//
 // TODO: doxygen
-class MOAIGfxScriptRetainedVK :
-	public virtual MOAIGfxScriptRetained,
+class MOAIGfxScriptVK :
+	public virtual MOAIGfxScript,
 	public virtual MOAIAbstractDrawingObjectVK {
 protected:
 	
 	//----------------------------------------------------------------//
-	void			MOAIGfxScriptRetained_Execute		( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ cmd, const void* rawParam ) const;
+	void			MOAIGfxScript_Execute		( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ cmd, const void* rawParam ) const;
 
 public:
 
-	DECL_LUA_FACTORY ( MOAIGfxScriptRetainedVK )
+	DECL_LUA_FACTORY ( MOAIGfxScriptVK )
 
 	//----------------------------------------------------------------//
-					MOAIGfxScriptRetainedVK				();
-					~MOAIGfxScriptRetainedVK			();
+					MOAIGfxScriptVK				();
+					~MOAIGfxScriptVK			();
 };
 
 #endif

@@ -5,28 +5,28 @@
 #define	MOAIGFXSCRIPTBATCH_H
 
 #include <moai-gfx/MOAIAbstractGfxScriptBatch.h>
+#include <moai-gfx/MOAIAbstractHasGfxScriptBatch.h>
 
 //================================================================//
 // MOAIGfxScriptBatch
 //================================================================//
 // TODO: doxygen
 class MOAIGfxScriptBatch :
-	public virtual MOAIAbstractGfxScriptBatch,
-	public virtual MOAIAbstractDrawingObject {
+	public virtual MOAIAbstractHasGfxScriptBatch,
+	public virtual MOAIAbstractGfxScriptBatch {
 private:
 
 	ZLSize													mIndexBatchSize;
 	ZLLeanArray < ZLStrongPtr < MOAIAbstractGfxScript > >	mGfxScripts;
 
 	//----------------------------------------------------------------//
-	void						MOAIAbstractDrawingAPI_RetainObject				( ZLRefCountedObject* object );
-	void						MOAIAbstractDrawingAPI_SubmitCommand			( MOAIDrawingAPIEnum::_ cmd, const void* param, ZLSize size );
-	MOAIGfxScriptRetained&		MOAIAbstractGfxScriptBatch_AffirmGfxScript		( ZLIndex index );
-	MOAIAbstractGfxScript*		MOAIAbstractGfxScriptBatch_GetGfxScript			( ZLIndex index );
-	ZLSize						MOAIAbstractGfxScriptBatch_GetIndexBatchSize	();
-	void						MOAIAbstractGfxScriptBatch_ReserveGfxScripts	( ZLSize size );
-	void						MOAIAbstractGfxScriptBatch_SetGfxScript			( ZLSize size, MOAIAbstractGfxScript* gfxScript );
-	void						MOAIAbstractGfxScriptBatch_SetIndexBatchSize	( ZLSize size );
+	MOAIAbstractGfxScript&			MOAIAbstractGfxScriptBatch_AffirmGfxScript				( ZLIndex index );
+	MOAIAbstractGfxScript*			MOAIAbstractGfxScriptBatch_GetGfxScript					( ZLIndex index );
+	ZLSize							MOAIAbstractGfxScriptBatch_GetIndexBatchSize			();
+	void							MOAIAbstractGfxScriptBatch_ReserveGfxScripts			( ZLSize size );
+	void							MOAIAbstractGfxScriptBatch_SetGfxScript					( ZLSize size, MOAIAbstractGfxScript* gfxScript );
+	void							MOAIAbstractGfxScriptBatch_SetIndexBatchSize			( ZLSize size );
+	MOAIAbstractGfxScriptBatch&		MOAIAbstractHasGfxScriptBatch_AffirmGfxScriptBatch		();
 
 	//----------------------------------------------------------------//
 	inline ZLIndex GetRawIndex ( ZLIndex idx ) {

@@ -22,7 +22,7 @@
 #include <moai-gfx/MOAIFrameBuffer.h>
 #include <moai-gfx/MOAIGfxBuffer.h>
 #include <moai-gfx/MOAIDrawingAPI.h>
-#include <moai-gfx/MOAIGfxScriptRetained.h>
+#include <moai-gfx/MOAIGfxScript.h>
 #include <moai-gfx/MOAIGfxConsts.h>
 #include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIGfxMgr_CPUCache.h>
@@ -32,9 +32,8 @@
 #include <moai-gfx/MOAIGfxMgrComponents.h>
 #include <moai-gfx/MOAIGfxPresetEnum.h>
 #include <moai-gfx/MOAIGfxResource.h>
+#include <moai-gfx/MOAIGfxScript.h>
 #include <moai-gfx/MOAIGfxScriptBatch.h>
-#include <moai-gfx/MOAIGfxScriptRetained.h>
-#include <moai-gfx/MOAIGfxScriptImmediate.h>
 #include <moai-gfx/MOAIGfxStateCPUCacheFrame.h>
 #include <moai-gfx/MOAIGfxStateCPUConsts.h>
 #include <moai-gfx/MOAIGfxStateGPUCacheFrame.h>

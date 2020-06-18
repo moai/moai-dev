@@ -4,46 +4,30 @@
 #ifndef	MOAIHASGFXSCRIPTBATCH_H
 #define	MOAIHASGFXSCRIPTBATCH_H
 
-#include <moai-gfx/MOAIAbstractGfxScriptBatch.h>
+#include <moai-gfx/MOAIAbstractHasGfxScriptBatch.h>
 
 //================================================================//
 // MOAIHasComposerBatch
 //================================================================//
 // TODO: doxygen
 class MOAIHasGfxScriptBatch :
-	public virtual MOAIAbstractGfxScriptBatch,
-	public virtual MOAIAbstractDrawingObject {
+	public virtual MOAIAbstractHasGfxScriptBatch {
 protected:
 
 	ZLStrongPtr < MOAIGfxScriptBatch > mGfxScriptBatch;
 
 	//----------------------------------------------------------------//
-	static int					_affirmGfxScriptBatch		( lua_State* L );
-	static int					_getGfxScriptBatch			( lua_State* L );
-	static int					_setGfxScriptBatch			( lua_State* L );
-
-	//----------------------------------------------------------------//
-	void						_RegisterLuaClass								( RTTIVisitorHistory& history, MOAILuaState& state );
-	void						_RegisterLuaFuncs								( RTTIVisitorHistory& history, MOAILuaState& state );
-	void						MOAIAbstractDrawingAPI_RetainObject				( ZLRefCountedObject* object );
-	void						MOAIAbstractDrawingAPI_SubmitCommand			( MOAIDrawingAPIEnum::_ cmd, const void* param, ZLSize size );
-	MOAIGfxScriptRetained&		MOAIAbstractGfxScriptBatch_AffirmGfxScript		( ZLIndex index );
-	MOAIAbstractGfxScript*		MOAIAbstractGfxScriptBatch_GetGfxScript			( ZLIndex index );
-	ZLSize						MOAIAbstractGfxScriptBatch_GetIndexBatchSize	();
-	void						MOAIAbstractGfxScriptBatch_ReserveGfxScripts	( ZLSize size );
-	void						MOAIAbstractGfxScriptBatch_SetGfxScript			( ZLSize index, MOAIAbstractGfxScript* gfxScript );
-	void						MOAIAbstractGfxScriptBatch_SetIndexBatchSize	( ZLSize size );
+	void							_RegisterLuaClass									( RTTIVisitorHistory& history, MOAILuaState& state );
+	void							_RegisterLuaFuncs									( RTTIVisitorHistory& history, MOAILuaState& state );
+	MOAIAbstractGfxScriptBatch&		MOAIAbstractHasGfxScriptBatch_AffirmGfxScriptBatch	();
 
 public:
 
 	DECL_LUA_FACTORY ( MOAIHasGfxScriptBatch )
 
 	//----------------------------------------------------------------//
-	MOAIGfxScriptBatch&			AffirmGfxScriptBatch 		();
-	MOAIGfxScriptBatch*			GetGfxScriptBatch 			();
-								MOAIHasGfxScriptBatch		();
-								~MOAIHasGfxScriptBatch		();
-	void						SetGfxScriptBatch			( MOAIGfxScriptBatch* batch );
+						MOAIHasGfxScriptBatch		();
+						~MOAIHasGfxScriptBatch		();
 };
 
 #endif

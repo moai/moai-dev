@@ -2,19 +2,46 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx/MOAIGfxScriptRetained.h>
+#include <moai-gfx/MOAIGfxScript.h>
 #include <moai-gfx/MOAIHasGfxScript.h>
+
+//================================================================//
+// lua
+//================================================================//
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIHasGfxScript::_getGfxScript ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHasGfxScript, "U" )
+
+	state.Push (( MOAIGfxScript* )self->GetGfxScript ());
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIHasGfxScript::_setGfxScript ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHasGfxScript, "U" )
+
+	self->SetGfxScript ( state.GetLuaObject < MOAIGfxScript >( 2, true ));
+	return 0;
+}
 
 //================================================================//
 // MOAIHasGfxScript
 //================================================================//
 
 //----------------------------------------------------------------//
+MOAIGfxScript* MOAIHasGfxScript::GetGfxScript () {
+
+	return this->mGfxScript;
+}
+
+//----------------------------------------------------------------//
 MOAIHasGfxScript::MOAIHasGfxScript () {
 
 	RTTI_BEGIN ( MOAIHasGfxScript )
 		RTTI_EXTEND ( MOAIAbstractHasGfxScript )
-		RTTI_EXTEND ( MOAIAbstractDrawingObject )
 	RTTI_END
 }
 
@@ -22,50 +49,40 @@ MOAIHasGfxScript::MOAIHasGfxScript () {
 MOAIHasGfxScript::~MOAIHasGfxScript () {
 }
 
+//----------------------------------------------------------------//
+void MOAIHasGfxScript::SetGfxScript ( MOAIGfxScript* gfxScript ) {
+
+	this->mGfxScript = gfxScript;
+}
+
 //================================================================//
 // virtual
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIHasGfxScript::MOAIAbstractDrawingAPI_RetainObject ( ZLRefCountedObject* object ) {
-
-	if ( object ) {
-		MOAIGfxScriptRetained* gfxScript = this->AffirmGfxScript ().AsType < MOAIGfxScriptRetained >();
-		if ( gfxScript ) {
-			gfxScript->RetainObject ( object );
-		}
-	}
+void MOAIHasGfxScript::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIHasGfxScript::MOAIAbstractDrawingAPI_SubmitCommand ( MOAIDrawingAPIEnum::_ cmd, const void* param, ZLSize size ) {
+void MOAIHasGfxScript::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
 
-	MOAIGfxScriptRetained* gfxScript = this->AffirmGfxScript ().AsType < MOAIGfxScriptRetained >();
-	if ( gfxScript ) {
-		gfxScript->SubmitCommand ( cmd, param, size );
-	}
+	luaL_Reg regTable [] = {
+		{ "getGfxScript",				_getGfxScript },
+		{ "setGfxScript",				_setGfxScript },
+		{ NULL, NULL }
+	};
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
-MOAIGfxScriptRetained& MOAIHasGfxScript::MOAIAbstractHasGfxScript_AffirmGfxScript () {
+MOAIAbstractGfxScript& MOAIHasGfxScript::MOAIAbstractHasGfxScript_AffirmGfxScript () {
 
-	MOAIGfxScriptRetained* gfxScript = this->mGfxScript ? MOAICast < MOAIGfxScriptRetained >( this->mGfxScript ) : NULL;
+	MOAIGfxScript* gfxScript = this->mGfxScript ? MOAICast < MOAIGfxScript >( this->mGfxScript ) : NULL;
 	if ( !gfxScript ) {
-		gfxScript = new MOAIGfxScriptRetained ();
+		gfxScript = new MOAIGfxScript ();
 		this->mGfxScript = gfxScript;
 	}
 	return *gfxScript;
 }
-
-//----------------------------------------------------------------//
-MOAIAbstractGfxScript* MOAIHasGfxScript::MOAIAbstractHasGfxScript_GetGfxScript () {
-
-	return this->mGfxScript;
-}
-
-//----------------------------------------------------------------//
-void MOAIHasGfxScript::MOAIAbstractHasGfxScript_SetGfxScript ( MOAIAbstractGfxScript* gfxScript ) {
-
-	this->mGfxScript = gfxScript;
-}
-

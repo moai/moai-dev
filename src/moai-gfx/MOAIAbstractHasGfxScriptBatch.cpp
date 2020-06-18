@@ -5,10 +5,7 @@
 
 #include <moai-gfx/MOAIAbstractGfxScript.h>
 #include <moai-gfx/MOAIAbstractGfxScriptBatch.h>
-#include <moai-gfx/MOAIGfxScriptBatch.h>
-#include <moai-gfx/MOAIGfxMgr.h>
-#include <moai-gfx/MOAIShader.h>
-#include <moai-gfx/MOAITexture.h>
+#include <moai-gfx/MOAIAbstractHasGfxScriptBatch.h>
 
 //================================================================//
 // lua
@@ -16,8 +13,8 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIAbstractGfxScriptBatch::_affirmGfxScript ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractGfxScriptBatch, "U" );
+int MOAIAbstractHasGfxScriptBatch::_affirmGfxScript ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractHasGfxScriptBatch, "U" );
 	state.Push ( &self->AffirmGfxScript ( state.GetValue < MOAILuaIndex >( 2, 0 )));
 	return 1;
 }
@@ -29,8 +26,8 @@ int MOAIAbstractGfxScriptBatch::_affirmGfxScript ( lua_State* L ) {
 	@in		MOAIGfxScriptBatch self
 	@out	number indexBatchSize
 */
-int MOAIAbstractGfxScriptBatch::_getIndexBatchSize ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractGfxScriptBatch, "U" );
+int MOAIAbstractHasGfxScriptBatch::_getIndexBatchSize ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractHasGfxScriptBatch, "U" );
 	
 	state.Push ( MOAILuaSize ( self->GetIndexBatchSize ()));
 	return 1;
@@ -38,8 +35,8 @@ int MOAIAbstractGfxScriptBatch::_getIndexBatchSize ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIAbstractGfxScriptBatch::_getGfxScript ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractGfxScriptBatch, "U" );
+int MOAIAbstractHasGfxScriptBatch::_getGfxScript ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractHasGfxScriptBatch, "U" );
 	state.Push ( self->GetGfxScript ( state.GetValue < MOAILuaIndex >( 2, 0 )));
 	return 1;
 }
@@ -52,8 +49,8 @@ int MOAIAbstractGfxScriptBatch::_getGfxScript ( lua_State* L ) {
 	@opt	number count
 	@out	nil
 */
-int MOAIAbstractGfxScriptBatch::_reserveGfxScripts ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractGfxScriptBatch, "U" )
+int MOAIAbstractHasGfxScriptBatch::_reserveGfxScripts ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractHasGfxScriptBatch, "U" )
 	
 	self->ReserveGfxScripts ( state.GetValue ( 2, 0 ));
 	return 0;
@@ -74,64 +71,70 @@ int MOAIAbstractGfxScriptBatch::_reserveGfxScripts ( lua_State* L ) {
 	@opt	number indexBatchSize		Default value is 1.
 	@out	nil
 */
-int MOAIAbstractGfxScriptBatch::_setIndexBatchSize ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractGfxScriptBatch, "U" )
+int MOAIAbstractHasGfxScriptBatch::_setIndexBatchSize ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractHasGfxScriptBatch, "U" )
 	
 	self->SetIndexBatchSize ( state.GetValue < u32 >( 2, 1 ));
 	return 0;
 }
 
 //================================================================//
-// MOAIAbstractGfxScriptBatch
+// MOAIAbstractHasGfxScriptBatch
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIGfxScriptRetained& MOAIAbstractGfxScriptBatch::AffirmGfxScript ( ZLIndex index ) {
+MOAIAbstractGfxScript& MOAIAbstractHasGfxScriptBatch::AffirmGfxScript ( ZLIndex index ) {
 
-	return this->MOAIAbstractGfxScriptBatch_AffirmGfxScript ( index );
+	return this->AffirmGfxScriptBatch ().MOAIAbstractGfxScriptBatch_AffirmGfxScript ( index );
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractGfxScript* MOAIAbstractGfxScriptBatch::GetGfxScript ( ZLIndex index ) {
+MOAIAbstractGfxScriptBatch& MOAIAbstractHasGfxScriptBatch::AffirmGfxScriptBatch () {
 
-	return this->MOAIAbstractGfxScriptBatch_GetGfxScript ( index );
+	return this->MOAIAbstractHasGfxScriptBatch_AffirmGfxScriptBatch ();
 }
 
 //----------------------------------------------------------------//
-ZLSize MOAIAbstractGfxScriptBatch::GetIndexBatchSize () {
+MOAIAbstractGfxScript* MOAIAbstractHasGfxScriptBatch::GetGfxScript ( ZLIndex index ) {
 
-	return this->MOAIAbstractGfxScriptBatch_GetIndexBatchSize ();
+	return this->AffirmGfxScriptBatch ().MOAIAbstractGfxScriptBatch_GetGfxScript ( index );
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractGfxScriptBatch::MOAIAbstractGfxScriptBatch () {
+ZLSize MOAIAbstractHasGfxScriptBatch::GetIndexBatchSize () {
 
-	RTTI_BEGIN ( MOAIAbstractGfxScriptBatch )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractGfxScriptBatch >)
+	return this->AffirmGfxScriptBatch ().MOAIAbstractGfxScriptBatch_GetIndexBatchSize ();
+}
+
+//----------------------------------------------------------------//
+MOAIAbstractHasGfxScriptBatch::MOAIAbstractHasGfxScriptBatch () {
+
+	RTTI_BEGIN ( MOAIAbstractHasGfxScriptBatch )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractHasGfxScriptBatch >)
 		RTTI_EXTEND ( MOAIAbstractHasGfxScript )
 	RTTI_END
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractGfxScriptBatch::~MOAIAbstractGfxScriptBatch () {
+MOAIAbstractHasGfxScriptBatch::~MOAIAbstractHasGfxScriptBatch () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractGfxScriptBatch::ReserveGfxScripts ( ZLSize size ) {
+void MOAIAbstractHasGfxScriptBatch::ReserveGfxScripts ( ZLSize size ) {
 
-	return this->MOAIAbstractGfxScriptBatch_ReserveGfxScripts ( size );
+	return this->AffirmGfxScriptBatch ().MOAIAbstractGfxScriptBatch_ReserveGfxScripts ( size );
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractGfxScriptBatch::SetGfxScript ( ZLIndex index, MOAIAbstractGfxScript* gfxScript ) {
+void MOAIAbstractHasGfxScriptBatch::SetGfxScript ( ZLIndex index, MOAIAbstractGfxScript* gfxScript ) {
 
-	return this->MOAIAbstractGfxScriptBatch_SetGfxScript ( index, gfxScript );
+	return this->AffirmGfxScriptBatch ().MOAIAbstractGfxScriptBatch_SetGfxScript ( index, gfxScript );
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractGfxScriptBatch::SetIndexBatchSize ( ZLSize size ) {
+void MOAIAbstractHasGfxScriptBatch::SetIndexBatchSize ( ZLSize size ) {
 
-	return this->MOAIAbstractGfxScriptBatch_SetIndexBatchSize ( size );
+	return this->AffirmGfxScriptBatch ().MOAIAbstractGfxScriptBatch_SetIndexBatchSize ( size );
 }
 
 //================================================================//
@@ -139,13 +142,13 @@ void MOAIAbstractGfxScriptBatch::SetIndexBatchSize ( ZLSize size ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAbstractGfxScriptBatch::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIAbstractHasGfxScriptBatch::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
 	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractGfxScriptBatch::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIAbstractHasGfxScriptBatch::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
@@ -161,19 +164,7 @@ void MOAIAbstractGfxScriptBatch::_RegisterLuaFuncs ( RTTIVisitorHistory& history
 }
 
 //----------------------------------------------------------------//
-MOAIGfxScriptRetained& MOAIAbstractGfxScriptBatch::MOAIAbstractHasGfxScript_AffirmGfxScript () {
+MOAIAbstractGfxScript& MOAIAbstractHasGfxScriptBatch::MOAIAbstractHasGfxScript_AffirmGfxScript () {
 
 	return this->AffirmGfxScript ( 0 );
-}
-
-//----------------------------------------------------------------//
-MOAIAbstractGfxScript* MOAIAbstractGfxScriptBatch::MOAIAbstractHasGfxScript_GetGfxScript () {
-
-	return this->GetGfxScript ( 0 );
-}
-
-//----------------------------------------------------------------//
-void MOAIAbstractGfxScriptBatch::MOAIAbstractHasGfxScript_SetGfxScript ( MOAIAbstractGfxScript* gfxScript ) {
-
-	this->SetGfxScript ( 0, gfxScript );
 }

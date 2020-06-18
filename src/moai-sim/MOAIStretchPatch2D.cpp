@@ -395,7 +395,7 @@ void MOAIStretchPatch2D::MOAIAbstractGfxScriptCallback_Call () {
 void MOAIStretchPatch2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	UNUSED ( idx );
 	
-//	MOAIGfxScriptRetained* composer = this->GetComposer ();
+//	MOAIGfxScript* composer = this->GetComposer ();
 //	if ( !composer ) return;
 //
 //	this->UpdateParams ();

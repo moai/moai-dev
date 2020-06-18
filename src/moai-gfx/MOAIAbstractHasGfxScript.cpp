@@ -5,53 +5,25 @@
 #include <moai-gfx/MOAIAbstractGfxScript.h>
 #include <moai-gfx/MOAIAbstractHasGfxScript.h>
 #include <moai-gfx/MOAIBlendMode.h>
+#include <moai-gfx/MOAIDrawingAPI.h>
 #include <moai-gfx/MOAIGfxMgr.h>
-#include <moai-gfx/MOAIGfxScriptRetained.h>
-
-//================================================================//
-// lua
-//================================================================//
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIAbstractHasGfxScript::_getGfxScript ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractHasGfxScript, "U" )
-	
-	state.Push (( MOAIAbstractGfxScript* )self->GetGfxScript ());
-	return 1;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIAbstractHasGfxScript::_setGfxScript ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractHasGfxScript, "U" )
-
-	self->SetGfxScript ( state.GetLuaObject < MOAIAbstractGfxScript >( 2, true ));
-	return 0;
-}
+#include <moai-gfx/MOAIGfxScript.h>
 
 //================================================================//
 // MOAIAbstractHasGfxScript
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIGfxScriptRetained& MOAIAbstractHasGfxScript::AffirmGfxScript () {
+MOAIAbstractGfxScript& MOAIAbstractHasGfxScript::AffirmGfxScript () {
 
 	return this->MOAIAbstractHasGfxScript_AffirmGfxScript ();
-}
-
-//----------------------------------------------------------------//
-MOAIAbstractGfxScript* MOAIAbstractHasGfxScript::GetGfxScript () {
-
-	return this->MOAIAbstractHasGfxScript_GetGfxScript ();
 }
 
 //----------------------------------------------------------------//
 MOAIAbstractHasGfxScript::MOAIAbstractHasGfxScript () {
 
 	RTTI_BEGIN ( MOAIAbstractHasGfxScript )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractHasGfxScript >)
-		RTTI_EXTEND ( MOAILuaObject )
+		RTTI_EXTEND ( MOAIAbstractDrawingObject )
 	RTTI_END
 }
 
@@ -60,9 +32,9 @@ MOAIAbstractHasGfxScript::~MOAIAbstractHasGfxScript () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractHasGfxScript::SetGfxScript ( MOAIAbstractGfxScript* gfxScript ) {
-
-	this->MOAIAbstractHasGfxScript_SetGfxScript ( gfxScript );
+void MOAIAbstractHasGfxScript::RunScript ( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ callCommand ) {
+	
+	this->AffirmGfxScript ().MOAIAbstractGfxScript_RunScript ( callable, callCommand );
 }
 
 //================================================================//
@@ -70,18 +42,13 @@ void MOAIAbstractHasGfxScript::SetGfxScript ( MOAIAbstractGfxScript* gfxScript )
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAbstractHasGfxScript::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+void MOAIAbstractHasGfxScript::MOAIAbstractDrawingAPI_RetainObject ( ZLRefCountedObject* object ) {
+
+	this->AffirmGfxScript ().MOAIAbstractGfxScript_RetainObject ( object );
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractHasGfxScript::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+void MOAIAbstractHasGfxScript::MOAIAbstractDrawingAPI_SubmitCommand ( MOAIDrawingAPIEnum::_ cmd, const void* param, ZLSize size ) {
 
-	luaL_Reg regTable [] = {
-		{ "getGfxScript",				_getGfxScript },
-		{ "setGfxScript",				_setGfxScript },
-		{ NULL, NULL }
-	};
-	luaL_register ( state, 0, regTable );
+	this->AffirmGfxScript ().MOAIAbstractGfxScript_SubmitCommand ( cmd, param, size );
 }

@@ -3,23 +3,23 @@
 
 #include "pch.h"
 #include <moai-gfx-vk/MOAIDrawingAPIVK.h>
-#include <moai-gfx-vk/MOAIGfxScriptRetainedVK.h>
+#include <moai-gfx-vk/MOAIGfxScriptVK.h>
 
 //================================================================//
-// MOAIGfxScriptRetainedVK
+// MOAIGfxScriptVK
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIGfxScriptRetainedVK::MOAIGfxScriptRetainedVK () {
+MOAIGfxScriptVK::MOAIGfxScriptVK () {
 
-	RTTI_BEGIN ( MOAIGfxScriptRetainedVK )
-		RTTI_EXTEND ( MOAIGfxScriptRetained )
+	RTTI_BEGIN ( MOAIGfxScriptVK )
+		RTTI_EXTEND ( MOAIGfxScript )
 		RTTI_EXTEND ( MOAIAbstractDrawingObjectVK )
 	RTTI_END
 }
 
 //----------------------------------------------------------------//
-MOAIGfxScriptRetainedVK::~MOAIGfxScriptRetainedVK () {
+MOAIGfxScriptVK::~MOAIGfxScriptVK () {
 }
 
 //================================================================//
@@ -27,7 +27,7 @@ MOAIGfxScriptRetainedVK::~MOAIGfxScriptRetainedVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxScriptRetainedVK::MOAIGfxScriptRetained_Execute ( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ cmd, const void* rawParam ) const {
+void MOAIGfxScriptVK::MOAIGfxScript_Execute ( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ cmd, const void* rawParam ) const {
 
 	MOAIDrawingAPIVK::Execute ( callable, cmd, rawParam );
 }

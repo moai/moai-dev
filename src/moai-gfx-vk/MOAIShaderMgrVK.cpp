@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-gfx-vk/MOAIGfxMgrVK.h>
-#include <moai-gfx-vk/MOAIGfxScriptRetainedVK.h>
+#include <moai-gfx-vk/MOAIGfxScriptVK.h>
 #include <moai-gfx-vk/MOAIPipelineLayoutVK.h>
 #include <moai-gfx-vk/MOAIShaderVK.h>
 #include <moai-gfx-vk/MOAIShaderMgrVK.h>
@@ -89,7 +89,7 @@ void MOAIShaderMgrVK::AffirmAll () {
 	this->mOneTexPipelineLayout->Initialize ( logicalDevice, 1 );
 	this->mOneTexPipelineLayout->SetDescriptorSetLayout ( 0, *this->mOneTexDescriptorSetLayout );
 
-	this->mOneTexGfxScript = new MOAIGfxScriptRetainedVK ();
+	this->mOneTexGfxScript = new MOAIGfxScriptVK ();
 	this->mOneTexGfxScript->LoadDescriptorFromTextureUnitVK ( 0, 0, 0, 0 );
 	this->mOneTexGfxScript->Optimize ();
 
@@ -237,7 +237,7 @@ MOAIShaderProgramVK* MOAIShaderMgrVK::GetProgram ( MOAIShaderPresetEnum shaderID
 					pipelineLayout->Initialize ( logicalDevice, 1 );
 					pipelineLayout->SetDescriptorSetLayout ( 0, *descriptorSetLayout );
 					
-					MOAIGfxScriptRetainedVK* script = new MOAIGfxScriptRetainedVK ();
+					MOAIGfxScriptVK* script = new MOAIGfxScriptVK ();
 					script->LoadDescriptorFromTextureUnitVK ( 0, 0, 0, 0 );
 					
 					program->LoadModule ( MOAIShaderProgramVK::VERTEX_MODULE, _oneTriShaderVSH, sizeof ( _oneTriShaderVSH ));

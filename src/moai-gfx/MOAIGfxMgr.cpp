@@ -4,7 +4,7 @@
 #include "pch.h"
 
 #include <moai-gfx/MOAIGfxMgr.h>
-#include <moai-gfx/MOAIGfxScriptRetained.h>
+#include <moai-gfx/MOAIGfxScript.h>
 #include <moai-gfx/MOAIImageTexture.h>
 #include <moai-gfx/MOAITexture2D.h>
 #include <moai-gfx/MOAIVertexFormatMgr.h>
@@ -51,7 +51,7 @@ void MOAIGfxMgr::BeginFrame () {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxScriptRetained* MOAIGfxMgr::CreateGfxScriptRetained () {
+MOAIGfxScript* MOAIGfxMgr::CreateGfxScriptRetained () {
 
 	return this->MOAIGfxMgr_CreateGfxScriptRetained ();
 }

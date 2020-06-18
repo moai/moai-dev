@@ -12,7 +12,7 @@
 #include <moai-gfx/MOAIGfxPresetEnum.h>
 
 class MOAIAbstractDrawingObject;
-class MOAIGfxScriptRetained;
+class MOAIGfxScript;
 class MOAIImageTexture;
 class MOAIRenderBatch;
 class MOAITexture2D;
@@ -41,7 +41,7 @@ protected:
 	virtual MOAIShader*					MOAIGfxMgr_AffirmShader					( MOAILuaState& state, int idx ) const = 0;
 	virtual MOAITexture*				MOAIGfxMgr_AffirmTexture				( MOAILuaState& state, int idx ) const = 0;
 	virtual void						MOAIGfxMgr_BeginFrame					() = 0;
-	virtual MOAIGfxScriptRetained*		MOAIGfxMgr_CreateGfxScriptRetained		() = 0;
+	virtual MOAIGfxScript*		MOAIGfxMgr_CreateGfxScriptRetained		() = 0;
 	virtual MOAIImageTexture*			MOAIGfxMgr_CreateImageTexture			() = 0;
 	virtual MOAIIndexBuffer*			MOAIGfxMgr_CreateIndexBuffer			() = 0;
 	virtual MOAIRenderBatch*			MOAIGfxMgr_CreateRenderBatch			() = 0;
@@ -77,7 +77,7 @@ public:
 	MOAITexture*					AffirmTexture				( MOAILuaState& state, int idx ) const;
 	MOAIVertexFormat*				AffirmVertexFormat			( MOAILuaState& state, int idx ) const;
 	void							BeginFrame					();
-	MOAIGfxScriptRetained*			CreateGfxScriptRetained		();
+	MOAIGfxScript*			CreateGfxScriptRetained		();
 	MOAIImageTexture*				CreateImageTexture			();
 	MOAIIndexBuffer*				CreateIndexBuffer			();
 	MOAIRenderBatch*				CreateRenderBatch			();

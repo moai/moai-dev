@@ -4,31 +4,51 @@
 #ifndef	MOAIHASGFXSCRIPT_H
 #define	MOAIHASGFXSCRIPT_H
 
-#include <moai-gfx/MOAIAbstractHasGfxScript.h>
+#include <moai-gfx/MOAIAbstractGfxScript.h>
+
+class MOAIGfxScript;
 
 //================================================================//
 // MOAIHasGfxScript
 //================================================================//
 // TODO: doxygen
 class MOAIHasGfxScript :
-	public virtual MOAIAbstractHasGfxScript,
-	public virtual MOAIAbstractDrawingObject {
+	public virtual MOAIAbstractHasGfxScript {
 protected:
 
-	ZLStrongPtr < MOAIAbstractGfxScript > mGfxScript;
+	ZLStrongPtr < MOAIGfxScript > mGfxScript;
+	
+	MOAI_LUA_OBJECT_VISITOR_FRIEND
 	
 	//----------------------------------------------------------------//
-	void						MOAIAbstractDrawingAPI_RetainObject			( ZLRefCountedObject* object );
-	void						MOAIAbstractDrawingAPI_SubmitCommand		( MOAIDrawingAPIEnum::_ cmd, const void* param, ZLSize size );
-	MOAIGfxScriptRetained&		MOAIAbstractHasGfxScript_AffirmGfxScript	();
-	MOAIAbstractGfxScript*		MOAIAbstractHasGfxScript_GetGfxScript		();
-	void						MOAIAbstractHasGfxScript_SetGfxScript		( MOAIAbstractGfxScript* gfxScript );
+	static int			_getGfxScript				( lua_State* L );
+	static int			_setGfxScript				( lua_State* L );
+	
+	//----------------------------------------------------------------//
+	void						_RegisterLuaClass							( RTTIVisitorHistory& history, MOAILuaState& state );
+	void						_RegisterLuaFuncs							( RTTIVisitorHistory& history, MOAILuaState& state );
+	MOAIAbstractGfxScript&		MOAIAbstractHasGfxScript_AffirmGfxScript	();
 
 public:
 
 	//----------------------------------------------------------------//
-				MOAIHasGfxScript			();
-				~MOAIHasGfxScript			();
+	MOAIGfxScript*		GetGfxScript				();
+						MOAIHasGfxScript			();
+						~MOAIHasGfxScript			();
+	void				SetGfxScript				( MOAIGfxScript* gfxScript );
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	TYPE& AffirmGfxScriptWithType () {
+				
+		TYPE* gfxScriptWithType = MOAICast < TYPE >( this->GetGfxScript ());
+		if ( !gfxScriptWithType ) {
+			gfxScriptWithType = new TYPE ();
+			this->SetGfxScript ( gfxScriptWithType );
+		}
+		assert ( gfxScriptWithType );
+		return *gfxScriptWithType;
+	}
 };
 
 #endif

@@ -536,7 +536,7 @@ MOAISpriteDeck2D::MOAISpriteDeck2D () {
 	RTTI_BEGIN ( MOAISpriteDeck2D )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAISpriteDeck2D >)
 		RTTI_EXTEND ( MOAIDeck )
-		RTTI_EXTEND ( MOAIHasGfxScript )
+		RTTI_EXTEND ( MOAIHasGfxScriptBatch )
 		RTTI_EXTEND ( MOAIHasHitMaskBatch )
 	RTTI_END
 }
@@ -681,7 +681,7 @@ void MOAISpriteDeck2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaS
 //----------------------------------------------------------------//
 void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 
-	MOAIAbstractGfxScript* gfxScript = this->GetGfxScript ();
+	MOAIAbstractGfxScript* gfxScript = this->GetGfxScript ( idx );
 	if ( !gfxScript ) return;
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
@@ -700,7 +700,7 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	for ( ZLIndex i = base; i < top; ++i ) {
 		MOAISpriteDeck2DCallable callable;
 		callable.mBrush = this->GetSpriteBrush ( i );
-		gfxScript->RunScript ( &callable, MOAIGfxScriptRetained::CALL_FROM_SHADER );
+		gfxScript->RunScript ( &callable, MOAIGfxScript::CALL_FROM_SHADER );
 	}
 }
 

@@ -6,7 +6,7 @@
 #include <moai-gfx-gl/MOAIFrameBufferGL.h>
 #include <moai-gfx-gl/MOAIDrawGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL.h>
-#include <moai-gfx-gl/MOAIGfxScriptRetainedGL.h>
+#include <moai-gfx-gl/MOAIGfxScriptGL.h>
 #include <moai-gfx-gl/MOAIImageTextureGL.h>
 #include <moai-gfx-gl/MOAIIndexBufferGL.h>
 #include <moai-gfx-gl/MOAIRenderBatchGL.h>
@@ -324,9 +324,9 @@ void MOAIGfxMgrGL::MOAIGfxMgr_BeginFrame () {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxScriptRetained* MOAIGfxMgrGL::MOAIGfxMgr_CreateGfxScriptRetained () {
+MOAIGfxScript* MOAIGfxMgrGL::MOAIGfxMgr_CreateGfxScriptRetained () {
 
-	return new MOAIGfxScriptRetainedGL ();
+	return new MOAIGfxScriptGL ();
 }
 
 //----------------------------------------------------------------//

@@ -3,7 +3,7 @@
 
 #include "pch.h"
 
-#include <moai-gfx/MOAIGfxScriptRetained.h>
+#include <moai-gfx/MOAIGfxScript.h>
 #include <moai-gfx/MOAIGfxScriptBatch.h>
 
 //================================================================//
@@ -16,7 +16,6 @@ MOAIGfxScriptBatch::MOAIGfxScriptBatch () :
 	
 	RTTI_BEGIN ( MOAIGfxScriptBatch )
 		RTTI_EXTEND ( MOAIAbstractGfxScriptBatch )
-		RTTI_EXTEND ( MOAIAbstractDrawingObject )
 	RTTI_END
 }
 
@@ -29,35 +28,15 @@ MOAIGfxScriptBatch::~MOAIGfxScriptBatch () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxScriptBatch::MOAIAbstractDrawingAPI_RetainObject ( ZLRefCountedObject* object ) {
-
-	if ( object ) {
-		MOAIGfxScriptRetained* gfxScript = this->AffirmGfxScript ( 0 ).AsType < MOAIGfxScriptRetained >();
-		if ( gfxScript ) {
-			gfxScript->RetainObject ( object );
-		}
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxScriptBatch::MOAIAbstractDrawingAPI_SubmitCommand ( MOAIDrawingAPIEnum::_ cmd, const void* param, ZLSize size ) {
-
-	MOAIGfxScriptRetained* gfxScript = this->AffirmGfxScript ( 0 ).AsType < MOAIGfxScriptRetained >();
-	if ( gfxScript ) {
-		gfxScript->SubmitCommand ( cmd, param, size );
-	}
-}
-
-//----------------------------------------------------------------//
-MOAIGfxScriptRetained& MOAIGfxScriptBatch::MOAIAbstractGfxScriptBatch_AffirmGfxScript ( ZLIndex index ) {
+MOAIAbstractGfxScript& MOAIGfxScriptBatch::MOAIAbstractGfxScriptBatch_AffirmGfxScript ( ZLIndex index ) {
 
 	this->mGfxScripts.Grow (( ZLSize )index + 1 );
 
 	MOAIAbstractGfxScript* abstractGfxScript = this->mGfxScripts [ index ];
-	MOAIGfxScriptRetained* gfxScript = abstractGfxScript ? MOAICast < MOAIGfxScriptRetained >( abstractGfxScript ) : NULL;
+	MOAIGfxScript* gfxScript = abstractGfxScript ? MOAICast < MOAIGfxScript >( abstractGfxScript ) : NULL;
 	
 	if ( !gfxScript ) {
-		gfxScript = new MOAIGfxScriptRetained ();
+		gfxScript = new MOAIGfxScript ();
 		this->mGfxScripts [ index ] = gfxScript;
 	}
 	return *gfxScript;
@@ -93,3 +72,10 @@ void MOAIGfxScriptBatch::MOAIAbstractGfxScriptBatch_SetIndexBatchSize ( ZLSize s
 
 	this->mIndexBatchSize = size;
 }
+
+//----------------------------------------------------------------//
+MOAIAbstractGfxScriptBatch& MOAIGfxScriptBatch::MOAIAbstractHasGfxScriptBatch_AffirmGfxScriptBatch () {
+
+	return *this;
+}
+

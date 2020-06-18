@@ -1,14 +1,11 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGFXSCRIPTRETAINED_H
-#define	MOAIGFXSCRIPTRETAINED_H
+#ifndef	MOAIGFXSCRIPT_H
+#define	MOAIGFXSCRIPT_H
 
 #include <moai-gfx/MOAIAbstractGfxScript.h>
-#include <moai-gfx/MOAIAbstractDrawingObject.h>
-
-class MOAIAbstractUniformBuffer;
-class MOAIUniformSchema;
+#include <moai-gfx/MOAIAbstractHasGfxScript.h>
 
 //================================================================//
 // MOAIGfxScriptCommand
@@ -20,17 +17,17 @@ struct MOAIGfxScriptCommand {
 };
 
 //================================================================//
-// MOAIGfxScriptRetained
+// MOAIGfxScript
 //================================================================//
 // TODO: doxygen
-class MOAIGfxScriptRetained :
-	public virtual MOAIAbstractGfxScript,
-	public virtual MOAIAbstractDrawingObject {
+class MOAIGfxScript :
+	public virtual MOAIAbstractHasGfxScript,
+	public virtual MOAIAbstractGfxScript {
 protected:
-
-	friend class MOAIAbstractGfxScriptInterface;
 	
 	MOAI_LUA_OBJECT_VISITOR_FRIEND
+
+	friend class MOAIHasGfxScript;
 
 	ZLMemStream											mCommandStream;
 	ZLLeanArray < u8 > 									mBytecode;
@@ -46,13 +43,12 @@ protected:
 	void 				ExecuteBytecode				( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ callCommand );
 		
 	//----------------------------------------------------------------//
-	void				_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
-//	void				MOAIAbstractDrawingAPI_Call				();
-	void				MOAIAbstractDrawingAPI_RetainObject		( ZLRefCountedObject* object );
-	void				MOAIAbstractDrawingAPI_SubmitCommand	( MOAIDrawingAPIEnum::_ cmd, const void* param, ZLSize size );
-	void				MOAIAbstractGfxScript_RunScript			( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ callCommand );
-	virtual void		MOAIGfxScriptRetained_Execute			( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ cmd, const void* rawParam ) const;
+	void						_RegisterLuaClass							( RTTIVisitorHistory& history, MOAILuaState& state );
+	void						_RegisterLuaFuncs							( RTTIVisitorHistory& history, MOAILuaState& state );
+	void						MOAIAbstractGfxScript_RetainObject			( ZLRefCountedObject* object ) ;
+	void						MOAIAbstractGfxScript_RunScript				( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ callCommand );
+	void						MOAIAbstractGfxScript_SubmitCommand			( MOAIDrawingAPIEnum::_ cmd, const void* param, ZLSize size );
+	MOAIAbstractGfxScript&		MOAIAbstractHasGfxScript_AffirmGfxScript	();
 
 public:
 
@@ -66,8 +62,8 @@ public:
 	void				Call						();
 	void				CallFromShader				();
 	bool				HasContent					();
-						MOAIGfxScriptRetained		();
-						~MOAIGfxScriptRetained		();
+						MOAIGfxScript				();
+						~MOAIGfxScript				();
 	void				Reset						();
 };
 
