@@ -21,6 +21,14 @@ int MOAIAbstractHasHitMaskBatch::_getHitMask ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIAbstractHasHitMaskBatch::_hitMask ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractHasHitMaskBatch, "U" );
+	state.Push ( &self->AffirmHitMask ( state.GetValue < MOAILuaIndex >( 2, 0 )));
+	return 1;
+}
+
+//----------------------------------------------------------------//
 int MOAIAbstractHasHitMaskBatch::_reserveHitMasks ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractHasHitMaskBatch, "U" )
 
@@ -43,6 +51,12 @@ int MOAIAbstractHasHitMaskBatch::_setHitMask ( lua_State* L ) {
 //================================================================//
 // MOAIAbstractHasHitMaskBatch
 //================================================================//
+
+//----------------------------------------------------------------//
+MOAIAbstractHitMask& MOAIAbstractHasHitMaskBatch::AffirmHitMask ( ZLIndex index ) {
+
+	return this->AffirmHitMaskBatch ().MOAIAbstractHitMaskBatch_AffirmHitMask ( index );
+}
 
 //----------------------------------------------------------------//
 MOAIAbstractHitMaskBatch& MOAIAbstractHasHitMaskBatch::AffirmHitMaskBatch () {
@@ -97,10 +111,17 @@ void MOAIAbstractHasHitMaskBatch::_RegisterLuaFuncs ( RTTIVisitorHistory& histor
 
 	luaL_Reg regTable [] = {
 		{ "getHitMask",				_getHitMask },
+		{ "hitMask",				_hitMask },
 		{ "reserveHitMasks",		_reserveHitMasks },
 		{ "setHitMask",				_setHitMask },
 		{ NULL, NULL }
 	};
 	
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+MOAIAbstractHitMask& MOAIAbstractHasHitMaskBatch::MOAIAbstractHasHitMask_AffirmHitMask () {
+
+	return this->AffirmHitMask ( 0 );
 }

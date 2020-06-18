@@ -26,13 +26,16 @@ MOAIHitMaskBatch::~MOAIHitMaskBatch () {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIAbstractHitMask& MOAIHitMaskBatch::MOAIAbstractHasHitMask_AffirmHitMask () {
+MOAIAbstractHitMask& MOAIHitMaskBatch::MOAIAbstractHitMaskBatch_AffirmHitMask ( ZLIndex index ) {
 
-	this->mHitMasks.Grow ( 1 );
-	if ( !this->mHitMasks [ 0 ]) {
-		this->mHitMasks [ 0 ] = new MOAIHitMask ();
+	this->mHitMasks.Grow (( ZLSize )index + 1 );
+	MOAIAbstractHitMask* hitMask = this->mHitMasks [ index ];
+	
+	if ( !hitMask ) {
+		hitMask = new MOAIHitMask ();
+		this->mHitMasks [ index ] = hitMask;
 	}
-	return *this->mHitMasks [ 0 ];
+	return *hitMask;
 }
 
 //----------------------------------------------------------------//

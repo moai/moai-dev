@@ -19,12 +19,14 @@ protected:
 
 	//----------------------------------------------------------------//
 	static int			_getHitMask				( lua_State* L );
+	static int			_hitMask				( lua_State* L );
 	static int			_reserveHitMasks		( lua_State* L );
 	static int			_setHitMask				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void						_RegisterLuaClass							( RTTIVisitorHistory& history, MOAILuaState& state );
+	void						_RegisterLuaFuncs							( RTTIVisitorHistory& history, MOAILuaState& state );
+	MOAIAbstractHitMask&		MOAIAbstractHasHitMask_AffirmHitMask		();
 
 	//----------------------------------------------------------------//
 	virtual MOAIAbstractHitMaskBatch&		MOAIAbstractHasHitMaskBatch_AffirmHitMaskBatch	() = 0;
@@ -32,6 +34,7 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
+	MOAIAbstractHitMask&			AffirmHitMask						( ZLIndex index );
 	MOAIAbstractHitMaskBatch&		AffirmHitMaskBatch					();
 	MOAIAbstractHitMask*			GetHitMask							( ZLIndex index );
 									MOAIAbstractHasHitMaskBatch			();

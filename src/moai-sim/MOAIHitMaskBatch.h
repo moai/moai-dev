@@ -18,8 +18,8 @@ protected:
 	ZLLeanArray < ZLStrongPtr < MOAIAbstractHitMask > >	mHitMasks;
 
 	//----------------------------------------------------------------//
-	MOAIAbstractHitMask&			MOAIAbstractHasHitMask_AffirmHitMask				();
 	MOAIAbstractHitMaskBatch&		MOAIAbstractHasHitMaskBatch_AffirmHitMaskBatch		();
+	MOAIAbstractHitMask&			MOAIAbstractHitMaskBatch_AffirmHitMask				( ZLIndex index );
 	MOAIAbstractHitMaskBatch&		MOAIAbstractHitMaskBatch_AffirmHitMaskBatch			();
 	MOAIAbstractHitMask*			MOAIAbstractHitMaskBatch_GetHitMask					( ZLIndex index );
 	void							MOAIAbstractHitMaskBatch_ReserveHitMasks			( ZLSize size );

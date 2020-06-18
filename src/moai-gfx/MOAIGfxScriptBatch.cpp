@@ -31,7 +31,6 @@ MOAIGfxScriptBatch::~MOAIGfxScriptBatch () {
 MOAIAbstractGfxScript& MOAIGfxScriptBatch::MOAIAbstractGfxScriptBatch_AffirmGfxScript ( ZLIndex index ) {
 
 	this->mGfxScripts.Grow (( ZLSize )index + 1 );
-
 	MOAIAbstractGfxScript* gfxScript = this->mGfxScripts [ index ];
 	
 	if ( !gfxScript ) {
