@@ -56,6 +56,8 @@ public:
 		CALL						= ( MOAIDrawingAPIEnum::_ )-1,
 		CALL_FROM_SHADER			= ( MOAIDrawingAPIEnum::_ )-2,
 	};
+	
+	DECL_LUA_FACTORY ( MOAIGfxScript )
 
 	//----------------------------------------------------------------//
 	void				AffirmBytecode				();

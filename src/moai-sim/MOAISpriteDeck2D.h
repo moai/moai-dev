@@ -51,7 +51,7 @@ public:
 
 	friend class MOAISpriteDeck2D;
 
-	MOAIQuadBrush	mBrush;
+	MOAISpriteBrush		mBrush;
 
 	//----------------------------------------------------------------//
 	void 		MOAIAbstractGfxScriptCallback_Call 		();

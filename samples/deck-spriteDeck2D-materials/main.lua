@@ -16,15 +16,15 @@ layer:pushRenderPass ()
 
 spriteDeck = MOAISpriteDeck2D.new ()
 
-spriteDeck:setTexture ( 1, '../resources/moai.png' )
-spriteDeck:setTexture ( 2, '../resources/test.png' )
-spriteDeck:setTexture ( 3, '../resources/numbers.png' )
+spriteDeck:gfxScript ( 1 ):setTexture ( '../resources/moai.png' )
+spriteDeck:gfxScript ( 2 ):setTexture ( '../resources/test.png' )
+spriteDeck:gfxScript ( 3 ):setTexture ( '../resources/numbers.png' )
 
 spriteDeck:reserveQuads ( 4 )
-spriteDeck:setRect ( 1, -64, 0, 0, 64 )
-spriteDeck:setRect ( 2, 0, 0, 64, 64 )
-spriteDeck:setRect ( 3, -64, -64, 0, 0 )
-spriteDeck:setRect ( 4, 0, -64, 64, 0 )
+spriteDeck:setRect ( 1, -128, 0, 0, 128 )
+spriteDeck:setRect ( 2, 0, 0, 128, 128 )
+spriteDeck:setRect ( 3, -128, -128, 0, 0 )
+spriteDeck:setRect ( 4, 0, -128, 128, 0 )
 
 spriteDeck:reserveUVQuads ( 4 )
 spriteDeck:setUVRect ( 1, 0.0, 0.5, 0.5, 0.0 )

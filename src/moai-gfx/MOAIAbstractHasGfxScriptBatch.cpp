@@ -12,14 +12,6 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIAbstractHasGfxScriptBatch::_affirmGfxScript ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractHasGfxScriptBatch, "U" );
-	state.Push ( &self->AffirmGfxScript ( state.GetValue < MOAILuaIndex >( 2, 0 )));
-	return 1;
-}
-
-//----------------------------------------------------------------//
 /**	@lua	getIndexBatchSize
 	@text	Get the index batch size.
  
@@ -38,6 +30,14 @@ int MOAIAbstractHasGfxScriptBatch::_getIndexBatchSize ( lua_State* L ) {
 int MOAIAbstractHasGfxScriptBatch::_getGfxScript ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractHasGfxScriptBatch, "U" );
 	state.Push ( self->GetGfxScript ( state.GetValue < MOAILuaIndex >( 2, 0 )));
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIAbstractHasGfxScriptBatch::_gfxScript ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractHasGfxScriptBatch, "U" );
+	state.Push ( &self->AffirmGfxScript ( state.GetValue < MOAILuaIndex >( 2, 0 )));
 	return 1;
 }
 
@@ -152,9 +152,9 @@ void MOAIAbstractHasGfxScriptBatch::_RegisterLuaFuncs ( RTTIVisitorHistory& hist
 	if ( history.DidVisit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
-		{ "affirmGfxScript",		_affirmGfxScript },
 		{ "getGfxScript",			_getGfxScript },
 		{ "getIndexBatchSize",		_getIndexBatchSize },
+		{ "gfxScript",				_gfxScript },
 		{ "reserveGfxScripts",		_reserveGfxScripts },
 		{ "setIndexBatchSize",		_setIndexBatchSize },
 		{ NULL, NULL }

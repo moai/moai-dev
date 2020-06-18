@@ -19,9 +19,9 @@ protected:
 	MOAI_LUA_OBJECT_VISITOR_FRIEND
 	
 	//----------------------------------------------------------------//
-	static int						_affirmGfxScript					( lua_State* L );
 	static int						_getGfxScript						( lua_State* L );
 	static int						_getIndexBatchSize					( lua_State* L );
+	static int						_gfxScript							( lua_State* L );
 	static int						_reserveGfxScripts					( lua_State* L );
 	static int						_setGfxScript						( lua_State* L );
 	static int						_setIndexBatchSize					( lua_State* L );

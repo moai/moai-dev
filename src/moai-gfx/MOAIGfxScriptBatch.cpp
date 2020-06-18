@@ -32,8 +32,7 @@ MOAIAbstractGfxScript& MOAIGfxScriptBatch::MOAIAbstractGfxScriptBatch_AffirmGfxS
 
 	this->mGfxScripts.Grow (( ZLSize )index + 1 );
 
-	MOAIAbstractGfxScript* abstractGfxScript = this->mGfxScripts [ index ];
-	MOAIGfxScript* gfxScript = abstractGfxScript ? MOAICast < MOAIGfxScript >( abstractGfxScript ) : NULL;
+	MOAIAbstractGfxScript* gfxScript = this->mGfxScripts [ index ];
 	
 	if ( !gfxScript ) {
 		gfxScript = new MOAIGfxScript ();

@@ -700,6 +700,10 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	for ( ZLIndex i = base; i < top; ++i ) {
 		MOAISpriteDeck2DCallable callable;
 		callable.mBrush = this->GetSpriteBrush ( i );
+		
+		MOAIAbstractGfxScript* gfxScript = this->GetGfxScript ( callable.mBrush.mMaterialID );
+		if ( !gfxScript ) continue;
+		
 		gfxScript->RunScript ( &callable, MOAIGfxScript::CALL_FROM_SHADER );
 	}
 }
