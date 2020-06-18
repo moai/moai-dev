@@ -50,8 +50,8 @@ private:
 	void					_RegisterLuaFuncs				( RTTIVisitorHistory& history, MOAILuaState& state );
 	void					_SerializeIn					( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
 	void					_SerializeOut					( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
-	ZLBounds				MOAIDeck_ComputeMaxAABB			();
 	void					MOAIDeck_Draw					( ZLIndex idx );
+	ZLBounds				MOAIDeck_GetBounds				();
 	ZLBounds				MOAIDeck_GetBounds				( ZLIndex idx );
 	MOAICollisionShape*		MOAIDeck_GetCollisionShape		( ZLIndex idx );
 

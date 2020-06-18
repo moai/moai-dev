@@ -4,42 +4,34 @@
 #ifndef	MOAIHITMASKBATCH_H
 #define	MOAIHITMASKBATCH_H
 
-class MOAIHitMask;
+#include <moai-sim/MOAIAbstractHasHitMaskBatch.h>
+#include <moai-sim/MOAIAbstractHitMaskBatch.h>
 
 //================================================================//
 // MOAIHitMaskBatch
 //================================================================//
 class MOAIHitMaskBatch :
-	public virtual MOAILuaObject {
+	public virtual MOAIAbstractHasHitMaskBatch,
+	public virtual MOAIAbstractHitMaskBatch {
 protected:
 
-	MOAI_LUA_OBJECT_VISITOR_FRIEND
-
-	ZLLeanArray < ZLStrongPtr < MOAIHitMask > >	mHitMasks;
+	ZLLeanArray < ZLStrongPtr < MOAIAbstractHitMask > >	mHitMasks;
 
 	//----------------------------------------------------------------//
-	static int		_getHitMask				( lua_State* L );
-	static int		_reserveHitMasks		( lua_State* L );
-	static int		_setHitMask				( lua_State* L );
-	static int		_setImage				( lua_State* L );
-	static int		_setScalar				( lua_State* L );
-	static int		_setThreshold			( lua_State* L );
-	static int		_testHit				( lua_State* L );
-	
-	//----------------------------------------------------------------//
-	void			_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
+	MOAIAbstractHitMask&			MOAIAbstractHasHitMask_AffirmHitMask				();
+	MOAIAbstractHitMaskBatch&		MOAIAbstractHasHitMaskBatch_AffirmHitMaskBatch		();
+	MOAIAbstractHitMaskBatch&		MOAIAbstractHitMaskBatch_AffirmHitMaskBatch			();
+	MOAIAbstractHitMask*			MOAIAbstractHitMaskBatch_GetHitMask					( ZLIndex index );
+	void							MOAIAbstractHitMaskBatch_ReserveHitMasks			( ZLSize size );
+	void							MOAIAbstractHitMaskBatch_SetHitMask					( ZLIndex index, MOAIAbstractHitMask* hitMask );
 
 public:
 
+	DECL_LUA_FACTORY ( MOAIHitMaskBatch )
+
 	//----------------------------------------------------------------//
-					MOAIHitMaskBatch		();
-					~MOAIHitMaskBatch		();
-	void			SetImage				( ZLImage* image );
-	void			SetScalar				( u32 idx, u32 scalar );
-	void			SetThreshold			( u32 idx, u32 threshold );
-	bool			TestHit					( u32 idx, float x, float y );
-	bool			TestHit					( u32 idx, const ZLQuad& modelQuad, const ZLQuad& uvQuad, float x, float y );
+							MOAIHitMaskBatch		();
+							~MOAIHitMaskBatch		();
 };
 
 #endif

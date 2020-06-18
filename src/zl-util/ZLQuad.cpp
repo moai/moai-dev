@@ -412,3 +412,17 @@ void ZLQuad::Translate ( ZLReal xOff, ZLReal yOff ) {
 	this->mV [ 2 ].Add ( offset );
 	this->mV [ 3 ].Add ( offset );
 }
+
+//----------------------------------------------------------------//
+ZLQuad::ZLQuad () {
+}
+
+//----------------------------------------------------------------//
+ZLQuad::ZLQuad ( const ZLRect& rect ) {
+	this->Init ( rect );
+}
+
+//----------------------------------------------------------------//
+ZLQuad::ZLQuad ( ZLReal x0, ZLReal y0, ZLReal x1, ZLReal y1 ) {
+	this->Init ( x0, y0, x1, y1 );
+}

@@ -43,8 +43,8 @@ private:
 	ZLBox			GetItemAABB				( u32 idx );
 
 	//----------------------------------------------------------------//
-	ZLBounds				MOAIDeck_ComputeMaxAABB			();
 	void					MOAIDeck_Draw					( ZLIndex idx );
+	ZLBounds				MOAIDeck_GetBounds				();
 	ZLBounds				MOAIDeck_GetBounds				( ZLIndex idx );
 	MOAICollisionShape*		MOAIDeck_GetCollisionShape		( ZLIndex idx );
 	void					_RegisterLuaClass				( RTTIVisitorHistory& history, MOAILuaState& state );

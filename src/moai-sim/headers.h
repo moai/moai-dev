@@ -7,6 +7,10 @@
 #include <moai-sim/pch.h>
 #include <moai-sim/strings.h>
 
+#include <moai-sim/MOAIAbstractHasHitMask.h>
+#include <moai-sim/MOAIAbstractHasHitMaskBatch.h>
+#include <moai-sim/MOAIAbstractHitMask.h>
+#include <moai-sim/MOAIAbstractHitMaskBatch.h>
 #include <moai-sim/MOAIAbstractLayer.h>
 #include <moai-sim/MOAIAbstractProp.h>
 #include <moai-sim/MOAIAbstractPropWithDeckAndGrid.h>
@@ -30,6 +34,8 @@
 #include <moai-sim/MOAIHasDeck.h>
 #include <moai-sim/MOAIHasDeckAndGrid.h>
 #include <moai-sim/MOAIHasDeckAndIndex.h>
+#include <moai-sim/MOAIHasHitMask.h>
+#include <moai-sim/MOAIHasHitMaskBatch.h>
 #include <moai-sim/MOAIHitMask.h>
 #include <moai-sim/MOAIHitMaskBatch.h>
 #include <moai-sim/MOAIDeckProxy.h>

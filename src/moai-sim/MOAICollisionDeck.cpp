@@ -157,12 +157,6 @@ void MOAICollisionDeck::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILua
 }
 
 //----------------------------------------------------------------//
-ZLBounds MOAICollisionDeck::MOAIDeck_ComputeMaxAABB () {
-
-	return this->MOAIDeck::GetBounds ( 0 );
-}
-
-//----------------------------------------------------------------//
 void MOAICollisionDeck::MOAIDeck_Draw ( ZLIndex idx ) {
 	UNUSED ( idx );
 	
@@ -182,6 +176,12 @@ void MOAICollisionDeck::MOAIDeck_Draw ( ZLIndex idx ) {
 //		
 //		this->mQuads [ itemIdx ].Draw ( offset.mX, offset.mY, offset.mZ, scale.mX, scale.mY  );
 //	}
+}
+
+//----------------------------------------------------------------//
+ZLBounds MOAICollisionDeck::MOAIDeck_GetBounds () {
+
+	return this->MOAIDeck::GetBounds ( 0 );
 }
 
 //----------------------------------------------------------------//

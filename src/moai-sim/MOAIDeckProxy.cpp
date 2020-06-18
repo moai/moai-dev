@@ -62,17 +62,17 @@ void MOAIDeckProxy::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaStat
 }
 
 //----------------------------------------------------------------//
-ZLBounds MOAIDeckProxy::MOAIDeck_ComputeMaxAABB () {
-
-	return this->mDeck ? this->mDeck->MOAIDeck_ComputeMaxAABB () : ZLBounds::EMPTY;
-}
-
-//----------------------------------------------------------------//
 void MOAIDeckProxy::MOAIDeck_Draw ( ZLIndex idx ) {
 
 	if ( this->mDeck ) {
 		this->mDeck->MOAIDeck_Draw ( this->MOAIDeckProxy_Remap ( idx ));
 	}
+}
+
+//----------------------------------------------------------------//
+ZLBounds MOAIDeckProxy::MOAIDeck_GetBounds () {
+
+	return this->mDeck ? this->mDeck->MOAIDeck_GetBounds () : ZLBounds::EMPTY;
 }
 
 //----------------------------------------------------------------//

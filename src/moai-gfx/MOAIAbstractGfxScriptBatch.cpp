@@ -32,7 +32,7 @@ int MOAIAbstractGfxScriptBatch::_affirmGfxScript ( lua_State* L ) {
 int MOAIAbstractGfxScriptBatch::_getIndexBatchSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractGfxScriptBatch, "U" );
 	
-	state.Push ( MOAILuaSize (self->GetIndexBatchSize ()));
+	state.Push ( MOAILuaSize ( self->GetIndexBatchSize ()));
 	return 1;
 }
 

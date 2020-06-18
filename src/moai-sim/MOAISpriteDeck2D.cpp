@@ -222,7 +222,6 @@ int MOAISpriteDeck2D::_setQuad ( lua_State* L ) {
 	ZLQuad quad = state.GetQuad ( idx );
 
 	self->SetQuad ( quadID, quad );
-	self->SetBoundsDirty ();
 
 	return 0;
 }
@@ -251,7 +250,6 @@ int MOAISpriteDeck2D::_setRect ( lua_State* L ) {
 	ZLRect rect = state.GetRect < float >( idx );
 
 	self->SetRect ( rectID, rect );
-	self->SetBoundsDirty ();
 
 	return 0;
 }
@@ -381,7 +379,6 @@ int MOAISpriteDeck2D::_transform ( lua_State* L ) {
 	if ( transform ) {
 		transform->ForceUpdate ();
 		self->Transform ( transform->GetLocalToWorldMtx ());
-		self->SetBoundsDirty ();
 	}
 	return 0;
 }
@@ -437,42 +434,101 @@ MOAIDeck* MOAISpriteDeck2D::AffirmDeck ( MOAILuaState& state, int idx ) {
 }
 
 //----------------------------------------------------------------//
-//bool MOAISpriteDeck2D::Contains ( u32 idx, const ZLVec2D& vec ) {
-//	
-//	size_t size = this->mSpriteLists.Size ();
-//	if ( size ) {
-//		
-//		idx = ( idx - 1 ) % size;
-//		MOAISpriteList& brush = this->mSpriteLists [ idx ];
-//		
-//		for ( size_t i = 0; i < brush.mTotalSprites; ++i ) {
-//			MOAISprite& prim = this->mSprites [ brush.mBaseSprite + i ];
-//			if ( this->mQuads [ prim.mQuadID ].Contains ( vec.mX, vec.mY )) {
-//				return true;
-//			} 
-//		}
-//	}
-//	return false;
-//}
+ZLSize MOAISpriteDeck2D::CountSpriteLists () const {
+	
+	ZLSize size = this->mSpriteLists.Size ();
+	if ( size > 0 ) return size;
+	
+	size = this->mSprites.Size ();
+	if ( size > 0 ) return size;
+	
+	size = this->mQuads.Size ();
+	if ( size > 0 ) return size;
+	
+	return 1;
+}
 
 //----------------------------------------------------------------//
-//bool MOAISpriteDeck2D::Inside ( u32 idx, MOAIGfxScriptBatch* materials, u32 granularity, ZLVec3D vec, float pad ) {
-//	UNUSED ( pad );
-//
-//	u32 size = ( u32 )this->mSpriteLists.Size (); // TODO: cast
-//	if ( size ) {
-//	
-//		idx = ( idx - 1 ) % size;
-//		
-//		MOAISpriteList& sprite = this->mSpriteLists [ idx ];
-//		
-//		for ( u32 i	 = 0; i < sprite.mTotalSprites; ++i ) {
-//			MOAISprite& prim = this->mSprites [ sprite.mBaseSprite + i ];
-//			if ( this->TestHit ( materials, prim.mMaterialID, idx, granularity, this->mQuads [ prim.mQuadID ], this->mUVQuads [ prim.mUVQuadID ], vec.mX, vec.mY )) return true;
-//		}
-//	}
-//	return false;
-//}
+ZLQuad MOAISpriteDeck2D::GetQuad ( ZLIndex index ) const {
+
+	ZLSize nQuads = this->mQuads.Size ();
+	if ( nQuads > 0 ) {
+		return this->mQuads [ index % nQuads ];
+	}
+	return ZLQuad ( -0.5f, -0.5f, 0.5f, 0.5f );
+}
+
+//----------------------------------------------------------------//
+MOAISprite MOAISpriteDeck2D::GetSprite ( ZLIndex index ) const {
+
+	ZLSize nSprites = this->mSprites.Size ();
+	if ( nSprites > 0 ) {
+		return this->mSprites [ index % nSprites ];
+	}
+
+	MOAISprite sprite;
+	sprite.mUVQuadID 	= 0;
+	sprite.mQuadID 		= 0;
+	sprite.mMaterialID 	= index;
+	return sprite;
+}
+
+//----------------------------------------------------------------//
+MOAISpriteBrush MOAISpriteDeck2D::GetSpriteBrush ( ZLIndex index ) const {
+
+	MOAISprite sprite = this->GetSprite ( index );
+
+	MOAISpriteBrush spriteBrush;
+	spriteBrush.mUVQuad = this->GetUVQuad ( sprite.mUVQuadID );
+	spriteBrush.mModelQuad = this->GetQuad ( sprite.mQuadID );
+	spriteBrush.mMaterialID = sprite.mMaterialID;
+	return spriteBrush;
+}
+
+//----------------------------------------------------------------//
+MOAISpriteList MOAISpriteDeck2D::GetSpriteList ( ZLIndex index ) const {
+
+	// we have a sprite list, so use that
+	ZLSize size = this->mSpriteLists.Size ();
+	if ( size > 0 ) {
+		return this->mSpriteLists [ index % size ];
+	}
+	
+	// no sprite list; fall back on others
+	
+	MOAISpriteList spriteList;
+	
+	// try using sprites
+	size = this->mSprites.Size ();
+	if ( size > 0 ) {
+		spriteList.mBaseSprite = index % size;
+		spriteList.mTotalSprites = 1;
+		return spriteList;
+	}
+	
+	// try using quads
+	size = this->mQuads.Size ();
+	if ( size > 0 ) {
+		spriteList.mBaseSprite = index % size;
+		spriteList.mTotalSprites = 1;
+		return spriteList;
+	}
+	
+	// so sprite lists, sprites or quads; use the default
+	spriteList.mBaseSprite = 0;
+	spriteList.mTotalSprites = 1;
+	return spriteList;
+}
+
+//----------------------------------------------------------------//
+ZLQuad MOAISpriteDeck2D::GetUVQuad ( ZLIndex index ) const {
+
+	ZLSize nUVQuads = this->mUVQuads.Size ();
+	if ( nUVQuads > 0 ) {
+		return this->mUVQuads [ index % nUVQuads ];
+	}
+	return ZLQuad ( 0.0f, 1.0f, 1.0f, 0.0f );
+}
 
 //----------------------------------------------------------------//
 MOAISpriteDeck2D::MOAISpriteDeck2D () {
@@ -481,6 +537,7 @@ MOAISpriteDeck2D::MOAISpriteDeck2D () {
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAISpriteDeck2D >)
 		RTTI_EXTEND ( MOAIDeck )
 		RTTI_EXTEND ( MOAIHasGfxScript )
+		RTTI_EXTEND ( MOAIHasHitMaskBatch )
 	RTTI_END
 }
 
@@ -622,26 +679,10 @@ void MOAISpriteDeck2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaS
 }
 
 //----------------------------------------------------------------//
-ZLBounds MOAISpriteDeck2D::MOAIDeck_ComputeMaxAABB () {
-
-	ZLSize size = this->mQuads.Size ();
-	
-	if ( size ) {
-	
-		ZLRect frame;
-		for ( ZLIndex i = 0; i < size; ++i ) {
-			frame.Grow ( this->mQuads [ i ].GetFrame (), i > 0 );
-		}
-		
-		ZLBounds bounds;
-		bounds.Init ( frame );
-		return bounds;
-	}
-	return ZLBounds::EMPTY;
-}
-
-//----------------------------------------------------------------//
 void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
+
+	MOAIAbstractGfxScript* gfxScript = this->GetGfxScript ();
+	if ( !gfxScript ) return;
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	MOAIQuadBrush::BindVertexFormat ();
@@ -651,124 +692,83 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	gfxMgr.SetBlendMode ( MOAIBlendMode ());
 	gfxMgr.SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
 
-	ZLSize totalSprites			= this->mSprites.Size ();
-	ZLSize totalSpriteLists		= this->mSpriteLists.Size ();
-	ZLSize totalQuads			= this->mQuads.Size ();
+	MOAISpriteList spriteList = this->GetSpriteList ( idx );
 	
-	if ( totalSprites ) {
-
-		ZLIndex base;
-		ZLIndex top;
-		
-		if ( totalSpriteLists ) {
-		
-			MOAISpriteList& spriteList = this->mSpriteLists [  ZLIndexOp::Wrap ( idx, totalSpriteLists )];
-			base = spriteList.mBaseSprite;
-			top = base + spriteList.mTotalSprites;
-		}
-		else {
-		
-			base =  ZLIndexOp::Wrap ( idx, totalSprites );
-			top = base + ( ZLSize )1;
-		}
-		
-		for ( ZLIndex i = base; i < top; ++i ) {
-			
-			MOAISprite spritePair = this->mSprites [  ZLIndexOp::Wrap ( i, totalSprites )];
-			
-			MOAIAbstractGfxScript* gfxScript = this->GetGfxScript ();
-			if ( !gfxScript ) continue;
-			
-			MOAISpriteDeck2DCallable callable;
-			callable.mBrush.mUVQuad = this->mUVQuads [ spritePair.mUVQuadID ];
-			callable.mBrush.mModelQuad = this->mQuads [ spritePair.mQuadID ];
-			
-			gfxScript->RunScript ( &callable, MOAIGfxScriptRetained::CALL_FROM_SHADER );
-		}
-	}
-	else {
-		
-		MOAIAbstractGfxScript* gfxScript = this->GetGfxScript ();
-		if ( !gfxScript ) return;
-		
+	ZLIndex base = spriteList.mBaseSprite;
+	ZLIndex top = base + spriteList.mTotalSprites;
+	
+	for ( ZLIndex i = base; i < top; ++i ) {
 		MOAISpriteDeck2DCallable callable;
-		
-		if ( totalQuads ) {
-			
-			ZLIndex itemIdx =  ZLIndexOp::Wrap ( idx, totalQuads );
-
-			callable.mBrush.mModelQuad = this->mQuads [ itemIdx ];
-
-			if ( itemIdx < this->mUVQuads.Size ()) {
-				callable.mBrush.mUVQuad = this->mUVQuads [ itemIdx ];
-			}
-			else {
-				callable.mBrush.mUVQuad.Init ( 0.0f, 1.0f, 1.0f, 0.0f );
-			}
-		}
-		else {
-			
-			callable.mBrush.mUVQuad.Init ( 0.0f, 1.0f, 1.0f, 0.0f );
-			callable.mBrush.mModelQuad.Init ( -0.5f, -0.5f, 0.5f, 0.5f );
-		}
-		
+		callable.mBrush = this->GetSpriteBrush ( i );
 		gfxScript->RunScript ( &callable, MOAIGfxScriptRetained::CALL_FROM_SHADER );
 	}
+}
+
+//----------------------------------------------------------------//
+ZLBounds MOAISpriteDeck2D::MOAIDeck_GetBounds () {
+
+	ZLSize size = this->mQuads.Size ();
+	
+	if ( size ) {
+		ZLRect rect;
+		for ( ZLIndex i = 0; i < size; ++i ) {
+			rect.Grow ( this->mQuads [ i ].GetFrame (), i > 0 );
+		}
+		return ZLBounds ( rect );
+	}
+	return ZLBounds ( this->GetQuad ( 0 ).GetFrame ());
 }
 
 //----------------------------------------------------------------//
 ZLBounds MOAISpriteDeck2D::MOAIDeck_GetBounds ( ZLIndex idx ) {
 
 	ZLBounds bounds = ZLBounds::EMPTY;
-
-	ZLSize totalSprites			= this->mSprites.Size ();
-	ZLSize totalSpriteLists		= this->mSpriteLists.Size ();
-	ZLSize totalQuads			= this->mQuads.Size ();
 	
-	if ( totalQuads ) {
+	MOAISpriteList spriteList = this->GetSpriteList ( idx );
 	
-		if ( totalSprites ) {
-
-			ZLIndex base;
-			ZLIndex top;
-			
-			if ( totalSpriteLists ) {
-			
-				MOAISpriteList& spriteList = this->mSpriteLists [  ZLIndexOp::Wrap ( idx, totalSpriteLists )];
-				base = spriteList.mBaseSprite;
-				top = base + spriteList.mTotalSprites;
-			}
-			else {
-			
-				base =  ZLIndexOp::Wrap ( idx, totalSprites );
-				top = base + ( ZLSize )1;
-			}
-
-			ZLRect rect;
-
-			for ( ZLIndex i = base ; i < top; ++i ) {
-				
-				MOAISprite sprite = this->mSprites [  ZLIndexOp::Wrap ( i, totalSprites )];
-				rect.Grow ( this->mQuads [ sprite.mQuadID ].GetFrame (), i > base );
-			}
-			bounds.Init ( rect );
-		}
-		else {
-		
-			ZLRect rect = this->mQuads [  ZLIndexOp::Wrap ( idx, totalQuads )].GetFrame ();
-			bounds.Init ( rect );
-		}
+	ZLIndex base = spriteList.mBaseSprite;
+	ZLIndex top = base + spriteList.mTotalSprites;
+	
+	ZLRect rect;
+	for ( ZLIndex i = base; i < top; ++i ) {
+		MOAISprite sprite = this->GetSprite ( i );
+		rect.Grow ( this->GetQuad ( sprite.mQuadID ).GetFrame (), i > base );
 	}
-	else {
-	
-		bounds.Init ( -0.5f, 0.5f, 0.5f, -0.5f );
-	}
-	
-	return bounds;
+	return ZLBounds ( rect );
 }
 
 //----------------------------------------------------------------//
 MOAICollisionShape* MOAISpriteDeck2D::MOAIDeck_GetCollisionShape ( ZLIndex idx ) {
-	UNUSED(idx);
+	UNUSED ( idx );
 	return 0;
+}
+
+//----------------------------------------------------------------//
+MOAIPickResult MOAISpriteDeck2D::MOAIDeck_PickByPoint ( ZLIndex idx, ZLVec3D loc ) {
+
+	MOAISpriteList spriteList = this->GetSpriteList ( idx );
+	
+	ZLIndex base = spriteList.mBaseSprite;
+	ZLIndex top = base + spriteList.mTotalSprites;
+	
+	for ( ZLIndex i = base; i < top; ++i ) {
+		MOAISpriteBrush sprite = this->GetSpriteBrush ( i );
+		MOAIAbstractHitMask* hitMask = this->GetHitMask ( sprite.mMaterialID );
+		
+		if ( hitMask ) {
+			if ( hitMask->TestHit ( sprite.mModelQuad, sprite.mUVQuad, loc.mX, loc.mY )) return true;
+		}
+		else {
+			if ( sprite.mModelQuad.Contains ( loc.mX, loc.mY )) return true;
+		}
+	}
+	return false;
+}
+
+//----------------------------------------------------------------//
+MOAIPickResult MOAISpriteDeck2D::MOAIDeck_PickByRay ( ZLIndex idx, ZLVec3D loc, ZLVec3D normal ) {
+	UNUSED ( loc );
+	UNUSED ( normal );
+
+	return false;
 }

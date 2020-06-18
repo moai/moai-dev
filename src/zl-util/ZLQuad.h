@@ -41,6 +41,9 @@ public:
 	void			Transform			( const ZLAffine3D& transform );
 	void			Transform			( const ZLMatrix3x3& transform );
 	void			Translate			( ZLReal xOff, ZLReal yOff );
+					ZLQuad				();
+					ZLQuad				( const ZLRect& rect );
+					ZLQuad				( ZLReal x0, ZLReal y0, ZLReal x1, ZLReal y1 );
 };
 
 #endif

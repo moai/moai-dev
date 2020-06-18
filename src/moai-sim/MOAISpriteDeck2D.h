@@ -5,12 +5,13 @@
 #define	MOAISPRITEDECK2D_H
 
 #include <moai-sim/MOAIDeck.h>
+#include <moai-sim/MOAIHasHitMaskBatch.h>
 
 //================================================================//
 // MOAISprite
 //================================================================//
 class MOAISprite {
-private:
+public:
 
 	friend class MOAISpriteDeck2D;
 
@@ -20,10 +21,20 @@ private:
 };
 
 //================================================================//
+// MOAISpriteBrush
+//================================================================//
+class MOAISpriteBrush :
+	public MOAIQuadBrush {
+public:
+
+	ZLIndex		mMaterialID;
+};
+
+//================================================================//
 // MOAISpriteList
 //================================================================//
 class MOAISpriteList {
-private:
+public:
 
 	friend class MOAISpriteDeck2D;
 
@@ -36,7 +47,7 @@ private:
 //================================================================//
 class MOAISpriteDeck2DCallable :
 	public MOAIAbstractGfxScriptCallback {
-private:
+public:
 
 	friend class MOAISpriteDeck2D;
 
@@ -57,7 +68,8 @@ private:
 */
 class MOAISpriteDeck2D :
 	public MOAIDeck,
-	public MOAIHasGfxScript {
+	public MOAIHasGfxScript,
+	public MOAIHasHitMaskBatch {
 private:
 	
 	ZLLeanArray < ZLQuad >				mUVQuads;
@@ -84,14 +96,24 @@ private:
 	static int				_transformUV					( lua_State* L );
 
 	//----------------------------------------------------------------//
+	ZLSize					CountSpriteLists				() const;
+	ZLQuad					GetQuad							( ZLIndex index ) const;
+	MOAISprite				GetSprite						( ZLIndex index ) const;
+	MOAISpriteBrush			GetSpriteBrush					( ZLIndex index ) const;
+	MOAISpriteList			GetSpriteList					( ZLIndex index ) const;
+	ZLQuad					GetUVQuad						( ZLIndex index ) const;
+
+	//----------------------------------------------------------------//
 	void					_RegisterLuaClass				( RTTIVisitorHistory& history, MOAILuaState& state );
 	void					_RegisterLuaFuncs				( RTTIVisitorHistory& history, MOAILuaState& state );
 	void					_SerializeIn					( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
 	void					_SerializeOut					( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
-	ZLBounds				MOAIDeck_ComputeMaxAABB			();
 	void					MOAIDeck_Draw					( ZLIndex idx );
+	ZLBounds				MOAIDeck_GetBounds				();
 	ZLBounds				MOAIDeck_GetBounds				( ZLIndex idx );
 	MOAICollisionShape*		MOAIDeck_GetCollisionShape		( ZLIndex idx );
+	virtual MOAIPickResult	MOAIDeck_PickByPoint			( ZLIndex idx, ZLVec3D loc );
+	virtual MOAIPickResult	MOAIDeck_PickByRay				( ZLIndex idx, ZLVec3D loc, ZLVec3D normal );
 
 public:
 	

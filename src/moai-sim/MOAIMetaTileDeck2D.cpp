@@ -50,7 +50,6 @@ int MOAIMetaTileDeck2D::_setDeck ( lua_State* L ) {
 	
 	MOAIDeck* deck = state.GetLuaObject < MOAIDeck >( 2, true );
 	self->mDeck.Set ( *self, deck );
-	self->SetBoundsDirty ();
 	
 	return 0;
 }
@@ -68,7 +67,6 @@ int MOAIMetaTileDeck2D::_setGrid ( lua_State* L ) {
 	
 	MOAIGrid* grid = state.GetLuaObject < MOAIGrid >( 2, true );
 	self->mGrid.Set ( *self, grid );
-	self->SetBoundsDirty ();
 	
 	return 0;
 }
@@ -101,8 +99,6 @@ int MOAIMetaTileDeck2D::_setMetaTile ( lua_State* L ) {
 		brush.mMax.mY		= state.GetValue < u32 >( 6, 0 ) + brush.mMin.mY - 1;
 		brush.mOffset.mX	= state.GetValue < float >( 7, 0.0f );
 		brush.mOffset.mY	= state.GetValue < float >( 8, 0.0f );
-		
-		self->SetBoundsDirty ();
 	}
 	return 0;
 }
@@ -149,21 +145,6 @@ void MOAIMetaTileDeck2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILu
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-ZLBounds MOAIMetaTileDeck2D::MOAIDeck_ComputeMaxAABB () {
-
-	ZLSize size = this->mBrushes.Size ();
-	if ( size == 0 ) {
-		return ZLBounds::EMPTY;
-	}
-
-	ZLBox aabb;
-	for ( ZLIndex i = 0; i < this->mBrushes.Size (); ++i ) {
-		aabb.Grow ( this->GetBounds ( i ).mAABB, i > 0 );
-	}
-	return ZLBounds ( aabb );
 }
 
 //----------------------------------------------------------------//
@@ -215,6 +196,21 @@ void MOAIMetaTileDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 			this->mDeck->Draw ( idx );
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+ZLBounds MOAIMetaTileDeck2D::MOAIDeck_GetBounds () {
+
+	ZLSize size = this->mBrushes.Size ();
+	if ( size == 0 ) {
+		return ZLBounds::EMPTY;
+	}
+
+	ZLBox aabb;
+	for ( ZLIndex i = 0; i < this->mBrushes.Size (); ++i ) {
+		aabb.Grow ( this->GetBounds ( i ).mAABB, i > 0 );
+	}
+	return ZLBounds ( aabb );
 }
 
 //----------------------------------------------------------------//

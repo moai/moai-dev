@@ -334,7 +334,12 @@ void MOAISurfaceDeck2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILua
 }
 
 //----------------------------------------------------------------//
-ZLBounds MOAISurfaceDeck2D::MOAIDeck_ComputeMaxAABB () {
+void MOAISurfaceDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
+	UNUSED ( idx );
+}
+
+//----------------------------------------------------------------//
+ZLBounds MOAISurfaceDeck2D::MOAIDeck_GetBounds () {
 
 	size_t size = this->mBrushes.Size ();
 
@@ -345,11 +350,6 @@ ZLBounds MOAISurfaceDeck2D::MOAIDeck_ComputeMaxAABB () {
 
 	ZLBox aabb ( frame.mXMin, frame.mYMax, frame.mXMax, frame.mYMin, 0.0f, 0.0f );
 	return aabb;
-}
-
-//----------------------------------------------------------------//
-void MOAISurfaceDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
-	UNUSED ( idx );
 }
 
 //----------------------------------------------------------------//

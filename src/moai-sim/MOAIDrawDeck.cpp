@@ -111,12 +111,6 @@ void MOAIDrawDeck::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState
 }
 
 //----------------------------------------------------------------//
-ZLBounds MOAIDrawDeck::MOAIDeck_ComputeMaxAABB () {
-
-	return this->mBounds;
-}
-
-//----------------------------------------------------------------//
 void MOAIDrawDeck::MOAIDeck_Draw ( ZLIndex idx ) {
 	
 	if ( this->mOnDraw ) {
@@ -137,6 +131,12 @@ void MOAIDrawDeck::MOAIDeck_Draw ( ZLIndex idx ) {
 		state.Push ( stretch.mZ );
 		state.DebugCall ( 5, 0 );
 	}
+}
+
+//----------------------------------------------------------------//
+ZLBounds MOAIDrawDeck::MOAIDeck_GetBounds () {
+
+	return this->mBounds;
 }
 
 //----------------------------------------------------------------//

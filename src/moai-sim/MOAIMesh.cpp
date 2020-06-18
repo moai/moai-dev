@@ -669,15 +669,15 @@ void MOAIMesh::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state,
 }
 
 //----------------------------------------------------------------//
-ZLBounds MOAIMesh::MOAIDeck_ComputeMaxAABB () {
-
-	return this->mBounds;
-}
-
-//----------------------------------------------------------------//
 void MOAIMesh::MOAIDeck_Draw ( ZLIndex idx ) {
 
 	this->DrawIndex ( idx, 0 );
+}
+
+//----------------------------------------------------------------//
+ZLBounds MOAIMesh::MOAIDeck_GetBounds () {
+
+	return this->mBounds;
 }
 
 //----------------------------------------------------------------//

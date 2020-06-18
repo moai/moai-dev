@@ -38,14 +38,23 @@ MOAIPickResult::MOAIPickResult ( bool picked, ZLReal time, ZLVec3D loc, ZLVec3D 
 int MOAIAbstractPickable::_pickByPoint ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractPickable, "U" )
 	
-	return 0;
+	ZLVec3D loc = state.GetValue < ZLVec3D >( 2, ZLVec3D::ORIGIN );
+	
+	MOAIPickResult result = self->PickByPoint ( loc );
+	state.Push ( result.mPicked );
+	return 1;
 }
 
 //----------------------------------------------------------------//
 int MOAIAbstractPickable::_pickByRay ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractPickable, "U" )
 
-	return 0;
+	ZLVec3D loc = state.GetValue < ZLVec3D >( 2, ZLVec3D::ORIGIN );
+	ZLVec3D vec = state.GetValue < ZLVec3D >( 5, ZLVec3D::Z_AXIS );
+	
+	MOAIPickResult result = self->PickByRay ( loc, vec );
+	state.Push ( result.mPicked );
+	return 1;
 }
 
 //================================================================//

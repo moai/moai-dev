@@ -4,40 +4,37 @@
 #ifndef	MOAIHITMASK_H
 #define	MOAIHITMASK_H
 
+#include <moai-sim/MOAIAbstractHasHitMask.h>
+#include <moai-sim/MOAIAbstractHitMask.h>
+
 //================================================================//
 // MOAIHitMask
 //================================================================//
 class MOAIHitMask :
-	public virtual MOAILuaObject {
+	public virtual MOAIAbstractHasHitMask,
+	public virtual MOAIAbstractHitMask {
 protected:
 
-	MOAI_LUA_OBJECT_VISITOR_FRIEND
-
-	ZLStrongPtr < ZLImage > mImage;
+	ZLStrongPtr < MOAIImage > mImage;
 
 	u32				mHitColorScalar;
 	u32				mHitColorThreshold;
 
 	//----------------------------------------------------------------//
-	static int		_setImage				( lua_State* L );
-	static int		_setScalar				( lua_State* L );
-	static int		_setThreshold			( lua_State* L );
-	static int		_testHit				( lua_State* L );
-	
-	//----------------------------------------------------------------//
-	void			_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
+	MOAIAbstractHitMask&	MOAIAbstractHasHitMask_AffirmHitMask	();
+	void					MOAIAbstractHitMask_SetImage			( MOAIImage* image );
+	void					MOAIAbstractHitMask_SetScalar			( u32 scalar );
+	void					MOAIAbstractHitMask_SetThreshold		( u32 threshold );
+	bool					MOAIAbstractHitMask_TestHit				( float x, float y );
+	bool					MOAIAbstractHitMask_TestHit				( const ZLQuad& modelQuad, const ZLQuad& uvQuad, float x, float y );
 
 public:
+
+	DECL_LUA_FACTORY ( MOAIHitMask )
 
 	//----------------------------------------------------------------//
 					MOAIHitMask				();
 					~MOAIHitMask			();
-	void			SetImage				( ZLImage* image );
-	void			SetScalar				( u32 scalar );
-	void			SetThreshold			( u32 threshold );
-	bool			TestHit					( float x, float y ); // in local (uv) space of the mask
-	bool			TestHit					( const ZLQuad& modelQuad, const ZLQuad& uvQuad, float x, float y ); // in local (model) space of the quad
 };
 
 #endif

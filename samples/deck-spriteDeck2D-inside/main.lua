@@ -15,26 +15,23 @@ layer:setViewport ( viewport )
 layer:pushRenderPass ()
 
 gfxQuad = MOAISpriteDeck2D.new ()
-gfxQuad:setTexture ( "../resources/moai.png" )
+gfxQuad:setTexture ( '../resources/moai.png' )
 gfxQuad:setRect ( -128, -128, 128, 128 )
 gfxQuad:setUVRect ( 0, 0, 1, 1 )
-
-gfxQuad:setHitMask ( "../resources/moai.png" )
+gfxQuad:setHitMaskImage ( '../resources/moai.png' )
 gfxQuad:setHitMaskScalar ( 1, 1, 1, 1 )
 gfxQuad:setHitMaskThreshold ( 1, 1, 1, 1 ) -- just hit test the white pixels
 
 prop = MOAIProp.new ()
 prop:setDeck ( gfxQuad )
-prop:setHitGranularity ( MOAIProp.HIT_TEST_FINE )
 prop:setPartition ( layer )
 
 function clickCallback ( down )
 	
 	if down then
-		
 		local x, y = MOAIInputMgr.device.pointer:getLoc ()
 		x, y = layer:wndToWorld ( x, y )
-		if prop:inside ( x, y ) then
+		if prop:pickByPoint ( x, y ) then
 			prop:addRot ( 0, 0, 5 )
 		end
 	end

@@ -44,7 +44,6 @@ public:
 	void		Init					( const ZLRect& rect );
 	void		Init					( float left, float top, float right, float bottom, float back = 0.0f, float front = 0.0f );
 				ZLBounds				();
-				
 				ZLBounds				( const ZLBox& box );
 				ZLBounds				( const ZLPrism& prism );
 				ZLBounds				( const ZLRect& rect );

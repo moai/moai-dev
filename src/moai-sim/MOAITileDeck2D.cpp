@@ -50,7 +50,6 @@ int MOAITileDeck2D::_setQuad ( lua_State* L ) {
 	quad.mV [ 3 ].mY = state.GetValue < float >( 9, 0.0f );
 
 	self->mQuad.SetVerts ( quad.mV [ 0 ], quad.mV [ 1 ], quad.mV [ 2 ], quad.mV [ 3 ]);
-	self->SetBoundsDirty ();
 
 	return 0;
 }
@@ -78,7 +77,6 @@ int MOAITileDeck2D::_setRect ( lua_State* L ) {
 	float y1	= state.GetValue < float >( 5, 0.0f );
 	
 	self->mQuad.SetVerts ( x0, y0, x1, y1 );
-	self->SetBoundsDirty ();
 
 	return 0;
 }
@@ -208,7 +206,6 @@ int MOAITileDeck2D::_transform ( lua_State* L ) {
 	if ( transform ) {
 		transform->ForceUpdate ();
 		self->Transform ( transform->GetLocalToWorldMtx ());
-		self->SetBoundsDirty ();
 	}
 	return 0;
 }
@@ -309,12 +306,6 @@ void MOAITileDeck2D::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& 
 }
 
 //----------------------------------------------------------------//
-ZLBounds MOAITileDeck2D::MOAIDeck_ComputeMaxAABB () {
-
-	return this->MOAIDeck::GetBounds ( 0 );
-}
-
-//----------------------------------------------------------------//
 void MOAITileDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 
 	MOAIAbstractGfxScript* gfxScript = this->GetGfxScript ();
@@ -342,6 +333,12 @@ void MOAITileDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	callable.mBrush = this->mQuad;
 	
 	gfxScript->RunScript ( &callable, MOAIGfxScriptRetained::CALL_FROM_SHADER );
+}
+
+//----------------------------------------------------------------//
+ZLBounds MOAITileDeck2D::MOAIDeck_GetBounds () {
+
+	return this->MOAIDeck::GetBounds ( 0 );
 }
 
 //----------------------------------------------------------------//

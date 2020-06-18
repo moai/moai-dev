@@ -81,20 +81,6 @@ void MOAIDeck::Draw ( ZLIndex idx ) {
 ZLBounds MOAIDeck::GetBounds () {
 
 	return this->GetBounds ( 0 );
-	/*
-	if ( this->mBoundsDirty ) {
-	
-		this->mMaxBounds = this->MOAIDeck_ComputeMaxAABB ();
-		
-		// flip and expand to account for flip flags
-		//ZLBox aabb = this->mMaxBounds;
-		//aabb.Scale ( -1.0f );
-		//aabb.Bless ();
-		
-		//this->mMaxBounds.Grow ( aabb );
-		this->mBoundsDirty = false;
-	}
-	return this->mMaxBounds;*/
 }
 
 //----------------------------------------------------------------//
@@ -110,9 +96,7 @@ MOAICollisionShape* MOAIDeck::GetCollisionShape ( ZLIndex idx ) {
 }
 
 //----------------------------------------------------------------//
-MOAIDeck::MOAIDeck () :
-	mMaxBounds ( ZLBounds::EMPTY ),
-	mBoundsDirty ( true ) {
+MOAIDeck::MOAIDeck () {
 	
 	RTTI_BEGIN ( MOAIDeck )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIDeck >)
@@ -124,12 +108,6 @@ MOAIDeck::MOAIDeck () :
 MOAIDeck::~MOAIDeck () {
 }
 
-////----------------------------------------------------------------//
-//bool MOAIDeck::Overlap ( ZLIndex idx, const ZLVec2D& vec, u32 granularity, ZLBounds* result ) {
-//
-//	return this->MOAIDeck_Overlap ( idx, vec, granularity, result );
-//}
-
 //----------------------------------------------------------------//
 MOAIPickResult MOAIDeck::PickByPoint ( ZLIndex idx, ZLVec3D loc ) {
 
@@ -140,12 +118,6 @@ MOAIPickResult MOAIDeck::PickByPoint ( ZLIndex idx, ZLVec3D loc ) {
 MOAIPickResult MOAIDeck::PickByRay ( ZLIndex idx, ZLVec3D loc, ZLVec3D normal ) {
 
 	return this->MOAIDeck_PickByRay ( idx, loc, normal );
-}
-
-//----------------------------------------------------------------//
-void MOAIDeck::SetBoundsDirty () {
-
-	this->mBoundsDirty = true;
 }
 
 //================================================================//
@@ -172,21 +144,20 @@ void MOAIDeck::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& st
 }
 
 //----------------------------------------------------------------//
-ZLBounds MOAIDeck::MOAIDeck_ComputeMaxAABB () {
-
-	return ZLBounds::EMPTY;
+void MOAIDeck::MOAIDeck_Draw ( ZLIndex idx ) {
+	UNUSED ( idx );
 }
 
 //----------------------------------------------------------------//
-void MOAIDeck::MOAIDeck_Draw ( ZLIndex idx ) {
-	UNUSED ( idx );
+ZLBounds MOAIDeck::MOAIDeck_GetBounds () {
+	return ZLBounds::GLOBAL;
 }
 
 //----------------------------------------------------------------//
 ZLBounds MOAIDeck::MOAIDeck_GetBounds ( ZLIndex idx ) {
 	UNUSED ( idx );
 
-	return ZLBounds::EMPTY;
+	return ZLBounds::GLOBAL;
 }
 
 //----------------------------------------------------------------//

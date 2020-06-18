@@ -127,7 +127,6 @@ int MOAIStretchPatch2D::_setRect ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIStretchPatch2D, "UNNNN" )
 	
 	self->mRect = state.GetRect < float >( 2 );
-	self->SetBoundsDirty ();
 	
 	return 0;
 }
@@ -393,12 +392,6 @@ void MOAIStretchPatch2D::MOAIAbstractGfxScriptCallback_Call () {
 }
 
 //----------------------------------------------------------------//
-ZLBounds MOAIStretchPatch2D::MOAIDeck_ComputeMaxAABB () {
-
-	return this->GetBounds ( 0 );
-}
-
-//----------------------------------------------------------------//
 void MOAIStretchPatch2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	UNUSED ( idx );
 	
@@ -414,6 +407,12 @@ void MOAIStretchPatch2D::MOAIDeck_Draw ( ZLIndex idx ) {
 //	gfxMgr.SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
 //
 //	composer->Execute ( *this );
+}
+
+//----------------------------------------------------------------//
+ZLBounds MOAIStretchPatch2D::MOAIDeck_GetBounds () {
+
+	return this->GetBounds ( 0 );
 }
 
 //----------------------------------------------------------------//
