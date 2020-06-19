@@ -681,9 +681,6 @@ void MOAISpriteDeck2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaS
 //----------------------------------------------------------------//
 void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 
-	MOAIAbstractGfxScript* gfxScript = this->GetGfxScript ( idx );
-	if ( !gfxScript ) return;
-
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	MOAIQuadBrush::BindVertexFormat ();
 	

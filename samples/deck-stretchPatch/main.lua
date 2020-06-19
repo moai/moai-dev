@@ -14,13 +14,13 @@ layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 layer:pushRenderPass ()
 
-function onDraw ( index, xStretch, yStretch )
+function onDraw ( draw, index, xStretch, yStretch )
 
     local x = 64 * xStretch
     local y = 64 * yStretch
 
-    MOAIDraw.setPenColor ( 0.5, 0.5, 0.5, 1 )
-    MOAIDraw.strokeRoundedRect ( -x, y, x, -y, 8, 12, 16 )
+    draw:setPenColor ( 0.5, 0.5, 0.5, 1 )
+    draw:strokeRoundedRect ( -x, y, x, -y, 8, 12, 16 )
 end
 
 drawDeck = MOAIDrawDeck.new ()

@@ -6,6 +6,8 @@
 
 #include <moai-sim/MOAIStretchDeck.h>
 
+class MOAIStretchPatch2D;
+
 //================================================================//
 // MOAIStretchPatchSpan
 //================================================================//
@@ -19,6 +21,23 @@ private:
 };
 
 //================================================================//
+// MOAIStretchPatch2DCallable
+//================================================================//
+class MOAIStretchPatch2DCallable :
+	public MOAIAbstractGfxScriptCallback {
+public:
+
+	friend class MOAIStretchPatch2D;
+
+	ZLIndex					mIndex;
+	MOAIStretchPatch2D*		mStretchPatch;
+
+	//----------------------------------------------------------------//
+	void 		MOAIAbstractGfxScriptCallback_Call 		();
+};
+
+
+//================================================================//
 // MOAIStretchPatch2D
 //================================================================//
 /**	@lua	MOAIStretchPatch2D
@@ -27,8 +46,7 @@ private:
 */
 class MOAIStretchPatch2D :
 	public MOAIStretchDeck,
-	public MOAIHasGfxScriptBatch,
-	public MOAIAbstractGfxScriptCallback {
+	public MOAIHasGfxScriptBatch {
 private:
 
 	ZLLeanArray < MOAIStretchPatchSpan >	mRows;
@@ -57,7 +75,6 @@ private:
 	static int		_setUVRect				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			DrawStretch				( ZLIndex idx, float xStretch, float yStretch );
 	void			UpdateParams			();
 
 	//----------------------------------------------------------------//
@@ -65,7 +82,6 @@ private:
 	void					_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
 	void					_SerializeIn							( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
 	void					_SerializeOut							( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
-	void 					MOAIAbstractGfxScriptCallback_Call		();
 	void					MOAIDeck_Draw							( ZLIndex idx );
 	ZLBounds				MOAIDeck_GetBounds						();
 	ZLBounds				MOAIDeck_GetBounds						( ZLIndex idx );
@@ -76,6 +92,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIStretchPatch2D )
 	
 	//----------------------------------------------------------------//
+	void			DrawStretch				( ZLIndex idx );
 					MOAIStretchPatch2D		();
 					~MOAIStretchPatch2D		();
 	void			SetColumn				( ZLIndex idx, float percent, bool canStretch );

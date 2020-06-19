@@ -6,6 +6,16 @@
 #include <moai-sim/MOAIStretchPatch2D.h>
 
 //================================================================//
+// MOAIStretchPatch2DCallable
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIStretchPatch2DCallable::MOAIAbstractGfxScriptCallback_Call () {
+
+	this->mStretchPatch->DrawStretch ( this->mIndex );
+}
+
+//================================================================//
 // lua
 //================================================================//
 
@@ -182,7 +192,13 @@ int MOAIStretchPatch2D::_setUVRect ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch2D::DrawStretch ( ZLIndex idx, float xStretch, float yStretch ) {
+void MOAIStretchPatch2D::DrawStretch ( ZLIndex idx ) {
+
+	this->UpdateParams ();
+
+	ZLVec3D stretch = this->BindStretchVertexTransform ();
+	float xStretch = stretch.mX;
+	float yStretch = stretch.mY;
 
 	ZLRect uvRect;
 	ZLSize totalUVRects = this->mUVRects.Size ();
@@ -385,28 +401,23 @@ void MOAIStretchPatch2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILu
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch2D::MOAIAbstractGfxScriptCallback_Call () {
-
-//	ZLVec3D stretch = this->BindStretchVertexTransform ();
-//	this->DrawStretch ( 0, stretch.mX, stretch.mY );
-}
-
-//----------------------------------------------------------------//
 void MOAIStretchPatch2D::MOAIDeck_Draw ( ZLIndex idx ) {
-	UNUSED ( idx );
+
+	MOAIAbstractGfxScript* gfxScript = this->GetGfxScript ( idx );
+	if ( !gfxScript ) return;
+
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIQuadBrush::BindVertexFormat ();
 	
-//	MOAIGfxScript* composer = this->GetComposer ();
-//	if ( !composer ) return;
-//
-//	this->UpdateParams ();
-//
-//	MOAIQuadBrush::BindVertexFormat ();
-//
-//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-//	gfxMgr.SetUVTransform ( MOAIGfxMgr::UV_TO_MODEL_MTX );
-//	gfxMgr.SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
-//
-//	composer->Execute ( *this );
+	gfxMgr.SetUVTransform ( MOAIGfxMgr::UV_TO_MODEL_MTX );
+	gfxMgr.SetBlendMode ( MOAIBlendMode ());
+	gfxMgr.SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
+
+	MOAIStretchPatch2DCallable callable;
+	callable.mIndex = idx;
+	callable.mStretchPatch = this;
+	
+	gfxScript->RunScript ( &callable, MOAIGfxScript::CALL_FROM_SHADER );
 }
 
 //----------------------------------------------------------------//
