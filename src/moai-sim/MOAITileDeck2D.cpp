@@ -240,7 +240,7 @@ MOAITileDeck2D::MOAITileDeck2D () {
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAITileDeck2D >)
 		RTTI_VISITOR ( MOAIAbstractLuaSerializationVisitor, MOAILuaSerializationVisitor < MOAITileDeck2D >)
 		RTTI_EXTEND ( MOAIDeck )
-		RTTI_EXTEND ( MOAIHasGfxScript )
+		RTTI_EXTEND ( MOAIHasGfxScriptBatch )
 		RTTI_EXTEND ( MOAIGridSpace )
 	RTTI_END
 	
@@ -308,7 +308,7 @@ void MOAITileDeck2D::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& 
 //----------------------------------------------------------------//
 void MOAITileDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 
-	MOAIAbstractGfxScript* gfxScript = this->GetGfxScript ();
+	MOAIAbstractGfxScript* gfxScript = this->GetGfxScript ( idx );
 	if ( !gfxScript ) return;
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();

@@ -36,7 +36,7 @@ public:
 */
 class MOAITileDeck2D :
 	public MOAIDeck,
-	public MOAIHasGfxScript,
+	public MOAIHasGfxScriptBatch,
 	public MOAIGridSpace {
 private:
 	

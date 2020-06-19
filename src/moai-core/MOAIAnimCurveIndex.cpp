@@ -51,7 +51,7 @@ int MOAIAnimCurveIndex::_setKey ( lua_State* L ) {
 	ZLIndex index		= state.GetValue < MOAILuaIndex >( 2, 0 ) ;
 	float time			= state.GetValue < float >( 3, 0.0 );
 	ZLIndex value		= state.GetValue < MOAILuaIndex >( 4, 0 );
-	u32 mode			= state.GetValue < u32 >( 5, ZLInterpolate::kSmooth );
+	u32 mode			= state.GetValue < u32 >( 5, ZLInterpolate::kFlat );
 	float weight		= state.GetValue < float >( 6, 1.0 );
 	
 	if ( MOAILogMgr::CheckIndexPlusOne ( index, self->mKeys.Size (), L )) {

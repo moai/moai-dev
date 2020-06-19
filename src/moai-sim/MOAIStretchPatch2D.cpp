@@ -207,8 +207,7 @@ void MOAIStretchPatch2D::DrawStretch ( ZLIndex idx ) {
 		uvRect.Init ( 0.0f, 1.0f, 1.0f, 0.0f );
 	}
 	else {
-		idx =  ZLIndexOp::SubtractAndWrap ( idx, 1, totalUVRects );
-		uvRect = this->mUVRects [ idx ];
+		uvRect = this->mUVRects [ idx % totalUVRects ];
 	}
 
 	float nativeWidth = this->mRect.Width ();

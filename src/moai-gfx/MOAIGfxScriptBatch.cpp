@@ -43,6 +43,7 @@ MOAIAbstractGfxScript& MOAIGfxScriptBatch::MOAIAbstractGfxScriptBatch_AffirmGfxS
 //----------------------------------------------------------------//
 MOAIAbstractGfxScript* MOAIGfxScriptBatch::MOAIAbstractGfxScriptBatch_GetGfxScript ( ZLIndex index ) {
 
+	index = this->WrapIndex ( index );
 	return ( index < this->mGfxScripts.Size ()) ? ( MOAIAbstractGfxScript* )this->mGfxScripts [ index ] : NULL;
 }
 

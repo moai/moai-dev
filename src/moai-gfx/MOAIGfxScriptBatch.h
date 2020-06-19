@@ -29,11 +29,10 @@ private:
 	MOAIAbstractGfxScriptBatch&		MOAIAbstractHasGfxScriptBatch_AffirmGfxScriptBatch		();
 
 	//----------------------------------------------------------------//
-	inline ZLIndex GetRawIndex ( ZLIndex idx ) {
+	inline ZLIndex WrapIndex ( ZLIndex index ) {
 	
 		ZLSize totalGfxScripts = this->mGfxScripts.Size ();
-		ZLSize rawIndex = ( totalGfxScripts && ( this->mIndexBatchSize > 0 )) ? (( idx / this->mIndexBatchSize ) % totalGfxScripts ) : 0;
-		return rawIndex;
+		return (( this->mIndexBatchSize > 0 ) ? ( index / this->mIndexBatchSize ) : index ) % totalGfxScripts;
 	}
 
 public:
@@ -45,7 +44,6 @@ public:
 	//----------------------------------------------------------------//
 								MOAIGfxScriptBatch			();
 	virtual						~MOAIGfxScriptBatch			();
-	MOAIAbstractGfxScript*		RawGetGfxScript				( ZLIndex idx );
 };
 
 #endif
