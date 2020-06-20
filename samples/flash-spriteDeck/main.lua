@@ -29,7 +29,7 @@ function loadSpriteLibs ( specList )
 	
 	for i, spec in ipairs ( specList ) do
 		
-		local spriteLib = MOAIGfxQuadListDeck2D.new ()
+		local spriteLib = MOAISpriteDeck2D.new ()
 		table.insert ( list, spriteLib );
 		
 		spriteLib:reserveUVQuads ( #spec.uvRects )
@@ -61,14 +61,14 @@ function loadSpriteLibs ( specList )
 			end
 		end
 		
-		spriteLib:reservePairs ( #spec.prims )
+		spriteLib:reserveSprites ( #spec.prims )
 		for j, prim in ipairs ( spec.prims ) do
-			spriteLib:setPair ( j, prim.uv, prim.q )
+			spriteLib:setSprite ( j, prim.uv, prim.q )
 		end
 		
-		spriteLib:reserveLists ( #spec.sprites )
+		spriteLib:reserveSpriteLists ( #spec.sprites )
 		for j, sprite in ipairs ( spec.sprites ) do
-			spriteLib:setList ( j, sprite.base, sprite.size )
+			spriteLib:setSpriteList ( j, sprite.base, sprite.size )
 		end
 		
 		spriteLib:setTexture ( texture )

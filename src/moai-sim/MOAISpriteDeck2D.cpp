@@ -467,8 +467,8 @@ MOAISprite MOAISpriteDeck2D::GetSprite ( ZLIndex index ) const {
 	}
 
 	MOAISprite sprite;
-	sprite.mUVQuadID 	= 0;
-	sprite.mQuadID 		= 0;
+	sprite.mUVQuadID 	= index;
+	sprite.mQuadID 		= index;
 	sprite.mMaterialID 	= index;
 	return sprite;
 }

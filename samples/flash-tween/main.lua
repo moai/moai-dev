@@ -70,9 +70,10 @@ function parseFlash ( flashAnim )
 	local step = 1 / flashAnim.fps
 	local layerSize = 6
 	
-	local quadDeck = MOAIGfxQuadDeck2D.new ()
+	local quadDeck = MOAISpriteDeck2D.new ()
 	quadDeck:setTexture ( flashAnim.texture )
-	quadDeck:reserve ( #flashAnim.brushDeck )
+	quadDeck:reserveQuads ( #flashAnim.brushDeck )
+    quadDeck:reserveUVQuads ( #flashAnim.brushDeck )
 	
 	for i, brush in pairs ( flashAnim.brushDeck ) do
 		
@@ -95,22 +96,22 @@ function parseFlash ( flashAnim )
 		
 		local nKeys = #layer.frames
 		
-		local idCurve = MOAIAnimCurve.new ()
+		local idCurve = MOAIAnimCurveIndex.new ()
 		idCurve:reserveKeys ( nKeys )
 		
-		local xCurve = MOAIAnimCurve.new ()
+		local xCurve = MOAIAnimCurveFloat.new ()
 		xCurve:reserveKeys ( nKeys )
 		
-		local yCurve = MOAIAnimCurve.new ()
+		local yCurve = MOAIAnimCurveFloat.new ()
 		yCurve:reserveKeys ( nKeys )
 	
-		local rCurve = MOAIAnimCurve.new ()
+		local rCurve = MOAIAnimCurveFloat.new ()
 		rCurve:reserveKeys ( nKeys )
 	
-		local sxCurve = MOAIAnimCurve.new ()
+		local sxCurve = MOAIAnimCurveFloat.new ()
 		sxCurve:reserveKeys ( nKeys )
 		
-		local syCurve = MOAIAnimCurve.new ()
+		local syCurve = MOAIAnimCurveFloat.new ()
 		syCurve:reserveKeys ( nKeys )
 	
 		for j, frame in pairs ( layer.frames ) do

@@ -45,7 +45,7 @@ end
 
 function loadQuadListDeck ( spec )
 		
-	local quadListDeck = MOAIGfxQuadListDeck2D.new ()
+	local quadListDeck = MOAISpriteDeck2D.new ()
 	
 	quadListDeck:reserveUVQuads ( #spec.uvRects )
 	for j, uvRect in ipairs ( spec.uvRects ) do
@@ -76,14 +76,14 @@ function loadQuadListDeck ( spec )
 		end
 	end
 	
-	quadListDeck:reservePairs ( #spec.prims )
+	quadListDeck:reserveSprites ( #spec.prims )
 	for j, prim in ipairs ( spec.prims ) do
-		quadListDeck:setPair ( j, prim.uv, prim.q )
+		quadListDeck:setSprite ( j, prim.uv, prim.q )
 	end
 	
-	quadListDeck:reserveLists ( #spec.sprites )
+	quadListDeck:reserveSpriteLists ( #spec.sprites )
 	for j, prop in ipairs ( spec.sprites ) do
-		quadListDeck:setList ( j, prop.base, prop.size )
+		quadListDeck:setSpriteList ( j, prop.base, prop.size )
 	end
 	
 	return quadListDeck
@@ -132,7 +132,7 @@ layer:setViewport ( viewport )
 layer:pushRenderPass ()
 MOAISim.openWindow ( "flash", fla.width, fla.height )
 
-MOAIGfxMgr.setClearColor ( 1, 1, 1, 1 )
+MOAIGfxMgr.getRender ():setClearColor ( 1, 1, 1, 1 )
 
 flash = parseFlash ( fla )
 
