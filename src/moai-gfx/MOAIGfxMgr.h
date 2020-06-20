@@ -38,10 +38,15 @@ protected:
 	MOAI_LUA_OBJECT_VISITOR_FRIEND
 
 	//----------------------------------------------------------------//
+	static int			_getRenderCount				( lua_State* L );
+	static int			_getRender					( lua_State* L );
+	static int			_setRender					( lua_State* L );
+
+	//----------------------------------------------------------------//
 	virtual MOAIShader*					MOAIGfxMgr_AffirmShader					( MOAILuaState& state, int idx ) const = 0;
 	virtual MOAITexture*				MOAIGfxMgr_AffirmTexture				( MOAILuaState& state, int idx ) const = 0;
 	virtual void						MOAIGfxMgr_BeginFrame					() = 0;
-	virtual MOAIGfxScript*		MOAIGfxMgr_CreateGfxScriptRetained		() = 0;
+	virtual MOAIGfxScript*				MOAIGfxMgr_CreateGfxScriptRetained		() = 0;
 	virtual MOAIImageTexture*			MOAIGfxMgr_CreateImageTexture			() = 0;
 	virtual MOAIIndexBuffer*			MOAIGfxMgr_CreateIndexBuffer			() = 0;
 	virtual MOAIRenderBatch*			MOAIGfxMgr_CreateRenderBatch			() = 0;
@@ -57,6 +62,8 @@ protected:
 	virtual void						MOAIGfxMgr_PushState					() = 0;
 	
 	//----------------------------------------------------------------//
+	void							_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
+	void							_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
 	MOAIGfxMgr_CPUCache&			MOAIGfxMgrComponents_GetCPUCache		();
 	MOAIGfxMgr&						MOAIGfxMgrComponents_GetGfxMgr			();
 	MOAIGfxMgr_GPUCache&			MOAIGfxMgrComponents_GetGPUCache		();
@@ -77,7 +84,7 @@ public:
 	MOAITexture*					AffirmTexture				( MOAILuaState& state, int idx ) const;
 	MOAIVertexFormat*				AffirmVertexFormat			( MOAILuaState& state, int idx ) const;
 	void							BeginFrame					();
-	MOAIGfxScript*			CreateGfxScriptRetained		();
+	MOAIGfxScript*					CreateGfxScriptRetained		();
 	MOAIImageTexture*				CreateImageTexture			();
 	MOAIIndexBuffer*				CreateIndexBuffer			();
 	MOAIRenderBatch*				CreateRenderBatch			();

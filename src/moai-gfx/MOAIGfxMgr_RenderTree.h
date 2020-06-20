@@ -13,26 +13,17 @@ class MOAIRenderBatch;
 class MOAIGfxMgr_RenderTree {
 protected:
 
-	u32				mRenderCounter;	// increments every render
-	double			mRenderDuration;
-	double			mRenderTime;
+	u32					mRenderCounter;	// increments every render
+	double				mRenderDuration;
+	double				mRenderTime;
 	
 	ZLStrongPtr < MOAIRenderBatch >		mRenderBatch; // this is the default batch
 	MOAILuaStrongRef					mRenderRoot; // this is for user-configured batches
-	
-	//----------------------------------------------------------------//
-	static int		_getRenderCount				( lua_State* L );
-	static int		_getRender					( lua_State* L );
-	static int		_setRender					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			AffirmDefaultBatch			();
-	void			PushDrawable				( MOAILuaStrongRef& renderRoot, MOAILuaObject* drawable );
-	void			RenderBatchOrRoot			();
-
-	//----------------------------------------------------------------//
-	void			_RegisterLuaClass				( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			_RegisterLuaFuncs				( RTTIVisitorHistory& history, MOAILuaState& state );
+	MOAIRenderBatch*	AffirmDefaultBatch			();
+	void				PushDrawable				( MOAILuaStrongRef& renderRoot, MOAILuaObject* drawable );
+	void				RenderBatchOrRoot			();
 
 public:
 	
@@ -41,10 +32,10 @@ public:
 	GET ( double, RenderTime, mRenderTime )
 	
 	//----------------------------------------------------------------//
-					MOAIGfxMgr_RenderTree		();
-	virtual			~MOAIGfxMgr_RenderTree		();
-	void			PushDrawable				( MOAILuaObject* drawable ); // goes into the default batch, if it exists
-	void			Render						();
+						MOAIGfxMgr_RenderTree		();
+	virtual				~MOAIGfxMgr_RenderTree		();
+	void				PushDrawable				( MOAILuaObject* drawable ); // goes into the default batch, if it exists
+	void				Render						();
 };
 
 #endif

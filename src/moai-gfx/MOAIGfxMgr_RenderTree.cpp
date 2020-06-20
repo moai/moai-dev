@@ -8,41 +8,16 @@
 #include <moai-gfx/MOAIRenderBatch.h>
 
 //================================================================//
-// lua
-//================================================================//
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIGfxMgr_RenderTree::_getRenderCount ( lua_State* L ) {
-
-	MOAIGfxMgr_RenderTree& gfxMgr = MOAIGfxMgr::Get ();
-	lua_pushnumber ( L, gfxMgr.mRenderCounter );
-
-	return 1;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIGfxMgr_RenderTree::_getRender ( lua_State* L ) {
-	MOAILuaState state ( L );
-	state.Push ( MOAIGfxMgr::Get ().mRenderRoot );
-	return 1;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIGfxMgr_RenderTree::_setRender ( lua_State* L ) {
-	MOAILuaState state ( L );
-	MOAIGfxMgr::Get ().mRenderRoot.SetRef ( state, 1 );
-	return 0;
-}
-
-//================================================================//
 // MOAIGfxMgr_RenderTree
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxMgr_RenderTree::AffirmDefaultBatch () {
+MOAIRenderBatch* MOAIGfxMgr_RenderTree::AffirmDefaultBatch () {
+
+	if ( !this->mRenderBatch ) {
+		this->mRenderBatch = MOAIGfxMgr::Get ().CreateRenderBatch ();
+	}
+	return this->mRenderBatch;
 }
 
 //----------------------------------------------------------------//
@@ -117,28 +92,4 @@ void MOAIGfxMgr_RenderTree::RenderBatchOrRoot () {
 	else if ( this->mRenderBatch ) {
 		this->mRenderBatch->Render ();
 	}
-}
-
-//================================================================//
-// virtual
-//================================================================//
-
-//----------------------------------------------------------------//
-void MOAIGfxMgr_RenderTree::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	luaL_Reg regTable [] = {
-		{ "getRenderCount",				_getRenderCount },
-		{ "getRender",					_getRender },
-		{ "setRender",					_setRender },
-		{ NULL, NULL }
-	};
-
-	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgr_RenderTree::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
 }

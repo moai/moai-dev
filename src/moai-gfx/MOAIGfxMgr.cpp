@@ -6,6 +6,7 @@
 #include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIGfxScript.h>
 #include <moai-gfx/MOAIImageTexture.h>
+#include <moai-gfx/MOAIRenderBatch.h>
 #include <moai-gfx/MOAITexture2D.h>
 #include <moai-gfx/MOAIVertexFormatMgr.h>
 
@@ -13,6 +14,46 @@
 	#include <moai-gfx/host.h>
 	#include <moai-sim/host.h>
 #endif
+
+//================================================================//
+// lua
+//================================================================//
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGfxMgr::_getRenderCount ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIGfxMgr, "" )
+
+	lua_pushnumber ( L, self->mRenderCounter );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGfxMgr::_getRender ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIGfxMgr, "" )
+	
+	if ( self->mRenderRoot ) {
+		state.Push ( self->mRenderRoot );
+	}
+	else {
+		state.Push ( self->AffirmDefaultBatch ());
+	}
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGfxMgr::_setRender ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIGfxMgr, "" )
+	
+	self->mRenderRoot.SetRef ( state, 1 );
+	if ( self->mRenderRoot ) {
+		self->mRenderBatch = NULL;
+	}
+	return 0;
+}
+
 
 //================================================================//
 // MOAIGfxMgr
@@ -212,6 +253,7 @@ ZLMatrix4x4 MOAIGfxMgr::GetWndToWorldMtx ( const ZLRect& wndRect ) {
 MOAIGfxMgr::MOAIGfxMgr () {
 		
 	RTTI_BEGIN ( MOAIGfxMgr )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIGfxMgr >)
 		RTTI_EXTEND ( MOAIGlobalEventSource )
 	RTTI_END
 }
@@ -267,4 +309,28 @@ void MOAIGfxMgr::ZLContextClass_Finalize () {
 void MOAIGfxMgr::ZLContextClass_Initialize () {
 
 	this->AffirmBuffers ();
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIGfxMgr::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	luaL_Reg regTable [] = {
+		{ "getRenderCount",				_getRenderCount },
+		{ "getRender",					_getRender },
+		{ "setRender",					_setRender },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxMgr::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	UNUSED ( state );
+	if ( history.DidVisit ( *this )) return;
 }
