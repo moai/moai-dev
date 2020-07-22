@@ -1,0 +1,610 @@
+cmake_minimum_required(VERSION 3.4.1)
+project(moai_dev)
+
+set(CMAKE_CXX_STANDARD 11)
+set(CMAKE_C_FLAGS "-DANDROID -DFT2_BUILD_LIBRARY -DHAVE_MEMMOVE=1 -DXML_STATIC")
+set(CMAKE_CXX_FLAGS "-DANDROID")
+include_directories(3rdparty)
+include_directories(3rdparty/box2d-2.2.1)
+include_directories(3rdparty/box2d-2.2.1/Box2D)
+include_directories(3rdparty/box2d-2.2.1/Box2D/Collision/Shapes)
+include_directories(3rdparty/box2d-2.2.1/Box2D/Collision)
+include_directories(3rdparty/box2d-2.2.1/Box2D/Common)
+include_directories(3rdparty/box2d-2.2.1/Box2D/Dynamics)
+include_directories(3rdparty/box2d-2.2.1/Box2D/Dynamics/Contacts)
+include_directories(3rdparty/box2d-2.2.1/Box2D/Dynamics/Joints)
+include_directories(3rdparty/c-ares-1.7.5)
+include_directories(3rdparty/c-ares-1.7.5/include-android)
+include_directories(3rdparty/chipmunk-5.3.4/include)
+include_directories(3rdparty/chipmunk-5.3.4/include/chipmunk)
+include_directories(3rdparty/chipmunk-5.3.4/include/chipmunk/constraints)
+include_directories(3rdparty/contrib)
+include_directories(3rdparty/curl-7.19.7/include-android)
+include_directories(3rdparty/expat-2.0.1/amiga)
+include_directories(3rdparty/expat-2.0.1/lib)
+include_directories(3rdparty/expat-2.0.1/xmlwf)
+include_directories(3rdparty/freetype-2.7/include)
+include_directories(3rdparty/freetype-2.7/include/freetype)
+include_directories(3rdparty/freetype-2.7/include/freetype2)
+include_directories(3rdparty/freetype-2.7/builds)
+include_directories(3rdparty/freetype-2.7/src)
+include_directories(3rdparty/freetype-2.7/config)
+include_directories(3rdparty/glew-1.5.6/include)
+include_directories(3rdparty/jansson-2.1/src)
+include_directories(3rdparty/jpeg-8c)
+include_directories(3rdparty/lpng140)
+include_directories(3rdparty/lua-5.1.3/src)
+include_directories(3rdparty/luasocket-2.0.2/src)
+include_directories(3rdparty/luacrypto-0.2.0/src)
+include_directories(3rdparty/luafilesystem-1.5.0/src)
+include_directories(3rdparty/luasql-2.2.0/src)
+include_directories(3rdparty/ooid-0.99)
+include_directories(3rdparty/openssl-1.0.0d/crypto)
+include_directories(3rdparty/openssl-1.0.0d/include-android)
+include_directories(3rdparty/sfmt-1.4)
+include_directories(3rdparty/sqlite3)
+include_directories(3rdparty/tinyxml)
+include_directories(3rdparty/tlsf-2.0)
+include_directories(3rdparty/zlib-1.2.3)
+include_directories(src)
+include_directories(src/aku)
+include_directories(src/config-default)
+include_directories(src/lua-headers)
+include_directories(src/moaicore)
+include_directories(src/uslscore)
+include_directories(src/zlcore)
+
+add_library(moai_dev SHARED
+	    3rdparty/box2d-2.2.1/Box2D/Collision/Shapes/b2ChainShape.cpp
+        3rdparty/box2d-2.2.1/Box2D/Collision/Shapes/b2CircleShape.cpp
+        3rdparty/box2d-2.2.1/Box2D/Collision/Shapes/b2EdgeShape.cpp
+        3rdparty/box2d-2.2.1/Box2D/Collision/Shapes/b2PolygonShape.cpp
+        3rdparty/box2d-2.2.1/Box2D/Collision/b2BroadPhase.cpp
+        3rdparty/box2d-2.2.1/Box2D/Collision/b2CollideCircle.cpp
+        3rdparty/box2d-2.2.1/Box2D/Collision/b2CollideEdge.cpp
+        3rdparty/box2d-2.2.1/Box2D/Collision/b2CollidePolygon.cpp
+        3rdparty/box2d-2.2.1/Box2D/Collision/b2Collision.cpp
+        3rdparty/box2d-2.2.1/Box2D/Collision/b2Distance.cpp
+        3rdparty/box2d-2.2.1/Box2D/Collision/b2DynamicTree.cpp
+        3rdparty/box2d-2.2.1/Box2D/Collision/b2TimeOfImpact.cpp
+        3rdparty/box2d-2.2.1/Box2D/Common/b2BlockAllocator.cpp
+        3rdparty/box2d-2.2.1/Box2D/Common/b2Math.cpp
+        3rdparty/box2d-2.2.1/Box2D/Common/b2Draw.cpp
+        3rdparty/box2d-2.2.1/Box2D/Common/b2Settings.cpp
+        3rdparty/box2d-2.2.1/Box2D/Common/b2StackAllocator.cpp
+        3rdparty/box2d-2.2.1/Box2D/Common/b2Timer.cpp
+        3rdparty/box2d-2.2.1/Box2D/Dynamics/Contacts/b2ChainAndCircleContact.cpp
+        3rdparty/box2d-2.2.1/Box2D/Dynamics/Contacts/b2ChainAndPolygonContact.cpp
+        3rdparty/box2d-2.2.1/Box2D/Dynamics/Contacts/b2CircleContact.cpp
+        3rdparty/box2d-2.2.1/Box2D/Dynamics/Contacts/b2Contact.cpp
+        3rdparty/box2d-2.2.1/Box2D/Dynamics/Contacts/b2ContactSolver.cpp
+        3rdparty/box2d-2.2.1/Box2D/Dynamics/Contacts/b2EdgeAndCircleContact.cpp
+        3rdparty/box2d-2.2.1/Box2D/Dynamics/Contacts/b2EdgeAndPolygonContact.cpp
+        3rdparty/box2d-2.2.1/Box2D/Dynamics/Contacts/b2PolygonAndCircleContact.cpp
+        3rdparty/box2d-2.2.1/Box2D/Dynamics/Contacts/b2PolygonContact.cpp
+        3rdparty/box2d-2.2.1/Box2D/Dynamics/Joints/b2DistanceJoint.cpp
+        3rdparty/box2d-2.2.1/Box2D/Dynamics/Joints/b2FrictionJoint.cpp
+        3rdparty/box2d-2.2.1/Box2D/Dynamics/Joints/b2GearJoint.cpp
+        3rdparty/box2d-2.2.1/Box2D/Dynamics/Joints/b2Joint.cpp
+        3rdparty/box2d-2.2.1/Box2D/Dynamics/Joints/b2MouseJoint.cpp
+        3rdparty/box2d-2.2.1/Box2D/Dynamics/Joints/b2PrismaticJoint.cpp
+        3rdparty/box2d-2.2.1/Box2D/Dynamics/Joints/b2RopeJoint.cpp
+        3rdparty/box2d-2.2.1/Box2D/Dynamics/Joints/b2PulleyJoint.cpp
+        3rdparty/box2d-2.2.1/Box2D/Dynamics/Joints/b2RevoluteJoint.cpp
+        3rdparty/box2d-2.2.1/Box2D/Dynamics/Joints/b2WeldJoint.cpp
+        3rdparty/box2d-2.2.1/Box2D/Dynamics/Joints/b2WheelJoint.cpp
+        3rdparty/box2d-2.2.1/Box2D/Dynamics/b2Body.cpp
+        3rdparty/box2d-2.2.1/Box2D/Dynamics/b2ContactManager.cpp
+        3rdparty/box2d-2.2.1/Box2D/Dynamics/b2Fixture.cpp
+        3rdparty/box2d-2.2.1/Box2D/Dynamics/b2Island.cpp
+        3rdparty/box2d-2.2.1/Box2D/Dynamics/b2World.cpp
+        3rdparty/box2d-2.2.1/Box2D/Dynamics/b2WorldCallbacks.cpp
+        3rdparty/chipmunk-5.3.4/src/chipmunk.c
+        3rdparty/chipmunk-5.3.4/src/cpArbiter.c
+        3rdparty/chipmunk-5.3.4/src/cpArray.c
+        3rdparty/chipmunk-5.3.4/src/cpBB.c
+        3rdparty/chipmunk-5.3.4/src/cpBody.c
+        3rdparty/chipmunk-5.3.4/src/cpCollision.c
+        3rdparty/chipmunk-5.3.4/src/cpHashSet.c
+        3rdparty/chipmunk-5.3.4/src/cpPolyShape.c
+        3rdparty/chipmunk-5.3.4/src/cpShape.c
+        3rdparty/chipmunk-5.3.4/src/cpSpace.c
+        3rdparty/chipmunk-5.3.4/src/cpSpaceComponent.c
+        3rdparty/chipmunk-5.3.4/src/cpSpaceHash.c
+        3rdparty/chipmunk-5.3.4/src/cpSpaceQuery.c
+        3rdparty/chipmunk-5.3.4/src/cpSpaceStep.c
+        3rdparty/chipmunk-5.3.4/src/cpVect.c
+        3rdparty/chipmunk-5.3.4/src/constraints/cpConstraint.c
+        3rdparty/chipmunk-5.3.4/src/constraints/cpDampedRotarySpring.c
+        3rdparty/chipmunk-5.3.4/src/constraints/cpDampedSpring.c
+        3rdparty/chipmunk-5.3.4/src/constraints/cpGearJoint.c
+        3rdparty/chipmunk-5.3.4/src/constraints/cpGrooveJoint.c
+        3rdparty/chipmunk-5.3.4/src/constraints/cpPinJoint.c
+        3rdparty/chipmunk-5.3.4/src/constraints/cpPivotJoint.c
+        3rdparty/chipmunk-5.3.4/src/constraints/cpRatchetJoint.c
+        3rdparty/chipmunk-5.3.4/src/constraints/cpRotaryLimitJoint.c
+        3rdparty/chipmunk-5.3.4/src/constraints/cpSimpleMotor.c
+        3rdparty/chipmunk-5.3.4/src/constraints/cpSlideJoint.c
+        3rdparty/contrib/utf8.c
+        3rdparty/contrib/whirlpool.c
+        3rdparty/openssl-1.0.0d/crypto/mem_clr.c
+        3rdparty/openssl-1.0.0d/crypto/sha/sha1_one.c
+        3rdparty/openssl-1.0.0d/crypto/sha/sha1dgst.c
+        3rdparty/openssl-1.0.0d/crypto/sha/sha256.c
+        3rdparty/openssl-1.0.0d/crypto/sha/sha512.c
+        3rdparty/openssl-1.0.0d/crypto/sha/sha_dgst.c
+        3rdparty/openssl-1.0.0d/crypto/sha/sha_one.c
+        3rdparty/openssl-1.0.0d/crypto/md5/md5_dgst.c
+        3rdparty/expat-2.0.1/lib/xmlparse.c
+        3rdparty/expat-2.0.1/lib/xmlrole.c
+        3rdparty/expat-2.0.1/lib/xmltok.c
+        3rdparty/expat-2.0.1/lib/xmltok_impl.c
+        3rdparty/expat-2.0.1/lib/xmltok_ns.c
+        3rdparty/freetype-2.7/src/autofit/autofit.c
+        3rdparty/freetype-2.7/src/bdf/bdf.c
+        3rdparty/freetype-2.7/src/cff/cff.c
+        3rdparty/freetype-2.7/src/base/ftbase.c
+        3rdparty/freetype-2.7/src/base/ftbitmap.c
+        3rdparty/freetype-2.7/src/cache/ftcache.c
+        3rdparty/freetype-2.7/src/base/ftfstype.c
+        3rdparty/freetype-2.7/src/base/ftgasp.c
+        3rdparty/freetype-2.7/src/base/ftglyph.c
+        3rdparty/freetype-2.7/src/gzip/ftgzip.c
+        3rdparty/freetype-2.7/src/base/ftinit.c
+        3rdparty/freetype-2.7/src/lzw/ftlzw.c
+        3rdparty/freetype-2.7/src/base/ftstroke.c
+        3rdparty/freetype-2.7/src/base/ftsystem.c
+        3rdparty/freetype-2.7/src/smooth/smooth.c
+        3rdparty/freetype-2.7/src/base/ftbbox.c
+        3rdparty/freetype-2.7/src/base/ftgxval.c
+        3rdparty/freetype-2.7/src/base/ftlcdfil.c
+        3rdparty/freetype-2.7/src/base/ftmm.c
+        3rdparty/freetype-2.7/src/base/ftotval.c
+        3rdparty/freetype-2.7/src/base/ftpatent.c
+        3rdparty/freetype-2.7/src/base/ftpfr.c
+        3rdparty/freetype-2.7/src/base/ftsynth.c
+        3rdparty/freetype-2.7/src/base/fttype1.c
+        3rdparty/freetype-2.7/src/base/ftwinfnt.c
+        3rdparty/freetype-2.7/src/pcf/pcf.c
+        3rdparty/freetype-2.7/src/pfr/pfr.c
+        3rdparty/freetype-2.7/src/psaux/psaux.c
+        3rdparty/freetype-2.7/src/pshinter/pshinter.c
+        3rdparty/freetype-2.7/src/psnames/psmodule.c
+        3rdparty/freetype-2.7/src/raster/raster.c
+        3rdparty/freetype-2.7/src/sfnt/sfnt.c
+        3rdparty/freetype-2.7/src/truetype/truetype.c
+        3rdparty/freetype-2.7/src/type1/type1.c
+        3rdparty/freetype-2.7/src/cid/type1cid.c
+        3rdparty/freetype-2.7/src/type42/type42.c
+        3rdparty/freetype-2.7/src/winfonts/winfnt.c
+        3rdparty/jansson-2.1/src/dump.c
+        3rdparty/jansson-2.1/src/error.c
+        3rdparty/jansson-2.1/src/hashtable.c
+        3rdparty/jansson-2.1/src/load.c
+        3rdparty/jansson-2.1/src/memory.c
+        3rdparty/jansson-2.1/src/pack_unpack.c
+        3rdparty/jansson-2.1/src/strbuffer.c
+        3rdparty/jansson-2.1/src/utf.c
+        3rdparty/jansson-2.1/src/value.c
+        3rdparty/jpeg-8c/jaricom.c
+        3rdparty/jpeg-8c/jcapimin.c
+        3rdparty/jpeg-8c/jcapistd.c
+        3rdparty/jpeg-8c/jcarith.c
+        3rdparty/jpeg-8c/jccoefct.c
+        3rdparty/jpeg-8c/jccolor.c
+        3rdparty/jpeg-8c/jcdctmgr.c
+        3rdparty/jpeg-8c/jchuff.c
+        3rdparty/jpeg-8c/jcinit.c
+        3rdparty/jpeg-8c/jcmainct.c
+        3rdparty/jpeg-8c/jcmarker.c
+        3rdparty/jpeg-8c/jcmaster.c
+        3rdparty/jpeg-8c/jcomapi.c
+        3rdparty/jpeg-8c/jcparam.c
+        3rdparty/jpeg-8c/jcprepct.c
+        3rdparty/jpeg-8c/jcsample.c
+        3rdparty/jpeg-8c/jctrans.c
+        3rdparty/jpeg-8c/jdapimin.c
+        3rdparty/jpeg-8c/jdapistd.c
+        3rdparty/jpeg-8c/jdarith.c
+        3rdparty/jpeg-8c/jdatadst.c
+        3rdparty/jpeg-8c/jdatasrc.c
+        3rdparty/jpeg-8c/jdcoefct.c
+        3rdparty/jpeg-8c/jdcolor.c
+        3rdparty/jpeg-8c/jddctmgr.c
+        3rdparty/jpeg-8c/jdhuff.c
+        3rdparty/jpeg-8c/jdinput.c
+        3rdparty/jpeg-8c/jdmainct.c
+        3rdparty/jpeg-8c/jdmarker.c
+        3rdparty/jpeg-8c/jdmaster.c
+        3rdparty/jpeg-8c/jdmerge.c
+        3rdparty/jpeg-8c/jdpostct.c
+        3rdparty/jpeg-8c/jdsample.c
+        3rdparty/jpeg-8c/jdtrans.c
+        3rdparty/jpeg-8c/jerror-moai.c
+        3rdparty/jpeg-8c/jfdctflt.c
+        3rdparty/jpeg-8c/jfdctfst.c
+        3rdparty/jpeg-8c/jfdctint.c
+        3rdparty/jpeg-8c/jidctflt.c
+        3rdparty/jpeg-8c/jidctfst.c
+        3rdparty/jpeg-8c/jidctint.c
+        3rdparty/jpeg-8c/jmemmgr.c
+        3rdparty/jpeg-8c/jmemnobs.c
+        3rdparty/jpeg-8c/jquant1.c
+        3rdparty/jpeg-8c/jquant2.c
+        3rdparty/jpeg-8c/jutils.c
+        3rdparty/lpng140/png.c
+        3rdparty/lpng140/pngerror.c
+        3rdparty/lpng140/pngget.c
+        3rdparty/lpng140/pngmem.c
+        3rdparty/lpng140/pngpread.c
+        3rdparty/lpng140/pngread.c
+        3rdparty/lpng140/pngrio.c
+        3rdparty/lpng140/pngrtran.c
+        3rdparty/lpng140/pngrutil.c
+        3rdparty/lpng140/pngset.c
+        3rdparty/lpng140/pngtrans.c
+        3rdparty/lpng140/pngwio.c
+        3rdparty/lpng140/pngwrite.c
+        3rdparty/lpng140/pngwtran.c
+        3rdparty/lpng140/pngwutil.c
+        3rdparty/lua-5.1.3/src/lapi.c
+        3rdparty/lua-5.1.3/src/lauxlib.c
+        3rdparty/lua-5.1.3/src/lbaselib.c
+        3rdparty/lua-5.1.3/src/lcode.c
+        3rdparty/lua-5.1.3/src/ldblib.c
+        3rdparty/lua-5.1.3/src/ldebug.c
+        3rdparty/lua-5.1.3/src/ldo.c
+        3rdparty/lua-5.1.3/src/ldump.c
+        3rdparty/lua-5.1.3/src/lfunc.c
+        3rdparty/lua-5.1.3/src/lgc.c
+        3rdparty/lua-5.1.3/src/linit.c
+        3rdparty/lua-5.1.3/src/liolib.c
+        3rdparty/lua-5.1.3/src/android/llex.c
+        3rdparty/lua-5.1.3/src/lmathlib.c
+        3rdparty/lua-5.1.3/src/lmem.c
+        3rdparty/lua-5.1.3/src/loadlib.c
+        3rdparty/lua-5.1.3/src/lobject.c
+        3rdparty/lua-5.1.3/src/lopcodes.c
+        3rdparty/lua-5.1.3/src/loslib.c
+        3rdparty/lua-5.1.3/src/lparser.c
+        3rdparty/lua-5.1.3/src/lstate.c
+        3rdparty/lua-5.1.3/src/lstring.c
+        3rdparty/lua-5.1.3/src/lstrlib.c
+        3rdparty/lua-5.1.3/src/ltable.c
+        3rdparty/lua-5.1.3/src/ltablib.c
+        3rdparty/lua-5.1.3/src/ltm.c
+        3rdparty/lua-5.1.3/src/lundump.c
+        3rdparty/lua-5.1.3/src/lvm.c
+        3rdparty/lua-5.1.3/src/lzio.c
+        3rdparty/lua-5.1.3/src/print.c
+        3rdparty/luafilesystem-1.5.0/src/lfs.c
+        3rdparty/luasocket-2.0.2/src/auxiliar.c
+        3rdparty/luasocket-2.0.2/src/buffer.c
+        3rdparty/luasocket-2.0.2/src/except.c
+        3rdparty/luasocket-2.0.2/src/inet.c
+        3rdparty/luasocket-2.0.2/src/io.c
+        3rdparty/luasocket-2.0.2/src/luasocket.c
+        3rdparty/luasocket-2.0.2/src/mime.c
+        3rdparty/luasocket-2.0.2/src/options.c
+        3rdparty/luasocket-2.0.2/src/select.c
+        3rdparty/luasocket-2.0.2/src/tcp.c
+        3rdparty/luasocket-2.0.2/src/timeout.c
+        3rdparty/luasocket-2.0.2/src/udp.c
+        3rdparty/luasocket-2.0.2/src/unix.c
+        3rdparty/luasocket-2.0.2/src/usocket.c
+        3rdparty/luasocket-2.0.2-embed/fullluasocket.c
+        3rdparty/luasocket-2.0.2-embed/luasocketscripts.c
+        3rdparty/luasql-2.2.0/src/luasql.c
+        3rdparty/luasql-2.2.0/src/ls_sqlite3.c
+        3rdparty/luafilesystem-1.5.0/src/lfs.c
+        3rdparty/luatrace/c/c_hook.c
+        3rdparty/sfmt-1.4/SFMT.c
+        3rdparty/sqlite3/sqlite3.c
+        3rdparty/tinyxml/tinystr.cpp
+        3rdparty/tinyxml/tinyxml.cpp
+        3rdparty/tinyxml/tinyxmlerror.cpp
+        3rdparty/tinyxml/tinyxmlparser.cpp
+        3rdparty/tlsf-2.0/tlsf.c
+        3rdparty/zlib-1.2.3/adler32.c
+        3rdparty/zlib-1.2.3/compress.c
+        3rdparty/zlib-1.2.3/crc32.c
+        3rdparty/zlib-1.2.3/deflate.c
+        3rdparty/zlib-1.2.3/gzio.c
+        3rdparty/zlib-1.2.3/infback.c
+        3rdparty/zlib-1.2.3/inffast.c
+        3rdparty/zlib-1.2.3/inflate.c
+        3rdparty/zlib-1.2.3/inftrees.c
+        3rdparty/zlib-1.2.3/trees.c
+        3rdparty/zlib-1.2.3/uncompr.c
+        3rdparty/zlib-1.2.3/zutil.c
+        src/aku/AKU-luaext.cpp
+        src/aku/AKU.cpp
+        src/aku/pch.cpp
+        src/moaicore/MOAIAction.cpp
+        src/moaicore/MOAIActionMgr.cpp
+        src/moaicore/MOAIAnim.cpp
+        src/moaicore/MOAIAnimCurve.cpp
+        src/moaicore/MOAIAnimCurveBase.cpp
+        src/moaicore/MOAIAnimCurveCustom.cpp
+        src/moaicore/MOAIAnimCurveQuat.cpp
+        src/moaicore/MOAIAnimCurveVec.cpp
+        src/moaicore/MOAIBitmapFontReader.cpp
+        src/moaicore/MOAIBlendMode.cpp
+        src/moaicore/MOAIBlocker.cpp
+        src/moaicore/MOAIBoundsDeck.cpp
+        src/moaicore/MOAIBox2DArbiter.cpp
+        src/moaicore/MOAIBox2DBody.cpp
+        src/moaicore/MOAIBox2DDebugDraw.cpp
+        src/moaicore/MOAIBox2DDistanceJoint.cpp
+        src/moaicore/MOAIBox2DFixture.cpp
+        src/moaicore/MOAIBox2DFrictionJoint.cpp
+        src/moaicore/MOAIBox2DGearJoint.cpp
+        src/moaicore/MOAIBox2DJoint.cpp
+        src/moaicore/MOAIBox2DMouseJoint.cpp
+        src/moaicore/MOAIBox2DPrismaticJoint.cpp
+        src/moaicore/MOAIBox2DPulleyJoint.cpp
+        src/moaicore/MOAIBox2DRevoluteJoint.cpp
+        src/moaicore/MOAIBox2DRopeJoint.cpp
+        src/moaicore/MOAIBox2DWeldJoint.cpp
+        src/moaicore/MOAIBox2DWheelJoint.cpp
+        src/moaicore/MOAIBox2DWorld.cpp
+        src/moaicore/MOAIButtonSensor.cpp
+        src/moaicore/MOAICamera.cpp
+        src/moaicore/MOAICamera2D.cpp
+        src/moaicore/MOAICameraAnchor2D.cpp
+        src/moaicore/MOAICameraFitter2D.cpp
+        src/moaicore/MOAICanary.cpp
+        src/moaicore/MOAICCParticle.cpp
+        src/moaicore/MOAICCParticleSystem.cpp
+        src/moaicore/MOAICollisionShape.cpp
+        src/moaicore/MOAIColor.cpp
+        src/moaicore/MOAICompassSensor.cpp
+        src/moaicore/moaicore-pch.cpp
+        src/moaicore/moaicore.cpp
+        src/moaicore/MOAICoroutine.cpp
+        src/moaicore/MOAICp.cpp
+        src/moaicore/MOAICpArbiter.cpp
+        src/moaicore/MOAICpBody.cpp
+        src/moaicore/MOAICpConstraint.cpp
+        src/moaicore/MOAICpDebugDraw.cpp
+        src/moaicore/MOAICpShape.cpp
+        src/moaicore/MOAICpSpace.cpp
+        src/moaicore/MOAIDataBuffer.cpp
+        src/moaicore/MOAIDataBufferStream.cpp
+        src/moaicore/MOAIDataIOTask.cpp
+        src/moaicore/MOAIDebugLines.cpp
+        src/moaicore/MOAIDeck.cpp
+        src/moaicore/MOAIDeckRemapper.cpp
+        src/moaicore/MOAIDeserializer.cpp
+        src/moaicore/MOAIDraw.cpp
+        src/moaicore/MOAIEase.cpp
+        src/moaicore/MOAIEaseBackBase.cpp
+        src/moaicore/MOAIEaseBackIn.cpp
+        src/moaicore/MOAIEaseBackInOut.cpp
+        src/moaicore/MOAIEaseBackOut.cpp
+        src/moaicore/MOAIEaseCustom.cpp
+        src/moaicore/MOAIEaseDriver.cpp
+        src/moaicore/MOAIEaseElasticBase.cpp
+        src/moaicore/MOAIEaseElasticIn.cpp
+        src/moaicore/MOAIEaseElasticInOut.cpp
+        src/moaicore/MOAIEaseElasticOut.cpp
+        src/moaicore/MOAIEaseExponentialIn.cpp
+        src/moaicore/MOAIEaseExponentialInOut.cpp
+        src/moaicore/MOAIEaseExponentialOut.cpp
+        src/moaicore/MOAIEaseLinear.cpp
+        src/moaicore/MOAIEaseSimpleBase.cpp
+        src/moaicore/MOAIEaseSimpleIn.cpp
+        src/moaicore/MOAIEaseSimpleInOut.cpp
+        src/moaicore/MOAIEaseSimpleOut.cpp
+        src/moaicore/MOAIEaseSineIn.cpp
+        src/moaicore/MOAIEaseSineInOut.cpp
+        src/moaicore/MOAIEaseSineOut.cpp
+        src/moaicore/MOAIEaseType.cpp
+        src/moaicore/MOAIEnvironment.cpp
+        src/moaicore/MOAIEventSource.cpp
+        src/moaicore/MOAIFileStream.cpp
+        src/moaicore/MOAIFileSystem.cpp
+        src/moaicore/MOAIFont.cpp
+        src/moaicore/MOAIFont_bmfont.cpp
+        src/moaicore/MOAIFontReader.cpp
+        src/moaicore/MOAIFoo.cpp
+        src/moaicore/MOAIFooMgr.cpp
+        src/moaicore/MOAIFrameBuffer.cpp
+        src/moaicore/MOAIFrameBufferTexture.cpp
+        src/moaicore/MOAIFreeTypeFont.cpp
+        src/moaicore/MOAIFreeTypeFontReader.cpp
+        src/moaicore/MOAIGfxDevice.cpp
+        src/moaicore/MOAIGfxQuad2D.cpp
+        src/moaicore/MOAIGfxQuadDeck2D.cpp
+        src/moaicore/MOAIGfxQuadListDeck2D.cpp
+        src/moaicore/MOAIGfxResource.cpp
+        src/moaicore/MOAIGlobals.cpp
+        src/moaicore/MOAIGlyph.cpp
+        src/moaicore/MOAIGlyphCache.cpp
+        src/moaicore/MOAIGlyphCacheBase.cpp
+        src/moaicore/MOAIGlyphCachePage.cpp
+        src/moaicore/MOAIGlyphSet.cpp
+        src/moaicore/MOAIGrid.cpp
+        src/moaicore/MOAIGridDeck2D.cpp
+        src/moaicore/MOAIGridPathGraph.cpp
+        src/moaicore/MOAIGridSpace.cpp
+        src/moaicore/MOAIHashWriter.cpp
+        src/moaicore/MOAIHttpTaskBase.cpp
+        src/moaicore/MOAIHttpTaskNaCl.cpp
+        src/moaicore/MOAIImage-jpg.cpp
+        src/moaicore/MOAIImage-png.cpp
+        src/moaicore/MOAIImage.cpp
+        src/moaicore/MOAIImageTexture.cpp
+        src/moaicore/MOAIIndexBuffer.cpp
+        src/moaicore/MOAIInputDevice.cpp
+        src/moaicore/MOAIInputMgr.cpp
+        src/moaicore/MOAIJoystickSensor.cpp
+        src/moaicore/MOAIJsonParser.cpp
+        src/moaicore/MOAIKeyboardSensor.cpp
+        src/moaicore/MOAILayer.cpp
+        src/moaicore/MOAILayer2D.cpp
+        src/moaicore/MOAILayerBridge.cpp
+        src/moaicore/MOAILayoutFrame.cpp
+        src/moaicore/MOAILocationSensor.cpp
+        src/moaicore/MOAILogMessages.cpp
+        src/moaicore/MOAILogMgr.cpp
+        src/moaicore/MOAILuaObject.cpp
+        src/moaicore/MOAILuaRef.cpp
+        src/moaicore/MOAILuaRuntime.cpp
+        src/moaicore/MOAILuaState.cpp
+        src/moaicore/MOAILuaStateHandle.cpp
+        src/moaicore/MOAIMath.cpp
+        src/moaicore/MOAIMemStream.cpp
+        src/moaicore/MOAIMesh.cpp
+        src/moaicore/MOAIMotionSensor.cpp
+        src/moaicore/MOAIMultiTexture.cpp
+        src/moaicore/MOAIMutex.cpp
+        src/moaicore/MOAIMutex_posix.cpp
+        src/moaicore/MOAIMutex_win32.cpp
+        src/moaicore/MOAINode.cpp
+        src/moaicore/MOAINodeMgr.cpp
+        src/moaicore/MOAIObject.cpp
+        src/moaicore/MOAIParser.cpp
+        src/moaicore/MOAIPartition.cpp
+        src/moaicore/MOAIPartitionCell.cpp
+        src/moaicore/MOAIPartitionLevel.cpp
+        src/moaicore/MOAIPartitionResultBuffer.cpp
+        src/moaicore/MOAIPartitionResultMgr.cpp
+        src/moaicore/MOAIPathFinder.cpp
+        src/moaicore/MOAIPathGraph.cpp
+        src/moaicore/MOAIPathTerrainDeck.cpp
+        src/moaicore/MOAIPointerSensor.cpp
+        src/moaicore/MOAIProp.cpp
+        src/moaicore/MOAIProp2D.cpp
+        src/moaicore/MOAIQuadBrush.cpp
+        src/moaicore/MOAIRenderable.cpp
+        src/moaicore/MOAIRenderMgr.cpp
+        src/moaicore/MOAIRtti.cpp
+        src/moaicore/MOAIScissorRect.cpp
+        src/moaicore/MOAIScriptDeck.cpp
+        src/moaicore/MOAIScriptNode.cpp
+        src/moaicore/MOAISensor.cpp
+        src/moaicore/MOAISerializer.cpp
+        src/moaicore/MOAISerializerBase.cpp
+        src/moaicore/MOAIShader.cpp
+        src/moaicore/MOAIShaderMgr.cpp
+        src/moaicore/MOAISim.cpp
+        src/moaicore/MOAIStaticGlyphCache.cpp
+        src/moaicore/MOAIStream.cpp
+        src/moaicore/MOAIStreamReader.cpp
+        src/moaicore/MOAIStreamWriter.cpp
+        src/moaicore/MOAIStretchPatch2D.cpp
+        src/moaicore/MOAISurfaceDeck2D.cpp
+        src/moaicore/MOAISurfaceSampler2D.cpp
+        src/moaicore/MOAITask.cpp
+        src/moaicore/MOAITaskQueue.cpp
+        src/moaicore/MOAITaskSubscriber.cpp
+        src/moaicore/MOAITaskThread.cpp
+        src/moaicore/MOAITextBox.cpp
+        src/moaicore/MOAITextBundle.cpp
+        src/moaicore/MOAITextDesigner.cpp
+        src/moaicore/MOAITextRenderer.cpp
+        src/moaicore/MOAITextStyle.cpp
+        src/moaicore/MOAITextStyler.cpp
+        src/moaicore/MOAITexture.cpp
+        src/moaicore/MOAITextureBase.cpp
+        src/moaicore/MOAITextureRaw.cpp
+        src/moaicore/MOAIThread.cpp
+        src/moaicore/MOAIThread_posix.cpp
+        src/moaicore/MOAIThread_win32.cpp
+        src/moaicore/MOAITileDeck2D.cpp
+        src/moaicore/MOAITileFlags.cpp
+        src/moaicore/MOAITimer.cpp
+        src/moaicore/MOAITouchSensor.cpp
+        src/moaicore/MOAITransform.cpp
+        src/moaicore/MOAITransform2D.cpp
+        src/moaicore/MOAITransformBase.cpp
+        src/moaicore/MOAIUrlMgrNaCl.cpp
+        src/moaicore/MOAIVertexBuffer.cpp
+        src/moaicore/MOAIVertexFormat.cpp
+        src/moaicore/MOAIVertexFormatMgr.cpp
+        src/moaicore/MOAIViewport.cpp
+        src/moaicore/MOAIWheelSensor.cpp
+        src/moaicore/MOAIXmlParser.cpp
+        src/moaicore/MOAIXmlWriter.cpp
+        src/uslscore/STLString.cpp
+        src/uslscore/USAdapterInfo_posix.cpp
+        src/uslscore/USAdapterInfo_win32.cpp
+        src/uslscore/USBase64Encoder.cpp
+        src/uslscore/USBase64Reader.cpp
+        src/uslscore/USBase64Writer.cpp
+        src/uslscore/USBox.cpp
+        src/uslscore/USByteStream.cpp
+        src/uslscore/USCgt.cpp
+        src/uslscore/USColor.cpp
+        src/uslscore/USCurve.cpp
+        src/uslscore/USDeflateReader.cpp
+        src/uslscore/USDeflateWriter.cpp
+        src/uslscore/USDeviceTime_apple.cpp
+        src/uslscore/USDeviceTime_nacl.cpp
+        src/uslscore/USDeviceTime_posix.cpp
+        src/uslscore/USDeviceTime_win32.cpp
+        src/uslscore/USDirectoryItr.cpp
+        src/uslscore/USDistance.cpp
+        src/uslscore/USFileStream.cpp
+        src/uslscore/USFileSys.cpp
+        src/uslscore/USFrustum.cpp
+        src/uslscore/USHashWriter.cpp
+        src/uslscore/USHashWriterAdler32.cpp
+        src/uslscore/USHashWriterCRC32.cpp
+        src/uslscore/USHashWriterMD5.cpp
+        src/uslscore/USHashWriterSHA1.cpp
+        src/uslscore/USHashWriterSHA224.cpp
+        src/uslscore/USHashWriterSHA256.cpp
+        src/uslscore/USHashWriterSHA384.cpp
+        src/uslscore/USHashWriterSHA512.cpp
+        src/uslscore/USHashWriterWhirlpool.cpp
+        src/uslscore/USHexDump.cpp
+        src/uslscore/USHexReader.cpp
+        src/uslscore/USHexWriter.cpp
+        src/uslscore/USInterpolate.cpp
+        src/uslscore/USIntersect.cpp
+        src/uslscore/USLexStream.cpp
+        src/uslscore/USLog.cpp
+        src/uslscore/uslscore-pch.cpp
+        src/uslscore/USMemStream.cpp
+        src/uslscore/USMercator.cpp
+        src/uslscore/USParser.cpp
+        src/uslscore/USPlane.cpp
+        src/uslscore/USPolar.cpp
+        src/uslscore/USPrism.cpp
+        src/uslscore/USQuad.cpp
+        src/uslscore/USQuadCoord.cpp
+        src/uslscore/USQuaternion.cpp
+        src/uslscore/USRhombus.cpp
+        src/uslscore/USStream.cpp
+        src/uslscore/USStreamReader.cpp
+        src/uslscore/USStreamWriter.cpp
+        src/uslscore/USSurface2D.cpp
+        src/uslscore/USSyntaxNode.cpp
+        src/uslscore/USSyntaxScanner.cpp
+        src/uslscore/USTrig.cpp
+        src/uslscore/USTypedPtr.cpp
+        src/uslscore/USXmlReader.cpp
+        src/uslscore/USZip.cpp
+        src/uslscore/USZipFile.cpp
+        src/zlcore/zlcore-pch.cpp
+        src/zlcore/zl_mutex.cpp
+        src/zlcore/zl_util.cpp
+        src/zlcore/zl_vfscanf.cpp
+        src/zlcore/zlcore.cpp
+        src/zlcore/ZLDirectoryItr.cpp
+        src/zlcore/ZLFile.cpp
+        src/zlcore/ZLFileSystem.cpp
+        src/zlcore/ZLVirtualPath.cpp
+        src/zlcore/ZLZipArchive.cpp
+        src/zlcore/ZLZipStream.cpp)
+
+find_library( android-log-lib log )
+target_link_libraries( moai_dev PRIVATE ${android-log-lib} )
+
+find_library( glesv1 GLESv1_CM )
+target_link_libraries( moai_dev PRIVATE ${glesv1} )
+
+find_library( glesv2 GLESv2 )
+target_link_libraries( moai_dev PRIVATE ${glesv2} )
