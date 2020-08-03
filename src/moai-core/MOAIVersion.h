@@ -10,6 +10,8 @@
 namespace MOAIVersion {
 
 	//----------------------------------------------------------------//
+	STLString	GetAuthorString		();
+	STLString	GetCommitString		();
 	STLString	GetVersionString	();
 };
 

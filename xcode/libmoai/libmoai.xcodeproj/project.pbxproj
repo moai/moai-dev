@@ -1478,6 +1478,12 @@
 		CD3024C11A68AB4B00CCEE32 /* MOAITestMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3024BE1A68AB4B00CCEE32 /* MOAITestMgr.cpp */; };
 		CD3024C21A68AB4B00CCEE32 /* MOAITestMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3024BF1A68AB4B00CCEE32 /* MOAITestMgr.h */; };
 		CD3024C31A68AB4B00CCEE32 /* MOAITestMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3024BF1A68AB4B00CCEE32 /* MOAITestMgr.h */; };
+		CD318BFC24D81D1D009E32EF /* moai_config.h in Headers */ = {isa = PBXBuildFile; fileRef = CD318BF724D81D1D009E32EF /* moai_config.h */; };
+		CD318BFD24D81D1D009E32EF /* moai_config.h in Headers */ = {isa = PBXBuildFile; fileRef = CD318BF724D81D1D009E32EF /* moai_config.h */; };
+		CD318BFE24D81D1D009E32EF /* moai_version_author.h in Headers */ = {isa = PBXBuildFile; fileRef = CD318BF824D81D1D009E32EF /* moai_version_author.h */; };
+		CD318BFF24D81D1D009E32EF /* moai_version_author.h in Headers */ = {isa = PBXBuildFile; fileRef = CD318BF824D81D1D009E32EF /* moai_version_author.h */; };
+		CD318C0024D81D1D009E32EF /* moai_version.h in Headers */ = {isa = PBXBuildFile; fileRef = CD318BF924D81D1D009E32EF /* moai_version.h */; };
+		CD318C0124D81D1D009E32EF /* moai_version.h in Headers */ = {isa = PBXBuildFile; fileRef = CD318BF924D81D1D009E32EF /* moai_version.h */; };
 		CD32104C1C517ADB00AD5E5C /* hb-atomic-private.hh in Headers */ = {isa = PBXBuildFile; fileRef = CD320F681C517ACF00AD5E5C /* hb-atomic-private.hh */; };
 		CD32104D1C517ADB00AD5E5C /* hb-blob.cc in Sources */ = {isa = PBXBuildFile; fileRef = CD320F691C517ACF00AD5E5C /* hb-blob.cc */; };
 		CD32104E1C517ADB00AD5E5C /* hb-blob.h in Headers */ = {isa = PBXBuildFile; fileRef = CD320F6A1C517ACF00AD5E5C /* hb-blob.h */; };
@@ -4505,8 +4511,6 @@
 		CDE440191AC0D27600C745DB /* ZLFrustumFitter.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE440111AC0D27600C745DB /* ZLFrustumFitter.h */; };
 		CDE6CF5F1EA6D3B80020B819 /* MOAICollisionPrim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE6CF5E1EA6D3B80020B819 /* MOAICollisionPrim.cpp */; };
 		CDE6CF601EA6D3B80020B819 /* MOAICollisionPrim.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDE6CF5E1EA6D3B80020B819 /* MOAICollisionPrim.cpp */; };
-		CDE93C1A1B34EF370051ADA1 /* moai_version.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE93C191B34EF370051ADA1 /* moai_version.h */; };
-		CDE93C1B1B34EF370051ADA1 /* moai_version.h in Headers */ = {isa = PBXBuildFile; fileRef = CDE93C191B34EF370051ADA1 /* moai_version.h */; };
 		CDECEE2018E0C87C00546426 /* mongoose.c in Sources */ = {isa = PBXBuildFile; fileRef = CD795EFE17F0901A006AEB47 /* mongoose.c */; };
 		CDECEE2118E0C87C00546426 /* mongoose.h in Headers */ = {isa = PBXBuildFile; fileRef = CD795EFF17F0901A006AEB47 /* mongoose.h */; };
 		CDECEE2418E0C88700546426 /* mongoose.c in Sources */ = {isa = PBXBuildFile; fileRef = CD795EFE17F0901A006AEB47 /* mongoose.c */; };
@@ -6276,6 +6280,10 @@
 		CD3024CA1A68F34E00CCEE32 /* PVRTMap.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PVRTMap.h; path = "../../3rdparty/libpvr-3.4/PVRTMap.h"; sourceTree = "<group>"; };
 		CD3024CB1A68F34E00CCEE32 /* PVRTTexture.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = PVRTTexture.cpp; path = "../../3rdparty/libpvr-3.4/PVRTTexture.cpp"; sourceTree = "<group>"; };
 		CD3024CC1A68F34E00CCEE32 /* PVRTTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = PVRTTexture.h; path = "../../3rdparty/libpvr-3.4/PVRTTexture.h"; sourceTree = "<group>"; };
+		CD318BF724D81D1D009E32EF /* moai_config.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = moai_config.h; path = config/moai_config.h; sourceTree = "<group>"; };
+		CD318BF824D81D1D009E32EF /* moai_version_author.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = moai_version_author.h; path = config/moai_version_author.h; sourceTree = "<group>"; };
+		CD318BF924D81D1D009E32EF /* moai_version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = moai_version.h; path = config/moai_version.h; sourceTree = "<group>"; };
+		CD318C2C24D8214E009E32EF /* moai_build.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = moai_build.h; path = config/moai_build.h; sourceTree = "<group>"; };
 		CD320DDA1C5179B000AD5E5C /* libmoai-ios-harfbuzz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-harfbuzz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD320F5D1C517A0E00AD5E5C /* libmoai-osx-harfbuzz.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-harfbuzz.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD320F681C517ACF00AD5E5C /* hb-atomic-private.hh */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.h; name = "hb-atomic-private.hh"; path = "../../3rdparty/harfbuzz-1.0.6/hb-atomic-private.hh"; sourceTree = "<group>"; };
@@ -7489,9 +7497,6 @@
 		CDB718CE1A451C4D003DFFBA /* tp.lua */ = {isa = PBXFileReference; lastKnownFileType = text; name = tp.lua; path = "../../3rdparty/luasocket-2.0.2/src/tp.lua"; sourceTree = "<group>"; };
 		CDB718CF1A451C4D003DFFBA /* url.lua */ = {isa = PBXFileReference; lastKnownFileType = text; name = url.lua; path = "../../3rdparty/luasocket-2.0.2/src/url.lua"; sourceTree = "<group>"; };
 		CDB73B651D00026D00B0E75A /* ZLPolygon2D.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLPolygon2D.cpp; sourceTree = "<group>"; };
-		CDBA13121A305641007503F3 /* moai_config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = moai_config.h; path = "config-default/moai_config.h"; sourceTree = "<group>"; };
-		CDBA13131A305641007503F3 /* moai_version_author.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = moai_version_author.h; path = "config-default/moai_version_author.h"; sourceTree = "<group>"; };
-		CDBA13161A30564B007503F3 /* moai_version_author.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = moai_version_author.h; path = config/moai_version_author.h; sourceTree = "<group>"; };
 		CDBE9A3E1D88C32D00444344 /* ZLThreadLocalPtr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLThreadLocalPtr.h; sourceTree = "<group>"; };
 		CDBF98EA23409246003F430D /* MOAIFenceVK.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIFenceVK.cpp; path = "moai-gfx-vk/MOAIFenceVK.cpp"; sourceTree = "<group>"; };
 		CDBF98EB23409246003F430D /* MOAIFenceVK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIFenceVK.h; path = "moai-gfx-vk/MOAIFenceVK.h"; sourceTree = "<group>"; };
@@ -8068,7 +8073,6 @@
 		CDE440101AC0D27600C745DB /* ZLFrustumFitter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLFrustumFitter.cpp; sourceTree = "<group>"; };
 		CDE440111AC0D27600C745DB /* ZLFrustumFitter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLFrustumFitter.h; sourceTree = "<group>"; };
 		CDE6CF5E1EA6D3B80020B819 /* MOAICollisionPrim.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICollisionPrim.cpp; sourceTree = "<group>"; };
-		CDE93C191B34EF370051ADA1 /* moai_version.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = moai_version.h; sourceTree = "<group>"; };
 		CDEEC77C1C7BCEDC0014CC3F /* ZLResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLResult.h; sourceTree = "<group>"; };
 		CDEFD55C181ECB3E0058D772 /* MOAITextLabel.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAITextLabel.cpp; sourceTree = "<group>"; };
 		CDEFD55D181ECB3E0058D772 /* MOAITextLabel.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAITextLabel.h; sourceTree = "<group>"; };
@@ -8780,8 +8784,7 @@
 		0324E4F113564BC7000ADC60 /* src */ = {
 			isa = PBXGroup;
 			children = (
-				CDBA13101A30561B007503F3 /* config */,
-				CDBA13111A305622007503F3 /* config-default */,
+				CD318BF524D81D10009E32EF /* config */,
 				CD257B241A6253F70057A53A /* moai-apple */,
 				CD4BCF861E542724002306C2 /* moai-ar */,
 				CD7852D11D18C761003F15D0 /* moai-assimp */,
@@ -9146,7 +9149,6 @@
 				89BE6ACB173975E500DFE837 /* headers.h */,
 				89BE6ACC173975E500DFE837 /* host.cpp */,
 				89BE6ACD173975E500DFE837 /* host.h */,
-				CDE93C191B34EF370051ADA1 /* moai_version.h */,
 				CDCDE224204F66C4005CD590 /* MOAICanary.cpp */,
 				CDCDE223204F66C4005CD590 /* MOAICanary.h */,
 				CD1845BE1A62751200FCCCE0 /* MOAIEnvironment.cpp */,
@@ -10257,6 +10259,17 @@
 				CD3024CC1A68F34E00CCEE32 /* PVRTTexture.h */,
 			);
 			name = libpvr;
+			sourceTree = "<group>";
+		};
+		CD318BF524D81D10009E32EF /* config */ = {
+			isa = PBXGroup;
+			children = (
+				CD318C2C24D8214E009E32EF /* moai_build.h */,
+				CD318BF724D81D1D009E32EF /* moai_config.h */,
+				CD318BF824D81D1D009E32EF /* moai_version_author.h */,
+				CD318BF924D81D1D009E32EF /* moai_version.h */,
+			);
+			name = config;
 			sourceTree = "<group>";
 		};
 		CD320F671C517AAA00AD5E5C /* harfbuzz */ = {
@@ -13356,23 +13369,6 @@
 			name = lua;
 			sourceTree = "<group>";
 		};
-		CDBA13101A30561B007503F3 /* config */ = {
-			isa = PBXGroup;
-			children = (
-				CDBA13161A30564B007503F3 /* moai_version_author.h */,
-			);
-			name = config;
-			sourceTree = "<group>";
-		};
-		CDBA13111A305622007503F3 /* config-default */ = {
-			isa = PBXGroup;
-			children = (
-				CDBA13121A305641007503F3 /* moai_config.h */,
-				CDBA13131A305641007503F3 /* moai_version_author.h */,
-			);
-			name = "config-default";
-			sourceTree = "<group>";
-		};
 		CDBF9916234332CE003F430D /* uniform */ = {
 			isa = PBXGroup;
 			children = (
@@ -13945,6 +13941,7 @@
 				CD5F96FA1C2BCD0D000FA476 /* MOAIFourier.h in Headers */,
 				CD4C387C242CC32200B1AC6A /* MOAIEaseType.h in Headers */,
 				CD212E2D24194ED2000FC3BD /* MOAILuaObjectVisitor.h in Headers */,
+				CD318BFF24D81D1D009E32EF /* moai_version_author.h in Headers */,
 				CD4C3852242CBDED00B1AC6A /* MOAITimer.h in Headers */,
 				CD2FB1B91C473B15005F8D8D /* MOAIConditionVariable.h in Headers */,
 				CD17127B22F446C500381882 /* MOAIScriptNode.h in Headers */,
@@ -13955,6 +13952,7 @@
 				89BE6B19173975E500DFE837 /* strings.h in Headers */,
 				CD4C386C242CC2E800B1AC6A /* MOAIAnimCurveBone.h in Headers */,
 				89BE6B1D173975E500DFE837 /* MOAILogMgr.h in Headers */,
+				CD318BFD24D81D1D009E32EF /* moai_config.h in Headers */,
 				CD3024C31A68AB4B00CCEE32 /* MOAITestMgr.h in Headers */,
 				CD17126122F446BA00381882 /* MOAILuaRuntime.h in Headers */,
 				CD2CB52019FDBECA00C42260 /* MOAIStreamAdapter.h in Headers */,
@@ -13963,7 +13961,6 @@
 				CD4C3868242CC2E800B1AC6A /* MOAIAnim.h in Headers */,
 				CD17128922F446E000381882 /* MOAISerializer.h in Headers */,
 				89BE6B51173975E500DFE837 /* pch.h in Headers */,
-				CDE93C1B1B34EF370051ADA1 /* moai_version.h in Headers */,
 				CD4C3848242CBDED00B1AC6A /* MOAIAction.h in Headers */,
 				CD17125D22F446BA00381882 /* MOAILuaRefTable.h in Headers */,
 				89BE6CFB1739A42500DFE837 /* headers.h in Headers */,
@@ -14023,6 +14020,7 @@
 				89BE6D671739A42500DFE837 /* pch.h in Headers */,
 				89E9D7891743F7EE00033CDD /* MOAIVersion.h in Headers */,
 				CD582B2A22728C83009CD0B6 /* MOAIImageLoadTask.h in Headers */,
+				CD318C0124D81D1D009E32EF /* moai_version.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -14030,9 +14028,10 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				CD318BFE24D81D1D009E32EF /* moai_version_author.h in Headers */,
 				CD1844D61A6269AB00FCCCE0 /* host.h in Headers */,
 				89BE6AF8173975E500DFE837 /* headers.h in Headers */,
-				CDE93C1A1B34EF370051ADA1 /* moai_version.h in Headers */,
+				CD318BFC24D81D1D009E32EF /* moai_config.h in Headers */,
 				CD0E8317249B523F00CD1634 /* MOAIAbstractGfxScript.h in Headers */,
 				89BE6AFC173975E500DFE837 /* host.h in Headers */,
 				89BE6B04173975E500DFE837 /* MOAIDeserializer.h in Headers */,
@@ -14070,6 +14069,7 @@
 				CD17129822F446EF00381882 /* MOAIFooMgr.h in Headers */,
 				89BE6D221739A42500DFE837 /* MOAIMemStream.h in Headers */,
 				CD1844E11A6269AB00FCCCE0 /* MOAIWebViewController.h in Headers */,
+				CD318C0024D81D1D009E32EF /* moai_version.h in Headers */,
 				89BE6D261739A42500DFE837 /* MOAIMutex.h in Headers */,
 				89BE6D2A1739A42500DFE837 /* MOAIMutex_posix.h in Headers */,
 				89BE6D2E1739A42500DFE837 /* MOAIMutex_win32.h in Headers */,
@@ -16386,6 +16386,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 0324E2B81356485F000ADC60 /* Build configuration list for PBXNativeTarget "libmoai-osx" */;
 			buildPhases = (
+				CD318BEE24D815F3009E32EF /* ShellScript */,
 				0324E2B41356485F000ADC60 /* Headers */,
 				0324E2B51356485F000ADC60 /* Sources */,
 				0324E2B61356485F000ADC60 /* Frameworks */,
@@ -16403,6 +16404,7 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = 03C2F6F8104DE131009A2D5D /* Build configuration list for PBXNativeTarget "libmoai-ios" */;
 			buildPhases = (
+				CD318BED24D815A1009E32EF /* ShellScript */,
 				03C2F6F0104DE130009A2D5D /* Headers */,
 				03C2F6F1104DE130009A2D5D /* Sources */,
 				03C2F6F2104DE130009A2D5D /* Frameworks */,
@@ -17528,6 +17530,43 @@
 			);
 		};
 /* End PBXProject section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		CD318BED24D815A1009E32EF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "'libmoai/moaiconfig.xcconfig'\n\nif test -f $PROJECT_DIR/libmoai/moaiconfig.xcconfig; then\n    echo \"moaiconfig.xcconfig.\"\nfi\n";
+		};
+		CD318BEE24D815F3009E32EF /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+			);
+			inputPaths = (
+			);
+			outputFileListPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "$PROJECT_DIR/../../ops/make-version-header.sh\n\nif ! [[ -f $PROJECT_DIR/moaiconfig.xcconfig ]]; then\n    echo \"'libmoai/moaiconfig.xcconfig' is missing. please copy 'libmoai/moaiconfig.xcconfig.example' and configure.\"\n    exit 1\nfi\n";
+		};
+/* End PBXShellScriptBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
 		0324E2AA1356485F000ADC60 /* Sources */ = {
@@ -20882,8 +20921,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"../../src/zl-vfs\"",
+					"\"../../src/.config\"",
 					"\"../../src/config\"",
-					"\"../../src/config-default\"",
 					"\"../../src\"",
 					"\"../../3rdparty\"",
 					"\"../../3rdparty/lua-5.1.3/src\"",
@@ -22052,8 +22091,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"../../src/zl-vfs\"",
+					"\"../../src/.config\"",
 					"\"../../src/config\"",
-					"\"../../src/config-default\"",
 					"\"../../src\"",
 					"\"../../3rdparty\"",
 					"\"../../3rdparty/lua-5.1.3/src\"",
@@ -27458,8 +27497,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"../../src/zl-vfs\"",
+					"\"../../src/.config\"",
 					"\"../../src/config\"",
-					"\"../../src/config-default\"",
 					"\"../../src\"",
 					"\"../../3rdparty\"",
 					"\"../../3rdparty/lua-5.1.3/src\"",

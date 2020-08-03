@@ -3265,8 +3265,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"../../src\"",
+					"\"../../src/.config\"",
 					"\"../../src/config\"",
-					"\"../../src/config-default\"",
 					"\"../../3rdparty/sdl2-2.0.9/include\"",
 					"\"../../3rdparty/google-test/googletest/include\"",
 				);
@@ -3354,8 +3354,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				HEADER_SEARCH_PATHS = (
 					"\"../../src\"",
+					"\"../../src/.config\"",
 					"\"../../src/config\"",
-					"\"../../src/config-default\"",
 					"\"../../3rdparty/sdl2-2.0.9/include\"",
 					"\"../../3rdparty/google-test/googletest/include\"",
 				);

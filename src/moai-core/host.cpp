@@ -388,16 +388,29 @@ lua_State* AKUGetLuaState () {
 }
 
 //----------------------------------------------------------------//
+char* AKUGetMoaiAuthor ( char* buffer, size_t length ) {
+
+	STLString version = MOAIVersion::GetAuthorString ();
+	strncpy ( buffer, version.c_str (), length - 1 );
+	buffer [ length - 1 ] = 0;
+	return buffer;
+}
+
+//----------------------------------------------------------------//
+char* AKUGetMoaiCommit ( char* buffer, size_t length ) {
+
+	STLString version = MOAIVersion::GetCommitString ();
+	strncpy ( buffer, version.c_str (), length - 1 );
+	buffer [ length - 1 ] = 0;
+	return buffer;
+}
+
+//----------------------------------------------------------------//
 char* AKUGetMoaiVersion ( char* buffer, size_t length ) {
 
 	STLString version = MOAIVersion::GetVersionString ();
-	if ( version.length () < length ) {
-		strcpy ( buffer, version.c_str ());
-	}
-	else {
-		strncpy ( buffer, version.c_str (), length - 1 );
-		buffer [ length - 1 ] = 0;
-	}
+	strncpy ( buffer, version.c_str (), length - 1 );
+	buffer [ length - 1 ] = 0;
 	return buffer;
 }
 

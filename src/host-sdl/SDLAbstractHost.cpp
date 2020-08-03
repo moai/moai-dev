@@ -381,10 +381,11 @@ void SDLAbstractHost::MainLoop () {
 //----------------------------------------------------------------//
 void SDLAbstractHost::PrintMoaiVersion () {
 
-	static const int length = 255;
-	char version [ length ];
-	AKUGetMoaiVersion ( version, length );
-	printf ( "%s\n", version );
+	char buffer [ 255 ];
+	
+	printf ( "%s\n", AKUGetMoaiVersion ( buffer, sizeof ( buffer )));
+	printf ( "%s\n", AKUGetMoaiCommit ( buffer, sizeof ( buffer )));
+	printf ( "%s\n", AKUGetMoaiAuthor ( buffer, sizeof ( buffer )));
 }
 
 //----------------------------------------------------------------//

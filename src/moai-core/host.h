@@ -85,6 +85,8 @@ AKU_API int				AKUCallFunc						();
 AKU_API int				AKUCallFuncWithArgArray			( char* exeName, char* scriptName, int argc, char** argv, int asParams );
 AKU_API int				AKUCallFuncWithArgString		( char* exeName, char* scriptName, char* args, int asParams );
 AKU_API lua_State*		AKUGetLuaState					();
+AKU_API char*			AKUGetMoaiAuthor				( char* buffer, size_t length );
+AKU_API char*			AKUGetMoaiCommit				( char* buffer, size_t length );
 AKU_API char*			AKUGetMoaiVersion				( char* buffer, size_t length );
 AKU_API char*			AKUGetWorkingDirectory			( char* buffer, size_t length );
 AKU_API int				AKULoadFuncFromBuffer			( void* data, size_t size, const char* chunkname, int compressed );
