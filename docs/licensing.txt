@@ -1,0 +1,9 @@
+Zipline Games, Inc. - Moai SDK
+
+Moai SDK is a copyrighted work of Zipline Games, Inc. Following August 3, 2020 (the "License Revocation Date"), modifications to its source code by Patrick Meehan or Zipline Games are provided for informational purposes only. No license for any use is granted or implied for these modifications.
+
+Moai SDK, as it existed prior to the License Revocation Date, continues to be available under its original license.
+
+Moai SDK will return under a new license in the future. In the mean time, if you want to use any portion of the Moai SDK sourcecode, email Patrick Meehan at moai.license AT fallguyconsulting DOT com.
+
+Thank you!
