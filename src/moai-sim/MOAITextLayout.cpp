@@ -231,6 +231,7 @@ void MOAITextLayout::Draw ( u32 reveal ) {
 		MOAIShader* currentShader = NULL; // TODO: used to be set based on the state of MOAIMaterialMgr
 		bool useSpriteShaders = ( currentShader == NULL );
 		MOAIShader* defaultShader = MOAIGfxMgr::Get ().GetShaderPreset ( MOAIShaderPresetEnum::FONT_SNAPPING_SHADER );
+//		MOAIShader* defaultShader = MOAIGfxMgr::Get ().GetShaderPreset ( MOAIShaderPresetEnum::FONT_SHADER );
 		
 		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 		MOAIQuadBrush::BindVertexFormat ();
@@ -261,6 +262,7 @@ void MOAITextLayout::Draw ( u32 reveal ) {
 				if ( spriteShader != currentShader ) {
 					if ( !spriteShader->IsReadyForUse ()) continue;
 					gfxMgr.SetShader ( spriteShader );
+					spriteShader->RunScript ();
 					currentShader = spriteShader;
 				}
 			}

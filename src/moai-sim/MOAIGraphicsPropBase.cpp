@@ -13,6 +13,23 @@
 #include <moai-sim/MOAISurfaceSampler2D.h>
 
 //================================================================//
+// MOAIGraphicsPropBaseCallable
+//================================================================//
+class MOAIGraphicsPropBaseCallable :
+	public MOAIAbstractGfxScriptCallback {
+public:
+
+	MOAIGraphicsPropBase*		mProp;
+	int							mSubPrimID;
+
+	//----------------------------------------------------------------//
+	void MOAIAbstractGfxScriptCallback_Call () {
+	
+		this->mProp->MOAIGraphicsPropBase_Draw ( this->mSubPrimID );
+	}
+};
+
+//================================================================//
 // lua
 //================================================================//
 
@@ -235,26 +252,6 @@ MOAIGraphicsPropBase::~MOAIGraphicsPropBase () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGraphicsPropBase::PopGfxState () {
-}
-
-//----------------------------------------------------------------//
-void MOAIGraphicsPropBase::PushGfxState () {
-
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-
-	gfxMgr.SetPenColor ( this->mColor );
-	
-	if ( this->mScissorRect ) {
-		ZLRect scissorRect = this->mScissorRect->GetScissorRect ( gfxMgr.GetWorldToWndMtx ());
-		gfxMgr.SetScissorRect ( scissorRect );
-	}
-	else {
-		gfxMgr.SetScissorRect ();
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIGraphicsPropBase::Render () {
 
 	this->Draw ( MOAIPartitionHull::NO_SUBPRIM_ID );
@@ -354,8 +351,31 @@ void MOAIGraphicsPropBase::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAI
 }
 
 //----------------------------------------------------------------//
+void MOAIGraphicsPropBase::MOAIDrawable_Draw ( int subPrimID ) {
+
+	if ( !this->IsVisible ()) return;
+	if ( this->IsClear ()) return;
+
+	if ( this->MOAIGraphicsPropBase_LoadGfxState ()) {
+
+		MOAIAbstractGfxScript* gfxScript = this->GetGfxScript ();
+		
+		if ( gfxScript ) {
+			MOAIGraphicsPropBaseCallable callable;
+			callable.mProp = this;
+			callable.mSubPrimID = subPrimID;
+			gfxScript->RunScript ( &callable, MOAIGfxScript::CALL_FROM_SHADER );
+		}
+		else {
+			this->MOAIGraphicsPropBase_Draw ( subPrimID );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIGraphicsPropBase::MOAIDrawable_DrawDebug ( int subPrimID ) {
-	UNUSED ( subPrimID );
+
+	this->MOAIGraphicsPropBase_DrawDebug ( subPrimID );
 
 	if ( this->GetWorldBounds ().IsEmpty ()) return;
 
@@ -416,6 +436,14 @@ void MOAIGraphicsPropBase::MOAIDrawable_DrawDebug ( int subPrimID ) {
 			}
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAIGraphicsPropBase::MOAIGraphicsPropBase_Draw ( int subPrimID ) {
+}
+
+//----------------------------------------------------------------//
+void MOAIGraphicsPropBase::MOAIGraphicsPropBase_DrawDebug ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
@@ -623,6 +651,23 @@ ZLMatrix4x4 MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx () con
 	}
 	
 	return worldDrawingMtx;
+}
+
+//----------------------------------------------------------------//
+bool MOAIGraphicsPropBase::MOAIGraphicsPropBase_LoadGfxState () {
+
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+
+	gfxMgr.SetPenColor ( this->mColor );
+	
+	if ( this->mScissorRect ) {
+		ZLRect scissorRect = this->mScissorRect->GetScissorRect ( gfxMgr.GetWorldToWndMtx ());
+		gfxMgr.SetScissorRect ( scissorRect );
+	}
+	else {
+		gfxMgr.SetScissorRect ();
+	}
+	return true;
 }
 
 //----------------------------------------------------------------//

@@ -49,6 +49,7 @@ protected:
 	void						MOAIAbstractGfxScript_RunScript				( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ callCommand );
 	void						MOAIAbstractGfxScript_SubmitCommand			( MOAIDrawingAPIEnum::_ cmd, const void* param, ZLSize size );
 	MOAIAbstractGfxScript&		MOAIAbstractHasGfxScript_AffirmGfxScript	();
+	virtual void				MOAIGfxScript_Execute						( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ cmd, const void* rawParam ) const;
 
 public:
 

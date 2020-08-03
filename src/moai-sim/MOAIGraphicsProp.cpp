@@ -39,20 +39,23 @@ MOAIGraphicsProp::~MOAIGraphicsProp () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGraphicsProp::MOAIDrawable_Draw ( int subPrimID ) {
+void MOAIGraphicsProp::MOAIGraphicsPropBase_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
-	if ( !this->IsVisible ()) return;
-	if ( !this->mDeck ) return;
-	if ( this->IsClear ()) return;
-
-	this->PushGfxState ();
-	this->LoadVertexTransform ();
-	this->LoadUVTransform ();
-	
 	this->mDeck->Draw ( this->mIndex );
+}
+
+//----------------------------------------------------------------//
+bool MOAIGraphicsProp::MOAIGraphicsPropBase_LoadGfxState () {
+
+	if ( this->mDeck && MOAIGraphicsPropBase::MOAIGraphicsPropBase_LoadGfxState ()) {
 	
-	this->PopGfxState ();
+		this->LoadVertexTransform ();
+		this->LoadUVTransform ();
+		
+		return true;
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//

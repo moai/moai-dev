@@ -12,9 +12,9 @@
 int MOAIAbstractDrawingObjectGL::_loadShaderUniformGL ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractDrawingObjectGL, "U" )
 	
-	ZLIndex globalID		= state.GetValue < u32 >( 3, 0 );
+	ZLIndex globalID		= state.GetValue < u32 >( 2, 0 );
 	ZLIndex uniformID		= state.GetValue < u32 >( 3, 0 );
-	ZLIndex index			= state.GetValue < u32 >( 3, 0 );
+	ZLIndex index			= state.GetValue < u32 >( 4, 0 );
 	
 	self->LoadShaderUniformGL ( globalID, uniformID, index );
 	return 0;

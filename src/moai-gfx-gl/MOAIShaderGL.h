@@ -32,11 +32,11 @@ protected:
 	static int				_setProgram					( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void							_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
-	void							_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
-	MOAIAbstractGfxScript*			MOAIAbstractHasGfxScript_GetGfxScript	();
-	const MOAIUniformSchema*		MOAIAbstractUniformBuffer_GetSchema		() const;
-	bool							MOAIShader_IsReadyForUse				() const;
+	void							_RegisterLuaClass							( RTTIVisitorHistory& history, MOAILuaState& state );
+	void							_RegisterLuaFuncs							( RTTIVisitorHistory& history, MOAILuaState& state );
+	MOAIAbstractGfxScript&			MOAIAbstractHasGfxScript_AffirmGfxScript	();
+	const MOAIUniformSchema*		MOAIAbstractUniformBuffer_GetSchema			() const;
+	bool							MOAIShader_IsReadyForUse					() const;
 
 public:
 

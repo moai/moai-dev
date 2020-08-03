@@ -123,7 +123,7 @@ class MOAIFont;
 	@const	WORD_BREAK_CHAR
 */
 class MOAITextLabel :
-	public MOAIGraphicsProp,
+	public MOAIGraphicsPropBase,
 	public MOAIAction {
 private:
 
@@ -206,8 +206,9 @@ private:
 	void				_RegisterLuaClass									( RTTIVisitorHistory& history, MOAILuaState& state );
 	void				_RegisterLuaFuncs									( RTTIVisitorHistory& history, MOAILuaState& state );
 	void				MOAIAbstractBaseTransform_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx );
-	void				MOAIDrawable_Draw									( int subPrimID );
-	void				MOAIDrawable_DrawDebug								( int subPrimID );
+	void				MOAIGraphicsPropBase_Draw							( int subPrimID );
+	void				MOAIGraphicsPropBase_DrawDebug						( int subPrimID );
+	bool				MOAIGraphicsPropBase_LoadGfxState					();
 	ZLBounds			MOAIAbstractProp_GetModelBounds						();
 	bool				MOAIAction_IsDone									();
 	void				MOAIAction_Update									( double step );

@@ -40,6 +40,14 @@ function onDraw ( draw, index )
 		0, 64,
 		32, -64
 	)
+
+    draw:call ( layer ):loadCamera ()
+    draw:call ( layer ):gatherPrims ()
+    draw:call ( layer ):sortPrims ()
+    draw:call ( layer ):draw ()
+
+    draw:api ( MOAIDrawingExtension ):foo ()
+    draw:api ( MOAITextLabel ):drawText ( x, y, z, "hi there" )
 end
 
 drawDeck = MOAIDrawDeck.new ()
@@ -50,3 +58,25 @@ prop:setDeck ( drawDeck )
 prop:setPartition ( layer )
 
 prop:moveRot ( 0, 0, 360, 1.5 )
+
+-- prop:gfx ():setTexture ()
+-- prop:gfx ():setShader ()
+-- prop:gfx ():draw ()
+
+-- prop:gfx ()
+--     :api ( layer )
+--     :loadCamera ()
+--     :sort ()
+--     :drawPrims ()
+
+-- layer:gfx ()
+--     :boof ()
+--     :doof ()
+--     :moof ()
+
+-- layer:gfx ():loadCamera ()
+-- layer:gfx ():gatherPrims ()
+-- layer:gfx ():sortPrims ()
+-- layer:gfx ():draw ()
+
+-- layer:gfx ():draw ( prop )

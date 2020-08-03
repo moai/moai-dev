@@ -190,15 +190,8 @@ MOAIGraphicsGridProp::~MOAIGraphicsGridProp () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGraphicsGridProp::MOAIDrawable_Draw ( int subPrimID ) {
+void MOAIGraphicsGridProp::MOAIGraphicsPropBase_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
-
-	if ( !this->IsVisible ()) return;
-	if ( !this->mDeck ) return;
-	if ( this->IsClear ()) return;
-
-	this->PushGfxState ();
-	this->LoadUVTransform ();
 	
 	MOAICellCoord c0, c1;
 
@@ -208,10 +201,17 @@ void MOAIGraphicsGridProp::MOAIDrawable_Draw ( int subPrimID ) {
 	else {
 		c0 = c1 = this->mGrid->GetCellCoord ( subPrimID );
 	}
-	
 	this->DrawGrid ( c0, c1 );
-	
-	this->PopGfxState ();
+}
+
+//----------------------------------------------------------------//
+bool MOAIGraphicsGridProp::MOAIGraphicsPropBase_LoadGfxState () {
+
+	if ( this->mDeck && MOAIGraphicsPropBase::MOAIGraphicsPropBase_LoadGfxState ()) {
+		this->LoadUVTransform ();
+		return true;
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//

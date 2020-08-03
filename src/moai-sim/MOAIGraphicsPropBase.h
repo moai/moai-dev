@@ -57,8 +57,10 @@ class MOAIGraphicsPropBase :
 	public virtual MOAIHasGfxScript {
 protected:
 
-	u32										mBillboard;
-	u32										mDisplayFlags;
+	friend class MOAIGraphicsPropBaseCallable;
+
+	u32						mBillboard;
+	u32						mDisplayFlags;
 	
 	// TODO: should be attributes?
 	MOAILuaSharedPtr < MOAIAbstractChildTransform >		mUVTransform;
@@ -78,14 +80,19 @@ protected:
 	//----------------------------------------------------------------//
 	void					LoadUVTransform				();
 	void					LoadVertexTransform			();
-	void					PopGfxState					();
-	void					PushGfxState				();
 
 	//----------------------------------------------------------------//
 	void					_RegisterLuaClass							( RTTIVisitorHistory& history, MOAILuaState& state );
 	void					_RegisterLuaFuncs							( RTTIVisitorHistory& history, MOAILuaState& state );
+		
+	void					MOAIDrawable_Draw							( int subPrimID );
 	void					MOAIDrawable_DrawDebug						( int subPrimID );
+	
+	virtual void			MOAIGraphicsPropBase_Draw					( int subPrimID );
+	virtual void			MOAIGraphicsPropBase_DrawDebug				( int subPrimID );
 	virtual ZLMatrix4x4		MOAIGraphicsPropBase_GetWorldDrawingMtx		() const; // factors in billboard flags
+	virtual bool			MOAIGraphicsPropBase_LoadGfxState			();
+	
 	bool					MOAINode_ApplyAttrOp						( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	void					MOAINode_Update								();
 

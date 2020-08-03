@@ -626,18 +626,11 @@ void MOAIParticleSystem::MOAIAction_Update ( double step ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleSystem::MOAIDrawable_Draw ( int subPrimID ) {
+void MOAIParticleSystem::MOAIGraphicsPropBase_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
-
-	if ( !this->IsVisible ()) return;
-	if ( !this->mDeck ) return;
-	if ( this->IsClear ()) return;
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
-	this->PushGfxState ();
-	this->LoadUVTransform ();
-
 	ZLAffine3D drawingMtx;
 	ZLAffine3D spriteMtx;
 	
@@ -671,8 +664,16 @@ void MOAIParticleSystem::MOAIDrawable_Draw ( int subPrimID ) {
 		
 		this->mDeck->Draw ( this->mIndex + ( ZLSize )sprite.mGfxID );
 	}
-	
-	this->PopGfxState ();
+}
+
+//----------------------------------------------------------------//
+bool MOAIParticleSystem::MOAIGraphicsPropBase_LoadGfxState () {
+
+	if ( this->mDeck && MOAIGraphicsPropBase::MOAIGraphicsPropBase_LoadGfxState ()) {
+		this->LoadUVTransform ();
+		return true;
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//

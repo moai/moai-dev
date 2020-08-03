@@ -873,7 +873,7 @@ MOAITextLabel::MOAITextLabel () :
 	RTTI_BEGIN ( MOAITextLabel )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAITextLabel >)
 		RTTI_EXTEND ( MOAIAction )
-		RTTI_EXTEND ( MOAIGraphicsProp )
+		RTTI_EXTEND ( MOAIGraphicsPropBase )
 	RTTI_END
 	
 	this->mStyleCache.SetOwner ( this );
@@ -1128,85 +1128,66 @@ void MOAITextLabel::MOAIAction_Update ( double step ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLabel::MOAIDrawable_Draw ( int subPrimID ) {
+void MOAITextLabel::MOAIGraphicsPropBase_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
 	
-	if ( !this->IsVisible ()) return;
-	if ( this->IsClear ()) return;
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	// TODO: this just snaps an image behind the label. useful, but find another way.
+//	if ( this->mDeck ) {
+//
+//		ZLBounds fitBounds = this->mDeck->GetBounds ( this->mIndex );
+//
+//		if ( fitBounds.HasGeometry ()) {
+//
+//			float width = fitBounds.mAABB.Width ();
+//			float height = fitBounds.mAABB.Height ();
+//
+//			if (( width > 0.0f ) && ( height > 0.0f )) {
+//
+//				ZLRect layoutFrame = this->mLayoutRules.GetFrame ();
+//
+//				float xFit = layoutFrame.Width () / width;
+//				float yFit = layoutFrame.Height () / height;
+//
+//				this->PushGfxState ();
+//
+//				ZLMatrix4x4 fit;
+//				fit.Scale ( xFit, -1.0f * yFit, 1.0f );
+//
+//				ZLMatrix4x4 worldDrawingMtx = this->MOAIGraphicsProp::MOAIGraphicsPropBase_GetWorldDrawingMtx ();
+//				worldDrawingMtx.Prepend ( fit );
+//
+//				gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX, worldDrawingMtx );
+//
+//				this->LoadUVTransform ();
+//				this->mDeck->Draw ( this->mIndex );
+//				this->PopGfxState ();
+//			}
+//		}
+//	}
 	
-	if ( this->mDeck ) {
-	
-		ZLBounds fitBounds = this->mDeck->GetBounds ( this->mIndex );
-		
-		if ( fitBounds.HasGeometry ()) {
-	
-			float width = fitBounds.mAABB.Width ();
-			float height = fitBounds.mAABB.Height ();
-	
-			if (( width > 0.0f ) && ( height > 0.0f )) {
-	
-				ZLRect layoutFrame = this->mLayoutRules.GetFrame ();
-	
-				float xFit = layoutFrame.Width () / width;
-				float yFit = layoutFrame.Height () / height;
-	
-				this->PushGfxState ();
-
-				ZLMatrix4x4 fit;
-				fit.Scale ( xFit, -1.0f * yFit, 1.0f );
-				
-				ZLMatrix4x4 worldDrawingMtx = this->MOAIGraphicsProp::MOAIGraphicsPropBase_GetWorldDrawingMtx ();
-				worldDrawingMtx.Prepend ( fit );
-			
-				gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX, worldDrawingMtx );
-			
-				this->LoadUVTransform ();
-				this->mDeck->Draw ( this->mIndex );
-				this->PopGfxState ();
-			}
-		}
-	}
-	
-	if ( this->mReveal ) {
-
-		this->PushGfxState ();
-		this->LoadVertexTransform ();
-		this->LoadUVTransform ();
-	
-		gfxMgr.SetVertexTransform ( MOAIGfxMgr::MODEL_TO_CLIP_MTX );
-		gfxMgr.SetUVTransform ( MOAIGfxMgr::UV_TO_MODEL_MTX );
-
-		this->mLayout.Draw ( this->mReveal );
-
-		this->PopGfxState ();
-	}
+	this->mLayout.Draw ( this->mReveal );
 }
 
 //----------------------------------------------------------------//
-void MOAITextLabel::MOAIDrawable_DrawDebug ( int subPrimID ) {
+void MOAITextLabel::MOAIGraphicsPropBase_DrawDebug ( int subPrimID ) {
 	UNUSED ( subPrimID );
 
 	if ( !this->IsVisible ()) return;
-
-	MOAIGraphicsProp::MOAIDrawable_DrawDebug ( subPrimID );
 
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAITextLabel >())) return;
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
-	ZLMatrix4x4 worldDrawingMtx = this->GetWorldDrawingMtx ();
-	
-	gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX, worldDrawingMtx );
-	gfxMgr.SetVertexTransform ( MOAIGfxMgr::MODEL_TO_CLIP_MTX );
-	
-	this->mLayout.DrawDebug ();
-	
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
 	draw.BindVectorPresets ();
+	
+	ZLMatrix4x4 worldDrawingMtx = this->GetWorldDrawingMtx ();
+	gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX, worldDrawingMtx );
+	
+	this->mLayout.DrawDebug ();
 	
 	if (( this->mLayout.mLayoutFrame.Area () > 0.0f ) && debugLines.Bind ( DEBUG_DRAW_TEXT_LABEL_LAYOUT_BOUNDS )) {
 		
@@ -1256,9 +1237,61 @@ void MOAITextLabel::MOAIDrawable_DrawDebug ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAITextLabel::MOAIGraphicsPropBase_LoadGfxState () {
+
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+
+	// TODO: was for drawing a label background. this is not the place for it.
+//	if ( this->mDeck ) {
+//
+//		ZLBounds fitBounds = this->mDeck->GetBounds ( this->mIndex );
+//
+//		if ( !fitBounds.HasGeometry ()) return false;
+//
+//		float width = fitBounds.mAABB.Width ();
+//		float height = fitBounds.mAABB.Height ();
+//
+//		if (( width == 0.0f ) || ( height == 0.0f )) return false;
+//
+//		if ( this->MOAIGraphicsProp::MOAIGraphicsPropBase_LoadGfxState ()) {
+//
+//			ZLRect layoutFrame = this->mLayoutRules.GetFrame ();
+//
+//			float xFit = layoutFrame.Width () / width;
+//			float yFit = layoutFrame.Height () / height;
+//
+//			this->PushGfxState ();
+//
+//			ZLMatrix4x4 fit;
+//			fit.Scale ( xFit, -1.0f * yFit, 1.0f );
+//
+//			ZLMatrix4x4 worldDrawingMtx = this->MOAIGraphicsProp::MOAIGraphicsPropBase_GetWorldDrawingMtx ();
+//			worldDrawingMtx.Prepend ( fit );
+//
+//			gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX, worldDrawingMtx );
+//
+//			return true;
+//		}
+//	}
+	
+	if ( this->mReveal && this->MOAIGraphicsPropBase::MOAIGraphicsPropBase_LoadGfxState ()) {
+
+		this->LoadVertexTransform ();
+		this->LoadUVTransform ();
+	
+		gfxMgr.SetVertexTransform ( MOAIGfxMgr::MODEL_TO_DISPLAY_MTX );
+		gfxMgr.SetUVTransform ( MOAIGfxMgr::UV_TO_MODEL_MTX );
+		gfxMgr.SetBlendMode ( MOAIBlendMode ());
+		
+		return true;
+	}
+	return false;
+}
+
+//----------------------------------------------------------------//
 ZLMatrix4x4 MOAITextLabel::MOAIGraphicsPropBase_GetWorldDrawingMtx () const {
 
-	ZLMatrix4x4 worldDrawingMtx = MOAIGraphicsProp::MOAIGraphicsPropBase_GetWorldDrawingMtx ();
+	ZLMatrix4x4 worldDrawingMtx = MOAIGraphicsPropBase::MOAIGraphicsPropBase_GetWorldDrawingMtx ();
 	
 	if ( this->mAutoFlip ) {
 		
@@ -1296,5 +1329,5 @@ ZLMatrix4x4 MOAITextLabel::MOAIGraphicsPropBase_GetWorldDrawingMtx () const {
 void MOAITextLabel::MOAINode_Update () {
 
 	this->Refresh ();
-	MOAIGraphicsProp::MOAINode_Update ();
+	MOAIGraphicsPropBase::MOAINode_Update ();
 }

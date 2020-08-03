@@ -94,7 +94,7 @@ void MOAIGfxScript::Execute ( MOAIAbstractGfxScriptCallback* callable, MOAIDrawi
 		}
 		
 		default:
-			MOAIDrawingAPI::Execute ( callable, cmd, rawParam );
+			this->MOAIGfxScript_Execute ( callable, cmd, rawParam );
 	}
 }
 
@@ -111,15 +111,14 @@ void MOAIGfxScript::ExecuteBytecode ( MOAIAbstractGfxScriptCallback* callable, M
 		const MOAIGfxScriptCommand& command = *( const MOAIGfxScriptCommand* )bytecode;
 		bytecode = ( const void* )(( uintptr )bytecode + sizeof ( MOAIGfxScriptCommand ));
 		
-		MOAIDrawingAPI::Execute ( callable, command.mType, bytecode );
+		this->Execute ( callable, command.mType, bytecode );
 		bytecode = ( const void* )(( uintptr )bytecode + command.mParamSize );
 		
 		didCall = didCall || ( command.mType == CALL ) || ( command.mType == CALL_FROM_SHADER );
 	}
 
 	if ( !didCall ) {
-		MOAIDrawingAPI::Execute ( callable, callCommand, NULL );
-		this->Execute ( callable, callCommand, 0 );
+		this->Execute ( callable, callCommand, NULL );
 	}
 }
 
@@ -205,4 +204,10 @@ void MOAIGfxScript::MOAIAbstractGfxScript_SubmitCommand ( MOAIDrawingAPIEnum::_ 
 MOAIAbstractGfxScript& MOAIGfxScript::MOAIAbstractHasGfxScript_AffirmGfxScript () {
 
 	return *this;
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxScript::MOAIGfxScript_Execute ( MOAIAbstractGfxScriptCallback* callable, MOAIDrawingAPIEnum::_ cmd, const void* rawParam ) const {
+
+	MOAIDrawingAPI::Execute ( callable, cmd, rawParam );
 }
