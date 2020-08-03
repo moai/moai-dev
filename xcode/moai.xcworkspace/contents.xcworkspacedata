@@ -5,15 +5,9 @@
       location = "group:ios/moai-ios.xcodeproj">
    </FileRef>
    <FileRef
-      location = "group:ios-static/moai-ios-static.xcodeproj">
-   </FileRef>
-   <FileRef
       location = "group:libmoai/libmoai.xcodeproj">
    </FileRef>
    <FileRef
       location = "group:osx/moai-osx.xcodeproj">
-   </FileRef>
-   <FileRef
-      location = "group:osx-static/moai-osx-static.xcodeproj">
    </FileRef>
 </Workspace>
