@@ -15,12 +15,18 @@ android {
             }
         }
         ndk {
-            // Specifies the ABI configurations of your native
-            // libraries Gradle should build and package with your APK.
-            abiFilters 'x86'//, 'x86_64', 'armeabi-v7a'
+            abiFilters 'x86', 'x86_64', 'armeabi-v7a'
 
         }
 
+        splits {
+            abi {
+                enable true
+                reset()
+                include 'x86', 'armeabi', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+                universalApk true
+            }
+        }
 
     }
     buildTypes {
@@ -34,6 +40,17 @@ android {
             path new File(moaiSdkRoot).canonicalPath + '/cmake/cmake/hosts/host-android/CMakeLists.txt'
         }
     }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'x86', 'armeabi-v7a', 'x86_64', 'arm64-v8a'
+
+            universalApk true
+        }
+    }
+
 }
 
 dependencies {
