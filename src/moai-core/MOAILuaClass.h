@@ -22,11 +22,12 @@ class MOAILuaClass :
 	public ZLContextClassBase {
 protected:
 
+	friend MOAILuaRuntime;
+
 	bool				mIsSingleton;
 	
 	MOAILuaStrongRef	mClassTable;			// global factory class for type
 	MOAILuaStrongRef	mInterfaceTable;		// interface shared by all instances of type
-	MOAILuaStrongRef	mRefTable;				// strong ref to member table for singletons
 
 	//----------------------------------------------------------------//
 	static int			_extendFactory				( lua_State* L );
@@ -40,7 +41,6 @@ protected:
 	void				InitLuaFactoryClass					( MOAILuaObject& data, MOAILuaState& state );
 	void				InitLuaSingletonClass				( MOAILuaObject& data, MOAILuaState& state );
 	void				PushInterfaceTable					( MOAILuaState& state );
-	void				PushRefTable						( MOAILuaState& state );
 	
 	//----------------------------------------------------------------//
 	virtual void		MOAILuaClass_RegisterLuaClass		( MOAILuaState& state ) = 0;
@@ -52,7 +52,7 @@ public:
 	//----------------------------------------------------------------//
 	virtual MOAILuaObject*	GetSingleton			();
 	bool					IsSingleton				();
-	virtual void			Register				() = 0;
+	virtual void			Register				( MOAILuaObject* instance ) = 0;
 							MOAILuaClass			();
 	virtual					~MOAILuaClass			();
 };
@@ -78,7 +78,7 @@ public:
 	//----------------------------------------------------------------//
 	static MOAILuaFactoryClass&		Get						();
 									MOAILuaFactoryClass		();
-	void							Register				();
+	void							Register				( MOAILuaObject* instance );
 };
 
 //================================================================//
@@ -90,12 +90,12 @@ class MOAILuaSingletonClass :
 private:
 	
 	//----------------------------------------------------------------//
+	static int						_get					( lua_State* L );
 	static int						_getClassName			( lua_State* L );
 	static int						_getTypeID				( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void							MOAILuaClass_RegisterLuaClass		( MOAILuaState& state );
-
 	
 public:
 	
@@ -103,8 +103,7 @@ public:
 	static MOAILuaSingletonClass&	Get						();
 	MOAILuaObject*					GetSingleton			();
 									MOAILuaSingletonClass	();
-	void							Register				();
-
+	void							Register				( MOAILuaObject* instance );
 };
 
 #endif

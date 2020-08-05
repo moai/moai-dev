@@ -51,15 +51,7 @@ int MOAILuaFactoryClass < TYPE >::_new ( lua_State* L ) {
 //----------------------------------------------------------------//
 template < typename TYPE >
 MOAILuaFactoryClass < TYPE >& MOAILuaFactoryClass < TYPE >::Get () {
-	MOAILuaFactoryClass < TYPE >* typeClass = ZLContextMgr::Get ()->GetGlobal < MOAILuaFactoryClass >();
-	if ( !typeClass ) {
-		typeClass = ZLContextMgr::Get ()->AffirmGlobal < MOAILuaFactoryClass >();
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		TYPE type;
-		typeClass->InitLuaFactoryClass ( type, state );
-	}
-	assert ( typeClass );
-	return *typeClass;
+	return *ZLContextMgr::Get ()->AffirmGlobal < MOAILuaFactoryClass < TYPE > >();
 }
 
 //----------------------------------------------------------------//
@@ -70,7 +62,16 @@ MOAILuaFactoryClass < TYPE >::MOAILuaFactoryClass () {
 
 //----------------------------------------------------------------//
 template < typename TYPE >
-void MOAILuaFactoryClass < TYPE >::Register () {
+void MOAILuaFactoryClass < TYPE >::Register ( MOAILuaObject* instance ) {
+
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	if ( instance ) {
+		this->InitLuaFactoryClass ( *instance, state );
+	}
+	else {
+		TYPE type;
+		this->InitLuaFactoryClass ( type, state );
+	}
 }
 
 //================================================================//
@@ -94,7 +95,17 @@ void MOAILuaFactoryClass < TYPE >::MOAILuaClass_RegisterLuaClass ( MOAILuaState&
 //================================================================//
 // lua
 //================================================================//
+
+//----------------------------------------------------------------//
+template < typename TYPE >
+int MOAILuaSingletonClass < TYPE >::_get ( lua_State* L ) {
 	
+	MOAILuaState state ( L );
+	MOAILuaObject* singleton = ZLContextMgr::Get ()->GetGlobal < TYPE >();
+	state.Push ( singleton );
+	return 1;
+}
+
 //----------------------------------------------------------------//
 template < typename TYPE >
 int MOAILuaSingletonClass < TYPE >::_getClassName ( lua_State* L ) {
@@ -138,12 +149,12 @@ MOAILuaSingletonClass < TYPE >::MOAILuaSingletonClass () {
 
 //----------------------------------------------------------------//
 template < typename TYPE >
-void MOAILuaSingletonClass < TYPE >::Register () {
+void MOAILuaSingletonClass < TYPE >::Register ( MOAILuaObject* instance ) {
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	MOAILuaObject* type = this->GetSingleton ();
-	assert ( type );
-	this->InitLuaSingletonClass ( *type, state );
+	instance = instance ? instance : this->GetSingleton ();
+	assert ( instance );
+	this->InitLuaSingletonClass ( *instance, state );
 }
 
 //================================================================//
@@ -155,6 +166,7 @@ template < typename TYPE >
 void MOAILuaSingletonClass < TYPE >::MOAILuaClass_RegisterLuaClass ( MOAILuaState& state ) {
 	
 	luaL_Reg regTable [] = {
+		{ "get",				_get },
 		{ "getClassName",		_getClassName },
 		{ "getTypeID",			_getTypeID },
 		{ NULL, NULL }

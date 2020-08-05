@@ -41,9 +41,9 @@ public:
 							MOAILuaRef		( const MOAILuaRef& assign );
 	virtual					~MOAILuaRef		();
 	bool					PushRef			( MOAILuaState& state );
-	virtual void			SetRef			( MOAILuaObject* object );
+	virtual void			SetRef			( MOAILuaObject* object ) = 0;
 	void					SetRef			( MOAILuaObject* object, u32 type );
-	virtual void			SetRef			( MOAILuaState& state, int idx );
+	virtual void			SetRef			( MOAILuaState& state, int idx ) = 0;
 	void					SetRef			( MOAILuaState& state, int idx, u32 type );
 	void					Take			( const MOAILuaRef& assign );
 

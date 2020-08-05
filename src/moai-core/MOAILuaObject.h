@@ -6,34 +6,34 @@
 
 #include <moai-core/MOAILuaRef.h>
 
-#define MOAI_LUA_OBJECT_VISITOR_FRIEND 														\
-	template < typename TYPE > friend class MOAILuaRegistrationVisitor;						\
+#define MOAI_LUA_OBJECT_VISITOR_FRIEND 																\
+	template < typename TYPE > friend class MOAILuaRegistrationVisitor;								\
 	template < typename TYPE > friend class MOAILuaSerializationVisitor;
 
-#define DECL_LUA_FACTORY(type)																\
-	IMPLEMENT_DEPENDS_ON ( type )															\
-	MOAI_LUA_OBJECT_VISITOR_FRIEND															\
-	MOAILuaClass* GetLuaClass () { return &MOAILuaFactoryClass < type >::Get (); }			\
-	static void RegisterLuaType () { MOAILuaFactoryClass < type >::Get ().Register (); }	\
+#define DECL_LUA_FACTORY(type)																		\
+	IMPLEMENT_DEPENDS_ON ( type )																	\
+	MOAI_LUA_OBJECT_VISITOR_FRIEND																	\
+	MOAILuaClass* GetLuaClass () { return &MOAILuaFactoryClass < type >::Get (); }					\
+	static void RegisterLuaType () { MOAILuaFactoryClass < type >::Get ().Register ( NULL ); }		\
 	cc8* TypeName () const { return #type; }
 
-#define DECL_LUA_ABSTRACT(type)																\
-	IMPLEMENT_DEPENDS_ON ( type )															\
-	MOAI_LUA_OBJECT_VISITOR_FRIEND															\
-	MOAILuaClass* GetLuaClass () { return 0; }												\
+#define DECL_LUA_ABSTRACT(type)																		\
+	IMPLEMENT_DEPENDS_ON ( type )																	\
+	MOAI_LUA_OBJECT_VISITOR_FRIEND																	\
+	MOAILuaClass* GetLuaClass () { return 0; }														\
 	cc8* TypeName () const { return #type; }
 
-#define DECL_LUA_OPAQUE(type)																\
-	IMPLEMENT_DEPENDS_ON ( type )															\
-	MOAI_LUA_OBJECT_VISITOR_FRIEND															\
-	MOAILuaClass* GetLuaClass () { return &MOAILuaFactoryClass < type >::Get (); }			\
+#define DECL_LUA_OPAQUE(type)																		\
+	IMPLEMENT_DEPENDS_ON ( type )																	\
+	MOAI_LUA_OBJECT_VISITOR_FRIEND																	\
+	MOAILuaClass* GetLuaClass () { return &MOAILuaFactoryClass < type >::Get (); }					\
 	cc8* TypeName () const { return #type; }
 
-#define DECL_LUA_SINGLETON(type)															\
-	IMPLEMENT_DEPENDS_ON ( type )															\
-	MOAI_LUA_OBJECT_VISITOR_FRIEND 															\
-	MOAILuaClass* GetLuaClass () { return &MOAILuaSingletonClass < type >::Get (); }		\
-	static void RegisterLuaType () { MOAILuaSingletonClass < type >::Get ().Register (); }	\
+#define DECL_LUA_SINGLETON(type)																	\
+	IMPLEMENT_DEPENDS_ON ( type )																	\
+	MOAI_LUA_OBJECT_VISITOR_FRIEND 																	\
+	MOAILuaClass* GetLuaClass () { return &MOAILuaSingletonClass < type >::Get (); }				\
+	static void RegisterLuaType () { MOAILuaSingletonClass < type >::Get ().Register ( NULL ); }	\
 	cc8* TypeName () const { return #type; }
 
 class MOAIDeserializer;

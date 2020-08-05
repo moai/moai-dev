@@ -7,6 +7,11 @@
 #include <moai-util/MOAIDataBuffer.h>
 #include <moai-util/MOAILuaUtil.h>
 
+#include <moai-core/MOAIExampleInstanceDSL.h>
+#include <moai-core/MOAIExampleSharedDSL.h>
+#include <moai-core/MOAIImmediateDSLStream.h>
+#include <moai-core/MOAIRetainedDSLStream.h>
+
 //================================================================//
 // AKUContext
 //================================================================//
@@ -319,6 +324,7 @@ AKUContextID AKUCreateContext () {
 	MOAIFooMgr::Affirm ();
 	MOAIEaseType::Affirm ();
 	MOAIEnvironment::Affirm ();
+	MOAIExampleSharedDSL::Affirm ();
 	MOAINodeMgr::Affirm ();
 	
 	REGISTER_LUA_CLASS ( MOAIAction )
@@ -333,13 +339,17 @@ AKUContextID AKUCreateContext () {
 	REGISTER_LUA_CLASS ( MOAICanary )
 	REGISTER_LUA_CLASS ( MOAIEaseDriver )
 	REGISTER_LUA_CLASS ( MOAIEaseType )
+	REGISTER_LUA_CLASS ( MOAIExampleInstanceDSL )
+	REGISTER_LUA_CLASS ( MOAIExampleSharedDSL )
 	REGISTER_LUA_CLASS ( MOAIFoo )
+	REGISTER_LUA_CLASS ( MOAIImmediateDSLStream )
 	REGISTER_LUA_CLASS ( MOAILuaRuntime )
 	REGISTER_LUA_CLASS ( MOAIEnvironment )
 	REGISTER_LUA_CLASS ( MOAIDeserializer )
 	REGISTER_LUA_CLASS ( MOAILogMgr )
 	REGISTER_LUA_CLASS ( MOAINode )
 	REGISTER_LUA_CLASS ( MOAINodeMgr )
+	REGISTER_LUA_CLASS ( MOAIRetainedDSLStream )
 	REGISTER_LUA_CLASS ( MOAISerializer )
 	REGISTER_LUA_CLASS ( MOAITimer )
 	REGISTER_LUA_CLASS ( MOAITrace )

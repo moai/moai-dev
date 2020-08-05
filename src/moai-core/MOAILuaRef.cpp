@@ -87,25 +87,12 @@ bool MOAILuaRef::PushRef ( MOAILuaState& state ) {
 }
 
 //----------------------------------------------------------------//
-void  MOAILuaRef::SetRef ( MOAILuaObject* object ) {
-	UNUSED ( object );
-	assert ( false );
-}
-
-//----------------------------------------------------------------//
 void MOAILuaRef::SetRef ( MOAILuaObject* object, u32 type ) {
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	state.Push ( object );
 	this->SetRef ( state, -1, type );
 	state.Pop ( 1 );
-}
-
-//----------------------------------------------------------------//
-void  MOAILuaRef::SetRef ( MOAILuaState& state, int idx ) {
-	UNUSED ( state );
-	UNUSED ( idx );
-	assert ( false );
 }
 
 //----------------------------------------------------------------//

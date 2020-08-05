@@ -61,6 +61,7 @@ public:
 
 private:
 
+	friend class MOAILuaClass;
 	friend class MOAILuaObjectMemo;
 
 	static const u32 WEAK_REF_BIT	= 0x80000000;
@@ -88,6 +89,8 @@ private:
 
 	MOAILuaRefTable		mStrongRefs;
 	MOAILuaRefTable		mWeakRefs;
+	
+	int					mSingletonRefTableID;
 
 	// this is to handle the edge case where an object gets created and bound to Lua, but is not
 	// passed back to Lua immediately. the binding's mUserdata is a weak ref, so if additional
@@ -135,11 +138,13 @@ private:
 	void					FindLuaRefs				( lua_State* L, int idx, FILE* file, STLString path, cc8* trackingGroup, MOAILuaTraversalState& traversalState );
 	int						GetRef					( MOAILuaState& state, int idx, u32 type );
 	static bool				IsLuaIdentifier			( const char *str );
+	void					PushSingletonForClass	( MOAILuaState& state, int idx );
 	int						MakeStrong				( int refID );
 	int						MakeWeak				( int refID );
 	void					OnGlobalsFinalize		();
 	void					RegisterObject			( MOAILuaObject& object );
 	void					RegisterObject			( MOAILuaState& state, MOAILuaObject& object );
+	void					RegisterSingleton		( MOAILuaObject& singleton );
 
 	//----------------------------------------------------------------//
 	void					_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
@@ -197,7 +202,17 @@ public:
 	void					SetTrackingFlags			( u32 flags );
 	void					SetTrackingGroup			();
 	void					SetTrackingGroup			( const STLString& trackingGroup );
-	MOAIScopedLuaState		State						();	
+	MOAIScopedLuaState		State						();
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	TYPE* GetSingletonForClass ( MOAILuaState& state, int idx ) {
+	
+		this->PushSingletonForClass ( state, idx );
+		TYPE* singleton = state.GetLuaObject < TYPE >( -1, false );
+		state.Pop ( 1 );
+		return singleton;
+	}
 };
 
 #endif

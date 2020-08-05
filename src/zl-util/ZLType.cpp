@@ -7,4 +7,4 @@
 // ZLType
 //================================================================//
 
-const ZLTypeID ZLType::NONE;
+const ZLTypeID ZLType::NONE = -1;

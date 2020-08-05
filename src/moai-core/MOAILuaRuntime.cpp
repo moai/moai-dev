@@ -917,6 +917,7 @@ int MOAILuaRuntime::MakeWeak ( int refID ) {
 //----------------------------------------------------------------//
 MOAILuaRuntime::MOAILuaRuntime () :
 	mTrackingFlags ( 0 ),
+	mSingletonRefTableID ( LUA_NOREF ),
 	mTracebackFunc ( 0 ),
 	mTotalBytes ( 0 ),
 	mObjectCount ( 0 ),
@@ -942,7 +943,7 @@ MOAIScopedLuaState MOAILuaRuntime::Open () {
 
 	// open the main state
 	#if (MOAI_WITH_LUAJIT && (defined(__x86_64 ) || defined(__amd64)) )
-		this->mState = luaL_newstate();  //luajit doesn't support custom allocs on 64bit
+		this->mState = luaL_newstate ();  //luajit doesn't support custom allocs on 64bit
 	#else
 		this->mState = lua_newstate ( _trackingAlloc, NULL );
 	#endif
@@ -952,6 +953,10 @@ MOAIScopedLuaState MOAILuaRuntime::Open () {
 	// set up the ref tables
 	this->mStrongRefs.InitStrong ();
 	this->mWeakRefs.InitWeak ();
+	
+	// set up a table to hold singletons
+	lua_newtable ( this->mState );
+	this->mSingletonRefTableID = luaL_ref ( this->mState, LUA_REGISTRYINDEX );
 	
 	return MOAIScopedLuaState ( this->mState );
 }
@@ -1014,6 +1019,17 @@ bool MOAILuaRuntime::PushRef ( MOAILuaState& state, int refID ) {
 }
 
 //----------------------------------------------------------------//
+void MOAILuaRuntime::PushSingletonForClass ( MOAILuaState& state, int idx ) {
+
+	idx = state.AbsIndex ( idx );
+
+	lua_rawgeti ( state, LUA_REGISTRYINDEX, this->mSingletonRefTableID );
+	lua_pushvalue ( state, idx );
+	lua_rawget ( state, -2 );
+	lua_replace ( state, -2 );
+}
+
+//----------------------------------------------------------------//
 void MOAILuaRuntime::PushTraceback ( MOAILuaState& state ) {
 	
 	state.Push ( _traceback );
@@ -1061,6 +1077,21 @@ void MOAILuaRuntime::RegisterObject ( MOAILuaState& state, MOAILuaObject& object
 			info.mStackTrace = state.GetStackTrace ( "object allocation:", 1 );
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+void MOAILuaRuntime::RegisterSingleton ( MOAILuaObject& singleton ) {
+
+	MOAILuaClass* luaClass = singleton.GetLuaClass ();
+	assert ( luaClass );
+	assert ( luaClass->IsSingleton ());
+	assert ( luaClass->mClassTable );
+	
+	lua_rawgeti ( this->mState, LUA_REGISTRYINDEX, this->mSingletonRefTableID );
+	this->mState.Push ( luaClass->mClassTable );
+	this->mState.Push ( &singleton );
+	lua_rawset ( this->mState, -3 );
+	lua_pop ( this->mState, 1 );
 }
 
 //----------------------------------------------------------------//

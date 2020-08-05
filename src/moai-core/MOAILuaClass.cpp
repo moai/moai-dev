@@ -6,7 +6,7 @@
 #include <moai-core/MOAISerializer.h>
 
 //================================================================//
-// MOAILuaClass
+// lua
 //================================================================//
 
 //----------------------------------------------------------------//
@@ -233,6 +233,10 @@ int MOAILuaClass::_new ( lua_State* L ) {
 	return 0;
 }
 
+//================================================================//
+// MOAILuaClass
+//================================================================//
+
 //----------------------------------------------------------------//
 MOAILuaObject* MOAILuaClass::GetSingleton () {
 	return 0;
@@ -240,6 +244,8 @@ MOAILuaObject* MOAILuaClass::GetSingleton () {
 
 //----------------------------------------------------------------//
 void MOAILuaClass::InitLuaFactoryClass ( MOAILuaObject& data, MOAILuaState& state ) {
+
+	if ( this->mClassTable ) return;
 
 	int top = lua_gettop ( state );
 
@@ -284,14 +290,20 @@ void MOAILuaClass::InitLuaFactoryClass ( MOAILuaObject& data, MOAILuaState& stat
 //----------------------------------------------------------------//
 void MOAILuaClass::InitLuaSingletonClass ( MOAILuaObject& data, MOAILuaState& state ) {
 
+	if ( this->mClassTable ) return;
+
 	// push class table
 	lua_newtable ( state );
 	this->MOAILuaClass_RegisterLuaClass ( state );
 	data.RegisterLuaClass ( state );
 	
-	// attach the ref table (for leak reporting only; no metamethods)
-	this->PushRefTable ( state );
-	lua_setmetatable ( state, -2 ); // for leak reporting only (no metamethods)
+//	// table to hold the singleton
+//	lua_newtable ( state );
+//	lua_setmetatable ( state, -2 );
+	
+//	// attach the ref table (for leak reporting only; no metamethods)
+//	this->PushRefTable ( state );
+//	lua_setmetatable ( state, -2 );
 	
 	// init the extend method
 	state.PushPtrUserData ( &data ); // copy of userdata
@@ -309,6 +321,11 @@ void MOAILuaClass::InitLuaSingletonClass ( MOAILuaObject& data, MOAILuaState& st
 	lua_setfield ( state, -2, "__newindex" );
 
 	lua_setglobal ( state, data.TypeName ());
+//
+//	state.Push ( &data );
+//	lua_setfield ( state, -2, "instance" );
+
+	MOAILuaRuntime::Get ().RegisterSingleton ( data );
 }
 
 //----------------------------------------------------------------//
@@ -323,17 +340,17 @@ void MOAILuaClass::PushInterfaceTable ( MOAILuaState& state ) {
 	state.Push ( this->mInterfaceTable );
 }
 
-//----------------------------------------------------------------//
-void MOAILuaClass::PushRefTable ( MOAILuaState& state ) {
-
-	if ( !this->mRefTable ) {
-		lua_newtable ( state );
-		this->mRefTable.SetRef ( state, -1 ); // strong ref to member table won't be garbage collected
-	}
-	else {
-		this->mRefTable.PushRef ( state );
-	}
-}
+////----------------------------------------------------------------//
+//void MOAILuaClass::PushRefTable ( MOAILuaState& state ) {
+//
+//	if ( !this->mRefTable ) {
+//		lua_newtable ( state );
+//		this->mRefTable.SetRef ( state, -1 ); // strong ref to member table won't be garbage collected
+//	}
+//	else {
+//		this->mRefTable.PushRef ( state );
+//	}
+//}
 
 //----------------------------------------------------------------//
 MOAILuaClass::MOAILuaClass () :

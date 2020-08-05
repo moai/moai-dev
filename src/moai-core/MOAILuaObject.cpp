@@ -215,38 +215,27 @@ void MOAILuaObject::BindToLua ( MOAILuaState& state ) {
 	MOAILuaClass* type = this->GetLuaClass ();
 	assert ( type );
 	
+	// TODO: this exposes the class name to Lua, so no anonymous types.
+	// TODO: if we want that will need to postpone making the class global until explicit registration.
+	type->Register ( this );
+	
 	// both singletons and instances may be bound to a userdata
 	state.PushPtrUserData ( this ); // userdata
 	
-	// for now, singletons are just userdata with no add'l metatables
-	// so only build the metatable stack if we're *not* a singleton
-	if ( !type->IsSingleton ()) {
+	// hang on to the userdata in case this object was created on the stack
+	// shouldn't need to do this for singletons
+	MOAILuaRuntime::Get ().CacheUserdata ( state, -1 );
 	
-		// hang on to the userdata in case this object was created on the stack
-		// shouldn't need to do this for singletons
-		MOAILuaRuntime::Get ().CacheUserdata ( state, -1 );
+	// instances get the 'full stack' of metatables
+	lua_newtable ( state ); // ref table
+	lua_newtable ( state ); // member table
+	type->PushInterfaceTable ( state ); // interface table
+	this->MakeLuaBinding ( state );
 	
-		// instances get the 'full stack' of metatables
-		lua_newtable ( state ); // ref table
-		lua_newtable ( state ); // member table
-		type->PushInterfaceTable ( state ); // interface table
-		this->MakeLuaBinding ( state );
-	}
-	
-	// and take a weak ref back to the userdata	
+	// and take a weak ref back to the userdata
 	this->mUserdata.SetRef ( state, -1 );
 	assert ( this->mUserdata );
 	this->mActiveUserdataCount++;
-	
-	// NOTE: we have to do this *after* mUserdata has been initialized as LuaRetain calls PushLuaUserdata
-	// which in turn calls BindToLua if there is no mUserdata...
-	if ( type->IsSingleton ()) {
-		this->LuaRetain ( this ); // create a circular reference to 'pin' the userdata
-		
-		// in the case of a singleton, the ref table is kept in the class record, which is a strong
-		// ref (as opposed to the metatable version attached to the weak userdata for regular instance
-		// classes).
-	}
 }
 
 //----------------------------------------------------------------//
@@ -409,6 +398,9 @@ MOAILuaObject::~MOAILuaObject () {
 //----------------------------------------------------------------//
 void MOAILuaObject::MakeLuaBinding ( MOAILuaState& state ) {
 
+	MOAILuaClass* type = this->GetLuaClass ();
+	assert ( type );
+
 	// stack:
 	// -1: interface table
 	// -2: member table
@@ -420,16 +412,16 @@ void MOAILuaObject::MakeLuaBinding ( MOAILuaState& state ) {
 	int refTable = top - 2;
 
 	// ref table gets gc and tostring
-	lua_pushcfunction ( state, MOAILuaObject::_gc );
-	lua_setfield ( state, refTable, "__gc" );
-	
+	if ( !this->IsSingleton ()) {
+		lua_pushcfunction ( state, MOAILuaObject::_gc );
+		lua_setfield ( state, refTable, "__gc" );
+	}
 	lua_pushcfunction ( state, MOAILuaObject::_tostring );
 	lua_setfield ( state, refTable, "__tostring" );
 	
 	// ref table gets 'moai' tag set to true
 	lua_pushboolean ( state, 1 );
 	lua_setfield ( state, refTable, MOAI_TAG );
-	
 	
 	// member table is __index and __newindex for ref table
 	lua_pushvalue ( state, memberTable );
@@ -499,11 +491,6 @@ bool MOAILuaObject::PushRefTable ( MOAILuaState& state ) {
 	if ( !luaClass ) {
 		lua_pushnil ( state );
 		return false;
-	}
-	
-	if ( luaClass->IsSingleton ()) {
-		luaClass->PushRefTable ( state );
-		return true;
 	}
 
 	if ( this->PushLuaUserdata ( state )) {
