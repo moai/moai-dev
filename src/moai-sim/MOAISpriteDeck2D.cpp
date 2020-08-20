@@ -702,6 +702,7 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 		if ( !gfxScript ) continue;
 		
 		gfxScript->ExecuteBytecode ( &callable );
+		callable.Flush ();
 	}
 }
 

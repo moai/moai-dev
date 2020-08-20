@@ -732,6 +732,12 @@ void MOAIDrawAPI::ClearSurface () {
 }
 
 //----------------------------------------------------------------//
+void MOAIDrawAPI::Draw () {
+
+	this->SubmitCommand ( DRAW );
+}
+
+//----------------------------------------------------------------//
 void MOAIDrawAPI::DrawAnimCurve ( MOAIAnimCurve& curve, u32 resolution ) {
 
 	MOAIDrawAPIParam::DrawAnimCurve param;
@@ -1257,12 +1263,6 @@ void MOAIDrawAPI::DrawVec ( float x, float y, float dx, float dy, float t ) {
 void MOAIDrawAPI::DrawVec ( float x, float y, float z, float dx, float dy, float dz, float t ) {
 
 	this->DrawLine ( x, y, z, x + ( dx * t ), y + ( dy * t ), z + ( dz * t ));
-}
-
-//----------------------------------------------------------------//
-void MOAIDrawAPI::Invoke () {
-
-	this->SubmitCommand ( INVOKE );
 }
 
 //----------------------------------------------------------------//

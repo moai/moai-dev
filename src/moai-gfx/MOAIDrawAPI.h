@@ -108,14 +108,14 @@ public:
 		BIND_VECTOR_PRESETS,
 		CLEAR_SURFACE,
 		
+		DRAW,
+		
 		DRAW_ANIM_CURVE,
 		DRAW_AXIS_2D,
 		DRAW_LINE,
 		DRAW_POINT,
 		DRAW_RAY,
 		DRAW_TRIANGLE,
-		
-		INVOKE,
 		
 		POP_GFX_STATE,
 		PUSH_GFX_STATE,
@@ -208,6 +208,7 @@ public:
 	//----------------------------------------------------------------//
 	void 				BindVectorPresets			();
 	void				ClearSurface				();
+	void				Draw						();
 	void				DrawAnimCurve				( MOAIAnimCurve& curve, u32 resolution );
 	void				DrawAxis2D					( float x, float y, float dx, float dy );
 	void				DrawBezierCurve				( const ZLCubicBezier2D& bezier );
@@ -242,7 +243,6 @@ public:
 	void				DrawTriangleOutline			( const ZLVec3D& v0, const ZLVec3D& v1, const ZLVec3D& v2 );
 	void				DrawVec						( float x, float y, float dx, float dy, float t );
 	void				DrawVec						( float x, float y, float z, float dx, float dy, float dz, float t );
-	void				Invoke						();
 						MOAIDrawAPI					();
 	virtual				~MOAIDrawAPI				();
 	void 				PopGfxState					();
@@ -266,39 +266,6 @@ public:
 	void				SetViewProj					( MOAIViewport* viewport, MOAICamera* camera );
 	void				SetViewRect					( const ZLRect& rect );
 	void				SetViewRect					( MOAIViewport* viewport );
-};
-
-//================================================================//
-// MOAIAbstractGfxScriptCallback
-//================================================================//
-class MOAIAbstractGfxScriptCallback :
-	public MOAIAbstractCmdStreamFilter {
-protected:
-
-	//----------------------------------------------------------------//
-	virtual void		MOAIAbstractGfxScriptCallback_Call			() = 0;
-
-	//----------------------------------------------------------------//
-	bool MOAIAbstractCmdStreamFilter_FilterCommand ( u32 cmd, const void* param, ZLSize paramSize ) {
-		UNUSED ( param );
-		UNUSED ( paramSize );
-	
-		if ( cmd == MOAIDrawAPI::INVOKE ) {
-			this->MOAIAbstractGfxScriptCallback_Call ();
-			return true;
-		}
-		return false;
-	}
-
-public:
-
-	//----------------------------------------------------------------//
-	MOAIAbstractGfxScriptCallback () {
-	}
-	
-	//----------------------------------------------------------------//
-	~MOAIAbstractGfxScriptCallback () {
-	}
 };
 
 #endif

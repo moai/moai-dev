@@ -399,6 +399,10 @@ void MOAIDraw::MOAIAbstractCmdHandler_HandleCommand ( u32 cmd, const void* param
 		case MOAIDrawAPI::CLEAR_SURFACE:
 			break;
 		
+		case MOAIDrawAPI::DRAW:
+			assert ( false );
+			break;
+		
 		case MOAIDrawAPI::DRAW_ANIM_CURVE: {
 			MOAIDraw::ExecuteDrawAnimCurve ( gfxMgr, *( const MOAIDrawAPIParam::DrawAnimCurve* )param );
 			break;

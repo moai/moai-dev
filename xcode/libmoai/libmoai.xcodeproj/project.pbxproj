@@ -769,6 +769,8 @@
 		CD0E3A5224ECD68C00E6C92C /* MOAIGfxCmdMedium.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD0E3A5024ECD68C00E6C92C /* MOAIGfxCmdMedium.cpp */; };
 		CD0E3A5324ECD68C00E6C92C /* MOAIGfxCmdMedium.h in Headers */ = {isa = PBXBuildFile; fileRef = CD0E3A5124ECD68C00E6C92C /* MOAIGfxCmdMedium.h */; };
 		CD0E3A5724EDDE5A00E6C92C /* MOAIAbstractCmdHandlerWithAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = CD0E3A5524EDDE5A00E6C92C /* MOAIAbstractCmdHandlerWithAPI.h */; };
+		CD0E3A5A24EE260400E6C92C /* MOAIAbstractGfxScriptCallback.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD0E3A5824EE260400E6C92C /* MOAIAbstractGfxScriptCallback.cpp */; };
+		CD0E3A5B24EE260400E6C92C /* MOAIAbstractGfxScriptCallback.h in Headers */ = {isa = PBXBuildFile; fileRef = CD0E3A5924EE260400E6C92C /* MOAIAbstractGfxScriptCallback.h */; };
 		CD14013F1A0C5F660065AEE7 /* MOAIInputMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD14013D1A0C5F660065AEE7 /* MOAIInputMgr.cpp */; };
 		CD1401401A0C5F660065AEE7 /* MOAIInputMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD14013D1A0C5F660065AEE7 /* MOAIInputMgr.cpp */; };
 		CD1401411A0C5F660065AEE7 /* MOAIInputMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD14013E1A0C5F660065AEE7 /* MOAIInputMgr.h */; };
@@ -5717,6 +5719,8 @@
 		CD0E3A5024ECD68C00E6C92C /* MOAIGfxCmdMedium.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIGfxCmdMedium.cpp; path = "moai-gfx/MOAIGfxCmdMedium.cpp"; sourceTree = "<group>"; };
 		CD0E3A5124ECD68C00E6C92C /* MOAIGfxCmdMedium.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxCmdMedium.h; path = "moai-gfx/MOAIGfxCmdMedium.h"; sourceTree = "<group>"; };
 		CD0E3A5524EDDE5A00E6C92C /* MOAIAbstractCmdHandlerWithAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIAbstractCmdHandlerWithAPI.h; sourceTree = "<group>"; };
+		CD0E3A5824EE260400E6C92C /* MOAIAbstractGfxScriptCallback.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIAbstractGfxScriptCallback.cpp; path = "moai-gfx/MOAIAbstractGfxScriptCallback.cpp"; sourceTree = "<group>"; };
+		CD0E3A5924EE260400E6C92C /* MOAIAbstractGfxScriptCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIAbstractGfxScriptCallback.h; path = "moai-gfx/MOAIAbstractGfxScriptCallback.h"; sourceTree = "<group>"; };
 		CD14013D1A0C5F660065AEE7 /* MOAIInputMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIInputMgr.cpp; sourceTree = "<group>"; };
 		CD14013E1A0C5F660065AEE7 /* MOAIInputMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIInputMgr.h; sourceTree = "<group>"; };
 		CD14014B1A0CC5B40065AEE7 /* MOAIVectorSensor.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVectorSensor.cpp; sourceTree = "<group>"; };
@@ -11485,6 +11489,8 @@
 		CD66A165242B46AD00DB95B4 /* cmd */ = {
 			isa = PBXGroup;
 			children = (
+				CD0E3A5824EE260400E6C92C /* MOAIAbstractGfxScriptCallback.cpp */,
+				CD0E3A5924EE260400E6C92C /* MOAIAbstractGfxScriptCallback.h */,
 				CD4B4EF724DB7CBC00AA7634 /* MOAIDraw.cpp */,
 				CD4B4EF824DB7CBC00AA7634 /* MOAIDraw.h */,
 				CD4B4EF324DB711600AA7634 /* MOAIDrawAPI.cpp */,
@@ -14002,6 +14008,7 @@
 				89BE6D471739A42500DFE837 /* MOAITaskQueue.h in Headers */,
 				CD4283641A0476D20069392E /* MOAIByteStream.h in Headers */,
 				CD4C3856242CBFB700B1AC6A /* MOAIUpdateMgr.h in Headers */,
+				CD0E3A5B24EE260400E6C92C /* MOAIAbstractGfxScriptCallback.h in Headers */,
 				CD4C387A242CC32200B1AC6A /* MOAIEaseDriver.h in Headers */,
 				89BE6D4B1739A42500DFE837 /* MOAITaskSubscriber.h in Headers */,
 				CD17127722F446C500381882 /* MOAINodeMgr.h in Headers */,
@@ -17713,6 +17720,7 @@
 				89BE6B4F173975E500DFE837 /* pch.cpp in Sources */,
 				89BE6CFD1739A42500DFE837 /* host.cpp in Sources */,
 				89BE6D011739A42500DFE837 /* MOAIDataBuffer.cpp in Sources */,
+				CD0E3A5A24EE260400E6C92C /* MOAIAbstractGfxScriptCallback.cpp in Sources */,
 				89BE6D051739A42500DFE837 /* MOAIDataBufferStream.cpp in Sources */,
 				89BE6D091739A42500DFE837 /* MOAIDataIOTask.cpp in Sources */,
 				89BE6D0D1739A42500DFE837 /* MOAIFileStream.cpp in Sources */,
