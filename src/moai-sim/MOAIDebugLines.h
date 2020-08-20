@@ -4,7 +4,7 @@
 #ifndef	MOAIDEBUGLINES_H
 #define	MOAIDEBUGLINES_H
 
-class MOAIAbstractDrawingAPI;
+class MOAIDrawAPI;
 
 //================================================================//
 // MOAIDebugLineStyle
@@ -93,7 +93,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool			Bind					( u32 styleID );
-	bool			Bind					( u32 styleID, MOAIAbstractDrawingAPI& draw );
+	bool			Bind					( u32 styleID, MOAIDrawAPI& draw );
 	bool			IsVisible				();
 	bool			IsVisible				( u32 styleID );
 					MOAIDebugLinesMgr		();

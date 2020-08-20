@@ -98,16 +98,16 @@ void MOAIShaderGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractGfxScript& MOAIShaderGL::MOAIAbstractHasGfxScript_AffirmGfxScript	() {
-
-	MOAIAbstractGfxScript* gfxScript = this->GetGfxScript ();
-	return gfxScript ? *gfxScript : this->mProgram->AffirmGfxScript ();
-}
-
-//----------------------------------------------------------------//
 const MOAIUniformSchema* MOAIShaderGL::MOAIAbstractUniformBuffer_GetSchema () const {
 
 	return this->mProgram;
+}
+
+//----------------------------------------------------------------//
+MOAIGfxScript& MOAIShaderGL::MOAIHasGfxScript_AffirmGfxScript	() {
+
+	MOAIGfxScript* gfxScript = this->GetGfxScript ();
+	return gfxScript ? *gfxScript : this->mProgram->AffirmGfxScript ();
 }
 
 //----------------------------------------------------------------//

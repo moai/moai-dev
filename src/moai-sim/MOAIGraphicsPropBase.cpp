@@ -4,7 +4,6 @@
 #include "pch.h"
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDebugLines.h>
-#include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIGraphicsPropBase.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAILayoutFrame.h>
@@ -358,13 +357,13 @@ void MOAIGraphicsPropBase::MOAIDrawable_Draw ( int subPrimID ) {
 
 	if ( this->MOAIGraphicsPropBase_LoadGfxState ()) {
 
-		MOAIAbstractGfxScript* gfxScript = this->GetGfxScript ();
+		MOAIGfxScript* gfxScript = this->GetGfxScript ();
 		
 		if ( gfxScript ) {
 			MOAIGraphicsPropBaseCallable callable;
 			callable.mProp = this;
 			callable.mSubPrimID = subPrimID;
-			gfxScript->RunScript ( &callable, MOAIGfxScript::CALL_FROM_SHADER );
+			gfxScript->ExecuteBytecode ( &callable );
 		}
 		else {
 			this->MOAIGraphicsPropBase_Draw ( subPrimID );
@@ -381,54 +380,54 @@ void MOAIGraphicsPropBase::MOAIDrawable_DrawDebug ( int subPrimID ) {
 
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAIGraphicsPropBase >())) return;
-	
+
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	
+
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
-	
+
 	draw.BindVectorPresets ();
-	
+
 	this->LoadVertexTransform ();
-	
+
 	gfxMgr.SetVertexTransform ( MOAIGfxMgr::MODEL_TO_DISPLAY_MTX );
-	
+
 	ZLBounds modelBounds = this->GetModelBounds ();
-	
+
 	// TODO: check bounds status
-	
+
 	if ( debugLines.Bind ( DEBUG_DRAW_AXIS )) {
 		draw.DrawBoxAxis ( modelBounds.mAABB );
 	}
-	
+
 	if ( debugLines.Bind ( DEBUG_DRAW_DIAGONALS )) {
 		draw.DrawBoxDiagonals ( modelBounds.mAABB );
 	}
-	
+
 	if ( debugLines.Bind ( DEBUG_DRAW_MODEL_BOUNDS )) {
 		draw.DrawBoxOutline ( modelBounds.mAABB );
 	}
-	
+
 	// clear out the world transform (draw in world space)
 	gfxMgr.SetVertexTransform ( MOAIGfxMgr::WORLD_TO_DISPLAY_MTX );
-	
+
 	if ( debugLines.Bind ( DEBUG_DRAW_WORLD_BOUNDS )) {
 		draw.DrawBoxOutline ( this->GetWorldBounds ().mAABB );
 	}
-	
+
 	if ( debugLines.IsVisible ( DEBUG_DRAW_PARTITION_CELLS ) || debugLines.IsVisible ( DEBUG_DRAW_PARTITION_CELLS )) {
-		
+
 		ZLRect cellRect;
 		ZLRect paddedRect;
-		
+
 		if ( this->GetCellRect ( &cellRect, &paddedRect )) {
-			
+
 			if ( cellRect.Area () != 0.0f ) {
 				if ( debugLines.Bind ( DEBUG_DRAW_PARTITION_CELLS )) {
 					draw.DrawRectOutline ( cellRect );
 				}
 			}
-			
+
 			if ( paddedRect.Area () != 0.0f ) {
 				if ( debugLines.Bind ( DEBUG_DRAW_PARTITION_PADDED_CELLS )) {
 					draw.DrawRectOutline ( paddedRect );

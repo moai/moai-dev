@@ -4,7 +4,6 @@
 #include "pch.h"
 #include <moai-sim/MOAICollisionPrim.h>
 #include <moai-sim/MOAICollisionShape.h>
-#include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIMoveConstraint2D.h>
 #include <moai-sim/MOAIOverlap.h>
 #include <moai-sim/MOAIOverlapResolver.h>
@@ -43,51 +42,51 @@ void MOAICollisionShape::Draw ( const ZLAffine3D& localToWorldMtx ) {
 
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
-	
+
 	draw.BindVectorPresets ();
-	
+
 	for ( ZLIndex i = 0; i < this->mShapes.Size (); ++i ) {
-	
+
 		MOAICollisionPrim* shape = this->mShapes [ i ];
-	
+
 		switch ( shape->mType ) {
-			
+
 			case MOAICollisionConsts::BOX: {
-			
+
 				gfxMgr.SetVertexTransform ( MOAIGfxMgr::WORLD_TO_CLIP_MTX );
-			
+
 				ZLBox box = *( ZLBox* )shape->mPtr;
 				box.Transform ( localToWorldMtx );
 				draw.DrawBoxOutline ( box );
 				break;
 			}
 			case MOAICollisionConsts::CIRCLE: {
-			
+
 				gfxMgr.SetVertexTransform ( MOAIGfxMgr::MODEL_TO_CLIP_MTX );
-			
+
 				ZLCircle circle = *( ZLCircle* )shape->mPtr;
 				draw.DrawEllipseOutline ( circle.mCenter.mX, circle.mCenter.mY, circle.mRadius, circle.mRadius, 32 );
 				break;
 			}
 			case MOAICollisionConsts::FRUSTUM:
 				break;
-			
+
 			case MOAICollisionConsts::POLYGON:
 				break;
-			
+
 			case MOAICollisionConsts::PRISM:
 				break;
-			
+
 			case MOAICollisionConsts::QUAD: {
-			
+
 				gfxMgr.SetVertexTransform ( MOAIGfxMgr::MODEL_TO_CLIP_MTX );
 				draw.DrawQuadOutline ( *( ZLQuad* )shape->mPtr );
 				break;
 			}
 			case MOAICollisionConsts::RECT: {
-			
+
 				gfxMgr.SetVertexTransform ( MOAIGfxMgr::WORLD_TO_CLIP_MTX );
-			
+
 				ZLRect rect = *( ZLRect* )shape->mPtr;
 				localToWorldMtx.Transform ( rect );
 				draw.DrawRectOutline ( rect );
@@ -95,7 +94,7 @@ void MOAICollisionShape::Draw ( const ZLAffine3D& localToWorldMtx ) {
 			}
 			case MOAICollisionConsts::SPHERE:
 				break;
-			
+
 			default:
 				break;
 		}

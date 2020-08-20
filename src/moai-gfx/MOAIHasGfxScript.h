@@ -4,16 +4,14 @@
 #ifndef	MOAIHASGFXSCRIPT_H
 #define	MOAIHASGFXSCRIPT_H
 
-#include <moai-gfx/MOAIAbstractGfxScript.h>
-
-class MOAIGfxScript;
+typedef MOAIRetainedCmdStream MOAIGfxScript;
 
 //================================================================//
 // MOAIHasGfxScript
 //================================================================//
 // TODO: doxygen
 class MOAIHasGfxScript :
-	public virtual MOAIAbstractHasGfxScript {
+	public virtual MOAILuaObject {
 protected:
 
 	ZLStrongPtr < MOAIGfxScript > mGfxScript;
@@ -22,32 +20,27 @@ protected:
 	
 	//----------------------------------------------------------------//
 	static int			_getGfxScript				( lua_State* L );
+	static int			_gfx						( lua_State* L );
 	static int			_setGfxScript				( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void						_RegisterLuaClass							( RTTIVisitorHistory& history, MOAILuaState& state );
-	void						_RegisterLuaFuncs							( RTTIVisitorHistory& history, MOAILuaState& state );
-	MOAIAbstractGfxScript&		MOAIAbstractHasGfxScript_AffirmGfxScript	();
+	void							_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
+	void							_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
+	virtual MOAIGfxScript&			MOAIHasGfxScript_AffirmGfxScript		();
 
 public:
 
 	//----------------------------------------------------------------//
+	MOAIGfxScript&		AffirmGfxScript				();
 	MOAIGfxScript*		GetGfxScript				();
 						MOAIHasGfxScript			();
 						~MOAIHasGfxScript			();
 	void				SetGfxScript				( MOAIGfxScript* gfxScript );
 	
 	//----------------------------------------------------------------//
-	template < typename TYPE >
-	TYPE& AffirmGfxScriptWithType () {
-				
-		TYPE* gfxScriptWithType = MOAICast < TYPE >( this->GetGfxScript ());
-		if ( !gfxScriptWithType ) {
-			gfxScriptWithType = new TYPE ();
-			this->SetGfxScript ( gfxScriptWithType );
-		}
-		assert ( gfxScriptWithType );
-		return *gfxScriptWithType;
+	template < typename API_TYPE >
+	MOAIConcreteCmdMedium < API_TYPE >& _ ( MOAIAbstractCmdHandler& handler ) {
+		return this->AffirmGfxScript ()._ < API_TYPE >( handler );
 	}
 };
 

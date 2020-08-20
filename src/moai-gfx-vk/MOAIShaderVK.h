@@ -33,7 +33,7 @@ protected:
 //	bool						IsDirty						();
 
 	//----------------------------------------------------------------//
-	MOAIAbstractGfxScript*		MOAIAbstractHasGfxScript_GetGfxScript		();
+	MOAIGfxScript*		MOAIAbstractHasGfxScript_GetGfxScript		();
 	bool						MOAINode_ApplyAttrOp						( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	void						MOAIShader_ComposeUniforms					();
 	bool						MOAIShader_IsReadyForUse					() const;

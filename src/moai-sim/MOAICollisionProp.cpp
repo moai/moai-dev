@@ -7,7 +7,6 @@
 #include <moai-sim/MOAICollisionWorld.h>
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDebugLines.h>
-#include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAILayoutFrame.h>
 #include <moai-sim/MOAIMoveConstraint2D.h>
@@ -106,7 +105,7 @@ void MOAICollisionProp::ClearOverlapLink ( MOAIPropOverlap& overlap ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionProp::DrawContactPoints ( MOAIAbstractDrawingAPI& draw, const MOAIMoveConstraint2D* contacts, u32 nContacts ) {
+void MOAICollisionProp::DrawContactPoints ( MOAIDrawAPI& draw, const MOAIMoveConstraint2D* contacts, u32 nContacts ) {
 
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAICollisionProp >())) return;
@@ -121,7 +120,6 @@ void MOAICollisionProp::DrawContactPoints ( MOAIAbstractDrawingAPI& draw, const 
 		ZLVec3D normal ( contact.mNormal.mX, contact.mNormal.mY, 0.0f );
 		const ZLVec2D cornerTangent = contact.mCornerTangent;
 		const ZLVec2D edgeNormal = contact.mEdgeNormal;
-		
 		
 		if ( debugLines.Bind ( DEBUG_DRAW_COLLISION_CONTACT_NORMAL, draw )) {
 			draw.DrawVec ( point.mX, point.mY, normal.mX, normal.mY, 32.0f );
@@ -362,7 +360,8 @@ void MOAICollisionProp::Move ( ZLVec3D move, u32 detach, u32 maxSteps ) {
 		}
 	}
 	
-	MOAIAbstractDrawingAPI& draw = this->mCollisionWorld->mDebugDraw;
+	MOAIDrawAPI& draw = this->mCollisionWorld->mDebugDraw._ < MOAIDrawAPI >( MOAIDraw::Get ());
+	
 	MOAICollisionProp::DrawContactPoints ( draw, contacts, contactAccumulator.Top ());
 	
 	// resolve overlaps
@@ -482,19 +481,19 @@ void MOAICollisionProp::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAICollisionProp >())) return;
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	
+
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
-	
+
 	draw.BindVectorPresets ();
 
 	if ( debugLines.Bind ( MOAICollisionProp::DEBUG_DRAW_COLLISION_WORLD_BOUNDS )) {
 		gfxMgr.SetVertexTransform ( MOAIGfxMgr::WORLD_TO_CLIP_MTX );
 		draw.DrawBoxOutline ( this->GetWorldBounds ().mAABB );
 	}
-	
+
 	MOAICollisionShape* shape = this->GetCollisionShape ();
-		
+
 	if ( shape ) {
 		const ZLAffine3D& localToWorldMtx = this->GetLocalToWorldMtx ();
 		gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX, localToWorldMtx );
@@ -502,30 +501,30 @@ void MOAICollisionProp::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	}
 
 	bool visible = false;
-	
+
 	if ( this->IsActive ()) {
-		
+
 		if ( this->mOverlapLinks ) {
 			visible = debugLines.Bind ( DEBUG_DRAW_COLLISION_ACTIVE_OVERLAP_PROP_BOUNDS );
 		}
-		
+
 		if ( this->mTouched == this->mOverlapPass && !visible ) {
 			visible = debugLines.Bind ( DEBUG_DRAW_COLLISION_ACTIVE_TOUCHED_PROP_BOUNDS );
 		}
-		
+
 		if ( !visible ) {
 			visible = debugLines.Bind ( DEBUG_DRAW_COLLISION_ACTIVE_PROP_BOUNDS );
 		}
 	}
-	
+
 	if ( this->mOverlapLinks && !visible ) {
 		visible = debugLines.Bind ( DEBUG_DRAW_COLLISION_OVERLAP_PROP_BOUNDS );
 	}
-	
+
 	if ( visible ) {
-		
+
 		shape = this->GetCollisionShape ();
-		
+
 		if ( shape ) {
 			const ZLAffine3D& localToWorldMtx = this->GetLocalToWorldMtx ();
 			gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX, localToWorldMtx );
@@ -536,9 +535,9 @@ void MOAICollisionProp::MOAIDrawable_DrawDebug ( int subPrimID ) {
 			draw.DrawBoxOutline ( this->GetWorldBounds ().mAABB );
 		}
 	}
-	
+
 	if ( debugLines.Bind ( MOAICollisionProp::DEBUG_DRAW_COLLISION_OVERLAPS )) {
-	
+
 		gfxMgr.SetVertexTransform ( MOAIGfxMgr::WORLD_TO_CLIP_MTX );
 
 		MOAIPropOverlapLink* overlapLinkIt = this->mOverlapLinks;

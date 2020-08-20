@@ -308,7 +308,7 @@ void MOAITileDeck2D::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& 
 //----------------------------------------------------------------//
 void MOAITileDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 
-	MOAIAbstractGfxScript* gfxScript = this->GetGfxScript ( idx );
+	MOAIGfxScript* gfxScript = this->GetGfxScript ( idx );
 	if ( !gfxScript ) return;
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
@@ -332,7 +332,7 @@ void MOAITileDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 
 	callable.mBrush = this->mQuad;
 	
-	gfxScript->RunScript ( &callable, MOAIGfxScript::CALL_FROM_SHADER );
+	gfxScript->ExecuteBytecode ( &callable );
 }
 
 //----------------------------------------------------------------//

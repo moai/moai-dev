@@ -13,7 +13,7 @@ class MOAICollisionProp;
 class MOAICollisionWorld;
 class MOAIContactPoint2D;
 class MOAIContactPointAccumulator2D;
-class MOAIAbstractDrawingAPI;
+class MOAIDrawAPI;
 class MOAIMoveConstraint2D;
 class MOAIOverlapHandler;
 class MOAIPropOverlap;
@@ -91,7 +91,7 @@ private:
 	
 	//----------------------------------------------------------------//
 	void				ClearOverlapLink		( MOAIPropOverlap& overlap );
-	static void			DrawContactPoints		( MOAIAbstractDrawingAPI& draw, const MOAIMoveConstraint2D* contacts, u32 nContacts );
+	static void			DrawContactPoints		( MOAIDrawAPI& draw, const MOAIMoveConstraint2D* contacts, u32 nContacts );
 	void				GatherAndProcess		( MOAICollisionPrimVisitor& visitor, const ZLBox& worldBounds );
 	bool				IsActive				();
 	

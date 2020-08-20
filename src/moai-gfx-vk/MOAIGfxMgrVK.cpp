@@ -503,12 +503,6 @@ void MOAIGfxMgrVK::MOAIGfxMgr_BeginFrame () {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxScript* MOAIGfxMgrVK::MOAIGfxMgr_CreateGfxScriptRetained () {
-
-	return new MOAIGfxScriptVK ();
-}
-
-//----------------------------------------------------------------//
 MOAIImageTexture* MOAIGfxMgrVK::MOAIGfxMgr_CreateImageTexture () {
 
 	return new MOAIImageTextureVK ();

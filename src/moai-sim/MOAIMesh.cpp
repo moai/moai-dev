@@ -522,7 +522,7 @@ u32 MOAIMesh::CountPrims () const {
 void MOAIMesh::DrawIndex ( ZLIndex idx, MOAIMeshSpan* span ) {
 	UNUSED ( idx );
 
-	MOAIAbstractGfxScript* gfxScript = this->GetGfxScript ();
+	MOAIGfxScript* gfxScript = this->GetGfxScript ();
 	if ( !gfxScript ) return;
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
@@ -540,7 +540,7 @@ void MOAIMesh::DrawIndex ( ZLIndex idx, MOAIMeshSpan* span ) {
 	callable.mPrimType 			= this->mPrimType;
 	callable.mSpan	 			= span;
 	callable.mTotalElements		= this->mTotalElements;
-	gfxScript->RunScript ( &callable, MOAIGfxScript::CALL_FROM_SHADER );
+	gfxScript->ExecuteBytecode ( &callable );
 }
 
 //----------------------------------------------------------------//
@@ -605,7 +605,6 @@ void MOAIMesh::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& st
 		{ "printPartition",				_printPartition },
 		{ "readPrimCoords",				_readPrimCoords },
 		{ "setBounds",					_setBounds },
-		{ "setIndexBuffer",				_setIndexBuffer },
 		{ "setPenWidth",				_setPenWidth },
 		{ "setPrimType",				_setPrimType },
 		{ "setTotalElements",			_setTotalElements },

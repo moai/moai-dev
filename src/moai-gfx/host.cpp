@@ -20,11 +20,10 @@ void AKUGfxAppInitialize () {
 //----------------------------------------------------------------//
 void AKUGfxContextInitialize () {
 
+	MOAIDraw::Affirm ();
 	MOAIVertexFormatMgr::Affirm ();
 	
 	REGISTER_LUA_CLASS ( MOAICamera )
-	REGISTER_LUA_CLASS ( MOAIGfxScript )
-	REGISTER_LUA_CLASS ( MOAIGfxScriptBatch )
 	REGISTER_LUA_CLASS ( MOAIMatrix )
 	REGISTER_LUA_CLASS ( MOAITransform )
 	REGISTER_LUA_CLASS ( MOAIVertexFormatMgr )

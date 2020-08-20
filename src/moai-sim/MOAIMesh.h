@@ -90,8 +90,8 @@ public:
 	@const	GL_TRIANGLE_STRIP
 */
 class MOAIMesh :
-	public MOAIDeck,
-	public MOAIHasGfxScript {
+	public virtual MOAIDeck,
+	public virtual MOAIHasGfxScript {
 protected:
 
 	friend class MOAIMeshPrimReader;

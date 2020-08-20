@@ -6,6 +6,8 @@
 
 #include <moai-gfx-gl/pch.h>
 
+#include <moai-gfx-gl/MOAIDrawAPIGL.h>
+#include <moai-gfx-gl/MOAIDrawGL.h>
 #include <moai-gfx-gl/MOAIFrameBufferGL.h>
 #include <moai-gfx-gl/MOAIFrameBufferTextureGL.h>
 #include <moai-gfx-gl/MOAIGfxBufferGL.h>
@@ -16,7 +18,6 @@
 #include <moai-gfx-gl/MOAIGfxMgrGL_VertexCacheGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGLComponents.h>
 #include <moai-gfx-gl/MOAIGfxResourceGL.h>
-#include <moai-gfx-gl/MOAIGfxScriptGL.h>
 #include <moai-gfx-gl/MOAIGfxStateGPUCacheFrameGL.h>
 #include <moai-gfx-gl/MOAIImageTextureGL.h>
 #include <moai-gfx-gl/MOAIIndexBufferGL.h>

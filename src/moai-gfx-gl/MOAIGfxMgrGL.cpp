@@ -6,7 +6,6 @@
 #include <moai-gfx-gl/MOAIFrameBufferGL.h>
 #include <moai-gfx-gl/MOAIDrawGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL.h>
-#include <moai-gfx-gl/MOAIGfxScriptGL.h>
 #include <moai-gfx-gl/MOAIImageTextureGL.h>
 #include <moai-gfx-gl/MOAIIndexBufferGL.h>
 #include <moai-gfx-gl/MOAIRenderBatchGL.h>
@@ -202,7 +201,6 @@ MOAIGfxMgrGL::MOAIGfxMgrGL () :
 		RTTI_EXTEND ( MOAIGfxMgr )
 	RTTI_END
 	
-	this->mDrawingObject.Set ( *this, new MOAIDrawGL ());
 	this->SetDefaultFrameBuffer ( new MOAIFrameBufferGL ());
 }
 
@@ -217,8 +215,6 @@ MOAIGfxMgrGL::~MOAIGfxMgrGL () {
 	
 	this->SetDefaultFrameBuffer ( 0 );
 	this->SetDefaultTexture ( 0 );
-	
-	this->mDrawingObject.Set ( *this, 0 );
 }
 
 //----------------------------------------------------------------//
@@ -324,12 +320,6 @@ void MOAIGfxMgrGL::MOAIGfxMgr_BeginFrame () {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxScript* MOAIGfxMgrGL::MOAIGfxMgr_CreateGfxScriptRetained () {
-
-	return new MOAIGfxScriptGL ();
-}
-
-//----------------------------------------------------------------//
 MOAIImageTexture* MOAIGfxMgrGL::MOAIGfxMgr_CreateImageTexture () {
 
 	return new MOAIImageTextureGL ();
@@ -376,12 +366,6 @@ void MOAIGfxMgrGL::MOAIGfxMgr_EndFrame () {
 
 	this->FlushToGPU (); // TODO: need to do this here?
 	this->UnbindAll ();
-}
-
-//----------------------------------------------------------------//
-MOAIAbstractDrawingObject* MOAIGfxMgrGL::MOAIGfxMgr_GetDrawingObject () {
-
-	return this->mDrawingObject;
 }
 
 //----------------------------------------------------------------//

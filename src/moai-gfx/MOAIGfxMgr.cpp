@@ -4,7 +4,6 @@
 #include "pch.h"
 
 #include <moai-gfx/MOAIGfxMgr.h>
-#include <moai-gfx/MOAIGfxScript.h>
 #include <moai-gfx/MOAIImageTexture.h>
 #include <moai-gfx/MOAIRenderBatch.h>
 #include <moai-gfx/MOAITexture2D.h>
@@ -92,12 +91,6 @@ void MOAIGfxMgr::BeginFrame () {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxScript* MOAIGfxMgr::CreateGfxScriptRetained () {
-
-	return this->MOAIGfxMgr_CreateGfxScriptRetained ();
-}
-
-//----------------------------------------------------------------//
 MOAIImageTexture* MOAIGfxMgr::CreateImageTexture () {
 
 	return this->MOAIGfxMgr_CreateImageTexture ();
@@ -143,12 +136,6 @@ MOAIVertexFormat* MOAIGfxMgr::CreateVertexFormat () {
 void MOAIGfxMgr::EndFrame () {
 
 	return this->MOAIGfxMgr_EndFrame ();
-}
-
-//----------------------------------------------------------------//
-MOAIAbstractDrawingObject* MOAIGfxMgr::GetDrawingObject () {
-
-	return this->MOAIGfxMgr_GetDrawingObject ();
 }
 
 //----------------------------------------------------------------//

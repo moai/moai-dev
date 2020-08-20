@@ -108,9 +108,9 @@ void MOAIShaderVK::SetProgram ( MOAIShaderProgramVK* program ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIAbstractGfxScript* MOAIShaderVK::MOAIAbstractHasGfxScript_GetGfxScript () {
+MOAIGfxScript* MOAIShaderVK::MOAIAbstractHasGfxScript_GetGfxScript () {
 
-	MOAIAbstractGfxScript* gfxScript = this->MOAIHasGfxScript::MOAIAbstractHasGfxScript_GetGfxScript ();
+	MOAIGfxScript* gfxScript = this->MOAIHasGfxScript::MOAIAbstractHasGfxScript_GetGfxScript ();
 	return gfxScript ? gfxScript : ( this->mProgram ? this->mProgram->GetGfxScript () : NULL );
 }
 

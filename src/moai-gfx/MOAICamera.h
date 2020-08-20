@@ -6,7 +6,7 @@
 
 #include <moai-gfx/MOAITransform.h>
 
-class MOAIAbstractDrawingAPI;
+class MOAIDrawAPI;
 class MOAIViewport;
 
 //================================================================//
@@ -62,7 +62,7 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-	void			DrawDebug 				( MOAIAbstractDrawingAPI& draw );
+	void			DrawDebug 				( MOAIDrawAPI& draw );
 					MOAICamera				();
 					~MOAICamera				();
 };

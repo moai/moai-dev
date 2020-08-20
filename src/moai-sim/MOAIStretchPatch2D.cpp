@@ -402,7 +402,7 @@ void MOAIStretchPatch2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILu
 //----------------------------------------------------------------//
 void MOAIStretchPatch2D::MOAIDeck_Draw ( ZLIndex idx ) {
 
-	MOAIAbstractGfxScript* gfxScript = this->GetGfxScript ( idx );
+	MOAIGfxScript* gfxScript = this->GetGfxScript ( idx );
 	if ( !gfxScript ) return;
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
@@ -416,7 +416,7 @@ void MOAIStretchPatch2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	callable.mIndex = idx;
 	callable.mStretchPatch = this;
 	
-	gfxScript->RunScript ( &callable, MOAIGfxScript::CALL_FROM_SHADER );
+	gfxScript->ExecuteBytecode ( &callable );
 }
 
 //----------------------------------------------------------------//

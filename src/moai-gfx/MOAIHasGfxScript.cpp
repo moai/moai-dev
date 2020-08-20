@@ -2,7 +2,6 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx/MOAIGfxScript.h>
 #include <moai-gfx/MOAIHasGfxScript.h>
 
 //================================================================//
@@ -20,6 +19,13 @@ int MOAIHasGfxScript::_getGfxScript ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIHasGfxScript::_gfx ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIHasGfxScript, "U" )
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIHasGfxScript::_setGfxScript ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHasGfxScript, "U" )
 
@@ -32,6 +38,12 @@ int MOAIHasGfxScript::_setGfxScript ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+MOAIGfxScript& MOAIHasGfxScript::AffirmGfxScript () {
+
+	return this->MOAIHasGfxScript_AffirmGfxScript ();
+}
+
+//----------------------------------------------------------------//
 MOAIGfxScript* MOAIHasGfxScript::GetGfxScript () {
 
 	return this->mGfxScript;
@@ -41,7 +53,8 @@ MOAIGfxScript* MOAIHasGfxScript::GetGfxScript () {
 MOAIHasGfxScript::MOAIHasGfxScript () {
 
 	RTTI_BEGIN ( MOAIHasGfxScript )
-		RTTI_EXTEND ( MOAIAbstractHasGfxScript )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIHasGfxScript >)
+		RTTI_EXTEND ( MOAILuaObject )
 	RTTI_END
 }
 
@@ -70,6 +83,7 @@ void MOAIHasGfxScript::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaS
 
 	luaL_Reg regTable [] = {
 		{ "getGfxScript",				_getGfxScript },
+		{ "gfx",						_gfx },
 		{ "setGfxScript",				_setGfxScript },
 		{ NULL, NULL }
 	};
@@ -77,12 +91,10 @@ void MOAIHasGfxScript::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaS
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractGfxScript& MOAIHasGfxScript::MOAIAbstractHasGfxScript_AffirmGfxScript () {
+MOAIGfxScript& MOAIHasGfxScript::MOAIHasGfxScript_AffirmGfxScript () {
 
-	MOAIGfxScript* gfxScript = this->mGfxScript ? MOAICast < MOAIGfxScript >( this->mGfxScript ) : NULL;
-	if ( !gfxScript ) {
-		gfxScript = new MOAIGfxScript ();
-		this->mGfxScript = gfxScript;
+	if ( !this->mGfxScript ) {
+		this->mGfxScript = new MOAIGfxScript ();
 	}
-	return *gfxScript;
+	return *this->mGfxScript;
 }

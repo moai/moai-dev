@@ -12,7 +12,6 @@
 #include <moai-gfx/MOAIGfxPresetEnum.h>
 
 class MOAIAbstractDrawingObject;
-class MOAIGfxScript;
 class MOAIImageTexture;
 class MOAIRenderBatch;
 class MOAITexture2D;
@@ -46,7 +45,6 @@ protected:
 	virtual MOAIShader*					MOAIGfxMgr_AffirmShader					( MOAILuaState& state, int idx ) const = 0;
 	virtual MOAITexture*				MOAIGfxMgr_AffirmTexture				( MOAILuaState& state, int idx ) const = 0;
 	virtual void						MOAIGfxMgr_BeginFrame					() = 0;
-	virtual MOAIGfxScript*				MOAIGfxMgr_CreateGfxScriptRetained		() = 0;
 	virtual MOAIImageTexture*			MOAIGfxMgr_CreateImageTexture			() = 0;
 	virtual MOAIIndexBuffer*			MOAIGfxMgr_CreateIndexBuffer			() = 0;
 	virtual MOAIRenderBatch*			MOAIGfxMgr_CreateRenderBatch			() = 0;
@@ -55,7 +53,6 @@ protected:
 	virtual MOAIVertexBuffer*			MOAIGfxMgr_CreateVertexBuffer			() = 0;
 	virtual MOAIVertexFormat*			MOAIGfxMgr_CreateVertexFormat			() = 0;
 	virtual void						MOAIGfxMgr_EndFrame						() = 0;
-	virtual MOAIAbstractDrawingObject*	MOAIGfxMgr_GetDrawingObject				() = 0;
 	virtual MOAIShader*					MOAIGfxMgr_GetShaderPreset				( MOAIShaderPresetEnum preset ) const = 0;
 	virtual size_t						MOAIGfxMgr_GetTextureMemoryUsage		() const = 0;
 	virtual void						MOAIGfxMgr_PopState						() = 0;
@@ -84,7 +81,6 @@ public:
 	MOAITexture*					AffirmTexture				( MOAILuaState& state, int idx ) const;
 	MOAIVertexFormat*				AffirmVertexFormat			( MOAILuaState& state, int idx ) const;
 	void							BeginFrame					();
-	MOAIGfxScript*					CreateGfxScriptRetained		();
 	MOAIImageTexture*				CreateImageTexture			();
 	MOAIIndexBuffer*				CreateIndexBuffer			();
 	MOAIRenderBatch*				CreateRenderBatch			();
@@ -93,7 +89,6 @@ public:
 	MOAIVertexBuffer*				CreateVertexBuffer			();
 	MOAIVertexFormat*				CreateVertexFormat			();
 	void							EndFrame					();
-	MOAIAbstractDrawingObject*		GetDrawingObject			();
 	ZLMatrix4x4						GetNormToWndMtx				();
 	ZLMatrix4x4						GetNormToWndMtx				( const ZLRect& wndRect );
 	MOAIShader*						GetShaderPreset				( MOAIShaderPresetEnum preset ) const;

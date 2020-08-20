@@ -6,7 +6,6 @@
 #include <moai-sim/MOAICollisionProp.h>
 #include <moai-sim/MOAICollisionShape.h>
 #include <moai-sim/MOAICollisionWorld.h>
-#include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
@@ -420,7 +419,7 @@ void MOAICollisionWorld::MOAIPartition_DrawDebugFront () {
 	if ( this->mDebugDraw.HasContent ()) {
 	
 		MOAIGfxMgr::Get ().SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX );
-		this->mDebugDraw.RunScript ();
+		this->mDebugDraw.ExecuteBytecode ();
 	}
 }
 

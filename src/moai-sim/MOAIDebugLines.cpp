@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIDebugLines.h>
-#include <moai-sim/MOAIDraw.h>
 
 //================================================================//
 // MOAIDebugLineStyle
@@ -110,7 +109,7 @@ bool MOAIDebugLinesMgr::Bind ( u32 styleID ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAIDebugLinesMgr::Bind ( u32 styleID, MOAIAbstractDrawingAPI& draw ) {
+bool MOAIDebugLinesMgr::Bind ( u32 styleID, MOAIDrawAPI& draw ) {
 
 	if ( !this->mShowDebugLines ) return false;
 

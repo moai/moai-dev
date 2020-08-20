@@ -25,7 +25,7 @@ protected:
 	bool	mUpdated;
 	u32		mOverlapPass;
 
-	MOAIGfxScript					mDebugDraw;
+	MOAIGfxScript							mDebugDraw;
 
 	typedef ZLLeanList < MOAICollisionProp* >::Iterator ActiveListIt;
 	ZLLeanList < MOAICollisionProp* >		mActiveList;

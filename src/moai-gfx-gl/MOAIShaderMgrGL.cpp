@@ -2,8 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-gfx-gl/MOAIDrawGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL.h>
-#include <moai-gfx-gl/MOAIGfxScriptGL.h>
 #include <moai-gfx-gl/MOAIShaderGL.h>
 #include <moai-gfx-gl/MOAIShaderMgrGL.h>
 #include <moai-gfx-gl/MOAIShaderProgramGL.h>
@@ -111,10 +111,11 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					program->ReserveUniforms ( 2 );
 					program->DeclareUniform ( 0, "xSnap", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT );
 					program->DeclareUniform ( 1, "ySnap", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT );
-					
-					MOAIGfxScriptGL& gfxScript = program->AffirmGfxScriptWithType < MOAIGfxScriptGL >();
-					gfxScript.LoadShaderUniformGL ( MOAIGfxMgrGL::VIEW_HALF_WIDTH, 0, 0 );
-					gfxScript.LoadShaderUniformGL ( MOAIGfxMgrGL::VIEW_HALF_HEIGHT, 1, 0 );
+										
+					program->_ < MOAIDrawAPIGL >( MOAIDrawGL::Get ())
+						.LoadShaderUniformGL ( MOAIGfxMgrGL::VIEW_HALF_WIDTH, 0, 0 )
+						.LoadShaderUniformGL ( MOAIGfxMgrGL::VIEW_HALF_HEIGHT, 1, 0 )
+						;
 					
 					program->Load ( _deck2DSnappingShaderVSH, _deck2DSnappingShaderFSH );
 					break;
@@ -139,9 +140,10 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					program->DeclareUniform ( 0, "xSnap", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT );
 					program->DeclareUniform ( 1, "ySnap", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT );
 					
-					MOAIGfxScriptGL& gfxScript = program->AffirmGfxScriptWithType < MOAIGfxScriptGL >();
-					gfxScript.LoadShaderUniformGL ( MOAIGfxMgrGL::VIEW_HALF_WIDTH, 0, 0 );
-					gfxScript.LoadShaderUniformGL ( MOAIGfxMgrGL::VIEW_HALF_HEIGHT, 1, 0 );
+					program->AffirmGfxScript ()._ < MOAIDrawAPIGL >( MOAIDrawGL::Get ())
+						.LoadShaderUniformGL ( MOAIGfxMgrGL::VIEW_HALF_WIDTH, 0, 0 )
+						.LoadShaderUniformGL ( MOAIGfxMgrGL::VIEW_HALF_HEIGHT, 1, 0 )
+						;
 					
 					program->Load ( _fontSnappingShaderVSH, _fontSnappingShaderFSH );
 					break;
@@ -163,9 +165,10 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					program->DeclareUniform ( 0, "transform", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT, MOAIUniformDescriptor::UNIFORM_WIDTH_MATRIX_4X4 );
 					program->DeclareUniform ( 1, "ucolor", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT, MOAIUniformDescriptor::UNIFORM_WIDTH_VEC_4 );
 					
-					MOAIGfxScriptGL& gfxScript = program->AffirmGfxScriptWithType < MOAIGfxScriptGL >();
-					gfxScript.LoadShaderUniformGL ( MOAIGfxMgrGL::MODEL_TO_CLIP_MTX, 0, 0 );
-					gfxScript.LoadShaderUniformGL ( MOAIGfxMgrGL::PEN_COLOR, 1, 0 );
+					program->AffirmGfxScript ()._ < MOAIDrawAPIGL >( MOAIDrawGL::Get ())
+						.LoadShaderUniformGL ( MOAIGfxMgrGL::MODEL_TO_CLIP_MTX, 0, 0 )
+						.LoadShaderUniformGL ( MOAIGfxMgrGL::PEN_COLOR, 1, 0 )
+						;
 					
 					program->Load ( _lineShader3DVSH, _lineShader3DFSH );
 					break;
@@ -181,10 +184,11 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					program->DeclareUniform ( 0, "transform", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT, MOAIUniformDescriptor::UNIFORM_WIDTH_MATRIX_4X4 );
 					program->DeclareUniform ( 1, "ucolor", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT, MOAIUniformDescriptor::UNIFORM_WIDTH_VEC_4 );
 					
-					MOAIGfxScriptGL& gfxScript = program->AffirmGfxScriptWithType < MOAIGfxScriptGL >();
-					gfxScript.LoadShaderUniformGL ( MOAIGfxMgrGL::MODEL_TO_CLIP_MTX, 0, 0 );
-					gfxScript.LoadShaderUniformGL ( MOAIGfxMgrGL::PEN_COLOR, 1, 0 );
-					
+					program->AffirmGfxScript ()._ < MOAIDrawAPIGL >( MOAIDrawGL::Get ())
+						.LoadShaderUniformGL ( MOAIGfxMgrGL::MODEL_TO_CLIP_MTX, 0, 0 )
+						.LoadShaderUniformGL ( MOAIGfxMgrGL::PEN_COLOR, 1, 0 )
+						;
+						
 					program->Load ( _meshShaderVSH, _meshShaderFSH );
 					break;
 				}

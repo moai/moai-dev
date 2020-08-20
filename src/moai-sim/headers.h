@@ -30,7 +30,7 @@
 #include <moai-sim/MOAICompassSensor.h>
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIDeck.h>
-#include <moai-sim/MOAIDraw.h>
+#include <moai-sim/MOAIDrawUI.h>
 #include <moai-sim/MOAIHasDeck.h>
 #include <moai-sim/MOAIHasDeckAndGrid.h>
 #include <moai-sim/MOAIHasDeckAndIndex.h>
@@ -40,7 +40,6 @@
 #include <moai-sim/MOAIHitMaskBatch.h>
 #include <moai-sim/MOAIDeckProxy.h>
 #include <moai-sim/MOAIDeckRemapper.h>
-#include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIDrawDeck.h>
 #include <moai-sim/MOAIFancyGrid.h>
 #include <moai-sim/MOAIGeometryWriter.h>

@@ -98,18 +98,18 @@ void MOAIProjectionProp::MOAIDrawable_Draw ( int subPrimID ) {
 //----------------------------------------------------------------//
 void MOAIProjectionProp::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	UNUSED ( subPrimID );
-	
+		
 	if ( this->GetWorldBounds ().IsEmpty ()) return;
 
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAIProjectionProp >())) return;
 	if ( !debugLines.Bind ( DEBUG_DRAW_WORLD_BOUNDS )) return;
-	
+
 	MOAIGfxMgr::Get ().SetVertexTransform ( MOAIGfxMgr::WORLD_TO_DISPLAY_MTX );
-	
+
 	MOAIDraw& draw = MOAIDraw::Get ();
 	UNUSED ( draw ); // mystery warning in vs2008
-	
+
 	draw.BindVectorPresets ();
 	draw.DrawBoxOutline ( this->GetWorldBounds ().mAABB );
 }

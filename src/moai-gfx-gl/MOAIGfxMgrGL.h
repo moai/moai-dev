@@ -50,8 +50,6 @@ protected:
 	ZLLeanArray < MOAIGfxStateFrameGL* >	mStateStack;
 	ZLIndex									mStateStackTop;
 
-	MOAILuaSharedPtr < MOAIDrawGL >			mDrawingObject;
-
 	//----------------------------------------------------------------//
 	static int							_enablePipelineLogging		( lua_State* L );
 	static int							_getFrameBuffer				( lua_State* L );
@@ -66,7 +64,6 @@ protected:
 	MOAIShader*							MOAIGfxMgr_AffirmShader							( MOAILuaState& state, int idx ) const;
 	MOAITexture*						MOAIGfxMgr_AffirmTexture						( MOAILuaState& state, int idx ) const;
 	void								MOAIGfxMgr_BeginFrame							();
-	MOAIGfxScript*				MOAIGfxMgr_CreateGfxScriptRetained				();
 	MOAIImageTexture*					MOAIGfxMgr_CreateImageTexture					();
 	MOAIIndexBuffer*					MOAIGfxMgr_CreateIndexBuffer					();
 	MOAIRenderBatch*					MOAIGfxMgr_CreateRenderBatch					();
@@ -75,7 +72,6 @@ protected:
 	MOAIVertexBuffer*					MOAIGfxMgr_CreateVertexBuffer					();
 	MOAIVertexFormat*					MOAIGfxMgr_CreateVertexFormat					();
 	void								MOAIGfxMgr_EndFrame								();
-	MOAIAbstractDrawingObject*			MOAIGfxMgr_GetDrawingObject						();
 	MOAIShader*							MOAIGfxMgr_GetShaderPreset						( MOAIShaderPresetEnum preset ) const;
 	size_t								MOAIGfxMgr_GetTextureMemoryUsage				() const;
 	void								MOAIGfxMgr_PopState								();

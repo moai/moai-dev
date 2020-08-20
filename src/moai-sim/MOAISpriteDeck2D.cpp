@@ -419,7 +419,7 @@ MOAIDeck* MOAISpriteDeck2D::AffirmDeck ( MOAILuaState& state, int idx ) {
 		MOAISpriteDeck2D* spriteDeck = new MOAISpriteDeck2D ();
 		assert ( spriteDeck );
 
-		spriteDeck->SetTexture ( texture, 0 );
+		spriteDeck->_ < MOAIDrawAPI >( MOAIDraw::Get ()).SetTexture ( texture, 0 );
 		
 		int hWidth = ( int )( texture->GetWidth () / 2 );
 		int hHeight = ( int )( texture->GetHeight () / 2 );
@@ -698,10 +698,10 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 		MOAISpriteDeck2DCallable callable;
 		callable.mBrush = this->GetSpriteBrush ( i );
 		
-		MOAIAbstractGfxScript* gfxScript = this->GetGfxScript ( callable.mBrush.mMaterialID );
+		MOAIGfxScript* gfxScript = this->GetGfxScript ( callable.mBrush.mMaterialID );
 		if ( !gfxScript ) continue;
 		
-		gfxScript->RunScript ( &callable, MOAIGfxScript::CALL_FROM_SHADER );
+		gfxScript->ExecuteBytecode ( &callable );
 	}
 }
 

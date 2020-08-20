@@ -5,7 +5,6 @@
 #include <contrib/moai_utf8.h>
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDebugLines.h>
-#include <moai-sim/MOAIDraw.h>
 #include <moai-sim/MOAIFont.h>
 #include <moai-sim/MOAITextLabel.h>
 #include <moai-sim/MOAITextLayoutRules.h>
@@ -262,7 +261,7 @@ void MOAITextLayout::Draw ( u32 reveal ) {
 				if ( spriteShader != currentShader ) {
 					if ( !spriteShader->IsReadyForUse ()) continue;
 					gfxMgr.SetShader ( spriteShader );
-					spriteShader->RunScript ();
+					spriteShader->AffirmGfxScript ().ExecuteBytecode ();
 					currentShader = spriteShader;
 				}
 			}

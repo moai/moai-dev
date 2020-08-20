@@ -2,8 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx/MOAIAbstractDrawingAPI.h>
 #include <moai-gfx/MOAICamera.h>
+#include <moai-gfx/MOAIDrawAPI.h>
 #include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIViewport.h>
 
@@ -314,7 +314,7 @@ int MOAICamera::_setType ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAICamera::DrawDebug ( MOAIAbstractDrawingAPI& draw ) {
+void MOAICamera::DrawDebug ( MOAIDrawAPI& draw ) {
 	UNUSED ( draw );
 	
 	// TODO: move this to draw command; shouldn't involve MOAIDebugLinesMgr, either

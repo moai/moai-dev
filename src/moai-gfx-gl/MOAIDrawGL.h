@@ -4,26 +4,30 @@
 #ifndef	MOAIDRAWGL_H
 #define	MOAIDRAWGL_H
 
-#include <moai-gfx-gl/MOAIAbstractDrawingObjectGL.h>
+#include <moai-gfx-gl/MOAIDrawAPIGL.h>
 
 //================================================================//
 // MOAIDrawGL
 //================================================================//
+// TODO: doxygen
 class MOAIDrawGL :
-	public virtual MOAIAbstractDrawingObjectGL {
+	public virtual MOAIAbstractCmdHandlerWithAPI < MOAIDrawAPIGL >,
+	public ZLContextClass < MOAIDrawGL > {
 protected:
 
 	//----------------------------------------------------------------//
-	void				MOAIAbstractDrawingAPI_RetainObject		( ZLRefCountedObject* object );
-	void				MOAIAbstractDrawingAPI_SubmitCommand	( MOAIDrawingAPIEnum::_ cmd, const void* param, ZLSize size );
+	void			ExecuteSetUniformGL			( MOAIGfxMgr& gfxMgr, const MOAIDrawingParamGL::LoadShaderUniform& param );
+
+	//----------------------------------------------------------------//
+	void			MOAIAbstractCmdHandler_HandleCommand		( u32 cmd, const void* param );
 
 public:
 
-	DECL_LUA_FACTORY ( MOAIDrawGL )
+	DECL_LUA_SINGLETON ( MOAIDrawGL )
 
 	//----------------------------------------------------------------//
-						MOAIDrawGL				();
-	virtual				~MOAIDrawGL				();
+					MOAIDrawGL					();
+					~MOAIDrawGL					();
 };
 
 #endif
