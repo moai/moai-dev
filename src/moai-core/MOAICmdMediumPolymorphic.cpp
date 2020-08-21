@@ -2,22 +2,19 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-core/MOAIAbstractCmdAPI.h>
-#include <moai-core/MOAIAbstractCmdStream.h>
-#include <moai-core/MOAICmdMedium.h>
+#include <moai-core/MOAICmdMediumPolymorphic.h>
 
 //================================================================//
-// MOAICmdMedium
+// MOAICmdMediumPolymorphic
 //================================================================//
-
+	
 //----------------------------------------------------------------//
-MOAICmdMedium::MOAICmdMedium ( MOAIAbstractCmdStream& stream ) :
-	MOAICmdMediumPolymorphic ( stream ) {
-	this->mAdapter = this;
+MOAICmdMediumPolymorphic::MOAICmdMediumPolymorphic () {
 }
 
 //----------------------------------------------------------------//
-MOAICmdMedium::~MOAICmdMedium () {
+MOAICmdMediumPolymorphic::MOAICmdMediumPolymorphic ( MOAIAbstractCmdStream& stream ) :
+	MOAICmdMediumAdapter ( stream ) {
 }
 
 //================================================================//
@@ -25,8 +22,6 @@ MOAICmdMedium::~MOAICmdMedium () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void* MOAICmdMedium::MOAIAbstractCmdMedium_GetMediumWithAPI ( ZLTypeID apiTypeID ) {
-
-	return ( this->mAPITypeID == apiTypeID ) ? ( void* )this->mBuffer.GetBuffer () : NULL;
+MOAICmdMediumPolymorphic* MOAICmdMediumPolymorphic::MOAICmdMediumAdapter_GetPolymorphic () {
+	return this;
 }
-

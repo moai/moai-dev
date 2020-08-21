@@ -27,7 +27,7 @@ MOAIAbstractCmdHandler::~MOAIAbstractCmdHandler () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractCmdHandler::InitializeMedium ( MOAIAbstractCmdMedium& medium ) {
+void MOAIAbstractCmdHandler::InitializePolymorphic ( MOAICmdMediumPolymorphic& polymorphic ) {
 
-	return this->MOAIAbstractCmdHandler_InitializeMedium ( medium );
+	return this->MOAIAbstractCmdHandler_InitializePolymorphic ( polymorphic );
 }

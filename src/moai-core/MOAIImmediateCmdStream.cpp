@@ -13,7 +13,7 @@
 MOAIImmediateCmdStream::MOAIImmediateCmdStream () {
 
 	RTTI_BEGIN ( MOAIImmediateCmdStream )
-		RTTI_EXTEND ( MOAIAbstractCmdStream )
+		RTTI_EXTEND ( MOAIAbstractCmdStreamWithMedium )
 	RTTI_END
 }
 

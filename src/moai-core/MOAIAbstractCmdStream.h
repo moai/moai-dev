@@ -13,7 +13,31 @@ class MOAIAbstractCmdStream;
 //================================================================//
 // MOAIAbstractCmdStream
 //================================================================//
-class MOAIAbstractCmdStream :
+class MOAIAbstractCmdStream {
+protected:
+
+	friend class MOAICmdMediumAdapter;
+
+	//----------------------------------------------------------------//
+	void				RetainObject				( MOAILuaObject* object );
+	void				SubmitCommand				( MOAIAbstractCmdHandler& handler, u32 cmd, const void* param, ZLSize paramSize );
+
+	//----------------------------------------------------------------//
+	virtual void		MOAIAbstractCmdStream_RetainObject			( MOAILuaObject* object ) = 0;
+	virtual void		MOAIAbstractCmdStream_SubmitCommand			( MOAIAbstractCmdHandler& handler, u32 cmd, const void* param, ZLSize paramSize ) = 0;
+
+public:
+
+	//----------------------------------------------------------------//
+						MOAIAbstractCmdStream		();
+	virtual				~MOAIAbstractCmdStream		();
+};
+
+//================================================================//
+// MOAIAbstractCmdStreamWithMedium
+//================================================================//
+class MOAIAbstractCmdStreamWithMedium :
+	public virtual MOAIAbstractCmdStream,
 	public virtual MOAILuaObject {
 protected:
 
@@ -34,19 +58,17 @@ protected:
 	//----------------------------------------------------------------//
 	void				_RegisterLuaClass							( RTTIVisitorHistory& history, MOAILuaState& state );
 	void				_RegisterLuaFuncs							( RTTIVisitorHistory& history, MOAILuaState& state );
-	virtual void		MOAIAbstractCmdStream_RetainObject			( MOAILuaObject* object ) = 0;
-	virtual void		MOAIAbstractCmdStream_SubmitCommand			( MOAIAbstractCmdHandler& handler, u32 cmd, const void* param, ZLSize paramSize ) = 0;
 
 public:
 
 	//----------------------------------------------------------------//
-						MOAIAbstractCmdStream		();
-						~MOAIAbstractCmdStream		();
-	void				SetMedium					( MOAICmdMedium* medium );
+						MOAIAbstractCmdStreamWithMedium		();
+						~MOAIAbstractCmdStreamWithMedium	();
+	void				SetMedium							( MOAICmdMedium* medium );
 	
 	//----------------------------------------------------------------//
 	template < typename API_TYPE >
-	MOAIConcreteCmdMedium < API_TYPE >& _ ( MOAIAbstractCmdHandler& handler ) {
+	MOAICmdMediumWithAPI < API_TYPE >& _ ( MOAIAbstractCmdHandler& handler ) {
 
 		return this->AffirmMedium ()._ < API_TYPE >( handler );
 	}

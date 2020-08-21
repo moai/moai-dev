@@ -94,7 +94,7 @@ MOAIRetainedCmdStream::MOAIRetainedCmdStream () {
 
 	RTTI_BEGIN ( MOAIRetainedCmdStream )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIRetainedCmdStream >)
-		RTTI_EXTEND ( MOAIAbstractCmdStream )
+		RTTI_EXTEND ( MOAIAbstractCmdStreamWithMedium )
 	RTTI_END
 
 	this->mCommandStream.SetChunkSize ( 256 );

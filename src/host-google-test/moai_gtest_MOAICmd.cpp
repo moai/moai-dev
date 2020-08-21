@@ -78,7 +78,7 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-	MOAIConcreteCmdMedium < MOAITestCmdAPI >& Bar () {
+	MOAICmdMediumWithAPI < MOAITestCmdAPI >& Bar () {
 
 		this->SubmitCommand ( CMD_BAR );
 		
@@ -86,7 +86,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	MOAIConcreteCmdMedium < MOAITestCmdAPI >& Baz () {
+	MOAICmdMediumWithAPI < MOAITestCmdAPI >& Baz () {
 
 		this->SubmitCommand ( CMD_BAZ );
 		
@@ -94,7 +94,7 @@ public:
 	}
 
 	//----------------------------------------------------------------//
-	MOAIConcreteCmdMedium < MOAITestCmdAPI >& Foo () {
+	MOAICmdMediumWithAPI < MOAITestCmdAPI >& Foo () {
 
 		this->SubmitCommand ( CMD_FOO );
 		
@@ -171,9 +171,9 @@ protected:
 	}
 	
 	//----------------------------------------------------------------//
-	void MOAIAbstractCmdHandler_InitializeMedium ( MOAIAbstractCmdMedium& medium ) {
+	void MOAIAbstractCmdHandler_InitializePolymorphic ( MOAICmdMediumPolymorphic& polymorphic ) {
 	
-		this->InitializeMedium < MOAITestCmdAPI >( medium );
+		this->InitializePolymorphic < MOAITestCmdAPI >( polymorphic );
 	}
 
 public:

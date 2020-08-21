@@ -10,6 +10,7 @@
 #include <moai-core/MOAIAbstractCmdAPI.h>
 #include <moai-core/MOAIAbstractCmdHandler.h>
 #include <moai-core/MOAIAbstractCmdHandlerWithAPI.h>
+#include <moai-core/MOAIAbstractCmdMedium.h>
 #include <moai-core/MOAIAbstractCmdStream.h>
 #include <moai-core/MOAIAction.h>
 #include <moai-core/MOAIActionMgr.h>
@@ -24,6 +25,9 @@
 #include <moai-core/MOAIBlocker.h>
 #include <moai-core/MOAICanary.h>
 #include <moai-core/MOAICmdMedium.h>
+#include <moai-core/MOAICmdMediumAdapter.h>
+#include <moai-core/MOAICmdMediumPolymorphic.h>
+#include <moai-core/MOAICmdMediumWithAPI.h>
 #include <moai-core/MOAICoroutine.h>
 #include <moai-core/MOAIDeserializer.h>
 #include <moai-core/MOAIEaseType.h>

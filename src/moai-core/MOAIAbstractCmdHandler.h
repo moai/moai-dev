@@ -6,12 +6,12 @@
 
 #include <moai-core/MOAILua.h>
 
+class MOAIAbstractCmdAPI;
 class MOAIAbstractCmdHandler;
 class MOAIAbstractCmdStream;
 class MOAIAbstractCmdMedium;
-class MOAIAbstractCmdAPI;
-class MOAIAbstractCmdMedium;
-template < typename TYPE > class MOAIConcreteCmdMedium;
+class MOAICmdMediumPolymorphic;
+template < typename TYPE > class MOAICmdMediumWithAPI;
 
 //================================================================//
 // MOAIAbstractCmdHandler
@@ -26,17 +26,16 @@ protected:
 	friend class MOAIRetainedCmdStream;
 
 	//----------------------------------------------------------------//
-	// implemented in MOAICmdMedium.h
 	template < typename API_TYPE >
-	void InitializeMedium ( MOAIAbstractCmdMedium& medium );
+	void InitializePolymorphic ( MOAICmdMediumPolymorphic& polymorphic ); // implemented in MOAICmdMediumPolymorphic.h
 
 	//----------------------------------------------------------------//
 	void			HandleCommand					( u32 cmd, const void* param );
-	void			InitializeMedium				( MOAIAbstractCmdMedium& medium );
+	void			InitializePolymorphic			( MOAICmdMediumPolymorphic& polymorphic );
 
 	//----------------------------------------------------------------//
-	virtual void		MOAIAbstractCmdHandler_HandleCommand		( u32 cmd, const void* param ) = 0;
-	virtual void		MOAIAbstractCmdHandler_InitializeMedium		( MOAIAbstractCmdMedium& medium ) = 0;
+	virtual void	MOAIAbstractCmdHandler_HandleCommand			( u32 cmd, const void* param ) = 0;
+	virtual void	MOAIAbstractCmdHandler_InitializePolymorphic	( MOAICmdMediumPolymorphic& polymorphic ) = 0;
 
 public:
 

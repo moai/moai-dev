@@ -14,6 +14,7 @@ class MOAIAbstractCmdAPI :
 	public virtual MOAIAbstractCmdMedium {
 protected:
 
+	friend class MOAIAbstractCmdMedium;
 	friend class MOAICmdMedium;
 
 	//----------------------------------------------------------------//

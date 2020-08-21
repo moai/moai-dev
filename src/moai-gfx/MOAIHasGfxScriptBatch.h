@@ -55,7 +55,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	template < typename API_TYPE >
-	MOAIConcreteCmdMedium < API_TYPE >& _ ( MOAIAbstractCmdHandler& handler, ZLIndex index = 0 ) {
+	MOAICmdMediumWithAPI < API_TYPE >& _ ( MOAIAbstractCmdHandler& handler, ZLIndex index = 0 ) {
 		return this->AffirmGfxScript ( index )._ < API_TYPE >( handler );
 	}
 };

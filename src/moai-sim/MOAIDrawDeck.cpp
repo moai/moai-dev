@@ -114,21 +114,21 @@ void MOAIDrawDeck::MOAIDeck_Draw ( ZLIndex idx ) {
 	
 	if ( this->mOnDraw ) {
 	
-//		MOAIDraw::Get ().BindVectorPresets ();
-//	
-//		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-//		ZLVec3D stretch = this->BindStretchVertexTransform ();
-//	
-//		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-//		this->mOnDraw.PushRef ( state );
-//
-//		state.Push ( gfxMgr.GetDrawingObject ());
-//		
-//		state.Push ( MOAILuaIndex ( idx ));
-//		state.Push ( stretch.mX );
-//		state.Push ( stretch.mY );
-//		state.Push ( stretch.mZ );
-//		state.DebugCall ( 5, 0 );
+		MOAIDraw::Get ().BindVectorPresets ();
+	
+		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+		ZLVec3D stretch = this->BindStretchVertexTransform ();
+	
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		this->mOnDraw.PushRef ( state );
+	
+		MOAIDraw::Get ().PushCmdInterface ( state );
+	
+		state.Push ( MOAILuaIndex ( idx ));
+		state.Push ( stretch.mX );
+		state.Push ( stretch.mY );
+		state.Push ( stretch.mZ );
+		state.DebugCall ( 5, 0 );
 	}
 }
 

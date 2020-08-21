@@ -14,7 +14,7 @@ class MOAIAbstractCmdStream;
 // MOAIImmediateCmdStream
 //================================================================//
 class MOAIImmediateCmdStream :
-	public virtual MOAIAbstractCmdStream {
+	public virtual MOAIAbstractCmdStreamWithMedium {
 protected:
 
 	//----------------------------------------------------------------//

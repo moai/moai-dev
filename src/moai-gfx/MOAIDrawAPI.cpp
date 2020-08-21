@@ -478,7 +478,7 @@ int MOAIDrawAPI::_fillRoundedRect ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 int MOAIDrawAPI::_popGfxState ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDrawAPI, "U" )
+	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
 	
 	self->PopGfxState ();
 	return 0;
@@ -486,7 +486,7 @@ int MOAIDrawAPI::_popGfxState ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 int MOAIDrawAPI::_pushGfxState ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDrawAPI, "U" )
+	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
 	
 	self->PushGfxState ();
 	return 0;
@@ -495,7 +495,7 @@ int MOAIDrawAPI::_pushGfxState ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIDrawAPI::_setBlendMode ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDrawAPI, "U" )
+	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
 	
 	MOAIBlendFuncEnum::_ equation			= ( MOAIBlendFuncEnum::_ )state.GetValue < u32 >( 2, MOAIBlendFuncEnum::ADD );
 	MOAIBlendFactorEnum::_ srcFactor		= ( MOAIBlendFactorEnum::_ )state.GetValue < u32 >( 3, MOAIBlendFactorEnum::ONE );
@@ -511,7 +511,7 @@ int MOAIDrawAPI::_setBlendMode ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIDrawAPI::_setCullFunc ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDrawAPI, "U" )
+	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
 
 	self->SetCullFunc (( MOAICullFuncEnum::_ )state.GetValue < u32 >( 2, 0 ));
 	return 0;
@@ -520,7 +520,7 @@ int MOAIDrawAPI::_setCullFunc ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIDrawAPI::_setDepthFunc ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDrawAPI, "U" )
+	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
 
 	self->SetDepthFunc (( MOAIDepthFuncEnum::_ )state.GetValue < u32 >( 2, 0 ));
 	return 0;
@@ -529,7 +529,7 @@ int MOAIDrawAPI::_setDepthFunc ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIDrawAPI::_setDepthMask ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDrawAPI, "U" )
+	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
 	
 	self->SetDepthMask ( state.GetValue < bool >( 2, false ));
 	return 0;
@@ -537,7 +537,7 @@ int MOAIDrawAPI::_setDepthMask ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 int MOAIDrawAPI::_setFrameBuffer ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDrawAPI, "U" )
+	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
 
 	self->SetFrameBuffer ( state.GetLuaObject < MOAIFrameBuffer >( 2, false ));
 	return 0;
@@ -545,7 +545,7 @@ int MOAIDrawAPI::_setFrameBuffer ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 int MOAIDrawAPI::_setIndexBuffer ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDrawAPI, "U" )
+	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
 
 	self->SetIndexBuffer ( state.GetLuaObject < MOAIIndexBuffer >( 2, false ));
 	return 0;
@@ -553,7 +553,7 @@ int MOAIDrawAPI::_setIndexBuffer ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 int MOAIDrawAPI::_setMatrix ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDrawAPI, "U" )
+	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
 
 	u32 matrixID = state.GetValue < u32 >( 2, MOAIGfxMgr::MODEL_TO_WORLD_MTX );
 
@@ -585,7 +585,7 @@ int MOAIDrawAPI::_setMatrix ( lua_State* L ) {
 	@out	nil
 */
 int MOAIDrawAPI::_setPenColor ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDrawAPI, "U" )
+	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
 
 	float r = state.GetValue < float >( 2, 1.0f );
 	float g = state.GetValue < float >( 3, 1.0f );
@@ -603,7 +603,7 @@ int MOAIDrawAPI::_setPenColor ( lua_State* L ) {
 	@out	nil
 */
 int MOAIDrawAPI::_setPenWidth ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDrawAPI, "U" )
+	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
 
 	float width = state.GetValue < float >( 2, 1.0f );
 	self->SetPenWidth ( width );
@@ -613,7 +613,7 @@ int MOAIDrawAPI::_setPenWidth ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 int MOAIDrawAPI::_setScissorRect ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDrawAPI, "U" )
+	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
 
 	ZLRect rect ( 0.0, 0.0, 0.0, 0.0 );
 	rect = state.GetValue < ZLRect >( 2, rect );
@@ -623,7 +623,7 @@ int MOAIDrawAPI::_setScissorRect ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 int MOAIDrawAPI::_setShader ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDrawAPI, "U" )
+	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
 	
 	MOAIShader* shader 		= MOAIGfxMgr::Get ().AffirmShader ( state, 2 );
 	self->SetShader ( shader );
@@ -632,7 +632,7 @@ int MOAIDrawAPI::_setShader ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 int MOAIDrawAPI::_setTexture ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDrawAPI, "U" )
+	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
 	
 	MOAITexture* texture	= MOAIGfxMgr::Get ().AffirmTexture ( state, 2 );
 	ZLIndex textureUnit		= state.GetValue < u32 >( 3, 0 );
@@ -643,7 +643,7 @@ int MOAIDrawAPI::_setTexture ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 int MOAIDrawAPI::_setVertexArray ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDrawAPI, "U" )
+	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
 	
 	self->SetVertexArray ( state.GetLuaObject < MOAIVertexArray >( 2, false ));
 	return 0;
@@ -651,7 +651,7 @@ int MOAIDrawAPI::_setVertexArray ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 int MOAIDrawAPI::_setVertexBuffer ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDrawAPI, "U" )
+	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
 
 	self->SetVertexBuffer ( state.GetLuaObject < MOAIVertexBuffer >( 2, false ));
 	return 0;
@@ -659,7 +659,7 @@ int MOAIDrawAPI::_setVertexBuffer ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 int MOAIDrawAPI::_setVertexFormat ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDrawAPI, "U" )
+	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
 
 	MOAIVertexFormat* vertexFormat = MOAIGfxMgr::Get ().AffirmVertexFormat ( state, 2 );
 	self->SetVertexFormat ( vertexFormat );
@@ -680,7 +680,7 @@ int MOAIDrawAPI::_setViewProj ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 int MOAIDrawAPI::_setViewRect ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIDrawAPI, "U" )
+	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
 	
 	if ( state.IsType ( 2, LUA_TUSERDATA )) {
 		MOAIViewport* viewport = state.GetLuaObject < MOAIViewport >( 2, true );

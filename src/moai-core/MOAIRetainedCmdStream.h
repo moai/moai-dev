@@ -31,7 +31,7 @@ public:
 // MOAIRetainedCmdStream
 //================================================================//
 class MOAIRetainedCmdStream :
-	public virtual MOAIAbstractCmdStream {
+	public virtual MOAIAbstractCmdStreamWithMedium {
 protected:
 
 	ZLMemStream						mCommandStream;
