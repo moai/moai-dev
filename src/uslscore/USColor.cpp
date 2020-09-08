@@ -453,9 +453,9 @@ void USColor::PremultiplyAlpha ( void* colors, Format format, u32 nColors ) {
 			for ( u32 i = 0; i < nColors; ++i ) {
 				color = *( u32* )colors;
 				alpha = ( color >> 0x18 ) & 0xFF;
-				*( u32* )colors =	((((( color >> 0x00 ) & 0xFF ) * alpha ) >> 0x08 ) << 0x00 ) +
-									((((( color >> 0x08 ) & 0xFF ) * alpha ) >> 0x08 ) << 0x08 ) +
-									((((( color >> 0x10 ) & 0xFF ) * alpha ) >> 0x08 ) << 0x10 ) +
+				*( u32* )colors =	((((( color >> 0x00 ) & 0xFF ) * alpha ) / 255 ) << 0x00 ) +
+									((((( color >> 0x08 ) & 0xFF ) * alpha ) / 255 ) << 0x08 ) +
+									((((( color >> 0x10 ) & 0xFF ) * alpha ) / 255 ) << 0x10 ) +
 									( alpha << 0x18 );
 				colors = ( void* )(( uintptr )colors + 4 );
 			}
