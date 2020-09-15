@@ -8250,7 +8250,6 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = NO;
 				LastUpgradeCheck = 0940;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "libmoai" */;
@@ -10382,7 +10381,7 @@
 					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
 					"../../3rdparty/sfmt-1.4/",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				OTHER_CFLAGS = (
 					"-include",
 					"\"zlcore/zl_replace.h\"",
@@ -10605,7 +10604,7 @@
 					"\"../../3rdparty/facebookiOS-3.0.6.b/src\"",
 					"../../3rdparty/sfmt-1.4/",
 				);
-				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
 				ONLY_ACTIVE_ARCH = YES;
 				OTHER_CFLAGS = (
 					"-include",
