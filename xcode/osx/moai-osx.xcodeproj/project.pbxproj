@@ -21,6 +21,10 @@
 		CD1845BD1A626F0300FCCCE0 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1845BC1A626F0300FCCCE0 /* SystemConfiguration.framework */; };
 		CD18CB3324E376BF00019385 /* moai_gtest_MOAICmd.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD18CB3224E376BF00019385 /* moai_gtest_MOAICmd.cpp */; };
 		CD273EF821B1F209006C4D84 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD273EF721B1F209006C4D84 /* Metal.framework */; };
+		CD2B8E972571E9F000CEFA29 /* vulkan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2B8E962571E9F000CEFA29 /* vulkan.framework */; };
+		CD2B8E982571E9F000CEFA29 /* vulkan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD2B8E962571E9F000CEFA29 /* vulkan.framework */; };
+		CD2B8E992571EA2C00CEFA29 /* vulkan.framework in Copy Files */ = {isa = PBXBuildFile; fileRef = CD2B8E962571E9F000CEFA29 /* vulkan.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		CD2B8E9A2571EA3A00CEFA29 /* vulkan.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CD2B8E962571E9F000CEFA29 /* vulkan.framework */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		CD2E46C51C5181A3008E22A1 /* libmoai-osx-harfbuzz.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1F44E81BDEBB7800F5CF59 /* libmoai-osx-harfbuzz.a */; };
 		CD323B071A8040CB00E2FEBB /* SDLJoystick.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD323B031A8040CB00E2FEBB /* SDLJoystick.cpp */; };
 		CD323B081A8040CB00E2FEBB /* SDLKeyCodeMapping.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD323B051A8040CB00E2FEBB /* SDLKeyCodeMapping.cpp */; };
@@ -57,7 +61,6 @@
 		CD7E372A221D09700065E863 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B319C9901DBFF96600A6C621 /* JavaScriptCore.framework */; };
 		CD7E372B221D09700065E863 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD273EF721B1F209006C4D84 /* Metal.framework */; };
 		CD7E372D221D09700065E863 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1845BC1A626F0300FCCCE0 /* SystemConfiguration.framework */; };
-		CD7E3758221D0A070065E863 /* vulkan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD7E3757221D0A070065E863 /* vulkan.framework */; };
 		CD7E3765221D0ABE0065E863 /* VulkanDebug.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7E375D221D0ABE0065E863 /* VulkanDebug.cpp */; };
 		CD7E3766221D0ABE0065E863 /* VulkanTools.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7E3762221D0ABE0065E863 /* VulkanTools.cpp */; };
 		CD7E3769221D0FE50065E863 /* VulkanAbstractExample.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7E3767221D0FE50065E863 /* VulkanAbstractExample.cpp */; };
@@ -125,7 +128,6 @@
 		CDDEA8A92220BA18005F7B52 /* libmoai-osx-3rdparty-core.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE6C8011AD8682200D6B83A /* libmoai-osx-3rdparty-core.a */; };
 		CDDEA8AB2220C1AA005F7B52 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDDEA8AA2220C1AA005F7B52 /* AudioToolbox.framework */; };
 		CDDEA8AD2220C1B2005F7B52 /* AudioUnit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CDDEA8AC2220C1B2005F7B52 /* AudioUnit.framework */; };
-		CDDEA8AF2220C270005F7B52 /* vulkan.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CD7E3757221D0A070065E863 /* vulkan.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CDDEA8DD22289B70005F7B52 /* libmoai-osx-apple.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE6C7FF1AD8682200D6B83A /* libmoai-osx-apple.a */; };
 		CDDEA8DE22289B70005F7B52 /* libmoai-osx-assimp.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CD8325991D18D2CC002CE2A1 /* libmoai-osx-assimp.a */; };
 		CDDEA8DF22289B70005F7B52 /* libmoai-osx-audio-sampler.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CDE6C8071AD8682200D6B83A /* libmoai-osx-audio-sampler.a */; };
@@ -182,8 +184,6 @@
 		CDDEA94A22289EDD005F7B52 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B319C9901DBFF96600A6C621 /* JavaScriptCore.framework */; };
 		CDDEA94B22289EDD005F7B52 /* Metal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD273EF721B1F209006C4D84 /* Metal.framework */; };
 		CDDEA94C22289EDD005F7B52 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD1845BC1A626F0300FCCCE0 /* SystemConfiguration.framework */; };
-		CDDEA94D22289EDD005F7B52 /* vulkan.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CD7E3757221D0A070065E863 /* vulkan.framework */; };
-		CDDEA95022289EDD005F7B52 /* vulkan.framework in CopyFiles */ = {isa = PBXBuildFile; fileRef = CD7E3757221D0A070065E863 /* vulkan.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		CDDEA95522289F5E005F7B52 /* aku_modules_util.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA633181A390CFB00F3995F /* aku_modules_util.cpp */; };
 		CDDEA95622289F5E005F7B52 /* aku_modules.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDA6331A1A390CFB00F3995F /* aku_modules.cpp */; };
 		CDDEA95822289F5E005F7B52 /* SDLHost-osx.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDF238101CAA7DAC00A45E31 /* SDLHost-osx.mm */; };
@@ -1354,23 +1354,24 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		CDDEA8AE2220C265005F7B52 /* CopyFiles */ = {
+		CDDEA8AE2220C265005F7B52 /* Copy Files */ = {
 			isa = PBXCopyFilesBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 12;
 			dstPath = "";
-			dstSubfolderSpec = 16;
+			dstSubfolderSpec = 10;
 			files = (
-				CDDEA8AF2220C270005F7B52 /* vulkan.framework in CopyFiles */,
+				CD2B8E992571EA2C00CEFA29 /* vulkan.framework in Copy Files */,
 			);
+			name = "Copy Files";
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		CDDEA94F22289EDD005F7B52 /* CopyFiles */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
-			dstSubfolderSpec = 16;
+			dstSubfolderSpec = 10;
 			files = (
-				CDDEA95022289EDD005F7B52 /* vulkan.framework in CopyFiles */,
+				CD2B8E9A2571EA3A00CEFA29 /* vulkan.framework in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1396,6 +1397,7 @@
 		CD18CB3224E376BF00019385 /* moai_gtest_MOAICmd.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = moai_gtest_MOAICmd.cpp; path = "../../src/host-google-test/moai_gtest_MOAICmd.cpp"; sourceTree = "<group>"; };
 		CD212DFE24142458000FC3BD /* moai_gtest_rtti.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = moai_gtest_rtti.cpp; path = "../../src/host-google-test/moai_gtest_rtti.cpp"; sourceTree = "<group>"; };
 		CD273EF721B1F209006C4D84 /* Metal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Metal.framework; path = System/Library/Frameworks/Metal.framework; sourceTree = SDKROOT; };
+		CD2B8E962571E9F000CEFA29 /* vulkan.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vulkan.framework; path = "../vulkan/vulkansdk-macos-1.2.154.0/macOS/Frameworks/vulkan.framework"; sourceTree = "<group>"; };
 		CD323B031A8040CB00E2FEBB /* SDLJoystick.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDLJoystick.cpp; path = "../../src/host-sdl/SDLJoystick.cpp"; sourceTree = "<group>"; };
 		CD323B041A8040CB00E2FEBB /* SDLJoystick.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SDLJoystick.h; path = "../../src/host-sdl/SDLJoystick.h"; sourceTree = "<group>"; };
 		CD323B051A8040CB00E2FEBB /* SDLKeyCodeMapping.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = SDLKeyCodeMapping.cpp; path = "../../src/host-sdl/SDLKeyCodeMapping.cpp"; sourceTree = "<group>"; };
@@ -1410,7 +1412,6 @@
 		CD795EF317F08F4E006AEB47 /* CoreAudio.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreAudio.framework; path = /System/Library/Frameworks/CoreAudio.framework; sourceTree = "<absolute>"; };
 		CD795EF517F08F86006AEB47 /* ForceFeedback.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ForceFeedback.framework; path = /System/Library/Frameworks/ForceFeedback.framework; sourceTree = "<absolute>"; };
 		CD7E3732221D09700065E863 /* moai-vk-onetri */ = {isa = PBXFileReference; explicitFileType = "compiled.mach-o.executable"; includeInIndex = 0; path = "moai-vk-onetri"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD7E3757221D0A070065E863 /* vulkan.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = vulkan.framework; path = "../../../../../../../../../vulkan/vulkansdk-macos-1.1.92.1/macOS/Frameworks/vulkan.framework"; sourceTree = "<group>"; };
 		CD7E375B221D0ABE0065E863 /* VulkanExample.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VulkanExample.h; path = "../../src/vulkan-onetri/VulkanExample.h"; sourceTree = "<group>"; };
 		CD7E375C221D0ABE0065E863 /* VkStruct.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = VkStruct.h; path = "../../src/vulkan-onetri/VkStruct.h"; sourceTree = "<group>"; };
 		CD7E375D221D0ABE0065E863 /* VulkanDebug.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = VulkanDebug.cpp; path = "../../src/vulkan-onetri/VulkanDebug.cpp"; sourceTree = "<group>"; };
@@ -1563,10 +1564,10 @@
 				CD7E3727221D09700065E863 /* ForceFeedback.framework in Frameworks */,
 				CD7E3728221D09700065E863 /* Foundation.framework in Frameworks */,
 				CD7E3729221D09700065E863 /* IOKit.framework in Frameworks */,
+				CD2B8E972571E9F000CEFA29 /* vulkan.framework in Frameworks */,
 				CD7E372A221D09700065E863 /* JavaScriptCore.framework in Frameworks */,
 				CD7E372B221D09700065E863 /* Metal.framework in Frameworks */,
 				CD7E372D221D09700065E863 /* SystemConfiguration.framework in Frameworks */,
-				CD7E3758221D0A070065E863 /* vulkan.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1652,6 +1653,7 @@
 				CDDEA93C22289EDD005F7B52 /* libzl-osx-vfs.a in Frameworks */,
 				CDDEA93D22289EDD005F7B52 /* libstdc++.dylib in Frameworks */,
 				CDDEA93E22289EDD005F7B52 /* libSystem.dylib in Frameworks */,
+				CD2B8E982571E9F000CEFA29 /* vulkan.framework in Frameworks */,
 				CDDEA93F22289EDD005F7B52 /* AudioToolbox.framework in Frameworks */,
 				CDDEA94022289EDD005F7B52 /* AudioUnit.framework in Frameworks */,
 				CDDEA94122289EDD005F7B52 /* Carbon.framework in Frameworks */,
@@ -1666,7 +1668,6 @@
 				CDDEA94A22289EDD005F7B52 /* JavaScriptCore.framework in Frameworks */,
 				CDDEA94B22289EDD005F7B52 /* Metal.framework in Frameworks */,
 				CDDEA94C22289EDD005F7B52 /* SystemConfiguration.framework in Frameworks */,
-				CDDEA94D22289EDD005F7B52 /* vulkan.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -1741,7 +1742,7 @@
 				CD6600651831CB5400D9862B /* OpenGL.framework */,
 				CD273EF721B1F209006C4D84 /* Metal.framework */,
 				CD1845BC1A626F0300FCCCE0 /* SystemConfiguration.framework */,
-				CD7E3757221D0A070065E863 /* vulkan.framework */,
+				CD2B8E962571E9F000CEFA29 /* vulkan.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -1937,7 +1938,7 @@
 				CD7E36FB221D09700065E863 /* Sources */,
 				CD7E3703221D09700065E863 /* Frameworks */,
 				CD7E372E221D09700065E863 /* Copy Binaries */,
-				CDDEA8AE2220C265005F7B52 /* CopyFiles */,
+				CDDEA8AE2220C265005F7B52 /* Copy Files */,
 			);
 			buildRules = (
 			);
@@ -2063,8 +2064,7 @@
 		29B97313FDCFA39411CA2CEA /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				BuildIndependentTargetsInParallel = NO;
-				LastUpgradeCheck = 1120;
+				LastUpgradeCheck = 1200;
 			};
 			buildConfigurationList = C01FCF4E08A954540054247B /* Build configuration list for PBXProject "moai-osx" */;
 			compatibilityVersion = "Xcode 3.2";
@@ -2566,7 +2566,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "OSX_BIN=../../bin/osx\nmkdir -p $OSX_BIN\ncp -a \"${TARGET_BUILD_DIR}/${TARGET_NAME}\" $OSX_BIN";
+			shellScript = "OSX_BIN=../../bin/osx\nmkdir -p $OSX_BIN\ncp -a \"${TARGET_BUILD_DIR}/${TARGET_NAME}\" $OSX_BIN\n";
 		};
 		CDD813CC1E16FFA900996311 /* Copy Binaries */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -2580,7 +2580,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "OSX_BIN=../../bin/osx\nmkdir -p $OSX_BIN\ncp -a \"${TARGET_BUILD_DIR}/${TARGET_NAME}\" $OSX_BIN";
+			shellScript = "OSX_BIN=../../bin/osx\nmkdir -p $OSX_BIN\ncp -a \"${TARGET_BUILD_DIR}/${TARGET_NAME}\" $OSX_BIN\n";
 		};
 		CDDEA94E22289EDD005F7B52 /* Copy Binaries */ = {
 			isa = PBXShellScriptBuildPhase;
@@ -3213,6 +3213,7 @@
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -3297,6 +3298,7 @@
 				CLANG_WARN_NON_LITERAL_NULL_CONVERSION = YES;
 				CLANG_WARN_OBJC_IMPLICIT_RETAIN_SELF = YES;
 				CLANG_WARN_OBJC_LITERAL_CONVERSION = YES;
+				CLANG_WARN_QUOTED_INCLUDE_IN_FRAMEWORK_HEADER = YES;
 				CLANG_WARN_RANGE_LOOP_ANALYSIS = YES;
 				CLANG_WARN_STRICT_PROTOTYPES = YES;
 				CLANG_WARN_SUSPICIOUS_MOVE = YES;
@@ -3383,15 +3385,16 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(VULKAN_SDK)/macOS/include",
+					"$(VULKAN_SDK)/include",
 				);
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
+					"$(VULKAN_SDK)/include",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SYSTEM_FRAMEWORK_SEARCH_PATHS = "$(VULKAN_SDK)/macOS/Frameworks";
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = "$(VULKAN_SDK)/Frameworks";
 			};
 			name = Debug;
 		};
@@ -3410,15 +3413,16 @@
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
-					"$(VULKAN_SDK)/macOS/include",
+					"$(VULKAN_SDK)/include",
 				);
 				LD_RUNPATH_SEARCH_PATHS = "@executable_path";
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
+					"$(VULKAN_SDK)/include",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				SYSTEM_FRAMEWORK_SEARCH_PATHS = "$(VULKAN_SDK)/macOS/Frameworks";
+				SYSTEM_FRAMEWORK_SEARCH_PATHS = "$(VULKAN_SDK)/Frameworks";
 			};
 			name = Release;
 		};
@@ -3554,6 +3558,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
+					"$(VULKAN_SDK)/macOS/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SYSTEM_FRAMEWORK_SEARCH_PATHS = "$(VULKAN_SDK)/macOS/Frameworks";
@@ -3580,6 +3585,7 @@
 				LIBRARY_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(SDKROOT)/usr/lib/system",
+					"$(VULKAN_SDK)/macOS/lib",
 				);
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SYSTEM_FRAMEWORK_SEARCH_PATHS = "$(VULKAN_SDK)/macOS/Frameworks";

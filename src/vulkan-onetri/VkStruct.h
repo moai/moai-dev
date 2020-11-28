@@ -125,14 +125,10 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	static VkClearValue clearValue ( VkClearColorValue* clearColor, VkClearDepthStencilValue* clearDepthStencil = NULL ) {
+	static VkClearValue clearValue ( const VkClearColorValue& clearColor, const VkClearDepthStencilValue& clearDepthStencil ) {
 		VkClearValue clearValue;
-		if ( clearColor ) {
-			clearValue.color = *clearColor;
-		}
-		else {
-			clearValue.depthStencil = *clearDepthStencil;
-		}
+		clearValue.color					= clearColor;
+		clearValue.depthStencil				= clearDepthStencil;
 		return clearValue;
 	}
 

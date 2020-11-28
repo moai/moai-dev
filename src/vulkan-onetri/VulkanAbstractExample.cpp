@@ -164,7 +164,8 @@ VkResult VulkanAbstractExample::createLogicalDevice ( VkQueueFlags requestedQueu
     deviceCreateInfo.sType = VK_STRUCTURE_TYPE_DEVICE_CREATE_INFO;
     deviceCreateInfo.queueCreateInfoCount = static_cast < uint32_t>( queueCreateInfos.size ());;
     deviceCreateInfo.pQueueCreateInfos = queueCreateInfos.data ();
-    deviceCreateInfo.pEnabledFeatures = &mEnabledFeatures;
+//    deviceCreateInfo.pEnabledFeatures = &mEnabledFeatures;
+	deviceCreateInfo.pEnabledFeatures = NULL;
 
 	std::vector < const char* > deviceExtensions;
 
@@ -177,9 +178,9 @@ VkResult VulkanAbstractExample::createLogicalDevice ( VkQueueFlags requestedQueu
 //        vks::debugmarker::setup ( mDevice );
 //    }
 
-    if (deviceExtensions.size () > 0) {
-        deviceCreateInfo.enabledExtensionCount = (uint32_t)deviceExtensions.size();
-        deviceCreateInfo.ppEnabledExtensionNames = deviceExtensions.data();
+    if ( deviceExtensions.size () > 0 ) {
+        deviceCreateInfo.enabledExtensionCount = ( uint32_t )deviceExtensions.size ();
+        deviceCreateInfo.ppEnabledExtensionNames = deviceExtensions.data ();
     }
 
     VK_CHECK_RESULT ( vkCreateDevice ( mPhysicalDevice, &deviceCreateInfo, nullptr, &mDevice ));

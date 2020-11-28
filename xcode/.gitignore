@@ -1,5 +1,6 @@
 build/
 xcuserdata/
+vulkan/
 *.pbxuser
 *.perspectivev3
 *.xcconfig
