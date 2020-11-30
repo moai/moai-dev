@@ -51,7 +51,6 @@ protected:
 	static int			_getInterface				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	MOAICmdMedium&		AffirmMedium				();
 	void				RetainObject				( MOAILuaObject* object );
 	void				SubmitCommand				( MOAIAbstractCmdHandler& handler, u32 cmd, const void* param, ZLSize paramSize );
 
@@ -62,6 +61,7 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
+	MOAICmdMedium&		AffirmMedium						();
 						MOAIAbstractCmdStreamWithMedium		();
 						~MOAIAbstractCmdStreamWithMedium	();
 	void				SetMedium							( MOAICmdMedium* medium );

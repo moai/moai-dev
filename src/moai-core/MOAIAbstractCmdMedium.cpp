@@ -34,7 +34,7 @@ int MOAIAbstractCmdMedium::_getInterface ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 	if ( state.IsType ( 1, LUA_TUSERDATA )) {
-		MOAICmdMedium* self = ( MOAICmdMedium* )state.GetPtrUserData ( 1 );
+		MOAIAbstractCmdMedium* self = ( MOAIAbstractCmdMedium* )state.GetPtrUserData ( 1 );
 		return self->PushCmdInterfaceWithHandler ( state, 2 );
 	}
 	return 0;

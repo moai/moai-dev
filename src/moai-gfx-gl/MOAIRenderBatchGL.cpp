@@ -85,10 +85,6 @@ void MOAIRenderBatchGL::MOAIRenderBatch_Render () {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	gfxMgr.SetFrameBuffer ( frameBuffer );
-	
-//	ZLRect bufferRect ( 0, 0, frameBuffer->GetBufferWidth (), frameBuffer->GetBufferHeight ());
-//	gfxMgr.SetViewRect ( bufferRect );
-//	gfxMgr.SetScissorRect ( bufferRect );
 
 	gfxMgr.SetViewRect ();
 	gfxMgr.SetScissorRect ();

@@ -766,8 +766,6 @@
 		CD0BB6411B0D22B900399FCB /* MOAILuaUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD0BB63D1B0D22AC00399FCB /* MOAILuaUtil.h */; };
 		CD0DD3CE18E1392900FBA4B5 /* MOAIVectorUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4C050D18500C18005B0520 /* MOAIVectorUtil.cpp */; };
 		CD0DD3CF18E1393000FBA4B5 /* MOAIVectorStyle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4C050C18500C18005B0520 /* MOAIVectorStyle.cpp */; };
-		CD0E3A5224ECD68C00E6C92C /* MOAIGfxCmdMedium.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD0E3A5024ECD68C00E6C92C /* MOAIGfxCmdMedium.cpp */; };
-		CD0E3A5324ECD68C00E6C92C /* MOAIGfxCmdMedium.h in Headers */ = {isa = PBXBuildFile; fileRef = CD0E3A5124ECD68C00E6C92C /* MOAIGfxCmdMedium.h */; };
 		CD0E3A5724EDDE5A00E6C92C /* MOAIAbstractCmdHandlerWithAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = CD0E3A5524EDDE5A00E6C92C /* MOAIAbstractCmdHandlerWithAPI.h */; };
 		CD0E3A5A24EE260400E6C92C /* MOAIAbstractGfxScriptCallback.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD0E3A5824EE260400E6C92C /* MOAIAbstractGfxScriptCallback.cpp */; };
 		CD0E3A5B24EE260400E6C92C /* MOAIAbstractGfxScriptCallback.h in Headers */ = {isa = PBXBuildFile; fileRef = CD0E3A5924EE260400E6C92C /* MOAIAbstractGfxScriptCallback.h */; };
@@ -5730,8 +5728,6 @@
 		CD08DBD61E690B9D00443255 /* MOAIFreeTypeFontReader_apple.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; path = MOAIFreeTypeFontReader_apple.mm; sourceTree = "<group>"; };
 		CD0BB63C1B0D22AC00399FCB /* MOAILuaUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAILuaUtil.cpp; sourceTree = "<group>"; };
 		CD0BB63D1B0D22AC00399FCB /* MOAILuaUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAILuaUtil.h; sourceTree = "<group>"; };
-		CD0E3A5024ECD68C00E6C92C /* MOAIGfxCmdMedium.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIGfxCmdMedium.cpp; path = "moai-gfx/MOAIGfxCmdMedium.cpp"; sourceTree = "<group>"; };
-		CD0E3A5124ECD68C00E6C92C /* MOAIGfxCmdMedium.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIGfxCmdMedium.h; path = "moai-gfx/MOAIGfxCmdMedium.h"; sourceTree = "<group>"; };
 		CD0E3A5524EDDE5A00E6C92C /* MOAIAbstractCmdHandlerWithAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIAbstractCmdHandlerWithAPI.h; sourceTree = "<group>"; };
 		CD0E3A5824EE260400E6C92C /* MOAIAbstractGfxScriptCallback.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIAbstractGfxScriptCallback.cpp; path = "moai-gfx/MOAIAbstractGfxScriptCallback.cpp"; sourceTree = "<group>"; };
 		CD0E3A5924EE260400E6C92C /* MOAIAbstractGfxScriptCallback.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIAbstractGfxScriptCallback.h; path = "moai-gfx/MOAIAbstractGfxScriptCallback.h"; sourceTree = "<group>"; };
@@ -11523,8 +11519,6 @@
 				CD4B4EF824DB7CBC00AA7634 /* MOAIDraw.h */,
 				CD4B4EF324DB711600AA7634 /* MOAIDrawAPI.cpp */,
 				CD4B4EF424DB711600AA7634 /* MOAIDrawAPI.h */,
-				CD0E3A5024ECD68C00E6C92C /* MOAIGfxCmdMedium.cpp */,
-				CD0E3A5124ECD68C00E6C92C /* MOAIGfxCmdMedium.h */,
 				CD66A13424219ED400DB95B4 /* MOAIHasGfxScript.cpp */,
 				CD66A13524219ED400DB95B4 /* MOAIHasGfxScript.h */,
 				CD4A92EC229C94DF00F9E400 /* MOAIHasGfxScriptBatch.cpp */,
@@ -15530,7 +15524,6 @@
 				CD4A966922A2045900F9E400 /* MOAIImageTexture.h in Headers */,
 				CD4A9605229E091F00F9E400 /* MOAIGfxMgr_CPUCache.h in Headers */,
 				CD4A9633229E786100F9E400 /* MOAIFrameBuffer.h in Headers */,
-				CD0E3A5324ECD68C00E6C92C /* MOAIGfxCmdMedium.h in Headers */,
 				CD4A966B22A2045900F9E400 /* MOAITexture2D.h in Headers */,
 				CD4A9603229E091F00F9E400 /* MOAIBlendMode.h in Headers */,
 				CD1711C622F2441A00381882 /* MOAIVertexFormatMgr.h in Headers */,
@@ -18992,7 +18985,6 @@
 			files = (
 				CDBF997223460281003F430D /* ZLAbstractFinalizable.cpp in Sources */,
 				CD4A9602229E091F00F9E400 /* MOAIBlendMode.cpp in Sources */,
-				CD0E3A5224ECD68C00E6C92C /* MOAIGfxCmdMedium.cpp in Sources */,
 				CD1711C522F2441A00381882 /* MOAIVertexFormatMgr.cpp in Sources */,
 				CD4A94A1229DE21A00F9E400 /* pch.cpp in Sources */,
 				CD4A9606229E091F00F9E400 /* MOAIUniformDescriptor.cpp in Sources */,

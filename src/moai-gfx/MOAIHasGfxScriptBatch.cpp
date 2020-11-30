@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <moai-gfx/MOAIDraw.h>
 #include <moai-gfx/MOAIHasGfxScriptBatch.h>
 
 //================================================================//
@@ -35,7 +36,12 @@ int MOAIHasGfxScriptBatch::_getGfxScript ( lua_State* L ) {
 // TODO: doxygen
 int MOAIHasGfxScriptBatch::_gfx ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHasGfxScriptBatch, "U" )
-	return 0;
+	
+	MOAIGfxScript& gfxScript = self->AffirmGfxScript ( 0 );
+	gfxScript.Reset ();
+	gfxScript.AffirmMedium ().PushCmdInterfaceWithHandler ( state, MOAIDraw::Get ());
+	
+	return 1;
 }
 
 //----------------------------------------------------------------//
