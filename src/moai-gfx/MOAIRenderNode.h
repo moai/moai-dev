@@ -1,40 +1,39 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIABSTRACTLAYER_H
-#define	MOAIABSTRACTLAYER_H
+#ifndef	MOAIRENDERNODE_H
+#define	MOAIRENDERNODE_H
 
-class MOAIColor;
-class MOAIFrameBuffer;
-class MOAIPartition;
-class MOAIFrameBuffer;
+#include <moai-gfx/MOAIAbstractDrawable.h>
+#include <moai-gfx/MOAIHasGfxScript.h>
 
 //================================================================//
-// MOAIAbstractLayer
+// MOAIRenderNode
 //================================================================//
-class MOAIAbstractLayer :
-	public virtual MOAIRenderNode,
-	public virtual MOAISurfaceClearColor {
+class MOAIRenderNode :
+	public virtual MOAIAbstractDrawable,
+	public virtual MOAIHasGfxScript {
 private:
 
 	MOAI_LUA_OBJECT_VISITOR_FRIEND
 
 	//----------------------------------------------------------------//
-//	static int		_draw						( lua_State* L );
-	static int		_pushRenderPass				( lua_State* L );
-
-protected:
+	static int		_render						( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void			_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
 	void			_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			MOAIDrawable_Draw			( int subPrimID );
 	void			MOAIDrawable_DrawDebug		( int subPrimID );
 
 public:
-	
+
+	DECL_LUA_FACTORY ( MOAIRenderNode )
+
 	//----------------------------------------------------------------//
-					MOAIAbstractLayer			();
-					~MOAIAbstractLayer			();
+					MOAIRenderNode				();
+	virtual 		~MOAIRenderNode				();
+	void			Render						();
 };
 
 #endif

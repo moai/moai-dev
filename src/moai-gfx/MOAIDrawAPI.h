@@ -108,6 +108,9 @@ public:
 		BIND_VECTOR_PRESETS,
 		CLEAR_SURFACE,
 		
+		DISABLE_SCISSOR_RECT,
+		DISABLE_VIEW_RECT,
+		
 		DRAW,
 		
 		DRAW_ANIM_CURVE,
@@ -131,6 +134,7 @@ public:
 		SET_PEN_COLOR,
 		SET_PEN_WIDTH,
 		SET_SCISSOR_RECT,
+		SET_SCISSOR_RECT_FROM_VIEWPORT,
 		SET_SHADER,
 		SET_TEXTURE,
 		SET_VERTEX_ARRAY,
@@ -257,13 +261,16 @@ public:
 	void 				SetMatrixFromTransform		( u32 matrixID, MOAIAbstractChildTransform& transform );
 	void				SetPenColor					( u32 color );
 	void				SetPenWidth					( float width );
+	void				SetScissorRect				();
 	void				SetScissorRect				( const ZLRect& rect );
+	void				SetScissorRect				( MOAIViewport* viewport );
 	void				SetShader					( MOAIShader* shader );
 	void				SetTexture					( MOAITexture* texture, ZLIndex textureUnit );
 	void				SetVertexArray				( MOAIVertexArray* vertexArray );
 	void				SetVertexBuffer				( MOAIVertexBuffer* vertexBuffer );
 	void				SetVertexFormat				( MOAIVertexFormat* vertexFormat );
 	void				SetViewProj					( MOAIViewport* viewport, MOAICamera* camera );
+	void				SetViewRect					();
 	void				SetViewRect					( const ZLRect& rect );
 	void				SetViewRect					( MOAIViewport* viewport );
 };

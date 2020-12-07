@@ -61,27 +61,27 @@ private:
 
 protected:
 
-	static int				_gc						( lua_State* L );
-	static int				_getClass				( lua_State* L );
-	static int				_getClassName			( lua_State* L );
-	static int				_getMemberTable			( lua_State* L );
-	static int				_getRefTable			( lua_State* L );
-	static int				_pin					( lua_State* L );
-	static int				_serializeIn			( lua_State* L );
-	static int				_serializeOut			( lua_State* L );
-	static int				_setFinalizer			( lua_State* L );
-	static int				_setInterface			( lua_State* L );
-	static int				_setMembers				( lua_State* L );
-	static int				_tostring				( lua_State* L );
-	static int				_unpin					( lua_State* L );
+	static int				_gc							( lua_State* L );
+	static int				_getClass					( lua_State* L );
+	static int				_getClassName				( lua_State* L );
+	static int				_getMemberTable				( lua_State* L );
+	static int				_getRefTable				( lua_State* L );
+	static int				_pin						( lua_State* L );
+	static int				_serializeIn				( lua_State* L );
+	static int				_serializeOut				( lua_State* L );
+	static int				_setFinalizer				( lua_State* L );
+	static int				_setInterface				( lua_State* L );
+	static int				_setMembers					( lua_State* L );
+	static int				_tostring					( lua_State* L );
+	static int				_unpin						( lua_State* L );
 
 	//----------------------------------------------------------------//
-	static int				InjectAndCall			( lua_CFunction func, MOAILuaObject* self, lua_State* L );
-	void					MakeLuaBinding			( MOAILuaState& state );
-	bool					PushRefTable			( MOAILuaState& state );
-	void					SetInterfaceTable		( MOAILuaState& state, int idx );
-	void					SetMemberTable			( MOAILuaState& state, int idx );
-	static void				Unbind					( MOAILuaObject* object, MOAILuaWeakRef& userdata );
+	static int				InjectAndCall				( lua_CFunction func, MOAILuaObject* self, lua_State* L );
+	void					MakeLuaBinding				( MOAILuaState& state );
+	bool					PushRefTable				( MOAILuaState& state );
+	void					SetInterfaceTable			( MOAILuaState& state, int idx );
+	void					SetMemberTable				( MOAILuaState& state, int idx );
+	static void				Unbind						( MOAILuaObject* object, MOAILuaWeakRef& userdata );
 
 	//----------------------------------------------------------------//
 	void					_RegisterLuaClass					( RTTIVisitorHistory& history, MOAILuaState& state );

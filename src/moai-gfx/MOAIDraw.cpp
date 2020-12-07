@@ -396,7 +396,28 @@ void MOAIDraw::MOAIAbstractCmdHandler_HandleCommand ( u32 cmd, const void* param
 			gfxMgr.SetCullFunc ();
 			break;
 		
-		case MOAIDrawAPI::CLEAR_SURFACE:
+		case MOAIDrawAPI::CLEAR_SURFACE: {
+
+			// TODO: handle properly setting clear color and flags
+			gfxMgr.SetClearColor ( ZLColorVec::CLEAR );
+			gfxMgr.SetClearFlags (
+				MOAIClearFlagsEnum::COLOR_BUFFER_BIT |
+				MOAIClearFlagsEnum::DEPTH_BUFFER_BIT |
+				MOAIClearFlagsEnum::STENCIL_BUFFER_BIT
+			);
+			gfxMgr.SetClearFlags (
+				MOAIClearFlagsEnum::COLOR_BUFFER_BIT
+			);
+			gfxMgr.ClearSurface ();
+			break;
+		}
+		
+		case MOAIDrawAPI::DISABLE_SCISSOR_RECT:
+			gfxMgr.SetScissorRect ();
+			break;
+			
+		case MOAIDrawAPI::DISABLE_VIEW_RECT:
+			gfxMgr.SetViewRect ();
 			break;
 		
 		case MOAIDrawAPI::DRAW:
@@ -457,9 +478,10 @@ void MOAIDraw::MOAIAbstractCmdHandler_HandleCommand ( u32 cmd, const void* param
 			gfxMgr.SetDepthMask ( *( const bool* )param );
 			break;
 		
-		case MOAIDrawAPI::SET_FRAME_BUFFER:
+		case MOAIDrawAPI::SET_FRAME_BUFFER: {
 			gfxMgr.SetFrameBuffer ( *( MOAIFrameBuffer** )param );
 			break;
+		}
 		
 		case MOAIDrawAPI::SET_INDEX_BUFFER:
 			gfxMgr.SetIndexBuffer ( *( MOAIIndexBuffer** )param );
@@ -487,6 +509,10 @@ void MOAIDraw::MOAIAbstractCmdHandler_HandleCommand ( u32 cmd, const void* param
 		
 		case MOAIDrawAPI::SET_SCISSOR_RECT:
 			gfxMgr.SetScissorRect ( *( ZLRect* )param );
+			break;
+		
+		case MOAIDrawAPI::SET_SCISSOR_RECT_FROM_VIEWPORT:
+			gfxMgr.SetScissorRect ( *( MOAIViewport** )param );
 			break;
 		
 		case MOAIDrawAPI::SET_SHADER:

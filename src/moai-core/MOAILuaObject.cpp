@@ -28,7 +28,7 @@ int MOAILuaObject::_gc ( lua_State* L ) {
 	MOAILuaState state ( L );
 	MOAILuaObject* self = ( MOAILuaObject* )state.GetPtrUserData ( 1 );
 	
-	//edgecase: ignore _gc() called by previous Lua userdata
+	// edgecase: ignore _gc() called by previous Lua userdata
 	self->mActiveUserdataCount--;
 	if ( self->mActiveUserdataCount > 0 ) return 0;
 	

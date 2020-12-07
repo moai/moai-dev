@@ -30,15 +30,15 @@ void AKUGfxGLContextInitialize () {
 	MOAIDrawGL::Affirm ();
 	MOAIGfxMgrGL::Affirm ();
 	MOAIGfxMgrGL::RegisterAlias < MOAIGfxMgr >();
-
 	MOAIShaderMgrGL::Affirm ();
 
+	MOAIGfxMgrGL::Get ().SetDefaultFrameBuffer ( new MOAIFrameBufferGL ());
+
 	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIFrameBufferGL, 			"MOAIFrameBuffer" )
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIFrameBufferTextureGL, 	"MOAIFrameBufferTexture" )
 	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIGfxMgrGL, 				"MOAIGfxMgr" )
 	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIImageTextureGL, 		"MOAIImageTexture" )
 	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIIndexBufferGL, 			"MOAIIndexBuffer" )
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIRenderBatchGL,			"MOAIShader" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIRenderBufferGL,			"MOAIRenderBuffer" )
 	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIShaderGL, 				"MOAIShader" )
 	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIShaderMgrGL, 			"MOAIShaderMgr" )
 	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIShaderProgramGL, 		"MOAIShaderProgram" )

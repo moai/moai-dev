@@ -2,6 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
+
+#include <moai-gfx/MOAIDraw.h>
 #include <moai-gfx/MOAIHasGfxScript.h>
 
 //================================================================//
@@ -21,7 +23,12 @@ int MOAIHasGfxScript::_getGfxScript ( lua_State* L ) {
 // TODO: doxygen
 int MOAIHasGfxScript::_gfx ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIHasGfxScript, "U" )
-	return 0;
+	
+	MOAIGfxScript& gfxScript = self->AffirmGfxScript ();
+	gfxScript.Reset ();
+	gfxScript.AffirmMedium ().PushCmdInterfaceWithHandler ( state, MOAIDraw::Get ());
+	
+	return 1;
 }
 
 //----------------------------------------------------------------//

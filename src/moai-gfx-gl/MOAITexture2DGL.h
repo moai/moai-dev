@@ -20,6 +20,11 @@ class MOAITexture2DGL :
 protected:
 
 	//----------------------------------------------------------------//
+	static int			_init					( lua_State* L );
+
+	//----------------------------------------------------------------//
+	void				_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
 	bool				MOAIGfxResourceGL_OnGPUCreate			();
 
 public:

@@ -116,6 +116,7 @@ public:
 	void					SetPenWidth					( float penWidth );
 	void					SetScissorRect				();
 	void					SetScissorRect				( ZLRect rect );
+	void					SetScissorRect				( MOAIViewport* viewport );
 	void					SetShader					( MOAIShader* shader = NULL );
 	void					SetShader					( MOAIShaderPresetEnum preset );
 	void					SetTexture					( MOAITexture* texture = NULL, ZLIndex textureUnit = 0 );

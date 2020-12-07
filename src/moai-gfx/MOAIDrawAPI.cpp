@@ -82,7 +82,9 @@ int MOAIDrawAPI::_clearSurface ( lua_State* L ) {
 	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
 	
 	self->ClearSurface ();
-	return 0;
+	
+	lua_pushvalue ( state, 1 );
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -540,7 +542,8 @@ int MOAIDrawAPI::_setFrameBuffer ( lua_State* L ) {
 	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
 
 	self->SetFrameBuffer ( state.GetLuaObject < MOAIFrameBuffer >( 2, false ));
-	return 0;
+	lua_pushvalue ( state, 1 );
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -615,10 +618,23 @@ int MOAIDrawAPI::_setPenWidth ( lua_State* L ) {
 int MOAIDrawAPI::_setScissorRect ( lua_State* L ) {
 	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
 
-	ZLRect rect ( 0.0, 0.0, 0.0, 0.0 );
-	rect = state.GetValue < ZLRect >( 2, rect );
-	self->SetScissorRect ( rect );
-	return 0;
+	// TODO: DRY with setViewRect
+	
+	if ( state.IsType ( 2, LUA_TUSERDATA )) {
+		MOAIViewport* viewport = state.GetLuaObject < MOAIViewport >( 2, true );
+		self->SetScissorRect ( viewport );
+	}
+	else if ( state.GetTop () > 1 ) {
+		ZLRect rect ( 0.0, 0.0, 0.0, 0.0 );
+		rect = state.GetValue < ZLRect >( 3, rect );
+		self->SetScissorRect ( rect );
+	}
+	else {
+		self->SetScissorRect ();
+	}
+	
+	lua_pushvalue ( state, 1 );
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -627,7 +643,9 @@ int MOAIDrawAPI::_setShader ( lua_State* L ) {
 	
 	MOAIShader* shader 		= MOAIGfxMgr::Get ().AffirmShader ( state, 2 );
 	self->SetShader ( shader );
-	return 0;
+	
+	lua_pushvalue ( state, 1 );
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -638,7 +656,9 @@ int MOAIDrawAPI::_setTexture ( lua_State* L ) {
 	ZLIndex textureUnit		= state.GetValue < u32 >( 3, 0 );
 
 	self->SetTexture ( texture, textureUnit );
-	return 0;
+	
+	lua_pushvalue ( state, 1 );
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -686,12 +706,17 @@ int MOAIDrawAPI::_setViewRect ( lua_State* L ) {
 		MOAIViewport* viewport = state.GetLuaObject < MOAIViewport >( 2, true );
 		self->SetViewRect ( viewport );
 	}
-	else {
+	else if ( state.GetTop () > 1 ) {
 		ZLRect rect ( 0.0, 0.0, 0.0, 0.0 );
 		rect = state.GetValue < ZLRect >( 3, rect );
 		self->SetViewRect ( rect );
 	}
-	return 0;
+	else {
+		self->SetViewRect ();
+	}
+	
+	lua_pushvalue ( state, 1 );
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -1355,9 +1380,22 @@ void MOAIDrawAPI::SetPenWidth ( float width ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIDrawAPI::SetScissorRect () {
+
+	this->SubmitCommand ( DISABLE_SCISSOR_RECT );
+}
+
+//----------------------------------------------------------------//
 void MOAIDrawAPI::SetScissorRect ( const ZLRect& rect ) {
 
 	this->SubmitCommand < ZLRect >( SET_SCISSOR_RECT, rect );
+}
+
+//----------------------------------------------------------------//
+void MOAIDrawAPI::SetScissorRect ( MOAIViewport* viewport ) {
+	
+	this->SubmitCommand < MOAIViewport* >( SET_SCISSOR_RECT_FROM_VIEWPORT, viewport );
+	this->RetainObject ( viewport );
 }
 
 //----------------------------------------------------------------//
@@ -1407,6 +1445,12 @@ void MOAIDrawAPI::SetViewProj ( MOAIViewport* viewport, MOAICamera* camera ) {
 	this->SubmitCommand < MOAIDrawAPIParam::SetViewProj >( SET_VIEW_PROJ, param );
 	this->RetainObject ( viewport );
 	this->RetainObject ( camera );
+}
+
+//----------------------------------------------------------------//
+void MOAIDrawAPI::SetViewRect () {
+
+	this->SubmitCommand ( DISABLE_VIEW_RECT );
 }
 
 //----------------------------------------------------------------//

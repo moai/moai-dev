@@ -246,12 +246,7 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushFrameBuffer () {
 		DEBUG_LOG ( "  binding frame buffer: %p\n", nextBuffer );
 	
 		this->GfxStateWillChange ();
-	
-		if ( nextBuffer ) {
-			nextBuffer->AffirmBuffers ();
-		}
-	
-		gfx.BindFramebuffer ( ZLGfxEnum::FRAMEBUFFER_TARGET_DRAW_READ, nextBuffer->mGLFrameBuffer );
+		nextBuffer->Bind ();
 		this->mActiveState->mFrameBuffer = nextBuffer;
 	}
 }

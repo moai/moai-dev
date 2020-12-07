@@ -142,6 +142,48 @@ void MOAITextureGL::CleanupOnError () {
 }
 
 //----------------------------------------------------------------//
+bool MOAITextureGL::CreateTexture () {
+
+	if ( !( this->mWidth && this->mHeight )) return false;
+
+	u32 pixelSize = 0;
+	
+	switch ( this->mGLPixelType ) {
+		
+		case ZLGfxEnum::PIXEL_TYPE_UNSIGNED_SHORT_5_6_5:
+		case ZLGfxEnum::PIXEL_TYPE_UNSIGNED_SHORT_5_5_5_1:
+		case ZLGfxEnum::PIXEL_TYPE_UNSIGNED_SHORT_4_4_4_4:
+			pixelSize = 2;
+			break;
+		
+		case ZLGfxEnum::PIXEL_TYPE_UNSIGNED_BYTE:
+			pixelSize = 4;
+			break;
+	}
+
+	if ( !pixelSize ) return false;
+
+	ZLGfx& gfx = this->mGfxMgr->GetDrawingAPI ();
+
+	this->mGLTexture = gfx.CreateTexture ();
+	
+	gfx.BindTexture ( this->mGLTexture );
+	gfx.TexImage2D (
+		0,
+		this->mGLInternalFormat,
+		this->mWidth,
+		this->mHeight,
+		this->mGLInternalFormat,
+		this->mGLPixelType,
+		NULL
+	);
+
+	this->mTextureSize = this->mWidth * this->mHeight * pixelSize;
+
+	return true;
+}
+
+//----------------------------------------------------------------//
 bool MOAITextureGL::CreateTextureFromImage ( ZLImage& srcImage ) {
 
 	// TODO: ZLGfx
@@ -286,12 +328,14 @@ bool MOAITextureGL::CreateTextureFromImage ( ZLImage& srcImage ) {
 }
 
 //----------------------------------------------------------------//
-MOAITextureGL::MOAITextureGL () {
+MOAITextureGL::MOAITextureGL () :
+	mGLInternalFormat ( ZLGfxEnum::PIXEL_FORMAT_RGBA ),
+	mGLPixelType ( ZLGfxEnum::PIXEL_TYPE_UNSIGNED_BYTE ) {
 	
 	RTTI_BEGIN ( MOAITextureGL )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAITextureGL >)
 		RTTI_EXTEND ( MOAITexture )
-		RTTI_EXTEND ( MOAIGfxResourceGL )
+		RTTI_EXTEND ( MOAIFrameBufferAttachmentGL )
 	RTTI_END
 }
 
@@ -427,6 +471,17 @@ void MOAITextureGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaStat
 	};
 
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+bool MOAITextureGL::MOAIFrameBufferAttachmentGL_Attach ( ZLGfx& gfx, ZLGfxEnum::_ target, ZLGfxEnum::_ attachment, s32 level, s32 layer ) {
+
+	this->Affirm ();
+
+	if ( !this->mGLTexture ) return false;
+	
+	gfx.FramebufferTexture2D ( target, attachment, this->mGLTexture, 0 );
+	return true;
 }
 
 //----------------------------------------------------------------//

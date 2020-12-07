@@ -2,47 +2,44 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIAbstractLayer.h>
+#include <moai-gfx/MOAIGfxMgr.h>
+#include <moai-gfx/MOAIRenderNode.h>
 
 //================================================================//
 // lua
 //================================================================//
 
-////----------------------------------------------------------------//
-//// TODO: doxygen
-//int MOAIAbstractLayer::_draw ( lua_State* L ) {
-//	MOAI_LUA_SETUP ( MOAIPartitionViewLayer, "U" )
-//
-//	self->Draw ( MOAIPartitionHull::NO_SUBPRIM_ID );
-//	return 0;
-//}
-
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIAbstractLayer::_pushRenderPass ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractLayer, "U" )
-	MOAIGfxMgr::Get ().PushDrawable ( self );
+int MOAIRenderNode::_render ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIRenderNode, "U" )
+	
+	self->Render ();
 	return 0;
 }
 
 //================================================================//
-// MOAIAbstractLayer
+// MOAIRenderNode
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIAbstractLayer::MOAIAbstractLayer () {
-	
-	this->mClearFlags = 0; // no clear on default
-	
-	RTTI_BEGIN ( MOAIAbstractLayer )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractLayer >)
-		RTTI_EXTEND ( MOAIRenderNode )
-		RTTI_EXTEND ( MOAISurfaceClearColor )
+MOAIRenderNode::MOAIRenderNode () {
+
+	RTTI_BEGIN ( MOAIRenderNode )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIRenderNode >)
+		RTTI_EXTEND ( MOAIAbstractDrawable )
+		RTTI_EXTEND ( MOAIHasGfxScript )
 	RTTI_END
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractLayer::~MOAIAbstractLayer () {
+MOAIRenderNode::~MOAIRenderNode () {
+}
+
+//----------------------------------------------------------------//
+void MOAIRenderNode::Render () {
+
+	this->Draw ( 0xffffffff );
 }
 
 //================================================================//
@@ -50,17 +47,16 @@ MOAIAbstractLayer::~MOAIAbstractLayer () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAbstractLayer::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIRenderNode::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractLayer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIRenderNode::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
-//		{ "draw",						_draw },
-		{ "pushRenderPass",				_pushRenderPass },
+		{ "render",						_render },
 		{ NULL, NULL }
 	};
 
@@ -68,6 +64,11 @@ void MOAIAbstractLayer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILua
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractLayer::MOAIDrawable_DrawDebug ( int subPrimID ) {
+void MOAIRenderNode::MOAIDrawable_Draw ( int subPrimID ) {
+	UNUSED ( subPrimID );
+}
+
+//----------------------------------------------------------------//
+void MOAIRenderNode::MOAIDrawable_DrawDebug ( int subPrimID ) {
 	UNUSED ( subPrimID );
 }

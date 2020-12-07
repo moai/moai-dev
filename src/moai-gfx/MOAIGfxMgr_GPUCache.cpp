@@ -313,6 +313,17 @@ void MOAIGfxMgr_GPUCache::SetScissorRect ( ZLRect rect ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxMgr_GPUCache::SetScissorRect ( MOAIViewport* viewport ) {
+
+	if ( viewport ) {
+		this->SetScissorRect ( *viewport );
+	}
+	else {
+		this->SetScissorRect ();
+	}
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxMgr_GPUCache::SetShader ( MOAIShader* shader ) {
 
 	assert ( !this->mApplyingStateChanges );

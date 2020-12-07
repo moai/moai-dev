@@ -34,17 +34,6 @@ public:
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIGraphicsPropBase::_draw ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIGraphicsPropBase, "U" )
-	
-	u32 subPrimID		= state.GetValue < u32 >( 2, (u32) MOAIPartitionHull::NO_SUBPRIM_ID );
-	
-	self->Draw ( (int) subPrimID );
-	return 0;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
 int MOAIGraphicsPropBase::_getBillboard ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGraphicsPropBase, "U" )
 	
@@ -236,8 +225,7 @@ MOAIGraphicsPropBase::MOAIGraphicsPropBase () :
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIGraphicsPropBase >)
 		RTTI_EXTEND ( MOAIAbstractProp )
 		RTTI_EXTEND ( MOAIColor )
-		RTTI_EXTEND ( MOAIAbstractDrawable )
-		RTTI_EXTEND ( MOAIHasGfxScript )
+		RTTI_EXTEND ( MOAIRenderNode )
 	RTTI_END
 	
 	this->mDisplayFlags = DEFAULT_FLAGS;
@@ -248,12 +236,6 @@ MOAIGraphicsPropBase::~MOAIGraphicsPropBase () {
 	
 	this->mUVTransform.Set ( *this, 0 );
 	this->mScissorRect.Set ( *this, 0 );
-}
-
-//----------------------------------------------------------------//
-void MOAIGraphicsPropBase::Render () {
-
-	this->Draw ( MOAIPartitionHull::NO_SUBPRIM_ID );
 }
 
 //----------------------------------------------------------------//
@@ -334,7 +316,6 @@ void MOAIGraphicsPropBase::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAI
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
-		{ "draw",					_draw },
 		{ "getBillboard",			_getBillboard },
 		{ "getScissorRect",			_getScissorRect },
 		{ "isVisible",				_isVisible },

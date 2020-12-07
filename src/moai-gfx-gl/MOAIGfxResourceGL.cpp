@@ -102,18 +102,6 @@ int MOAIGfxResourceGL::_scheduleForGPUUpdate ( lua_State* L ) {
 //----------------------------------------------------------------//
 bool MOAIGfxResourceGL::Affirm () {
 
-	if ( this->mState == STATE_NEEDS_GPU_UPDATE ) {
-		this->DoGPUUpdate ();
-	}
-	else {
-		this->DoGPUCreate ();
-	}
-	return this->IsReadyForUse ();
-}
-
-//----------------------------------------------------------------//
-u32 MOAIGfxResourceGL::Bind () {
-
 	// TODO: ZLGfx
 //	if ( !MOAIGfxMgr::Get ().GetHasContext ()) {
 //		MOAILog ( 0, MOAISTRING_MOAIGfxResource_MissingDevice );
@@ -121,16 +109,30 @@ u32 MOAIGfxResourceGL::Bind () {
 //	}
 
 	if ( this->mState != STATE_READY_TO_BIND ) {
-		this->Affirm ();
+	
+		if ( this->mState == STATE_NEEDS_GPU_UPDATE ) {
+			this->DoGPUUpdate ();
+		}
+		else {
+			this->DoGPUCreate ();
+		}
 	}
-
-	// we're ready to bind, so do it
+	
 	if ( this->mState == STATE_READY_TO_BIND ) {
-		// TODO: ZLGfx
 		this->mLastRenderCount = this->mGfxMgr->GetRenderCounter ();
-		this->MOAIGfxResourceGL_OnGPUBind ();
+		return true;
 	}
-	return this->mState;
+	return false;
+}
+
+//----------------------------------------------------------------//
+bool MOAIGfxResourceGL::Bind () {
+
+	if ( this->Affirm ()) {
+		this->MOAIGfxResourceGL_OnGPUBind ();
+		return true;
+	}
+	return false;
 }
 
 //----------------------------------------------------------------//

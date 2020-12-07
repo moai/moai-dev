@@ -36,7 +36,7 @@ public:
 	GET ( u32, FinalColor32, this->mStateFrameCPU.mFinalColor32 )
 	
 	GET_SET ( u32, ClearFlags, this->mStateFrameCPU.mClearFlags )
-	GET_SET ( ZLColorVec&, ClearColor, this->mStateFrameCPU.mClearColor )
+	GET_SET ( const ZLColorVec&, ClearColor, this->mStateFrameCPU.mClearColor )
 	GET_SET ( double, ClearDepth, this->mStateFrameCPU.mClearDepth )
 
 	//----------------------------------------------------------------//

@@ -229,6 +229,12 @@ struct ZLGfxEnum {
 		TOTAL_FLAGS,
 	};
 	
+	#if defined ( MOAI_OS_ANDROID ) || defined ( MOAI_OS_HTML )
+		static const _ DEFAULT_RGBA_PIXEL_FORMAT		= PIXEL_FORMAT_RGB565;
+	#else
+		static const _ DEFAULT_RGBA_PIXEL_FORMAT		= PIXEL_FORMAT_RGBA8;
+	#endif
+	
 	//----------------------------------------------------------------//
 	static _			MapNativeToZL		( u32 value );
 	static u32			MapZLToNative		( _ value );

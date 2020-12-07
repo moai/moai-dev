@@ -17,6 +17,7 @@ class MOAIAbstractViewLayer :
 	public virtual MOAIAbstractLayer {
 protected:
 
+	MOAILuaSharedPtr < MOAIFrameBuffer >	mFrameBuffer;
 	MOAILuaSharedPtr < MOAICamera >			mCamera;
 	MOAILuaSharedPtr < MOAICamera >			mDebugCamera;
 	MOAILuaSharedPtr < MOAIViewport >		mViewport;
@@ -31,6 +32,7 @@ protected:
 	static int		_getViewport			( lua_State* L );
 	static int		_setDebugCamera			( lua_State* L );
 	static int		_setCamera				( lua_State* L );
+	static int		_setFrameBuffer			( lua_State* L );
 	static int		_setParallax			( lua_State* L );
 	static int		_setViewport			( lua_State* L );
 	static int		_showDebugLines			( lua_State* L );

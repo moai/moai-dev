@@ -9,7 +9,6 @@
 #include <moai-gfx-gl/MOAIDrawAPIGL.h>
 #include <moai-gfx-gl/MOAIDrawGL.h>
 #include <moai-gfx-gl/MOAIFrameBufferGL.h>
-#include <moai-gfx-gl/MOAIFrameBufferTextureGL.h>
 #include <moai-gfx-gl/MOAIGfxBufferGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_GPUCacheGL.h>
@@ -21,7 +20,7 @@
 #include <moai-gfx-gl/MOAIGfxStateGPUCacheFrameGL.h>
 #include <moai-gfx-gl/MOAIImageTextureGL.h>
 #include <moai-gfx-gl/MOAIIndexBufferGL.h>
-#include <moai-gfx-gl/MOAIRenderBatchGL.h>
+#include <moai-gfx-gl/MOAIRenderBufferGL.h>
 #include <moai-gfx-gl/MOAIShaderGL.h>
 #include <moai-gfx-gl/MOAIShaderMgrGL.h>
 #include <moai-gfx-gl/MOAIShaderProgramGL.h>

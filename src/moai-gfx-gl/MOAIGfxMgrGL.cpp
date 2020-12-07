@@ -198,10 +198,9 @@ MOAIGfxMgrGL::MOAIGfxMgrGL () :
 	mStateStackTop ( 0 ) {
 	
 	RTTI_BEGIN ( MOAIGfxMgrGL )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIGfxMgrGL >)
 		RTTI_EXTEND ( MOAIGfxMgr )
 	RTTI_END
-	
-	this->SetDefaultFrameBuffer ( new MOAIFrameBufferGL ());
 }
 
 //----------------------------------------------------------------//

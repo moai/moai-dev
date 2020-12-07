@@ -19,7 +19,7 @@ class MOAIGfxMgrGL;
 class MOAIGfxResourceGL :
 	public virtual MOAIGfxResource,
 	public virtual MOAIInstanceEventSource,
-	public ZLGfxListener {
+	public virtual ZLGfxListener {
 public:
 
 	enum PipelineHint {
@@ -52,7 +52,7 @@ protected:
 
 	//----------------------------------------------------------------//	
 	bool				Affirm						();
-	u32					Bind						(); // bind OR create
+	bool				Bind						();
 	bool				DoGPUCreate					(); // gets ready to bind
 	bool				DoGPUUpdate					();
 	void				Renew						(); // lose (but not *delete*) the GPU resource

@@ -195,6 +195,16 @@ int MOAIAbstractViewLayer::_setDebugCamera ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIAbstractViewLayer::_setFrameBuffer ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractViewLayer, "UU" )
+
+	self->mFrameBuffer.Set ( *self, state.GetLuaObject < MOAIFrameBuffer >( 2, true ));
+
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	setParallax
 	@text	Sets the parallax scale for this layer. This is simply a
 			scalar applied to the view transform before rendering.
@@ -452,6 +462,7 @@ MOAIAbstractViewLayer::MOAIAbstractViewLayer () :
 //----------------------------------------------------------------//
 MOAIAbstractViewLayer::~MOAIAbstractViewLayer () {
 
+	this->mFrameBuffer.Set ( *this, 0 );
 	this->mCamera.Set ( *this, 0 );
 	this->mDebugCamera.Set ( *this, 0 );
 	this->mViewport.Set ( *this, 0 );
@@ -462,6 +473,35 @@ MOAIAbstractViewLayer::~MOAIAbstractViewLayer () {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIAbstractViewLayer::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+}
+
+//----------------------------------------------------------------//
+void MOAIAbstractViewLayer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+	
+	luaL_Reg regTable [] = {
+		{ "getCamera",				_getCamera },
+		{ "getFitting",				_getFitting },
+		{ "getFitting3D",			_getFitting3D },
+		{ "getViewport",			_getViewport },
+		{ "setDebugCamera",			_setDebugCamera },
+		{ "setCamera",				_setCamera },
+		{ "setFrameBuffer",			_setFrameBuffer },
+		{ "setParallax",			_setParallax },
+		{ "setViewport",			_setViewport },
+		{ "showDebugLines",			_showDebugLines },
+		{ "wndToWorld",				_wndToWorld },
+		{ "wndToWorldRay",			_wndToWorldRay },
+		{ "worldToWnd",				_worldToWnd },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
 void MOAIAbstractViewLayer::MOAIDrawable_Draw ( int subPrimID ) {
 	UNUSED ( subPrimID );
     
@@ -470,7 +510,12 @@ void MOAIAbstractViewLayer::MOAIDrawable_Draw ( int subPrimID ) {
 	if ( this->IsClear ()) return;
 	
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-		
+
+	// TODO: change this to a push/pop
+	if ( this->mFrameBuffer ) {
+		gfxMgr.SetFrameBuffer ( this->mFrameBuffer );
+	}
+
 	MOAIViewport& viewport = *this->mViewport;
 	ZLRect viewportRect = viewport;
 
@@ -480,11 +525,17 @@ void MOAIAbstractViewLayer::MOAIDrawable_Draw ( int subPrimID ) {
 	gfxMgr.SetViewRect ( viewportRect );
 	gfxMgr.SetScissorRect ( viewportRect );
 	
-	this->MOAISurfaceClearColor::ClearSurface ();
-	
 	gfxMgr.SetViewProj ( this->mViewport, this->mCamera, this->mDebugCamera, this->mParallax );
 	gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX );
 	gfxMgr.SetAmbientColor ( this->mColor );
+	
+	this->MOAISurfaceClearColor::ClearSurface ();
+	
+	MOAIGfxScript* gfxScript = this->GetGfxScript ();
+		
+	if ( gfxScript ) {
+		gfxScript->ExecuteBytecode ();
+	}
 	
 	this->MOAIAbstractViewLayer_Draw ();
 	
@@ -509,32 +560,4 @@ ZLBounds MOAIAbstractViewLayer::MOAIAbstractProp_GetModelBounds () {
 		return bounds;
 	}
 	return ZLBounds::EMPTY;
-}
-
-//----------------------------------------------------------------//
-void MOAIAbstractViewLayer::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIAbstractViewLayer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-	
-	luaL_Reg regTable [] = {
-		{ "getCamera",				_getCamera },
-		{ "getFitting",				_getFitting },
-		{ "getFitting3D",			_getFitting3D },
-		{ "getViewport",			_getViewport },
-		{ "setDebugCamera",			_setDebugCamera },
-		{ "setCamera",				_setCamera },
-		{ "setParallax",			_setParallax },
-		{ "setViewport",			_setViewport },
-		{ "showDebugLines",			_showDebugLines },
-		{ "wndToWorld",				_wndToWorld },
-		{ "wndToWorldRay",			_wndToWorldRay },
-		{ "worldToWnd",				_worldToWnd },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
 }

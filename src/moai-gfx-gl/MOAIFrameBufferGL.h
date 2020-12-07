@@ -4,7 +4,10 @@
 #ifndef	MOAIFRAMEBUFFERGL_H
 #define	MOAIFRAMEBUFFERGL_H
 
+#include <moai-gfx-gl/MOAIGfxResourceGL.h>
+
 class MOAIGfxMgrGL;
+class MOAIFrameBufferAttachmentGL;
 
 //================================================================//
 // MOAIFrameBufferGL
@@ -23,30 +26,29 @@ class MOAIGfxMgrGL;
 */
 class MOAIFrameBufferGL :
 	public virtual MOAIFrameBuffer,
-	public virtual ZLGfxListener {
+	public virtual MOAIGfxResourceGL {
 protected:
 	
 	friend class MOAIGfxMgrGL_GPUCacheGL;
 	
+	bool				mIsDefaultBuffer; // TODO: this is a hack; should probably be its own class (w/o attachments)
 	ZLGfxHandle			mGLFrameBuffer;
 
-	bool								mGrabNextFrame;
-	MOAILuaMemberRef					mOnFrameFinish;
-	MOAILuaSharedPtr < MOAIImage >		mFrameImage;
+	ZLStrongPtr < MOAIFrameBufferAttachmentGL >		mColorAttachment;
+	ZLStrongPtr < MOAIFrameBufferAttachmentGL >		mDepthAttachment;
+	ZLStrongPtr < MOAIFrameBufferAttachmentGL >		mStencilAttachment;
 
 	//----------------------------------------------------------------//
-	static int			_getGrabbedImage			( lua_State* L );
-	static int			_grabNextFrame				( lua_State* L );
-	static int			_isPendingGrab				( lua_State* L );
-
-	//----------------------------------------------------------------//
-	void				AffirmBuffers				();
+	static int			_setAttachment				( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void				_RegisterLuaClass					( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				_RegisterLuaFuncs					( RTTIVisitorHistory& history, MOAILuaState& state );
-	virtual void		MOAIFrameBufferGL_AffirmBuffers		();
-	void				ZLGfxListener_OnReadPixels			( const ZLCopyOnWrite& buffer, void* userdata );
+	void				_RegisterLuaClass							( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaFuncs							( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				MOAIGfxResourceGL_OnGPUBind					();
+	bool				MOAIGfxResourceGL_OnGPUCreate				();
+	void				MOAIGfxResourceGL_OnGPUDeleteOrDiscard		( bool shouldDelete );
+	void				MOAIGfxResourceGL_OnGPUUnbind				(); 
+	bool				MOAIGfxResourceGL_OnGPUUpdate				();
 
 public:
 	
@@ -55,11 +57,9 @@ public:
 	//----------------------------------------------------------------//
 	void				DetectGLFrameBufferID		( MOAIGfxMgrGL& gfxMgr );
 	ZLRect				GetBufferRect				() const;
-	void				GrabImage					( MOAIImage* image );
 						MOAIFrameBufferGL			();
 						~MOAIFrameBufferGL			();
 	void				SetGLFrameBuffer			( MOAIGfxMgrGL& gfxMgr, const ZLGfxHandle& frameBuffer );
-//	ZLRect				WndRectToDevice				( ZLRect rect ) const;
 };
 
 #endif

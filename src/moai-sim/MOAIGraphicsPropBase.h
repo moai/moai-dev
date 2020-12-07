@@ -53,8 +53,7 @@ class MOAIScissorRect;
 class MOAIGraphicsPropBase :
 	public virtual MOAIAbstractProp,
 	public virtual MOAIColor,
-	public virtual MOAIAbstractDrawable,
-	public virtual MOAIHasGfxScript {
+	public virtual MOAIRenderNode {
 protected:
 
 	friend class MOAIGraphicsPropBaseCallable;
@@ -67,7 +66,6 @@ protected:
 	MOAILuaSharedPtr < MOAIScissorRect >				mScissorRect;
 
 	//----------------------------------------------------------------//
-	static int				_draw						( lua_State* L );
 	static int				_getBillboard				( lua_State* L );
 	static int				_getScissorRect				( lua_State* L );
 	static int				_isVisible					( lua_State* L );
@@ -154,7 +152,6 @@ public:
 	bool					IsVisible					();
 							MOAIGraphicsPropBase		();
 	virtual					~MOAIGraphicsPropBase		();
-	void					Render						();
 	void					SetVisible					( bool visible );
 };
 
