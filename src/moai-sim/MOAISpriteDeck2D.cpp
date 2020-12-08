@@ -139,7 +139,7 @@ int MOAISpriteDeck2D::_reserveQuads ( lua_State* L ) {
 	u32 total = state.GetValue < u32 >( 2, 0 );
 	self->ReserveQuads ( total );
 
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -156,7 +156,7 @@ int MOAISpriteDeck2D::_reserveSprites ( lua_State* L ) {
 	u32 total = state.GetValue < u32 >( 2, 0 );
 	self->ReservePairs ( total );
 	
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -173,7 +173,7 @@ int MOAISpriteDeck2D::_reserveSpriteLists ( lua_State* L ) {
 	u32 total = state.GetValue < u32 >( 2, 0 );
 	self->ReserveLists ( total );
 
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -190,7 +190,7 @@ int MOAISpriteDeck2D::_reserveUVQuads ( lua_State* L ) {
 	u32 total = state.GetValue < u32 >( 2, 0 );
 	self->ReserveUVQuads ( total );
 
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -223,7 +223,7 @@ int MOAISpriteDeck2D::_setQuad ( lua_State* L ) {
 
 	self->SetQuad ( quadID, quad );
 
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -251,7 +251,7 @@ int MOAISpriteDeck2D::_setRect ( lua_State* L ) {
 
 	self->SetRect ( rectID, rect );
 
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -275,7 +275,7 @@ int MOAISpriteDeck2D::_setSprite ( lua_State* L ) {
 	
 	self->SetPair ( idx, uvQuadID, quadID, materialID );
 
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -300,7 +300,7 @@ int MOAISpriteDeck2D::_setSpriteList ( lua_State* L ) {
 
 	self->SetList ( idx, basePairID, totalPairs );
 
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -333,7 +333,7 @@ int MOAISpriteDeck2D::_setUVQuad ( lua_State* L ) {
 
 	self->SetUVQuad ( quadID, quad );
 
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -361,7 +361,7 @@ int MOAISpriteDeck2D::_setUVRect ( lua_State* L ) {
 
 	self->SetUVRect ( rectID, rect );
 
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -380,7 +380,7 @@ int MOAISpriteDeck2D::_transform ( lua_State* L ) {
 		transform->ForceUpdate ();
 		self->Transform ( transform->GetLocalToWorldMtx ());
 	}
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -399,7 +399,7 @@ int MOAISpriteDeck2D::_transformUV ( lua_State* L ) {
 		transform->ForceUpdate ();
 		self->TransformUV ( transform->GetLocalToWorldMtx ());
 	}
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //================================================================//
@@ -699,9 +699,9 @@ void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 		callable.mBrush = this->GetSpriteBrush ( i );
 		
 		MOAIGfxScript* gfxScript = this->GetGfxScript ( callable.mBrush.mMaterialID );
-		if ( !gfxScript ) continue;
-		
-		gfxScript->ExecuteBytecode ( &callable );
+		if ( gfxScript ) {
+			gfxScript->ExecuteBytecode ( &callable );
+		}
 		callable.Flush ();
 	}
 }

@@ -21,7 +21,7 @@ int MOAITexture2DGL::_init ( lua_State* L ) {
 
 	self->ScheduleForGPUUpdate ();
 
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //================================================================//

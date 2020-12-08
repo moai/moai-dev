@@ -12,20 +12,6 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIRenderBufferGL::_init ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIRenderBufferGL, "U" )
-
-	self->mWidth				= state.GetValue < u32 >( 2, 0 );
-	self->mHeight				= state.GetValue < u32 >( 3, 0 );
-	self->mGLPixelFormat		= ( ZLGfxEnum::_ )state.GetValue < u32 >( 4, ZLGfxEnum::DEFAULT_RGBA_PIXEL_FORMAT );
-
-	self->ScheduleForGPUUpdate ();
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@lua	getSize
 	@text	Returns the width and height of the texture's source image.
 			Avoid using the texture width and height to compute UV
@@ -43,6 +29,20 @@ int MOAIRenderBufferGL::_getSize ( lua_State* L ) {
 	lua_pushnumber ( state, self->mHeight );
 	
 	return 2;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIRenderBufferGL::_init ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIRenderBufferGL, "U" )
+
+	self->mWidth				= state.GetValue < u32 >( 2, 0 );
+	self->mHeight				= state.GetValue < u32 >( 3, 0 );
+	self->mGLPixelFormat		= ( ZLGfxEnum::_ )state.GetValue < u32 >( 4, ZLGfxEnum::DEFAULT_RGBA_PIXEL_FORMAT );
+
+	self->ScheduleForGPUUpdate ();
+
+	MOAI_LUA_RETURN_SELF
 }
 
 //================================================================//
@@ -81,8 +81,8 @@ void MOAIRenderBufferGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILu
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
-		{ "init",					_init },
 		{ "getSize",				_getSize },
+		{ "init",					_init },
 		{ NULL, NULL }
 	};
 

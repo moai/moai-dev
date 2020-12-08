@@ -20,6 +20,7 @@ bool MOAIFrameBufferAttachmentGL::Attach ( ZLGfx& gfx, ZLGfxEnum::_ target, ZLGf
 MOAIFrameBufferAttachmentGL::MOAIFrameBufferAttachmentGL () {
 	
 	RTTI_BEGIN ( MOAIFrameBufferAttachmentGL )
+		RTTI_EXTEND ( MOAIRenderResource )
 		RTTI_EXTEND ( MOAIGfxResourceGL )
 	RTTI_END
 }

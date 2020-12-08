@@ -26,7 +26,8 @@ class MOAIFrameBufferAttachmentGL;
 */
 class MOAIFrameBufferGL :
 	public virtual MOAIFrameBuffer,
-	public virtual MOAIGfxResourceGL {
+	public virtual MOAIGfxResourceGL,
+	public virtual MOAIRenderResource {
 protected:
 	
 	friend class MOAIGfxMgrGL_GPUCacheGL;
@@ -39,6 +40,7 @@ protected:
 	ZLStrongPtr < MOAIFrameBufferAttachmentGL >		mStencilAttachment;
 
 	//----------------------------------------------------------------//
+	static int			_getAttachment				( lua_State* L );
 	static int			_setAttachment				( lua_State* L );
 	
 	//----------------------------------------------------------------//
@@ -49,6 +51,7 @@ protected:
 	void				MOAIGfxResourceGL_OnGPUDeleteOrDiscard		( bool shouldDelete );
 	void				MOAIGfxResourceGL_OnGPUUnbind				(); 
 	bool				MOAIGfxResourceGL_OnGPUUpdate				();
+	void				MOAIRenderResource_OnRemit					();
 
 public:
 	

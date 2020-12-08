@@ -40,7 +40,7 @@ int MOAIHasDeckAndIndex::_setIndex ( lua_State* L ) {
 	self->mIndex = state.GetValue < MOAILuaIndex >( 2, 0 );
 	self->ScheduleUpdate ();
 
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //================================================================//

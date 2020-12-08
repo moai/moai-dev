@@ -30,8 +30,8 @@ protected:
 	ZLGfxEnum::_		mGLPixelFormat;
 
 	//----------------------------------------------------------------//
-	static int			_init						( lua_State* L );
 	static int			_getSize					( lua_State* L );
+	static int			_init						( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void				_RegisterLuaClass							( RTTIVisitorHistory& history, MOAILuaState& state );

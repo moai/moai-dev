@@ -11,6 +11,17 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+int MOAIFrameBufferGL::_getAttachment ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIFrameBufferGL, "U" )
+	
+	if ( self->mColorAttachment ) {
+		state.Push (( MOAILuaObject* )self->mColorAttachment );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 int MOAIFrameBufferGL::_setAttachment ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFrameBufferGL, "U" )
 	
@@ -18,7 +29,7 @@ int MOAIFrameBufferGL::_setAttachment ( lua_State* L ) {
 	self->mColorAttachment = attachment;
 	self->ScheduleForGPUUpdate ();
 
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //================================================================//
@@ -52,6 +63,7 @@ MOAIFrameBufferGL::MOAIFrameBufferGL () :
 	RTTI_BEGIN ( MOAIFrameBufferGL )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIFrameBufferGL >)
 		RTTI_EXTEND ( MOAIFrameBuffer )
+		RTTI_EXTEND ( MOAIRenderResource )
 	RTTI_END
 }
 
@@ -84,6 +96,7 @@ void MOAIFrameBufferGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILua
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
+		{ "getAttachment",				_getAttachment },
 		{ "setAttachment",				_setAttachment },
 		{ NULL, NULL }
 	};
@@ -144,6 +157,14 @@ void MOAIFrameBufferGL::MOAIGfxResourceGL_OnGPUUnbind () {
 bool MOAIFrameBufferGL::MOAIGfxResourceGL_OnGPUUpdate () {
 
 	return true;
+}
+
+//----------------------------------------------------------------//
+void MOAIFrameBufferGL::MOAIRenderResource_OnRemit () {
+
+	MOAIRenderResourcePool::ReleaseIfPooled < MOAIFrameBufferAttachmentGL >( this->mColorAttachment );
+	MOAIRenderResourcePool::ReleaseIfPooled < MOAIFrameBufferAttachmentGL >( this->mDepthAttachment );
+	MOAIRenderResourcePool::ReleaseIfPooled < MOAIFrameBufferAttachmentGL >( this->mStencilAttachment );
 }
 
 //================================================================//

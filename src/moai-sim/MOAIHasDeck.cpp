@@ -43,11 +43,7 @@ int MOAIHasDeck::_setDeck ( lua_State* L ) {
 	self->mDeck.Set ( *self, deck );
 	self->ScheduleUpdate ();
 	
-	if ( deck ) {
-		state.Push ( deck );
-		return 1;
-	}
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //================================================================//

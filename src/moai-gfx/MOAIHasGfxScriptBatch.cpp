@@ -109,8 +109,11 @@ MOAIGfxScript& MOAIHasGfxScriptBatch::AffirmGfxScript ( ZLIndex index ) {
 //----------------------------------------------------------------//
 MOAIGfxScript* MOAIHasGfxScriptBatch::GetGfxScript ( ZLIndex index ) {
 
+	ZLSize size = this->mGfxScripts.Size ();
+	if ( !size ) return NULL;
+	
 	index = this->WrapIndex ( index );
-	return ( index < this->mGfxScripts.Size ()) ? ( MOAIGfxScript* )this->mGfxScripts [ index ] : NULL;
+	return ( index < size ) ? ( MOAIGfxScript* )this->mGfxScripts [ index ] : NULL;
 }
 
 //----------------------------------------------------------------//

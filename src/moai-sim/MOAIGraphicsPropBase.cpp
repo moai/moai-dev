@@ -107,7 +107,7 @@ int MOAIGraphicsPropBase::_setBillboard ( lua_State* L ) {
 	else {
 		self->mBillboard = state.GetValue < u32 >( 2, BILLBOARD_NONE );
 	}
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -127,7 +127,7 @@ int MOAIGraphicsPropBase::_setParent ( lua_State* L ) {
 	self->SetAttrLink ( MOAIAbstractChildTransform::AttrID_INHERIT_TRANSFORM (),	parent, MOAIAbstractBaseTransform::AttrID_TRANSFORM_TRAIT ());
 	self->SetAttrLink ( AttrID_INHERIT_VISIBLE (),									parent, AttrID_ATTR_VISIBLE ());
 		
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -144,7 +144,7 @@ int MOAIGraphicsPropBase::_setScissorRect ( lua_State* L ) {
 	MOAIScissorRect* scissorRect = state.GetLuaObject < MOAIScissorRect >( 2, true );
 	self->mScissorRect.Set ( *self, scissorRect );
 	
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -161,7 +161,7 @@ int MOAIGraphicsPropBase::_setUVTransform ( lua_State* L ) {
 	MOAIAbstractChildTransform* transform = state.GetLuaObject < MOAIAbstractChildTransform >( 2, true );
 	self->SetDependentMember < MOAIAbstractChildTransform >( self->mUVTransform, transform );
 
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -178,7 +178,7 @@ int MOAIGraphicsPropBase::_setVisible ( lua_State* L ) {
 	bool visible = state.GetValue < bool >( 2, true );
 	self->SetVisible ( visible );
 
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //================================================================//

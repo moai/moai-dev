@@ -23,6 +23,10 @@
 	type* self = MOAILogMgr::Get ().LuaSetupSingle < type >( state, str );		\
 	if ( !self ) return 0;
 
+#define MOAI_LUA_RETURN_SELF													\
+	lua_pushvalue ( state, 1 );													\
+	return 1;
+
 //================================================================//
 // MOAILogMgr
 //================================================================//

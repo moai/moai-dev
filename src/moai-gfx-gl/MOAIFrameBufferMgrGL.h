@@ -51,7 +51,7 @@ class MOAIFrameBufferMgrGL :
 	public ZLContextClass < MOAIFrameBufferMgrGL >,
 	public virtual MOAILuaObject {
 private:
-	
+
 //	enum MOAIShaderPresetEnum {
 //		DECK2D_SHADER,
 //		DECK2D_SNAPPING_SHADER,

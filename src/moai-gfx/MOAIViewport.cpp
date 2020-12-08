@@ -50,7 +50,7 @@ int MOAIViewport::_setOffset ( lua_State* L ) {
 
 	self->SetOffset ( xOffset, yOffset );
 
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -67,7 +67,7 @@ int MOAIViewport::_setRotation ( lua_State* L ) {
 	float rotation = state.GetValue < float >( 2, 0.0f );
 	self->SetRotation ( rotation );
 	
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -101,7 +101,7 @@ int MOAIViewport::_setScale ( lua_State* L ) {
 	
 	self->SetScale ( xScale, yScale );
 
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -147,7 +147,7 @@ int MOAIViewport::_setSize ( lua_State* L ) {
 		self->Init ( 0.0f, 0.0f, x0, y0 );
 	}
 
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //================================================================//

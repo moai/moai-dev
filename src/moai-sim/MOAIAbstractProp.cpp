@@ -88,7 +88,7 @@ int MOAIAbstractProp::_setExpandForSort ( lua_State* L ) {
 		self->mFlags &= ~FLAGS_EXPAND_FOR_SORT;
 	}
 
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -101,7 +101,7 @@ int MOAIAbstractProp::_setFlag ( lua_State* L ) {
 
 	self->mFlags = set ? self->mFlags |= flag : self->mFlags &= flag;
 
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -136,7 +136,7 @@ int MOAIAbstractProp::_setModelBounds ( lua_State* L ) {
 	}
 	
 	self->ScheduleUpdate ();
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -151,7 +151,7 @@ int MOAIAbstractProp::_setModelBoundsPad ( lua_State* L ) {
 
 	self->ScheduleUpdate ();
 
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //================================================================//

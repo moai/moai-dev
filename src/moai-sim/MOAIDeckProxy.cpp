@@ -18,7 +18,7 @@ int MOAIDeckProxy::_setDeck ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDeckProxy, "U" )
 	
 	self->mDeck.Set ( *self, state.GetLuaObject < MOAIDeck >( 2, true ));
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //================================================================//

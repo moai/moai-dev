@@ -22,8 +22,10 @@ void AKUGfxContextInitialize () {
 
 	MOAIDraw::Affirm ();
 	MOAIVertexFormatMgr::Affirm ();
+	MOAIRenderResourcePool::Affirm ();
 	
 	REGISTER_LUA_CLASS ( MOAIDraw )
+	REGISTER_LUA_CLASS ( MOAIRenderResourcePool )
 	
 	REGISTER_LUA_CLASS ( MOAICamera )
 	REGISTER_LUA_CLASS ( MOAIMatrix )

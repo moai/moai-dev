@@ -28,7 +28,7 @@ int MOAIProjectionProp::_init ( lua_State* L ) {
 	self->SetDependentMember ( self->mSourceLayer, sourceLayer );
 	self->SetDependentMember ( self->mDestLayer, destLayer );
 	
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //================================================================//

@@ -46,7 +46,7 @@ int MOAIHasDeckAndGrid::_setGrid ( lua_State* L ) {
 	self->mGrid.Set ( *self, grid );
 	self->ScheduleUpdate ();
 	
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -66,7 +66,7 @@ int MOAIHasDeckAndGrid::_setGridScale ( lua_State* L ) {
 	
 	self->ScheduleUpdate ();
 	
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //================================================================//

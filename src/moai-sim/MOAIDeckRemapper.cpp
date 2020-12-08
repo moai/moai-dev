@@ -27,7 +27,7 @@ int MOAIDeckRemapper::_reserve ( lua_State* L ) {
 	for ( ZLIndex i = 0; i < size; ++i ) {
 		self->mRemap [ i ] = i;
 	}
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -45,7 +45,7 @@ int MOAIDeckRemapper::_setBase ( lua_State* L ) {
 	
 	self->mBase = state.GetValue < u32 >( 2, 0 );
 	
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -68,7 +68,7 @@ int MOAIDeckRemapper::_setRemap ( lua_State* L ) {
 	if ( code < self->mRemap.Size ()) {
 		self->mRemap [ code ] = remap;
 	}
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //================================================================//

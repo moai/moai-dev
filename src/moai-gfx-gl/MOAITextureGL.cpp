@@ -58,7 +58,7 @@ int MOAITextureGL::_setDebugName ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextureGL, "U" )
 
 	self->mDebugName = state.GetValue < cc8* >( 2, "" );
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -81,7 +81,7 @@ int MOAITextureGL::_setFilter ( lua_State* L ) {
 
 	self->SetFilter ( min, mag );
 
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -99,7 +99,7 @@ int MOAITextureGL::_setWrap ( lua_State* L ) {
 	
 	self->mWrap = wrap ? MOAITextureWrapEnum::REPEAT : MOAITextureWrapEnum::CLAMP;
 
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //================================================================//

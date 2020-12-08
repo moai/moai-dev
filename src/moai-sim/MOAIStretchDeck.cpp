@@ -15,7 +15,7 @@ int MOAIStretchDeck::_setStretchFactor ( lua_State* L ) {
 
 	self->mStretchFactor = state.GetValue < float >( 2, 0.0f );
 
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //================================================================//
