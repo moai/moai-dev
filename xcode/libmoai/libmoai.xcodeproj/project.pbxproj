@@ -1495,8 +1495,14 @@
 		CD2B8EE5257A887A00CEFA29 /* MOAIFrameBufferMgrGL.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B8EE3257A887900CEFA29 /* MOAIFrameBufferMgrGL.h */; };
 		CD2B8EE9257EB2D000CEFA29 /* MOAIRenderBufferGL.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B8EE7257EB2CF00CEFA29 /* MOAIRenderBufferGL.h */; };
 		CD2B8EEA257EB2D000CEFA29 /* MOAIRenderBufferGL.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2B8EE8257EB2D000CEFA29 /* MOAIRenderBufferGL.cpp */; };
-		CD2B8EF1257FB8E100CEFA29 /* MOAIRenderResourcePool.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B8EEF257FB8E000CEFA29 /* MOAIRenderResourcePool.h */; };
-		CD2B8EF2257FB8E100CEFA29 /* MOAIRenderResourcePool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2B8EF0257FB8E100CEFA29 /* MOAIRenderResourcePool.cpp */; };
+		CD2B8EF72582941400CEFA29 /* MOAIPool.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2B8EF52582941400CEFA29 /* MOAIPool.cpp */; };
+		CD2B8EF82582941400CEFA29 /* MOAIPool.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B8EF62582941400CEFA29 /* MOAIPool.h */; };
+		CD2B8EFD258294BF00CEFA29 /* MOAIScope.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2B8EF9258294BE00CEFA29 /* MOAIScope.cpp */; };
+		CD2B8EFE258294BF00CEFA29 /* MOAIPoolableObject.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2B8EFA258294BE00CEFA29 /* MOAIPoolableObject.cpp */; };
+		CD2B8EFF258294BF00CEFA29 /* MOAIScope.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B8EFB258294BF00CEFA29 /* MOAIScope.h */; };
+		CD2B8F00258294BF00CEFA29 /* MOAIPoolableObject.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B8EFC258294BF00CEFA29 /* MOAIPoolableObject.h */; };
+		CD2B8F03258294E900CEFA29 /* MOAIPoolableObjectFactory.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2B8F01258294E800CEFA29 /* MOAIPoolableObjectFactory.h */; };
+		CD2B8F04258294E900CEFA29 /* MOAIPoolableObjectFactory.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2B8F02258294E900CEFA29 /* MOAIPoolableObjectFactory.cpp */; };
 		CD2CB51D19FDBECA00C42260 /* MOAIStreamAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2CB51B19FDBECA00C42260 /* MOAIStreamAdapter.cpp */; };
 		CD2CB51E19FDBECA00C42260 /* MOAIStreamAdapter.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2CB51B19FDBECA00C42260 /* MOAIStreamAdapter.cpp */; };
 		CD2CB51F19FDBECA00C42260 /* MOAIStreamAdapter.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2CB51C19FDBECA00C42260 /* MOAIStreamAdapter.h */; };
@@ -6312,8 +6318,14 @@
 		CD2B8EE3257A887900CEFA29 /* MOAIFrameBufferMgrGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIFrameBufferMgrGL.h; path = "moai-gfx-gl/MOAIFrameBufferMgrGL.h"; sourceTree = "<group>"; };
 		CD2B8EE7257EB2CF00CEFA29 /* MOAIRenderBufferGL.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIRenderBufferGL.h; path = "moai-gfx-gl/MOAIRenderBufferGL.h"; sourceTree = "<group>"; };
 		CD2B8EE8257EB2D000CEFA29 /* MOAIRenderBufferGL.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIRenderBufferGL.cpp; path = "moai-gfx-gl/MOAIRenderBufferGL.cpp"; sourceTree = "<group>"; };
-		CD2B8EEF257FB8E000CEFA29 /* MOAIRenderResourcePool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIRenderResourcePool.h; path = "moai-gfx/MOAIRenderResourcePool.h"; sourceTree = "<group>"; };
-		CD2B8EF0257FB8E100CEFA29 /* MOAIRenderResourcePool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIRenderResourcePool.cpp; path = "moai-gfx/MOAIRenderResourcePool.cpp"; sourceTree = "<group>"; };
+		CD2B8EF52582941400CEFA29 /* MOAIPool.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPool.cpp; sourceTree = "<group>"; };
+		CD2B8EF62582941400CEFA29 /* MOAIPool.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPool.h; sourceTree = "<group>"; };
+		CD2B8EF9258294BE00CEFA29 /* MOAIScope.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIScope.cpp; sourceTree = "<group>"; };
+		CD2B8EFA258294BE00CEFA29 /* MOAIPoolableObject.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPoolableObject.cpp; sourceTree = "<group>"; };
+		CD2B8EFB258294BF00CEFA29 /* MOAIScope.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIScope.h; sourceTree = "<group>"; };
+		CD2B8EFC258294BF00CEFA29 /* MOAIPoolableObject.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPoolableObject.h; sourceTree = "<group>"; };
+		CD2B8F01258294E800CEFA29 /* MOAIPoolableObjectFactory.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPoolableObjectFactory.h; sourceTree = "<group>"; };
+		CD2B8F02258294E900CEFA29 /* MOAIPoolableObjectFactory.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPoolableObjectFactory.cpp; sourceTree = "<group>"; };
 		CD2CB51B19FDBECA00C42260 /* MOAIStreamAdapter.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIStreamAdapter.cpp; sourceTree = "<group>"; };
 		CD2CB51C19FDBECA00C42260 /* MOAIStreamAdapter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIStreamAdapter.h; sourceTree = "<group>"; };
 		CD2E468C1C517FF6008E22A1 /* host.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = host.cpp; path = "moai-harfbuzz/host.cpp"; sourceTree = "<group>"; };
@@ -9187,6 +9199,7 @@
 				CD1711EE22F4458700381882 /* example */,
 				CD17122222F445AA00381882 /* lua */,
 				CD17122F22F445CA00381882 /* node */,
+				CD2B8EF4258293F500CEFA29 /* pool */,
 				CD17123622F4468700381882 /* serialization */,
 				89BE6ACB173975E500DFE837 /* headers.h */,
 				89BE6ACC173975E500DFE837 /* host.cpp */,
@@ -10305,6 +10318,21 @@
 			name = "moai-ios";
 			sourceTree = "<group>";
 		};
+		CD2B8EF4258293F500CEFA29 /* pool */ = {
+			isa = PBXGroup;
+			children = (
+				CD2B8EF52582941400CEFA29 /* MOAIPool.cpp */,
+				CD2B8EF62582941400CEFA29 /* MOAIPool.h */,
+				CD2B8EFA258294BE00CEFA29 /* MOAIPoolableObject.cpp */,
+				CD2B8EFC258294BF00CEFA29 /* MOAIPoolableObject.h */,
+				CD2B8F02258294E900CEFA29 /* MOAIPoolableObjectFactory.cpp */,
+				CD2B8F01258294E800CEFA29 /* MOAIPoolableObjectFactory.h */,
+				CD2B8EF9258294BE00CEFA29 /* MOAIScope.cpp */,
+				CD2B8EFB258294BF00CEFA29 /* MOAIScope.h */,
+			);
+			name = pool;
+			sourceTree = "<group>";
+		};
 		CD2E468B1C517FAC008E22A1 /* moai-harfbuzz */ = {
 			isa = PBXGroup;
 			children = (
@@ -10697,8 +10725,6 @@
 				CD582D6A2272A3DD009CD0B6 /* MOAIAbstractDrawable.h */,
 				CD2B8E9E257479CF00CEFA29 /* MOAIRenderNode.cpp */,
 				CD2B8E9D257479CF00CEFA29 /* MOAIRenderNode.h */,
-				CD2B8EF0257FB8E100CEFA29 /* MOAIRenderResourcePool.cpp */,
-				CD2B8EEF257FB8E000CEFA29 /* MOAIRenderResourcePool.h */,
 			);
 			name = drawable;
 			sourceTree = "<group>";
@@ -14010,6 +14036,7 @@
 				CD18CB7624E4E80D00019385 /* MOAIRetainedCmdStream.h in Headers */,
 				89BE6B51173975E500DFE837 /* pch.h in Headers */,
 				CD4C3848242CBDED00B1AC6A /* MOAIAction.h in Headers */,
+				CD2B8EF82582941400CEFA29 /* MOAIPool.h in Headers */,
 				CD17125D22F446BA00381882 /* MOAILuaRefTable.h in Headers */,
 				89BE6CFB1739A42500DFE837 /* headers.h in Headers */,
 				89BE6CFF1739A42500DFE837 /* host.h in Headers */,
@@ -14041,6 +14068,7 @@
 				89BE6D2B1739A42500DFE837 /* MOAIMutex_posix.h in Headers */,
 				CD1845C31A62751300FCCCE0 /* MOAIEnvironment.h in Headers */,
 				89BE6D2F1739A42500DFE837 /* MOAIMutex_win32.h in Headers */,
+				CD2B8F00258294BF00CEFA29 /* MOAIPoolableObject.h in Headers */,
 				89BE6D331739A42500DFE837 /* MOAIParser.h in Headers */,
 				89BE6D371739A42500DFE837 /* MOAIStream.h in Headers */,
 				CD0E3A7B24F090EA00E6C92C /* MOAICmdMediumWithAPI.h in Headers */,
@@ -14053,6 +14081,7 @@
 				89BE6D431739A42500DFE837 /* MOAITask.h in Headers */,
 				CD17125522F446BA00381882 /* MOAILuaObject.h in Headers */,
 				CD17128122F446D000381882 /* MOAIScopedLuaState.h in Headers */,
+				CD2B8EFF258294BF00CEFA29 /* MOAIScope.h in Headers */,
 				CD0E3A6F24F084F600E6C92C /* MOAICmdMediumAdapter.h in Headers */,
 				CD4C384E242CBDED00B1AC6A /* MOAIBlocker.h in Headers */,
 				89BE6D471739A42500DFE837 /* MOAITaskQueue.h in Headers */,
@@ -14074,6 +14103,7 @@
 				CD17129522F446EF00381882 /* MOAIFoo.h in Headers */,
 				89BE6D631739A42500DFE837 /* MOAIXmlWriter.h in Headers */,
 				89BE6D671739A42500DFE837 /* pch.h in Headers */,
+				CD2B8F03258294E900CEFA29 /* MOAIPoolableObjectFactory.h in Headers */,
 				89E9D7891743F7EE00033CDD /* MOAIVersion.h in Headers */,
 				CD582B2A22728C83009CD0B6 /* MOAIImageLoadTask.h in Headers */,
 				CD318C0124D81D1D009E32EF /* moai_version.h in Headers */,
@@ -15559,7 +15589,6 @@
 				CD1711B822F16A5700381882 /* MOAIGfxStateCPUConsts.h in Headers */,
 				CD4A9615229E125200F9E400 /* MOAIGfxMgr_RenderTree.h in Headers */,
 				CD1711B622F1698300381882 /* MOAIGfxStateCPUCacheFrame.h in Headers */,
-				CD2B8EF1257FB8E100CEFA29 /* MOAIRenderResourcePool.h in Headers */,
 				CD4A9611229E0E4100F9E400 /* MOAIUniformSchema.h in Headers */,
 				CD4A9497229DE21A00F9E400 /* host.h in Headers */,
 				CD4B4EF624DB711600AA7634 /* MOAIDrawAPI.h in Headers */,
@@ -17800,6 +17829,7 @@
 				89BE6D1D1739A42500DFE837 /* MOAIMath.cpp in Sources */,
 				CD4C3867242CC2E800B1AC6A /* MOAIAnim.cpp in Sources */,
 				89BE6D211739A42500DFE837 /* MOAIMemStream.cpp in Sources */,
+				CD2B8EF72582941400CEFA29 /* MOAIPool.cpp in Sources */,
 				89BE6D251739A42500DFE837 /* MOAIMutex.cpp in Sources */,
 				89BE6D291739A42500DFE837 /* MOAIMutex_posix.cpp in Sources */,
 				CD582B2322728C83009CD0B6 /* MOAIImage.cpp in Sources */,
@@ -17824,15 +17854,18 @@
 				CD17126722F446BA00381882 /* MOAILuaState.cpp in Sources */,
 				89BE6D511739A42500DFE837 /* MOAIThread.cpp in Sources */,
 				89BE6D551739A42500DFE837 /* MOAIThread_posix.cpp in Sources */,
+				CD2B8F04258294E900CEFA29 /* MOAIPoolableObjectFactory.cpp in Sources */,
 				89BE6D591739A42500DFE837 /* MOAIThread_win32.cpp in Sources */,
 				89BE6D5D1739A42500DFE837 /* MOAIXmlParser.cpp in Sources */,
 				89BE6D611739A42500DFE837 /* MOAIXmlWriter.cpp in Sources */,
 				CD18CB6724E4DF9A00019385 /* MOAIAbstractCmdHandler.cpp in Sources */,
 				89BE6D651739A42500DFE837 /* pch.cpp in Sources */,
+				CD2B8EFE258294BF00CEFA29 /* MOAIPoolableObject.cpp in Sources */,
 				CD1845C11A62751200FCCCE0 /* MOAIEnvironment.cpp in Sources */,
 				89E9D7871743F7EE00033CDD /* MOAIVersion.cpp in Sources */,
 				CDCDE228204F66C4005CD590 /* MOAICanary.cpp in Sources */,
 				CD582B2922728C83009CD0B6 /* MOAIImageLoadTask.cpp in Sources */,
+				CD2B8EFD258294BF00CEFA29 /* MOAIScope.cpp in Sources */,
 				CD4283621A0476D20069392E /* MOAIByteStream.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -19054,7 +19087,6 @@
 				CD4A94B7229DE21A00F9E400 /* MOAIGfxMgr.cpp in Sources */,
 				CD4A9608229E091F00F9E400 /* MOAIUniformHandle.cpp in Sources */,
 				CD1711B122F168C800381882 /* MOAIGfxStateGPUCacheFrame.cpp in Sources */,
-				CD2B8EF2257FB8E100CEFA29 /* MOAIRenderResourcePool.cpp in Sources */,
 				CD7F2C632488304900514DAE /* MOAIColor.cpp in Sources */,
 				CD4A966822A2045900F9E400 /* MOAIImageTexture.cpp in Sources */,
 			);

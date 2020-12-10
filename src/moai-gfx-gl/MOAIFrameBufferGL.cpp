@@ -63,7 +63,7 @@ MOAIFrameBufferGL::MOAIFrameBufferGL () :
 	RTTI_BEGIN ( MOAIFrameBufferGL )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIFrameBufferGL >)
 		RTTI_EXTEND ( MOAIFrameBuffer )
-		RTTI_EXTEND ( MOAIRenderResource )
+		RTTI_EXTEND ( MOAIPoolableObject )
 	RTTI_END
 }
 
@@ -162,9 +162,9 @@ bool MOAIFrameBufferGL::MOAIGfxResourceGL_OnGPUUpdate () {
 //----------------------------------------------------------------//
 void MOAIFrameBufferGL::MOAIRenderResource_OnRemit () {
 
-	MOAIRenderResourcePool::ReleaseIfPooled < MOAIFrameBufferAttachmentGL >( this->mColorAttachment );
-	MOAIRenderResourcePool::ReleaseIfPooled < MOAIFrameBufferAttachmentGL >( this->mDepthAttachment );
-	MOAIRenderResourcePool::ReleaseIfPooled < MOAIFrameBufferAttachmentGL >( this->mStencilAttachment );
+	MOAIPool::ReleaseIfPooled < MOAIFrameBufferAttachmentGL >( this->mColorAttachment );
+	MOAIPool::ReleaseIfPooled < MOAIFrameBufferAttachmentGL >( this->mDepthAttachment );
+	MOAIPool::ReleaseIfPooled < MOAIFrameBufferAttachmentGL >( this->mStencilAttachment );
 }
 
 //================================================================//

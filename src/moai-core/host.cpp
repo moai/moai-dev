@@ -315,6 +315,7 @@ AKUContextID AKUCreateContext () {
 	luaRuntime.Open ();
 	luaRuntime.LoadLibs ();
 	
+	MOAIPool::Affirm ();
 	MOAIActionMgr::Affirm ();
 	MOAIFooMgr::Affirm ();
 	MOAIEaseType::Affirm ();
@@ -341,6 +342,8 @@ AKUContextID AKUCreateContext () {
 	REGISTER_LUA_CLASS ( MOAILogMgr )
 	REGISTER_LUA_CLASS ( MOAINode )
 	REGISTER_LUA_CLASS ( MOAINodeMgr )
+	REGISTER_LUA_CLASS ( MOAIPool )
+	REGISTER_LUA_CLASS ( MOAIScope )
 	REGISTER_LUA_CLASS ( MOAIRetainedCmdStream )
 	REGISTER_LUA_CLASS ( MOAISerializer )
 	REGISTER_LUA_CLASS ( MOAITimer )

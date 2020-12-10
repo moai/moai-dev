@@ -167,6 +167,7 @@ public:
 	int				Push						( const ZLVec4D& value );
 	void			Push						( lua_CFunction value );
 	void			Push						( MOAILuaObject* luaObject );
+	void			Push						( MOAILuaObject& luaObject );
 	void			Push						( MOAILuaRef& ref );
 	void			Push						( MOAILuaMemberRef& ref );
 	void			Push						( const void* value );

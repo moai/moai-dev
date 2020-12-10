@@ -10,7 +10,7 @@
 // MOAIFrameBufferAttachmentGL
 //================================================================//
 class MOAIFrameBufferAttachmentGL :
-	public virtual MOAIRenderResource,
+	public virtual MOAIPoolableObject,
 	public virtual MOAIGfxResourceGL {
 private:
 	

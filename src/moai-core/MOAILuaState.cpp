@@ -1380,6 +1380,12 @@ void MOAILuaState::Push ( MOAILuaObject* luaObject ) {
 }
 
 //----------------------------------------------------------------//
+void MOAILuaState::Push ( MOAILuaObject& luaObject ) {
+
+	this->Push ( &luaObject );
+}
+
+//----------------------------------------------------------------//
 void MOAILuaState::Push ( MOAILuaRef& ref ) {
 
 	ref.PushRef ( *this );

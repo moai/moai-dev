@@ -38,7 +38,6 @@
 #include <moai-gfx/MOAIQuadBrush.h>
 #include <moai-gfx/MOAIRenderBatch.h>
 #include <moai-gfx/MOAIRenderNode.h>
-#include <moai-gfx/MOAIRenderResourcePool.h>
 #include <moai-gfx/MOAIScissorRect.h>
 #include <moai-gfx/MOAIShader.h>
 #include <moai-gfx/MOAISurfaceClearColor.h>

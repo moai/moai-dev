@@ -6,21 +6,21 @@
 
 MOAISim.openWindow ( "test", 320, 480 )
 
-TEXTURE_256_256 = MOAIRenderResourcePool.addFactory (
+TEXTURE_256_256 = MOAIPool.addFactory (
 
 	function ()
 		return MOAITexture.new ():init ( 256, 256 )
 	end
 )
 
-COLOR_FBO_256_256 = MOAIRenderResourcePool.addFactory (
+COLOR_FBO_256_256 = MOAIPool.addFactory (
 
 	function ()
 		return MOAIFrameBuffer.new ()
 	end,
 
-	function ( frameBuffer )
-		frameBuffer:setAttachment ( MOAIRenderResourcePool.provision ( TEXTURE_256_256 ))
+	function ( frameBuffer, scope )
+		frameBuffer:setAttachment ( MOAIPool.provision ( TEXTURE_256_256, scope ))
 	end
 )
 
@@ -46,11 +46,9 @@ gfxQuad = MOAISpriteDeck2D.new ()
 prop = MOAIGraphicsProp.new ():setDeck ( gfxQuad )
 prop:moveRot ( 0, 0, -360, 5 )
 
-node = MOAIRenderNode.new ()
+function render ( node, draw, scope )
 
-function render ( draw )
-
-	local frameBuffer = MOAIRenderResourcePool.provision ( COLOR_FBO_256_256 )
+	local frameBuffer = MOAIPool.provision ( COLOR_FBO_256_256, scope )
 
 	draw
 		:setFrameBuffer ( frameBuffer )
@@ -61,13 +59,14 @@ function render ( draw )
 	offscreenProp:render ()
 
 	draw
-		:setTexture ( frameBuffer:getAttachment ()) -- set this here to retain texture
 		:setFrameBuffer ()
 		:setViewRect ( viewport )
 		:clearSurface ()
 		:setViewProj ( viewport )
+		:setTexture ( frameBuffer:getAttachment ())
 
 	prop:render ()
 end
 
-MOAIGfxMgr.setRender ( render )
+node = MOAIRenderNode.new ():setRender ( render ):setScope ( MOAIPoolScope.new ())
+MOAIGfxMgr.setRender ( node )

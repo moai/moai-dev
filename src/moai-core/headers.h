@@ -40,7 +40,11 @@
 #include <moai-core/MOAILua.h>
 #include <moai-core/MOAINode.h>
 #include <moai-core/MOAINodeMgr.h>
+#include <moai-core/MOAIPool.h>
+#include <moai-core/MOAIPoolableObject.h>
+#include <moai-core/MOAIPoolableObjectFactory.h>
 #include <moai-core/MOAIRetainedCmdStream.h>
+#include <moai-core/MOAIScope.h>
 #include <moai-core/MOAIScriptNode.h>
 #include <moai-core/MOAISerializer.h>
 #include <moai-core/MOAISerializerBase.h>

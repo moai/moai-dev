@@ -27,7 +27,7 @@ class MOAIFrameBufferAttachmentGL;
 class MOAIFrameBufferGL :
 	public virtual MOAIFrameBuffer,
 	public virtual MOAIGfxResourceGL,
-	public virtual MOAIRenderResource {
+	public virtual MOAIPoolableObject {
 protected:
 	
 	friend class MOAIGfxMgrGL_GPUCacheGL;
