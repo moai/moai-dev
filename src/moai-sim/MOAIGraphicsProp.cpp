@@ -55,10 +55,16 @@ bool MOAIGraphicsProp::MOAIAbstractRenderNode_LoadGfxState ( u32 renderPhase ) {
 //----------------------------------------------------------------//
 void MOAIGraphicsProp::MOAIAbstractRenderNode_Render ( u32 renderPhase ) {
 
-	if ( renderPhase == MOAIAbstractRenderNode::RENDER_PHASE_DRAW ) {
-		this->DrawDebug ();
+	switch ( renderPhase ) {
+		
+		case MOAIAbstractRenderNode::RENDER_PHASE_DRAW:
+			this->mDeck->Draw ( this->mIndex );
+			break;
+		
+		case MOAIAbstractRenderNode::RENDER_PHASE_DRAW_DEBUG:
+			this->DrawDebug ();
+			break;
 	}
-	this->mDeck->Draw ( this->mIndex );
 }
 
 //----------------------------------------------------------------//

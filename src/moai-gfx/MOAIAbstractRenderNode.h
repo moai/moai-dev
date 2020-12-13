@@ -29,7 +29,6 @@ protected:
 	static int			_setScope					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				InvokeGfxScript				( u32 renderPhase );
 	bool				LoadGfxState				( u32 renderPhase );
 
 	//----------------------------------------------------------------//

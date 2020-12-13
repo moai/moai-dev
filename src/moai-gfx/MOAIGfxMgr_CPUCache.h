@@ -30,14 +30,15 @@ protected:
 	
 public:
 
-	GET ( const ZLColorVec&, AmbientColor, this->mStateFrameCPU.mAmbientColor )
-	GET ( const ZLColorVec&, PenColor, this->mStateFrameCPU.mPenColor )
-	GET ( const ZLColorVec&, FinalColor, this->mStateFrameCPU.mFinalColor )
-	GET ( u32, FinalColor32, this->mStateFrameCPU.mFinalColor32 )
+	GET ( const ZLColorVec&,		AmbientColor,		this->mStateFrameCPU.mAmbientColor )
+	GET ( const ZLColorVec&,		PenColor,			this->mStateFrameCPU.mPenColor )
+	GET ( const ZLColorVec&,		FinalColor,			this->mStateFrameCPU.mFinalColor )
+	GET ( u32,						FinalColor32,		this->mStateFrameCPU.mFinalColor32 )
 	
-	GET_SET ( u32, ClearFlags, this->mStateFrameCPU.mClearFlags )
-	GET_SET ( const ZLColorVec&, ClearColor, this->mStateFrameCPU.mClearColor )
-	GET_SET ( double, ClearDepth, this->mStateFrameCPU.mClearDepth )
+	GET_SET ( const ZLColorVec&, 	ClearColor,			this->mStateFrameCPU.mClearColor )
+	GET_SET ( double, 				ClearDepth,			this->mStateFrameCPU.mClearDepth )
+	GET_SET ( u32, 					ClearFlags,			this->mStateFrameCPU.mClearFlags )
+	GET_SET ( u32, 					Index, 				this->mStateFrameCPU.mIndex )
 
 	//----------------------------------------------------------------//
 	const ZLMatrix4x4&		GetMtx						( u32 mtxID );

@@ -101,22 +101,6 @@ MOAIGfxScript* MOAIAbstractRenderNode::GetGfxScript ( u32 renderPhase ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractRenderNode::InvokeGfxScript ( u32 renderPhase ) {
-
-	MOAIGfxScript* gfxScript = this->GetGfxScript ( renderPhase );
-	
-	if ( gfxScript ) {
-		MOAIAbstractRenderNodeCallback callback;
-		callback.mNode = this;
-		callback.mRenderPhase = renderPhase;
-		gfxScript->ExecuteBytecode ( &callback );
-	}
-	else {
-		this->MOAIAbstractRenderNode_Render ( renderPhase );
-	}
-}
-
-//----------------------------------------------------------------//
 bool MOAIAbstractRenderNode::LoadGfxState ( u32 renderPhase ) {
 
 	return this->MOAIAbstractRenderNode_LoadGfxState ( renderPhase );
@@ -138,8 +122,18 @@ MOAIAbstractRenderNode::~MOAIAbstractRenderNode () {
 //----------------------------------------------------------------//
 void MOAIAbstractRenderNode::Render ( u32 renderPhase ) {
 
-	if ( this->LoadGfxState ( renderPhase )) {
-		this->InvokeGfxScript ( renderPhase );
+	if ( !this->LoadGfxState ( renderPhase )) return;
+			
+	MOAIGfxScript* gfxScript = this->GetGfxScript ( renderPhase );
+	
+	if ( gfxScript ) {
+		MOAIAbstractRenderNodeCallback callback;
+		callback.mNode = this;
+		callback.mRenderPhase = renderPhase;
+		gfxScript->ExecuteBytecode ( &callback );
+	}
+	else {
+		this->MOAIAbstractRenderNode_Render ( renderPhase );
 	}
 	
 	if ( this->mScope ) {

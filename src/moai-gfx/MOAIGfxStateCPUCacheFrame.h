@@ -29,6 +29,8 @@ protected:
 	u32						mClearFlags;
 	ZLColorVec				mClearColor;
 	double					mClearDepth;
+	
+	u32						mIndex;
 };
 
 #endif

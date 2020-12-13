@@ -234,10 +234,14 @@ void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition, u32 rende
 //----------------------------------------------------------------//
 void MOAIPartitionViewLayer::DrawProps ( MOAIPartitionResultBuffer& buffer, u32 renderPhase ) {
 
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	u32 totalResults = buffer.GetTotalResults ();
 
 	for ( u32 i = 0; i < totalResults; ++i ) {
+		
 		MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
+		gfxMgr.SetIndex ( result->mSubPrimID );
+		
 		MOAIAbstractRenderNode* prop = result->AsType < MOAIAbstractRenderNode >();
 		prop->Render ( renderPhase );
 	}
