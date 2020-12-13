@@ -195,16 +195,6 @@ int MOAIAbstractViewLayer::_setDebugCamera ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIAbstractViewLayer::_setFrameBuffer ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractViewLayer, "UU" )
-
-	self->mFrameBuffer.Set ( *self, state.GetLuaObject < MOAIFrameBuffer >( 2, true ));
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
 /**	@lua	setParallax
 	@text	Sets the parallax scale for this layer. This is simply a
 			scalar applied to the view transform before rendering.
@@ -454,15 +444,14 @@ MOAIAbstractViewLayer::MOAIAbstractViewLayer () :
 	
 	RTTI_BEGIN ( MOAIAbstractViewLayer )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractViewLayer >)
-		RTTI_EXTEND ( MOAIGraphicsProp )
 		RTTI_EXTEND ( MOAIAbstractLayer )
+		RTTI_EXTEND ( MOAIAbstractProp )
 	RTTI_END
 }
 
 //----------------------------------------------------------------//
 MOAIAbstractViewLayer::~MOAIAbstractViewLayer () {
 
-	this->mFrameBuffer.Set ( *this, 0 );
 	this->mCamera.Set ( *this, 0 );
 	this->mDebugCamera.Set ( *this, 0 );
 	this->mViewport.Set ( *this, 0 );
@@ -488,7 +477,6 @@ void MOAIAbstractViewLayer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOA
 		{ "getViewport",			_getViewport },
 		{ "setDebugCamera",			_setDebugCamera },
 		{ "setCamera",				_setCamera },
-		{ "setFrameBuffer",			_setFrameBuffer },
 		{ "setParallax",			_setParallax },
 		{ "setViewport",			_setViewport },
 		{ "showDebugLines",			_showDebugLines },
@@ -502,19 +490,11 @@ void MOAIAbstractViewLayer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOA
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractViewLayer::MOAIDrawable_Draw ( int subPrimID ) {
-	UNUSED ( subPrimID );
+void MOAIAbstractViewLayer::MOAIAbstractLayer_Render ( u32 renderPhase ) {
     
-   	if ( !this->IsVisible ()) return;
 	if ( !this->mViewport ) return;
-	if ( this->IsClear ()) return;
 	
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-
-	// TODO: change this to a push/pop
-	if ( this->mFrameBuffer ) {
-		gfxMgr.SetFrameBuffer ( this->mFrameBuffer );
-	}
 
 	MOAIViewport& viewport = *this->mViewport;
 	ZLRect viewportRect = viewport;
@@ -527,17 +507,10 @@ void MOAIAbstractViewLayer::MOAIDrawable_Draw ( int subPrimID ) {
 	
 	gfxMgr.SetViewProj ( this->mViewport, this->mCamera, this->mDebugCamera, this->mParallax );
 	gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX );
-	gfxMgr.SetAmbientColor ( this->mColor );
 	
 	this->MOAISurfaceClearColor::ClearSurface ();
 	
-	MOAIGfxScript* gfxScript = this->GetGfxScript ();
-		
-	if ( gfxScript ) {
-		gfxScript->ExecuteBytecode ();
-	}
-	
-	this->MOAIAbstractViewLayer_Draw ();
+	this->MOAIAbstractViewLayer_Render ( renderPhase );
 	
 	if ( MOAIDebugLinesMgr::Get ().IsVisible () && this->mShowDebugLines ) {
 		// TODO: fix camera debug lines
@@ -548,16 +521,26 @@ void MOAIAbstractViewLayer::MOAIDrawable_Draw ( int subPrimID ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractViewLayer::MOAIDrawable_DrawDebug ( int subPrimID ) {
-	UNUSED ( subPrimID );
-}
-
-//----------------------------------------------------------------//
 ZLBounds MOAIAbstractViewLayer::MOAIAbstractProp_GetModelBounds () {
-	
+
 	if ( this->mViewport ) {
 		ZLBounds bounds ( this->mViewport->GetRect ());
 		return bounds;
 	}
 	return ZLBounds::EMPTY;
 }
+
+//----------------------------------------------------------------//
+bool MOAIAbstractViewLayer::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
+
+	if ( MOAIAbstractLayer::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
+	if ( MOAIAbstractProp::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
+}
+
+//----------------------------------------------------------------//
+void MOAIAbstractViewLayer::MOAINode_Update () {
+
+	MOAIAbstractLayer::MOAINode_Update ();
+	MOAIAbstractProp::MOAINode_Update ();
+}
+

@@ -323,8 +323,7 @@ void MOAIOneTriVK::UpdateMatrices ( u32 width, u32 height ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
-	UNUSED ( subPrimID );
+void MOAIOneTriVK::MOAIAbstractRenderNode_Render () {
 
 	this->PreparePipeline ();
 
@@ -382,8 +381,4 @@ void MOAIOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 	// snapshots should be cached and re-used, even if they need their data updated
 	// snapshots contain the actual VK resource
 	// snapshots may keep a mem copy for comparison (to check if dirty)
-}
-
-//----------------------------------------------------------------//
-void MOAIOneTriVK::MOAIDrawable_DrawDebug ( int subPrimID ) {
 }

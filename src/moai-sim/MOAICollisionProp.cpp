@@ -209,7 +209,7 @@ MOAICollisionProp::MOAICollisionProp () :
 	RTTI_BEGIN ( MOAICollisionProp )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAICollisionProp >)
 		RTTI_EXTEND ( MOAIAbstractProp )
-		RTTI_EXTEND ( MOAIAbstractDrawable )
+		RTTI_EXTEND ( MOAIAbstractRenderNode )
 		RTTI_EXTEND ( MOAIHasDeckAndIndex )
 	RTTI_END
 	
@@ -461,21 +461,8 @@ ZLBounds MOAICollisionProp::MOAIAbstractProp_GetModelBounds () {
 }
 
 //----------------------------------------------------------------//
-bool MOAICollisionProp::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
-
-	if ( MOAIHasDeckAndIndex::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
-	if ( MOAIAbstractProp::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
-	return false;
-}
-
-//----------------------------------------------------------------//
-void MOAICollisionProp::MOAIDrawable_Draw ( int subPrimID ) {
-	UNUSED ( subPrimID );
-}
-
-//----------------------------------------------------------------//
-void MOAICollisionProp::MOAIDrawable_DrawDebug ( int subPrimID ) {
-	UNUSED ( subPrimID );
+void MOAICollisionProp::MOAIAbstractRenderNode_RenderInner ( u32 renderPhase ) {
+	UNUSED ( renderPhase );
 
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAICollisionProp >())) return;
@@ -548,6 +535,14 @@ void MOAICollisionProp::MOAIDrawable_DrawDebug ( int subPrimID ) {
 			}
 		}
 	}
+}
+
+//----------------------------------------------------------------//
+bool MOAICollisionProp::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
+
+	if ( MOAIHasDeckAndIndex::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
+	if ( MOAIAbstractProp::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
+	return false;
 }
 
 //----------------------------------------------------------------//

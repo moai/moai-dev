@@ -50,7 +50,6 @@ public:
 		FLAGS_PAD_BOUNDS			= 0x02,
 		FLAGS_EXPAND_FOR_SORT		= 0x04,
 		FLAGS_PARTITION_GLOBAL		= 0x08,
-		TOTAL_FLAGS,
 	};
 
 	//----------------------------------------------------------------//

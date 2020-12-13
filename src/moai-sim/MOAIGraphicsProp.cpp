@@ -26,7 +26,7 @@ MOAIGraphicsProp::MOAIGraphicsProp () {
 	
 	RTTI_BEGIN ( MOAIGraphicsProp )
 		RTTI_EXTEND ( MOAIHasDeckAndIndex )
-		RTTI_EXTEND ( MOAIGraphicsPropBase )
+		RTTI_EXTEND ( MOAIAbstractGraphicsProp )
 	RTTI_END
 }
 
@@ -39,16 +39,9 @@ MOAIGraphicsProp::~MOAIGraphicsProp () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGraphicsProp::MOAIGraphicsPropBase_Draw ( int subPrimID ) {
-	UNUSED ( subPrimID );
+bool MOAIGraphicsProp::MOAIAbstractGraphicsProp_LoadGfxState () {
 
-	this->mDeck->Draw ( this->mIndex );
-}
-
-//----------------------------------------------------------------//
-bool MOAIGraphicsProp::MOAIGraphicsPropBase_LoadGfxState () {
-
-	if ( this->mDeck && MOAIGraphicsPropBase::MOAIGraphicsPropBase_LoadGfxState ()) {
+	if ( this->mDeck && MOAIAbstractGraphicsProp::MOAIAbstractGraphicsProp_LoadGfxState ()) {
 	
 		this->LoadVertexTransform ();
 		this->LoadUVTransform ();
@@ -59,15 +52,22 @@ bool MOAIGraphicsProp::MOAIGraphicsPropBase_LoadGfxState () {
 }
 
 //----------------------------------------------------------------//
+void MOAIGraphicsProp::MOAIAbstractGraphicsProp_Render ( u32 renderPhase ) {
+	UNUSED ( renderPhase );
+
+	this->mDeck->Draw ( this->mIndex );
+}
+
+//----------------------------------------------------------------//
 bool MOAIGraphicsProp::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 	
 	if ( MOAIHasDeckAndIndex::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
-	if ( MOAIGraphicsPropBase::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
+	if ( MOAIAbstractGraphicsProp::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
 	return false;
 }
 
 //----------------------------------------------------------------//
 void MOAIGraphicsProp::MOAINode_Update () {
 	
-	MOAIGraphicsPropBase::MOAINode_Update ();
+	MOAIAbstractGraphicsProp::MOAINode_Update ();
 }

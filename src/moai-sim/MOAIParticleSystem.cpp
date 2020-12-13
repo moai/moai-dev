@@ -565,6 +565,92 @@ void MOAIParticleSystem::ReserveStates ( ZLSize total ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIParticleSystem::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+
+	state.SetField ( -1, "ORDER_NORMAL",	( u32 )ORDER_NORMAL );
+	state.SetField ( -1, "ORDER_REVERSE",	( u32 )ORDER_REVERSE );
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleSystem::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+	
+	luaL_Reg regTable [] = {
+		{ "capParticles",		_capParticles },
+		{ "capSprites",			_capSprites },
+		{ "clearSprites",		_clearSprites },
+		{ "isIdle",				_isIdle },
+		{ "getState",			_getState },
+		{ "pushParticle",		_pushParticle },
+		{ "pushSprite",			_pushSprite },
+		{ "reserveParticles",	_reserveParticles },
+		{ "reserveSprites",		_reserveSprites },
+		{ "reserveStates",		_reserveStates },
+		{ "setDrawOrder",		_setDrawOrder },
+		{ "setComputeBounds",	_setComputeBounds },
+		{ "setSpriteColor",		_setSpriteColor },
+		{ "setSpriteDeckIdx",	_setSpriteDeckIdx },
+		{ "setState",			_setState },
+		{ "surge",				_surge },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleSystem::MOAIAbstractGraphicsProp_Draw ( int subPrimID ) {
+	UNUSED ( subPrimID );
+
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	
+	ZLAffine3D drawingMtx;
+	ZLAffine3D spriteMtx;
+	
+	u32 maxSprites = ( u32 )this->mSprites.Size ();
+	u32 total = this->mSpriteTop;
+	u32 base = 0;
+	if ( total > maxSprites ) {
+		base = total % maxSprites;
+		total = maxSprites;
+	}
+	
+	for ( u32 i = 0; i < total; ++i ) {
+
+		ZLIndex idx;
+		if ( this->mDrawOrder == ORDER_NORMAL ) {
+			idx = ( base + i ) % maxSprites;
+		}
+		else {
+			idx = ( base + ( total - 1 - i )) % maxSprites;
+		}
+		
+		AKUParticleSprite& sprite = this->mSprites [ idx ];
+		gfxMgr.SetPenColor ( sprite.mRed, sprite.mGreen, sprite.mBlue, sprite.mAlpha );
+		
+		spriteMtx.ScRoTr ( sprite.mXScl, sprite.mYScl, 1.0f, 0.0f, 0.0f, sprite.mZRot * ( float )D2R, sprite.mXLoc, sprite.mYLoc, 0.0f );
+		
+		drawingMtx = this->GetLocalToWorldMtx ();
+		drawingMtx.Prepend ( spriteMtx );
+		
+		gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX, drawingMtx );
+		
+		this->mDeck->Draw ( this->mIndex + ( ZLSize )sprite.mGfxID );
+	}
+}
+
+//----------------------------------------------------------------//
+bool MOAIParticleSystem::MOAIAbstractGraphicsProp_LoadGfxState () {
+
+	if ( this->mDeck && MOAIAbstractGraphicsProp::MOAIAbstractGraphicsProp_LoadGfxState ()) {
+		this->LoadUVTransform ();
+		return true;
+	}
+	return false;
+}
+
+//----------------------------------------------------------------//
 ZLBounds MOAIParticleSystem::MOAIAbstractProp_GetModelBounds () {
 
 	if ( this->mSpriteTop ) {
@@ -623,90 +709,4 @@ void MOAIParticleSystem::MOAIAction_Update ( double step ) {
 	if ( schedule || this->mSpriteTop ) {
 		this->ScheduleUpdate ();
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleSystem::MOAIGraphicsPropBase_Draw ( int subPrimID ) {
-	UNUSED ( subPrimID );
-
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	
-	ZLAffine3D drawingMtx;
-	ZLAffine3D spriteMtx;
-	
-	u32 maxSprites = ( u32 )this->mSprites.Size ();
-	u32 total = this->mSpriteTop;
-	u32 base = 0;
-	if ( total > maxSprites ) {
-		base = total % maxSprites;
-		total = maxSprites;
-	}
-	
-	for ( u32 i = 0; i < total; ++i ) {
-
-		ZLIndex idx;
-		if ( this->mDrawOrder == ORDER_NORMAL ) {
-			idx = ( base + i ) % maxSprites;
-		}
-		else {
-			idx = ( base + ( total - 1 - i )) % maxSprites;
-		}
-		
-		AKUParticleSprite& sprite = this->mSprites [ idx ];
-		gfxMgr.SetPenColor ( sprite.mRed, sprite.mGreen, sprite.mBlue, sprite.mAlpha );
-		
-		spriteMtx.ScRoTr ( sprite.mXScl, sprite.mYScl, 1.0f, 0.0f, 0.0f, sprite.mZRot * ( float )D2R, sprite.mXLoc, sprite.mYLoc, 0.0f );
-		
-		drawingMtx = this->GetLocalToWorldMtx ();
-		drawingMtx.Prepend ( spriteMtx );
-		
-		gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX, drawingMtx );
-		
-		this->mDeck->Draw ( this->mIndex + ( ZLSize )sprite.mGfxID );
-	}
-}
-
-//----------------------------------------------------------------//
-bool MOAIParticleSystem::MOAIGraphicsPropBase_LoadGfxState () {
-
-	if ( this->mDeck && MOAIGraphicsPropBase::MOAIGraphicsPropBase_LoadGfxState ()) {
-		this->LoadUVTransform ();
-		return true;
-	}
-	return false;
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleSystem::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-
-	state.SetField ( -1, "ORDER_NORMAL",	( u32 )ORDER_NORMAL );
-	state.SetField ( -1, "ORDER_REVERSE",	( u32 )ORDER_REVERSE );
-}
-
-//----------------------------------------------------------------//
-void MOAIParticleSystem::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
-	
-	luaL_Reg regTable [] = {
-		{ "capParticles",		_capParticles },
-		{ "capSprites",			_capSprites },
-		{ "clearSprites",		_clearSprites },
-		{ "isIdle",				_isIdle },
-		{ "getState",			_getState },
-		{ "pushParticle",		_pushParticle },
-		{ "pushSprite",			_pushSprite },
-		{ "reserveParticles",	_reserveParticles },
-		{ "reserveSprites",		_reserveSprites },
-		{ "reserveStates",		_reserveStates },
-		{ "setDrawOrder",		_setDrawOrder },
-		{ "setComputeBounds",	_setComputeBounds },
-		{ "setSpriteColor",		_setSpriteColor },
-		{ "setSpriteDeckIdx",	_setSpriteDeckIdx },
-		{ "setState",			_setState },
-		{ "surge",				_surge },
-		{ NULL, NULL }
-	};
-	
-	luaL_register ( state, 0, regTable );
 }

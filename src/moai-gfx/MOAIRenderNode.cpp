@@ -12,29 +12,17 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIRenderNode::_render ( lua_State* L ) {
+int MOAIRenderNode::_getRenderRoot ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIRenderNode, "U" )
-	
-	self->MOAIRenderNode_Render ();
-	return 0;
+	state.Push ( self->mRenderRoot );
+	return 1;
 }
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIRenderNode::_setRender ( lua_State* L ) {
+int MOAIRenderNode::_setRenderRoot ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIRenderNode, "U" )
-	
 	self->mRenderRoot.SetRef ( state, 2 );
-	MOAI_LUA_RETURN_SELF
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIRenderNode::_setScope ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIRenderNode, "U" )
-	
-	MOAIScope* scope = state.GetLuaObject < MOAIScope >( 2, false );
-	self->mScope.Set ( *self, scope );
 	MOAI_LUA_RETURN_SELF
 }
 
@@ -47,8 +35,7 @@ MOAIRenderNode::MOAIRenderNode () {
 
 	RTTI_BEGIN ( MOAIRenderNode )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIRenderNode >)
-		RTTI_EXTEND ( MOAIAbstractDrawable )
-		RTTI_EXTEND ( MOAIHasGfxScript )
+		RTTI_EXTEND ( MOAIAbstractRenderNode )
 	RTTI_END
 }
 
@@ -57,22 +44,59 @@ MOAIRenderNode::~MOAIRenderNode () {
 }
 
 //----------------------------------------------------------------//
-void MOAIRenderNode::Render () {
+void MOAIRenderNode::Render ( u32 renderPhase, MOAILuaMemberRef& ref, MOAIRenderNode* caller ) {
 
-	if ( this->mRenderRoot ) {
+	if ( ref ) {
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		state.Push ( this->mRenderRoot );
-		state.Push ( this );
-		MOAIDraw::Get ().PushCmdInterface ( state );
-		state.Push ( *this->mScope );
-		state.DebugCall ( 3, 0 );
+		state.Push ( ref );
+		MOAIRenderNode::Render ( renderPhase, state, -1, caller );
+		state.Pop ( 1 );
 	}
-	else {
-		this->MOAIRenderNode_Render ();
-	}
-	
-	if ( this->mScope ) {
-		this->mScope->Purge ();
+}
+
+
+//----------------------------------------------------------------//
+void MOAIRenderNode::Render ( u32 renderPhase, MOAILuaState& state, int idx, MOAIRenderNode* caller ) {
+
+	idx = state.AbsIndex ( idx );
+	int valType = lua_type ( state, idx );
+
+	switch ( valType ) {
+
+		case LUA_TUSERDATA: {
+
+			MOAIAbstractRenderNode* node = state.GetLuaObject < MOAIAbstractRenderNode >( idx, false );
+			if ( node ) {
+				node->Render ( renderPhase );
+			}
+			break;
+		}
+
+		case LUA_TTABLE: {
+
+			size_t tableSize = state.GetTableSize ( idx );
+			for ( size_t i = 0; i < tableSize; ++i ) {
+				lua_rawgeti ( state, idx, i + 1 );
+				MOAIRenderNode::Render ( renderPhase, state, -1, caller );
+				lua_pop ( state, 1 );
+			}
+			break;
+		}
+
+		case LUA_TFUNCTION: {
+
+			state.CopyToTop ( idx ); // copy the function to the top
+			MOAIDraw::Get ().PushCmdInterface ( state );
+			if ( caller ) {
+				state.Push ( caller );
+				state.Push (( MOAILuaObject* )caller->mScope );
+				state.DebugCall ( 3, 0 );
+			}
+			else {
+				state.DebugCall ( 1, 0 );
+			}
+			break;
+		}
 	}
 }
 
@@ -90,9 +114,8 @@ void MOAIRenderNode::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaSta
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
-		{ "render",						_render },
-		{ "setRender",					_setRender },
-		{ "setScope",					_setScope },
+		{ "getRenderRoot",				_getRenderRoot },
+		{ "setRenderRoot",				_setRenderRoot },
 		{ NULL, NULL }
 	};
 
@@ -100,17 +123,11 @@ void MOAIRenderNode::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaSta
 }
 
 //----------------------------------------------------------------//
-void MOAIRenderNode::MOAIDrawable_Draw ( int subPrimID ) {
-	UNUSED ( subPrimID );
-}
+void MOAIRenderNode::MOAIAbstractRenderNode_RenderInner ( u32 renderPhase ) {
 
-//----------------------------------------------------------------//
-void MOAIRenderNode::MOAIDrawable_DrawDebug ( int subPrimID ) {
-	UNUSED ( subPrimID );
-}
-
-//----------------------------------------------------------------//
-void MOAIRenderNode::MOAIRenderNode_Render () {
-
-	this->Draw ( 0xffffffff );
+	if ( this->mRenderRoot ) {
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		state.Push ( this->mRenderRoot );
+		MOAIRenderNode::Render ( renderPhase, state, -1, this );
+	}
 }

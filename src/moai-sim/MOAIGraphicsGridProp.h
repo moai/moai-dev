@@ -5,7 +5,7 @@
 #define	MOAIGRAPHICSGRIDPROP_H
 
 #include <moai-sim/MOAIAbstractPropWithDeckAndGrid.h>
-#include <moai-sim/MOAIGraphicsPropBase.h>
+#include <moai-sim/MOAIAbstractGraphicsProp.h>
 
 //================================================================//
 // MOAIGraphicsGridProp
@@ -13,7 +13,7 @@
 // TODO: doxygen
 class MOAIGraphicsGridProp :
 	public virtual MOAIAbstractPropWithDeckAndGrid,
-	public virtual MOAIGraphicsPropBase {
+	public virtual MOAIAbstractGraphicsProp {
 private:
 
 	//----------------------------------------------------------------//
@@ -22,8 +22,8 @@ private:
 	void					DrawGrid								( const MOAICellCoord &c0, const MOAICellCoord &c1 );
 
 	//----------------------------------------------------------------//
-	void					MOAIGraphicsPropBase_Draw				( int subPrimID );
-	bool					MOAIGraphicsPropBase_LoadGfxState		();
+	bool					MOAIAbstractGraphicsProp_LoadGfxState	();
+	void					MOAIAbstractGraphicsProp_Render			( u32 renderPhase );
 	bool					MOAINode_ApplyAttrOp					( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	void					MOAINode_Update							();
 	void					MOAIPartitionHull_AddToSortBuffer		( MOAIPartitionResultBuffer& buffer, u32 key = 0 );

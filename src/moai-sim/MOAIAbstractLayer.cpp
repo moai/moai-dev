@@ -8,20 +8,21 @@
 // lua
 //================================================================//
 
-////----------------------------------------------------------------//
-//// TODO: doxygen
-//int MOAIAbstractLayer::_draw ( lua_State* L ) {
-//	MOAI_LUA_SETUP ( MOAIPartitionViewLayer, "U" )
-//
-//	self->Draw ( MOAIPartitionHull::NO_SUBPRIM_ID );
-//	return 0;
-//}
-
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIAbstractLayer::_pushRenderPass ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractLayer, "U" )
-	MOAIGfxMgr::Get ().PushDrawable ( self );
+	MOAIGfxMgr::Get ().PushRenderNode ( self );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIAbstractLayer::_setFrameBuffer ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractViewLayer, "UU" )
+
+	self->mFrameBuffer.Set ( *self, state.GetLuaObject < MOAIFrameBuffer >( 2, true ));
+
 	return 0;
 }
 
@@ -36,13 +37,16 @@ MOAIAbstractLayer::MOAIAbstractLayer () {
 	
 	RTTI_BEGIN ( MOAIAbstractLayer )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractLayer >)
-		RTTI_EXTEND ( MOAIRenderNode )
+		RTTI_EXTEND ( MOAIAbstractRenderNode )
 		RTTI_EXTEND ( MOAISurfaceClearColor )
+		RTTI_EXTEND ( MOAIColor )
 	RTTI_END
 }
 
 //----------------------------------------------------------------//
 MOAIAbstractLayer::~MOAIAbstractLayer () {
+
+	this->mFrameBuffer.Set ( *this, 0 );
 }
 
 //================================================================//
@@ -59,8 +63,8 @@ void MOAIAbstractLayer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILua
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
-//		{ "draw",						_draw },
 		{ "pushRenderPass",				_pushRenderPass },
+		{ "setFrameBuffer",				_setFrameBuffer },
 		{ NULL, NULL }
 	};
 
@@ -68,6 +72,23 @@ void MOAIAbstractLayer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILua
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractLayer::MOAIDrawable_DrawDebug ( int subPrimID ) {
-	UNUSED ( subPrimID );
+void MOAIAbstractLayer::MOAIAbstractRenderNode_RenderInner ( u32 renderPhase ) {
+	
+	this->MOAIAbstractLayer_Render ( renderPhase );
+}
+
+//----------------------------------------------------------------//
+void MOAIAbstractLayer::MOAIAbstractRenderNode_RenderOuter ( u32 renderPhase ) {
+
+	if ( this->IsClear ()) return;
+	
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+
+	// TODO: change this to a push/pop
+	if ( this->mFrameBuffer ) {
+		gfxMgr.SetFrameBuffer ( this->mFrameBuffer );
+	}
+	gfxMgr.SetAmbientColor ( this->mColor );
+	
+	this->InvokeGfxScript ( renderPhase );
 }

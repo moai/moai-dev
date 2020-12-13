@@ -64,8 +64,7 @@ MOAIGfxMgrOneTriVK::~MOAIGfxMgrOneTriVK () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
-	UNUSED ( subPrimID );
+void MOAIGfxMgrOneTriVK::MOAIAbstractRenderNode_Render () {
 
 	MOAIGfxMgrVK& gfxMgr					= MOAIGfxMgrVK::Get ();
 	MOAILogicalDeviceVK& logicalDevice		= gfxMgr.GetLogicalDevice ();
@@ -85,8 +84,4 @@ void MOAIGfxMgrOneTriVK::MOAIDrawable_Draw ( int subPrimID ) {
 	gfxMgr.SetIndexBuffer ( this->mIndices );
 	
 	gfxMgr.DrawPrims ( MOAIGfxTopologyEnum::TRIANGLE_LIST, 0, this->mIndices->CountIndices ());
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrOneTriVK::MOAIDrawable_DrawDebug ( int subPrimID ) {
 }

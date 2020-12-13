@@ -21,7 +21,7 @@ class MOAIVertexBufferVK;
 // MOAIGfxMgrOneTriVK
 //================================================================//
 class MOAIGfxMgrOneTriVK :
-	public virtual MOAIAbstractDrawable {
+	public virtual MOAIAbstractRenderNode {
 private:
 
 	struct Vertex {
@@ -49,17 +49,16 @@ private:
 	} mMatrixUniforms;
 
 	//----------------------------------------------------------------//
-	void			UpdateMatrices				( u32 width, u32 height );
+	void			UpdateMatrices						( u32 width, u32 height );
 
 	//----------------------------------------------------------------//
-	void			MOAIDrawable_Draw			( int subPrimID );
-	void			MOAIDrawable_DrawDebug		( int subPrimID );
+	void			MOAIAbstractRenderNode_Render		( int subPrimID );
 
 public:
 
 	//----------------------------------------------------------------//
-					MOAIGfxMgrOneTriVK			();
-					~MOAIGfxMgrOneTriVK			();
+					MOAIGfxMgrOneTriVK					();
+					~MOAIGfxMgrOneTriVK					();
 };
 
 #endif

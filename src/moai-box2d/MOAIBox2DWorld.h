@@ -61,7 +61,7 @@ public:
 */
 class MOAIBox2DWorld :
 	public MOAIAction,
-	public MOAIAbstractDrawable,
+	public MOAIAbstractRenderNode,
 	public b2DestructionListener {
 private:
 
@@ -121,12 +121,11 @@ private:
 	void			ScheduleDestruction			( MOAIBox2DJoint& joint );
 
 	//----------------------------------------------------------------//
-	void			_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
-	bool			MOAIAction_IsDone			();
-	void			MOAIAction_Update			( double step );
-	void			MOAIDrawable_Draw			( int subPrimID );
-	void			MOAIDrawable_DrawDebug		( int subPrimID );
+	void			_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			MOAIAbstractRenderNode_RenderInner		( u32 renderPhase );
+	bool			MOAIAction_IsDone						();
+	void			MOAIAction_Update						( double step );
 
 public:
 	

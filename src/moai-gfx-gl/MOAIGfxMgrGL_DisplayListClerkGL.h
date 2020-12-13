@@ -22,7 +22,7 @@ private:
 
 	enum {
 		QUEUE_FOR_CPU,			// busy on the main thread
-		QUEUE_PENDING,		// waiting for the graphics thread
+		QUEUE_PENDING,			// waiting for the graphics thread
 		QUEUE_FOR_GPU,			// busy on the graphics thread
 		QUEUE_TOTAL_STAGES,
 	};

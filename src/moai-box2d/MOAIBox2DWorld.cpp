@@ -1122,7 +1122,7 @@ MOAIBox2DWorld::MOAIBox2DWorld () :
 	RTTI_BEGIN ( MOAIBox2DWorld )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIBox2DWorld >)
 		RTTI_EXTEND ( MOAIAction )
-		RTTI_EXTEND ( MOAIAbstractDrawable )
+		RTTI_EXTEND ( MOAIAbstractRenderNode )
 	RTTI_END
 	
 	this->mArbiter.Set ( *this, new MOAIBox2DArbiter ( *this ));
@@ -1265,6 +1265,22 @@ void MOAIBox2DWorld::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaSta
 }
 
 //----------------------------------------------------------------//
+void MOAIBox2DWorld::MOAIAbstractRenderNode_RenderInner ( u32 renderPhase ) {
+	UNUSED ( renderPhase );
+
+	if ( this->mDebugDraw ) {
+		
+		MOAIDraw::Get ().BindVectorPresets ();
+		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+		
+		gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX );
+		
+		this->mDebugDraw->mScale = 1.0f / this->mUnitsToMeters;
+		this->mWorld->DrawDebugData ();
+	}
+}
+
+//----------------------------------------------------------------//
 bool MOAIBox2DWorld::MOAIAction_IsDone () {
 
 	return false;
@@ -1287,26 +1303,3 @@ void MOAIBox2DWorld::MOAIAction_Update ( double step ) {
 		}
 	}
 }
-
-//----------------------------------------------------------------//
-void MOAIBox2DWorld::MOAIDrawable_Draw ( int subPrimID ) {
-	UNUSED ( subPrimID );
-
-	if ( this->mDebugDraw ) {
-		
-		MOAIDraw::Get ().BindVectorPresets ();
-		
-		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-		
-		gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX );
-		
-		this->mDebugDraw->mScale = 1.0f / this->mUnitsToMeters;
-		this->mWorld->DrawDebugData ();
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIBox2DWorld::MOAIDrawable_DrawDebug ( int subPrimID ) {
-	UNUSED ( subPrimID );
-}
-

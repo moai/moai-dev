@@ -5,7 +5,6 @@
 
 #include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIImageTexture.h>
-#include <moai-gfx/MOAIRenderBatch.h>
 #include <moai-gfx/MOAITexture2D.h>
 #include <moai-gfx/MOAIVertexFormatMgr.h>
 
@@ -35,9 +34,9 @@ int MOAIGfxMgr::_getRender ( lua_State* L ) {
 	if ( self->mRenderRoot ) {
 		state.Push ( self->mRenderRoot );
 	}
-	else {
-		state.Push ( self->AffirmDefaultBatch ());
-	}
+//	else {
+//		state.Push ( self->AffirmDefaultBatch ());
+//	}
 	return 1;
 }
 
@@ -47,9 +46,9 @@ int MOAIGfxMgr::_setRender ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIGfxMgr, "" )
 	
 	self->mRenderRoot.SetRef ( state, 1 );
-	if ( self->mRenderRoot ) {
-		self->mRenderBatch = NULL;
-	}
+//	if ( self->mRenderRoot ) {
+//		self->mRenderBatch = NULL;
+//	}
 	return 0;
 }
 
@@ -103,7 +102,7 @@ MOAIIndexBuffer* MOAIGfxMgr::CreateIndexBuffer () {
 }
 
 //----------------------------------------------------------------//
-MOAIRenderBatch* MOAIGfxMgr::CreateRenderBatch () {
+MOAIRenderNode* MOAIGfxMgr::CreateRenderBatch () {
 
 	return this->MOAIGfxMgr_CreateRenderBatch ();
 }

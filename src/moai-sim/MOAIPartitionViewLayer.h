@@ -30,7 +30,7 @@
 class MOAIPartitionViewLayer :
 	public virtual MOAIPartitionHolder,
 	public virtual MOAIAbstractViewLayer {
-private:
+protected:
 
 	u32			mSortMode;
 	bool		mSortInViewSpace;
@@ -48,17 +48,16 @@ private:
 	static int		_setSortScale			( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void			DrawPartition			( MOAIPartition& partition );
-	void			DrawProps				( MOAIPartitionResultBuffer& buffer );
-	void			DrawPropsDebug			( MOAIPartitionResultBuffer& buffer);
+	void			DrawPartition			( MOAIPartition& partition, u32 renderPhase );
+	void			DrawProps				( MOAIPartitionResultBuffer& buffer, u32 renderPhase );
 
 	//----------------------------------------------------------------//
 	void			_RegisterLuaClass				( RTTIVisitorHistory& history, MOAILuaState& state );
 	void			_RegisterLuaFuncs				( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAIAbstractViewLayer_Draw		();
+	void			MOAIAbstractViewLayer_Render	( u32 renderPhase );
 
 public:
-		
+	
 	DECL_LUA_FACTORY ( MOAIPartitionViewLayer )
 	
 	//----------------------------------------------------------------//

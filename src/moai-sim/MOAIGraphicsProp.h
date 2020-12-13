@@ -5,7 +5,7 @@
 #define	MOAIGRAPHICSPROP_H
 
 #include <moai-sim/MOAIAbstractPropWithDeckAndIndex.h>
-#include <moai-sim/MOAIGraphicsPropBase.h>
+#include <moai-sim/MOAIAbstractGraphicsProp.h>
 
 //================================================================//
 // MOAIGraphicsProp
@@ -13,12 +13,12 @@
 // TODO: doxygen
 class MOAIGraphicsProp :
 	public virtual MOAIAbstractPropWithDeckAndIndex,
-	public virtual MOAIGraphicsPropBase {
+	public virtual MOAIAbstractGraphicsProp {
 protected:
 
 	//----------------------------------------------------------------//
-	void					MOAIGraphicsPropBase_Draw				( int subPrimID );
-	bool					MOAIGraphicsPropBase_LoadGfxState		();
+	bool					MOAIAbstractGraphicsProp_LoadGfxState	();
+	void					MOAIAbstractGraphicsProp_Render			( u32 renderPhase );
 	bool					MOAINode_ApplyAttrOp					( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	void					MOAINode_Update							();
 

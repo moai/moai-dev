@@ -7,6 +7,7 @@
 #include <moai-sim/pch.h>
 #include <moai-sim/strings.h>
 
+#include <moai-sim/MOAIAbstractGraphicsProp.h>
 #include <moai-sim/MOAIAbstractHasHitMask.h>
 #include <moai-sim/MOAIAbstractHasHitMaskBatch.h>
 #include <moai-sim/MOAIAbstractHitMask.h>
@@ -99,7 +100,6 @@
 #include <moai-sim/MOAISpriteDeck2D.h>
 #include <moai-sim/MOAIStretchPatch2D.h>
 #include <moai-sim/MOAISurfaceDeck2D.h>
-#include <moai-sim/MOAITableLayer.h>
 #include <moai-sim/MOAITableViewLayer.h>
 #include <moai-sim/MOAITileDeck2D.h>
 #include <moai-sim/MOAITileFlags.h>

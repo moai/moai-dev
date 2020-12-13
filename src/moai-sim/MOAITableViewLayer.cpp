@@ -23,8 +23,8 @@
 MOAITableViewLayer::MOAITableViewLayer () {
 	
 	RTTI_BEGIN ( MOAITableViewLayer )
-		RTTI_EXTEND ( MOAITableLayer )
 		RTTI_EXTEND ( MOAIAbstractViewLayer )
+		RTTI_EXTEND ( MOAIRenderNode )
 	RTTI_END
 }
 
@@ -37,17 +37,17 @@ MOAITableViewLayer::~MOAITableViewLayer () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITableViewLayer::MOAIAbstractViewLayer_Draw () {
+void MOAITableViewLayer::MOAIAbstractViewLayer_Render ( u32 renderPhase ) {
 	
-	MOAIAbstractDrawable::Draw ( this->mRenderTable );
+	MOAIRenderNode::MOAIAbstractRenderNode_RenderInner ( renderPhase );
 	
-	if ( MOAIDebugLinesMgr::Get ().IsVisible () && this->mShowDebugLines ) {
-		MOAIAbstractDrawable::Draw ( this->mRenderTable, true );
-	}
+//	if ( MOAIDebugLinesMgr::Get ().IsVisible () && this->mShowDebugLines ) {
+//		MOAIRenderNode::Draw ( this->mRenderTable, true );
+//	}
 }
 
 //----------------------------------------------------------------//
-void MOAITableViewLayer::MOAIDrawable_Draw ( int subPrimID ) {
+void MOAITableViewLayer::MOAIAbstractRenderNode_RenderInner ( u32 renderPhase ) {
 
-	this->MOAIAbstractViewLayer::MOAIDrawable_Draw ( subPrimID );
+	MOAIAbstractLayer::MOAIAbstractRenderNode_RenderInner ( renderPhase );
 }

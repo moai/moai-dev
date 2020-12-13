@@ -4,33 +4,27 @@
 #ifndef	MOAIRENDERNODE_H
 #define	MOAIRENDERNODE_H
 
-#include <moai-gfx/MOAIAbstractDrawable.h>
-#include <moai-gfx/MOAIHasGfxScript.h>
+#include <moai-gfx/MOAIAbstractRenderNode.h>
 
 //================================================================//
 // MOAIRenderNode
 //================================================================//
 class MOAIRenderNode :
-	public virtual MOAIAbstractDrawable,
-	public virtual MOAIHasGfxScript {
-private:
+	public virtual MOAIAbstractRenderNode {
+protected:
 
 	MOAI_LUA_OBJECT_VISITOR_FRIEND
 
-	MOAILuaStrongRef						mRenderRoot;
-	MOAILuaSharedPtr < MOAIScope >		mScope;
+	MOAILuaStrongRef					mRenderRoot;
 
 	//----------------------------------------------------------------//
-	static int			_render						( lua_State* L );
-	static int			_setRender					( lua_State* L );
-	static int			_setScope					( lua_State* L );
+	static int			_getRenderRoot				( lua_State* L );
+	static int			_setRenderRoot				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				MOAIDrawable_Draw			( int subPrimID );
-	void				MOAIDrawable_DrawDebug		( int subPrimID );
-	virtual void		MOAIRenderNode_Render 		();
+	void				_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
+	virtual void		MOAIAbstractRenderNode_RenderInner 		( u32 renderPhase );
 
 public:
 
@@ -39,7 +33,8 @@ public:
 	//----------------------------------------------------------------//
 						MOAIRenderNode				();
 	virtual 			~MOAIRenderNode				();
-	void				Render						();
+	static void			Render						( u32 renderPhase, MOAILuaMemberRef& ref, MOAIRenderNode* caller );
+	static void			Render						( u32 renderPhase, MOAILuaState& state, int idx, MOAIRenderNode* caller );
 };
 
 #endif

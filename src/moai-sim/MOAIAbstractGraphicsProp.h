@@ -1,8 +1,8 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIGRAPHICSPROPBASE_H
-#define	MOAIGRAPHICSPROPBASE_H
+#ifndef	MOAIABSTRACTGRAPHICSPROP_H
+#define	MOAIABSTRACTGRAPHICSPROP_H
 
 #include <moai-sim/MOAIAbstractProp.h>
 #include <moai-gfx/MOAITransform.h>
@@ -10,9 +10,9 @@
 class MOAIScissorRect;
 
 //================================================================//
-// MOAIGraphicsPropBase
+// MOAIAbstractGraphicsProp
 //================================================================//
-/**	@lua	MOAIGraphicsPropBase
+/**	@lua	MOAIAbstractGraphicsProp
 	@text	Base class for graphics props.
 	
 	@const	FRAME_FROM_DECK
@@ -50,10 +50,10 @@ class MOAIScissorRect;
 	@const	CULL_BACK
 	@const	CULL_FRONT
 */
-class MOAIGraphicsPropBase :
+class MOAIAbstractGraphicsProp :
 	public virtual MOAIAbstractProp,
-	public virtual MOAIColor,
-	public virtual MOAIRenderNode {
+	public virtual MOAIAbstractRenderNode,
+	public virtual MOAIColor {
 protected:
 
 	friend class MOAIGraphicsPropBaseCallable;
@@ -76,28 +76,26 @@ protected:
 	static int				_setVisible					( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void					Draw						( u32 renderPhase );
+	void					DrawDebug					();
 	void					LoadUVTransform				();
 	void					LoadVertexTransform			();
 
 	//----------------------------------------------------------------//
-	void					_RegisterLuaClass							( RTTIVisitorHistory& history, MOAILuaState& state );
-	void					_RegisterLuaFuncs							( RTTIVisitorHistory& history, MOAILuaState& state );
-		
-	void					MOAIDrawable_Draw							( int subPrimID );
-	void					MOAIDrawable_DrawDebug						( int subPrimID );
-	
-	virtual void			MOAIGraphicsPropBase_Draw					( int subPrimID );
-	virtual void			MOAIGraphicsPropBase_DrawDebug				( int subPrimID );
-	virtual ZLMatrix4x4		MOAIGraphicsPropBase_GetWorldDrawingMtx		() const; // factors in billboard flags
-	virtual bool			MOAIGraphicsPropBase_LoadGfxState			();
-	
-	bool					MOAINode_ApplyAttrOp						( ZLAttrID attrID, ZLAttribute& attr, u32 op );
-	void					MOAINode_Update								();
+	void					_RegisterLuaClass								( RTTIVisitorHistory& history, MOAILuaState& state );
+	void					_RegisterLuaFuncs								( RTTIVisitorHistory& history, MOAILuaState& state );
+	virtual ZLMatrix4x4		MOAIAbstractGraphicsProp_GetWorldDrawingMtx		() const; // factors in billboard flags
+	virtual bool			MOAIAbstractGraphicsProp_LoadGfxState			();
+	virtual void			MOAIAbstractGraphicsProp_Render					( u32 renderPhase ) = 0;
+	void					MOAIAbstractRenderNode_RenderInner				( u32 renderPhase );
+	void					MOAIAbstractRenderNode_RenderOuter				( u32 renderPhase );
+	bool					MOAINode_ApplyAttrOp							( ZLAttrID attrID, ZLAttribute& attr, u32 op );
+	void					MOAINode_Update									();
 
 public:
 
-	DECL_LUA_ABSTRACT ( MOAIGraphicsPropBase )
-	DECL_ATTR_HELPER ( MOAIGraphicsPropBase );
+	DECL_LUA_ABSTRACT ( MOAIAbstractGraphicsProp )
+	DECL_ATTR_HELPER ( MOAIAbstractGraphicsProp );
 
 	enum {
 		DEBUG_DRAW_PARTITION_CELLS,
@@ -148,11 +146,11 @@ public:
 	DECL_ATTR_ID ( FRAME_TRAIT )
 
 	//----------------------------------------------------------------//
-	ZLMatrix4x4				GetWorldDrawingMtx			() const;
-	bool					IsVisible					();
-							MOAIGraphicsPropBase		();
-	virtual					~MOAIGraphicsPropBase		();
-	void					SetVisible					( bool visible );
+	ZLMatrix4x4				GetWorldDrawingMtx				() const;
+	bool					IsVisible						();
+							MOAIAbstractGraphicsProp		();
+	virtual					~MOAIAbstractGraphicsProp		();
+	void					SetVisible						( bool visible );
 };
 
 #endif

@@ -60,7 +60,7 @@ private:
 // TODO: doxygen
 class MOAICollisionProp :
 	public virtual MOAIAbstractPropWithDeckAndIndex,
-	public virtual MOAIAbstractDrawable {
+	public virtual MOAIAbstractRenderNode {
 private:
 	
 	friend class MOAICollisionWorld;
@@ -99,8 +99,7 @@ private:
 	void				_RegisterLuaClass							( RTTIVisitorHistory& history, MOAILuaState& state );
 	void				_RegisterLuaFuncs							( RTTIVisitorHistory& history, MOAILuaState& state );
 	ZLBounds			MOAIAbstractProp_GetModelBounds				();
-	void				MOAIDrawable_Draw							( int subPrimID );
-	void				MOAIDrawable_DrawDebug						( int subPrimID );
+	void				MOAIAbstractRenderNode_RenderInner			( u32 renderPhase );
 	bool				MOAINode_ApplyAttrOp						( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	void				MOAINode_Update								();
 	bool				MOAIPartitionHull_PrepareForInsertion		( const MOAIPartition& partition );

@@ -517,7 +517,7 @@ MOAIIndexBuffer* MOAIGfxMgrVK::MOAIGfxMgr_CreateIndexBuffer () {
 }
 
 //----------------------------------------------------------------//
-MOAIRenderBatch* MOAIGfxMgrVK::MOAIGfxMgr_CreateRenderBatch () {
+MOAIRenderNode* MOAIGfxMgrVK::MOAIGfxMgr_CreateRenderBatch () {
 
 	return new MOAIRenderBatchVK ();
 }

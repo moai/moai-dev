@@ -13,22 +13,29 @@ class MOAIFrameBuffer;
 // MOAIAbstractLayer
 //================================================================//
 class MOAIAbstractLayer :
-	public virtual MOAIRenderNode,
-	public virtual MOAISurfaceClearColor {
-private:
+	public virtual MOAIAbstractRenderNode,
+	public virtual MOAISurfaceClearColor,
+	public virtual MOAIColor {
+protected:
 
 	MOAI_LUA_OBJECT_VISITOR_FRIEND
 
+	MOAILuaSharedPtr < MOAIFrameBuffer >	mFrameBuffer;
+
 	//----------------------------------------------------------------//
-//	static int		_draw						( lua_State* L );
 	static int		_pushRenderPass				( lua_State* L );
+	static int		_setFrameBuffer				( lua_State* L );
+
+	//----------------------------------------------------------------//
+	virtual void	MOAIAbstractLayer_Render				( u32 renderPhase ) = 0;
+	void			MOAIAbstractRenderNode_RenderInner		( u32 renderPhase );
+	void			MOAIAbstractRenderNode_RenderOuter		( u32 renderPhase );
 
 protected:
 
 	//----------------------------------------------------------------//
 	void			_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
 	void			_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAIDrawable_DrawDebug		( int subPrimID );
 
 public:
 	

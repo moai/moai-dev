@@ -5,28 +5,27 @@
 #define	MOAITABLEVIEWLAYER_H
 
 #include <moai-sim/MOAIAbstractViewLayer.h>
-#include <moai-sim/MOAITableLayer.h>
 
 //================================================================//
 // MOAITableViewLayer
 //================================================================//
 // TODO: doxygen
 class MOAITableViewLayer :
-	public virtual MOAITableLayer,
-	public virtual MOAIAbstractViewLayer {
-private:
+	public virtual MOAIAbstractViewLayer,
+	public virtual MOAIRenderNode {
+protected:
 
 	//----------------------------------------------------------------//
-	void				MOAIAbstractViewLayer_Draw			();
-	void				MOAIDrawable_Draw					( int subPrimID );
+	void			MOAIAbstractViewLayer_Render			( u32 renderPhase );
+	void			MOAIAbstractRenderNode_RenderInner		( u32 renderPhase );
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAITableViewLayer )
 	
 	//----------------------------------------------------------------//
-						MOAITableViewLayer			();
-						~MOAITableViewLayer			();
+					MOAITableViewLayer			();
+					~MOAITableViewLayer			();
 };
 
 #endif

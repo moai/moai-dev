@@ -4,7 +4,7 @@
 #ifndef	MOAITEXTLABEL_H
 #define	MOAITEXTLABEL_H
 
-#include <moai-sim/MOAIGraphicsPropBase.h>
+#include <moai-sim/MOAIAbstractGraphicsProp.h>
 #include <moai-sim/MOAITextLayoutRules.h>
 #include <moai-sim/MOAITextLayout.h>
 #include <moai-sim/MOAITextStyle.h>
@@ -123,7 +123,7 @@ class MOAIFont;
 	@const	WORD_BREAK_CHAR
 */
 class MOAITextLabel :
-	public MOAIGraphicsPropBase,
+	public MOAIAbstractGraphicsProp,
 	public MOAIAction {
 private:
 
@@ -206,13 +206,12 @@ private:
 	void				_RegisterLuaClass									( RTTIVisitorHistory& history, MOAILuaState& state );
 	void				_RegisterLuaFuncs									( RTTIVisitorHistory& history, MOAILuaState& state );
 	void				MOAIAbstractBaseTransform_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx );
-	void				MOAIGraphicsPropBase_Draw							( int subPrimID );
-	void				MOAIGraphicsPropBase_DrawDebug						( int subPrimID );
-	bool				MOAIGraphicsPropBase_LoadGfxState					();
+	ZLMatrix4x4			MOAIAbstractGraphicsProp_GetWorldDrawingMtx			() const;
+	bool				MOAIAbstractGraphicsProp_LoadGfxState				();
+	void				MOAIAbstractGraphicsProp_Render						( u32 renderPhase );
 	ZLBounds			MOAIAbstractProp_GetModelBounds						();
 	bool				MOAIAction_IsDone									();
 	void				MOAIAction_Update									( double step );
-	ZLMatrix4x4			MOAIGraphicsPropBase_GetWorldDrawingMtx				() const;
 	void				MOAINode_Update										();
 
 public:

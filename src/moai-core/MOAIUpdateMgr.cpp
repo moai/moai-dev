@@ -328,56 +328,6 @@ int MOAIUpdateMgr::_timeToFrames ( lua_State* L ) {
 }
 
 //================================================================//
-// DOXYGEN
-//================================================================//
-
-#ifdef DOXYGEN
-
-	//----------------------------------------------------------------//
-	/**	@lua	clearRenderStack
-		@text	Alias for MOAIRenderMgr.clearRenderStack (). THIS METHOD
-				IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
-
-		@out	nil
-	*/
-	int MOAIUpdateMgr::_clearRenderStack ( lua_State* L ) {
-	}
-	
-	//----------------------------------------------------------------//
-	/**	@lua	popRenderPass
-		@text	Alias for MOAIRenderMgr.popRenderPass (). THIS METHOD
-				IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
-
-		@out	nil
-	*/
-	int MOAIUpdateMgr::_popRenderPass ( lua_State* L ) {
-	}
-	
-	//----------------------------------------------------------------//
-	/**	@lua	pushRenderPass
-		@text	Alias for MOAIRenderMgr.pushRenderPass (). THIS METHOD
-				IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
-
-		@in		MOAIAbstractDrawable renderable
-		@out	nil
-	*/
-	int MOAIUpdateMgr::_pushRenderPass ( lua_State* L ) {
-	}
-	
-	//----------------------------------------------------------------//
-	/**	@lua	removeRenderPass
-		@text	Alias for MOAIRenderMgr.removeRenderPass (). THIS METHOD
-				IS DEPRECATED AND WILL BE REMOVED IN A FUTURE RELEASE.
-
-		@in		MOAIAbstractDrawable renderable
-		@out	nil
-	*/
-	int MOAIUpdateMgr::_removeRenderPass ( lua_State* L ) {
-	}
-
-#endif
-
-//================================================================//
 // MOAIUpdateMgr
 //================================================================//
 

@@ -19,7 +19,7 @@ class MOAIGfxBufferSnapshotVK;
 // MOAIOneTriVK
 //================================================================//
 class MOAIOneTriVK :
-	public virtual MOAIAbstractDrawable {
+	public virtual MOAIAbstractRenderNode {
 private:
 
 	struct Vertex {
@@ -54,23 +54,22 @@ private:
 
 	ZLStrongPtr < MOAIPipelineLayoutVK >	mPipelineLayout;
 	ZLStrongPtr < MOAIDescriptorSetVK >		mDescriptorSet;
-	VkPipeline										mPipeline;
+	VkPipeline								mPipeline;
 
 	//----------------------------------------------------------------//
-	void			PreparePipeline				();
-	void			PrepareTexture				();
-	void			PrepareVertices				( bool useStagingBuffers = true );
-	void			UpdateMatrices				( u32 width, u32 height );
+	void			PreparePipeline						();
+	void			PrepareTexture						();
+	void			PrepareVertices						( bool useStagingBuffers = true );
+	void			UpdateMatrices						( u32 width, u32 height );
 
 	//----------------------------------------------------------------//
-	void			MOAIDrawable_Draw			( int subPrimID );
-	void			MOAIDrawable_DrawDebug		( int subPrimID );
+	void			MOAIAbstractRenderNode_Render		( int subPrimID );
 
 public:
 
 	//----------------------------------------------------------------//
-					MOAIOneTriVK				();
-					~MOAIOneTriVK				();
+					MOAIOneTriVK						();
+					~MOAIOneTriVK						();
 };
 
 #endif

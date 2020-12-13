@@ -15,7 +15,7 @@
 int MOAIProjectionProp::_init ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIProjectionProp, "UUUU" );
 	
-	MOAIGraphicsPropBase* sourceProp = state.GetLuaObject < MOAIGraphicsPropBase >( 2, true );
+	MOAIAbstractGraphicsProp* sourceProp = state.GetLuaObject < MOAIAbstractGraphicsProp >( 2, true );
 	if ( !sourceProp ) return 0;
 	
 	MOAIAbstractViewLayer* sourceLayer = state.GetLuaObject < MOAIAbstractViewLayer >( 3, true );
@@ -41,7 +41,7 @@ MOAIProjectionProp::MOAIProjectionProp () :
 	
 	RTTI_BEGIN ( MOAIProjectionProp )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIProjectionProp >)
-		RTTI_EXTEND ( MOAIAbstractDrawable )
+		RTTI_EXTEND ( MOAIAbstractRenderNode )
 		RTTI_EXTEND ( MOAIPartitionHull )
 	RTTI_END
 }
@@ -77,28 +77,9 @@ void MOAIProjectionProp::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILu
 }
 
 //----------------------------------------------------------------//
-bool MOAIProjectionProp::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
+void MOAIProjectionProp::MOAIAbstractRenderNode_RenderInner ( u32 renderPhase ) {
+	UNUSED ( renderPhase );
 
-	if ( AttrID::Check ( attrID )) {
-		switch ( attrID.Unpack ()) {
-			case ATTR_FRONT:
-				attr.Apply ( this->mFront, op, ZLAttribute::ATTR_READ );
-				return true;
-		}
-	}
-	
-	return MOAIPartitionHull::MOAINode_ApplyAttrOp ( attrID, attr, op );
-}
-
-//----------------------------------------------------------------//
-void MOAIProjectionProp::MOAIDrawable_Draw ( int subPrimID ) {
-	UNUSED ( subPrimID );
-}
-
-//----------------------------------------------------------------//
-void MOAIProjectionProp::MOAIDrawable_DrawDebug ( int subPrimID ) {
-	UNUSED ( subPrimID );
-		
 	if ( this->GetWorldBounds ().IsEmpty ()) return;
 
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
@@ -112,6 +93,20 @@ void MOAIProjectionProp::MOAIDrawable_DrawDebug ( int subPrimID ) {
 
 	draw.BindVectorPresets ();
 	draw.DrawBoxOutline ( this->GetWorldBounds ().mAABB );
+}
+
+//----------------------------------------------------------------//
+bool MOAIProjectionProp::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
+
+	if ( AttrID::Check ( attrID )) {
+		switch ( attrID.Unpack ()) {
+			case ATTR_FRONT:
+				attr.Apply ( this->mFront, op, ZLAttribute::ATTR_READ );
+				return true;
+		}
+	}
+	
+	return MOAIPartitionHull::MOAINode_ApplyAttrOp ( attrID, attr, op );
 }
 
 //----------------------------------------------------------------//

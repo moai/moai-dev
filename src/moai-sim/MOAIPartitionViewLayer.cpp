@@ -33,7 +33,7 @@ int	MOAIPartitionViewLayer::_getPropViewList ( lua_State* L ) {
 	
 	if ( partition && self->mViewport ) {
 		
-		ZLTypeID typeID = ZLType::GetID < MOAIAbstractDrawable >();
+		ZLTypeID typeID = ZLType::GetID < MOAIAbstractRenderNode >();
 		
 		float sortScale [ 4 ];
 		
@@ -186,11 +186,11 @@ int	MOAIPartitionViewLayer::_setSortScale ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition ) {
+void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition, u32 renderPhase ) {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	ZLTypeID typeID = ZLType::GetID < MOAIAbstractDrawable >();
+	ZLTypeID typeID = ZLType::GetID < MOAIAbstractRenderNode >();
 	
 	MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
 	MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
@@ -222,37 +222,24 @@ void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition ) {
 	
 	buffer.Sort ( this->mSortMode );
 	
-	this->DrawProps ( buffer );
-		
+	this->DrawProps ( buffer, renderPhase );
+	
 	if ( MOAIDebugLinesMgr::Get ().IsVisible () && this->mShowDebugLines ) {
-		
 		partition.DrawDebugBack ();
-		this->DrawPropsDebug ( buffer );
+		this->DrawProps ( buffer, MOAIAbstractRenderNode::RENDER_PHASE_DRAW_DEBUG );
 		partition.DrawDebugFront ();
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionViewLayer::DrawProps ( MOAIPartitionResultBuffer& buffer ) {
+void MOAIPartitionViewLayer::DrawProps ( MOAIPartitionResultBuffer& buffer, u32 renderPhase ) {
 
 	u32 totalResults = buffer.GetTotalResults ();
 
 	for ( u32 i = 0; i < totalResults; ++i ) {
 		MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
-		MOAIAbstractDrawable* drawable = result->AsType < MOAIAbstractDrawable >();
-		drawable->Draw ( result->mSubPrimID );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIPartitionViewLayer::DrawPropsDebug ( MOAIPartitionResultBuffer& buffer ) {
-
-	u32 totalResults = buffer.GetTotalResults ();
-
-	for ( u32 i = 0; i < totalResults; ++i ) {
-		MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
-		MOAIAbstractDrawable* drawable = result->AsType < MOAIAbstractDrawable >();
-		drawable->DrawDebug ( result->mSubPrimID );
+		MOAIAbstractRenderNode* prop = result->AsType < MOAIAbstractRenderNode >();
+		prop->Render ( renderPhase );
 	}
 }
 
@@ -324,9 +311,9 @@ void MOAIPartitionViewLayer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MO
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionViewLayer::MOAIAbstractViewLayer_Draw () {
+void MOAIPartitionViewLayer::MOAIAbstractViewLayer_Render ( u32 renderPhase ) {
 	
 	if ( this->MOAIPartitionHolder::mPartition ) {
-		this->DrawPartition ( *this->MOAIPartitionHolder::mPartition );
+		this->DrawPartition ( *this->MOAIPartitionHolder::mPartition, renderPhase  );
 	}
 }

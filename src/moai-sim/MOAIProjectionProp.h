@@ -13,13 +13,13 @@ class MOAIAbstractViewLayer;
 //================================================================//
 // TODO: doxygen
 class MOAIProjectionProp :
-	public virtual MOAIAbstractDrawable,
+	public virtual MOAIAbstractRenderNode,
 	public virtual MOAIPartitionHull {
 protected:
 
-	MOAILuaSharedPtr < MOAIGraphicsPropBase >	mSourceProp;
-	MOAILuaSharedPtr < MOAIAbstractViewLayer >	mSourceLayer;
-	MOAILuaSharedPtr < MOAIAbstractViewLayer >	mDestLayer;
+	MOAILuaSharedPtr < MOAIAbstractGraphicsProp >	mSourceProp;
+	MOAILuaSharedPtr < MOAIAbstractViewLayer >		mSourceLayer;
+	MOAILuaSharedPtr < MOAIAbstractViewLayer >		mDestLayer;
 
 	ZLReal				mFront;
 
@@ -27,12 +27,11 @@ protected:
 	static int			_init						( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				MOAIDrawable_Draw			( int subPrimID );
-	void				MOAIDrawable_DrawDebug		( int subPrimID );
-	bool				MOAINode_ApplyAttrOp		( ZLAttrID attrID, ZLAttribute& attr, u32 op );
-	void				MOAINode_Update				();
+	void				_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				MOAIAbstractRenderNode_RenderInner		( u32 renderPhase );
+	bool				MOAINode_ApplyAttrOp					( ZLAttrID attrID, ZLAttribute& attr, u32 op );
+	void				MOAINode_Update							();
 
 public:
 
