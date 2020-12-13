@@ -52,9 +52,9 @@ protected:
 	void			DrawProps				( MOAIPartitionResultBuffer& buffer, u32 renderPhase );
 
 	//----------------------------------------------------------------//
-	void			_RegisterLuaClass				( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			_RegisterLuaFuncs				( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAIAbstractViewLayer_Render	( u32 renderPhase );
+	void			_RegisterLuaClass					( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaFuncs					( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			MOAIAbstractRenderNode_Render		( u32 renderPhase );
 
 public:
 	

@@ -39,9 +39,10 @@ MOAIGraphicsProp::~MOAIGraphicsProp () {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIGraphicsProp::MOAIAbstractGraphicsProp_LoadGfxState () {
+bool MOAIGraphicsProp::MOAIAbstractRenderNode_LoadGfxState ( u32 renderPhase ) {
+	if ( renderPhase == MOAIAbstractRenderNode::RENDER_PHASE_DRAW_DEBUG ) return true;
 
-	if ( this->mDeck && MOAIAbstractGraphicsProp::MOAIAbstractGraphicsProp_LoadGfxState ()) {
+	if ( this->mDeck && MOAIAbstractGraphicsProp::MOAIAbstractRenderNode_LoadGfxState ( renderPhase )) {
 	
 		this->LoadVertexTransform ();
 		this->LoadUVTransform ();
@@ -52,9 +53,11 @@ bool MOAIGraphicsProp::MOAIAbstractGraphicsProp_LoadGfxState () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGraphicsProp::MOAIAbstractGraphicsProp_Render ( u32 renderPhase ) {
-	UNUSED ( renderPhase );
+void MOAIGraphicsProp::MOAIAbstractRenderNode_Render ( u32 renderPhase ) {
 
+	if ( renderPhase == MOAIAbstractRenderNode::RENDER_PHASE_DRAW ) {
+		this->DrawDebug ();
+	}
 	this->mDeck->Draw ( this->mIndex );
 }
 

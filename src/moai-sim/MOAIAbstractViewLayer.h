@@ -39,13 +39,12 @@ protected:
 	static int			_worldToWnd					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				_RegisterLuaClass					( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				_RegisterLuaFuncs					( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				MOAIAbstractLayer_Render			( u32 renderPhase );
-	ZLBounds			MOAIAbstractProp_GetModelBounds		();
-	virtual void		MOAIAbstractViewLayer_Render		( u32 renderPhase ) = 0;
-	bool				MOAINode_ApplyAttrOp				( ZLAttrID attrID, ZLAttribute& attr, u32 op );
-	void				MOAINode_Update						();
+	void				_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
+	ZLBounds			MOAIAbstractProp_GetModelBounds			();
+	bool				MOAIAbstractRenderNode_LoadGfxState		( u32 renderPhase );
+	bool				MOAINode_ApplyAttrOp					( ZLAttrID attrID, ZLAttribute& attr, u32 op );
+	void				MOAINode_Update							();
 
 public:
 

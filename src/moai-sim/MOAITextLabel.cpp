@@ -1175,7 +1175,46 @@ ZLMatrix4x4 MOAITextLabel::MOAIAbstractGraphicsProp_GetWorldDrawingMtx () const 
 }
 
 //----------------------------------------------------------------//
-bool MOAITextLabel::MOAIAbstractGraphicsProp_LoadGfxState () {
+ZLBounds MOAITextLabel::MOAIAbstractProp_GetModelBounds () {
+	
+	this->Refresh ();
+
+	ZLBounds bounds = ZLBounds::EMPTY;
+
+	ZLRect textBounds; // the tight fitting bounds of the text (if any: may be empty)
+	bool hasBounds = this->mLayout.GetFrame ( textBounds );
+	
+	ZLRect textFrame = this->mLayoutRules.GetFrame ();
+	bool limitWidth = this->mLayoutRules.GetLimitWidth ();
+	bool limitHeight = this->mLayoutRules.GetLimitHeight ();
+	
+	if ( hasBounds ) {
+	
+		if ( limitWidth ) {
+			textBounds.mXMin = textFrame.mXMin;
+			textBounds.mXMax = textFrame.mXMax;
+		}
+		
+		if ( limitHeight ) {
+			textBounds.mYMin = textFrame.mYMin;
+			textBounds.mYMax = textFrame.mYMax;
+		}
+		
+		bounds.Init ( textBounds );
+	}
+	else {
+	
+		// if the text bounds are empty, then *both* frame axis must be in use for the rect to be valid
+		if ( limitWidth && limitHeight ) {
+			bounds.Init ( textFrame );
+		}
+	}
+	
+	return bounds;
+}
+
+//----------------------------------------------------------------//
+bool MOAITextLabel::MOAIAbstractRenderNode_LoadGfxState ( u32 renderPhase ) {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
@@ -1212,7 +1251,7 @@ bool MOAITextLabel::MOAIAbstractGraphicsProp_LoadGfxState () {
 //		}
 //	}
 	
-	if ( this->mReveal && this->MOAIAbstractGraphicsProp::MOAIAbstractGraphicsProp_LoadGfxState ()) {
+	if ( this->mReveal && this->MOAIAbstractGraphicsProp::MOAIAbstractRenderNode_LoadGfxState ( renderPhase )) {
 
 		this->LoadVertexTransform ();
 		this->LoadUVTransform ();
@@ -1227,7 +1266,7 @@ bool MOAITextLabel::MOAIAbstractGraphicsProp_LoadGfxState () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLabel::MOAIAbstractGraphicsProp_Render ( u32 renderPhase ) {
+void MOAITextLabel::MOAIAbstractRenderNode_Render ( u32 renderPhase ) {
 	UNUSED ( renderPhase );
 	
 	// TODO: this just snaps an image behind the label. useful, but find another way.
@@ -1265,45 +1304,6 @@ void MOAITextLabel::MOAIAbstractGraphicsProp_Render ( u32 renderPhase ) {
 //	}
 	
 	this->mLayout.Draw ( this->mReveal );
-}
-
-//----------------------------------------------------------------//
-ZLBounds MOAITextLabel::MOAIAbstractProp_GetModelBounds () {
-	
-	this->Refresh ();
-
-	ZLBounds bounds = ZLBounds::EMPTY;
-
-	ZLRect textBounds; // the tight fitting bounds of the text (if any: may be empty)
-	bool hasBounds = this->mLayout.GetFrame ( textBounds );
-	
-	ZLRect textFrame = this->mLayoutRules.GetFrame ();
-	bool limitWidth = this->mLayoutRules.GetLimitWidth ();
-	bool limitHeight = this->mLayoutRules.GetLimitHeight ();
-	
-	if ( hasBounds ) {
-	
-		if ( limitWidth ) {
-			textBounds.mXMin = textFrame.mXMin;
-			textBounds.mXMax = textFrame.mXMax;
-		}
-		
-		if ( limitHeight ) {
-			textBounds.mYMin = textFrame.mYMin;
-			textBounds.mYMax = textFrame.mYMax;
-		}
-		
-		bounds.Init ( textBounds );
-	}
-	else {
-	
-		// if the text bounds are empty, then *both* frame axis must be in use for the rect to be valid
-		if ( limitWidth && limitHeight ) {
-			bounds.Init ( textFrame );
-		}
-	}
-	
-	return bounds;
 }
 
 //----------------------------------------------------------------//

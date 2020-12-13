@@ -22,9 +22,9 @@ protected:
 	static int			_setRenderRoot				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
-	virtual void		MOAIAbstractRenderNode_RenderInner 		( u32 renderPhase );
+	void				_RegisterLuaClass					( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaFuncs					( RTTIVisitorHistory& history, MOAILuaState& state );
+	virtual void		MOAIAbstractRenderNode_Render 		( u32 renderPhase );
 
 public:
 

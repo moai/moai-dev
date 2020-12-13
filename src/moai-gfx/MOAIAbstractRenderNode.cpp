@@ -20,7 +20,7 @@ public:
 	//----------------------------------------------------------------//
 	void MOAIAbstractGfxScriptCallback_Call () {
 	
-		this->mNode->MOAIAbstractRenderNode_RenderInner ( this->mRenderPhase );
+		this->mNode->MOAIAbstractRenderNode_Render ( this->mRenderPhase );
 	}
 };
 
@@ -112,8 +112,14 @@ void MOAIAbstractRenderNode::InvokeGfxScript ( u32 renderPhase ) {
 		gfxScript->ExecuteBytecode ( &callback );
 	}
 	else {
-		this->MOAIAbstractRenderNode_RenderInner ( renderPhase );
+		this->MOAIAbstractRenderNode_Render ( renderPhase );
 	}
+}
+
+//----------------------------------------------------------------//
+bool MOAIAbstractRenderNode::LoadGfxState ( u32 renderPhase ) {
+
+	return this->MOAIAbstractRenderNode_LoadGfxState ( renderPhase );
 }
 
 //----------------------------------------------------------------//
@@ -132,7 +138,9 @@ MOAIAbstractRenderNode::~MOAIAbstractRenderNode () {
 //----------------------------------------------------------------//
 void MOAIAbstractRenderNode::Render ( u32 renderPhase ) {
 
-	this->MOAIAbstractRenderNode_RenderOuter ( renderPhase );
+	if ( this->LoadGfxState ( renderPhase )) {
+		this->InvokeGfxScript ( renderPhase );
+	}
 	
 	if ( this->mScope ) {
 		this->mScope->Purge ();
@@ -173,7 +181,7 @@ void MOAIAbstractRenderNode::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MO
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractRenderNode::MOAIAbstractRenderNode_RenderOuter ( u32 renderPhase ) {
-
-	this->InvokeGfxScript ( renderPhase );
+bool MOAIAbstractRenderNode::MOAIAbstractRenderNode_LoadGfxState ( u32 renderPhase ) {
+	UNUSED ( renderPhase );
+	return true;
 }

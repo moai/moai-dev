@@ -490,9 +490,21 @@ void MOAIAbstractViewLayer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOA
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractViewLayer::MOAIAbstractLayer_Render ( u32 renderPhase ) {
-    
-	if ( !this->mViewport ) return;
+ZLBounds MOAIAbstractViewLayer::MOAIAbstractProp_GetModelBounds () {
+
+	if ( this->mViewport ) {
+		ZLBounds bounds ( this->mViewport->GetRect ());
+		return bounds;
+	}
+	return ZLBounds::EMPTY;
+}
+
+//----------------------------------------------------------------//
+bool MOAIAbstractViewLayer::MOAIAbstractRenderNode_LoadGfxState ( u32 renderPhase ) {
+
+	if ( this->IsClear ()) return false;
+	if ( !this->mViewport ) return false;
+	if ( !this->MOAIAbstractLayer::MOAIAbstractRenderNode_LoadGfxState ( renderPhase )) return false;
 	
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
@@ -508,26 +520,7 @@ void MOAIAbstractViewLayer::MOAIAbstractLayer_Render ( u32 renderPhase ) {
 	gfxMgr.SetViewProj ( this->mViewport, this->mCamera, this->mDebugCamera, this->mParallax );
 	gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX );
 	
-	this->MOAISurfaceClearColor::ClearSurface ();
-	
-	this->MOAIAbstractViewLayer_Render ( renderPhase );
-	
-	if ( MOAIDebugLinesMgr::Get ().IsVisible () && this->mShowDebugLines ) {
-		// TODO: fix camera debug lines
-//		if ( this->mCamera ) {
-//			this->mCamera->DrawDebug ();
-//		}
-	}
-}
-
-//----------------------------------------------------------------//
-ZLBounds MOAIAbstractViewLayer::MOAIAbstractProp_GetModelBounds () {
-
-	if ( this->mViewport ) {
-		ZLBounds bounds ( this->mViewport->GetRect ());
-		return bounds;
-	}
-	return ZLBounds::EMPTY;
+	return true;
 }
 
 //----------------------------------------------------------------//
@@ -543,4 +536,3 @@ void MOAIAbstractViewLayer::MOAINode_Update () {
 	MOAIAbstractLayer::MOAINode_Update ();
 	MOAIAbstractProp::MOAINode_Update ();
 }
-

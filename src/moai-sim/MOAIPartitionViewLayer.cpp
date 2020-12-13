@@ -311,7 +311,9 @@ void MOAIPartitionViewLayer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MO
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionViewLayer::MOAIAbstractViewLayer_Render ( u32 renderPhase ) {
+void MOAIPartitionViewLayer::MOAIAbstractRenderNode_Render ( u32 renderPhase ) {
+	
+	this->ClearSurface ();
 	
 	if ( this->MOAIPartitionHolder::mPartition ) {
 		this->DrawPartition ( *this->MOAIPartitionHolder::mPartition, renderPhase  );

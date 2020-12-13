@@ -99,7 +99,7 @@ private:
 	void				_RegisterLuaClass							( RTTIVisitorHistory& history, MOAILuaState& state );
 	void				_RegisterLuaFuncs							( RTTIVisitorHistory& history, MOAILuaState& state );
 	ZLBounds			MOAIAbstractProp_GetModelBounds				();
-	void				MOAIAbstractRenderNode_RenderInner			( u32 renderPhase );
+	void				MOAIAbstractRenderNode_Render				( u32 renderPhase );
 	bool				MOAINode_ApplyAttrOp						( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	void				MOAINode_Update								();
 	bool				MOAIPartitionHull_PrepareForInsertion		( const MOAIPartition& partition );

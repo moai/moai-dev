@@ -169,17 +169,6 @@ int MOAIAbstractGraphicsProp::_setVisible ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAbstractGraphicsProp::Draw ( u32 renderPhase ) {
-
-	if ( !this->IsVisible ()) return;
-	if ( this->IsClear ()) return;
-
-	if ( this->MOAIAbstractGraphicsProp_LoadGfxState ()) {
-		this->InvokeGfxScript ( renderPhase );
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAIAbstractGraphicsProp::DrawDebug () {
 
 	if ( this->GetWorldBounds ().IsEmpty ()) return;
@@ -596,7 +585,12 @@ ZLMatrix4x4 MOAIAbstractGraphicsProp::MOAIAbstractGraphicsProp_GetWorldDrawingMt
 }
 
 //----------------------------------------------------------------//
-bool MOAIAbstractGraphicsProp::MOAIAbstractGraphicsProp_LoadGfxState () {
+bool MOAIAbstractGraphicsProp::MOAIAbstractRenderNode_LoadGfxState ( u32 renderPhase ) {
+
+	if ( !this->IsVisible ()) return false;
+	if ( this->IsClear ()) return false;
+
+	if ( !MOAIAbstractRenderNode::MOAIAbstractRenderNode_LoadGfxState ( renderPhase )) return false;
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
@@ -610,23 +604,6 @@ bool MOAIAbstractGraphicsProp::MOAIAbstractGraphicsProp_LoadGfxState () {
 		gfxMgr.SetScissorRect ();
 	}
 	return true;
-}
-
-//----------------------------------------------------------------//
-void MOAIAbstractGraphicsProp::MOAIAbstractRenderNode_RenderInner ( u32 renderPhase ) {
-
-	this->MOAIAbstractGraphicsProp_Render ( renderPhase );
-}
-
-//----------------------------------------------------------------//
-void MOAIAbstractGraphicsProp::MOAIAbstractRenderNode_RenderOuter ( u32 renderPhase ) {
-
-	if ( renderPhase == MOAIAbstractRenderNode::RENDER_PHASE_DRAW_DEBUG ) {
-		this->DrawDebug ();
-	}
-	else {
-		this->Draw ( renderPhase );
-	}
 }
 
 //----------------------------------------------------------------//

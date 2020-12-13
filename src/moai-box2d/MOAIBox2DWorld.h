@@ -121,11 +121,11 @@ private:
 	void			ScheduleDestruction			( MOAIBox2DJoint& joint );
 
 	//----------------------------------------------------------------//
-	void			_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAIAbstractRenderNode_RenderInner		( u32 renderPhase );
-	bool			MOAIAction_IsDone						();
-	void			MOAIAction_Update						( double step );
+	void			_RegisterLuaClass					( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaFuncs					( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			MOAIAbstractRenderNode_Render		( u32 renderPhase );
+	bool			MOAIAction_IsDone					();
+	void			MOAIAction_Update					( double step );
 
 public:
 	

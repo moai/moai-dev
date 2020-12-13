@@ -123,7 +123,7 @@ void MOAIRenderNode::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaSta
 }
 
 //----------------------------------------------------------------//
-void MOAIRenderNode::MOAIAbstractRenderNode_RenderInner ( u32 renderPhase ) {
+void MOAIRenderNode::MOAIAbstractRenderNode_Render ( u32 renderPhase ) {
 
 	if ( this->mRenderRoot ) {
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();

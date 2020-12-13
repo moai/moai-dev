@@ -600,8 +600,35 @@ void MOAIParticleSystem::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILu
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleSystem::MOAIAbstractGraphicsProp_Draw ( int subPrimID ) {
-	UNUSED ( subPrimID );
+ZLBounds MOAIParticleSystem::MOAIAbstractProp_GetModelBounds () {
+
+	if ( this->mSpriteTop ) {
+		ZLBounds bounds;
+		bounds.Init ( this->mParticleBounds );
+		return bounds;
+	}
+	return ZLBounds::EMPTY;
+}
+
+//----------------------------------------------------------------//
+bool MOAIParticleSystem::MOAIAction_IsDone () {
+
+	return false;
+}
+
+//----------------------------------------------------------------//
+bool MOAIParticleSystem::MOAIAbstractRenderNode_LoadGfxState ( u32 renderPhase ) {
+
+	if ( this->mDeck && MOAIAbstractGraphicsProp::MOAIAbstractRenderNode_LoadGfxState ( renderPhase )) {
+		this->LoadUVTransform ();
+		return true;
+	}
+	return false;
+}
+
+//----------------------------------------------------------------//
+void MOAIParticleSystem::MOAIAbstractRenderNode_Render ( u32 renderPhase ) {
+	UNUSED ( renderPhase );
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	
@@ -638,33 +665,6 @@ void MOAIParticleSystem::MOAIAbstractGraphicsProp_Draw ( int subPrimID ) {
 		
 		this->mDeck->Draw ( this->mIndex + ( ZLSize )sprite.mGfxID );
 	}
-}
-
-//----------------------------------------------------------------//
-bool MOAIParticleSystem::MOAIAbstractGraphicsProp_LoadGfxState () {
-
-	if ( this->mDeck && MOAIAbstractGraphicsProp::MOAIAbstractGraphicsProp_LoadGfxState ()) {
-		this->LoadUVTransform ();
-		return true;
-	}
-	return false;
-}
-
-//----------------------------------------------------------------//
-ZLBounds MOAIParticleSystem::MOAIAbstractProp_GetModelBounds () {
-
-	if ( this->mSpriteTop ) {
-		ZLBounds bounds;
-		bounds.Init ( this->mParticleBounds );
-		return bounds;
-	}
-	return ZLBounds::EMPTY;
-}
-
-//----------------------------------------------------------------//
-bool MOAIParticleSystem::MOAIAction_IsDone () {
-
-	return false;
 }
 
 //----------------------------------------------------------------//

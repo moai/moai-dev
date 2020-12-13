@@ -29,13 +29,14 @@ protected:
 	static int			_setScope					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				InvokeGfxScript							( u32 renderPhase );
+	void				InvokeGfxScript				( u32 renderPhase );
+	bool				LoadGfxState				( u32 renderPhase );
 
 	//----------------------------------------------------------------//
 	void				_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
 	void				_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
-	virtual void		MOAIAbstractRenderNode_RenderOuter 		( u32 renderPhase );
-	virtual void		MOAIAbstractRenderNode_RenderInner 		( u32 renderPhase ) = 0;
+	virtual bool		MOAIAbstractRenderNode_LoadGfxState		( u32 renderPhase );
+	virtual void		MOAIAbstractRenderNode_Render 			( u32 renderPhase ) = 0;
 
 public:
 

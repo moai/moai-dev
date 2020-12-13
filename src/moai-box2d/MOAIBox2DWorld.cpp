@@ -1265,7 +1265,7 @@ void MOAIBox2DWorld::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaSta
 }
 
 //----------------------------------------------------------------//
-void MOAIBox2DWorld::MOAIAbstractRenderNode_RenderInner ( u32 renderPhase ) {
+void MOAIBox2DWorld::MOAIAbstractRenderNode_Render ( u32 renderPhase ) {
 	UNUSED ( renderPhase );
 
 	if ( this->mDebugDraw ) {

@@ -77,7 +77,7 @@ void MOAIProjectionProp::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILu
 }
 
 //----------------------------------------------------------------//
-void MOAIProjectionProp::MOAIAbstractRenderNode_RenderInner ( u32 renderPhase ) {
+void MOAIProjectionProp::MOAIAbstractRenderNode_Render ( u32 renderPhase ) {
 	UNUSED ( renderPhase );
 
 	if ( this->GetWorldBounds ().IsEmpty ()) return;

@@ -37,17 +37,20 @@ MOAITableViewLayer::~MOAITableViewLayer () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITableViewLayer::MOAIAbstractViewLayer_Render ( u32 renderPhase ) {
+bool MOAITableViewLayer::MOAIAbstractRenderNode_LoadGfxState ( u32 renderPhase ) {
+
+	if ( !this->MOAIAbstractViewLayer::MOAIAbstractRenderNode_LoadGfxState ( renderPhase )) return false;
+	if ( !this->MOAIRenderNode::MOAIAbstractRenderNode_LoadGfxState ( renderPhase )) return false;
 	
-	MOAIRenderNode::MOAIAbstractRenderNode_RenderInner ( renderPhase );
-	
-//	if ( MOAIDebugLinesMgr::Get ().IsVisible () && this->mShowDebugLines ) {
-//		MOAIRenderNode::Draw ( this->mRenderTable, true );
-//	}
+	return true;
 }
 
 //----------------------------------------------------------------//
-void MOAITableViewLayer::MOAIAbstractRenderNode_RenderInner ( u32 renderPhase ) {
+void MOAITableViewLayer::MOAIAbstractRenderNode_Render ( u32 renderPhase ) {
 
-	MOAIAbstractLayer::MOAIAbstractRenderNode_RenderInner ( renderPhase );
+	MOAIRenderNode::MOAIAbstractRenderNode_Render ( renderPhase );
+	
+	if ( MOAIDebugLinesMgr::Get ().IsVisible () && this->mShowDebugLines ) {
+		MOAIRenderNode::MOAIAbstractRenderNode_Render ( MOAIAbstractRenderNode::RENDER_PHASE_DRAW_DEBUG );
+	}
 }

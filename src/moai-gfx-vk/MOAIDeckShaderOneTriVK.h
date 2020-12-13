@@ -52,7 +52,7 @@ private:
 	void			UpdateMatrices				( u32 width, u32 height );
 
 	//----------------------------------------------------------------//
-	void			MOAIAbstractRenderNode_Render			( int subPrimID );
+	void			MOAIAbstractRenderNode_Render		( int subPrimID );
 
 public:
 

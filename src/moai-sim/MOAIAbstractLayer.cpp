@@ -72,15 +72,10 @@ void MOAIAbstractLayer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILua
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractLayer::MOAIAbstractRenderNode_RenderInner ( u32 renderPhase ) {
-	
-	this->MOAIAbstractLayer_Render ( renderPhase );
-}
+bool MOAIAbstractLayer::MOAIAbstractRenderNode_LoadGfxState ( u32 renderPhase ) {
 
-//----------------------------------------------------------------//
-void MOAIAbstractLayer::MOAIAbstractRenderNode_RenderOuter ( u32 renderPhase ) {
-
-	if ( this->IsClear ()) return;
+	if ( !this->MOAIAbstractRenderNode::MOAIAbstractRenderNode_LoadGfxState ( renderPhase )) return false;
+	if ( this->IsClear ()) return false;
 	
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
@@ -90,5 +85,5 @@ void MOAIAbstractLayer::MOAIAbstractRenderNode_RenderOuter ( u32 renderPhase ) {
 	}
 	gfxMgr.SetAmbientColor ( this->mColor );
 	
-	this->InvokeGfxScript ( renderPhase );
+	return true;
 }

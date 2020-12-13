@@ -112,9 +112,10 @@ MOAIGraphicsGridProp::~MOAIGraphicsGridProp () {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIGraphicsGridProp::MOAIAbstractGraphicsProp_LoadGfxState () {
+bool MOAIGraphicsGridProp::MOAIAbstractRenderNode_LoadGfxState ( u32 renderPhase ) {
+	if ( renderPhase == MOAIAbstractRenderNode::RENDER_PHASE_DRAW_DEBUG ) return true;
 
-	if ( this->mDeck && MOAIAbstractGraphicsProp::MOAIAbstractGraphicsProp_LoadGfxState ()) {
+	if ( this->mDeck && MOAIAbstractGraphicsProp::MOAIAbstractRenderNode_LoadGfxState ( renderPhase )) {
 		this->LoadUVTransform ();
 		return true;
 	}
@@ -122,8 +123,11 @@ bool MOAIGraphicsGridProp::MOAIAbstractGraphicsProp_LoadGfxState () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGraphicsGridProp::MOAIAbstractGraphicsProp_Render ( u32 renderPhase ) {
-	UNUSED ( renderPhase );
+void MOAIGraphicsGridProp::MOAIAbstractRenderNode_Render ( u32 renderPhase ) {
+	
+	if ( renderPhase == MOAIAbstractRenderNode::RENDER_PHASE_DRAW ) {
+		this->DrawDebug ();
+	}
 	
 	MOAICellCoord c0, c1;
 

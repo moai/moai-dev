@@ -76,7 +76,6 @@ protected:
 	static int				_setVisible					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void					Draw						( u32 renderPhase );
 	void					DrawDebug					();
 	void					LoadUVTransform				();
 	void					LoadVertexTransform			();
@@ -85,10 +84,7 @@ protected:
 	void					_RegisterLuaClass								( RTTIVisitorHistory& history, MOAILuaState& state );
 	void					_RegisterLuaFuncs								( RTTIVisitorHistory& history, MOAILuaState& state );
 	virtual ZLMatrix4x4		MOAIAbstractGraphicsProp_GetWorldDrawingMtx		() const; // factors in billboard flags
-	virtual bool			MOAIAbstractGraphicsProp_LoadGfxState			();
-	virtual void			MOAIAbstractGraphicsProp_Render					( u32 renderPhase ) = 0;
-	void					MOAIAbstractRenderNode_RenderInner				( u32 renderPhase );
-	void					MOAIAbstractRenderNode_RenderOuter				( u32 renderPhase );
+	bool					MOAIAbstractRenderNode_LoadGfxState				( u32 renderPhase );
 	bool					MOAINode_ApplyAttrOp							( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	void					MOAINode_Update									();
 

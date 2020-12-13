@@ -461,7 +461,7 @@ ZLBounds MOAICollisionProp::MOAIAbstractProp_GetModelBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionProp::MOAIAbstractRenderNode_RenderInner ( u32 renderPhase ) {
+void MOAICollisionProp::MOAIAbstractRenderNode_Render ( u32 renderPhase ) {
 	UNUSED ( renderPhase );
 
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();

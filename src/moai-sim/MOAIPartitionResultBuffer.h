@@ -13,12 +13,13 @@ class MOAIPartitionResult :
 	public ZLRadixKey32Base {
 public:
 
-	MOAIPartitionHull*	mHull;
-	int			mSubPrimID;
-	s32			mPriority;
+	MOAIPartitionHull*		mHull;
 	
-	ZLVec3D		mLoc;
-	ZLBox		mAABB;
+	int						mSubPrimID;
+	s32						mPriority;
+	
+	ZLVec3D					mLoc;
+	ZLBox					mAABB;
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >

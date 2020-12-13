@@ -22,8 +22,8 @@ private:
 	void					DrawGrid								( const MOAICellCoord &c0, const MOAICellCoord &c1 );
 
 	//----------------------------------------------------------------//
-	bool					MOAIAbstractGraphicsProp_LoadGfxState	();
-	void					MOAIAbstractGraphicsProp_Render			( u32 renderPhase );
+	bool					MOAIAbstractRenderNode_LoadGfxState		( u32 renderPhase );
+	void					MOAIAbstractRenderNode_Render			( u32 renderPhase );
 	bool					MOAINode_ApplyAttrOp					( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	void					MOAINode_Update							();
 	void					MOAIPartitionHull_AddToSortBuffer		( MOAIPartitionResultBuffer& buffer, u32 key = 0 );
