@@ -26,8 +26,7 @@ class MOAIFrameBufferAttachmentGL;
 */
 class MOAIFrameBufferGL :
 	public virtual MOAIFrameBuffer,
-	public virtual MOAIGfxResourceGL,
-	public virtual MOAIPoolableObject {
+	public virtual MOAIGfxResourceGL {
 protected:
 	
 	friend class MOAIGfxMgrGL_GPUCacheGL;
@@ -51,7 +50,7 @@ protected:
 	void				MOAIGfxResourceGL_OnGPUDeleteOrDiscard		( bool shouldDelete );
 	void				MOAIGfxResourceGL_OnGPUUnbind				(); 
 	bool				MOAIGfxResourceGL_OnGPUUpdate				();
-	void				MOAIRenderResource_OnRemit					();
+	void				MOAILuaObject_OnPooledRemit					();
 
 public:
 	

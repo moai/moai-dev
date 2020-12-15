@@ -1,18 +1,17 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIPOOLABLEOBJECTFACTORY_H
-#define	MOAIPOOLABLEOBJECTFACTORY_H
+#ifndef	MOAIPOOLEDOBJECTFACTORY_H
+#define	MOAIPOOLEDOBJECTFACTORY_H
 
 #include <moai-core/MOAILua.h>
 
 class MOAIScope;
-class MOAIPoolableObject;
 
 //================================================================//
-// MOAIPoolableObjectFactory
+// MOAIPooledObjectFactory
 //================================================================//
-class MOAIPoolableObjectFactory {
+class MOAIPooledObjectFactory {
 public:
 
 	MOAILuaStrongRef		mFactory;
@@ -20,9 +19,9 @@ public:
 	MOAILuaStrongRef		mOnRemit;
 	
 	//----------------------------------------------------------------//
-	MOAIPoolableObject*		Create 				();
-	void 					OnProvision 		( MOAIPoolableObject& resource, MOAIScope& scope );
-	void 					OnRemit 			( MOAIPoolableObject& resource );
+	MOAILuaObject*			Create 				();
+	void 					OnProvision 		( MOAILuaObject& object, MOAIScope& scope );
+	void 					OnRemit 			( MOAILuaObject& object );
 };
 
 #endif

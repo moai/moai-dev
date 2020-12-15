@@ -6,8 +6,6 @@
 
 #include <moai-core/MOAILua.h>
 
-class MOAIPoolableObject;
-
 //================================================================//
 // MOAIScope
 //================================================================//
@@ -16,8 +14,8 @@ class MOAIScope :
 	public virtual MOAILuaObject {
 private:
 
-	STLSet < MOAIPoolableObject* >		mObjects;
-	u32									mScopeRefCount;
+	STLSet < MOAILuaObject* >		mObjects;
+	u32								mScopeRefCount;
 
 	//----------------------------------------------------------------//
 	static int			_purge						( lua_State* L );
@@ -31,7 +29,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIScope )
 
 	//----------------------------------------------------------------//
-	void				AddObject					( MOAIPoolableObject* object );
+	void				AddObject					( MOAILuaObject* object );
 						MOAIScope					();
 						~MOAIScope					();
 	void				Purge						();

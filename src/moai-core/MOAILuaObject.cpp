@@ -4,6 +4,7 @@
 #include "pch.h"
 #include <moai-core/MOAIDeserializer.h>
 #include <moai-core/MOAILua.h>
+#include <moai-core/MOAIPool.h>
 #include <moai-core/MOAISerializer.h>
 #include <moai-core/MOAILuaState-impl.h>
 #include <moai-core/strings.h>
@@ -278,6 +279,12 @@ bool MOAILuaObject::IsBound () {
 }
 
 //----------------------------------------------------------------//
+bool MOAILuaObject::IsInPool () {
+
+	return ( this->mPoolType != NOT_IN_POOL );
+}
+
+//----------------------------------------------------------------//
 bool MOAILuaObject::IsMoaiUserdata ( MOAILuaState& state, int idx ) {
 
 	bool result = false;
@@ -377,7 +384,8 @@ void MOAILuaObject::LuaRetain ( MOAILuaObject* object ) {
 
 //----------------------------------------------------------------//
 MOAILuaObject::MOAILuaObject () :
-	mActiveUserdataCount ( 0 ) {
+	mActiveUserdataCount ( 0 ),
+	mPoolType ( NOT_IN_POOL ) {
 	
 	RTTI_BEGIN ( MOAILuaObject )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAILuaObject >)
@@ -646,8 +654,19 @@ void MOAILuaObject::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaStat
 }
 
 //----------------------------------------------------------------//
+void MOAILuaObject::MOAILuaObject_OnPooledRemit () {
+}
+
+//----------------------------------------------------------------//
 void MOAILuaObject::ZLRefCountedObjectBase_OnRelease ( u32 refCount ) {
 
+	if ( this->IsInPool () && ( refCount < 2 )) {
+		if ( refCount == 0 ) {
+			this->Retain ();
+		}
+		MOAIPool::Get ().Remit ( this );
+	}
+	
 	// The engine is done with this object, so it's OK to delete
 	// it if there is no connection to the Lua runtime. If there
 	// is, then refcount can remain 0 and the object will be

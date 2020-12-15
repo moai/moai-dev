@@ -58,6 +58,7 @@ private:
 	u32						mActiveUserdataCount;
 	MOAILuaWeakRef			mUserdata;		// ref to userdata (weak)
 	MOAILuaStrongRef		mFinalizer;		// ref to finalizer (strong)
+	u32						mPoolType;
 
 protected:
 
@@ -86,16 +87,20 @@ protected:
 	//----------------------------------------------------------------//
 	void					_RegisterLuaClass					( RTTIVisitorHistory& history, MOAILuaState& state );
 	void					_RegisterLuaFuncs					( RTTIVisitorHistory& history, MOAILuaState& state );
+	virtual void			MOAILuaObject_OnPooledRemit			();
 	void					ZLRefCountedObjectBase_OnRelease	( u32 refCount );
 
 public:
 
+	friend class MOAIDeserializer;
 	friend class MOAILuaCanary;
 	friend class MOAILuaClass;
 	friend class MOAILuaMemberRef;
 	friend class MOAILuaRuntime;
-	friend class MOAIDeserializer;
+	friend class MOAIPool;
 	friend class MOAISerializer;
+
+	static const u32 NOT_IN_POOL = ( u32 )-1;
 
 	//----------------------------------------------------------------//
 	static int				_alertNewIsUnsupported		( lua_State* L );
@@ -106,6 +111,7 @@ public:
 	MOAIScopedLuaState		GetSelf						();
 	void					GetRef						( MOAILuaRef& ref );
 	bool					IsBound						();
+	bool					IsInPool					();
 	static bool				IsMoaiUserdata				( MOAILuaState& state, int idx );
 	bool					IsSingleton					();
 	void					LuaRelease					();

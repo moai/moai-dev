@@ -5,8 +5,7 @@
 #define	MOAIPOOL_H
 
 #include <moai-core/MOAILua.h>
-#include <moai-core/MOAIPoolableObject.h>
-#include <moai-core/MOAIPoolableObjectFactory.h>
+#include <moai-core/MOAIPooledObjectFactory.h>
 
 class MOAIScope;
 
@@ -19,21 +18,21 @@ class MOAIPool :
 	public virtual MOAILuaObject {
 private:
 	
-	friend class MOAIPoolableObject;
+	friend class MOAILuaObject;
 	
-	STLMap < u32, MOAIPoolableObjectFactory >		mFactory;
-	STLSet < MOAIPoolableObject* >					mResources;
-	u32										mMaxID;
+	STLMap < u32, MOAIPooledObjectFactory >		mFactory;
+	STLSet < MOAILuaObject* >					mResources;
+	u32											mMaxID;
 	
-	STLMap < u32, STLSet < MOAIPoolableObject* > >	mAvailableResourcesByType;
+	STLMap < u32, STLSet < MOAILuaObject* > >	mAvailableResourcesByType;
 	
 	//----------------------------------------------------------------//
 	static int 				_addFactory						( lua_State* L );
 	static int				_provision						( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	MOAIPoolableObject* 			Provision						( u32 poolType, MOAIScope& scope );
-	void					Remit							( MOAIPoolableObject* resource );
+	MOAILuaObject* 			Provision						( u32 poolType, MOAIScope& scope );
+	void					Remit							( MOAILuaObject* resource );
 	
 	//----------------------------------------------------------------//
 	void					_RegisterLuaClass				( RTTIVisitorHistory& history, MOAILuaState& state );
@@ -51,7 +50,7 @@ public:
 	//----------------------------------------------------------------//
 	template < typename TYPE >
 	static void ReleaseIfPooled ( ZLStrongPtr < TYPE >& ptr ) {
-		MOAIPoolableObject* resource = ptr;
+		MOAILuaObject* resource = ptr;
 		if ( resource && resource->IsInPool ()) {
 			ptr = NULL;
 		}

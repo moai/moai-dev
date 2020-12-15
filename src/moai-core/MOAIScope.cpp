@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include <moai-core/MOAIScope.h>
-#include <moai-core/MOAIPoolableObject.h>
 
 //================================================================//
 // lua
@@ -27,7 +26,7 @@ int MOAIScope::_purge ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIScope::AddObject ( MOAIPoolableObject* object ) {
+void MOAIScope::AddObject ( MOAILuaObject* object ) {
 
 	if ( !object ) return;
 	if ( this->mObjects.contains ( object )) return;
@@ -55,9 +54,9 @@ MOAIScope::~MOAIScope () {
 //----------------------------------------------------------------//
 void MOAIScope::Purge () {
 
-	STLSet < MOAIPoolableObject* >::iterator objectIt = this->mObjects.begin ();
+	STLSet < MOAILuaObject* >::iterator objectIt = this->mObjects.begin ();
 	for ( ; objectIt != this->mObjects.end (); ++objectIt ) {
-		MOAIPoolableObject* object = *objectIt;
+		MOAILuaObject* object = *objectIt;
 		object->Release ();
 	}
 	this->mObjects.clear ();
