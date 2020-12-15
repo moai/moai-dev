@@ -12,7 +12,7 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIRenderNode::_getRenderRoot ( lua_State* L ) {
+int MOAIRenderNode::_getRender ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIRenderNode, "U" )
 	state.Push ( self->mRenderRoot );
 	return 1;
@@ -20,7 +20,7 @@ int MOAIRenderNode::_getRenderRoot ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIRenderNode::_setRenderRoot ( lua_State* L ) {
+int MOAIRenderNode::_setRender ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIRenderNode, "U" )
 	self->mRenderRoot.SetRef ( state, 2 );
 	MOAI_LUA_RETURN_SELF
@@ -89,7 +89,7 @@ void MOAIRenderNode::Render ( u32 renderPhase, MOAILuaState& state, int idx, MOA
 			MOAIDraw::Get ().PushCmdInterface ( state );
 			if ( caller ) {
 				state.Push ( caller );
-				state.Push (( MOAILuaObject* )caller->mScope );
+				state.Push ( renderPhase );
 				state.DebugCall ( 3, 0 );
 			}
 			else {
@@ -114,8 +114,8 @@ void MOAIRenderNode::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaSta
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
-		{ "getRenderRoot",				_getRenderRoot },
-		{ "setRenderRoot",				_setRenderRoot },
+		{ "getRender",					_getRender },
+		{ "setRender",					_setRender },
 		{ NULL, NULL }
 	};
 

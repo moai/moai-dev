@@ -17,16 +17,19 @@ protected:
 
 	MOAI_LUA_OBJECT_VISITOR_FRIEND
 
-	MOAILuaSharedPtr < MOAIScope >		mScope;
+	MOAILuaSharedPtr < MOAIScope >	mLocalScope;
+	MOAILuaSharedPtr < MOAIScope >	mSharedScope;
 	
 	STLMap < u32, ZLStrongPtr < MOAIGfxScript > > mGfxScripts;
 
 	//----------------------------------------------------------------//
 	static int			_getGfxScript				( lua_State* L );
 	static int			_gfxScript					( lua_State* L );
+	static int			_localScope					( lua_State* L );
 	static int			_render						( lua_State* L );
 	static int			_setGfxScript				( lua_State* L );
-	static int			_setScope					( lua_State* L );
+	static int			_setSharedScope				( lua_State* L );
+	static int			_sharedScope				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	bool				LoadGfxState				( u32 renderPhase );
@@ -46,6 +49,7 @@ public:
 
 	//----------------------------------------------------------------//
 	MOAIGfxScript*		AffirmGfxScript				( u32 renderPhase );
+	void				AffirmLocalScope			();
 	MOAIGfxScript*		GetGfxScript				( u32 renderPhase );
 						MOAIAbstractRenderNode		();
 	virtual 			~MOAIAbstractRenderNode		();

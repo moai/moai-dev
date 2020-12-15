@@ -46,9 +46,9 @@ gfxQuad = MOAISpriteDeck2D.new ()
 prop = MOAIGraphicsProp.new ():setDeck ( gfxQuad )
 prop:moveRot ( 0, 0, -360, 5 )
 
-function render ( draw, node, scope )
+function render ( draw, node, phase )
 
-	local frameBuffer = MOAIPool.provision ( COLOR_FBO_256_256, scope )
+	local frameBuffer = MOAIPool.provision ( COLOR_FBO_256_256, node:localScope ())
 
 	draw
 		:setFrameBuffer ( frameBuffer )
@@ -68,5 +68,5 @@ function render ( draw, node, scope )
 	prop:render ()
 end
 
-node = MOAIRenderNode.new ():setRender ( render ):setScope ( MOAIPoolScope.new ())
+node = MOAIRenderNode.new ():setRender ( render )
 MOAIGfxMgr.setRender ( node )

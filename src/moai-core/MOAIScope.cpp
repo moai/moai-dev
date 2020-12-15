@@ -37,7 +37,8 @@ void MOAIScope::AddObject ( MOAIPoolableObject* object ) {
 }
 
 //----------------------------------------------------------------//
-MOAIScope::MOAIScope () {
+MOAIScope::MOAIScope () :
+	mScopeRefCount ( 0 ) {
 
 	RTTI_BEGIN ( MOAIScope )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIScope >)
@@ -60,6 +61,23 @@ void MOAIScope::Purge () {
 		object->Release ();
 	}
 	this->mObjects.clear ();
+}
+
+//----------------------------------------------------------------//
+void MOAIScope::ScopeRelease () {
+
+	if ( this->mScopeRefCount > 0 ) {
+		this->mScopeRefCount--;
+		if ( this->mScopeRefCount == 0 ) {
+			this->Purge ();
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIScope::ScopeRetain () {
+
+	this->mScopeRefCount++;
 }
 
 //================================================================//

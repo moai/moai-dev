@@ -50,6 +50,16 @@ int MOAIAbstractRenderNode::_gfxScript ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIAbstractRenderNode::_localScope ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractRenderNode, "U" )
+	
+	self->AffirmLocalScope ();
+	self->mLocalScope.PushRef ( state );
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIAbstractRenderNode::_render ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractRenderNode, "U" )
 	
@@ -70,12 +80,24 @@ int MOAIAbstractRenderNode::_setGfxScript ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIAbstractRenderNode::_setScope ( lua_State* L ) {
+int MOAIAbstractRenderNode::_setSharedScope ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractRenderNode, "U" )
 	
 	MOAIScope* scope = state.GetLuaObject < MOAIScope >( 2, false );
-	self->mScope.Set ( *self, scope );
+	self->mSharedScope.Set ( *self, scope );
 	MOAI_LUA_RETURN_SELF
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIAbstractRenderNode::_sharedScope ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractRenderNode, "U" )
+	
+	if ( self->mSharedScope ) {
+		self->mSharedScope.PushRef ( state );
+		return 1;
+	}
+	return 0;
 }
 
 //================================================================//
@@ -91,6 +113,14 @@ MOAIGfxScript* MOAIAbstractRenderNode::AffirmGfxScript ( u32 renderPhase ) {
 		this->mGfxScripts [ renderPhase ] = gfxScript;
 	}
 	return gfxScript;
+}
+
+//----------------------------------------------------------------//
+void MOAIAbstractRenderNode::AffirmLocalScope () {
+
+	if ( !this->mLocalScope ) {
+		this->mLocalScope.Set ( *this, new MOAIScope ());
+	}
 }
 
 //----------------------------------------------------------------//
@@ -117,13 +147,20 @@ MOAIAbstractRenderNode::MOAIAbstractRenderNode () {
 
 //----------------------------------------------------------------//
 MOAIAbstractRenderNode::~MOAIAbstractRenderNode () {
+
+	this->mLocalScope.Set ( *this, NULL );
+	this->mSharedScope.Set ( *this, NULL );
 }
 
 //----------------------------------------------------------------//
 void MOAIAbstractRenderNode::Render ( u32 renderPhase ) {
 
 	if ( !this->LoadGfxState ( renderPhase )) return;
-			
+	
+	if ( this->mSharedScope ) {
+		this->mSharedScope->ScopeRetain ();
+	}
+	
 	MOAIGfxScript* gfxScript = this->GetGfxScript ( renderPhase );
 	
 	if ( gfxScript ) {
@@ -136,8 +173,12 @@ void MOAIAbstractRenderNode::Render ( u32 renderPhase ) {
 		this->MOAIAbstractRenderNode_Render ( renderPhase );
 	}
 	
-	if ( this->mScope ) {
-		this->mScope->Purge ();
+	if ( this->mLocalScope ) {
+		this->mLocalScope->Purge ();
+	}
+	
+	if ( this->mSharedScope ) {
+		this->mSharedScope->ScopeRelease ();
 	}
 }
 
@@ -166,8 +207,13 @@ void MOAIAbstractRenderNode::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MO
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
+		{ "getGfxScript",				_getGfxScript },
+		{ "gfxScript",					_gfxScript },
+		{ "localScope",					_localScope },
 		{ "render",						_render },
-		{ "setScope",					_setScope },
+		{ "setGfxScript",				_setGfxScript },
+		{ "setSharedScope",				_setSharedScope },
+		{ "sharedScope",				_sharedScope },
 		{ NULL, NULL }
 	};
 

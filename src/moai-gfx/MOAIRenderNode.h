@@ -15,11 +15,11 @@ protected:
 
 	MOAI_LUA_OBJECT_VISITOR_FRIEND
 
-	MOAILuaStrongRef					mRenderRoot;
+	MOAILuaStrongRef	mRenderRoot;
 
 	//----------------------------------------------------------------//
-	static int			_getRenderRoot				( lua_State* L );
-	static int			_setRenderRoot				( lua_State* L );
+	static int			_getRender					( lua_State* L );
+	static int			_setRender					( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void				_RegisterLuaClass					( RTTIVisitorHistory& history, MOAILuaState& state );

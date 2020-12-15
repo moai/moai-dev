@@ -34,7 +34,6 @@ class MOAIParticleSystem;
 	@const	SPRITE_OPACITY
 	@const	SPRITE_GLOW
 	@const	SPRITE_IDX
-
 */
 class MOAIParticleScript :
 	public virtual MOAILuaObject {

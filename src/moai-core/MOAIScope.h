@@ -17,6 +17,7 @@ class MOAIScope :
 private:
 
 	STLSet < MOAIPoolableObject* >		mObjects;
+	u32									mScopeRefCount;
 
 	//----------------------------------------------------------------//
 	static int			_purge						( lua_State* L );
@@ -34,6 +35,8 @@ public:
 						MOAIScope					();
 						~MOAIScope					();
 	void				Purge						();
+	void				ScopeRelease				();
+	void				ScopeRetain					();
 };
 
 #endif
