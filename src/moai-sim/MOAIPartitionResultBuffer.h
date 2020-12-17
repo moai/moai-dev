@@ -35,8 +35,11 @@ public:
 	@text	Class for optimizing spatial queries against sets of primitives.
 			Configure for performance; default behavior is a simple list.
 */
-class MOAIPartitionResultBuffer {
+class MOAIPartitionResultBuffer :
+	public virtual MOAILuaObject {
 private:
+
+	MOAI_LUA_OBJECT_VISITOR_FRIEND
 
 	friend class MOAIPartition;
 	friend class MOAIPartitionCell;
@@ -54,15 +57,26 @@ private:
 	u32										mTotalResults;
 
 	//----------------------------------------------------------------//
+	static int				_findBest						( lua_State* L );
+	static int				_getResults						( lua_State* L );
+	static int				_sort							( lua_State* L );
+
+	//----------------------------------------------------------------//
 	MOAIPartitionResult*	AffirmSwapBuffer				();
 	void					SetResultsBuffer				( MOAIPartitionResult* buffer );
 	u32						SortResultsIso					();
 	u32						SortResultsLinear				();
 	
+	//----------------------------------------------------------------//
+	void					_RegisterLuaClass				( RTTIVisitorHistory& history, MOAILuaState& state );
+	void					_RegisterLuaFuncs				( RTTIVisitorHistory& history, MOAILuaState& state );
+	
 public:
 
 	static const u32 SORT_FLAG_DESCENDING		= 0x80000000;
 	static const u32 SORT_MODE_MASK				= 0x7fffffff;
+
+	DECL_LUA_FACTORY ( MOAIPartitionResultBuffer )
 
 	enum {
 		SORT_NONE,

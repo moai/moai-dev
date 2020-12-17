@@ -7,7 +7,6 @@
 #include <moai-sim/MOAIPartitionViewLayer.h>
 #include <moai-sim/MOAIPartition.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
-#include <moai-sim/MOAIPartitionResultMgr.h>
 
 //================================================================//
 // lua
@@ -53,25 +52,25 @@ int	MOAIPartitionViewLayer::_getPropViewList ( lua_State* L ) {
 		ZLFrustum viewVolume;
 		viewVolume.Init ( invViewProjMtx );
 		
-		MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
-		MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
+		ZLStrongPtr < MOAIPartitionResultBuffer > buffer;
+		MOAIPool::Get ().Provision < MOAIPartitionResultBuffer >( buffer );
 		
 		u32 totalResults = 0;
 		
 		if ( self->mPartitionCull2D ) {
-			totalResults = partition->GatherHulls ( buffer, 0, viewVolume.mAABB, typeID );
+			totalResults = partition->GatherHulls ( *buffer, 0, viewVolume.mAABB, typeID );
 		}
 		else {
-			totalResults = partition->GatherHulls ( buffer, 0, viewVolume, typeID );
+			totalResults = partition->GatherHulls ( *buffer, 0, viewVolume, typeID );
 		}
 		
 		if ( !totalResults ) return 0;
 		
 		if ( sortInViewSpace ) {
-			buffer.Transform ( viewMtx, false );
+			buffer->Transform ( viewMtx, false );
 		}
 		
-		buffer.GenerateKeys (
+		buffer->GenerateKeys (
 			sortMode,
 			sortScale [ 0 ],
 			sortScale [ 1 ],
@@ -79,9 +78,9 @@ int	MOAIPartitionViewLayer::_getPropViewList ( lua_State* L ) {
 			sortScale [ 3 ]
 		);
 		
-		buffer.Sort ( self->mSortMode );
-	
-		buffer.PushHulls ( L );
+		buffer->Sort ( self->mSortMode );
+
+		buffer->PushHulls ( L );
 		return totalResults;
 	}
 	return 0;
@@ -192,27 +191,27 @@ void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition, u32 rende
 
 	ZLTypeID typeID = ZLType::GetID < MOAIAbstractRenderNode >();
 	
-	MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
-	MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
+	ZLStrongPtr < MOAIPartitionResultBuffer > buffer;
+	MOAIPool::Get ().Provision < MOAIPartitionResultBuffer >( buffer );
 	
 	const ZLFrustum& viewVolume = gfxMgr.GetViewVolume ();
 	
 	u32 totalResults = 0;
 		
 	if ( this->mPartitionCull2D ) {
-		totalResults = partition.GatherHulls ( buffer, 0, viewVolume.mAABB, typeID );
+		totalResults = partition.GatherHulls ( *buffer, 0, viewVolume.mAABB, typeID );
 	}
 	else {
-		totalResults = partition.GatherHulls ( buffer, 0, viewVolume, typeID );
+		totalResults = partition.GatherHulls ( *buffer, 0, viewVolume, typeID );
 	}
 	
 	if ( !totalResults ) return;
 	
 	if ( this->mSortInViewSpace ) {
-		buffer.Transform ( gfxMgr.GetMtx ( MOAIGfxMgr::WORLD_TO_VIEW_MTX ), false );
+		buffer->Transform ( gfxMgr.GetMtx ( MOAIGfxMgr::WORLD_TO_VIEW_MTX ), false );
 	}
 	
-	buffer.GenerateKeys (
+	buffer->GenerateKeys (
 		this->mSortMode,
 		this->mSortScale [ 0 ],
 		this->mSortScale [ 1 ],
@@ -220,13 +219,13 @@ void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition, u32 rende
 		this->mSortScale [ 3 ]
 	);
 	
-	buffer.Sort ( this->mSortMode );
+	buffer->Sort ( this->mSortMode );
 	
-	this->DrawProps ( buffer, renderPhase );
+	this->DrawProps ( *buffer, renderPhase );
 	
 	if ( MOAIDebugLinesMgr::Get ().IsVisible () && this->mShowDebugLines ) {
 		partition.DrawDebugBack ();
-		this->DrawProps ( buffer, MOAIAbstractRenderNode::RENDER_PHASE_DRAW_DEBUG );
+		this->DrawProps ( *buffer, MOAIAbstractRenderNode::RENDER_PHASE_DRAW_DEBUG );
 		partition.DrawDebugFront ();
 	}
 }

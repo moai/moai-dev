@@ -7,7 +7,6 @@
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIPartition.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
-#include <moai-sim/MOAIPartitionResultMgr.h>
 
 //================================================================//
 // lua

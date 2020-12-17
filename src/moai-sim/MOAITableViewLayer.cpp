@@ -7,7 +7,6 @@
 #include <moai-sim/MOAITableViewLayer.h>
 #include <moai-sim/MOAIPartitionHolder.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
-#include <moai-sim/MOAIPartitionResultMgr.h>
 
 //================================================================//
 // lua

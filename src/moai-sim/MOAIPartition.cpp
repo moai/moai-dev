@@ -6,7 +6,6 @@
 #include <moai-sim/MOAIPartitionCell.h>
 #include <moai-sim/MOAIPartitionLevel.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
-#include <moai-sim/MOAIPartitionResultMgr.h>
 #include <moai-sim/MOAIPartitionHull.h>
 
 //================================================================//
@@ -24,306 +23,82 @@ int MOAIPartition::_clear ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartition, "U" )
 
 	self->Clear ();
+	MOAI_LUA_RETURN_SELF
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIPartition::_hulls ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPartition, "UU" )
+
+	MOAIPartitionResultBuffer* buffer = state.GetLuaObject < MOAIPartitionResultBuffer >( 2, true );
+	if ( buffer ) {
 	
+		ZLTypeID typeID			= state.GetValue < ZLTypeID >( 3, ZLType::GetID < MOAIPartitionHull >());
+		u32 queryMask			= state.GetValue < u32 >( 4, MASK_ANY );
+
+		self->GatherHulls ( *buffer, 0, typeID, queryMask );
+		buffer->PushLuaUserdata ( state );
+		return 1;
+	}
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@lua	hullForPoint
-	@text	Returns the hull with the highest priority that contains
-			the given world space point.
-	
-	@in		MOAIPartition self
-	@in		number x
-	@in		number y
-	@in		number z
-	@opt	number sortMode			One of the MOAIPartitionViewLayer sort modes. Default value is SORT_PRIORITY_ASCENDING.
-	@opt	number xScale			X scale for vector sort. Default value is 0.
-	@opt	number yScale			Y scale for vector sort. Default value is 0.
-	@opt	number zScale			Z scale for vector sort. Default value is 0.
-	@opt	number priorityScale	Priority scale for vector sort. Default value is 1.
-	@opt	number typeID
-	@opt	number queryMask
-	@out	MOAIPartitionHull hull			The hull under the point or nil if no hull found.
-*/
-int MOAIPartition::_hullForPoint ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPartition, "UNN" )
+// TODO: doxygen
+int MOAIPartition::_hullsForPoint ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPartition, "UU" )
 
-	ZLVec3D vec;
-	vec.mX					= state.GetValue < float >( 2, 0.0f );
-	vec.mY					= state.GetValue < float >( 3, 0.0f );
-	vec.mZ					= state.GetValue < float >( 4, 0.0f );
+	MOAIPartitionResultBuffer* buffer = state.GetLuaObject < MOAIPartitionResultBuffer >( 2, true );
+	if ( buffer ) {
 
-	u32 sortMode			= state.GetValue < u32 >( 5, MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
-	float xScale			= state.GetValue < float >( 6, 0.0f );
-	float yScale			= state.GetValue < float >( 7, 0.0f );
-	float zScale			= state.GetValue < float >( 8, 0.0f );
-	float priorityScale		= state.GetValue < float >( 9, 1.0f );
+		ZLVec3D vec				= state.GetValue < ZLVec3D >( 3, ZLVec3D::ORIGIN );
+		ZLTypeID typeID			= state.GetValue < ZLTypeID >( 6, ZLType::GetID < MOAIPartitionHull >());
+		u32 queryMask			= state.GetValue < u32 >( 7, MASK_ANY );
 
-	ZLTypeID typeID			= state.GetValue < ZLTypeID >( 10, ZLType::GetID < MOAIPartitionHull >());
-	u32 queryMask			= state.GetValue < u32 >( 11, MASK_ANY );
+		self->GatherHulls ( *buffer, 0, vec, typeID, queryMask );
+		buffer->PushLuaUserdata ( state );
+		return 1;
+	}
+	return 0;
+}
 
-	MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
-	MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
-	
-	u32 total = self->GatherHulls ( buffer, 0, vec, typeID, queryMask );
-	if ( total ) {
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIPartition::_hullsForRay ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPartition, "UU" )
+
+	MOAIPartitionResultBuffer* buffer = state.GetLuaObject < MOAIPartitionResultBuffer >( 2, true );
+	if ( buffer ) {
+
+		ZLVec3D vec				= state.GetValue < ZLVec3D >( 3, ZLVec3D::ORIGIN );
+		ZLVec3D direction		= state.GetValue < ZLVec3D >( 6, ZLVec3D::ORIGIN );
+		ZLTypeID typeID			= state.GetValue < ZLTypeID >( 9, ZLType::GetID < MOAIPartitionHull >());
+		u32 queryMask			= state.GetValue < u32 >( 10, MASK_ANY );
 		
-		// this just swaps the internal buffer pointers so we can access the results
-		buffer.Sort ( MOAIPartitionResultBuffer::SORT_NONE );
-		
-		// generate the sort keys, but don't actually sort
-		buffer.GenerateKeys ( sortMode, xScale, yScale, zScale, priorityScale );
-		
-		// since we're just looking for one hull, do a one-pass traversal to find the best result
-		MOAIPartitionHull* hull = buffer.FindBest ();
-		if ( hull ) {
-			hull->PushLuaUserdata ( state );
-			return 1;
-		}
+		direction.Norm ();
+		self->GatherHulls ( *buffer, 0, vec, direction, typeID, queryMask );
+		buffer->PushLuaUserdata ( state );
+		return 1;
 	}
 	return 0;
 }
 
 //----------------------------------------------------------------//
-/**	@lua	hullForRay
-	@text	Returns the first hull that intersects the given ray
-	 
-	@in		MOAIPartition self
-	@in		number x
-	@in		number y
-	@in		number z
-	@in		number xdirection
-	@in		number ydirection
-	@in		number zdirection
-	@opt	number typeID
-	@opt	number queryMask
-	@out	MOAIPartitionHull hull		The hull under the point in order of depth or nil if no hull found.
-*/
-int MOAIPartition::_hullForRay ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPartition, "UNN" )
+// TODO: doxygen
+int MOAIPartition::_hullsForRect ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPartition, "UU" )
 	
-	ZLVec3D vec;
-	vec.mX					= state.GetValue < float >( 2, 0.0f );
-	vec.mY 					= state.GetValue < float >( 3, 0.0f );
-	vec.mZ 					= state.GetValue < float >( 4, 0.0f );
+	MOAIPartitionResultBuffer* buffer = state.GetLuaObject < MOAIPartitionResultBuffer >( 2, true );
+	if ( buffer ) {
 	
-	ZLVec3D direction;
-	direction.mX 			= state.GetValue < float >( 5, 0.0f );
-	direction.mY 			= state.GetValue < float >( 6, 0.0f );
-	direction.mZ 			= state.GetValue < float >( 7, 0.0f );
-	direction.Norm ();
+		ZLRect rect				= state.GetValue < ZLRect >( 3, ZLRect::EMPTY );
+		ZLTypeID typeID			= state.GetValue < ZLTypeID >( 7, ZLType::GetID < MOAIPartitionHull >());
+		u32 queryMask			= state.GetValue < u32 >( 8, MASK_ANY );
 	
-	ZLTypeID typeID			= state.GetValue < ZLTypeID >( 8, ZLType::GetID < MOAIPartitionHull >());
-	u32 queryMask			= state.GetValue < u32 >( 9, MASK_ANY );
-	
-	MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
-	MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
-	
-	u32 total = self->GatherHulls ( buffer, 0, vec, direction, typeID, queryMask );
-
-	if ( total ) {
-		
-		MOAIPartitionHull* hull = buffer.FindBest ();
-		if ( hull ) {
-			hull->PushLuaUserdata ( state );
-			return 1;
-		}
-	}
-
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	hullList
-	@text	Returns all props.
-	
-	@in		MOAIPartition self
-	@opt	number sortMode			One of the MOAIPartitionViewLayer sort modes. Default value is SORT_NONE.
-	@opt	number xScale			X scale for vector sort. Default value is 0.
-	@opt	number yScale			Y scale for vector sort. Default value is 0.
-	@opt	number zScale			Z scale for vector sort. Default value is 0.
-	@opt	number priorityScale	Priority scale for vector sort. Default value is 1.
-	@opt	number typeID
-	@opt	number queryMask
-	@out	... props				The props pushed onto the stack.
-*/
-int MOAIPartition::_hullList ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPartition, "U" )
-
-	u32 sortMode 			= state.GetValue < u32 >( 2, MOAIPartitionResultBuffer::SORT_NONE );
-	float xScale 			= state.GetValue < float >( 3, 0.0f );
-	float yScale 			= state.GetValue < float >( 4, 0.0f );
-	float zScale 			= state.GetValue < float >( 5, 0.0f );
-	float priorityScale 	= state.GetValue < float >( 6, 1.0f );
-	ZLTypeID typeID			= state.GetValue < ZLTypeID >( 7, ZLType::GetID < MOAIPartitionHull >());
-	u32 queryMask			= state.GetValue < u32 >( 8, MASK_ANY );
-
-	MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
-	MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
-
-	u32 total = self->GatherHulls ( buffer, 0, typeID, queryMask );
-	if ( total ) {
-	
-		buffer.GenerateKeys ( sortMode, xScale, yScale, zScale, priorityScale );
-		buffer.Sort ( sortMode );
-		buffer.PushHulls ( L );
-		return total;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	hullListForPoint
-	@text	Returns all props under a given world space point.
-	
-	@in		MOAIPartition self
-	@in		number x
-	@in		number y
-	@in		number z
-	@opt	number sortMode			One of the MOAIPartitionViewLayer sort modes. Default value is SORT_NONE.
-	@opt	number xScale			X scale for vector sort. Default value is 0.
-	@opt	number yScale			Y scale for vector sort. Default value is 0.
-	@opt	number zScale			Z scale for vector sort. Default value is 0.
-	@opt	number priorityScale	Priority scale for vector sort. Default value is 1.
-	@opt	number typeID
-	@opt	number queryMask
-	@out	... props				The props under the point, all pushed onto the stack.
-*/
-int MOAIPartition::_hullListForPoint ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPartition, "UNN" )
-
-	ZLVec3D vec;
-	vec.mX 					= state.GetValue < float >( 2, 0.0f );
-	vec.mY 					= state.GetValue < float >( 3, 0.0f );
-	vec.mZ 					= state.GetValue < float >( 4, 0.0f );
-
-	u32 sortMode 			= state.GetValue < u32 >( 5, MOAIPartitionResultBuffer::SORT_NONE );
-	float xScale 			= state.GetValue < float >( 6, 0.0f );
-	float yScale 			= state.GetValue < float >( 7, 0.0f );
-	float zScale 			= state.GetValue < float >( 8, 0.0f );
-	float priorityScale 	= state.GetValue < float >( 9, 1.0f );
-	ZLTypeID typeID			= state.GetValue < ZLTypeID >( 10, ZLType::GetID < MOAIPartitionHull >());
-	u32 queryMask			= state.GetValue < u32 >( 11, MASK_ANY );
-
-	MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
-	MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
-
-	u32 total = self->GatherHulls ( buffer, 0, vec, typeID, queryMask );
-	if ( total ) {
-	
-		buffer.GenerateKeys ( sortMode, xScale, yScale, zScale, priorityScale );
-		buffer.Sort ( sortMode );
-		buffer.PushHulls ( L );
-		return total;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	hullListForRay
-	@text	Returns all props that intersect the given ray.
-	
-	@in		MOAIPartition self
-	@in		number x
-	@in		number y
-	@in		number z
-	@in		number xdirection
-	@in		number ydirection
-	@in		number zdirection
-	@opt	number sortMode			One of the MOAIPartitionViewLayer sort modes. Default value is SORT_KEY_ASCENDING.
-	@opt	number xScale			X scale for vector sort. Default value is 0.
-	@opt	number yScale			Y scale for vector sort. Default value is 0.
-	@opt	number zScale			Z scale for vector sort. Default value is 0.
-	@opt	number priorityScale	Priority scale for vector sort. Default value is 1.
-	@opt	number typeID
-	@opt	number queryMask
-	@out	... props				The props under the point in order of depth, all pushed onto the stack.
-*/
-int MOAIPartition::_hullListForRay ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPartition, "UNN" )
-
-	ZLVec3D vec;
-	vec.mX 					= state.GetValue < float >( 2, 0.0f );
-	vec.mY 					= state.GetValue < float >( 3, 0.0f );
-	vec.mZ 					= state.GetValue < float >( 4, 0.0f );
-	
-	ZLVec3D direction;
-	direction.mX 			= state.GetValue < float >( 5, 0.0f );
-	direction.mY 			= state.GetValue < float >( 6, 0.0f );
-	direction.mZ 			= state.GetValue < float >( 7, 0.0f );
-	direction.Norm ();
-	
-	u32 sortMode 			= state.GetValue < u32 >( 8, MOAIPartitionResultBuffer::SORT_KEY_ASCENDING );
-	float xScale 			= state.GetValue < float >( 9, 0.0f );
-	float yScale 			= state.GetValue < float >( 10, 0.0f );
-	float zScale 			= state.GetValue < float >( 11, 0.0f );
-	float priorityScale 	= state.GetValue < float >( 12, 1.0f );
-	ZLTypeID typeID			= state.GetValue < ZLTypeID >( 13, ZLType::GetID < MOAIPartitionHull >());
-	u32 queryMask			= state.GetValue < u32 >( 14, MASK_ANY );
-	
-	MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
-	MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
-	
-	u32 total = self->GatherHulls ( buffer, 0, vec, direction, typeID, queryMask );
-
-	if ( total ) {
-	
-		buffer.GenerateKeys ( sortMode, xScale, yScale, zScale, priorityScale );
-		buffer.Sort ( sortMode );
-		buffer.PushHulls ( L );
-		return total;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-/**	@lua	hullListForRect
-	@text	Returns all props under a given world space rect.
-	
-	@in		MOAIPartition self
-	@in		number xMin
-	@in		number yMin
-	@in		number xMax
-	@in		number yMax
-	@opt	number sortMode			One of the MOAIPartitionViewLayer sort modes. Default value is SORT_NONE.
-	@opt	number xScale			X scale for vector sort. Default value is 0.
-	@opt	number yScale			Y scale for vector sort. Default value is 0.
-	@opt	number zScale			Z scale for vector sort. Default value is 0.
-	@opt	number priorityScale	Priority scale for vector sort. Default value is 1.
-	@opt	number typeID
-	@opt	number queryMask
-	@out	... props				The props under the rect, all pushed onto the stack.
-*/
-int MOAIPartition::_hullListForRect ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIPartition, "UNNNN" )
-	
-	ZLRect rect;
-	
-	rect.mXMin 				= state.GetValue < float >( 2, 0.0f );
-	rect.mYMin 				= state.GetValue < float >( 3, 0.0f );
-	
-	rect.mXMax 				= state.GetValue < float >( 4, 0.0f );
-	rect.mYMax 				= state.GetValue < float >( 5, 0.0f );
-	
-	u32 sortMode 			= state.GetValue < u32 >( 6, MOAIPartitionResultBuffer::SORT_NONE );
-	float xScale 			= state.GetValue < float >( 7, 0.0f );
-	float yScale 			= state.GetValue < float >( 8, 0.0f );
-	float zScale			= state.GetValue < float >( 9, 0.0f );
-	float priorityScale		= state.GetValue < float >( 10, 1.0f );
-	ZLTypeID typeID			= state.GetValue < ZLTypeID >( 11, ZLType::GetID < MOAIPartitionHull >());
-	u32 queryMask			= state.GetValue < u32 >( 12, MASK_ANY );
-	
-	MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
-	MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
-	
-	u32 total = self->GatherHulls ( buffer, 0, rect, typeID, queryMask );
-	if ( total ) {
-	
-		buffer.GenerateKeys ( sortMode, xScale, yScale, zScale, priorityScale );
-		buffer.Sort ( sortMode );
-		buffer.PushHulls ( L );
-		return total;
+		self->GatherHulls ( *buffer, 0, rect, typeID, queryMask );
+		buffer->PushLuaUserdata ( state );
+		return 1;
 	}
 	return 0;
 }
@@ -342,10 +117,9 @@ int MOAIPartition::_reserveLevels ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartition, "UN" )
 
 	u32 totalLevels = state.GetValue < u32 >( 2, 0 );
-	
 	self->ReserveLevels ( totalLevels );
-
-	return 0;
+	
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -377,7 +151,7 @@ int MOAIPartition::_setLevel ( lua_State* L ) {
 
 	self->SetLevel ( levelID, cellSize, width, height );
 
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -398,7 +172,7 @@ int MOAIPartition::_setPlane ( lua_State* L ) {
 	u32 planeID	= state.GetValue < u32 >( 2, ZLBox::PLANE_XY );
 	self->SetPlane ( planeID );
 
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //================================================================//
@@ -717,12 +491,10 @@ void MOAIPartition::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaStat
 	
 	luaL_Reg regTable [] = {
 		{ "clear",						_clear },
-		{ "hullForPoint",				_hullForPoint },
-		{ "hullForRay",					_hullForRay },
-		{ "hullList",					_hullList },
-		{ "hullListForPoint",			_hullListForPoint },
-		{ "hullListForRay",				_hullListForRay },
-		{ "hullListForRect",			_hullListForRect },
+		{ "hulls",						_hulls },
+		{ "hullsForPoint",				_hullsForPoint },
+		{ "hullsForRay",				_hullsForRay },
+		{ "hullsForRect",				_hullsForRect },
 		{ "reserveLevels",				_reserveLevels },
 		{ "setLevel",					_setLevel },
 		{ "setPlane",					_setPlane },

@@ -13,7 +13,6 @@
 #include <moai-sim/MOAIOverlap.h>
 #include <moai-sim/MOAIOverlapResolver.h>
 #include <moai-sim/MOAIPartition.h>
-#include <moai-sim/MOAIPartitionResultMgr.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
 #include <moai-sim/MOAISurfaceSampler2D.h>
 
@@ -169,13 +168,13 @@ void MOAICollisionProp::GatherAndProcess ( MOAICollisionPrimVisitor& visitor, co
 
 	MOAICollisionWorld& world = *this->mCollisionWorld;
 
-	MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
-	MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
-	
-	u32 totalResults = world.GatherHulls ( buffer, this, worldBounds, ZLType::GetID < MOAICollisionProp >());
+	ZLStrongPtr < MOAIPartitionResultBuffer > buffer;
+	MOAIPool::Get ().Provision < MOAIPartitionResultBuffer >( buffer );
+
+	u32 totalResults = world.GatherHulls ( *buffer, this, worldBounds, ZLType::GetID < MOAICollisionProp >());
 	
 	for ( u32 i = 0; i < totalResults; ++i ) {
-		MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
+		MOAIPartitionResult* result = buffer->GetResultUnsafe ( i );
 		MOAICollisionProp* other = result->AsType < MOAICollisionProp >();
 		if ( !other ) continue;
 		

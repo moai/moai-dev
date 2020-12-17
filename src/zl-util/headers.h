@@ -54,6 +54,7 @@
 #include <zl-util/ZLFloat.h>
 #include <zl-util/ZLFrustum.h>
 #include <zl-util/ZLFrustumFitter.h>
+#include <zl-util/ZLHashFNV1a.h>
 #include <zl-util/ZLHashedString.h>
 #include <zl-util/ZLHashWriter.h>
 #include <zl-util/ZLHashWriterAdler32.h>

@@ -324,7 +324,6 @@ void AKUSimAppInitialize () {
 void AKUSimContextInitialize () {
 
 	MOAIDebugLinesMgr::Affirm ();
-	MOAIPartitionResultMgr::Affirm ();
 	MOAIInputMgr::Affirm ();
 	MOAIDraw::Affirm ();
 	
@@ -376,6 +375,7 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIParticleSystem )
 	REGISTER_LUA_CLASS ( MOAIParticleTimedEmitter )
 	REGISTER_LUA_CLASS ( MOAIPartition )
+	REGISTER_LUA_CLASS ( MOAIPartitionResultBuffer )
 	REGISTER_LUA_CLASS ( MOAIPartitionViewLayer )
 	REGISTER_LUA_CLASS ( MOAIPath )
 	REGISTER_LUA_CLASS ( MOAIPathFinder )
@@ -414,6 +414,9 @@ void AKUSimContextInitialize () {
 	#if MOAI_WITH_FREETYPE
 		REGISTER_LUA_CLASS ( MOAIFreeTypeFontReader )
 	#endif
+	
+	// pool
+	MOAIPool::Get ().AffirmFactory < MOAIPartitionResultBuffer >();
 }
 
 //----------------------------------------------------------------//

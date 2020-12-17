@@ -25,6 +25,7 @@ protected:
 	//----------------------------------------------------------------//
 	static int			_getGfxScript				( lua_State* L );
 	static int			_gfxScript					( lua_State* L );
+	static int			_hash						( lua_State* L );
 	static int			_localScope					( lua_State* L );
 	static int			_render						( lua_State* L );
 	static int			_setGfxScript				( lua_State* L );
@@ -43,8 +44,8 @@ protected:
 public:
 
 	enum {
-		RENDER_PHASE_DRAW = 0,
-		RENDER_PHASE_DRAW_DEBUG,
+		RENDER_PHASE_DRAW 			= 0x51a7d193, // FNV1a ( "DRAW" )
+		RENDER_PHASE_DRAW_DEBUG		= 0x21c4b503, // FNV1a ( "DRAW_DEBUG" )
 	};
 
 	//----------------------------------------------------------------//

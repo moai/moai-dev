@@ -18,10 +18,14 @@ int MOAIPool::_addFactory ( lua_State* L ) {
 
 	if ( state.IsType ( 1, LUA_TFUNCTION )) {
 		typeID = self->mMaxID++;
-		MOAIPooledObjectFactory& factory = self->mFactory [ typeID ];
-		factory.mFactory.SetRef ( state, 1 );
-		factory.mOnProvision.SetRef ( state, 2 );
-		factory.mOnRemit.SetRef ( state, 3 );
+		
+		MOAIPooledObjectLuaFactory* factory = new MOAIPooledObjectLuaFactory ();
+		
+		factory->mFactory.SetRef ( state, 1 );
+		factory->mOnProvision.SetRef ( state, 2 );
+		factory->mOnRemit.SetRef ( state, 3 );
+		
+		self->mFactory [ typeID ] = factory;
 	}
 	state.Push ( typeID );
 	return 1;
@@ -33,11 +37,11 @@ int MOAIPool::_provision ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIPool, "" )
 
 	u32 typeID 				= state.GetValue < u32 >( 1, MOAILuaObject::NOT_IN_POOL );
-	MOAIScope* scope	= state.GetLuaObject < MOAIScope >( 2, true );
+	MOAIScope* scope		= state.GetLuaObject < MOAIScope >( 2, true );
 	
 	if ( scope ) {
 		
-		MOAILuaObject* resource = self->Provision ( typeID, *scope );
+		MOAILuaObject* resource = self->Provision ( typeID, scope );
 		assert ( resource );
 
 		if ( resource ) {
@@ -54,12 +58,27 @@ int MOAIPool::_provision ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAILuaObject* MOAIPool::Provision ( u32 poolType, MOAIScope& scope ) {
+MOAIPool::MOAIPool () :
+	mMaxID ( STARTING_ID ) {
+	
+	RTTI_BEGIN ( MOAIPool )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIPool >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
+}
+
+//----------------------------------------------------------------//
+MOAIPool::~MOAIPool () {
+}
+
+//----------------------------------------------------------------//
+MOAILuaObject* MOAIPool::Provision ( u32 poolType, MOAIScope* scope ) {
 
 	if ( poolType == MOAILuaObject::NOT_IN_POOL ) return NULL;
 	if ( !this->mFactory.contains ( poolType )) return NULL;
 
-	MOAIPooledObjectFactory& factory = this->mFactory [ poolType ];
+	MOAIAbstractPooledObjectFactory* factory = this->mFactory [ poolType ];
+	assert ( factory );
 
 	MOAILuaObject* resource = NULL;
 
@@ -73,7 +92,7 @@ MOAILuaObject* MOAIPool::Provision ( u32 poolType, MOAIScope& scope ) {
 	
 	if ( !resource ) {
 		
-		resource = factory.Create ();
+		resource = factory->Create ();
 		if ( !resource ) return NULL;
 		
 		assert ( !resource->IsInPool ());
@@ -85,8 +104,10 @@ MOAILuaObject* MOAIPool::Provision ( u32 poolType, MOAIScope& scope ) {
 		this->mResources.insert ( resource );
 	}
 	
-	scope.AddObject ( resource );
-	factory.OnProvision ( *resource, scope );
+	if ( scope ) {
+		scope->AddObject ( resource );
+	}
+	factory->OnProvision ( *resource, scope );
 	return resource;
 }
 
@@ -97,7 +118,7 @@ void MOAIPool::Remit ( MOAILuaObject* resource ) {
 	assert ( resource->IsInPool ());
 	assert ( this->mFactory.contains ( resource->mPoolType ));
 	
-	this->mFactory [ resource->mPoolType ].OnRemit ( *resource );
+	this->mFactory [ resource->mPoolType ]->OnRemit ( *resource );
 	resource->MOAILuaObject_OnPooledRemit ();
 	
 	STLSet < MOAILuaObject* >& pool = this->mAvailableResourcesByType [ resource->mPoolType ];
@@ -105,17 +126,15 @@ void MOAIPool::Remit ( MOAILuaObject* resource ) {
 }
 
 //----------------------------------------------------------------//
-MOAIPool::MOAIPool () :
-	mMaxID ( 0 ) {
-	
-	RTTI_BEGIN ( MOAIPool )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIPool >)
-		RTTI_EXTEND ( MOAILuaObject )
-	RTTI_END
-}
+void MOAIPool::PurgeAll () {
 
-//----------------------------------------------------------------//
-MOAIPool::~MOAIPool () {
+	STLSet < MOAILuaObject* >::iterator resourceIt = this->mResources.begin ();
+	for ( ; resourceIt != this->mResources.end (); ++resourceIt ) {
+		MOAILuaObject* resource = *resourceIt;
+		resource->mPoolType = MOAILuaObject::NOT_IN_POOL;
+		this->LuaRelease ( resource );
+	}
+	this->mResources.clear ();
 }
 
 //================================================================//
@@ -146,11 +165,5 @@ void MOAIPool::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& st
 //----------------------------------------------------------------//
 void MOAIPool::ZLContextClass_Finalize () {
 
-	STLSet < MOAILuaObject* >::iterator resourceIt = this->mResources.begin ();
-	for ( ; resourceIt != this->mResources.end (); ++resourceIt ) {
-		MOAILuaObject* resource = *resourceIt;
-		resource->mPoolType = MOAILuaObject::NOT_IN_POOL;
-		this->LuaRelease ( resource );
-	}
-	this->mResources.clear ();
+	this->PurgeAll ();
 }

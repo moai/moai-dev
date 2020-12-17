@@ -42,9 +42,12 @@ gfxQuad = MOAISpriteDeck2D.new ()
 	:setRect ( -128, -128, 128, 128 )
 	:setUVRect ( 0, 0, 1, 1 )
 
+partition = MOAIPartition.new ()
+
 -- prop to render the framebuffer texture deck
 prop = MOAIGraphicsProp.new ():setDeck ( gfxQuad )
 prop:moveRot ( 0, 0, -360, 5 )
+prop:setPartition ( partition )
 
 function render ( draw, node, phase )
 

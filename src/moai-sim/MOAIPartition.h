@@ -40,12 +40,10 @@ protected:
 
 	//----------------------------------------------------------------//
 	static int		_clear					( lua_State* L );
-	static int		_hullForPoint			( lua_State* L );
-	static int		_hullForRay				( lua_State* L );
-	static int		_hullList				( lua_State* L );
-	static int		_hullListForPoint		( lua_State* L );
-	static int		_hullListForRay			( lua_State* L );
-	static int		_hullListForRect		( lua_State* L );
+	static int		_hulls					( lua_State* L );
+	static int		_hullsForPoint			( lua_State* L );
+	static int		_hullsForRay			( lua_State* L );
+	static int		_hullsForRect			( lua_State* L );
 	static int		_reserveLevels			( lua_State* L );
 	static int		_setLevel				( lua_State* L );
 	static int		_setPlane				( lua_State* L );

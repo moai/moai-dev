@@ -20,7 +20,9 @@ private:
 	
 	friend class MOAILuaObject;
 	
-	STLMap < u32, MOAIPooledObjectFactory >		mFactory;
+	static const u32 STARTING_ID = 0x70000000;
+	
+	STLMap < u32, ZLStrongPtr < MOAIAbstractPooledObjectFactory > > mFactory;
 	STLSet < MOAILuaObject* >					mResources;
 	u32											mMaxID;
 	
@@ -31,7 +33,7 @@ private:
 	static int				_provision						( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	MOAILuaObject* 			Provision						( u32 poolType, MOAIScope& scope );
+	MOAILuaObject* 			Provision						( u32 poolType, MOAIScope* scope );
 	void					Remit							( MOAILuaObject* resource );
 	
 	//----------------------------------------------------------------//
@@ -46,6 +48,28 @@ public:
 	//----------------------------------------------------------------//
 							MOAIPool			();
 							~MOAIPool			();
+	void					PurgeAll			();
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	void AffirmFactory () {
+	
+		u32 typeID = ( u32 )ZLType::RawID < TYPE >();
+		assert ( typeID < STARTING_ID );
+	
+		if ( !this->mFactory.contains ( typeID )) {
+			this->mFactory [ typeID ] = new MOAIPooledObjectFactory < TYPE >();
+		}
+	}
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	void Provision ( ZLStrongPtr < TYPE >& retain, MOAIScope* scope = NULL ) {
+	
+		u32 typeID = ( u32 )ZLType::RawID < TYPE >();
+		this->AffirmFactory < TYPE >();
+		retain = this->Provision ( typeID, scope )->AsType < TYPE >(); // TODO: cache this?
+	}
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >

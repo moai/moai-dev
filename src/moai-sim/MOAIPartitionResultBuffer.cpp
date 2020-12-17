@@ -84,6 +84,62 @@ public:
 };
 
 //================================================================//
+// lua
+//================================================================//
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIPartitionResultBuffer::_findBest ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPartitionResultBuffer, "U" )
+
+	if ( self->mTotalResults ) {
+
+		u32 sortMode			= state.GetValue < u32 >( 2, MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
+		float xScale			= state.GetValue < float >( 3, 0.0f );
+		float yScale			= state.GetValue < float >( 4, 0.0f );
+		float zScale			= state.GetValue < float >( 5, 0.0f );
+		float priorityScale		= state.GetValue < float >( 6, 1.0f );
+	
+		self->GenerateKeys ( sortMode, xScale, yScale, zScale, priorityScale );
+		MOAIPartitionHull* hull = self->FindBest ();
+		if ( hull ) {
+			hull->PushLuaUserdata ( state );
+			return 1;
+		}
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIPartitionResultBuffer::_getResults ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPartitionResultBuffer, "U" )
+
+	self->PushHulls ( state );
+	return self->GetTotalResults ();
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIPartitionResultBuffer::_sort ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPartitionResultBuffer, "U" )
+
+	if ( self->mTotalResults ) {
+
+		u32 sortMode			= state.GetValue < u32 >( 2, MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING );
+		float xScale			= state.GetValue < float >( 3, 0.0f );
+		float yScale			= state.GetValue < float >( 4, 0.0f );
+		float zScale			= state.GetValue < float >( 5, 0.0f );
+		float priorityScale		= state.GetValue < float >( 6, 1.0f );
+		
+		
+		self->GenerateKeys ( sortMode, xScale, yScale, zScale, priorityScale );
+		self->Sort ( sortMode );
+	}
+	MOAI_LUA_RETURN_SELF
+}
+
+//================================================================//
 // MOAIPartitionResultBuffer
 //================================================================//
 
@@ -204,6 +260,11 @@ MOAIPartitionResultBuffer::MOAIPartitionResultBuffer () :
 	mMainBuffer ( 0 ),
 	mSwapBuffer ( 0 ),
 	mTotalResults ( 0 ) {
+	
+	RTTI_BEGIN ( MOAIPartitionResultBuffer )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIPartitionResultBuffer >)
+		RTTI_EXTEND ( MOAILuaObject )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//
@@ -405,4 +466,27 @@ void MOAIPartitionResultBuffer::Transform ( const ZLMatrix4x4& mtx, bool transfo
 			mtx.Transform ( this->mResults [ i ].mLoc );
 		}
 	}
+}
+
+//================================================================//
+// virtual
+//================================================================//
+
+//----------------------------------------------------------------//
+void MOAIPartitionResultBuffer::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+}
+
+//----------------------------------------------------------------//
+void MOAIPartitionResultBuffer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.DidVisit ( *this )) return;
+	
+	luaL_Reg regTable [] = {
+		{ "findBest",				_findBest },
+		{ "getResults",				_getResults },
+		{ "sort",					_sort },
+		{ NULL, NULL }
+	};
+	
+	luaL_register ( state, 0, regTable );
 }

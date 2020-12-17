@@ -196,6 +196,7 @@ void AKUAppFinalize () {
 //		sContextMap = 0;
 //	}
 	
+	MOAIPool::Get ().PurgeAll ();
 	ZLContextMgr::Finalize ();
 	
 	zl_cleanup ();

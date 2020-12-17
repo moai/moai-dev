@@ -9,7 +9,6 @@
 #include <moai-sim/MOAIDebugLines.h>
 #include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIPartitionResultBuffer.h>
-#include <moai-sim/MOAIPartitionResultMgr.h>
 
 // uncomment me to debug log
 //#define MOAICOLLISIONWORLD_DEBUG
@@ -307,14 +306,14 @@ void MOAICollisionWorld::ProcessOverlaps () {
 				
 		// this gives us the coarse filter based on world space bounds
 		// TODO: find a way to utilize overlap flags?
-		MOAIScopedPartitionResultBufferHandle scopedBufferHandle = MOAIPartitionResultMgr::Get ().GetBufferHandle ();
-		MOAIPartitionResultBuffer& buffer = scopedBufferHandle;
+		ZLStrongPtr < MOAIPartitionResultBuffer > buffer;
+		MOAIPool::Get ().Provision < MOAIPartitionResultBuffer >( buffer );
 
-		u32 totalResults = this->GatherHulls ( buffer, &prop, prop.GetWorldBounds ().mAABB, ZLType::GetID < MOAICollisionProp >());
+		u32 totalResults = this->GatherHulls ( *buffer, &prop, prop.GetWorldBounds ().mAABB, ZLType::GetID < MOAICollisionProp >());
 		
 		for ( u32 i = 0; i < totalResults; ++i ) {
 		
-			MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
+			MOAIPartitionResult* result = buffer->GetResultUnsafe ( i );
 			MOAICollisionProp* otherProp = result->AsType < MOAICollisionProp >();
 			
 			if ( !otherProp ) continue;

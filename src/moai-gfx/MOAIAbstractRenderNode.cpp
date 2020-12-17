@@ -50,6 +50,15 @@ int MOAIAbstractRenderNode::_gfxScript ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIAbstractRenderNode::_hash ( lua_State* L ) {
+	MOAI_LUA_SETUP_CLASS ( "" )
+	
+	state.Push ( ZLHashFNV1a::Hash32 ( state.GetValue < cc8* >( 1, "" )));
+	return 1;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIAbstractRenderNode::_localScope ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractRenderNode, "U" )
 	
@@ -200,6 +209,16 @@ void MOAIAbstractRenderNode::SetGfxScript ( u32 renderPhase, MOAIGfxScript* gfxS
 //----------------------------------------------------------------//
 void MOAIAbstractRenderNode::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
+
+	state.SetField ( -1, "RENDER_PHASE_DRAW",			( u32 )RENDER_PHASE_DRAW );
+	state.SetField ( -1, "RENDER_PHASE_DRAW_DEBUG",		( u32 )RENDER_PHASE_DRAW_DEBUG );
+	
+	luaL_Reg regTable [] = {
+		{ "hash",						_hash },
+		{ NULL, NULL }
+	};
+
+	luaL_register ( state, 0, regTable );
 }
 
 //----------------------------------------------------------------//
