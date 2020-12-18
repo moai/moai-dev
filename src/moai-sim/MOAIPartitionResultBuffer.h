@@ -59,7 +59,9 @@ private:
 	//----------------------------------------------------------------//
 	static int				_findBest						( lua_State* L );
 	static int				_getResults						( lua_State* L );
+	static int				_render							( lua_State* L );
 	static int				_sort							( lua_State* L );
+	static int				_view							( lua_State* L );
 
 	//----------------------------------------------------------------//
 	MOAIPartitionResult*	AffirmSwapBuffer				();
@@ -112,6 +114,7 @@ public:
 	void					Project							( const ZLMatrix4x4& mtx );
 	void					PushHulls						( lua_State* L );
 	void					PushResult						( MOAIPartitionHull& hull, u32 key, int subPrimID, s32 priority, const ZLVec3D& loc, const ZLBox& aabb, const ZLVec3D& piv );
+	void					Render							( u32 renderPhase );
 	void					Reset							();
 	u32						Sort							( u32 mode );
 	void					Transform						( const ZLMatrix4x4& mtx, bool transformBounds );

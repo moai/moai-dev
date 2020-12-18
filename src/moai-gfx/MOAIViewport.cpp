@@ -10,7 +10,7 @@
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIViewport::_getFrame ( lua_State* L ) {
+int MOAIViewport::_getViewFrame ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIViewport, "U" )
 	
 	state.Push ( self->mXMin );
@@ -23,7 +23,7 @@ int MOAIViewport::_getFrame ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIViewport::_getSize ( lua_State* L ) {
+int MOAIViewport::_getViewSize ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIViewport, "U" )
 	
 	state.Push ( self->Width ());
@@ -42,7 +42,7 @@ int MOAIViewport::_getSize ( lua_State* L ) {
 	@in		number yOff
 	@out	nil
 */
-int MOAIViewport::_setOffset ( lua_State* L ) {
+int MOAIViewport::_setViewOffset ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIViewport, "UNN" )
 	
 	float xOffset = state.GetValue < float >( 2, 0.0f );
@@ -54,14 +54,14 @@ int MOAIViewport::_setOffset ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	setRotation
+/**	@lua	setViewRotation
 	@text	Sets global rotation to be added to camera transform.
 	
 	@in		MOAIViewport self
 	@in		number rotation
 	@out	nil
 */
-int MOAIViewport::_setRotation ( lua_State* L ) {
+int MOAIViewport::_setViewRotation ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIViewport, "U" )
 	
 	float rotation = state.GetValue < float >( 2, 0.0f );
@@ -71,7 +71,7 @@ int MOAIViewport::_setRotation ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	setScale
+/**	@lua	setViewScale
 	@text	Sets the number of world units visible of the viewport for one or both
 			dimensions. Set 0 for one of the dimensions to use a derived value based on
 			the other dimension and the aspect ratio. Negative values are also OK.
@@ -85,7 +85,7 @@ int MOAIViewport::_setRotation ( lua_State* L ) {
 	@in		number yScale
 	@out	nil
 */
-int MOAIViewport::_setScale ( lua_State* L ) {
+int MOAIViewport::_setViewScale ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "UNN" )) return 0;
@@ -102,7 +102,7 @@ int MOAIViewport::_setScale ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-/**	@lua	setSize
+/**	@lua	setViewSize
 	@text	Sets the dimensions of the viewport.
 	
 	@overload
@@ -121,7 +121,7 @@ int MOAIViewport::_setScale ( lua_State* L ) {
 		@in		number bottom
 		@out	nil
 */
-int MOAIViewport::_setSize ( lua_State* L ) {
+int MOAIViewport::_setViewSize ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 	if ( !state.CheckParams ( 1, "UNN" )) return 0;
@@ -151,11 +151,20 @@ int MOAIViewport::_setSize ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+ZLViewport MOAIViewport::GetWorldViewport () const {
+
+	ZLViewport viewport = *this;
+	ZLMatrix4x4 mtx ( this->mLocalToWorldMtx );
+	mtx.Transform ( viewport );
+	return viewport;
+}
+
+//----------------------------------------------------------------//
 MOAIViewport::MOAIViewport () {
 		
 	RTTI_BEGIN ( MOAIViewport )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIViewport >)
-		RTTI_EXTEND ( MOAILuaObject )
+		RTTI_EXTEND ( MOAITransform )
 	RTTI_END
 }
 
@@ -178,12 +187,12 @@ void MOAIViewport::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
-		{ "getFrame",		_getFrame },
-		{ "getSize",		_getSize },
-		{ "setOffset",		_setOffset },
-		{ "setRotation",	_setRotation },
-		{ "setScale",		_setScale },
-		{ "setSize",		_setSize },
+		{ "getViewFrame",		_getViewFrame },
+		{ "getViewSize",		_getViewSize },
+		{ "setViewOffset",		_setViewOffset },
+		{ "setViewRotation",	_setViewRotation },
+		{ "setViewScale",		_setViewScale },
+		{ "setViewSize",		_setViewSize },
 		{ NULL, NULL }
 	};
 

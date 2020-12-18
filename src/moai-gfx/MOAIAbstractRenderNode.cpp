@@ -39,6 +39,14 @@ int MOAIAbstractRenderNode::_getGfxScript ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAIAbstractRenderNode::_getRenderTypeID ( lua_State* L ) {
+	MOAI_LUA_SETUP_CLASS ( "" )
+
+	state.Push ( ZLType::GetID < MOAIAbstractRenderNode >());
+	return 1;
+}
+
+//----------------------------------------------------------------//
 int MOAIAbstractRenderNode::_gfxScript ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractRenderNode, "U" )
 	
@@ -214,6 +222,7 @@ void MOAIAbstractRenderNode::_RegisterLuaClass ( RTTIVisitorHistory& history, MO
 	state.SetField ( -1, "RENDER_PHASE_DRAW_DEBUG",		( u32 )RENDER_PHASE_DRAW_DEBUG );
 	
 	luaL_Reg regTable [] = {
+		{ "getRenderTypeID",			_getRenderTypeID },
 		{ "hash",						_hash },
 		{ NULL, NULL }
 	};

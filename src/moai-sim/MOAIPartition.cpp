@@ -104,6 +104,32 @@ int MOAIPartition::_hullsForRect ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIPartition::_hullsForViewProj ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPartition, "U" )
+	
+	MOAIPartitionResultBuffer* buffer = state.GetLuaObject < MOAIPartitionResultBuffer >( 2, true );
+	if ( buffer ) {
+	
+		MOAIViewport* viewport	= state.GetLuaObject < MOAIViewport >( 3, false );
+		MOAICamera* camera		= state.GetLuaObject < MOAICamera >( 4, false );
+		ZLTypeID typeID			= state.GetValue < ZLTypeID >( 5, ZLType::GetID < MOAIPartitionHull >());
+		u32 queryMask			= state.GetValue < u32 >( 6, MASK_ANY );
+		
+		// TODO: get rid of the NULL viewport idiom
+		ZLViewport worldViewport;
+		if ( viewport ) {
+			worldViewport = viewport->GetWorldViewport ();
+		}
+		
+		self->GatherHulls ( *buffer, 0, viewport ? &worldViewport : NULL, camera, typeID, queryMask );
+		buffer->PushLuaUserdata ( state );
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
 /**	@lua	reserveLevels
 	@text	Reserves a stack of levels in the partition. Levels must be
 			initialized with setLevel (). This will trigger a full rebuild
@@ -307,6 +333,29 @@ u32 MOAIPartition::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartiti
 }
 
 //----------------------------------------------------------------//
+u32 MOAIPartition::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, const ZLViewport* viewport, const ZLCamera* camera, ZLTypeID typeID, u32 mask ) {
+
+	if ( !viewport ) return this->GatherHulls ( results, ignoreProp, typeID, mask );
+		
+	ZLMatrix4x4 viewMtx = ZLViewProj::GetViewMtx ( camera );
+	ZLMatrix4x4 invViewProjMtx = viewMtx;
+	invViewProjMtx.Append ( ZLViewProj::GetProjectionMtx ( viewport, camera ));
+	invViewProjMtx.Inverse ();
+
+	ZLFrustum viewVolume;
+	viewVolume.Init ( invViewProjMtx );
+	
+	return this->GatherHulls ( results, 0, viewVolume, typeID );
+	
+//	if ( self->mPartitionCull2D ) {
+//		totalResults = partition->GatherHulls ( *buffer, 0, viewVolume.mAABB, typeID );
+//	}
+//	else {
+//		totalResults = partition->GatherHulls ( *buffer, 0, viewVolume, typeID );
+//	}
+}
+
+//----------------------------------------------------------------//
 void MOAIPartition::InsertHull ( MOAIPartitionHull& hull ) {
 	
 	if ( hull.mPartition == this ) return;
@@ -495,6 +544,7 @@ void MOAIPartition::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaStat
 		{ "hullsForPoint",				_hullsForPoint },
 		{ "hullsForRay",				_hullsForRay },
 		{ "hullsForRect",				_hullsForRect },
+		{ "hullsForViewProj",			_hullsForViewProj },
 		{ "reserveLevels",				_reserveLevels },
 		{ "setLevel",					_setLevel },
 		{ "setPlane",					_setPlane },

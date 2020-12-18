@@ -427,13 +427,13 @@ float MOAIAbstractViewLayer::GetFitting ( ZLRect& worldRect, float hPad, float v
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAIAbstractViewLayer::GetWndToWorldMtx () const {
 
-	return ZLViewProj::GetWndToWorldMtx ( this->mViewport, this->mCamera, this->mLocalToWorldMtx, this->mParallax );
+	return ZLViewProj::GetWndToWorldMtx ( this->mViewport, this->mCamera, this->mViewport ? this->mViewport->GetLocalToWorldMtx () : ZLAffine3D::IDENT, this->mParallax );
 }
 
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAIAbstractViewLayer::GetWorldToWndMtx () const {
 
-	return ZLViewProj::GetWorldToWndMtx ( this->mViewport, this->mCamera, this->mLocalToWorldMtx, this->mParallax );
+	return ZLViewProj::GetWorldToWndMtx ( this->mViewport, this->mCamera, this->mViewport ? this->mViewport->GetLocalToWorldMtx () : ZLAffine3D::IDENT, this->mParallax );
 }
 
 //----------------------------------------------------------------//
@@ -444,7 +444,6 @@ MOAIAbstractViewLayer::MOAIAbstractViewLayer () :
 	RTTI_BEGIN ( MOAIAbstractViewLayer )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractViewLayer >)
 		RTTI_EXTEND ( MOAIAbstractLayer )
-		RTTI_EXTEND ( MOAIAbstractProp )
 	RTTI_END
 }
 
@@ -507,10 +506,7 @@ bool MOAIAbstractViewLayer::MOAIAbstractRenderNode_LoadGfxState ( u32 renderPhas
 	
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	ZLViewport viewport = *this->mViewport; // make a copy of the viewport before transform
-
-	ZLMatrix4x4 mtx ( this->mLocalToWorldMtx );
-	mtx.Transform ( viewport );
+	ZLViewport viewport = this->mViewport->GetWorldViewport (); // make a copy of the viewport before transform
 
 	gfxMgr.SetViewRect ( viewport );
 	gfxMgr.SetScissorRect ( viewport );
@@ -525,12 +521,10 @@ bool MOAIAbstractViewLayer::MOAIAbstractRenderNode_LoadGfxState ( u32 renderPhas
 bool MOAIAbstractViewLayer::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 
 	if ( MOAIAbstractLayer::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
-	if ( MOAIAbstractProp::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
 }
 
 //----------------------------------------------------------------//
 void MOAIAbstractViewLayer::MOAINode_Update () {
 
 	MOAIAbstractLayer::MOAINode_Update ();
-	MOAIAbstractProp::MOAINode_Update ();
 }

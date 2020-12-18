@@ -4,6 +4,8 @@
 #ifndef	MOAIVIEWPORT_H
 #define	MOAIVIEWPORT_H
 
+#include <moai-gfx/MOAITransform.h>
+
 //================================================================//
 // MOAIViewport
 //================================================================//
@@ -11,17 +13,17 @@
 	@text	Viewport object.
 */
 class MOAIViewport :
-	public virtual MOAILuaObject,
-	public virtual ZLViewport {
+	public virtual ZLViewport,
+	public virtual MOAITransform {
 private:
 
 	//----------------------------------------------------------------//
-	static int		_getFrame		( lua_State* L );
-	static int		_getSize		( lua_State* L );
-	static int		_setOffset		( lua_State* L );
-	static int		_setRotation	( lua_State* L );
-	static int		_setScale		( lua_State* L );
-	static int		_setSize		( lua_State* L );
+	static int		_getViewFrame			( lua_State* L );
+	static int		_getViewSize			( lua_State* L );
+	static int		_setViewOffset			( lua_State* L );
+	static int		_setViewRotation		( lua_State* L );
+	static int		_setViewScale			( lua_State* L );
+	static int		_setViewSize			( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void			_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
@@ -34,6 +36,7 @@ public:
 	friend class MOAICamera;
 	
 	//----------------------------------------------------------------//
+	ZLViewport		GetWorldViewport		() const;
 					MOAIViewport			();
 					~MOAIViewport			();
 };

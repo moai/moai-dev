@@ -25,8 +25,8 @@ COLOR_FBO_256_256 = MOAIPool.addFactory (
 )
 
 offscreenViewport = MOAIViewport.new ()
-	:setSize ( 256, 256 )
-	:setScale ( 256, 256 )
+	:setViewSize ( 256, 256 )
+	:setViewScale ( 256, 256 )
 
 -- add a prop to render
 offscreenProp = MOAIProp.new ():setDeck ( '../resources/moai.png' )
@@ -34,8 +34,8 @@ offscreenProp:moveRot ( 0, 0, 720, 5 )
 
 -- now set up a layer and render pass to render to the default/window frame buffer
 viewport = MOAIViewport.new ()
-	:setSize ( 320, 480 )
-	:setScale ( 320, 480 )
+	:setViewSize ( 320, 480 )
+	:setViewScale ( 320, 480 )
 
 -- deck to render a quad using the framebuffer texture
 gfxQuad = MOAISpriteDeck2D.new ()
@@ -68,7 +68,10 @@ function render ( draw, node, phase )
 		:setViewProj ( viewport )
 		:setTexture ( frameBuffer:getAttachment ())
 
-	prop:render ()
+	local partitionResults = MOAIPool.provision ( MOAIPartitionResultBuffer.getTypeID (), node:localScope ())
+	partition:hullsForViewProj ( partitionResults, viewport, nil, MOAIRenderNode.getRenderTypeID ())
+
+	partitionResults:render ()
 end
 
 node = MOAIRenderNode.new ():setRender ( render )

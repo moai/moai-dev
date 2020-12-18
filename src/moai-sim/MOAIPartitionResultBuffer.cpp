@@ -121,6 +121,16 @@ int MOAIPartitionResultBuffer::_getResults ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIPartitionResultBuffer::_render ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPartitionResultBuffer, "U" )
+
+	u32 renderPhase = state.GetValue < u32 >( 2, MOAIAbstractRenderNode::RENDER_PHASE_DRAW );
+	self->Render ( renderPhase );
+	MOAI_LUA_RETURN_SELF
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIPartitionResultBuffer::_sort ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartitionResultBuffer, "U" )
 
@@ -135,6 +145,23 @@ int MOAIPartitionResultBuffer::_sort ( lua_State* L ) {
 		
 		self->GenerateKeys ( sortMode, xScale, yScale, zScale, priorityScale );
 		self->Sort ( sortMode );
+	}
+	MOAI_LUA_RETURN_SELF
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIPartitionResultBuffer::_view ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPartitionResultBuffer, "U" )
+
+	if ( self->mTotalResults ) {
+
+		MOAICamera* camera = state.GetLuaObject < MOAICamera >( 2, false );
+		if( camera ) {
+			bool transformBounds = state.GetValue < bool >( 3, false );
+			ZLMatrix4x4 viewMtx = ZLViewProj::GetViewMtx ( camera );
+			self->Transform ( viewMtx, transformBounds );
+		}
 	}
 	MOAI_LUA_RETURN_SELF
 }
@@ -442,6 +469,23 @@ u32 MOAIPartitionResultBuffer::SortResultsIso () {
 }
 
 //----------------------------------------------------------------//
+void MOAIPartitionResultBuffer::Render ( u32 renderPhase ) {
+
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	u32 totalResults = this->GetTotalResults ();
+
+	for ( u32 i = 0; i < totalResults; ++i ) {
+		
+		MOAIPartitionResult* result = this->GetResultUnsafe ( i );
+		MOAIAbstractRenderNode* prop = result->AsType < MOAIAbstractRenderNode >();
+		if ( prop ) {
+			gfxMgr.SetIndex ( result->mSubPrimID );
+			prop->Render ( renderPhase );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 u32 MOAIPartitionResultBuffer::SortResultsLinear () {
 
 	MOAIPartitionResult* swapBuffer = this->AffirmSwapBuffer ();
@@ -484,7 +528,9 @@ void MOAIPartitionResultBuffer::_RegisterLuaFuncs ( RTTIVisitorHistory& history,
 	luaL_Reg regTable [] = {
 		{ "findBest",				_findBest },
 		{ "getResults",				_getResults },
+		{ "render",					_render },
 		{ "sort",					_sort },
+		{ "view",					_view },
 		{ NULL, NULL }
 	};
 	

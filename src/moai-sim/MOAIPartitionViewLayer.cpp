@@ -220,29 +220,12 @@ void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition, u32 rende
 	);
 	
 	buffer->Sort ( this->mSortMode );
-	
-	this->DrawProps ( *buffer, renderPhase );
+	buffer->Render ( renderPhase );
 	
 	if ( MOAIDebugLinesMgr::Get ().IsVisible () && this->mShowDebugLines ) {
 		partition.DrawDebugBack ();
-		this->DrawProps ( *buffer, MOAIAbstractRenderNode::RENDER_PHASE_DRAW_DEBUG );
+		buffer->Render ( MOAIAbstractRenderNode::RENDER_PHASE_DRAW_DEBUG );
 		partition.DrawDebugFront ();
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIPartitionViewLayer::DrawProps ( MOAIPartitionResultBuffer& buffer, u32 renderPhase ) {
-
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	u32 totalResults = buffer.GetTotalResults ();
-
-	for ( u32 i = 0; i < totalResults; ++i ) {
-		
-		MOAIPartitionResult* result = buffer.GetResultUnsafe ( i );
-		gfxMgr.SetIndex ( result->mSubPrimID );
-		
-		MOAIAbstractRenderNode* prop = result->AsType < MOAIAbstractRenderNode >();
-		prop->Render ( renderPhase );
 	}
 }
 
@@ -254,8 +237,8 @@ MOAIPartitionViewLayer::MOAIPartitionViewLayer () :
 	
 	RTTI_BEGIN ( MOAIPartitionViewLayer )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIPartitionViewLayer >)
-		RTTI_EXTEND ( MOAIPartitionHolder )
 		RTTI_EXTEND ( MOAIAbstractViewLayer )
+		RTTI_EXTEND ( MOAIPartitionHolder )
 	RTTI_END
 	
 	this->mSortScale [ 0 ] = 0.0f;
@@ -297,13 +280,9 @@ void MOAIPartitionViewLayer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MO
 	if ( history.DidVisit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
-		{ "getLayerPartition",		MOAIPartitionHolder::_getPartition },
-		{ "getPartition",			MOAIAbstractViewLayer::_getPartition },
 		{ "getPropViewList",		_getPropViewList },
 		{ "getSortMode",			_getSortMode },
 		{ "getSortScale",			_getSortScale },
-		{ "setLayerPartition",		MOAIPartitionHolder::_setPartition },
-		{ "setPartition",			MOAIAbstractViewLayer::_setPartition },
 		{ "setPartitionCull2D",		_setPartitionCull2D },
 		{ "setSortMode",			_setSortMode },
 		{ "setSortScale",			_setSortScale },

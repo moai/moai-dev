@@ -28,8 +28,8 @@
 	@const	SORT_VECTOR_DESCENDING
 */
 class MOAIPartitionViewLayer :
-	public virtual MOAIPartitionHolder,
-	public virtual MOAIAbstractViewLayer {
+	public virtual MOAIAbstractViewLayer,
+	public virtual MOAIPartitionHolder {
 protected:
 
 	u32			mSortMode;

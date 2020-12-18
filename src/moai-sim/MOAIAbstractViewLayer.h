@@ -13,8 +13,7 @@
 //================================================================//
 // TODO: doxygen
 class MOAIAbstractViewLayer :
-	public virtual MOAIAbstractLayer,
-	public virtual MOAIAbstractProp {
+	public virtual MOAIAbstractLayer {
 protected:
 
 	MOAILuaSharedPtr < MOAICamera >			mCamera;

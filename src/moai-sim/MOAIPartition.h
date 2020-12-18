@@ -44,6 +44,7 @@ protected:
 	static int		_hullsForPoint			( lua_State* L );
 	static int		_hullsForRay			( lua_State* L );
 	static int		_hullsForRect			( lua_State* L );
+	static int		_hullsForViewProj		( lua_State* L );
 	static int		_reserveLevels			( lua_State* L );
 	static int		_setLevel				( lua_State* L );
 	static int		_setPlane				( lua_State* L );
@@ -77,6 +78,7 @@ public:
 	u32				GatherHulls				( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, ZLRect rect, ZLTypeID typeID, u32 mask = MASK_ANY );
 	u32				GatherHulls				( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, ZLBox box, ZLTypeID typeID, u32 mask = MASK_ANY );
 	u32				GatherHulls				( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, const ZLFrustum& frustum, ZLTypeID typeID, u32 mask = MASK_ANY );
+	u32				GatherHulls				( MOAIPartitionResultBuffer& results, MOAIPartitionHull* ignoreProp, const ZLViewport* viewport, const ZLCamera* camera, ZLTypeID typeID, u32 mask = MASK_ANY );
 	void			InsertHull				( MOAIPartitionHull& hull );
 	bool			IsEmpty					( MOAIPartitionHull& hull );
 	bool			IsGlobal				( MOAIPartitionHull& hull );

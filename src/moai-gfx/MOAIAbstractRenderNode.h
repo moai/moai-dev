@@ -24,6 +24,7 @@ protected:
 
 	//----------------------------------------------------------------//
 	static int			_getGfxScript				( lua_State* L );
+	static int			_getRenderTypeID			( lua_State* L );
 	static int			_gfxScript					( lua_State* L );
 	static int			_hash						( lua_State* L );
 	static int			_localScope					( lua_State* L );
