@@ -472,18 +472,18 @@ double MOAIUpdateMgr::StepSim ( double step, u32 multiplier ) {
 		this->InvokeListener ( EVENT_STEP );
 		
 		double t = ZLDeviceTime::GetTimeInSeconds ();
-			MOAIActionMgr::Get ().GetActionTree ().Update ( step );
+		MOAIActionMgr::Get ().GetActionTree ().Update ( step );
 		this->mActionTreeTime = this->mActionTreeTime + ZLDeviceTime::GetTimeInSeconds () - t;
 		
 		t = ZLDeviceTime::GetTimeInSeconds ();
-			MOAINodeMgr::Get ().Update ();
+		MOAINodeMgr::Get ().Update ();
 		this->mNodeMgrTime = this->mNodeMgrTime + ZLDeviceTime::GetTimeInSeconds () - t;
 		
 		this->mSimTime += step;
 		this->mStepCount++;
 		
 		if ( this->mGCActive ) {
-		
+			
 			// empty the userdata cache
 			MOAILuaRuntime::Get ().PurgeUserdataCache ();
 		

@@ -9,6 +9,7 @@
 #include <moai-core/MOAIScopedLuaState.h>
 #include <moai-core/MOAILuaRuntime.h>
 #include <moai-core/MOAILuaRef.h>
+#include <moai-core/MOAIPool.h>
 
 #include <moai-core/MOAILuaState-impl.h>
 #include <moai-core/MOAILuaClass-impl.h>
@@ -551,6 +552,7 @@ void MOAILuaRuntime::ClearRef ( int refID ) {
 void MOAILuaRuntime::Close () {
 
 	if ( this->mState ) {
+		MOAIPool::Get ().PurgeAll ();
 		lua_close ( this->mState );
 		this->mState = 0;
 	}

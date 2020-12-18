@@ -47,7 +47,6 @@ protected:
 	MOAIPartitionLevel*			mLevel;
 	
 	ZLLeanLink < MOAIPartitionHull* >	mLinkInCell;
-	MOAIPartitionHull*					mNextResult;
 
 	u32					mQueryMask;
 	s32					mPriority;

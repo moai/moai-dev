@@ -28,27 +28,29 @@ int MOAIGfxMgr::_getRenderCount ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIGfxMgr::_getRender ( lua_State* L ) {
+int MOAIGfxMgr::_getRenderRoot ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIGfxMgr, "" )
 	
-	if ( self->mRenderRoot ) {
-		state.Push ( self->mRenderRoot );
-	}
-//	else {
-//		state.Push ( self->AffirmDefaultBatch ());
-//	}
+	self->AffirmRenderRoot ();
+	state.Push ( self->mRenderRoot );
 	return 1;
 }
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIGfxMgr::_setRender ( lua_State* L ) {
+int MOAIGfxMgr::_pushRenderNode ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIGfxMgr, "" )
+	
+	self->PushRenderNode ( state, 1 );
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIGfxMgr::_setRenderRoot ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIGfxMgr, "" )
 	
 	self->mRenderRoot.SetRef ( state, 1 );
-//	if ( self->mRenderRoot ) {
-//		self->mRenderBatch = NULL;
-//	}
 	return 0;
 }
 
@@ -102,9 +104,9 @@ MOAIIndexBuffer* MOAIGfxMgr::CreateIndexBuffer () {
 }
 
 //----------------------------------------------------------------//
-MOAIRenderNode* MOAIGfxMgr::CreateRenderBatch () {
+MOAIRenderNode* MOAIGfxMgr::CreateRenderRoot () {
 
-	return this->MOAIGfxMgr_CreateRenderBatch ();
+	return this->MOAIGfxMgr_CreateRenderRoot ();
 }
 
 //----------------------------------------------------------------//
@@ -307,8 +309,9 @@ void MOAIGfxMgr::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& 
 
 	luaL_Reg regTable [] = {
 		{ "getRenderCount",				_getRenderCount },
-		{ "getRender",					_getRender },
-		{ "setRender",					_setRender },
+		{ "getRenderRoot",				_getRenderRoot },
+		{ "pushRenderNode",				_pushRenderNode },
+		{ "setRenderRoot",				_setRenderRoot },
 		{ NULL, NULL }
 	};
 

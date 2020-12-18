@@ -145,8 +145,6 @@ void MOAIPool::PurgeAll () {
 void MOAIPool::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
-//	state.SetField ( -1, "DECK2D_SHADER",			( u32 )MOAIShaderPresetEnum::DECK2D_SHADER );
-
 	luaL_Reg regTable [] = {
 		{ "addFactory",				_addFactory },
 		{ "provision",				_provision },

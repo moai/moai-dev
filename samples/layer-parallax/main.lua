@@ -4,28 +4,28 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-MOAISim.openWindow ( "test", 480, 320 )
+MOAISim.openWindow ( 'test', 480, 320 )
 
 viewport = MOAIViewport.new ()
 viewport:setSize ( 480, 320 )
 viewport:setScale ( 480, 320 )
 
-camera = MOAICamera2D.new ()
-camera:moveLoc ( 240, 0, 4 )
+camera = MOAICamera.new ()
+camera:moveLoc ( 240, 0, 0, 4 )
 
 layer1 = MOAIPartitionViewLayer.new ()
 layer1:setViewport ( viewport )
 layer1:setCamera ( camera )
 layer1:setParallax ( 0.5, 1 )
-MOAISim.pushRenderPass ( layer1 )
+layer1:pushRenderPass ()
 
 layer2 = MOAIPartitionViewLayer.new ()
 layer2:setViewport ( viewport )
 layer2:setCamera ( camera )
-MOAISim.pushRenderPass ( layer2 )
+layer2:pushRenderPass ()
 
-gfxQuad = MOAIGfxQuad2D.new ()
-gfxQuad:setTexture ( "moai.png" )
+gfxQuad = MOAISpriteDeck2D.new ()
+gfxQuad:gfx ():setTexture ( '../resources/moai.png' )
 gfxQuad:setRect ( -64, -64, 64, 64 )
 
 prop = MOAIProp.new ()

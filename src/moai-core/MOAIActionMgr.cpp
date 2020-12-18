@@ -13,7 +13,7 @@
 //----------------------------------------------------------------//
 /**	@lua	getActionTree
 	@text	Get the action manager's action tree. This is the 'global' action tree
-			that all newly started actions are automatically added.
+			to which all newly started actions are automatically added.
 
 	@out	MOAIActionTree actionMgr
 */

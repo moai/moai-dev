@@ -11,6 +11,17 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIGfxMgr_RenderTree::AffirmRenderRoot () {
+
+	if ( !this->mRenderRoot ) {
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIRenderNode* node = MOAIGfxMgr::Get ().CreateRenderRoot ();
+		node->PushLuaUserdata ( state );
+		this->mRenderRoot.SetRef ( state, -1 );
+	}
+}
+
+//----------------------------------------------------------------//
 MOAIGfxMgr_RenderTree::MOAIGfxMgr_RenderTree () :
 	mRenderCounter ( 0 ),
 	mRenderDuration ( 1.0 / 60.0 ),
@@ -22,40 +33,50 @@ MOAIGfxMgr_RenderTree::~MOAIGfxMgr_RenderTree () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgr_RenderTree::PushRenderNode ( MOAIAbstractRenderNode* node ) {
+void MOAIGfxMgr_RenderTree::PushRenderNode ( MOAIAbstractRenderNode& node ) {
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	node.PushLuaUserdata ( state );
+	this->PushRenderNode ( state, -1 );
+}
 
-	if ( this->mRenderRoot ) {
-		state.Push ( this->mRenderRoot );
-	}
-	else {
-//		MOAIRenderNode* node =  MOAIGfxMgr::Get ().CreateRenderBatch ();
-//		state.Push ( node );
-//		this->mRenderRoot.SetRef ( state, -1 );
-		lua_newtable ( state );
-		this->mRenderRoot.SetRef ( state, -1 );
-	}
+//----------------------------------------------------------------//
+void MOAIGfxMgr_RenderTree::PushRenderNode ( MOAILuaState& state, int idx ) {
 
-	int idx = state.AbsIndex ( -1 );
-	int valType = lua_type ( state, idx );
+	idx = state.AbsIndex ( idx );
 
-	switch ( valType ) {
-
-//		case LUA_TUSERDATA: {
-//			MOAIRenderNode* node = state.GetLuaObject < MOAIRenderNode >( idx, false );
-//			if ( node ) {
-//				node->PushChild ( node );
-//			}
-//			break;
-//		}
-
-		case LUA_TTABLE: {
-			int top = ( int )state.GetTableSize ( -1 );
-			state.SetField ( -1, top + 1, node );
-			break;
+	state.Push ( this->mRenderRoot );
+	if ( !state.IsType ( -1, LUA_TTABLE )) {
+		MOAIRenderNode* node = state.GetLuaObject < MOAIRenderNode >( -1, false );
+		if ( !node ) {
+			state.Pop ();
+			node = MOAIGfxMgr::Get ().CreateRenderRoot ();
+			node->PushLuaUserdata ( state );
+			this->mRenderRoot.SetRef ( state, -1 );
 		}
 	}
+
+	switch (  lua_type ( state, -1 )) {
+
+		case LUA_TUSERDATA: {
+			MOAIRenderNode* node = state.GetLuaObject < MOAIRenderNode >( -1, false );
+			node->PushChild ( state, idx );
+			break;
+		}
+		
+		case LUA_TTABLE: {
+			int top = ( int )state.GetTableSize ( -1 );
+	
+			lua_pushnumber ( state, top + 1 );
+			lua_pushvalue ( state, idx );
+			lua_settable ( state, -3 );
+			break;
+		}
+		
+		default:
+			assert ( false );
+	}
+	state.Pop ();
 }
 
 //----------------------------------------------------------------//
@@ -63,24 +84,11 @@ void MOAIGfxMgr_RenderTree::Render () {
 
 	// Measure performance
 	double startTime = ZLDeviceTime::GetTimeInSeconds ();
-
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	gfxMgr.BeginFrame ();
-	
-	gfxMgr.SetFrameBuffer ();
-	gfxMgr.SetViewRect ();
-	gfxMgr.SetScissorRect ();
-
-	gfxMgr.SetClearColor ( 0x00000000 );
-	gfxMgr.SetClearFlags ( MOAIClearFlagsEnum::COLOR_BUFFER_BIT | MOAIClearFlagsEnum::DEPTH_BUFFER_BIT );
-	gfxMgr.ClearSurface ();
 	
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	state.Push ( this->mRenderRoot );
 	MOAIRenderNode::Render ( MOAIAbstractRenderNode::RENDER_PHASE_DRAW, state, -1, NULL );
-	
-	gfxMgr.EndFrame ();
-	
+
 	// Measure performance
 	double endTime = ZLDeviceTime::GetTimeInSeconds ();
 	this->mRenderDuration = endTime - startTime;

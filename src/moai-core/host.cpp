@@ -196,9 +196,7 @@ void AKUAppFinalize () {
 //		sContextMap = 0;
 //	}
 	
-	MOAIPool::Get ().PurgeAll ();
 	ZLContextMgr::Finalize ();
-	
 	zl_cleanup ();
 }
 
@@ -365,7 +363,7 @@ void AKUDeleteContext ( AKUContextID contextID ) {
 	if ( !context ) return;
 	
 	// MOAILusRuntime needs to clean up first; release all of the lua state and lua-bound objects
-	MOAILuaRuntime::Get ().Close (); // call this ahead of everything to purge all the Lua bindings!
+	MOAILuaRuntime::Get ().Close (); // call this ahead of everything to purge all the Lua bindings
 	
 	ZLContextMgr::Delete ( context );
 	

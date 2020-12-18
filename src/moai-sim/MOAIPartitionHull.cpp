@@ -282,7 +282,6 @@ MOAIPartitionHull::MOAIPartitionHull () :
 	mPartition ( 0 ),
 	mCell ( 0 ),
 	mLevel ( 0 ),
-	mNextResult ( 0 ),
 	mQueryMask ( 0xffffffff ),
 	mPriority ( UNKNOWN_PRIORITY ),
 	mWorldBounds ( ZLBounds::EMPTY ) {

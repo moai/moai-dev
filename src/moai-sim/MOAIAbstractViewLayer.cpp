@@ -507,16 +507,15 @@ bool MOAIAbstractViewLayer::MOAIAbstractRenderNode_LoadGfxState ( u32 renderPhas
 	
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	MOAIViewport& viewport = *this->mViewport;
-	ZLRect viewportRect = viewport;
+	ZLViewport viewport = *this->mViewport; // make a copy of the viewport before transform
 
 	ZLMatrix4x4 mtx ( this->mLocalToWorldMtx );
-	mtx.Transform ( viewportRect );
+	mtx.Transform ( viewport );
 
-	gfxMgr.SetViewRect ( viewportRect );
-	gfxMgr.SetScissorRect ( viewportRect );
+	gfxMgr.SetViewRect ( viewport );
+	gfxMgr.SetScissorRect ( viewport );
 	
-	gfxMgr.SetViewProj ( this->mViewport, this->mCamera, this->mDebugCamera, this->mParallax );
+	gfxMgr.SetViewProj ( &viewport, this->mCamera, this->mDebugCamera, this->mParallax );
 	gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX );
 	
 	return true;

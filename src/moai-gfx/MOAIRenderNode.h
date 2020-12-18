@@ -19,6 +19,7 @@ protected:
 
 	//----------------------------------------------------------------//
 	static int			_getRender					( lua_State* L );
+	static int			_pushChild					( lua_State* L );
 	static int			_setRender					( lua_State* L );
 
 	//----------------------------------------------------------------//
@@ -33,6 +34,8 @@ public:
 	//----------------------------------------------------------------//
 						MOAIRenderNode				();
 	virtual 			~MOAIRenderNode				();
+	void				PushChild					( MOAIAbstractRenderNode& node );
+	void				PushChild					( MOAILuaState& state, int idx );
 	static void			Render						( u32 renderPhase, MOAILuaMemberRef& ref, MOAIRenderNode* caller );
 	static void			Render						( u32 renderPhase, MOAILuaState& state, int idx, MOAIRenderNode* caller );
 };

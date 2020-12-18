@@ -38,8 +38,9 @@ protected:
 
 	//----------------------------------------------------------------//
 	static int			_getRenderCount				( lua_State* L );
-	static int			_getRender					( lua_State* L );
-	static int			_setRender					( lua_State* L );
+	static int			_getRenderRoot				( lua_State* L );
+	static int			_pushRenderNode				( lua_State* L );
+	static int			_setRenderRoot				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	virtual MOAIShader*					MOAIGfxMgr_AffirmShader					( MOAILuaState& state, int idx ) const = 0;
@@ -47,7 +48,7 @@ protected:
 	virtual void						MOAIGfxMgr_BeginFrame					() = 0;
 	virtual MOAIImageTexture*			MOAIGfxMgr_CreateImageTexture			() = 0;
 	virtual MOAIIndexBuffer*			MOAIGfxMgr_CreateIndexBuffer			() = 0;
-	virtual MOAIRenderNode*				MOAIGfxMgr_CreateRenderBatch			() = 0;
+	virtual MOAIRenderNode*				MOAIGfxMgr_CreateRenderRoot				() = 0;
 	virtual MOAITexture2D*				MOAIGfxMgr_CreateTexture2D				() = 0;
 	virtual MOAIVertexArray*			MOAIGfxMgr_CreateVertexArray			() = 0;
 	virtual MOAIVertexBuffer*			MOAIGfxMgr_CreateVertexBuffer			() = 0;
@@ -83,7 +84,7 @@ public:
 	void							BeginFrame					();
 	MOAIImageTexture*				CreateImageTexture			();
 	MOAIIndexBuffer*				CreateIndexBuffer			();
-	MOAIRenderNode*					CreateRenderBatch			();
+	MOAIRenderNode*					CreateRenderRoot			();
 	MOAITexture2D*					CreateTexture2D				();
 	MOAIVertexArray*				CreateVertexArray			();
 	MOAIVertexBuffer*				CreateVertexBuffer			();

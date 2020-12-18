@@ -175,58 +175,6 @@ ZLMatrix4x4 ZLViewport::GetWndToNormMtx () const {
 }
 
 //----------------------------------------------------------------//
-//ZLMatrix4x4 ZLViewport::GetWndToWorldMtx ( const ZLMatrix4x4& view ) const {
-//
-//	ZLMatrix4x4 wndToWorld;
-//
-//	ZLMatrix4x4 mtx;
-//	ZLRect rect = this->GetRect ();
-//
-//	float hWidth = rect.Width () * 0.5f;
-//	float hHeight = rect.Height () * 0.5f;
-//
-//	// Inv Wnd
-//	wndToWorld.Translate ( -hWidth - rect.mXMin, -hHeight - rect.mYMin, 0.0f );
-//	
-//	mtx.Scale (( 1.0f / hWidth ), -( 1.0f / hHeight ), 1.0f );
-//	wndToWorld.Append ( mtx );
-//
-//	mtx = this->GetProjMtxInv ();
-//	wndToWorld.Append ( mtx );
-//	
-//	mtx.Inverse ( view );
-//	wndToWorld.Append ( mtx );
-//	
-//	return wndToWorld;
-//}
-
-//----------------------------------------------------------------//
-//ZLMatrix4x4 ZLViewport::GetWorldToWndMtx ( const ZLMatrix4x4& view ) const {
-//
-//	ZLMatrix4x4 worldToWnd;
-//
-//	ZLMatrix4x4 mtx;
-//	ZLRect rect		= this->GetRect ();
-//	
-//	float hWidth	= this->Width () * 0.5f;
-//	float hHeight	= this->Height () * 0.5f;
-//
-//	worldToWnd = view;
-//
-//	mtx = this->GetProjMtx ();
-//	worldToWnd.Append ( mtx );
-//
-//	// Wnd
-//	mtx.Scale ( hWidth, -hHeight, 1.0f );
-//	worldToWnd.Append ( mtx );
-//	
-//	mtx.Translate ( hWidth + rect.mXMin, hHeight + rect.mYMin, 0.0f );
-//	worldToWnd.Append ( mtx );
-//	
-//	return worldToWnd;
-//}
-
-//----------------------------------------------------------------//
 void ZLViewport::SetOffset ( float xOffset, float yOffset ) {
 
 	this->mOffset.Init ( xOffset, yOffset );

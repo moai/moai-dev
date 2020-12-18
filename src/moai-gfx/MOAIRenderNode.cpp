@@ -20,6 +20,14 @@ int MOAIRenderNode::_getRender ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
+int MOAIRenderNode::_pushChild ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIRenderNode, "U" )
+	self->PushChild ( state, 2 );
+	MOAI_LUA_RETURN_SELF
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIRenderNode::_setRender ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIRenderNode, "U" )
 	self->mRenderRoot.SetRef ( state, 2 );
@@ -44,6 +52,35 @@ MOAIRenderNode::~MOAIRenderNode () {
 }
 
 //----------------------------------------------------------------//
+void MOAIRenderNode::PushChild ( MOAIAbstractRenderNode& node ) {
+
+	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	node.PushLuaUserdata ( state );
+	this->PushChild ( state, -1 );
+}
+
+//----------------------------------------------------------------//
+void MOAIRenderNode::PushChild ( MOAILuaState& state, int idx ) {
+
+	idx = state.AbsIndex ( idx );
+
+	state.Push ( this->mRenderRoot );
+	if ( !state.IsType ( -1, LUA_TTABLE )) {
+		state.Pop ();
+		lua_newtable ( state );
+		this->mRenderRoot.SetRef ( state, -1 );
+	}
+	
+	int top = ( int )state.GetTableSize ( -1 );
+	
+	lua_pushnumber ( state, top + 1 );
+	lua_pushvalue ( state, idx );
+	lua_settable ( state, -3 );
+	
+	state.Pop ();
+}
+
+//----------------------------------------------------------------//
 void MOAIRenderNode::Render ( u32 renderPhase, MOAILuaMemberRef& ref, MOAIRenderNode* caller ) {
 
 	if ( ref ) {
@@ -53,7 +90,6 @@ void MOAIRenderNode::Render ( u32 renderPhase, MOAILuaMemberRef& ref, MOAIRender
 		state.Pop ( 1 );
 	}
 }
-
 
 //----------------------------------------------------------------//
 void MOAIRenderNode::Render ( u32 renderPhase, MOAILuaState& state, int idx, MOAIRenderNode* caller ) {
@@ -115,6 +151,7 @@ void MOAIRenderNode::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaSta
 
 	luaL_Reg regTable [] = {
 		{ "getRender",					_getRender },
+		{ "pushChild",					_pushChild },
 		{ "setRender",					_setRender },
 		{ NULL, NULL }
 	};

@@ -72,4 +72,5 @@ function render ( draw, node, phase )
 end
 
 node = MOAIRenderNode.new ():setRender ( render )
-MOAIGfxMgr.setRender ( node )
+-- MOAIGfxMgr.setRenderRoot ( node )
+MOAIGfxMgr.pushRenderNode ( node )

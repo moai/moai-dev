@@ -76,9 +76,6 @@ int MOAIViewport::_setRotation ( lua_State* L ) {
 			dimensions. Set 0 for one of the dimensions to use a derived value based on
 			the other dimension and the aspect ratio. Negative values are also OK.
 			
-			It is typical to set the scale to the number of pixels visible in the
-			this-> This practice is neither endorsed nor condemned.
-			
 			Note that the while the contents of the viewport will appear to stretch
 			or shrink to match the dimensions of the viewport given by setSize, the
 			number of world units visible will remain constant.
@@ -106,8 +103,7 @@ int MOAIViewport::_setScale ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 /**	@lua	setSize
-	@text	Sets the dimensions of the this->
-	
+	@text	Sets the dimensions of the viewport.
 	
 	@overload
 	

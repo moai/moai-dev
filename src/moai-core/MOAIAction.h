@@ -46,27 +46,27 @@ private:
 	u32 mActionFlags;
 	
 	//----------------------------------------------------------------//
-	static int			_addChild				( lua_State* L );
-	static int			_attach					( lua_State* L );
-	static int			_clear					( lua_State* L );
-	static int			_defer					( lua_State* L );
-	static int			_detach					( lua_State* L );
-	static int 			_getChildren			( lua_State* L );
-	static int 			_hasChildren			( lua_State* L );
-	static int			_isActive				( lua_State* L );
-	static int			_isBusy					( lua_State* L );
-	static int			_isDone					( lua_State* L );
-	static int			_isPaused				( lua_State* L );
-	static int			_pause					( lua_State* L );
-	static int			_setAutoStop			( lua_State* L );
-	static int			_start					( lua_State* L );
-	static int			_stop					( lua_State* L );
-	static int			_throttle				( lua_State* L );
-	static int			_update					( lua_State* L );
+	static int				_addChild				( lua_State* L );
+	static int				_attach					( lua_State* L );
+	static int				_clear					( lua_State* L );
+	static int				_defer					( lua_State* L );
+	static int				_detach					( lua_State* L );
+	static int 				_getChildren			( lua_State* L );
+	static int 				_hasChildren			( lua_State* L );
+	static int				_isActive				( lua_State* L );
+	static int				_isBusy					( lua_State* L );
+	static int				_isDone					( lua_State* L );
+	static int				_isPaused				( lua_State* L );
+	static int				_pause					( lua_State* L );
+	static int				_setAutoStop			( lua_State* L );
+	static int				_start					( lua_State* L );
+	static int				_stop					( lua_State* L );
+	static int				_throttle				( lua_State* L );
+	static int				_update					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				ResetPass				( u32 pass = 0 );
-	void				Update					( MOAIActionTree& tree, double step );
+	void					ResetPass				( u32 pass = 0 );
+	void					Update					( MOAIActionTree& tree, double step );
 
 protected:
 

@@ -66,7 +66,7 @@ protected:
 	void								MOAIGfxMgr_BeginFrame							();
 	MOAIImageTexture*					MOAIGfxMgr_CreateImageTexture					();
 	MOAIIndexBuffer*					MOAIGfxMgr_CreateIndexBuffer					();
-	MOAIRenderNode*						MOAIGfxMgr_CreateRenderBatch					();
+	MOAIRenderNode*						MOAIGfxMgr_CreateRenderRoot						();
 	MOAITexture2D*						MOAIGfxMgr_CreateTexture2D						();
 	MOAIVertexArray*					MOAIGfxMgr_CreateVertexArray					();
 	MOAIVertexBuffer*					MOAIGfxMgr_CreateVertexBuffer					();
