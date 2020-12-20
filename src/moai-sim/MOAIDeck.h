@@ -64,7 +64,7 @@ public:
 							~MOAIDeck						();
 	MOAIPickResult			PickByPoint						( ZLIndex idx, ZLVec3D loc );
 	MOAIPickResult			PickByRay						( ZLIndex idx, ZLVec3D loc, ZLVec3D normal );
-	
+
 };
 
 #endif

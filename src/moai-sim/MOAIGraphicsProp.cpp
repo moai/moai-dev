@@ -25,7 +25,7 @@
 MOAIGraphicsProp::MOAIGraphicsProp () {
 	
 	RTTI_BEGIN ( MOAIGraphicsProp )
-		RTTI_EXTEND ( MOAIHasDeckAndIndex )
+		RTTI_EXTEND ( MOAIPropWithDeckAndIndex )
 		RTTI_EXTEND ( MOAIAbstractGraphicsProp )
 	RTTI_END
 }
@@ -53,24 +53,9 @@ bool MOAIGraphicsProp::MOAIAbstractRenderNode_LoadGfxState ( u32 renderPhase ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGraphicsProp::MOAIAbstractRenderNode_Render ( u32 renderPhase ) {
-
-	switch ( renderPhase ) {
-		
-		case MOAIAbstractRenderNode::RENDER_PHASE_DRAW:
-			this->mDeck->Draw ( this->mIndex );
-			break;
-		
-		case MOAIAbstractRenderNode::RENDER_PHASE_DRAW_DEBUG:
-			this->DrawDebug ();
-			break;
-	}
-}
-
-//----------------------------------------------------------------//
 bool MOAIGraphicsProp::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 	
-	if ( MOAIHasDeckAndIndex::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
+	if ( MOAIPropWithDeckAndIndex::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
 	if ( MOAIAbstractGraphicsProp::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
 	return false;
 }

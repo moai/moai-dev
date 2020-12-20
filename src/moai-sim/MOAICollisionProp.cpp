@@ -207,9 +207,8 @@ MOAICollisionProp::MOAICollisionProp () :
 
 	RTTI_BEGIN ( MOAICollisionProp )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAICollisionProp >)
-		RTTI_EXTEND ( MOAIAbstractProp )
+		RTTI_EXTEND ( MOAIPropWithDeckAndIndex )
 		RTTI_EXTEND ( MOAIAbstractRenderNode )
-		RTTI_EXTEND ( MOAIHasDeckAndIndex )
 	RTTI_END
 	
 	this->mActiveListLink.Data ( this );
@@ -539,7 +538,7 @@ void MOAICollisionProp::MOAIAbstractRenderNode_Render ( u32 renderPhase ) {
 //----------------------------------------------------------------//
 bool MOAICollisionProp::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
 
-	if ( MOAIHasDeckAndIndex::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
+	if ( MOAIPropWithDeckAndIndex::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
 	if ( MOAIAbstractProp::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
 	return false;
 }

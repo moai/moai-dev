@@ -206,8 +206,8 @@ private:
 	void				_RegisterLuaClass									( RTTIVisitorHistory& history, MOAILuaState& state );
 	void				_RegisterLuaFuncs									( RTTIVisitorHistory& history, MOAILuaState& state );
 	void				MOAIAbstractBaseTransform_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx );
-	ZLMatrix4x4			MOAIAbstractGraphicsProp_GetWorldDrawingMtx			() const;
 	ZLBounds			MOAIAbstractProp_GetModelBounds						();
+	ZLMatrix4x4			MOAIAbstractProp_GetWorldDrawingMtx					() const;
 	bool				MOAIAbstractRenderNode_LoadGfxState					( u32 renderPhase );
 	void				MOAIAbstractRenderNode_Render						( u32 renderPhase );
 	bool				MOAIAction_IsDone									();

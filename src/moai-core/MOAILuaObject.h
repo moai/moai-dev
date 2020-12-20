@@ -85,10 +85,11 @@ protected:
 	static void				Unbind						( MOAILuaObject* object, MOAILuaWeakRef& userdata );
 
 	//----------------------------------------------------------------//
-	void					_RegisterLuaClass					( RTTIVisitorHistory& history, MOAILuaState& state );
-	void					_RegisterLuaFuncs					( RTTIVisitorHistory& history, MOAILuaState& state );
-	virtual void			MOAILuaObject_OnPooledRemit			();
-	void					ZLRefCountedObjectBase_OnRelease	( u32 refCount );
+	void					_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
+	void					_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
+	virtual void			MOAILuaObject_DecorateLuaBinding		( MOAILuaState& state );
+	virtual void			MOAILuaObject_OnPooledRemit				();
+	void					ZLRefCountedObjectBase_OnRelease		( u32 refCount );
 
 public:
 

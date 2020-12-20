@@ -4,9 +4,8 @@
 #ifndef	MOAICOLLISIONFACET_H
 #define	MOAICOLLISIONFACET_H
 
-#include <moai-sim/MOAIAbstractPropWithDeckAndIndex.h>
+#include <moai-sim/MOAIPropWithDeckAndIndex.h>
 #include <moai-sim/MOAICollisionPrim.h>
-#include <moai-sim/MOAIHasDeckAndIndex.h>
 
 class MOAICollisionShape;
 class MOAICollisionProp;
@@ -59,7 +58,7 @@ private:
 //================================================================//
 // TODO: doxygen
 class MOAICollisionProp :
-	public virtual MOAIAbstractPropWithDeckAndIndex,
+	public virtual MOAIPropWithDeckAndIndex,
 	public virtual MOAIAbstractRenderNode {
 private:
 	

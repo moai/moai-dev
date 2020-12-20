@@ -82,7 +82,6 @@ MOAIHasDeck::MOAIHasDeck () {
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIHasDeck >)
 		RTTI_VISITOR ( MOAIAbstractLuaSerializationVisitor, MOAILuaSerializationVisitor < MOAIHasDeck >)
 		RTTI_EXTEND ( MOAINode )
-		RTTI_EXTEND ( MOAIAbstractPickable )
 	RTTI_END
 }
 

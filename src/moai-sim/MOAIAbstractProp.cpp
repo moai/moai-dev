@@ -159,6 +159,70 @@ int MOAIAbstractProp::_setModelBoundsPad ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
+void MOAIAbstractProp::DrawDebug () {
+
+	if ( this->GetWorldBounds ().IsEmpty ()) return;
+
+	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
+	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAIAbstractGraphicsProp >())) return;
+
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+
+	MOAIDraw& draw = MOAIDraw::Get ();
+	UNUSED ( draw ); // mystery warning in vs2008
+
+	draw.BindVectorPresets ();
+
+	this->LoadVertexTransform ();
+
+	gfxMgr.SetVertexTransform ( MOAIGfxMgr::MODEL_TO_DISPLAY_MTX );
+
+	ZLBounds modelBounds = this->GetModelBounds ();
+
+	// TODO: check bounds status
+
+	if ( debugLines.Bind ( DEBUG_DRAW_AXIS )) {
+		draw.DrawBoxAxis ( modelBounds.mAABB );
+	}
+
+	if ( debugLines.Bind ( DEBUG_DRAW_DIAGONALS )) {
+		draw.DrawBoxDiagonals ( modelBounds.mAABB );
+	}
+
+	if ( debugLines.Bind ( DEBUG_DRAW_MODEL_BOUNDS )) {
+		draw.DrawBoxOutline ( modelBounds.mAABB );
+	}
+
+	// clear out the world transform (draw in world space)
+	gfxMgr.SetVertexTransform ( MOAIGfxMgr::WORLD_TO_DISPLAY_MTX );
+
+	if ( debugLines.Bind ( DEBUG_DRAW_WORLD_BOUNDS )) {
+		draw.DrawBoxOutline ( this->GetWorldBounds ().mAABB );
+	}
+
+	if ( debugLines.IsVisible ( DEBUG_DRAW_PARTITION_CELLS ) || debugLines.IsVisible ( DEBUG_DRAW_PARTITION_CELLS )) {
+
+		ZLRect cellRect;
+		ZLRect paddedRect;
+
+		if ( this->GetCellRect ( &cellRect, &paddedRect )) {
+
+			if ( cellRect.Area () != 0.0f ) {
+				if ( debugLines.Bind ( DEBUG_DRAW_PARTITION_CELLS )) {
+					draw.DrawRectOutline ( cellRect );
+				}
+			}
+
+			if ( paddedRect.Area () != 0.0f ) {
+				if ( debugLines.Bind ( DEBUG_DRAW_PARTITION_PADDED_CELLS )) {
+					draw.DrawRectOutline ( paddedRect );
+				}
+			}
+		}
+	}
+}
+
+//----------------------------------------------------------------//
 ZLBounds MOAIAbstractProp::GetModelBounds () {
 
 	if ( this->mFlags & FLAGS_PARTITION_GLOBAL ) {
@@ -182,6 +246,19 @@ ZLBounds MOAIAbstractProp::GetModelBounds () {
 }
 
 //----------------------------------------------------------------//
+ZLMatrix4x4 MOAIAbstractProp::GetWorldDrawingMtx () const {
+
+	return this->MOAIAbstractProp_GetWorldDrawingMtx ();
+}
+
+//----------------------------------------------------------------//
+void MOAIAbstractProp::LoadVertexTransform () {
+
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX, this->GetWorldDrawingMtx ());
+}
+
+//----------------------------------------------------------------//
 MOAIAbstractProp::MOAIAbstractProp () :
 		mFlags ( 0 ),
 		mModelBoundsOverride ( ZLBox::EMPTY ),
@@ -190,6 +267,7 @@ MOAIAbstractProp::MOAIAbstractProp () :
 	RTTI_BEGIN ( MOAIAbstractProp )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractProp >)
 		RTTI_EXTEND ( MOAIPartitionHull )
+		RTTI_EXTEND ( MOAIAbstractRenderNode )
 		RTTI_EXTEND ( MOAITransform )
 	RTTI_END
 }
@@ -206,8 +284,18 @@ MOAIAbstractProp::~MOAIAbstractProp () {
 void MOAIAbstractProp::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 	
-	state.SetField ( -1, "FLAGS_EXPAND_FOR_SORT",		( u32 )FLAGS_EXPAND_FOR_SORT );
-	state.SetField ( -1, "FLAGS_PARTITION_GLOBAL",		( u32 )FLAGS_PARTITION_GLOBAL );
+	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAIAbstractProp >( TOTAL_DEBUG_LINE_STYLES );
+	
+	state.SetField ( -1, "DEBUG_DRAW_GFX_PROP_MASTER",			MOAIDebugLinesMgr::Pack < MOAIAbstractProp >( (u32) -1 ));
+	state.SetField ( -1, "DEBUG_DRAW_PARTITION_CELLS",			MOAIDebugLinesMgr::Pack < MOAIAbstractProp >( DEBUG_DRAW_PARTITION_CELLS ));
+	state.SetField ( -1, "DEBUG_DRAW_PARTITION_PADDED_CELLS",	MOAIDebugLinesMgr::Pack < MOAIAbstractProp >( DEBUG_DRAW_PARTITION_PADDED_CELLS ));
+	state.SetField ( -1, "DEBUG_DRAW_AXIS",						MOAIDebugLinesMgr::Pack < MOAIAbstractProp >( DEBUG_DRAW_AXIS ));
+	state.SetField ( -1, "DEBUG_DRAW_DIAGONALS",				MOAIDebugLinesMgr::Pack < MOAIAbstractProp >( DEBUG_DRAW_DIAGONALS ));
+	state.SetField ( -1, "DEBUG_DRAW_MODEL_BOUNDS",				MOAIDebugLinesMgr::Pack < MOAIAbstractProp >( DEBUG_DRAW_MODEL_BOUNDS ));
+	state.SetField ( -1, "DEBUG_DRAW_WORLD_BOUNDS",				MOAIDebugLinesMgr::Pack < MOAIAbstractProp >( DEBUG_DRAW_WORLD_BOUNDS ));
+	
+	state.SetField ( -1, "FLAGS_EXPAND_FOR_SORT",				( u32 )FLAGS_EXPAND_FOR_SORT );
+	state.SetField ( -1, "FLAGS_PARTITION_GLOBAL",				( u32 )FLAGS_PARTITION_GLOBAL );
 }
 
 //----------------------------------------------------------------//
@@ -225,6 +313,12 @@ void MOAIAbstractProp::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaS
 	};
 	
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+ZLMatrix4x4 MOAIAbstractProp::MOAIAbstractProp_GetWorldDrawingMtx () const {
+
+	return ZLMatrix4x4::IDENT;
 }
 
 //----------------------------------------------------------------//

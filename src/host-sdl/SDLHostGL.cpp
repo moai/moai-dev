@@ -26,7 +26,7 @@ SDLHostGL::~SDLHostGL () {
 //----------------------------------------------------------------//
 void SDLHostGL::SDLAbstractHost_MainLoopDidFinish () {
 	
-	AKUDeleteContext ( AKUGetContext ());
+//	AKUDeleteContext ( AKUGetContext ());
 
 	//SDL_GL_DeleteContext ( context );  removing context here leaves the window and it explodes with gl error during glflush
 

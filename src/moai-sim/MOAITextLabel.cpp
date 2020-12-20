@@ -1138,43 +1138,6 @@ void MOAITextLabel::MOAIAbstractBaseTransform_BuildLocalToWorldMtx ( ZLAffine3D&
 //}
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAITextLabel::MOAIAbstractGraphicsProp_GetWorldDrawingMtx () const {
-
-	ZLMatrix4x4 worldDrawingMtx = MOAIAbstractGraphicsProp::MOAIAbstractGraphicsProp_GetWorldDrawingMtx ();
-	
-	if ( this->mAutoFlip ) {
-		
-		ZLMatrix4x4 viewProj = MOAIGfxMgr::Get ().GetMtx ( MOAIGfxMgr::WORLD_TO_CLIP_MTX );
-
-		ZLVec3D upVec = worldDrawingMtx.GetYAxis ();
-
-		viewProj.TransformVec ( upVec );
-
-		// For text flipping when orbiting. Tilting should not affect this
-		if ( upVec.mY > 0.0f ) {
-
-			ZLMatrix4x4 flip;
-			flip.Scale ( -1.0f, -1.0f, 1.0f );
-			
-			// if there's no x-axis constraint, flip inside the glyph rect
-			if ( !this->mLayoutRules.GetLimitWidth ()) {
-				float xOffset = this->mLayout.mGlyphFrame.mXMin + this->mLayout.mGlyphFrame.mXMax;
-				flip.m [ ZLMatrix4x4::C3_R0 ] = xOffset;
-			}
-			
-			// if there's no y-axis constraint, flip inside the glyph rect
-			if ( !this->mLayoutRules.GetLimitHeight ()) {
-				float yOffset = this->mLayout.mGlyphFrame.mYMin + this->mLayout.mGlyphFrame.mYMax;
-				flip.m [ ZLMatrix4x4::C3_R1 ] = yOffset;
-			}
-			worldDrawingMtx.Prepend ( flip );
-		}
-	}
-	
-	return worldDrawingMtx;
-}
-
-//----------------------------------------------------------------//
 ZLBounds MOAITextLabel::MOAIAbstractProp_GetModelBounds () {
 	
 	this->Refresh ();
@@ -1211,6 +1174,43 @@ ZLBounds MOAITextLabel::MOAIAbstractProp_GetModelBounds () {
 	}
 	
 	return bounds;
+}
+
+//----------------------------------------------------------------//
+ZLMatrix4x4 MOAITextLabel::MOAIAbstractProp_GetWorldDrawingMtx () const {
+
+	ZLMatrix4x4 worldDrawingMtx = MOAIAbstractGraphicsProp::MOAIAbstractProp_GetWorldDrawingMtx ();
+	
+	if ( this->mAutoFlip ) {
+		
+		ZLMatrix4x4 viewProj = MOAIGfxMgr::Get ().GetMtx ( MOAIGfxMgr::WORLD_TO_CLIP_MTX );
+
+		ZLVec3D upVec = worldDrawingMtx.GetYAxis ();
+
+		viewProj.TransformVec ( upVec );
+
+		// For text flipping when orbiting. Tilting should not affect this
+		if ( upVec.mY > 0.0f ) {
+
+			ZLMatrix4x4 flip;
+			flip.Scale ( -1.0f, -1.0f, 1.0f );
+			
+			// if there's no x-axis constraint, flip inside the glyph rect
+			if ( !this->mLayoutRules.GetLimitWidth ()) {
+				float xOffset = this->mLayout.mGlyphFrame.mXMin + this->mLayout.mGlyphFrame.mXMax;
+				flip.m [ ZLMatrix4x4::C3_R0 ] = xOffset;
+			}
+			
+			// if there's no y-axis constraint, flip inside the glyph rect
+			if ( !this->mLayoutRules.GetLimitHeight ()) {
+				float yOffset = this->mLayout.mGlyphFrame.mYMin + this->mLayout.mGlyphFrame.mYMax;
+				flip.m [ ZLMatrix4x4::C3_R1 ] = yOffset;
+			}
+			worldDrawingMtx.Prepend ( flip );
+		}
+	}
+	
+	return worldDrawingMtx;
 }
 
 //----------------------------------------------------------------//

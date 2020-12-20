@@ -52,11 +52,8 @@ class MOAIScissorRect;
 */
 class MOAIAbstractGraphicsProp :
 	public virtual MOAIAbstractProp,
-	public virtual MOAIAbstractRenderNode,
 	public virtual MOAIColor {
 protected:
-
-	friend class MOAIGraphicsPropBaseCallable;
 
 	u32						mBillboard;
 	u32						mDisplayFlags;
@@ -76,14 +73,12 @@ protected:
 	static int				_setVisible					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void					DrawDebug					();
 	void					LoadUVTransform				();
-	void					LoadVertexTransform			();
 
 	//----------------------------------------------------------------//
 	void					_RegisterLuaClass								( RTTIVisitorHistory& history, MOAILuaState& state );
 	void					_RegisterLuaFuncs								( RTTIVisitorHistory& history, MOAILuaState& state );
-	virtual ZLMatrix4x4		MOAIAbstractGraphicsProp_GetWorldDrawingMtx		() const; // factors in billboard flags
+	virtual ZLMatrix4x4		MOAIAbstractProp_GetWorldDrawingMtx				() const;
 	bool					MOAIAbstractRenderNode_LoadGfxState				( u32 renderPhase );
 	bool					MOAINode_ApplyAttrOp							( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	void					MOAINode_Update									();
@@ -92,16 +87,6 @@ public:
 
 	DECL_LUA_ABSTRACT ( MOAIAbstractGraphicsProp )
 	DECL_ATTR_HELPER ( MOAIAbstractGraphicsProp );
-
-	enum {
-		DEBUG_DRAW_PARTITION_CELLS,
-		DEBUG_DRAW_PARTITION_PADDED_CELLS,
-		DEBUG_DRAW_AXIS,
-		DEBUG_DRAW_DIAGONALS,
-		DEBUG_DRAW_MODEL_BOUNDS,
-		DEBUG_DRAW_WORLD_BOUNDS,
-		TOTAL_DEBUG_LINE_STYLES,
-	};
 
 	enum {
 		BILLBOARD_NONE,
@@ -142,7 +127,6 @@ public:
 	DECL_ATTR_ID ( FRAME_TRAIT )
 
 	//----------------------------------------------------------------//
-	ZLMatrix4x4				GetWorldDrawingMtx				() const;
 	bool					IsVisible						();
 							MOAIAbstractGraphicsProp		();
 	virtual					~MOAIAbstractGraphicsProp		();

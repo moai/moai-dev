@@ -2,10 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIDeck.h>
-#include <moai-sim/MOAIPartition.h>
-#include <moai-sim/MOAIPartitionResultBuffer.h>
-#include <moai-sim/MOAIHasDeckAndIndex.h>
+#include <moai-sim/MOAIPropWithDeckAndIndex.h>
 
 //================================================================//
 // lua
@@ -15,11 +12,11 @@
 /**	@lua	getIndex
 	@text	Gets the value of the deck indexer.
 	
-	@in		MOAIHasDeckAndIndex self
+	@in		MOAIPropWithDeckAndIndex self
 	@out	number index
 */
-int MOAIHasDeckAndIndex::_getIndex ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIHasDeckAndIndex, "U" )
+int MOAIPropWithDeckAndIndex::_getIndex ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPropWithDeckAndIndex, "U" )
 
 	state.Push ( MOAILuaIndex ( self->mIndex ));
 
@@ -30,12 +27,12 @@ int MOAIHasDeckAndIndex::_getIndex ( lua_State* L ) {
 /**	@lua	setIndex
 	@text	Set the prop's index into its deck.
 	
-	@in		MOAIHasDeckAndIndex self
+	@in		MOAIPropWithDeckAndIndex self
 	@opt	number index		Default value is 1.
 	@out	nil
 */
-int MOAIHasDeckAndIndex::_setIndex ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIHasDeckAndIndex, "U" )
+int MOAIPropWithDeckAndIndex::_setIndex ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIPropWithDeckAndIndex, "U" )
 
 	self->mIndex = state.GetValue < MOAILuaIndex >( 2, 0 );
 	self->ScheduleUpdate ();
@@ -44,21 +41,21 @@ int MOAIHasDeckAndIndex::_setIndex ( lua_State* L ) {
 }
 
 //================================================================//
-// MOAIHasDeckAndIndex
+// MOAIPropWithDeckAndIndex
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIHasDeckAndIndex::MOAIHasDeckAndIndex () :
+MOAIPropWithDeckAndIndex::MOAIPropWithDeckAndIndex () :
 	mIndex ( 0 ) {
 	
-	RTTI_BEGIN ( MOAIHasDeckAndIndex )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIHasDeckAndIndex >)
+	RTTI_BEGIN ( MOAIPropWithDeckAndIndex )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIPropWithDeckAndIndex >)
 		RTTI_EXTEND ( MOAIHasDeck )
 	RTTI_END
 }
 
 //----------------------------------------------------------------//
-MOAIHasDeckAndIndex::~MOAIHasDeckAndIndex () {
+MOAIPropWithDeckAndIndex::~MOAIPropWithDeckAndIndex () {
 }
 
 //================================================================//
@@ -66,14 +63,14 @@ MOAIHasDeckAndIndex::~MOAIHasDeckAndIndex () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIHasDeckAndIndex::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIPropWithDeckAndIndex::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	state.SetField ( -1, "ATTR_INDEX", AttrID::Pack ( ATTR_INDEX ).ToRaw ());
 }
 
 //----------------------------------------------------------------//
-void MOAIHasDeckAndIndex::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIPropWithDeckAndIndex::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
 
 	luaL_Reg regTable [] = {
@@ -86,20 +83,42 @@ void MOAIHasDeckAndIndex::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAIL
 }
 
 //----------------------------------------------------------------//
-MOAIPickResult MOAIHasDeckAndIndex::MOAIAbstractPickable_PickByPoint ( ZLVec3D loc ) {
+ZLBounds MOAIPropWithDeckAndIndex::MOAIAbstractProp_GetModelBounds () {
+	
+	return this->mDeck ? this->mDeck->GetBounds ( this->mIndex ) : ZLBounds::EMPTY;
+}
 
+
+//----------------------------------------------------------------//
+MOAIPickResult MOAIPropWithDeckAndIndex::MOAIAbstractProp_PickByPoint ( ZLVec3D loc ) {
+	
 	return this->mDeck ? this->mDeck->PickByPoint ( this->mIndex, loc ) : MOAIPickResult ();
 }
 
 //----------------------------------------------------------------//
-MOAIPickResult MOAIHasDeckAndIndex::MOAIAbstractPickable_PickByRay ( ZLVec3D loc, ZLVec3D normal ) {
-
+MOAIPickResult MOAIPropWithDeckAndIndex::MOAIAbstractProp_PickByRay ( ZLVec3D loc, ZLVec3D normal ) {
+	
 	return this->mDeck ? this->mDeck->PickByRay ( this->mIndex, loc, normal ) : MOAIPickResult ();
 }
 
 //----------------------------------------------------------------//
-bool MOAIHasDeckAndIndex::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
+void MOAIPropWithDeckAndIndex::MOAIAbstractRenderNode_Render ( u32 renderPhase ) {
 
+	switch ( renderPhase ) {
+		
+		case MOAIAbstractRenderNode::RENDER_PHASE_DRAW:
+			this->mDeck->Draw ( this->mIndex );
+			break;
+		
+		case MOAIAbstractRenderNode::RENDER_PHASE_DRAW_DEBUG:
+			this->DrawDebug ();
+			break;
+	}
+}
+
+//----------------------------------------------------------------//
+bool MOAIPropWithDeckAndIndex::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op ) {
+	
 	if ( AttrID::Check ( attrID )) {
 		
 		switch ( attrID.Unpack ()) {
@@ -108,5 +127,7 @@ bool MOAIHasDeckAndIndex::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& a
 				return true;
 		}
 	}
+	
+	if ( MOAIAbstractProp::MOAINode_ApplyAttrOp ( attrID, attr, op )) return true;
 	return false;
 }

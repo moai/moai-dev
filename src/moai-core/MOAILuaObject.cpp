@@ -415,9 +415,9 @@ void MOAILuaObject::MakeLuaBinding ( MOAILuaState& state ) {
 	// -3: ref table
 	// -4: userdata
 
-	int top = state.GetTop ();
-	int memberTable = top - 1;
-	int refTable = top - 2;
+	int top 			= state.GetTop ();
+	int memberTable 	= top - 1;
+	int refTable 		= top - 2;
 
 	// ref table gets gc and tostring
 	if ( !this->IsSingleton ()) {
@@ -442,6 +442,8 @@ void MOAILuaObject::MakeLuaBinding ( MOAILuaState& state ) {
 	lua_setmetatable ( state, -2 ); // interface is meta of member
 	lua_setmetatable ( state, -2 ); // member is meta of ref
 	lua_setmetatable ( state, -2 ); // ref is meta of userdata
+	
+	this->MOAILuaObject_DecorateLuaBinding ( state );
 }
 
 //----------------------------------------------------------------//
@@ -651,6 +653,11 @@ void MOAILuaObject::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaStat
 	};
 
 	luaL_register ( state, 0, regTable );
+}
+
+//----------------------------------------------------------------//
+void MOAILuaObject::MOAILuaObject_DecorateLuaBinding ( MOAILuaState& state ) {
+	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//

@@ -18,21 +18,25 @@ private:
 	u32								mScopeRefCount;
 
 	//----------------------------------------------------------------//
+	static int			_countRetained				( lua_State* L );
+	static int			_newindex					( lua_State* L );
 	static int			_purge						( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
+	void				MOAILuaObject_DecorateLuaBinding		( MOAILuaState& state );
 
 public:
 
 	DECL_LUA_FACTORY ( MOAIScope )
 
 	//----------------------------------------------------------------//
-	void				AddObject					( MOAILuaObject* object );
+	void				AffirmObject				( MOAILuaObject& object );
 						MOAIScope					();
 						~MOAIScope					();
 	void				Purge						();
+	void				RemoveObject				( MOAILuaObject& object );
 	void				ScopeRelease				();
 	void				ScopeRetain					();
 };

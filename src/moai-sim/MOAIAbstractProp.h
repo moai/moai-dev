@@ -12,6 +12,7 @@
 // TODO: doxygen
 class MOAIAbstractProp :
 	public virtual MOAIPartitionHull,
+	public virtual MOAIAbstractRenderNode,
 	public virtual MOAITransform {
 protected:
 
@@ -30,7 +31,11 @@ protected:
 	static int			_setModelBoundsPad			( lua_State* L );
 
 	//----------------------------------------------------------------//
+	void					LoadVertexTransform					();
+
+	//----------------------------------------------------------------//
 	virtual ZLBounds			MOAIAbstractProp_GetModelBounds			() = 0; // get the prop bounds in model space
+	virtual ZLMatrix4x4			MOAIAbstractProp_GetWorldDrawingMtx		() const;
 	virtual MOAIPickResult		MOAIAbstractProp_PickByPoint			( ZLVec3D loc );
 	virtual MOAIPickResult		MOAIAbstractProp_PickByRay				( ZLVec3D loc, ZLVec3D normal );
 
@@ -46,6 +51,17 @@ protected:
 public:
 
 	enum {
+		DEBUG_DRAW_PARTITION_CELLS,
+		DEBUG_DRAW_PARTITION_PADDED_CELLS,
+		DEBUG_DRAW_AXIS,
+		DEBUG_DRAW_DIAGONALS,
+		DEBUG_DRAW_MODEL_BOUNDS,
+		DEBUG_DRAW_WORLD_BOUNDS,
+		TOTAL_DEBUG_LINE_STYLES,
+	};
+
+
+	enum {
 		FLAGS_OVERRIDE_BOUNDS		= 0x01,
 		FLAGS_PAD_BOUNDS			= 0x02,
 		FLAGS_EXPAND_FOR_SORT		= 0x04,
@@ -53,7 +69,9 @@ public:
 	};
 
 	//----------------------------------------------------------------//
+	void				DrawDebug					();
 	ZLBounds			GetModelBounds				(); // get the prop bounds in model space
+	ZLMatrix4x4			GetWorldDrawingMtx			() const;
 	bool				InsideModelBounds			( const ZLVec3D& vec, float pad );
 						MOAIAbstractProp			();
 	virtual				~MOAIAbstractProp			();

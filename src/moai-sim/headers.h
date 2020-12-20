@@ -14,8 +14,6 @@
 #include <moai-sim/MOAIAbstractHitMaskBatch.h>
 #include <moai-sim/MOAIAbstractLayer.h>
 #include <moai-sim/MOAIAbstractProp.h>
-#include <moai-sim/MOAIAbstractPropWithDeckAndGrid.h>
-#include <moai-sim/MOAIAbstractPropWithDeckAndIndex.h>
 #include <moai-sim/MOAIAbstractViewLayer.h>
 //#include <moai-sim/MOAIBoundsDeck.h>
 //#include <moai-sim/MOAIBspBuilder2D.h>
@@ -33,8 +31,6 @@
 #include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIDrawUI.h>
 #include <moai-sim/MOAIHasDeck.h>
-#include <moai-sim/MOAIHasDeckAndGrid.h>
-#include <moai-sim/MOAIHasDeckAndIndex.h>
 #include <moai-sim/MOAIHasHitMask.h>
 #include <moai-sim/MOAIHasHitMaskBatch.h>
 #include <moai-sim/MOAIHitMask.h>
@@ -90,6 +86,8 @@
 #include <moai-sim/MOAIPathTerrainDeck.h>
 #include <moai-sim/MOAIPinTransform.h>
 #include <moai-sim/MOAIPointerSensor.h>
+#include <moai-sim/MOAIPropWithDeckAndGrid.h>
+#include <moai-sim/MOAIPropWithDeckAndIndex.h>
 #include <moai-sim/MOAIProjectionProp.h>
 #include <moai-sim/MOAIRegion.h>
 #include <moai-sim/MOAISelectionMesh.h>

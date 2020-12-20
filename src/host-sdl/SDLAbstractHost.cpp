@@ -125,6 +125,7 @@ void SDLAbstractHost::_SDL_LogOutputFunction ( void *userdata, int category, SDL
 //----------------------------------------------------------------//
 void SDLAbstractHost::Finalize () {
 
+	AKUDeleteContext ( AKUGetContext ());
 	AKUModulesAppFinalize ();
 	AKUAppFinalize ();
 	
@@ -375,7 +376,6 @@ void SDLAbstractHost::MainLoop () {
 	}
 	
 	this->SDLAbstractHost_MainLoopDidFinish ();
-	AKUDeleteContext ( AKUGetContext ());
 }
 
 //----------------------------------------------------------------//

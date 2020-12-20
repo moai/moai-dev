@@ -169,76 +169,6 @@ int MOAIAbstractGraphicsProp::_setVisible ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAbstractGraphicsProp::DrawDebug () {
-
-	if ( this->GetWorldBounds ().IsEmpty ()) return;
-
-	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
-	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAIAbstractGraphicsProp >())) return;
-
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-
-	MOAIDraw& draw = MOAIDraw::Get ();
-	UNUSED ( draw ); // mystery warning in vs2008
-
-	draw.BindVectorPresets ();
-
-	this->LoadVertexTransform ();
-
-	gfxMgr.SetVertexTransform ( MOAIGfxMgr::MODEL_TO_DISPLAY_MTX );
-
-	ZLBounds modelBounds = this->GetModelBounds ();
-
-	// TODO: check bounds status
-
-	if ( debugLines.Bind ( DEBUG_DRAW_AXIS )) {
-		draw.DrawBoxAxis ( modelBounds.mAABB );
-	}
-
-	if ( debugLines.Bind ( DEBUG_DRAW_DIAGONALS )) {
-		draw.DrawBoxDiagonals ( modelBounds.mAABB );
-	}
-
-	if ( debugLines.Bind ( DEBUG_DRAW_MODEL_BOUNDS )) {
-		draw.DrawBoxOutline ( modelBounds.mAABB );
-	}
-
-	// clear out the world transform (draw in world space)
-	gfxMgr.SetVertexTransform ( MOAIGfxMgr::WORLD_TO_DISPLAY_MTX );
-
-	if ( debugLines.Bind ( DEBUG_DRAW_WORLD_BOUNDS )) {
-		draw.DrawBoxOutline ( this->GetWorldBounds ().mAABB );
-	}
-
-	if ( debugLines.IsVisible ( DEBUG_DRAW_PARTITION_CELLS ) || debugLines.IsVisible ( DEBUG_DRAW_PARTITION_CELLS )) {
-
-		ZLRect cellRect;
-		ZLRect paddedRect;
-
-		if ( this->GetCellRect ( &cellRect, &paddedRect )) {
-
-			if ( cellRect.Area () != 0.0f ) {
-				if ( debugLines.Bind ( DEBUG_DRAW_PARTITION_CELLS )) {
-					draw.DrawRectOutline ( cellRect );
-				}
-			}
-
-			if ( paddedRect.Area () != 0.0f ) {
-				if ( debugLines.Bind ( DEBUG_DRAW_PARTITION_PADDED_CELLS )) {
-					draw.DrawRectOutline ( paddedRect );
-				}
-			}
-		}
-	}
-}
-
-//----------------------------------------------------------------//
-ZLMatrix4x4 MOAIAbstractGraphicsProp::GetWorldDrawingMtx () const {
-
-	return this->MOAIAbstractGraphicsProp_GetWorldDrawingMtx ();
-}
-
-//----------------------------------------------------------------//
 bool MOAIAbstractGraphicsProp::IsVisible () {
 	return (( this->mDisplayFlags & FLAGS_LOCAL_VISIBLE ) && ( this->mDisplayFlags & FLAGS_VISIBLE ));
 }
@@ -258,20 +188,12 @@ void MOAIAbstractGraphicsProp::LoadUVTransform () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractGraphicsProp::LoadVertexTransform () {
-
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX, this->GetWorldDrawingMtx ());
-}
-
-//----------------------------------------------------------------//
 MOAIAbstractGraphicsProp::MOAIAbstractGraphicsProp () :
 	mBillboard ( BILLBOARD_NONE ) {
 	
 	RTTI_BEGIN ( MOAIAbstractGraphicsProp )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractGraphicsProp >)
 		RTTI_EXTEND ( MOAIAbstractProp )
-		RTTI_EXTEND ( MOAIAbstractRenderNode )
 		RTTI_EXTEND ( MOAIColor )
 	RTTI_END
 	
@@ -299,16 +221,6 @@ void MOAIAbstractGraphicsProp::SetVisible ( bool visible ) {
 //----------------------------------------------------------------//
 void MOAIAbstractGraphicsProp::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.DidVisit ( *this )) return;
-	
-	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAIAbstractGraphicsProp >( TOTAL_DEBUG_LINE_STYLES );
-	
-	state.SetField ( -1, "DEBUG_DRAW_GFX_PROP_MASTER",			MOAIDebugLinesMgr::Pack < MOAIAbstractGraphicsProp >( (u32) -1 ));
-	state.SetField ( -1, "DEBUG_DRAW_PARTITION_CELLS",			MOAIDebugLinesMgr::Pack < MOAIAbstractGraphicsProp >( DEBUG_DRAW_PARTITION_CELLS ));
-	state.SetField ( -1, "DEBUG_DRAW_PARTITION_PADDED_CELLS",	MOAIDebugLinesMgr::Pack < MOAIAbstractGraphicsProp >( DEBUG_DRAW_PARTITION_PADDED_CELLS ));
-	state.SetField ( -1, "DEBUG_DRAW_AXIS",						MOAIDebugLinesMgr::Pack < MOAIAbstractGraphicsProp >( DEBUG_DRAW_AXIS ));
-	state.SetField ( -1, "DEBUG_DRAW_DIAGONALS",				MOAIDebugLinesMgr::Pack < MOAIAbstractGraphicsProp >( DEBUG_DRAW_DIAGONALS ));
-	state.SetField ( -1, "DEBUG_DRAW_MODEL_BOUNDS",				MOAIDebugLinesMgr::Pack < MOAIAbstractGraphicsProp >( DEBUG_DRAW_MODEL_BOUNDS ));
-	state.SetField ( -1, "DEBUG_DRAW_WORLD_BOUNDS",				MOAIDebugLinesMgr::Pack < MOAIAbstractGraphicsProp >( DEBUG_DRAW_WORLD_BOUNDS ));
 	
 	state.SetField ( -1, "ATTR_SCISSOR_RECT",			AttrID::Pack ( ATTR_SCISSOR_RECT ).ToRaw ());
 
@@ -378,7 +290,7 @@ void MOAIAbstractGraphicsProp::_RegisterLuaFuncs ( RTTIVisitorHistory& history, 
 }
 
 //----------------------------------------------------------------//
-ZLMatrix4x4 MOAIAbstractGraphicsProp::MOAIAbstractGraphicsProp_GetWorldDrawingMtx () const {
+ZLMatrix4x4 MOAIAbstractGraphicsProp::MOAIAbstractProp_GetWorldDrawingMtx () const {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
@@ -501,11 +413,8 @@ ZLMatrix4x4 MOAIAbstractGraphicsProp::MOAIAbstractGraphicsProp_GetWorldDrawingMt
 			
 			worldDrawingMtx = ZLMatrix4x4 ( this->GetLocalToWorldMtx ());
 			
-			bool worldToViewInvSuccess = worldToViewInv.Inverse(worldToView);
-			
-			if (!worldToViewInvSuccess) {
-				break;
-			}
+			bool worldToViewInvSuccess = worldToViewInv.Inverse ( worldToView );
+			if ( !worldToViewInvSuccess ) break; // TODO: this should never happen
 			
 			ZLAffine3D cameraMtx ( worldToViewInv );
 			
@@ -529,8 +438,8 @@ ZLMatrix4x4 MOAIAbstractGraphicsProp::MOAIAbstractGraphicsProp_GetWorldDrawingMt
 			worldDrawingMtx.GetTranslation ( loc );
 			ZLVec4D loc4 (loc.mX, loc.mY, loc.mZ, 1);
 			worldToClip.Transform(loc4);
-			float sx = loc4.mW * clipToWindow.GetXAxis().Length() / viewToClip.GetXAxis().Length();
-			float sy = loc4.mW * clipToWindow.GetYAxis().Length() / viewToClip.GetYAxis().Length();
+			float sx = loc4.mW * clipToWindow.GetXAxis ().Length () / viewToClip.GetXAxis ().Length ();
+			float sy = loc4.mW * clipToWindow.GetYAxis ().Length () / viewToClip.GetYAxis ().Length ();
 			
 			ZLMatrix4x4 billboardMtx;
 			billboardMtx.Translate ( -this->mPiv.mX, -this->mPiv.mY, -this->mPiv.mZ );
@@ -590,7 +499,7 @@ bool MOAIAbstractGraphicsProp::MOAIAbstractRenderNode_LoadGfxState ( u32 renderP
 	if ( !this->IsVisible ()) return false;
 	if ( this->IsClear ()) return false;
 
-	if ( !MOAIAbstractRenderNode::MOAIAbstractRenderNode_LoadGfxState ( renderPhase )) return false;
+	if ( !MOAIAbstractProp::MOAIAbstractRenderNode_LoadGfxState ( renderPhase )) return false;
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 

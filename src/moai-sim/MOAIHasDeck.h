@@ -14,8 +14,7 @@ class MOAIDeck;
 //================================================================//
 // TODO: doxygen
 class MOAIHasDeck :
-	public virtual MOAINode,
-	public virtual MOAIAbstractPickable {
+	public virtual MOAINode {
 protected:
 	
 	MOAI_LUA_OBJECT_VISITOR_FRIEND

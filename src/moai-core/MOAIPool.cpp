@@ -104,8 +104,8 @@ MOAILuaObject* MOAIPool::Provision ( u32 poolType, MOAIScope* scope ) {
 		this->mResources.insert ( resource );
 	}
 	
-	if ( scope ) {
-		scope->AddObject ( resource );
+	if ( scope && resource ) {
+		scope->AffirmObject ( *resource );
 	}
 	factory->OnProvision ( *resource, scope );
 	return resource;
