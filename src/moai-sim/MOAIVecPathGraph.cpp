@@ -247,12 +247,12 @@ void MOAIVecPathGraph::SetNode ( ZLIndex id, const ZLVec3D& node ) {
 
 //----------------------------------------------------------------//
 void MOAIVecPathGraph::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIVecPathGraph::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "areNeighbors",			_areNeighbors },

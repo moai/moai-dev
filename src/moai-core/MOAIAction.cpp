@@ -565,7 +565,7 @@ void MOAIAction::Stop () {
 
 //----------------------------------------------------------------//
 void MOAIAction::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "EVENT_ACTION_PRE_UPDATE",		( u32 )EVENT_ACTION_PRE_UPDATE );
 	state.SetField ( -1, "EVENT_ACTION_POST_UPDATE",	( u32 )EVENT_ACTION_POST_UPDATE );
@@ -576,7 +576,7 @@ void MOAIAction::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& 
 
 //----------------------------------------------------------------//
 void MOAIAction::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "addChild",				_addChild },

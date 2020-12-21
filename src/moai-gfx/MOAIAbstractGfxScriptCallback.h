@@ -20,8 +20,8 @@ private:
 	void			Invoke								();
 
 	//----------------------------------------------------------------//
-	bool				MOAIAbstractCmdStreamFilter_FilterCommand		( u32 cmd, const void* param, ZLSize paramSize );
-	virtual void		MOAIAbstractGfxScriptCallback_Call				() = 0;
+	bool			MOAIAbstractCmdStreamFilter_FilterCommand		( u32 cmd, const void* param, ZLSize paramSize );
+	virtual void	MOAIAbstractGfxScriptCallback_Call				() = 0;
 
 public:
 

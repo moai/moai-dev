@@ -29,7 +29,7 @@ protected:
 	//----------------------------------------------------------------//
 	void				_RegisterLuaClass					( RTTIVisitorHistory& history, MOAILuaState& state );
 	void				_RegisterLuaFuncs					( RTTIVisitorHistory& history, MOAILuaState& state );
-	void				MOAIAbstractRenderNode_Render		( u32 renderPhase );
+	void				MOAIAbstractRenderNode_Render		( MOAIRenderPhaseEnum::_ renderPhase );
 	bool				MOAINode_ApplyAttrOp				( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	void				MOAINode_Update						();
 

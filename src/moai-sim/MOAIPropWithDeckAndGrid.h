@@ -27,7 +27,7 @@ protected:
 	static int			_setGridScale			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				DrawGrid								( const MOAICellCoord &c0, const MOAICellCoord &c1 );
+	void				DrawGrid								( MOAIRenderPhaseEnum::_ renderPhase, const MOAICellCoord &c0, const MOAICellCoord &c1 );
 	void				GetGridFrameInView						( const ZLAffine3D& worldToLocalMtx, MOAICellCoord& c0, MOAICellCoord& c1 ); // TODO: this shoudln't be here
 
 	//----------------------------------------------------------------//
@@ -38,7 +38,7 @@ protected:
 	ZLBounds			MOAIAbstractProp_GetModelBounds			();
 	MOAIPickResult		MOAIAbstractProp_PickByPoint			( ZLVec3D loc );
 	MOAIPickResult		MOAIAbstractProp_PickByRay				( ZLVec3D loc, ZLVec3D normal );
-	void				MOAIAbstractRenderNode_Render			( u32 renderPhase );
+	void				MOAIAbstractRenderNode_Render			( MOAIRenderPhaseEnum::_ renderPhase );
 	bool				MOAINode_ApplyAttrOp					( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	void				MOAIPartitionHull_AddToSortBuffer		( MOAIPartitionResultBuffer& buffer, u32 key = 0 );
 

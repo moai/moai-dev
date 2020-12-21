@@ -213,6 +213,19 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
+	template < typename TYPE >
+	TYPE GetEnum ( int idx, TYPE value ) {
+		return ( TYPE )this->GetValue < u32 >( idx, ( u32 )value );
+	}
+	
+	//----------------------------------------------------------------//
+	template < typename KEY_TYPE, typename TYPE >
+	void SetEnum ( int idx, KEY_TYPE key, TYPE value ) {
+		assert (( sizeof ( TYPE ) == sizeof ( u32 )) || ( value <= 0xffffffff ));
+		this->SetField < KEY_TYPE, u32 >( idx, key, ( u32 )value );
+	}
+	
+	//----------------------------------------------------------------//
 	template < typename KEY_TYPE, typename TYPE  > TYPE		GetFieldValue		( int idx, KEY_TYPE key, TYPE value );
 	template < typename TYPE > TYPE*						GetLuaObject		( int idx, bool verbose );
 	template < typename TYPE > TYPE*						GetLuaObject		( int idx, cc8* name, bool verbose );

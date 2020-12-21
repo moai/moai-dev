@@ -15,7 +15,7 @@ private:
 	size_t mRevisits;
 
 	//----------------------------------------------------------------//
-	bool DidVisit ( ZLType::RAW_ID typeID ) {
+	bool Visit ( ZLType::RAW_ID typeID ) {
 	
 		if ( this->mTypeIDs.contains ( typeID )) return true;
 		this->mTypeIDs.insert ( typeID );
@@ -33,23 +33,23 @@ public:
 	size_t CountRevisits () {
 		return this->mRevisits;
 	}
-
-	//----------------------------------------------------------------//
-	template < typename TYPE >
-	bool DidVisit ( TYPE& self ) {
-		UNUSED ( self );
-		this->mVisits++;
-		if ( this->DidVisit ( ZLType::RawID < TYPE >())) {
-			this->mRevisits++;
-			return true;
-		}
-		return false;
-	}
 	
 	//----------------------------------------------------------------//
 	RTTIVisitorHistory () :
 		mVisits ( 0 ),
 		mRevisits ( 0 ) {
+	}
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	bool Visit ( TYPE& self ) {
+		UNUSED ( self );
+		this->mVisits++;
+		if ( this->Visit ( ZLType::RawID < TYPE >())) {
+			this->mRevisits++;
+			return true;
+		}
+		return false;
 	}
 };
 

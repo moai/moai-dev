@@ -306,8 +306,9 @@ MOAIStretchPatch2D::MOAIStretchPatch2D () :
 
 	RTTI_BEGIN ( MOAIStretchPatch2D )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIStretchPatch2D >)
+		RTTI_EXTEND ( MOAIDeck )
+		RTTI_EXTEND ( MOAIHasGfxScriptBatchesForPhases )
 		RTTI_EXTEND ( MOAIStretchDeck )
-		RTTI_EXTEND ( MOAIHasGfxScriptBatch )
 	RTTI_END
 }
 
@@ -377,12 +378,12 @@ void MOAIStretchPatch2D::SetRow ( ZLIndex idx, float percent, bool canStretch ) 
 
 //----------------------------------------------------------------//
 void MOAIStretchPatch2D::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIStretchPatch2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "ninePatch",			_ninePatch },
@@ -400,9 +401,22 @@ void MOAIStretchPatch2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILu
 }
 
 //----------------------------------------------------------------//
-void MOAIStretchPatch2D::MOAIDeck_Draw ( ZLIndex idx ) {
+ZLBounds MOAIStretchPatch2D::MOAIDeck_GetBounds () {
 
-	MOAIGfxScript* gfxScript = this->GetGfxScript ( idx );
+	return this->GetBounds ( 0 );
+}
+
+//----------------------------------------------------------------//
+ZLBounds MOAIStretchPatch2D::MOAIDeck_GetBounds ( ZLIndex idx ) {
+	UNUSED ( idx );
+
+	return ZLBounds ( this->mRect );
+}
+
+//----------------------------------------------------------------//
+void MOAIStretchPatch2D::MOAIDeck_Render ( ZLIndex idx, MOAIRenderPhaseEnum::_ renderPhase ) {
+
+	MOAIGfxScript* gfxScript = this->GetGfxScript ( idx, renderPhase );
 	if ( !gfxScript ) return;
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
@@ -417,24 +431,4 @@ void MOAIStretchPatch2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	callable.mStretchPatch = this;
 	
 	gfxScript->ExecuteBytecode ( &callable );
-}
-
-//----------------------------------------------------------------//
-ZLBounds MOAIStretchPatch2D::MOAIDeck_GetBounds () {
-
-	return this->GetBounds ( 0 );
-}
-
-//----------------------------------------------------------------//
-ZLBounds MOAIStretchPatch2D::MOAIDeck_GetBounds ( ZLIndex idx ) {
-	UNUSED ( idx );
-
-	return ZLBounds ( this->mRect );
-}
-
-//----------------------------------------------------------------//
-MOAICollisionShape* MOAIStretchPatch2D::MOAIDeck_GetCollisionShape ( ZLIndex idx ) {
-	UNUSED ( idx );
-
-	return 0;
 }

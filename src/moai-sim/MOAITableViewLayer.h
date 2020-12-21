@@ -16,8 +16,8 @@ class MOAITableViewLayer :
 protected:
 
 	//----------------------------------------------------------------//
-	bool			MOAIAbstractRenderNode_LoadGfxState		( u32 renderPhase );
-	void			MOAIAbstractRenderNode_Render			( u32 renderPhase );
+	bool			MOAIAbstractRenderNode_LoadGfxState		( MOAIRenderPhaseEnum::_ renderPhase );
+	void			MOAIAbstractRenderNode_Render			( MOAIRenderPhaseEnum::_ renderPhase );
 
 public:
 	

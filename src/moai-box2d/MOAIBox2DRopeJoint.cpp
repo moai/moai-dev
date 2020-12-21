@@ -97,12 +97,12 @@ MOAIBox2DRopeJoint::~MOAIBox2DRopeJoint () {
 
 //----------------------------------------------------------------//
 void MOAIBox2DRopeJoint::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIBox2DRopeJoint::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getLimitState",			_getLimitState },

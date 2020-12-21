@@ -112,6 +112,16 @@ struct MOAIGfxTypeEnum {
 };
 
 //================================================================//
+// MOAIRenderPhaseEnum
+//================================================================//
+struct MOAIRenderPhaseEnum {
+	enum _ {
+		RENDER_PHASE_DRAW 			= 0x51a7d193, // FNV1a ( "DRAW" )
+		RENDER_PHASE_DRAW_DEBUG		= 0x21c4b503, // FNV1a ( "DRAW_DEBUG" )
+	};
+};
+
+//================================================================//
 // MOAIRenderPassAttachmentEnum
 //================================================================//
 //struct MOAIRenderPassAttachmentEnum {

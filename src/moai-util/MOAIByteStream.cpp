@@ -113,13 +113,13 @@ void MOAIByteStream::Open ( void* data, size_t size ) {
 //----------------------------------------------------------------//
 void MOAIByteStream::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIByteStream::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "close",				_close },

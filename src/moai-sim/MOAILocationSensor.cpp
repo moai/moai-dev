@@ -115,12 +115,12 @@ void MOAILocationSensor::ParseEvent ( ZLStream& eventStream ) {
 
 //----------------------------------------------------------------//
 void MOAILocationSensor::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAILocationSensor::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getLocation",		_getLocation },

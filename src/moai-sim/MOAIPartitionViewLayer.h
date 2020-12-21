@@ -48,13 +48,13 @@ protected:
 	static int		_setSortScale			( lua_State* L );
 	
 	//----------------------------------------------------------------//
-	void			DrawPartition			( MOAIPartition& partition, u32 renderPhase );
-	void			DrawProps				( MOAIPartitionResultBuffer& buffer, u32 renderPhase );
+	void			DrawPartition			( MOAIPartition& partition, MOAIRenderPhaseEnum::_ renderPhase );
+	void			DrawProps				( MOAIPartitionResultBuffer& buffer, MOAIRenderPhaseEnum::_ renderPhase );
 
 	//----------------------------------------------------------------//
 	void			_RegisterLuaClass					( RTTIVisitorHistory& history, MOAILuaState& state );
 	void			_RegisterLuaFuncs					( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			MOAIAbstractRenderNode_Render		( u32 renderPhase );
+	void			MOAIAbstractRenderNode_Render		( MOAIRenderPhaseEnum::_ renderPhase );
 
 public:
 	

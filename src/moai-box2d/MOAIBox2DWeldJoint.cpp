@@ -126,12 +126,12 @@ MOAIBox2DWeldJoint::~MOAIBox2DWeldJoint () {
 
 //----------------------------------------------------------------//
 void MOAIBox2DWeldJoint::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIBox2DWeldJoint::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getDampingRatio",		_getDampingRatio },

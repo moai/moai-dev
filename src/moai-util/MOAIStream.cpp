@@ -809,7 +809,7 @@ int MOAIStream::WriteFormat ( MOAILuaState& state, int idx ) {
 
 //----------------------------------------------------------------//
 void MOAIStream::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "SEEK_CUR", ( u32 )SEEK_CUR );
 	state.SetField ( -1, "SEEK_END", ( u32 )SEEK_END );
@@ -826,7 +826,7 @@ void MOAIStream::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& 
 
 //----------------------------------------------------------------//
 void MOAIStream::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "collapse",			_collapse },

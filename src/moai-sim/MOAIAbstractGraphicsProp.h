@@ -79,7 +79,7 @@ protected:
 	void					_RegisterLuaClass								( RTTIVisitorHistory& history, MOAILuaState& state );
 	void					_RegisterLuaFuncs								( RTTIVisitorHistory& history, MOAILuaState& state );
 	virtual ZLMatrix4x4		MOAIAbstractProp_GetWorldDrawingMtx				() const;
-	bool					MOAIAbstractRenderNode_LoadGfxState				( u32 renderPhase );
+	bool					MOAIAbstractRenderNode_LoadGfxState				( MOAIRenderPhaseEnum::_ renderPhase );
 	bool					MOAINode_ApplyAttrOp							( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	void					MOAINode_Update									();
 

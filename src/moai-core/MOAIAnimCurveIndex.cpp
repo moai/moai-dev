@@ -108,12 +108,12 @@ void MOAIAnimCurveIndex::SetSample ( ZLIndex idx, ZLIndex value ) {
 //----------------------------------------------------------------//
 void MOAIAnimCurveIndex::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIAnimCurveIndex::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getValueAtTime",		_getValueAtTime },

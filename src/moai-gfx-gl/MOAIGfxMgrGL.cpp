@@ -251,7 +251,7 @@ void MOAIGfxMgrGL::ResetDrawCount () {
 
 //----------------------------------------------------------------//
 void MOAIGfxMgrGL::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "EVENT_RESIZE",	( u32 )EVENT_RESIZE );
 	

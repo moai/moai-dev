@@ -6,6 +6,8 @@
 
 #include <moai-gfx/MOAIGfxConsts.h>
 
+typedef MOAIRetainedCmdStream MOAIGfxScript;
+
 class MOAIAbstractChildTransform;
 class MOAIBlendMode;
 class MOAICamera;

@@ -257,12 +257,12 @@ void MOAIAssimpAnimation::SetAnimation ( aiAnimation* assimpAnimation ) {
 
 //----------------------------------------------------------------//
 void MOAIAssimpAnimation::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIAssimpAnimation::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "countChannels",			_countChannels },

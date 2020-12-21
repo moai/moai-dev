@@ -631,7 +631,7 @@ void MOAIHttpTaskBase::SetHeader ( cc8* key, cc8* value ) {
 
 //----------------------------------------------------------------//
 void MOAIHttpTaskBase::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "HTTP_GET",( u32 )   HTTP_GET );
 	state.SetField ( -1, "HTTP_HEAD",( u32 )  HTTP_HEAD );
@@ -642,7 +642,7 @@ void MOAIHttpTaskBase::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaS
 
 //----------------------------------------------------------------//
 void MOAIHttpTaskBase::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "cancel",				_cancel },

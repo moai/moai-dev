@@ -138,12 +138,12 @@ void MOAICollisionDeck::SetQuad ( ZLIndex idx, const ZLQuad& quad ) {
 
 //----------------------------------------------------------------//
 void MOAICollisionDeck::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAICollisionDeck::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "reserveShapes",		_reserveShapes },
@@ -154,28 +154,6 @@ void MOAICollisionDeck::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILua
 	};
 	
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAICollisionDeck::MOAIDeck_Draw ( ZLIndex idx ) {
-	UNUSED ( idx );
-	
-//	u32 size = ( u32 )this->mQuads.Size ();
-//	if ( size ) {
-//
-//		idx = idx - 1;
-//		u32 itemIdx = idx % size;
-//
-//		if ( !this->LoadGfxState ( materials, this->mMaterialIDs [ itemIdx ], idx, MOAIShaderPresetEnum::DECK2D_SHADER )) return;
-//
-//		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-//		MOAIQuadBrush::BindVertexFormat ();
-//		
-//		gfxState.SetVertexTransform ( MOAIGfxMgr::MODEL_TO_CLIP_MTX );
-//		gfxState.SetUVTransform ( MOAIGfxMgr::UV_TO_MODEL_MTX );
-//		
-//		this->mQuads [ itemIdx ].Draw ( offset.mX, offset.mY, offset.mZ, scale.mX, scale.mY  );
-//	}
 }
 
 //----------------------------------------------------------------//
@@ -199,4 +177,26 @@ MOAICollisionShape* MOAICollisionDeck::MOAIDeck_GetCollisionShape ( ZLIndex idx 
 		return this->mShapes [ idx ];
 	}
 	return 0;
+}
+
+//----------------------------------------------------------------//
+void MOAICollisionDeck::MOAIDeck_Render ( ZLIndex idx, MOAIRenderPhaseEnum::_ renderPhase ) {
+	UNUSED ( idx );
+	
+//	u32 size = ( u32 )this->mQuads.Size ();
+//	if ( size ) {
+//
+//		idx = idx - 1;
+//		u32 itemIdx = idx % size;
+//
+//		if ( !this->LoadGfxState ( materials, this->mMaterialIDs [ itemIdx ], idx, MOAIShaderPresetEnum::DECK2D_SHADER )) return;
+//
+//		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+//		MOAIQuadBrush::BindVertexFormat ();
+//
+//		gfxState.SetVertexTransform ( MOAIGfxMgr::MODEL_TO_CLIP_MTX );
+//		gfxState.SetUVTransform ( MOAIGfxMgr::UV_TO_MODEL_MTX );
+//
+//		this->mQuads [ itemIdx ].Draw ( offset.mX, offset.mY, offset.mZ, scale.mX, scale.mY  );
+//	}
 }

@@ -1489,7 +1489,7 @@ void MOAIDrawAPI::SetViewRect ( MOAIViewport* viewport ) {
 
 //----------------------------------------------------------------//
 void MOAIDrawAPI::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "UNIFORM_WIDTH_VEC_2",						( u32 )MOAIUniformDescriptor::UNIFORM_WIDTH_VEC_2 );
 	state.SetField ( -1, "UNIFORM_WIDTH_VEC_3",						( u32 )MOAIUniformDescriptor::UNIFORM_WIDTH_VEC_3 );
@@ -1571,7 +1571,7 @@ void MOAIDrawAPI::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState&
 //----------------------------------------------------------------//
 void MOAIDrawAPI::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//

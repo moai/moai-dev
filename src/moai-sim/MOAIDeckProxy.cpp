@@ -46,12 +46,12 @@ MOAIDeckProxy::~MOAIDeckProxy () {
 
 //----------------------------------------------------------------//
 void MOAIDeckProxy::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIDeckProxy::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "setDeck",				_setDeck },
@@ -59,14 +59,6 @@ void MOAIDeckProxy::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaStat
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIDeckProxy::MOAIDeck_Draw ( ZLIndex idx ) {
-
-	if ( this->mDeck ) {
-		this->mDeck->MOAIDeck_Draw ( this->MOAIDeckProxy_Remap ( idx ));
-	}
 }
 
 //----------------------------------------------------------------//
@@ -103,4 +95,12 @@ MOAIPickResult MOAIDeckProxy::MOAIDeck_PickByRay ( ZLIndex idx, ZLVec3D loc, ZLV
 ZLIndex MOAIDeckProxy::MOAIDeckProxy_Remap ( ZLIndex idx ) {
 
 	return idx;
+}
+
+//----------------------------------------------------------------//
+void MOAIDeckProxy::MOAIDeck_Render ( ZLIndex idx, MOAIRenderPhaseEnum::_ renderPhase ) {
+
+	if ( this->mDeck ) {
+		this->mDeck->MOAIDeck_Render ( this->MOAIDeckProxy_Remap ( idx ), renderPhase );
+	}
 }

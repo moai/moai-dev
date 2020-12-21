@@ -81,7 +81,7 @@ void MOAIRenderNode::PushChild ( MOAILuaState& state, int idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIRenderNode::Render ( u32 renderPhase, MOAILuaMemberRef& ref, MOAIRenderNode* caller ) {
+void MOAIRenderNode::Render ( MOAIRenderPhaseEnum::_ renderPhase, MOAILuaMemberRef& ref, MOAIRenderNode* caller ) {
 
 	if ( ref ) {
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
@@ -92,7 +92,7 @@ void MOAIRenderNode::Render ( u32 renderPhase, MOAILuaMemberRef& ref, MOAIRender
 }
 
 //----------------------------------------------------------------//
-void MOAIRenderNode::Render ( u32 renderPhase, MOAILuaState& state, int idx, MOAIRenderNode* caller ) {
+void MOAIRenderNode::Render ( MOAIRenderPhaseEnum::_ renderPhase, MOAILuaState& state, int idx, MOAIRenderNode* caller ) {
 
 	idx = state.AbsIndex ( idx );
 	int valType = lua_type ( state, idx );
@@ -142,12 +142,12 @@ void MOAIRenderNode::Render ( u32 renderPhase, MOAILuaState& state, int idx, MOA
 
 //----------------------------------------------------------------//
 void MOAIRenderNode::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIRenderNode::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getRender",					_getRender },
@@ -160,7 +160,7 @@ void MOAIRenderNode::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaSta
 }
 
 //----------------------------------------------------------------//
-void MOAIRenderNode::MOAIAbstractRenderNode_Render ( u32 renderPhase ) {
+void MOAIRenderNode::MOAIAbstractRenderNode_Render ( MOAIRenderPhaseEnum::_ renderPhase ) {
 
 	if ( this->mRenderRoot ) {
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();

@@ -268,7 +268,7 @@ MOAIJsonParser::~MOAIJsonParser () {
 
 //----------------------------------------------------------------//
 void MOAIJsonParser::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	lua_pushlightuserdata ( state, 0 );
 	lua_setfield ( state, -2, "JSON_NULL" );
@@ -291,7 +291,7 @@ void MOAIJsonParser::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaSta
 
 //----------------------------------------------------------------//
 void MOAIJsonParser::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	UNUSED ( state );
 }
 

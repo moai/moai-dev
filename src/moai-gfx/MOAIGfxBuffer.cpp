@@ -89,12 +89,12 @@ MOAIGfxBuffer::~MOAIGfxBuffer () {
 
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "copyFromStream",			_copyFromStream },
@@ -108,7 +108,7 @@ void MOAIGfxBuffer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaStat
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	u32 size = state.GetFieldValue < cc8*, u32 >( -1, "mSize", 0 );
 	this->Reserve ( size );
@@ -131,7 +131,7 @@ void MOAIGfxBuffer::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& st
 //----------------------------------------------------------------//
 void MOAIGfxBuffer::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	ZLSize size = this->GetLength ();
 

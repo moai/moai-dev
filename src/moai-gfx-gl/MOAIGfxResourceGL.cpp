@@ -259,7 +259,7 @@ void MOAIGfxResourceGL::Unbind () {
 
 //----------------------------------------------------------------//
 void MOAIGfxResourceGL::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "STATE_UNINITIALIZED",					( u32 )MOAIGfxResourceGL::STATE_UNINITIALIZED );
 	state.SetField ( -1, "STATE_READY_FOR_GPU_CREATE",			( u32 )MOAIGfxResourceGL::STATE_READY_FOR_GPU_CREATE );
@@ -274,7 +274,7 @@ void MOAIGfxResourceGL::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILua
 
 //----------------------------------------------------------------//
 void MOAIGfxResourceGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "clear",						_destroy }, // TODO: deprecate

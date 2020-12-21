@@ -107,12 +107,12 @@ MOAIPickResult MOAIAbstractPickable::PickByRayHelper ( ZLBounds bounds, ZLVec3D 
 //----------------------------------------------------------------//
 void MOAIAbstractPickable::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIAbstractPickable::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "pickByPoint",		_pickByPoint },

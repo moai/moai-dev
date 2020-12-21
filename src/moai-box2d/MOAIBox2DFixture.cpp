@@ -321,12 +321,12 @@ void MOAIBox2DFixture::SetFixture ( b2Fixture* fixture ) {
 //----------------------------------------------------------------//
 void MOAIBox2DFixture::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIBox2DFixture::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
 		{ "destroy",				_destroy },

@@ -266,7 +266,7 @@ ZLReal MOAIAnimCurve::WrapTime ( ZLReal t, ZLReal &repeat ) const {
 
 //----------------------------------------------------------------//
 void MOAIAnimCurve::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "ATTR_TIME",	AttrID::Pack ( ATTR_TIME ).ToRaw ());
 	state.SetField ( -1, "ATTR_VALUE", 	AttrID::Pack ( ATTR_VALUE ).ToRaw ());
@@ -279,7 +279,7 @@ void MOAIAnimCurve::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaStat
 
 //----------------------------------------------------------------//
 void MOAIAnimCurve::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getLength",			_getLength },

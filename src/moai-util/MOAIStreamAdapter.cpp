@@ -228,7 +228,7 @@ int MOAIStreamAdapter::Open ( MOAILuaState& state, int idx, ZLStreamAdapter* ada
 
 //----------------------------------------------------------------//
 void MOAIStreamAdapter::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "DEFAULT_LEVEL", ZLDeflateWriter::DEFAULT_LEVEL );
 	state.SetField ( -1, "DEFAULT_WBITS", ZLDeflateWriter::DEFAULT_WBITS );
@@ -236,7 +236,7 @@ void MOAIStreamAdapter::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILua
 
 //----------------------------------------------------------------//
 void MOAIStreamAdapter::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "close",					_close },

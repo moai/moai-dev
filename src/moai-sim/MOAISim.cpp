@@ -348,7 +348,7 @@ void MOAISim::SetStep ( double step ) {
 
 //----------------------------------------------------------------//
 void MOAISim::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "crash",						_crash },
@@ -371,7 +371,7 @@ void MOAISim::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& sta
 //----------------------------------------------------------------//
 void MOAISim::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//

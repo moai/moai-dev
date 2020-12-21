@@ -78,13 +78,13 @@ void MOAIAbstractCmdStreamWithMedium::SetMedium ( MOAICmdMedium* medium ) {
 //----------------------------------------------------------------//
 void MOAIAbstractCmdStreamWithMedium::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIAbstractCmdStreamWithMedium::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "_",							_getInterface },

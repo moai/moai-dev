@@ -46,24 +46,21 @@ private:
 	static int		_setMetaTile			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void					_RegisterLuaClass				( RTTIVisitorHistory& history, MOAILuaState& state );
-	void					_RegisterLuaFuncs				( RTTIVisitorHistory& history, MOAILuaState& state );
-	void					_SerializeIn					( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
-	void					_SerializeOut					( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
-	void					MOAIDeck_Draw					( ZLIndex idx );
-	ZLBounds				MOAIDeck_GetBounds				();
-	ZLBounds				MOAIDeck_GetBounds				( ZLIndex idx );
-	MOAICollisionShape*		MOAIDeck_GetCollisionShape		( ZLIndex idx );
+	void			_RegisterLuaClass				( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_RegisterLuaFuncs				( RTTIVisitorHistory& history, MOAILuaState& state );
+	void			_SerializeIn					( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
+	void			_SerializeOut					( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
+	ZLBounds		MOAIDeck_GetBounds				();
+	ZLBounds		MOAIDeck_GetBounds				( ZLIndex idx );
+	void			MOAIDeck_Render					( ZLIndex idx, MOAIRenderPhaseEnum::_ renderPhase );
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAIMetaTileDeck2D )
-	
-	//using MOAIDeck::DrawIndex;
-	
+		
 	//----------------------------------------------------------------//
-							MOAIMetaTileDeck2D		();
-							~MOAIMetaTileDeck2D		();
+					MOAIMetaTileDeck2D		();
+					~MOAIMetaTileDeck2D		();
 };
 
 #endif

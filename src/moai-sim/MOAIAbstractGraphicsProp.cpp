@@ -220,7 +220,7 @@ void MOAIAbstractGraphicsProp::SetVisible ( bool visible ) {
 
 //----------------------------------------------------------------//
 void MOAIAbstractGraphicsProp::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	state.SetField ( -1, "ATTR_SCISSOR_RECT",			AttrID::Pack ( ATTR_SCISSOR_RECT ).ToRaw ());
 
@@ -272,7 +272,7 @@ void MOAIAbstractGraphicsProp::_RegisterLuaClass ( RTTIVisitorHistory& history, 
 
 //----------------------------------------------------------------//
 void MOAIAbstractGraphicsProp::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getBillboard",			_getBillboard },
@@ -494,7 +494,7 @@ ZLMatrix4x4 MOAIAbstractGraphicsProp::MOAIAbstractProp_GetWorldDrawingMtx () con
 }
 
 //----------------------------------------------------------------//
-bool MOAIAbstractGraphicsProp::MOAIAbstractRenderNode_LoadGfxState ( u32 renderPhase ) {
+bool MOAIAbstractGraphicsProp::MOAIAbstractRenderNode_LoadGfxState ( MOAIRenderPhaseEnum::_ renderPhase ) {
 
 	if ( !this->IsVisible ()) return false;
 	if ( this->IsClear ()) return false;

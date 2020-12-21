@@ -27,7 +27,7 @@ protected:
 	static int		_setFrameBuffer				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool			MOAIAbstractRenderNode_LoadGfxState			( u32 renderPhase );
+	bool			MOAIAbstractRenderNode_LoadGfxState			( MOAIRenderPhaseEnum::_ renderPhase );
 
 protected:
 

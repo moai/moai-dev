@@ -245,12 +245,12 @@ int MOAIFontReader::OpenFontFile ( cc8* filename ) {
 //----------------------------------------------------------------//
 void MOAIFontReader::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIFontReader::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
 		{ "close",				_close },

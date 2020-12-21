@@ -127,12 +127,12 @@ MOAIHashWriterCrypto::~MOAIHashWriterCrypto () {
 
 //----------------------------------------------------------------//
 void MOAIHashWriterCrypto::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIHashWriterCrypto::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "openMD5",			_openMD5 },

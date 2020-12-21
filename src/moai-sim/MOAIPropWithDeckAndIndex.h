@@ -30,7 +30,7 @@ protected:
 	ZLBounds			MOAIAbstractProp_GetModelBounds			();
 	MOAIPickResult		MOAIAbstractProp_PickByPoint			( ZLVec3D loc );
 	MOAIPickResult		MOAIAbstractProp_PickByRay				( ZLVec3D loc, ZLVec3D normal );
-	void				MOAIAbstractRenderNode_Render			( u32 renderPhase );
+	void				MOAIAbstractRenderNode_Render			( MOAIRenderPhaseEnum::_ renderPhase );
 	bool				MOAINode_ApplyAttrOp					( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 
 public:

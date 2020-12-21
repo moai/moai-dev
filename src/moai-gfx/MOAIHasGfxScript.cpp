@@ -47,7 +47,10 @@ int MOAIHasGfxScript::_setGfxScript ( lua_State* L ) {
 //----------------------------------------------------------------//
 MOAIGfxScript& MOAIHasGfxScript::AffirmGfxScript () {
 
-	return this->MOAIHasGfxScript_AffirmGfxScript ();
+	if ( !this->mGfxScript ) {
+		this->mGfxScript = new MOAIGfxScript ();
+	}
+	return *this->mGfxScript;
 }
 
 //----------------------------------------------------------------//
@@ -81,12 +84,13 @@ void MOAIHasGfxScript::SetGfxScript ( MOAIGfxScript* gfxScript ) {
 
 //----------------------------------------------------------------//
 void MOAIHasGfxScript::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
+	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIHasGfxScript::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getGfxScript",				_getGfxScript },
@@ -95,13 +99,4 @@ void MOAIHasGfxScript::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaS
 		{ NULL, NULL }
 	};
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-MOAIGfxScript& MOAIHasGfxScript::MOAIHasGfxScript_AffirmGfxScript () {
-
-	if ( !this->mGfxScript ) {
-		this->mGfxScript = new MOAIGfxScript ();
-	}
-	return *this->mGfxScript;
 }

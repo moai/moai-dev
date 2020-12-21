@@ -396,7 +396,7 @@ void MOAICollisionProp::Move ( ZLVec3D move, u32 detach, u32 maxSteps ) {
 
 //----------------------------------------------------------------//
 void MOAICollisionProp::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAICollisionProp >( TOTAL_DEBUG_LINE_STYLES );
 	
@@ -434,7 +434,7 @@ void MOAICollisionProp::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILua
 
 //----------------------------------------------------------------//
 void MOAICollisionProp::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
 		{ "collisionMove",		_collisionMove },
@@ -459,7 +459,7 @@ ZLBounds MOAICollisionProp::MOAIAbstractProp_GetModelBounds () {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionProp::MOAIAbstractRenderNode_Render ( u32 renderPhase ) {
+void MOAICollisionProp::MOAIAbstractRenderNode_Render ( MOAIRenderPhaseEnum::_ renderPhase ) {
 	UNUSED ( renderPhase );
 
 	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();

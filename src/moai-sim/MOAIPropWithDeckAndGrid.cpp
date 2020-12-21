@@ -71,7 +71,7 @@ int MOAIPropWithDeckAndGrid::_setGridScale ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIPropWithDeckAndGrid::DrawGrid ( const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
+void MOAIPropWithDeckAndGrid::DrawGrid ( MOAIRenderPhaseEnum::_ renderPhase, const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
@@ -119,7 +119,7 @@ void MOAIPropWithDeckAndGrid::DrawGrid ( const MOAICellCoord &c0, const MOAICell
 				gfxMgr.SetPenColor ( penColor * fancyGrid->GetTileColor ( addr ));
 			}
 			
-			this->mDeck->Draw (( idx & MOAITileFlags::CODE_MASK ) - 1 );
+			this->mDeck->Render (( idx & MOAITileFlags::CODE_MASK ) - 1, renderPhase );
 		}
 	}
 }
@@ -190,12 +190,12 @@ MOAIPropWithDeckAndGrid::~MOAIPropWithDeckAndGrid () {
 
 //----------------------------------------------------------------//
 void MOAIPropWithDeckAndGrid::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIPropWithDeckAndGrid::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getGrid",				_getGrid },
@@ -209,14 +209,14 @@ void MOAIPropWithDeckAndGrid::_RegisterLuaFuncs ( RTTIVisitorHistory& history, M
 
 //----------------------------------------------------------------//
 void MOAIPropWithDeckAndGrid::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	this->mGrid.Set ( *this, serializer.MemberIDToObject < MOAIGrid >( state.GetFieldValue < cc8*, MOAISerializerBase::ObjID >( -1, "mGrid", 0 )));
 }
 
 //----------------------------------------------------------------//
 void MOAIPropWithDeckAndGrid::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "mGrid", serializer.AffirmMemberID ( this->mGrid ));
 }
@@ -253,9 +253,9 @@ MOAIPickResult MOAIPropWithDeckAndGrid::MOAIAbstractProp_PickByRay ( ZLVec3D loc
 }
 
 //----------------------------------------------------------------//
-void MOAIPropWithDeckAndGrid::MOAIAbstractRenderNode_Render ( u32 renderPhase ) {
+void MOAIPropWithDeckAndGrid::MOAIAbstractRenderNode_Render ( MOAIRenderPhaseEnum::_ renderPhase ) {
 	
-	if ( renderPhase == MOAIAbstractRenderNode::RENDER_PHASE_DRAW ) {
+	if ( renderPhase == MOAIRenderPhaseEnum::RENDER_PHASE_DRAW ) {
 		this->DrawDebug ();
 		return;
 	}
@@ -271,7 +271,7 @@ void MOAIPropWithDeckAndGrid::MOAIAbstractRenderNode_Render ( u32 renderPhase ) 
 	else {
 		c0 = c1 = this->mGrid->GetCellCoord ( subPrimID );
 	}
-	this->DrawGrid ( c0, c1 );
+	this->DrawGrid ( renderPhase, c0, c1 );
 }
 
 //----------------------------------------------------------------//

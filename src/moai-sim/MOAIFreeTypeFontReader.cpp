@@ -408,7 +408,7 @@ int MOAIFreeTypeFontReader::StrokeGlyph ( MOAIImage& image, float x, float y, fl
 
 //----------------------------------------------------------------//
 void MOAIFreeTypeFontReader::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "STROKER_CAP_STYLE_BUTT",				( u32 )FT_STROKER_LINECAP_BUTT );
 	state.SetField ( -1, "STROKER_CAP_STYLE_ROUND",				( u32 )FT_STROKER_LINECAP_ROUND );
@@ -430,7 +430,7 @@ void MOAIFreeTypeFontReader::_RegisterLuaClass ( RTTIVisitorHistory& history, MO
 
 //----------------------------------------------------------------//
 void MOAIFreeTypeFontReader::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "enableAntiAliasing",		_enableAntiAliasing },

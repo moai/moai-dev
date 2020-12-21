@@ -35,9 +35,9 @@ public:
 			from the texture's left top to right bottom.
 */
 class MOAITileDeck2D :
-	public MOAIDeck,
-	public MOAIHasGfxScriptBatch,
-	public MOAIGridSpace {
+	public virtual MOAIDeck,
+	public virtual MOAIHasGfxScriptBatchesForPhases,
+	public virtual MOAIGridSpace {
 private:
 	
 	MOAIQuadBrush 	mQuad;
@@ -57,10 +57,9 @@ private:
 	void					_SerializeIn							( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
 	void					_SerializeOut							( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
 	void 					MOAIAbstractGfxScriptCallback_Call 		();
-	void					MOAIDeck_Draw							( ZLIndex idx );
 	ZLBounds				MOAIDeck_GetBounds						();
 	ZLBounds				MOAIDeck_GetBounds						( ZLIndex idx );
-	MOAICollisionShape*		MOAIDeck_GetCollisionShape				( ZLIndex idx );
+	void					MOAIDeck_Render							( ZLIndex idx, MOAIRenderPhaseEnum::_ renderPhase );
 	
 public:
 	

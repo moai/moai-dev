@@ -30,9 +30,7 @@ ZLVec3D MOAIStretchDeck::BindStretchVertexTransform () const {
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
 	if ( this->mStretchFactor > 0.0f ) {
-	
-		// TODO: propery implement stretch factor
-	
+		
 		ZLMatrix4x4 worldTransform = gfxMgr.GetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX );
 		stretch = worldTransform.GetStretch ();
 		
@@ -71,12 +69,12 @@ MOAIStretchDeck::~MOAIStretchDeck () {
 
 //----------------------------------------------------------------//
 void MOAIStretchDeck::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIStretchDeck::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "setStretchFactor",		_setStretchFactor },

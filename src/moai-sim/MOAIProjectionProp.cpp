@@ -56,7 +56,7 @@ MOAIProjectionProp::~MOAIProjectionProp () {
 
 //----------------------------------------------------------------//
 void MOAIProjectionProp::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAIProjectionProp >( TOTAL_DEBUG_LINE_STYLES );
 	
@@ -66,7 +66,7 @@ void MOAIProjectionProp::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILu
 
 //----------------------------------------------------------------//
 void MOAIProjectionProp::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "init",					_init },
@@ -77,7 +77,7 @@ void MOAIProjectionProp::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILu
 }
 
 //----------------------------------------------------------------//
-void MOAIProjectionProp::MOAIAbstractRenderNode_Render ( u32 renderPhase ) {
+void MOAIProjectionProp::MOAIAbstractRenderNode_Render ( MOAIRenderPhaseEnum::_ renderPhase ) {
 	UNUSED ( renderPhase );
 
 	if ( this->GetWorldBounds ().IsEmpty ()) return;

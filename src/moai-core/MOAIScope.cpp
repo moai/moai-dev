@@ -155,13 +155,13 @@ void MOAIScope::ScopeRetain () {
 
 //----------------------------------------------------------------//
 void MOAIScope::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIScope::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "countRetained",		_countRetained },

@@ -167,12 +167,12 @@ bool MOAIInstanceEventSource::PushListenerTable ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIInstanceEventSource::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIInstanceEventSource::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getListener",		_getListener },

@@ -989,7 +989,7 @@ void MOAITransform::SetScl ( float x, float y, float z ) {
 
 //----------------------------------------------------------------//
 void MOAITransform::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "ATTR_X_PIV",			AttrID::Pack ( ATTR_X_PIV ).ToRaw ());
 	state.SetField ( -1, "ATTR_Y_PIV",			AttrID::Pack ( ATTR_Y_PIV ).ToRaw ());
@@ -1009,7 +1009,7 @@ void MOAITransform::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaStat
 
 //----------------------------------------------------------------//
 void MOAITransform::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "addLoc",				_addLoc },
@@ -1046,7 +1046,7 @@ void MOAITransform::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaStat
 //----------------------------------------------------------------//
 void MOAITransform::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	this->mPiv.mX		= state.GetFieldValue < cc8*, float >( -1, "mPiv.mX", 0.0f );
 	this->mPiv.mY		= state.GetFieldValue < cc8*, float >( -1, "mPiv.mY", 0.0f );
@@ -1063,7 +1063,7 @@ void MOAITransform::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& st
 //----------------------------------------------------------------//
 void MOAITransform::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "mPiv.mX", this->mPiv.mX );
 	state.SetField ( -1, "mPiv.mY", this->mPiv.mY );

@@ -370,12 +370,12 @@ MOAIBox2DWheelJoint::~MOAIBox2DWheelJoint () {
 
 //----------------------------------------------------------------//
 void MOAIBox2DWheelJoint::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIBox2DWheelJoint::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getJointTranslation",		_getJointTranslation },

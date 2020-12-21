@@ -50,7 +50,7 @@ MOAIFooMgr::~MOAIFooMgr () {
 
 //----------------------------------------------------------------//
 void MOAIFooMgr::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	// call any initializers for base classes here:
 	// MOAI_CALL_SUPER_ONCE ( composer, MOAIFooBase, _RegisterLuaClass ( composer, state ));

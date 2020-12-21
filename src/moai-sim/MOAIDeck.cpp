@@ -16,12 +16,10 @@
 int MOAIDeck::_draw ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIDeck, "U" )
 
-	ZLIndex index					= state.GetValue < u32 >( 2, 0 );
-	//MOAIGfxScriptBatch* materials	= state.GetLuaObject < MOAIGfxScriptBatch >( 3, false );
-	//ZLVec3D offset					= state.GetValue < ZLVec3D >( 4, ZLVec3D::ORIGIN );
-	//ZLVec3D scale					= state.GetValue < ZLVec3D >( 7, ZLVec3D::AXIS );
+	ZLIndex index = state.GetValue < u32 >( 2, 0 );
+	MOAIRenderPhaseEnum::_ renderPhase = state.GetEnum ( 2, MOAIRenderPhaseEnum::RENDER_PHASE_DRAW );
 
-	self->Draw ( index );
+	self->Render ( index, renderPhase );
 
 	return 0;
 }
@@ -72,12 +70,6 @@ int MOAIDeck::_getBounds ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIDeck::Draw ( ZLIndex idx ) {
-
-	this->MOAIDeck_Draw ( idx );
-}
-
-//----------------------------------------------------------------//
 ZLBounds MOAIDeck::GetBounds () {
 
 	return this->GetBounds ( 0 );
@@ -120,6 +112,12 @@ MOAIPickResult MOAIDeck::PickByRay ( ZLIndex idx, ZLVec3D loc, ZLVec3D normal ) 
 	return this->MOAIDeck_PickByRay ( idx, loc, normal );
 }
 
+//----------------------------------------------------------------//
+void MOAIDeck::Render ( ZLIndex idx, MOAIRenderPhaseEnum::_ renderPhase ) {
+
+	this->MOAIDeck_Render ( idx, renderPhase );
+}
+
 //================================================================//
 // virtual
 //================================================================//
@@ -127,12 +125,12 @@ MOAIPickResult MOAIDeck::PickByRay ( ZLIndex idx, ZLVec3D loc, ZLVec3D normal ) 
 //----------------------------------------------------------------//
 void MOAIDeck::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIDeck::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "draw",					_draw },
@@ -141,11 +139,6 @@ void MOAIDeck::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& st
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIDeck::MOAIDeck_Draw ( ZLIndex idx ) {
-	UNUSED ( idx );
 }
 
 //----------------------------------------------------------------//
@@ -196,3 +189,8 @@ MOAIPickResult MOAIDeck::MOAIDeck_PickByRay ( ZLIndex idx, ZLVec3D loc, ZLVec3D 
 //	ZLBounds bounds = this->GetBounds ( idx );
 //	return (( bounds.HasGeometry ()) && bounds.mAABB.Contains ( vec ));
 //}
+
+//----------------------------------------------------------------//
+void MOAIDeck::MOAIDeck_Render ( ZLIndex idx, MOAIRenderPhaseEnum::_ renderPhase ) {
+	UNUSED ( idx );
+}

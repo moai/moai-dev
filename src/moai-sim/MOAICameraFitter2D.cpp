@@ -652,7 +652,7 @@ void MOAICameraFitter2D::UpdateTracking () {
 
 //----------------------------------------------------------------//
 void MOAICameraFitter2D::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "FITTING_MODE_SEEK_LOC", ( u32 )FITTING_MODE_SEEK_LOC );
 	state.SetField ( -1, "FITTING_MODE_SEEK_SCALE", ( u32 )FITTING_MODE_SEEK_SCALE );
@@ -665,7 +665,7 @@ void MOAICameraFitter2D::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILu
 
 //----------------------------------------------------------------//
 void MOAICameraFitter2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "clearAnchors",		_clearAnchors },

@@ -11,7 +11,7 @@
 //================================================================//
 // TODO: doxygen
 class MOAIStretchDeck :
-	public MOAIDeck {
+	public virtual MOAIDeck {
 protected:
 
 	MOAI_LUA_OBJECT_VISITOR_FRIEND

@@ -580,7 +580,7 @@ void MOAITimer::ToggleDirection () {
 
 //----------------------------------------------------------------//
 void MOAITimer::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "ATTR_TIME", AttrID::Pack ( ATTR_TIME ).ToRaw ());
 	
@@ -600,7 +600,7 @@ void MOAITimer::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& s
 
 //----------------------------------------------------------------//
 void MOAITimer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getSpeed",			_getSpeed },

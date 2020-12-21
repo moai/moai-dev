@@ -378,7 +378,7 @@ void MOAICollisionWorld::PruneOverlaps ( MOAICollisionProp& prop ) {
 
 //----------------------------------------------------------------//
 void MOAICollisionWorld::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	state.SetField ( -1, "OVERLAP_BEGIN",				( u32 )OVERLAP_BEGIN );
 	state.SetField ( -1, "OVERLAP_END",					( u32 )OVERLAP_END );
@@ -387,7 +387,7 @@ void MOAICollisionWorld::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILu
 
 //----------------------------------------------------------------//
 void MOAICollisionWorld::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
 		{ "processOverlaps",	_processOverlaps },

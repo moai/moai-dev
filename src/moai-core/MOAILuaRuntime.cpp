@@ -1273,7 +1273,7 @@ MOAIScopedLuaState MOAILuaRuntime::State () {
 
 //----------------------------------------------------------------//
 void MOAILuaRuntime::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "TRACK_OBJECTS",					( u32 )TRACK_OBJECTS );
 	state.SetField ( -1, "TRACK_OBJECTS_STACK_TRACE",		( u32 )TRACK_OBJECTS_STACK_TRACE );
@@ -1304,5 +1304,5 @@ void MOAILuaRuntime::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaSta
 //----------------------------------------------------------------//
 void MOAILuaRuntime::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }

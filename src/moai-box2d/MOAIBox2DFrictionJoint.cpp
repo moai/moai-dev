@@ -132,12 +132,12 @@ MOAIBox2DFrictionJoint::~MOAIBox2DFrictionJoint () {
 
 //----------------------------------------------------------------//
 void MOAIBox2DFrictionJoint::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIBox2DFrictionJoint::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getMaxForce",			_getMaxForce },

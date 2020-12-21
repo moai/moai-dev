@@ -80,7 +80,7 @@ void MOAIActionMgr::Push ( MOAIAction& action ) {
 
 //----------------------------------------------------------------//
 void MOAIActionMgr::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getActionTree",				_getActionTree },
@@ -93,5 +93,5 @@ void MOAIActionMgr::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaStat
 //----------------------------------------------------------------//
 void MOAIActionMgr::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }

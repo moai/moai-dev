@@ -352,7 +352,7 @@ void MOAIPartitionHull::WasRemovedFromPartition () {
 
 //----------------------------------------------------------------//
 void MOAIPartitionHull::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	state.SetField ( -1, "ATTR_PARTITION",				AttrID::Pack ( ATTR_PARTITION ).ToRaw ());
 	state.SetField ( -1, "ATTR_WORLD_BOUNDS_TRAIT",		AttrID::Pack ( ATTR_WORLD_BOUNDS_TRAIT ).ToRaw ());
@@ -360,7 +360,7 @@ void MOAIPartitionHull::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILua
 
 //----------------------------------------------------------------//
 void MOAIPartitionHull::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
 		{ "getPartition",			_getPartition },

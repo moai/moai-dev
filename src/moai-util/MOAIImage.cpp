@@ -1302,7 +1302,7 @@ MOAIImage::~MOAIImage () {
 
 //----------------------------------------------------------------//
 void MOAIImage::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "FILTER_LINEAR",						( u32 )MOAIImage::FILTER_LINEAR );
 	state.SetField ( -1, "FILTER_NEAREST",						( u32 )MOAIImage::FILTER_NEAREST );
@@ -1356,7 +1356,7 @@ void MOAIImage::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& s
 //----------------------------------------------------------------//
 void MOAIImage::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "average",					_average },

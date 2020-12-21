@@ -749,7 +749,7 @@ void MOAIParticlePexPlugin::Parse ( cc8* filename, MOAIParticlePexPlugin& plugin
 
 //----------------------------------------------------------------//
 void MOAIParticlePexPlugin::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	//UNUSED ( state );
 	luaL_Reg regTable [] = {
@@ -762,7 +762,7 @@ void MOAIParticlePexPlugin::_RegisterLuaClass ( RTTIVisitorHistory& history, MOA
 
 //----------------------------------------------------------------//
 void MOAIParticlePexPlugin::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable[] = {
 		{ "getBlendMode",		_getBlendMode },

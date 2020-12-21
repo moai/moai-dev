@@ -101,7 +101,7 @@ MOAIPinTransform::~MOAIPinTransform () {
 
 //----------------------------------------------------------------//
 void MOAIPinTransform::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "ATTR_FRONT", 					AttrID::Pack ( ATTR_FRONT ).ToRaw ());
 	state.SetField ( -1, "ATTR_INHERIT_WORLD_BOUNDS", 	AttrID::Pack ( ATTR_INHERIT_WORLD_BOUNDS ).ToRaw ());
@@ -109,7 +109,7 @@ void MOAIPinTransform::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaS
 
 //----------------------------------------------------------------//
 void MOAIPinTransform::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getWorldBounds",				_getWorldBounds },

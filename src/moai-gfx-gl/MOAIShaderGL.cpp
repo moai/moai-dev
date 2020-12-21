@@ -83,12 +83,12 @@ void MOAIShaderGL::SetProgram ( MOAIShaderProgramGL* program ) {
 
 //----------------------------------------------------------------//
 void MOAIShaderGL::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIShaderGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "setProgram",					_setProgram },

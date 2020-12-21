@@ -185,7 +185,7 @@ int	MOAIPartitionViewLayer::_setSortScale ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition, u32 renderPhase ) {
+void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition, MOAIRenderPhaseEnum::_ renderPhase ) {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
@@ -224,7 +224,7 @@ void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition, u32 rende
 	
 	if ( MOAIDebugLinesMgr::Get ().IsVisible () && this->mShowDebugLines ) {
 		partition.DrawDebugBack ();
-		buffer->Render ( MOAIAbstractRenderNode::RENDER_PHASE_DRAW_DEBUG );
+		buffer->Render ( MOAIRenderPhaseEnum::RENDER_PHASE_DRAW_DEBUG );
 		partition.DrawDebugFront ();
 	}
 }
@@ -257,7 +257,7 @@ MOAIPartitionViewLayer::~MOAIPartitionViewLayer () {
 
 //----------------------------------------------------------------//
 void MOAIPartitionViewLayer::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	state.SetField ( -1, "SORT_NONE",						( u32 )MOAIPartitionResultBuffer::SORT_NONE );
 	state.SetField ( -1, "SORT_ISO",						( u32 )MOAIPartitionResultBuffer::SORT_ISO );
@@ -277,7 +277,7 @@ void MOAIPartitionViewLayer::_RegisterLuaClass ( RTTIVisitorHistory& history, MO
 
 //----------------------------------------------------------------//
 void MOAIPartitionViewLayer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
 		{ "getPropViewList",		_getPropViewList },
@@ -293,7 +293,7 @@ void MOAIPartitionViewLayer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MO
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionViewLayer::MOAIAbstractRenderNode_Render ( u32 renderPhase ) {
+void MOAIPartitionViewLayer::MOAIAbstractRenderNode_Render ( MOAIRenderPhaseEnum::_ renderPhase ) {
 	
 	this->ClearSurface ();
 	

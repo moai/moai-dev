@@ -31,7 +31,8 @@
 #include <moai-gfx/MOAIGfxStateCPUConsts.h>
 #include <moai-gfx/MOAIGfxStateGPUCacheFrame.h>
 #include <moai-gfx/MOAIHasGfxScript.h>
-#include <moai-gfx/MOAIHasGfxScriptBatch.h>
+#include <moai-gfx/MOAIHasGfxScriptBatchesForPhases.h>
+#include <moai-gfx/MOAIHasGfxScriptsForPhases.h>
 #include <moai-gfx/MOAIImageTexture.h>
 #include <moai-gfx/MOAIIndexBuffer.h>
 #include <moai-gfx/MOAIMatrix.h>

@@ -142,12 +142,12 @@ void MOAISurfaceClearColor::SetClearColor ( MOAIColor* color ) {
 
 //----------------------------------------------------------------//
 void MOAISurfaceClearColor::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAISurfaceClearColor::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "setClearColor",				_setClearColor },

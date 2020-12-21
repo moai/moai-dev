@@ -76,12 +76,12 @@ void MOAIImageTexture::UpdateRegion ( ZLIntRect rect ) {
 //----------------------------------------------------------------//
 void MOAIImageTexture::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIImageTexture::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
 		{ "invalidate",					_updateRegion }, // TODO: deprecate

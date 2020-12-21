@@ -68,7 +68,7 @@ MOAIFileStream::~MOAIFileStream () {
 
 //----------------------------------------------------------------//
 void MOAIFileStream::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "APPEND",				( u32 )ZLFileStream::APPEND );
 	state.SetField ( -1, "READ",				( u32 )ZLFileStream::READ );
@@ -80,7 +80,7 @@ void MOAIFileStream::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaSta
 
 //----------------------------------------------------------------//
 void MOAIFileStream::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "close",				_close },

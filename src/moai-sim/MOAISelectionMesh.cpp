@@ -550,12 +550,12 @@ void MOAISelectionMesh::ReserveSelections ( ZLSize total ) {
 
 //----------------------------------------------------------------//
 void MOAISelectionMesh::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAISelectionMesh::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "addSelection",			_addSelection },
@@ -572,7 +572,7 @@ void MOAISelectionMesh::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILua
 }
 
 //----------------------------------------------------------------//
-void MOAISelectionMesh::MOAIDeck_Draw ( ZLIndex idx ) {
+void MOAISelectionMesh::MOAIDeck_Draw ( ZLIndex idx, MOAIRenderPhaseEnum::_ renderPhase ) {
 	
 	if ( !this->mMesh ) return;
 	

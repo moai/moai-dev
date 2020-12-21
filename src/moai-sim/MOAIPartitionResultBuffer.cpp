@@ -124,7 +124,7 @@ int MOAIPartitionResultBuffer::_getResults ( lua_State* L ) {
 int MOAIPartitionResultBuffer::_render ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIPartitionResultBuffer, "U" )
 
-	u32 renderPhase = state.GetValue < u32 >( 2, MOAIAbstractRenderNode::RENDER_PHASE_DRAW );
+	MOAIRenderPhaseEnum::_ renderPhase = state.GetEnum ( 2, MOAIRenderPhaseEnum::RENDER_PHASE_DRAW );
 	self->Render ( renderPhase );
 	MOAI_LUA_RETURN_SELF
 }
@@ -469,7 +469,7 @@ u32 MOAIPartitionResultBuffer::SortResultsIso () {
 }
 
 //----------------------------------------------------------------//
-void MOAIPartitionResultBuffer::Render ( u32 renderPhase ) {
+void MOAIPartitionResultBuffer::Render ( MOAIRenderPhaseEnum::_ renderPhase ) {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	u32 totalResults = this->GetTotalResults ();
@@ -518,12 +518,12 @@ void MOAIPartitionResultBuffer::Transform ( const ZLMatrix4x4& mtx, bool transfo
 
 //----------------------------------------------------------------//
 void MOAIPartitionResultBuffer::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIPartitionResultBuffer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
 		{ "findBest",				_findBest },

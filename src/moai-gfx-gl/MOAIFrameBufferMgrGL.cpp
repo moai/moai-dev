@@ -90,7 +90,7 @@ MOAIFrameBufferMgrGL::~MOAIFrameBufferMgrGL () {
 
 //----------------------------------------------------------------//
 void MOAIFrameBufferMgrGL::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 //	state.SetField ( -1, "DECK2D_SHADER",			( u32 )MOAIShaderPresetEnum::DECK2D_SHADER );
 //	state.SetField ( -1, "DECK2D_SNAPPING_SHADER",	( u32 )MOAIShaderPresetEnum::DECK2D_SNAPPING_SHADER );
@@ -112,5 +112,5 @@ void MOAIFrameBufferMgrGL::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAI
 //----------------------------------------------------------------//
 void MOAIFrameBufferMgrGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }

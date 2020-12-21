@@ -666,7 +666,7 @@ void MOAIDataBuffer::Unlock () {
 
 //----------------------------------------------------------------//
 void MOAIDataBuffer::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "NO_INFLATE",		( u32 )NO_INFLATE );
 	state.SetField ( -1, "FORCE_INFLATE",	( u32 )FORCE_INFLATE );
@@ -688,7 +688,7 @@ void MOAIDataBuffer::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaSta
 
 //----------------------------------------------------------------//
 void MOAIDataBuffer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "base64Decode",	_base64Decode },

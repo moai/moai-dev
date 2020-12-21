@@ -308,12 +308,12 @@ void MOAIParticleEmitter::Surge ( u32 total ) {
 
 //----------------------------------------------------------------//
 void MOAIParticleEmitter::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIParticleEmitter::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
 		{ "setAngle",			_setAngle },

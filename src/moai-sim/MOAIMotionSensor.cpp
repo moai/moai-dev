@@ -98,12 +98,12 @@ void MOAIMotionSensor::ParseEvent ( ZLStream& eventStream ) {
 
 //----------------------------------------------------------------//
 void MOAIMotionSensor::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIMotionSensor::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getLevel",			_getLevel },

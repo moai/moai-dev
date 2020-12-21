@@ -199,12 +199,12 @@ void MOAIAnimCurveBone::SetSampleScale ( ZLIndex idx, float x, float y, float z 
 //----------------------------------------------------------------//
 void MOAIAnimCurveBone::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIAnimCurveBone::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getValueAtTime",		_getValueAtTime },

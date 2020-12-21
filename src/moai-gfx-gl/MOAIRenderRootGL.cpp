@@ -25,7 +25,7 @@ MOAIRenderRootGL::~MOAIRenderRootGL () {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIRenderRootGL::MOAIAbstractRenderNode_Render ( u32 renderPhase ) {
+void MOAIRenderRootGL::MOAIAbstractRenderNode_Render ( MOAIRenderPhaseEnum::_ renderPhase ) {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	gfxMgr.BeginFrame ();

@@ -256,7 +256,7 @@ void MOAIGridPathGraph::SetGrid ( MOAIGrid* grid ) {
 
 //----------------------------------------------------------------//
 void MOAIGridPathGraph::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "MANHATTAN_DISTANCE", ( u32 )MANHATTAN_DISTANCE );
 	state.SetField ( -1, "DIAGONAL_DISTANCE", ( u32 )DIAGONAL_DISTANCE );
@@ -267,7 +267,7 @@ void MOAIGridPathGraph::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILua
 
 //----------------------------------------------------------------//
 void MOAIGridPathGraph::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "setGrid",			_setGrid },

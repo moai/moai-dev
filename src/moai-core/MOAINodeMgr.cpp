@@ -182,7 +182,7 @@ void MOAINodeMgr::Update () {
 
 //----------------------------------------------------------------//
 void MOAINodeMgr::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "reset",					_reset },
@@ -197,5 +197,5 @@ void MOAINodeMgr::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState&
 //----------------------------------------------------------------//
 void MOAINodeMgr::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }

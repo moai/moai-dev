@@ -126,12 +126,12 @@ void MOAIRetainedCmdStream::Reset () {
 //----------------------------------------------------------------//
 void MOAIRetainedCmdStream::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIRetainedCmdStream::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "affirmBytecode",				_affirmBytecode },

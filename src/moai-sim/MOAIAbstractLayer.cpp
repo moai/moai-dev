@@ -55,12 +55,12 @@ MOAIAbstractLayer::~MOAIAbstractLayer () {
 
 //----------------------------------------------------------------//
 void MOAIAbstractLayer::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIAbstractLayer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "pushRenderPass",				_pushRenderPass },
@@ -72,7 +72,7 @@ void MOAIAbstractLayer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILua
 }
 
 //----------------------------------------------------------------//
-bool MOAIAbstractLayer::MOAIAbstractRenderNode_LoadGfxState ( u32 renderPhase ) {
+bool MOAIAbstractLayer::MOAIAbstractRenderNode_LoadGfxState ( MOAIRenderPhaseEnum::_ renderPhase ) {
 
 	if ( !this->MOAIAbstractRenderNode::MOAIAbstractRenderNode_LoadGfxState ( renderPhase )) return false;
 	if ( this->IsClear ()) return false;

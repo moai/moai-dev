@@ -576,7 +576,7 @@ void MOAIMesh::SetBounds ( const ZLBox& aabb ) {
 
 //----------------------------------------------------------------//
 void MOAIMesh::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	state.SetField ( -1, "GL_LINES",			( u32 )MOAIGfxTopologyEnum::LINE_LIST );
 	state.SetField ( -1, "GL_LINE_LOOP",		( u32 )MOAIGfxTopologyEnum::LINE_LOOP );
@@ -594,7 +594,7 @@ void MOAIMesh::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& st
 
 //----------------------------------------------------------------//
 void MOAIMesh::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "buildQuadTree",				_buildQuadTree },
@@ -616,7 +616,7 @@ void MOAIMesh::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& st
 
 //----------------------------------------------------------------//
 void MOAIMesh::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 //	this->SetIndexBuffer (
 //		serializer.MemberIDToObject < MOAIIndexBuffer >( state.GetFieldValue < cc8*, MOAISerializer::ObjID >( -1, "mIndexBuffer", 0 ))
@@ -646,7 +646,7 @@ void MOAIMesh::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, 
 
 //----------------------------------------------------------------//
 void MOAIMesh::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 //	state.SetField ( -1, "mIndexBuffer", serializer.AffirmMemberID ( this->mIndexBuffer ));
 	
@@ -668,7 +668,7 @@ void MOAIMesh::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state,
 }
 
 //----------------------------------------------------------------//
-void MOAIMesh::MOAIDeck_Draw ( ZLIndex idx ) {
+void MOAIMesh::MOAIDeck_Draw ( ZLIndex idx, MOAIRenderPhaseEnum::_ renderPhase ) {
 
 	this->DrawIndex ( idx, 0 );
 }

@@ -208,8 +208,8 @@ private:
 	void				MOAIAbstractBaseTransform_BuildLocalToWorldMtx		( ZLAffine3D& localToWorldMtx );
 	ZLBounds			MOAIAbstractProp_GetModelBounds						();
 	ZLMatrix4x4			MOAIAbstractProp_GetWorldDrawingMtx					() const;
-	bool				MOAIAbstractRenderNode_LoadGfxState					( u32 renderPhase );
-	void				MOAIAbstractRenderNode_Render						( u32 renderPhase );
+	bool				MOAIAbstractRenderNode_LoadGfxState					( MOAIRenderPhaseEnum::_ renderPhase );
+	void				MOAIAbstractRenderNode_Render						( MOAIRenderPhaseEnum::_ renderPhase );
 	bool				MOAIAction_IsDone									();
 	void				MOAIAction_Update									( double step );
 	void				MOAINode_Update										();

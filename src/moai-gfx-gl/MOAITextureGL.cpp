@@ -430,7 +430,7 @@ bool MOAITextureGL::UpdateTextureFromImage ( ZLImage& image, ZLIntRect rect ) {
 
 //----------------------------------------------------------------//
 void MOAITextureGL::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	state.SetField ( -1, "GL_LINEAR",					( u32 )MOAITextureFilterEnum::LINEAR );
 	state.SetField ( -1, "GL_LINEAR_MIPMAP_LINEAR",		( u32 )MOAITextureFilterEnum::LINEAR_MIPMAP_LINEAR );
@@ -459,7 +459,7 @@ void MOAITextureGL::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaStat
 
 //----------------------------------------------------------------//
 void MOAITextureGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getSize",				_getSize },

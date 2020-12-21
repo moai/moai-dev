@@ -280,12 +280,12 @@ MOAIBox2DMotorJoint::~MOAIBox2DMotorJoint () {
 
 //----------------------------------------------------------------//
 void MOAIBox2DMotorJoint::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIBox2DMotorJoint::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "setLinearOffset", 		_setLinearOffset },

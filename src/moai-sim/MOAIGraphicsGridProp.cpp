@@ -40,8 +40,8 @@ MOAIGraphicsGridProp::~MOAIGraphicsGridProp () {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIGraphicsGridProp::MOAIAbstractRenderNode_LoadGfxState ( u32 renderPhase ) {
-	if ( renderPhase == MOAIAbstractRenderNode::RENDER_PHASE_DRAW_DEBUG ) return true;
+bool MOAIGraphicsGridProp::MOAIAbstractRenderNode_LoadGfxState ( MOAIRenderPhaseEnum::_ renderPhase ) {
+	if ( renderPhase == MOAIRenderPhaseEnum::RENDER_PHASE_DRAW_DEBUG ) return true;
 
 	if ( this->mDeck && MOAIAbstractGraphicsProp::MOAIAbstractRenderNode_LoadGfxState ( renderPhase )) {
 		this->LoadUVTransform ();

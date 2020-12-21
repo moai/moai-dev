@@ -217,13 +217,13 @@ void MOAIParser::Traverse ( ZLSyntaxNode* node ) {
 
 //----------------------------------------------------------------//
 void MOAIParser::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAIParser::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable[] = {
 		{ "loadFile",			_loadFile },

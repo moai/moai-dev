@@ -301,12 +301,12 @@ void MOAITexture2D::_Finalize () {
 //----------------------------------------------------------------//
 void MOAITexture2D::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAITexture2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "load",					_load },
@@ -318,7 +318,7 @@ void MOAITexture2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaStat
 
 //----------------------------------------------------------------//
 void MOAITexture2D::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	STLString path = state.GetFieldValue ( -1, "mPath", "" );
 	
@@ -329,7 +329,7 @@ void MOAITexture2D::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& st
 
 //----------------------------------------------------------------//
 void MOAITexture2D::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	STLString path = ZLFileSys::GetRelativePath ( this->mFilename );
 	state.SetField ( -1, "mPath", path.str ());

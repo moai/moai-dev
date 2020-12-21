@@ -212,12 +212,12 @@ void MOAIAssimpCamera::SetCamera ( aiCamera *assimpCamera ) {
 
 //----------------------------------------------------------------//
 void MOAIAssimpCamera::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIAssimpCamera::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getAspect",				_getAspect },

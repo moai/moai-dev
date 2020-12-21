@@ -764,7 +764,7 @@ bool MOAINode::MOAINode_ApplyAttrOp ( ZLAttrID attrID, ZLAttribute& attr, u32 op
 
 //----------------------------------------------------------------//
 void MOAINode::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "EVENT_UPDATE",			( u32 )EVENT_NODE_PRE_UPDATE ); // TODO: deprecate
 	
@@ -779,7 +779,7 @@ void MOAINode::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& st
 
 //----------------------------------------------------------------//
 void MOAINode::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "clearAttrLink",			_clearAttrLink },

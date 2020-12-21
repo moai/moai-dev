@@ -84,7 +84,7 @@ MOAIMath::~MOAIMath () {
 
 //----------------------------------------------------------------//
 void MOAIMath::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		#if MOAI_WITH_SFMT

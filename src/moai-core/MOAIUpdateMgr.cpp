@@ -652,7 +652,7 @@ void MOAIUpdateMgr::Update () {
 
 //----------------------------------------------------------------//
 void MOAIUpdateMgr::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "EVENT_FINALIZE",	( u32 )EVENT_FINALIZE );
 	state.SetField ( -1, "EVENT_PAUSE",		( u32 )EVENT_PAUSE );
@@ -709,7 +709,7 @@ void MOAIUpdateMgr::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaStat
 //----------------------------------------------------------------//
 void MOAIUpdateMgr::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//

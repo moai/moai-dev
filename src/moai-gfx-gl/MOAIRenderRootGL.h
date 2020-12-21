@@ -12,7 +12,7 @@ class MOAIRenderRootGL :
 protected:
 
 	//----------------------------------------------------------------//
-	void			MOAIAbstractRenderNode_Render 		( u32 renderPhase );
+	void			MOAIAbstractRenderNode_Render 		( MOAIRenderPhaseEnum::_ renderPhase );
 
 public:
 

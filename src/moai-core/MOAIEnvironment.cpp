@@ -232,7 +232,7 @@ void MOAIEnvironment::SetValue ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 void MOAIEnvironment::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "EVENT_VALUE_CHANGED", ( u32 )EVENT_VALUE_CHANGED );
 
@@ -264,5 +264,5 @@ void MOAIEnvironment::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaSt
 //----------------------------------------------------------------//
 void MOAIEnvironment::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }

@@ -1007,14 +1007,14 @@ void MOAIMarkerMgr::VideoDidStart () {
 //----------------------------------------------------------------//
 void MOAIMarkerMgr::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 
-	state.SetField ( -1, "EVENT_KPM_BEGIN",		( u32 )EVENT_KPM_BEGIN );
-	state.SetField ( -1, "EVENT_KPM_END",		( u32 )EVENT_KPM_END );
-	state.SetField ( -1, "EVENT_KPM_UPDATE",	( u32 )EVENT_KPM_UPDATE );
-	state.SetField ( -1, "EVENT_MARKER_BEGIN",	( u32 )EVENT_MARKER_BEGIN );
-	state.SetField ( -1, "EVENT_MARKER_END",	( u32 )EVENT_MARKER_END );
-	state.SetField ( -1, "EVENT_MARKER_UPDATE",	( u32 )EVENT_MARKER_UPDATE );
-	state.SetField ( -1, "EVENT_UPDATE_FRAME",	( u32 )EVENT_UPDATE_FRAME );
-	state.SetField ( -1, "EVENT_VIDEO_START",	( u32 )EVENT_VIDEO_START );
+	state.SetEnum ( -1, "EVENT_KPM_BEGIN",			EVENT_KPM_BEGIN );
+	state.SetEnum ( -1, "EVENT_KPM_END",			EVENT_KPM_END );
+	state.SetEnum ( -1, "EVENT_KPM_UPDATE",			EVENT_KPM_UPDATE );
+	state.SetEnum ( -1, "EVENT_MARKER_BEGIN",		EVENT_MARKER_BEGIN );
+	state.SetEnum ( -1, "EVENT_MARKER_END",			EVENT_MARKER_END );
+	state.SetEnum ( -1, "EVENT_MARKER_UPDATE",		EVENT_MARKER_UPDATE );
+	state.SetEnum ( -1, "EVENT_UPDATE_FRAME",		EVENT_UPDATE_FRAME );
+	state.SetEnum ( -1, "EVENT_VIDEO_START",		EVENT_VIDEO_START );
 
 	luaL_Reg regTable [] = {
 		{ "getKPMMatrix",			_getKPMMatrix },

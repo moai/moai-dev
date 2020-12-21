@@ -163,12 +163,12 @@ void MOAIVertexArrayGL::UnbindVertexArrayItems () {
 
 //----------------------------------------------------------------//
 void MOAIVertexArrayGL::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIVertexArrayGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "reserveVAOs",				_reserveVAOs },
@@ -182,7 +182,7 @@ void MOAIVertexArrayGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILua
 
 //----------------------------------------------------------------//
 void MOAIVertexArrayGL::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	ZLSize totalVAOs = state.GetFieldValue < cc8*, MOAILuaSize >( -1, "mTotalVAOs", 0 );
 	this->ReserveVAOs ( totalVAOs );
@@ -206,7 +206,7 @@ void MOAIVertexArrayGL::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState
 
 //----------------------------------------------------------------//
 void MOAIVertexArrayGL::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField < cc8*, MOAILuaSize >( -1, "mTotalVAOs", this->mVAOs.Size ());
 	state.SetField < cc8*, MOAILuaSize >( -1, "mTotalVertexBuffers", this->mVertexBuffers.Size ());

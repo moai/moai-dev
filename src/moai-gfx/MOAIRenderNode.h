@@ -25,7 +25,7 @@ protected:
 	//----------------------------------------------------------------//
 	void				_RegisterLuaClass					( RTTIVisitorHistory& history, MOAILuaState& state );
 	void				_RegisterLuaFuncs					( RTTIVisitorHistory& history, MOAILuaState& state );
-	virtual void		MOAIAbstractRenderNode_Render 		( u32 renderPhase );
+	virtual void		MOAIAbstractRenderNode_Render 		( MOAIRenderPhaseEnum::_ renderPhase );
 
 public:
 
@@ -36,8 +36,8 @@ public:
 	virtual 			~MOAIRenderNode				();
 	void				PushChild					( MOAIAbstractRenderNode& node );
 	void				PushChild					( MOAILuaState& state, int idx );
-	static void			Render						( u32 renderPhase, MOAILuaMemberRef& ref, MOAIRenderNode* caller );
-	static void			Render						( u32 renderPhase, MOAILuaState& state, int idx, MOAIRenderNode* caller );
+	static void			Render						( MOAIRenderPhaseEnum::_ renderPhase, MOAILuaMemberRef& ref, MOAIRenderNode* caller );
+	static void			Render						( MOAIRenderPhaseEnum::_ renderPhase, MOAILuaState& state, int idx, MOAIRenderNode* caller );
 };
 
 #endif

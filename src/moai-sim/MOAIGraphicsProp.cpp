@@ -39,8 +39,9 @@ MOAIGraphicsProp::~MOAIGraphicsProp () {
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIGraphicsProp::MOAIAbstractRenderNode_LoadGfxState ( u32 renderPhase ) {
-	if ( renderPhase == MOAIAbstractRenderNode::RENDER_PHASE_DRAW_DEBUG ) return true;
+bool MOAIGraphicsProp::MOAIAbstractRenderNode_LoadGfxState ( MOAIRenderPhaseEnum::_ renderPhase ) {
+
+	if ( renderPhase == MOAIRenderPhaseEnum::RENDER_PHASE_DRAW_DEBUG ) return true;
 
 	if ( this->mDeck && MOAIAbstractGraphicsProp::MOAIAbstractRenderNode_LoadGfxState ( renderPhase )) {
 	

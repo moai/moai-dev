@@ -136,12 +136,12 @@ void MOAITaskQueue::Stop () {
 
 //----------------------------------------------------------------//
 void MOAITaskQueue::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	UNUSED ( state );
 }
 
 //----------------------------------------------------------------//
 void MOAITaskQueue::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	UNUSED ( state );
 }

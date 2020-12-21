@@ -334,11 +334,6 @@ void MOAISurfaceDeck2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILua
 }
 
 //----------------------------------------------------------------//
-void MOAISurfaceDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
-	UNUSED ( idx );
-}
-
-//----------------------------------------------------------------//
 ZLBounds MOAISurfaceDeck2D::MOAIDeck_GetBounds () {
 
 	size_t size = this->mBrushes.Size ();
@@ -360,10 +355,8 @@ ZLBounds MOAISurfaceDeck2D::MOAIDeck_GetBounds ( ZLIndex idx ) {
 }
 
 //----------------------------------------------------------------//
-MOAICollisionShape* MOAISurfaceDeck2D::MOAIDeck_GetCollisionShape ( ZLIndex idx ) {
+void MOAISurfaceDeck2D::MOAIDeck_Render ( ZLIndex idx, MOAIRenderPhaseEnum::_ renderPhase ) {
 	UNUSED ( idx );
-
-	return 0;
 }
 
 #endif

@@ -1150,7 +1150,7 @@ ZLVec2D MOAIGridSpace::WorldToCell ( MOAICellCoord cellCoord, ZLVec2D loc ) cons
 
 //----------------------------------------------------------------//
 void MOAIGridSpace::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "TILE_X_FLIP", ( u32 )MOAITileFlags::XFLIP );
 	state.SetField ( -1, "TILE_Y_FLIP", ( u32 )MOAITileFlags::YFLIP );
@@ -1178,7 +1178,7 @@ void MOAIGridSpace::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaStat
 
 //----------------------------------------------------------------//
 void MOAIGridSpace::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "cellAddrToCoord",	_cellAddrToCoord },
@@ -1208,7 +1208,7 @@ void MOAIGridSpace::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaStat
 //----------------------------------------------------------------//
 void MOAIGridSpace::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	this->mXOff			= state.GetFieldValue ( -1, "mXOff", this->mXOff );
 	this->mYOff			= state.GetFieldValue ( -1, "mYOff", this->mYOff );
@@ -1229,7 +1229,7 @@ void MOAIGridSpace::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& st
 //----------------------------------------------------------------//
 void MOAIGridSpace::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	state.SetField ( -1, "mXOff", this->mXOff );
 	state.SetField ( -1, "mYOff", this->mYOff );

@@ -43,7 +43,7 @@ MOAISensor::~MOAISensor () {
 
 //----------------------------------------------------------------//
 void MOAISensor::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "new",					MOAILuaObject::_alertNewIsUnsupported },
@@ -55,7 +55,7 @@ void MOAISensor::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& 
 
 //----------------------------------------------------------------//
 void MOAISensor::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getTimestamp",			_getTimestamp },

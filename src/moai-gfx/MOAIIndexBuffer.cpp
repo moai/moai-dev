@@ -217,12 +217,12 @@ void MOAIIndexBuffer::WriteIndex ( u32 index ) {
 //----------------------------------------------------------------//
 void MOAIIndexBuffer::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIIndexBuffer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
 		{ "copyFromStream",			_copyFromStream },
@@ -237,14 +237,14 @@ void MOAIIndexBuffer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaSt
 
 //----------------------------------------------------------------//
 void MOAIIndexBuffer::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	this->mIndexSize = state.GetFieldValue < cc8*, u32 >( -1, "mIndexSize", 0 );
 }
 
 //----------------------------------------------------------------//
 void MOAIIndexBuffer::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	state.SetField < cc8*, u32 >( -1, "mIndexSize", this->mIndexSize );
 }

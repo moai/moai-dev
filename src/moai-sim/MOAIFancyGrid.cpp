@@ -373,12 +373,12 @@ void MOAIFancyGrid::SetPaletteColor ( ZLIndex idx, MOAIColor* color ) {
 
 //----------------------------------------------------------------//
 void MOAIFancyGrid::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIFancyGrid::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "fillColor",			_fillColor },

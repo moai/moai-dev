@@ -27,7 +27,7 @@ MOAIEaseType::~MOAIEaseType () {
 
 //----------------------------------------------------------------//
 void MOAIEaseType::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	state.SetField ( -1, "EASE_IN",							( u32 )ZLInterpolate::kEaseIn );
 	state.SetField ( -1, "EASE_OUT",						( u32 )ZLInterpolate::kEaseOut );

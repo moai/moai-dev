@@ -21,7 +21,7 @@ MOAIKeyCode::~MOAIKeyCode () {
 
 //----------------------------------------------------------------//
 void MOAIKeyCode::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "BACKSPACE",		( u32 )MOAI_KEY_BACKSPACE );
 	state.SetField ( -1, "TAB",				( u32 )MOAI_KEY_TAB );

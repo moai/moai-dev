@@ -310,7 +310,7 @@ int MOAICoroutine::Resume ( float step ) {
 
 //----------------------------------------------------------------//
 void MOAICoroutine::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "blockOnAction",		_blockOnAction },
@@ -323,7 +323,7 @@ void MOAICoroutine::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaStat
 
 //----------------------------------------------------------------//
 void MOAICoroutine::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getHistogram",			_getHistogram },

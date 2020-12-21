@@ -4,7 +4,6 @@
 #ifndef	MOAISPRITEDECK2D_H
 #define	MOAISPRITEDECK2D_H
 
-#include <moai-sim/MOAIDeck.h>
 #include <moai-sim/MOAIHasHitMaskBatch.h>
 
 //================================================================//
@@ -68,7 +67,7 @@ public:
 */
 class MOAISpriteDeck2D :
 	public virtual MOAIDeck,
-	public virtual MOAIHasGfxScriptBatch,
+	public virtual MOAIHasGfxScriptBatchesForPhases,
 	public virtual MOAIHasHitMaskBatch {
 private:
 	
@@ -108,12 +107,11 @@ private:
 	void					_RegisterLuaFuncs				( RTTIVisitorHistory& history, MOAILuaState& state );
 	void					_SerializeIn					( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
 	void					_SerializeOut					( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
-	void					MOAIDeck_Draw					( ZLIndex idx );
 	ZLBounds				MOAIDeck_GetBounds				();
 	ZLBounds				MOAIDeck_GetBounds				( ZLIndex idx );
-	MOAICollisionShape*		MOAIDeck_GetCollisionShape		( ZLIndex idx );
-	virtual MOAIPickResult	MOAIDeck_PickByPoint			( ZLIndex idx, ZLVec3D loc );
-	virtual MOAIPickResult	MOAIDeck_PickByRay				( ZLIndex idx, ZLVec3D loc, ZLVec3D normal );
+	MOAIPickResult			MOAIDeck_PickByPoint			( ZLIndex idx, ZLVec3D loc );
+	MOAIPickResult			MOAIDeck_PickByRay				( ZLIndex idx, ZLVec3D loc, ZLVec3D normal );
+	void					MOAIDeck_Render					( ZLIndex idx, MOAIRenderPhaseEnum::_ renderPhase );
 
 public:
 	

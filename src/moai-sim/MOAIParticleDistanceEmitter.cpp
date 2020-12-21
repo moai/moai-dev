@@ -85,12 +85,12 @@ void MOAIParticleDistanceEmitter::SetDistanceRange ( float min, float max ) {
 
 //----------------------------------------------------------------//
 void MOAIParticleDistanceEmitter::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIParticleDistanceEmitter::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "reset",					_reset },

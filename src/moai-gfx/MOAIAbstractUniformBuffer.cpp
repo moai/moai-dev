@@ -84,12 +84,12 @@ MOAIAbstractUniformBuffer::~MOAIAbstractUniformBuffer () {
 //----------------------------------------------------------------//
 void MOAIAbstractUniformBuffer::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIAbstractUniformBuffer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getAttributeID",				_getAttributeID },

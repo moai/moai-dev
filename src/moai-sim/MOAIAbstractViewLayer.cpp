@@ -461,12 +461,12 @@ MOAIAbstractViewLayer::~MOAIAbstractViewLayer () {
 
 //----------------------------------------------------------------//
 void MOAIAbstractViewLayer::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIAbstractViewLayer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
 		{ "getCamera",				_getCamera },
@@ -498,7 +498,7 @@ ZLBounds MOAIAbstractViewLayer::MOAIAbstractProp_GetModelBounds () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIAbstractViewLayer::MOAIAbstractRenderNode_LoadGfxState ( u32 renderPhase ) {
+bool MOAIAbstractViewLayer::MOAIAbstractRenderNode_LoadGfxState ( MOAIRenderPhaseEnum::_ renderPhase ) {
 
 	if ( this->IsClear ()) return false;
 	if ( !this->mViewport ) return false;

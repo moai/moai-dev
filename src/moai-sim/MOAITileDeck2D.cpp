@@ -240,7 +240,7 @@ MOAITileDeck2D::MOAITileDeck2D () {
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAITileDeck2D >)
 		RTTI_VISITOR ( MOAIAbstractLuaSerializationVisitor, MOAILuaSerializationVisitor < MOAITileDeck2D >)
 		RTTI_EXTEND ( MOAIDeck )
-		RTTI_EXTEND ( MOAIHasGfxScriptBatch )
+		RTTI_EXTEND ( MOAIHasGfxScriptBatchesForPhases )
 		RTTI_EXTEND ( MOAIGridSpace )
 	RTTI_END
 	
@@ -270,12 +270,12 @@ void MOAITileDeck2D::TransformUV ( const ZLAffine3D& mtx ) {
 
 //----------------------------------------------------------------//
 void MOAITileDeck2D::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAITileDeck2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
 		{ "setQuad",			_setQuad },
@@ -293,22 +293,35 @@ void MOAITileDeck2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaSta
 
 //----------------------------------------------------------------//
 void MOAITileDeck2D::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	//this->mTexture.Set ( *this, serializer.MemberIDToObject < MOAITexture >( state.GetFieldValue < MOAISerializerBase::ObjID >( -1, "mTexture", 0 )));
 }
 
 //----------------------------------------------------------------//
 void MOAITileDeck2D::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	//state.SetField ( -1, "mTexture", serializer.AffirmMemberID ( this->mTexture ));
 }
 
 //----------------------------------------------------------------//
-void MOAITileDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
+ZLBounds MOAITileDeck2D::MOAIDeck_GetBounds () {
 
-	MOAIGfxScript* gfxScript = this->GetGfxScript ( idx );
+	return this->MOAIDeck::GetBounds ( 0 );
+}
+
+//----------------------------------------------------------------//
+ZLBounds MOAITileDeck2D::MOAIDeck_GetBounds ( ZLIndex idx ) {
+	UNUSED ( idx );
+	
+	return ZLBounds ( this->mQuad.GetVtxBounds ());
+}
+
+//----------------------------------------------------------------//
+void MOAITileDeck2D::MOAIDeck_Render ( ZLIndex idx, MOAIRenderPhaseEnum::_ renderPhase ) {
+
+	MOAIGfxScript* gfxScript = this->GetGfxScript ( idx, renderPhase );
 	if ( !gfxScript ) return;
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
@@ -333,24 +346,4 @@ void MOAITileDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 	callable.mBrush = this->mQuad;
 	
 	gfxScript->ExecuteBytecode ( &callable );
-}
-
-//----------------------------------------------------------------//
-ZLBounds MOAITileDeck2D::MOAIDeck_GetBounds () {
-
-	return this->MOAIDeck::GetBounds ( 0 );
-}
-
-//----------------------------------------------------------------//
-ZLBounds MOAITileDeck2D::MOAIDeck_GetBounds ( ZLIndex idx ) {
-	UNUSED ( idx );
-	
-	return ZLBounds ( this->mQuad.GetVtxBounds ());
-}
-
-//----------------------------------------------------------------//
-MOAICollisionShape* MOAITileDeck2D::MOAIDeck_GetCollisionShape ( ZLIndex idx ) {
-	UNUSED ( idx );
-
-	return 0;
 }

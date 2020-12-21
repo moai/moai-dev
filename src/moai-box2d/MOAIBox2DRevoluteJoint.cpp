@@ -366,12 +366,12 @@ MOAIBox2DRevoluteJoint::~MOAIBox2DRevoluteJoint () {
 
 //----------------------------------------------------------------//
 void MOAIBox2DRevoluteJoint::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIBox2DRevoluteJoint::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getJointAngle",				_getJointAngle },

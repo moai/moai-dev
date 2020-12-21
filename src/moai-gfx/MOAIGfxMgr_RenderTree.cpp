@@ -87,7 +87,7 @@ void MOAIGfxMgr_RenderTree::Render () {
 	
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	state.Push ( this->mRenderRoot );
-	MOAIRenderNode::Render ( MOAIAbstractRenderNode::RENDER_PHASE_DRAW, state, -1, NULL );
+	MOAIRenderNode::Render ( MOAIRenderPhaseEnum::RENDER_PHASE_DRAW, state, -1, NULL );
 
 	// Measure performance
 	double endTime = ZLDeviceTime::GetTimeInSeconds ();

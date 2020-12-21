@@ -577,7 +577,7 @@ MOAIAssimpScene::~MOAIAssimpScene () {
 
 //----------------------------------------------------------------//
 void MOAIAssimpScene::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "CONVERT_TO_LEFT_HANDED",			( u32 )aiProcess_ConvertToLeftHanded );
 	state.SetField ( -1, "TARGET_REALTIME_FAST",			( u32 )aiProcessPreset_TargetRealtime_Fast );
@@ -613,7 +613,7 @@ void MOAIAssimpScene::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaSt
 
 //----------------------------------------------------------------//
 void MOAIAssimpScene::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "clear",					_clear },

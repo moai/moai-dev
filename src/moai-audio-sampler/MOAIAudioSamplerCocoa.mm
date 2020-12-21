@@ -342,7 +342,7 @@ void MOAIAudioSamplerCocoa::Stop () {
 //----------------------------------------------------------------//
 void MOAIAudioSamplerCocoa::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "EVENT_BUFFER",	( u32 )EVENT_BUFFER );
 	
@@ -358,7 +358,7 @@ void MOAIAudioSamplerCocoa::_RegisterLuaClass ( RTTIVisitorHistory& history, MOA
 //----------------------------------------------------------------//
 void MOAIAudioSamplerCocoa::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getLevels",				_getLevels },

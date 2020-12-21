@@ -395,7 +395,7 @@ MOAICamera::~MOAICamera () {
 
 //----------------------------------------------------------------//
 void MOAICamera::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	// TODO: MOAIDebugLinesMgr stuff should go somewhere else
 //	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAICamera >( TOTAL_DEBUG_LINE_STYLES );
@@ -413,7 +413,7 @@ void MOAICamera::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& 
 
 //----------------------------------------------------------------//
 void MOAICamera::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getFarPlane",		_getFarPlane },

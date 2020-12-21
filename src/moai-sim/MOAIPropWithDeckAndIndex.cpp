@@ -64,14 +64,14 @@ MOAIPropWithDeckAndIndex::~MOAIPropWithDeckAndIndex () {
 
 //----------------------------------------------------------------//
 void MOAIPropWithDeckAndIndex::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "ATTR_INDEX", AttrID::Pack ( ATTR_INDEX ).ToRaw ());
 }
 
 //----------------------------------------------------------------//
 void MOAIPropWithDeckAndIndex::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getIndex",				_getIndex },
@@ -102,17 +102,13 @@ MOAIPickResult MOAIPropWithDeckAndIndex::MOAIAbstractProp_PickByRay ( ZLVec3D lo
 }
 
 //----------------------------------------------------------------//
-void MOAIPropWithDeckAndIndex::MOAIAbstractRenderNode_Render ( u32 renderPhase ) {
+void MOAIPropWithDeckAndIndex::MOAIAbstractRenderNode_Render ( MOAIRenderPhaseEnum::_ renderPhase ) {
 
-	switch ( renderPhase ) {
-		
-		case MOAIAbstractRenderNode::RENDER_PHASE_DRAW:
-			this->mDeck->Draw ( this->mIndex );
-			break;
-		
-		case MOAIAbstractRenderNode::RENDER_PHASE_DRAW_DEBUG:
-			this->DrawDebug ();
-			break;
+	if ( renderPhase == MOAIRenderPhaseEnum::RENDER_PHASE_DRAW_DEBUG ) {
+		this->DrawDebug ();
+	}
+	else {
+		this->mDeck->Render ( this->mIndex, renderPhase );
 	}
 }
 

@@ -7,8 +7,8 @@
 MOAISim.openWindow ( "test", 320, 480 )
 
 viewport = MOAIViewport.new ()
-viewport:setSize ( 320, 480 )
-viewport:setScale ( 320, 480 )
+viewport:setViewSize ( 320, 480 )
+viewport:setViewScale ( 320, 480 )
 
 layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )

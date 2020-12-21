@@ -980,7 +980,7 @@ void MOAITextLabel::SetText ( cc8* text ) {
 
 //----------------------------------------------------------------//
 void MOAITextLabel::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAITextLabel >( TOTAL_DEBUG_LINE_STYLES );
 
@@ -1013,7 +1013,7 @@ void MOAITextLabel::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaStat
 
 //----------------------------------------------------------------//
 void MOAITextLabel::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
 		{ "clearHighlights",		_clearHighlights },
@@ -1214,7 +1214,7 @@ ZLMatrix4x4 MOAITextLabel::MOAIAbstractProp_GetWorldDrawingMtx () const {
 }
 
 //----------------------------------------------------------------//
-bool MOAITextLabel::MOAIAbstractRenderNode_LoadGfxState ( u32 renderPhase ) {
+bool MOAITextLabel::MOAIAbstractRenderNode_LoadGfxState ( MOAIRenderPhaseEnum::_ renderPhase ) {
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
@@ -1266,7 +1266,7 @@ bool MOAITextLabel::MOAIAbstractRenderNode_LoadGfxState ( u32 renderPhase ) {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLabel::MOAIAbstractRenderNode_Render ( u32 renderPhase ) {
+void MOAITextLabel::MOAIAbstractRenderNode_Render ( MOAIRenderPhaseEnum::_ renderPhase ) {
 	UNUSED ( renderPhase );
 	
 	// TODO: this just snaps an image behind the label. useful, but find another way.

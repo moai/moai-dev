@@ -112,12 +112,12 @@ bool MOAIAbstractHasHitMask::TestHit ( float x, float y ) {
 //----------------------------------------------------------------//
 void MOAIAbstractHasHitMask::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIAbstractHasHitMask::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "setHitMaskImage",		_setHitMaskImage },

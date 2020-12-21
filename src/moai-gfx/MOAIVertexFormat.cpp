@@ -817,7 +817,7 @@ void MOAIVertexFormat::WriteUV ( ZLStream& stream, ZLIndex idx, float x, float y
 
 //----------------------------------------------------------------//
 void MOAIVertexFormat::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	state.SetField ( -1, "GL_BYTE",					( u32 )MOAIGfxTypeEnum::BYTE );
 	state.SetField ( -1, "GL_FLOAT",				( u32 )MOAIGfxTypeEnum::FLOAT );
@@ -836,7 +836,7 @@ void MOAIVertexFormat::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaS
 
 //----------------------------------------------------------------//
 void MOAIVertexFormat::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "clear",					_clear },
@@ -858,7 +858,7 @@ void MOAIVertexFormat::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaS
 //----------------------------------------------------------------//
 void MOAIVertexFormat::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	this->mTotalAttributes		= state.GetFieldValue < cc8*, u32 >( -1, "mTotalAttributes", 0 );
 	this->mVertexSize			= state.GetFieldValue < cc8*, u32 >( -1, "mVertexSize", 0 );
@@ -904,7 +904,7 @@ void MOAIVertexFormat::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState&
 //----------------------------------------------------------------//
 void MOAIVertexFormat::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "mTotalAttributes", MOAILuaSize ( this->mTotalAttributes ));
 	state.SetField ( -1, "mVertexSize", MOAILuaSize ( this->mVertexSize ));

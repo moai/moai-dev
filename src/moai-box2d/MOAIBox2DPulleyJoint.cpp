@@ -156,12 +156,12 @@ MOAIBox2DPulleyJoint::~MOAIBox2DPulleyJoint () {
 
 //----------------------------------------------------------------//
 void MOAIBox2DPulleyJoint::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIBox2DPulleyJoint::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getGroundAnchorA",		_getGroundAnchorA },

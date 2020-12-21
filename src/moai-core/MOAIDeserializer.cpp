@@ -162,7 +162,7 @@ u32 MOAIDeserializer::SerializeFromFile ( cc8* filename ) {
 
 //----------------------------------------------------------------//
 void MOAIDeserializer::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "base64Decode",			_base64Decode },
@@ -174,7 +174,7 @@ void MOAIDeserializer::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaS
 
 //----------------------------------------------------------------//
 void MOAIDeserializer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "createObject",			_createObject },

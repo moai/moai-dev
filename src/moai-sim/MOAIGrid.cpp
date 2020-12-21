@@ -344,12 +344,12 @@ size_t MOAIGrid::StreamTilesOut ( ZLStream* stream ) {
 
 //----------------------------------------------------------------//
 void MOAIGrid::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIGrid::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "clearTileFlags",		_clearTileFlags },
@@ -371,7 +371,7 @@ void MOAIGrid::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& st
 //----------------------------------------------------------------//
 void MOAIGrid::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	this->mTiles.Init ( this->MOAIGridSpace::GetTotalCells ());
 
@@ -403,7 +403,7 @@ void MOAIGrid::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, 
 //----------------------------------------------------------------//
 void MOAIGrid::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
 	UNUSED ( serializer );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	ZLLeanArray < u8 > zip;
 	ZLZip::Deflate ( this->mTiles.GetBuffer (), this->mTiles.Size () * sizeof ( u32 ), zip );

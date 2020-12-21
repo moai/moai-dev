@@ -17,7 +17,7 @@ class MOAIGraphicsGridProp :
 private:
 
 	//----------------------------------------------------------------//
-	bool					MOAIAbstractRenderNode_LoadGfxState		( u32 renderPhase );
+	bool					MOAIAbstractRenderNode_LoadGfxState		( MOAIRenderPhaseEnum::_ renderPhase );
 	bool					MOAINode_ApplyAttrOp					( ZLAttrID attrID, ZLAttribute& attr, u32 op );
 	void					MOAINode_Update							();
 

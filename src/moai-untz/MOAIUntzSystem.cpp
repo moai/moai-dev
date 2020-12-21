@@ -213,7 +213,7 @@ void MOAIUntzSystem::Suspend () {
 
 //----------------------------------------------------------------//
 void MOAIUntzSystem::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
 		//{ "getDeviceCount",			_getDeviceCount },
@@ -239,5 +239,5 @@ void MOAIUntzSystem::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaSta
 //----------------------------------------------------------------//
 void MOAIUntzSystem::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }

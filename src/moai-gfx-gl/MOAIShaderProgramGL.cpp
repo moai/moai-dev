@@ -239,12 +239,12 @@ void MOAIShaderProgramGL::SetVertexAttribute ( u32 idx, cc8* attribute ) {
 
 //----------------------------------------------------------------//
 void MOAIShaderProgramGL::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIShaderProgramGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "declareUniform",				_declareUniform },

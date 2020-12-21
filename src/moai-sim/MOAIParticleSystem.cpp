@@ -566,7 +566,7 @@ void MOAIParticleSystem::ReserveStates ( ZLSize total ) {
 
 //----------------------------------------------------------------//
 void MOAIParticleSystem::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "ORDER_NORMAL",	( u32 )ORDER_NORMAL );
 	state.SetField ( -1, "ORDER_REVERSE",	( u32 )ORDER_REVERSE );
@@ -574,7 +574,7 @@ void MOAIParticleSystem::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILu
 
 //----------------------------------------------------------------//
 void MOAIParticleSystem::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
 		{ "capParticles",		_capParticles },
@@ -617,7 +617,7 @@ bool MOAIParticleSystem::MOAIAction_IsDone () {
 }
 
 //----------------------------------------------------------------//
-bool MOAIParticleSystem::MOAIAbstractRenderNode_LoadGfxState ( u32 renderPhase ) {
+bool MOAIParticleSystem::MOAIAbstractRenderNode_LoadGfxState ( MOAIRenderPhaseEnum::_ renderPhase ) {
 
 	if ( this->mDeck && MOAIAbstractGraphicsProp::MOAIAbstractRenderNode_LoadGfxState ( renderPhase )) {
 		this->LoadUVTransform ();
@@ -627,7 +627,7 @@ bool MOAIParticleSystem::MOAIAbstractRenderNode_LoadGfxState ( u32 renderPhase )
 }
 
 //----------------------------------------------------------------//
-void MOAIParticleSystem::MOAIAbstractRenderNode_Render ( u32 renderPhase ) {
+void MOAIParticleSystem::MOAIAbstractRenderNode_Render ( MOAIRenderPhaseEnum::_ renderPhase ) {
 	UNUSED ( renderPhase );
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
@@ -663,7 +663,7 @@ void MOAIParticleSystem::MOAIAbstractRenderNode_Render ( u32 renderPhase ) {
 		
 		gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX, drawingMtx );
 		
-		this->mDeck->Draw ( this->mIndex + ( ZLSize )sprite.mGfxID );
+		this->mDeck->Render ( this->mIndex + ( ZLSize )sprite.mGfxID, renderPhase );
 	}
 }
 

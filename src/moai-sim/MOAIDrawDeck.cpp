@@ -75,6 +75,7 @@ MOAIDrawDeck::MOAIDrawDeck () {
 	
 	RTTI_BEGIN ( MOAIDrawDeck )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIDrawDeck >)
+		RTTI_EXTEND ( MOAIDeck )
 		RTTI_EXTEND ( MOAIStretchDeck )
 	RTTI_END
 	
@@ -92,12 +93,12 @@ MOAIDrawDeck::~MOAIDrawDeck () {
 
 //----------------------------------------------------------------//
 void MOAIDrawDeck::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIDrawDeck::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "setBounds",				_setBounds },
@@ -107,29 +108,6 @@ void MOAIDrawDeck::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAIDrawDeck::MOAIDeck_Draw ( ZLIndex idx ) {
-	
-	if ( this->mOnDraw ) {
-	
-		MOAIDraw::Get ().BindVectorPresets ();
-	
-		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-		ZLVec3D stretch = this->BindStretchVertexTransform ();
-	
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-		this->mOnDraw.PushRef ( state );
-	
-		MOAIDraw::Get ().PushCmdInterface ( state );
-	
-		state.Push ( MOAILuaIndex ( idx ));
-		state.Push ( stretch.mX );
-		state.Push ( stretch.mY );
-		state.Push ( stretch.mZ );
-		state.DebugCall ( 5, 0 );
-	}
 }
 
 //----------------------------------------------------------------//
@@ -158,8 +136,24 @@ ZLBounds MOAIDrawDeck::MOAIDeck_GetBounds ( ZLIndex idx ) {
 }
 
 //----------------------------------------------------------------//
-MOAICollisionShape* MOAIDrawDeck::MOAIDeck_GetCollisionShape ( ZLIndex idx ) {
-	UNUSED ( idx );
-
-	return 0;
+void MOAIDrawDeck::MOAIDeck_Render ( ZLIndex idx, MOAIRenderPhaseEnum::_ renderPhase ) {
+	
+	if ( this->mOnDraw ) {
+	
+		MOAIDraw::Get ().BindVectorPresets ();
+	
+		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+		ZLVec3D stretch = this->BindStretchVertexTransform ();
+	
+		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		this->mOnDraw.PushRef ( state );
+	
+		MOAIDraw::Get ().PushCmdInterface ( state );
+	
+		state.Push ( MOAILuaIndex ( idx ));
+		state.Push ( stretch.mX );
+		state.Push ( stretch.mY );
+		state.Push ( stretch.mZ );
+		state.DebugCall ( 5, 0 );
+	}
 }

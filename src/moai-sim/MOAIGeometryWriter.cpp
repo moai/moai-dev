@@ -929,7 +929,7 @@ void MOAIGeometryWriter::WriteVertex ( const MOAIVertexFormat& format, ZLStream&
 
 //----------------------------------------------------------------//
 void MOAIGeometryWriter::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "COLOR_ADD",				( u32 )COLOR_ADD );
 	state.SetField ( -1, "COLOR_MULTIPLY",			( u32 )COLOR_MULTIPLY );
@@ -960,5 +960,5 @@ void MOAIGeometryWriter::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILu
 //----------------------------------------------------------------//
 void MOAIGeometryWriter::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	UNUSED ( state );
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }

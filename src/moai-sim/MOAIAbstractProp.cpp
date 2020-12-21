@@ -282,7 +282,7 @@ MOAIAbstractProp::~MOAIAbstractProp () {
 
 //----------------------------------------------------------------//
 void MOAIAbstractProp::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAIAbstractProp >( TOTAL_DEBUG_LINE_STYLES );
 	
@@ -300,7 +300,7 @@ void MOAIAbstractProp::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaS
 
 //----------------------------------------------------------------//
 void MOAIAbstractProp::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 	
 	luaL_Reg regTable [] = {
 		{ "getModelBounds",			_getModelBounds },

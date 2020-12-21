@@ -419,7 +419,7 @@ MOAIDeck* MOAISpriteDeck2D::AffirmDeck ( MOAILuaState& state, int idx ) {
 		MOAISpriteDeck2D* spriteDeck = new MOAISpriteDeck2D ();
 		assert ( spriteDeck );
 
-		spriteDeck->_ < MOAIDrawAPI >( MOAIDraw::Get ()).SetTexture ( texture, 0 );
+		spriteDeck->_ < MOAIDrawAPI >( MOAIDraw::Get (), 0, MOAIRenderPhaseEnum::RENDER_PHASE_DRAW ).SetTexture ( texture, 0 );
 		
 		int hWidth = ( int )( texture->GetWidth () / 2 );
 		int hHeight = ( int )( texture->GetHeight () / 2 );
@@ -536,7 +536,7 @@ MOAISpriteDeck2D::MOAISpriteDeck2D () {
 	RTTI_BEGIN ( MOAISpriteDeck2D )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAISpriteDeck2D >)
 		RTTI_EXTEND ( MOAIDeck )
-		RTTI_EXTEND ( MOAIHasGfxScriptBatch )
+		RTTI_EXTEND ( MOAIHasGfxScriptBatchesForPhases )
 		RTTI_EXTEND ( MOAIHasHitMaskBatch )
 	RTTI_END
 }
@@ -648,12 +648,12 @@ void MOAISpriteDeck2D::TransformUV ( const ZLAffine3D& mtx ) {
 
 //----------------------------------------------------------------//
 void MOAISpriteDeck2D::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAISpriteDeck2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "getQuad",				_getQuad },
@@ -676,34 +676,6 @@ void MOAISpriteDeck2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaS
 	};
 
 	luaL_register ( state, 0, regTable );
-}
-
-//----------------------------------------------------------------//
-void MOAISpriteDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
-
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	MOAIQuadBrush::BindVertexFormat ();
-	
-	gfxMgr.SetVertexTransform ( MOAIGfxMgr::MODEL_TO_DISPLAY_MTX );
-	gfxMgr.SetUVTransform ( MOAIGfxMgr::UV_TO_MODEL_MTX );
-	gfxMgr.SetBlendMode ( MOAIBlendMode ());
-	gfxMgr.SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
-
-	MOAISpriteList spriteList = this->GetSpriteList ( idx );
-	
-	ZLIndex base = spriteList.mBaseSprite;
-	ZLIndex top = base + spriteList.mTotalSprites;
-	
-	for ( ZLIndex i = base; i < top; ++i ) {
-		MOAISpriteDeck2DCallable callable;
-		callable.mBrush = this->GetSpriteBrush ( i );
-		
-		MOAIGfxScript* gfxScript = this->GetGfxScript ( callable.mBrush.mMaterialID );
-		if ( gfxScript ) {
-			gfxScript->ExecuteBytecode ( &callable );
-		}
-		callable.Flush ();
-	}
 }
 
 //----------------------------------------------------------------//
@@ -740,12 +712,6 @@ ZLBounds MOAISpriteDeck2D::MOAIDeck_GetBounds ( ZLIndex idx ) {
 }
 
 //----------------------------------------------------------------//
-MOAICollisionShape* MOAISpriteDeck2D::MOAIDeck_GetCollisionShape ( ZLIndex idx ) {
-	UNUSED ( idx );
-	return 0;
-}
-
-//----------------------------------------------------------------//
 MOAIPickResult MOAISpriteDeck2D::MOAIDeck_PickByPoint ( ZLIndex idx, ZLVec3D loc ) {
 
 	MOAISpriteList spriteList = this->GetSpriteList ( idx );
@@ -773,4 +739,32 @@ MOAIPickResult MOAISpriteDeck2D::MOAIDeck_PickByRay ( ZLIndex idx, ZLVec3D loc, 
 	UNUSED ( normal );
 
 	return false;
+}
+
+//----------------------------------------------------------------//
+void MOAISpriteDeck2D::MOAIDeck_Render ( ZLIndex idx, MOAIRenderPhaseEnum::_ renderPhase ) {
+
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIQuadBrush::BindVertexFormat ();
+	
+	gfxMgr.SetVertexTransform ( MOAIGfxMgr::MODEL_TO_DISPLAY_MTX );
+	gfxMgr.SetUVTransform ( MOAIGfxMgr::UV_TO_MODEL_MTX );
+	gfxMgr.SetBlendMode ( MOAIBlendMode ());
+	gfxMgr.SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
+
+	MOAISpriteList spriteList = this->GetSpriteList ( idx );
+	
+	ZLIndex base = spriteList.mBaseSprite;
+	ZLIndex top = base + spriteList.mTotalSprites;
+	
+	for ( ZLIndex i = base; i < top; ++i ) {
+		MOAISpriteDeck2DCallable callable;
+		callable.mBrush = this->GetSpriteBrush ( i );
+		
+		MOAIGfxScript* gfxScript = this->GetGfxScript ( callable.mBrush.mMaterialID, renderPhase );
+		if ( gfxScript ) {
+			gfxScript->ExecuteBytecode ( &callable );
+		}
+		callable.Flush ();
+	}
 }

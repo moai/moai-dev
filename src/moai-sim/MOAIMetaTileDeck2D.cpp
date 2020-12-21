@@ -129,12 +129,12 @@ MOAIMetaTileDeck2D::~MOAIMetaTileDeck2D () {
 
 //----------------------------------------------------------------//
 void MOAIMetaTileDeck2D::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 }
 
 //----------------------------------------------------------------//
 void MOAIMetaTileDeck2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.DidVisit ( *this )) return;
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "reserveMetaTiles",	_reserveMetaTiles },
@@ -148,7 +148,39 @@ void MOAIMetaTileDeck2D::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILu
 }
 
 //----------------------------------------------------------------//
-void MOAIMetaTileDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
+ZLBounds MOAIMetaTileDeck2D::MOAIDeck_GetBounds () {
+
+	ZLSize size = this->mBrushes.Size ();
+	if ( size == 0 ) {
+		return ZLBounds::EMPTY;
+	}
+
+	ZLBox aabb;
+	for ( ZLIndex i = 0; i < this->mBrushes.Size (); ++i ) {
+		aabb.Grow ( this->GetBounds ( i ).mAABB, i > 0 );
+	}
+	return ZLBounds ( aabb );
+}
+
+//----------------------------------------------------------------//
+ZLBounds MOAIMetaTileDeck2D::MOAIDeck_GetBounds ( ZLIndex idx ) {
+	
+	ZLSize size = this->mBrushes.Size ();
+	if ( this->mGrid && size ) {
+		
+		// TODO: handle oversized decks (don't assume unit sized deck items)
+		idx = ZLIndexOp::Wrap ( idx, size );
+		
+		MOAIMetaTile& brush = this->mBrushes [ idx ];
+		ZLRect frame = this->mGrid->GetFrame ( brush.mMin, brush.mMax );
+		frame.Offset ( brush.mOffset.mX - frame.mXMin, brush.mOffset.mY - frame.mYMin );
+		return ZLBounds ( frame );
+	}
+	return ZLBounds::EMPTY;
+}
+
+//----------------------------------------------------------------//
+void MOAIMetaTileDeck2D::MOAIDeck_Render ( ZLIndex idx, MOAIRenderPhaseEnum::_ renderPhase ) {
 	UNUSED ( idx );
 
 	u32 size = ( u32 )this->mBrushes.Size ();
@@ -192,47 +224,7 @@ void MOAIMetaTileDeck2D::MOAIDeck_Draw ( ZLIndex idx ) {
 			mtx.PrependSclTr2D ( tileWidth, tileHeight, xOff + loc.mX, yOff + loc.mY );
 			gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX, mtx );
 
-			//this->mDeck->Draw ( MOAIDeckRemapper::Remap ( this->mRemapper, idx ), materials, loc, scale );
-			this->mDeck->Draw ( idx );
+			this->mDeck->Render ( idx, renderPhase );
 		}
 	}
-}
-
-//----------------------------------------------------------------//
-ZLBounds MOAIMetaTileDeck2D::MOAIDeck_GetBounds () {
-
-	ZLSize size = this->mBrushes.Size ();
-	if ( size == 0 ) {
-		return ZLBounds::EMPTY;
-	}
-
-	ZLBox aabb;
-	for ( ZLIndex i = 0; i < this->mBrushes.Size (); ++i ) {
-		aabb.Grow ( this->GetBounds ( i ).mAABB, i > 0 );
-	}
-	return ZLBounds ( aabb );
-}
-
-//----------------------------------------------------------------//
-ZLBounds MOAIMetaTileDeck2D::MOAIDeck_GetBounds ( ZLIndex idx ) {
-	
-	ZLSize size = this->mBrushes.Size ();
-	if ( this->mGrid && size ) {
-		
-		// TODO: handle oversized decks (don't assume unit sized deck items)
-		idx = ZLIndexOp::Wrap ( idx, size );
-		
-		MOAIMetaTile& brush = this->mBrushes [ idx ];
-		ZLRect frame = this->mGrid->GetFrame ( brush.mMin, brush.mMax );
-		frame.Offset ( brush.mOffset.mX - frame.mXMin, brush.mOffset.mY - frame.mYMin );
-		return ZLBounds ( frame );
-	}
-	return ZLBounds::EMPTY;
-}
-
-//----------------------------------------------------------------//
-MOAICollisionShape* MOAIMetaTileDeck2D::MOAIDeck_GetCollisionShape ( ZLIndex idx ) {
-	UNUSED ( idx );
-
-	return 0;
 }
