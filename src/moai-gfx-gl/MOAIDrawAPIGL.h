@@ -9,7 +9,7 @@
 class MOAIBlendMode;
 class MOAIFrameBuffer;
 class MOAIIndexBuffer;
-class MOAIShader;
+class MOAIShaderGL;
 class MOAITexture;
 class MOAIVertexArray;
 class MOAIVertexBuffer;

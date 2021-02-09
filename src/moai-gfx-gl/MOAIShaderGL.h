@@ -4,6 +4,8 @@
 #ifndef	MOAISHADERGL_H
 #define	MOAISHADERGL_H
 
+#include <moai-gfx-gl/MOAIDrawAPIGL.h>
+
 class MOAIShaderProgramGL;
 
 // MOAIShaderUniformComposerInterface
@@ -20,7 +22,8 @@ class MOAIShaderProgramGL;
 */
 class MOAIShaderGL :
 	public virtual MOAIShader,
-	public virtual MOAIAbstractUniformBuffer {
+	public virtual MOAIAbstractUniformBuffer,
+	public virtual MOAIAbstractCmdStreamFilter {
 protected:
 
 	friend class MOAIGfxMgrGL_GPUCacheGL;
@@ -32,10 +35,13 @@ protected:
 	static int				_setProgram					( lua_State* L );
 	
 	//----------------------------------------------------------------//
+	void					ExecuteSetUniformGL			( MOAIGfxMgr& gfxMgr, const MOAIDrawingParamGL::LoadShaderUniform& param );
+	
+	//----------------------------------------------------------------//
 	void							_RegisterLuaClass							( RTTIVisitorHistory& history, MOAILuaState& state );
 	void							_RegisterLuaFuncs							( RTTIVisitorHistory& history, MOAILuaState& state );
+	bool							MOAIAbstractCmdStreamFilter_FilterCommand	( u32 cmd, const void* param, ZLSize paramSize );
 	const MOAIUniformSchema*		MOAIAbstractUniformBuffer_GetSchema			() const;
-	MOAIGfxScript&					MOAIHasGfxScript_AffirmGfxScript			();
 	bool							MOAIShader_IsReadyForUse					() const;
 
 public:
@@ -48,6 +54,7 @@ public:
 	void					ApplyUniforms				();
 	void					BindUniforms				();
 	void					Bless						();
+	void					GatherUniforms				();
 	MOAIUniformHandle		GetUniformHandle			( ZLIndex uniformID, ZLIndex index );
 	bool					HasDirtyUniforms			();
 							MOAIShaderGL				();

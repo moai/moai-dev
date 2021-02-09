@@ -16,9 +16,6 @@ class MOAIDrawGL :
 protected:
 
 	//----------------------------------------------------------------//
-	void			ExecuteSetUniformGL			( MOAIGfxMgr& gfxMgr, const MOAIDrawingParamGL::LoadShaderUniform& param );
-
-	//----------------------------------------------------------------//
 	void			MOAIAbstractCmdHandler_HandleCommand		( u32 cmd, const void* param );
 
 public:

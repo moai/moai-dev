@@ -40,6 +40,59 @@ void MOAIShaderGL::BindUniforms () {
 }
 
 //----------------------------------------------------------------//
+void MOAIShaderGL::ExecuteSetUniformGL ( MOAIGfxMgr& gfxMgr, const MOAIDrawingParamGL::LoadShaderUniform& param ) {
+	
+	MOAIUniformHandle uniform = this->GetUniformHandle ( param.mTargetUniformID, param.mTargetUniformIndex );
+	if ( !uniform.IsValid ()) return;
+
+	if ( param.mPipelineGlobalID < MOAIGfxMgr::TOTAL_MATRICES ) {
+
+		uniform.SetValue ( gfxMgr.GetMtx ( param.mPipelineGlobalID ));
+	}
+	else {
+
+		switch (( ZLSize )param.mPipelineGlobalID ) {
+
+			case MOAIGfxMgr::PEN_COLOR:
+
+				uniform.SetValue ( gfxMgr.GetFinalColor ());
+				break;
+
+			case MOAIGfxMgr::VIEW_HALF_HEIGHT:
+
+				uniform.SetValue ( gfxMgr.GetViewRect ().Height () * 0.5f );
+				break;
+
+			case MOAIGfxMgr::VIEW_HALF_WIDTH: {
+
+				uniform.SetValue ( gfxMgr.GetViewRect ().Width () * 0.5f );
+				break;
+			}
+			case MOAIGfxMgr::VIEW_HEIGHT:
+
+				uniform.SetValue ( gfxMgr.GetViewRect ().Height ());
+				break;
+
+			case MOAIGfxMgr::VIEW_WIDTH:
+
+				uniform.SetValue ( gfxMgr.GetViewRect ().Width ());
+				break;
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIShaderGL::GatherUniforms () {
+
+	MOAIGfxScript* gfxScript = this->GetGfxScript ();
+	gfxScript = gfxScript ? gfxScript : ( this->mProgram ? this->mProgram->GetGfxScript () : NULL );
+	
+	if ( gfxScript ) {
+		gfxScript->ExecuteBytecode ( this );
+	}
+}
+
+//----------------------------------------------------------------//
 MOAIUniformHandle MOAIShaderGL::GetUniformHandle ( ZLIndex uniformID, ZLIndex index ) {
 
 	return this->mProgram->GetUniformHandle ( this->mUniforms.GetBuffer (), uniformID, index );
@@ -98,16 +151,24 @@ void MOAIShaderGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState
 }
 
 //----------------------------------------------------------------//
-const MOAIUniformSchema* MOAIShaderGL::MOAIAbstractUniformBuffer_GetSchema () const {
+bool MOAIShaderGL::MOAIAbstractCmdStreamFilter_FilterCommand ( u32 cmd, const void* param, ZLSize paramSize ) {
 
-	return this->mProgram;
+	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+
+	switch ( cmd ) {
+	
+		case MOAIDrawAPIGL::LOAD_SHADER_UNIFORM_GL: {
+			this->ExecuteSetUniformGL ( gfxMgr, *( const MOAIDrawingParamGL::LoadShaderUniform* )param );
+			break;
+		}
+	}
+	return true;
 }
 
 //----------------------------------------------------------------//
-MOAIGfxScript& MOAIShaderGL::MOAIHasGfxScript_AffirmGfxScript	() {
+const MOAIUniformSchema* MOAIShaderGL::MOAIAbstractUniformBuffer_GetSchema () const {
 
-	MOAIGfxScript* gfxScript = this->GetGfxScript ();
-	return gfxScript ? *gfxScript : this->mProgram->AffirmGfxScript ();
+	return this->mProgram;
 }
 
 //----------------------------------------------------------------//

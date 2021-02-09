@@ -120,9 +120,9 @@ protected:
 	void				_RegisterLuaFuncs			( RTTIVisitorHistory& history, MOAILuaState& state );
 	void				_SerializeIn				( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
 	void				_SerializeOut				( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
-	void				MOAIDeck_Draw				( ZLIndex idx, MOAIRenderPhaseEnum::_ renderPhase );
 	ZLBounds			MOAIDeck_GetBounds			();
 	ZLBounds			MOAIDeck_GetBounds			( ZLIndex idx );
+	void				MOAIDeck_Render				( ZLIndex idx, MOAIRenderPhaseEnum::_ renderPhase );
 
 public:
 

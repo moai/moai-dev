@@ -28,9 +28,9 @@ int MOAIDrawAPIGL::_loadShaderUniformGL ( lua_State* L ) {
 MOAIDrawAPIGL& MOAIDrawAPIGL::LoadShaderUniformGL ( ZLIndex globalID, ZLIndex uniformID, ZLIndex index ) {
 
 	MOAIDrawingParamGL::LoadShaderUniform param;
-	param.mPipelineGlobalID = globalID;
-	param.mTargetUniformID = uniformID;
-	param.mTargetUniformIndex = index;
+	param.mPipelineGlobalID		= globalID;
+	param.mTargetUniformID		= uniformID;
+	param.mTargetUniformIndex	= index;
 	this->SubmitCommand < MOAIDrawingParamGL::LoadShaderUniform >( MOAIDrawAPIGL::LOAD_SHADER_UNIFORM_GL, param );
 	
 	return *this;

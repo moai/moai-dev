@@ -10,8 +10,8 @@ MOAIDebugLinesMgr.setStyle ( MOAIProp.DEBUG_DRAW_WORLD_BOUNDS, 1, 0.5, 0.5, 0.5 
 MOAISim.openWindow ( "test", 320, 480 )
 
 viewport = MOAIViewport.new ()
-viewport:setSize ( 320, 480 )
-viewport:setScale ( 320, 480 )
+	:setViewSize ( 320, 480 )
+	:setViewScale ( 320, 480 )
 
 layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
@@ -96,13 +96,16 @@ function makeBoxMesh ( xMin, yMin, zMin, xMax, yMax, zMax, texture )
 
     mesh:setTotalElements ( vertexBuffer:countElements ( vertexFormat ))
     mesh:setBounds ( vertexBuffer:computeBounds ( vertexFormat ))
-	mesh:setTexture ( texture )
-    mesh:setShader ( MOAIShaderMgr.MESH_SHADER )
-    mesh:setVertexFormat ( vertexFormat )
-	mesh:setVertexBuffer ( vertexBuffer )
+
+	mesh:gfx ()
+		:setTexture ( texture )
+    	:setShader ( MOAIShaderMgr.MESH_SHADER )
+    	:setVertexFormat ( vertexFormat )
+		:setVertexBuffer ( vertexBuffer )
+    	:setCullFunc ( MOAIGraphicsProp.CULL_BACK )
+
 	mesh:setPrimType ( MOAIMesh.GL_TRIANGLES )
-    mesh:setCullFunc ( MOAIGraphicsProp.CULL_BACK )
-	
+
 	return mesh
 end
 

@@ -541,6 +541,8 @@ void MOAIMesh::DrawIndex ( ZLIndex idx, MOAIMeshSpan* span ) {
 	callable.mSpan	 			= span;
 	callable.mTotalElements		= this->mTotalElements;
 	gfxScript->ExecuteBytecode ( &callable );
+	
+	callable.Flush ();
 }
 
 //----------------------------------------------------------------//
@@ -668,12 +670,6 @@ void MOAIMesh::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state,
 }
 
 //----------------------------------------------------------------//
-void MOAIMesh::MOAIDeck_Draw ( ZLIndex idx, MOAIRenderPhaseEnum::_ renderPhase ) {
-
-	this->DrawIndex ( idx, 0 );
-}
-
-//----------------------------------------------------------------//
 ZLBounds MOAIMesh::MOAIDeck_GetBounds () {
 
 	return this->mBounds;
@@ -684,4 +680,10 @@ ZLBounds MOAIMesh::MOAIDeck_GetBounds ( ZLIndex idx ) {
 	UNUSED ( idx );
 
 	return this->mBounds;
+}
+
+//----------------------------------------------------------------//
+void MOAIMesh::MOAIDeck_Render ( ZLIndex idx, MOAIRenderPhaseEnum::_ renderPhase ) {
+
+	this->DrawIndex ( idx, 0 );
 }

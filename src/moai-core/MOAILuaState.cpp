@@ -838,7 +838,6 @@ ZLColorVec MOAILuaState::GetValue < ZLColorVec >( int idx, const ZLColorVec valu
 	return color;
 }
 
-
 //----------------------------------------------------------------//
 template <>
 ZLMatrix3x3 MOAILuaState::GetValue < ZLMatrix3x3 >( int idx, const ZLMatrix3x3 value ) {

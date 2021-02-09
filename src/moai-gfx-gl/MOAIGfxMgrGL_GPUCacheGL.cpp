@@ -378,6 +378,8 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushShader () {
 	MOAIShaderProgramGL* program = nextShader ? nextShader->GetProgram () : 0;
 	nextShader = program ? nextShader : 0;
 	
+	nextShader->GatherUniforms ();
+	
 	bool applyUniforms	= ( nextShader && nextShader->HasDirtyUniforms ());
 	bool changeShader	= ( nextShader != prevShader );
 
