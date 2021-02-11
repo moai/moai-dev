@@ -19,7 +19,7 @@ class MOAIGfxBufferSnapshotVK;
 // MOAIOneTriVK
 //================================================================//
 class MOAIOneTriVK :
-	public virtual MOAIAbstractRenderNode {
+	public virtual MOAIAbstractRenderable {
 private:
 
 	struct Vertex {

@@ -477,7 +477,7 @@ void MOAIPartitionResultBuffer::Render ( MOAIRenderPhaseEnum::_ renderPhase ) {
 	for ( u32 i = 0; i < totalResults; ++i ) {
 		
 		MOAIPartitionResult* result = this->GetResultUnsafe ( i );
-		MOAIAbstractRenderNode* prop = result->AsType < MOAIAbstractRenderNode >();
+		MOAIAbstractRenderable* prop = result->AsType < MOAIAbstractRenderable >();
 		if ( prop ) {
 			gfxMgr.SetIndex ( result->mSubPrimID );
 			prop->Render ( renderPhase );

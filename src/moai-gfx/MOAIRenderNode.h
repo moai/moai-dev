@@ -4,13 +4,13 @@
 #ifndef	MOAIRENDERNODE_H
 #define	MOAIRENDERNODE_H
 
-#include <moai-gfx/MOAIAbstractRenderNode.h>
+#include <moai-gfx/MOAIAbstractRenderable.h>
 
 //================================================================//
 // MOAIRenderNode
 //================================================================//
 class MOAIRenderNode :
-	public virtual MOAIAbstractRenderNode {
+	public virtual MOAIAbstractRenderable {
 protected:
 
 	MOAI_LUA_OBJECT_VISITOR_FRIEND
@@ -34,7 +34,7 @@ public:
 	//----------------------------------------------------------------//
 						MOAIRenderNode				();
 	virtual 			~MOAIRenderNode				();
-	void				PushChild					( MOAIAbstractRenderNode& node );
+	void				PushChild					( MOAIAbstractRenderable& node );
 	void				PushChild					( MOAILuaState& state, int idx );
 	static void			Render						( MOAIRenderPhaseEnum::_ renderPhase, MOAILuaMemberRef& ref );
 	static void			Render						( MOAIRenderPhaseEnum::_ renderPhase, MOAILuaState& state, int idx );

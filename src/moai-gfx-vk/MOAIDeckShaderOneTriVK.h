@@ -21,7 +21,7 @@ class MOAIVertexBufferVK;
 // MOAIDeckShaderOneTriVK
 //================================================================//
 class MOAIDeckShaderOneTriVK :
-	public virtual MOAIAbstractRenderNode {
+	public virtual MOAIAbstractRenderable {
 private:
 
 	struct Vertex {

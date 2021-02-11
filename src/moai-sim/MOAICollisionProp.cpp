@@ -208,7 +208,7 @@ MOAICollisionProp::MOAICollisionProp () :
 	RTTI_BEGIN ( MOAICollisionProp )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAICollisionProp >)
 		RTTI_EXTEND ( MOAIPropWithDeckAndIndex )
-		RTTI_EXTEND ( MOAIAbstractRenderNode )
+		RTTI_EXTEND ( MOAIAbstractRenderable )
 	RTTI_END
 	
 	this->mActiveListLink.Data ( this );

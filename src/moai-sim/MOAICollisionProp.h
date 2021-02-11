@@ -59,7 +59,7 @@ private:
 // TODO: doxygen
 class MOAICollisionProp :
 	public virtual MOAIPropWithDeckAndIndex,
-	public virtual MOAIAbstractRenderNode {
+	public virtual MOAIAbstractRenderable {
 private:
 	
 	friend class MOAICollisionWorld;

@@ -267,7 +267,7 @@ MOAIAbstractProp::MOAIAbstractProp () :
 	RTTI_BEGIN ( MOAIAbstractProp )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractProp >)
 		RTTI_EXTEND ( MOAIPartitionHull )
-		RTTI_EXTEND ( MOAIAbstractRenderNode )
+		RTTI_EXTEND ( MOAIAbstractRenderable )
 		RTTI_EXTEND ( MOAITransform )
 	RTTI_END
 }

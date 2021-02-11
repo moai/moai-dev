@@ -3,7 +3,7 @@
 
 #include "pch.h"
 
-#include <moai-gfx/MOAIAbstractRenderNode.h>
+#include <moai-gfx/MOAIAbstractRenderable.h>
 #include <moai-gfx/MOAIHasGfxScriptBatchesForPhases.h>
 
 //================================================================//

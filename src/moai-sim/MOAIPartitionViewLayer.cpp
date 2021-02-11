@@ -32,7 +32,7 @@ int	MOAIPartitionViewLayer::_getPropViewList ( lua_State* L ) {
 	
 	if ( partition && self->mViewport ) {
 		
-		ZLTypeID typeID = ZLType::GetID < MOAIAbstractRenderNode >();
+		ZLTypeID typeID = ZLType::GetID < MOAIAbstractRenderable >();
 		
 		float sortScale [ 4 ];
 		
@@ -189,7 +189,7 @@ void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition, MOAIRende
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 
-	ZLTypeID typeID = ZLType::GetID < MOAIAbstractRenderNode >();
+	ZLTypeID typeID = ZLType::GetID < MOAIAbstractRenderable >();
 	
 	ZLStrongPtr < MOAIPartitionResultBuffer > buffer;
 	MOAIPool::Get ().Provision < MOAIPartitionResultBuffer >( buffer );

@@ -13,7 +13,7 @@ class MOAIAbstractViewLayer;
 //================================================================//
 // TODO: doxygen
 class MOAIProjectionProp :
-	public virtual MOAIAbstractRenderNode,
+	public virtual MOAIAbstractRenderable,
 	public virtual MOAIPartitionHull {
 protected:
 

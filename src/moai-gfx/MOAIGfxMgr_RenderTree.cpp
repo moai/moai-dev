@@ -33,7 +33,7 @@ MOAIGfxMgr_RenderTree::~MOAIGfxMgr_RenderTree () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgr_RenderTree::PushRenderable ( MOAIAbstractRenderNode& node ) {
+void MOAIGfxMgr_RenderTree::PushRenderable ( MOAIAbstractRenderable& node ) {
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	node.PushLuaUserdata ( state );

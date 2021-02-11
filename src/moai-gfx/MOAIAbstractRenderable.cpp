@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-gfx/MOAIAbstractGfxScriptCallback.h>
-#include <moai-gfx/MOAIAbstractRenderNode.h>
+#include <moai-gfx/MOAIAbstractRenderable.h>
 #include <moai-gfx/MOAIDraw.h>
 #include <moai-gfx/MOAIGfxMgr.h>
 
@@ -14,7 +14,7 @@ class MOAIAbstractRenderNodeCallback :
 	public MOAIAbstractGfxScriptCallback {
 public:
 
-	MOAIAbstractRenderNode*		mNode;
+	MOAIAbstractRenderable*		mNode;
 	MOAIRenderPhaseEnum::_		mRenderPhase;
 
 	//----------------------------------------------------------------//
@@ -29,16 +29,16 @@ public:
 //================================================================//
 
 //----------------------------------------------------------------//
-int MOAIAbstractRenderNode::_getRenderTypeID ( lua_State* L ) {
+int MOAIAbstractRenderable::_getRenderTypeID ( lua_State* L ) {
 	MOAI_LUA_SETUP_CLASS ( "" )
 
-	state.Push ( ZLType::GetID < MOAIAbstractRenderNode >());
+	state.Push ( ZLType::GetID < MOAIAbstractRenderable >());
 	return 1;
 }
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIAbstractRenderNode::_hash ( lua_State* L ) {
+int MOAIAbstractRenderable::_hash ( lua_State* L ) {
 	MOAI_LUA_SETUP_CLASS ( "" )
 	
 	state.Push ( ZLHashFNV1a::Hash32 ( state.GetValue < cc8* >( 1, "" )));
@@ -47,82 +47,35 @@ int MOAIAbstractRenderNode::_hash ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIAbstractRenderNode::_localScope ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractRenderNode, "U" )
-	
-	self->AffirmLocalScope ();
-	self->mLocalScope.PushRef ( state );
-	return 1;
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIAbstractRenderNode::_render ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractRenderNode, "U" )
+int MOAIAbstractRenderable::_render ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIAbstractRenderable, "U" )
 	
 	MOAIRenderPhaseEnum::_ renderPhase = state.GetEnum ( 2, MOAIRenderPhaseEnum::RENDER_PHASE_DRAW );
 	self->Render ( renderPhase );
 	return 0;
 }
 
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIAbstractRenderNode::_setSharedScope ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractRenderNode, "U" )
-	
-	MOAIScope* scope = state.GetLuaObject < MOAIScope >( 2, false );
-	self->mSharedScope.Set ( *self, scope );
-	MOAI_LUA_RETURN_SELF
-}
-
-//----------------------------------------------------------------//
-// TODO: doxygen
-int MOAIAbstractRenderNode::_sharedScope ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIAbstractRenderNode, "U" )
-	
-	if ( self->mSharedScope ) {
-		self->mSharedScope.PushRef ( state );
-		return 1;
-	}
-	return 0;
-}
-
 //================================================================//
-// MOAIAbstractRenderNode
+// MOAIAbstractRenderable
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAbstractRenderNode::AffirmLocalScope () {
+MOAIAbstractRenderable::MOAIAbstractRenderable () {
 
-	if ( !this->mLocalScope ) {
-		this->mLocalScope.Set ( *this, new MOAIScope ());
-	}
-}
-
-//----------------------------------------------------------------//
-MOAIAbstractRenderNode::MOAIAbstractRenderNode () {
-
-	RTTI_BEGIN ( MOAIAbstractRenderNode )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractRenderNode >)
+	RTTI_BEGIN ( MOAIAbstractRenderable )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractRenderable >)
 		RTTI_EXTEND ( MOAIHasGfxScriptsForPhases )
 	RTTI_END
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractRenderNode::~MOAIAbstractRenderNode () {
-
-	this->mLocalScope.Set ( *this, NULL );
-	this->mSharedScope.Set ( *this, NULL );
+MOAIAbstractRenderable::~MOAIAbstractRenderable () {
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractRenderNode::Render ( MOAIRenderPhaseEnum::_ renderPhase ) {
+void MOAIAbstractRenderable::Render ( MOAIRenderPhaseEnum::_ renderPhase ) {
 
 	if ( !this->MOAIAbstractRenderNode_LoadGfxState ( renderPhase )) return;
-	
-	if ( this->mSharedScope ) {
-		this->mSharedScope->ScopeRetain ();
-	}
 	
 	MOAIGfxScript* gfxScript = this->GetGfxScript ( renderPhase );
 	
@@ -136,14 +89,6 @@ void MOAIAbstractRenderNode::Render ( MOAIRenderPhaseEnum::_ renderPhase ) {
 	else {
 		this->MOAIAbstractRenderNode_Render ( renderPhase );
 	}
-	
-	if ( this->mLocalScope ) {
-		this->mLocalScope->Purge ();
-	}
-	
-	if ( this->mSharedScope ) {
-		this->mSharedScope->ScopeRelease ();
-	}
 }
 
 //================================================================//
@@ -151,7 +96,7 @@ void MOAIAbstractRenderNode::Render ( MOAIRenderPhaseEnum::_ renderPhase ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIAbstractRenderNode::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIAbstractRenderable::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.Visit ( *this )) return;
 
 	state.SetEnum ( -1, "RENDER_PHASE_DRAW",		MOAIRenderPhaseEnum::RENDER_PHASE_DRAW );
@@ -167,14 +112,11 @@ void MOAIAbstractRenderNode::_RegisterLuaClass ( RTTIVisitorHistory& history, MO
 }
 
 //----------------------------------------------------------------//
-void MOAIAbstractRenderNode::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+void MOAIAbstractRenderable::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
-		{ "localScope",					_localScope },
 		{ "render",						_render },
-		{ "setSharedScope",				_setSharedScope },
-		{ "sharedScope",				_sharedScope },
 		{ NULL, NULL }
 	};
 
@@ -182,7 +124,7 @@ void MOAIAbstractRenderNode::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MO
 }
 
 //----------------------------------------------------------------//
-bool MOAIAbstractRenderNode::MOAIAbstractRenderNode_LoadGfxState ( MOAIRenderPhaseEnum::_ renderPhase ) {
+bool MOAIAbstractRenderable::MOAIAbstractRenderNode_LoadGfxState ( MOAIRenderPhaseEnum::_ renderPhase ) {
 	UNUSED ( renderPhase );
 	return true;
 }

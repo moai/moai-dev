@@ -37,7 +37,7 @@ MOAIAbstractLayer::MOAIAbstractLayer () {
 	
 	RTTI_BEGIN ( MOAIAbstractLayer )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractLayer >)
-		RTTI_EXTEND ( MOAIAbstractRenderNode )
+		RTTI_EXTEND ( MOAIAbstractRenderable )
 		RTTI_EXTEND ( MOAISurfaceClearColor )
 		RTTI_EXTEND ( MOAIColor )
 	RTTI_END
@@ -74,7 +74,7 @@ void MOAIAbstractLayer::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILua
 //----------------------------------------------------------------//
 bool MOAIAbstractLayer::MOAIAbstractRenderNode_LoadGfxState ( MOAIRenderPhaseEnum::_ renderPhase ) {
 
-	if ( !this->MOAIAbstractRenderNode::MOAIAbstractRenderNode_LoadGfxState ( renderPhase )) return false;
+	if ( !this->MOAIAbstractRenderable::MOAIAbstractRenderNode_LoadGfxState ( renderPhase )) return false;
 	if ( this->IsClear ()) return false;
 	
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();

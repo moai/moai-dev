@@ -13,7 +13,7 @@ class MOAIFrameBuffer;
 // MOAIAbstractLayer
 //================================================================//
 class MOAIAbstractLayer :
-	public virtual MOAIAbstractRenderNode,
+	public virtual MOAIAbstractRenderable,
 	public virtual MOAISurfaceClearColor,
 	public virtual MOAIColor {
 protected:

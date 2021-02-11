@@ -12,7 +12,7 @@
 // TODO: doxygen
 class MOAIAbstractProp :
 	public virtual MOAIPartitionHull,
-	public virtual MOAIAbstractRenderNode,
+	public virtual MOAIAbstractRenderable,
 	public virtual MOAITransform {
 protected:
 

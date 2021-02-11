@@ -9,7 +9,7 @@
 #include <moai-gfx/MOAIAbstractBaseTransform.h>
 #include <moai-gfx/MOAIAbstractChildTransform.h>
 #include <moai-gfx/MOAIAbstractGfxScriptCallback.h>
-#include <moai-gfx/MOAIAbstractRenderNode.h>
+#include <moai-gfx/MOAIAbstractRenderable.h>
 #include <moai-gfx/MOAIAbstractUniformBuffer.h>
 #include <moai-gfx/MOAIBlendMode.h>
 #include <moai-gfx/MOAICamera.h>

@@ -43,7 +43,7 @@ MOAIRenderNode::MOAIRenderNode () {
 
 	RTTI_BEGIN ( MOAIRenderNode )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIRenderNode >)
-		RTTI_EXTEND ( MOAIAbstractRenderNode )
+		RTTI_EXTEND ( MOAIAbstractRenderable )
 	RTTI_END
 }
 
@@ -52,7 +52,7 @@ MOAIRenderNode::~MOAIRenderNode () {
 }
 
 //----------------------------------------------------------------//
-void MOAIRenderNode::PushChild ( MOAIAbstractRenderNode& node ) {
+void MOAIRenderNode::PushChild ( MOAIAbstractRenderable& node ) {
 
 	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 	node.PushLuaUserdata ( state );
@@ -101,7 +101,7 @@ void MOAIRenderNode::Render ( MOAIRenderPhaseEnum::_ renderPhase, MOAILuaState& 
 
 		case LUA_TUSERDATA: {
 
-			MOAIAbstractRenderNode* node = state.GetLuaObject < MOAIAbstractRenderNode >( idx, false );
+			MOAIAbstractRenderable* node = state.GetLuaObject < MOAIAbstractRenderable >( idx, false );
 			if ( node ) {
 				node->Render ( renderPhase );
 			}

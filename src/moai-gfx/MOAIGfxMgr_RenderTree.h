@@ -4,7 +4,7 @@
 #ifndef	MOAIGFXMGR_RENDERTREE_H
 #define	MOAIGFXMGR_RENDERTREE_H
 
-class MOAIAbstractRenderNode;
+class MOAIAbstractRenderable;
 
 //================================================================//
 // MOAIGfxMgr_RenderTree
@@ -31,7 +31,7 @@ public:
 	//----------------------------------------------------------------//
 						MOAIGfxMgr_RenderTree		();
 	virtual				~MOAIGfxMgr_RenderTree		();
-	void				PushRenderable				( MOAIAbstractRenderNode& node ); // goes into the default batch, if it exists
+	void				PushRenderable				( MOAIAbstractRenderable& node ); // goes into the default batch, if it exists
 	void				PushRenderable				( MOAILuaState& state, int idx );
 	void				Render						();
 };

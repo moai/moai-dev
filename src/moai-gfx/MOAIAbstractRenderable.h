@@ -1,34 +1,28 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef	MOAIABSTRACTRENDERNODE_H
-#define	MOAIABSTRACTRENDERNODE_H
+#ifndef	MOAIABSTRACTRENDERABLE_H
+#define	MOAIABSTRACTRENDERABLE_H
 
 #include <moai-gfx/MOAIHasGfxScriptsForPhases.h>
 
 //================================================================//
-// MOAIAbstractRenderNode
+// MOAIAbstractRenderable
 //================================================================//
-class MOAIAbstractRenderNode :
+class MOAIAbstractRenderable :
 	public virtual MOAIHasGfxScriptsForPhases {
 protected:
 
 	friend class MOAIAbstractRenderNodeCallback;
 
 	MOAI_LUA_OBJECT_VISITOR_FRIEND
-
-	MOAILuaSharedPtr < MOAIScope >	mLocalScope;
-	MOAILuaSharedPtr < MOAIScope >	mSharedScope;
 	
 	STLMap < u32, ZLStrongPtr < MOAIGfxScript > > mGfxScripts;
 
 	//----------------------------------------------------------------//
 	static int			_getRenderTypeID			( lua_State* L );
-	static int			_hash						( lua_State* L );
-	static int			_localScope					( lua_State* L );
+	static int			_hash						( lua_State* L ); // TODO: move to util
 	static int			_render						( lua_State* L );
-	static int			_setSharedScope				( lua_State* L );
-	static int			_sharedScope				( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void				_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
@@ -40,8 +34,8 @@ public:
 
 	//----------------------------------------------------------------//
 	void				AffirmLocalScope			();
-						MOAIAbstractRenderNode		();
-	virtual 			~MOAIAbstractRenderNode		();
+						MOAIAbstractRenderable		();
+	virtual 			~MOAIAbstractRenderable		();
 	void				Render						( MOAIRenderPhaseEnum::_ renderPhase );
 };
 
