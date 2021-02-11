@@ -3,29 +3,29 @@
 
 #include "pch.h"
 
-#include <moai-gfx-gl/MOAIFrameBufferAttachmentGL.h>
+#include <moai-gfx-gl/MOAIFrameBufferAttachableGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL.h>
 
 //================================================================//
-// MOAIFrameBufferAttachmentGL
+// MOAIFrameBufferAttachableGL
 //================================================================//
 
 //----------------------------------------------------------------//
-bool MOAIFrameBufferAttachmentGL::Attach ( ZLGfx& gfx, ZLGfxEnum::_ target, ZLGfxEnum::_ attachment, s32 level, s32 layer ) {
+bool MOAIFrameBufferAttachableGL::Attach ( ZLGfx& gfx, ZLGfxEnum::_ attachment, ZLGfxEnum::_ target, s32 level, s32 layer ) {
 
-	return this->MOAIFrameBufferAttachmentGL_Attach ( gfx, target, attachment, level, layer );
+	return this->MOAIFrameBufferAttachableGL_Attach ( gfx, attachment, target, level, layer );
 }
 
 //----------------------------------------------------------------//
-MOAIFrameBufferAttachmentGL::MOAIFrameBufferAttachmentGL () {
+MOAIFrameBufferAttachableGL::MOAIFrameBufferAttachableGL () {
 	
-	RTTI_BEGIN ( MOAIFrameBufferAttachmentGL )
+	RTTI_BEGIN ( MOAIFrameBufferAttachableGL )
 		RTTI_EXTEND ( MOAIGfxResourceGL )
 	RTTI_END
 }
 
 //----------------------------------------------------------------//
-MOAIFrameBufferAttachmentGL::~MOAIFrameBufferAttachmentGL () {
+MOAIFrameBufferAttachableGL::~MOAIFrameBufferAttachableGL () {
 }
 
 //================================================================//
@@ -33,12 +33,12 @@ MOAIFrameBufferAttachmentGL::~MOAIFrameBufferAttachmentGL () {
 //================================================================//
 
 ////----------------------------------------------------------------//
-//void MOAIFrameBufferAttachmentGL::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+//void MOAIFrameBufferAttachableGL::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 //	if ( history.DidVisit ( *this )) return;
 //}
 //
 ////----------------------------------------------------------------//
-//void MOAIFrameBufferAttachmentGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+//void MOAIFrameBufferAttachableGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 //	if ( history.DidVisit ( *this )) return;
 //
 //	luaL_Reg regTable [] = {
@@ -50,11 +50,11 @@ MOAIFrameBufferAttachmentGL::~MOAIFrameBufferAttachmentGL () {
 //}
 //
 ////----------------------------------------------------------------//
-//void MOAIFrameBufferAttachmentGL::MOAIGfxResourceGL_OnGPUBind () {
+//void MOAIFrameBufferAttachableGL::MOAIGfxResourceGL_OnGPUBind () {
 //}
 //
 ////----------------------------------------------------------------//
-//bool MOAIFrameBufferAttachmentGL::MOAIGfxResourceGL_OnGPUCreate () {
+//bool MOAIFrameBufferAttachableGL::MOAIGfxResourceGL_OnGPUCreate () {
 //	
 //	if ( !( this->mWidth && this->mHeight && this->mPixelFormat )) {
 //		return false;
@@ -71,7 +71,7 @@ MOAIFrameBufferAttachmentGL::~MOAIFrameBufferAttachmentGL () {
 //}
 //
 ////----------------------------------------------------------------//
-//void MOAIFrameBufferAttachmentGL::MOAIGfxResourceGL_OnGPUDeleteOrDiscard ( bool shouldDelete ) {
+//void MOAIFrameBufferAttachableGL::MOAIGfxResourceGL_OnGPUDeleteOrDiscard ( bool shouldDelete ) {
 //
 //	this->mGfxMgr->DeleteOrDiscard ( this->mBuffer, shouldDelete );
 //}

@@ -28,7 +28,7 @@
 //================================================================//
 	
 //----------------------------------------------------------------//
-MOAIFrameBufferAttachmentGL* MOAIFrameBufferAttachmentFactory::MakeAttachment ( u32 factoryID, u32 width, u32 height ) {
+MOAIFrameBufferAttachableGL* MOAIFrameBufferAttachmentFactory::MakeAttachment ( u32 factoryID, u32 width, u32 height ) {
 	return this->MOAIFrameBufferAttachmentFactory_MakeAttachment ( factoryID, width, height );
 }
 
@@ -44,7 +44,7 @@ MOAIFrameBufferAttachmentFactory::~MOAIFrameBufferAttachmentFactory () {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIFrameBufferAttachmentGL* MOAIFrameBufferAttachmentFactory::MOAIFrameBufferAttachmentFactory_MakeAttachment ( u32 factoryID, u32 width, u32 height ) {
+MOAIFrameBufferAttachableGL* MOAIFrameBufferAttachmentFactory::MOAIFrameBufferAttachmentFactory_MakeAttachment ( u32 factoryID, u32 width, u32 height ) {
 }
 
 //================================================================//

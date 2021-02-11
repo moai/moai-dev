@@ -57,7 +57,7 @@ MOAIRenderBufferGL::MOAIRenderBufferGL () :
 	
 	RTTI_BEGIN ( MOAIRenderBufferGL )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIRenderBufferGL >)
-		RTTI_EXTEND ( MOAIFrameBufferAttachmentGL )
+		RTTI_EXTEND ( MOAIFrameBufferAttachableGL )
 	RTTI_END
 }
 
@@ -90,7 +90,7 @@ void MOAIRenderBufferGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILu
 }
 
 //----------------------------------------------------------------//
-bool MOAIRenderBufferGL::MOAIFrameBufferAttachmentGL_Attach ( ZLGfx& gfx, ZLGfxEnum::_ target, ZLGfxEnum::_ attachment, s32 level, s32 layer ) {
+bool MOAIRenderBufferGL::MOAIFrameBufferAttachableGL_Attach ( ZLGfx& gfx, ZLGfxEnum::_ attachment, ZLGfxEnum::_ target, s32 level, s32 layer ) {
 	UNUSED ( layer );
 
 	gfx.FramebufferRenderbuffer ( target, attachment, this->mGLRenderBuffer );

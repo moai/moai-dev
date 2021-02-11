@@ -4,7 +4,7 @@
 #ifndef	MOAITEXTUREGL_H
 #define	MOAITEXTUREGL_H
 
-#include <moai-gfx-gl/MOAIFrameBufferAttachmentGL.h>
+#include <moai-gfx-gl/MOAIFrameBufferAttachableGL.h>
 #include <moai-gfx-gl/MOAIGfxResourceGL.h>
 
 class ZLImage;
@@ -24,7 +24,7 @@ class ZLImage;
 */
 class MOAITextureGL :
 	public virtual MOAITexture,
-	public virtual MOAIFrameBufferAttachmentGL {
+	public virtual MOAIFrameBufferAttachableGL {
 protected:
 
 	MOAI_LUA_OBJECT_VISITOR_FRIEND
@@ -56,7 +56,7 @@ protected:
 	//----------------------------------------------------------------//
 	void				_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
 	void				_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
-	bool				MOAIFrameBufferAttachmentGL_Attach		( ZLGfx& gfx, ZLGfxEnum::_ target, ZLGfxEnum::_ attachment, s32 level, s32 layer );
+	bool				MOAIFrameBufferAttachableGL_Attach		( ZLGfx& gfx, ZLGfxEnum::_ attachment, ZLGfxEnum::_ target, s32 level, s32 layer );
 	void				MOAIGfxResourceGL_OnGPUBind				();
 	void				MOAIGfxResourceGL_OnGPUDeleteOrDiscard	( bool shouldDelete );
 	void				MOAIGfxResourceGL_OnGPUUnbind			();

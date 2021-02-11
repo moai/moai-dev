@@ -335,7 +335,7 @@ MOAITextureGL::MOAITextureGL () :
 	RTTI_BEGIN ( MOAITextureGL )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAITextureGL >)
 		RTTI_EXTEND ( MOAITexture )
-		RTTI_EXTEND ( MOAIFrameBufferAttachmentGL )
+		RTTI_EXTEND ( MOAIFrameBufferAttachableGL )
 	RTTI_END
 }
 
@@ -474,7 +474,7 @@ void MOAITextureGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaStat
 }
 
 //----------------------------------------------------------------//
-bool MOAITextureGL::MOAIFrameBufferAttachmentGL_Attach ( ZLGfx& gfx, ZLGfxEnum::_ target, ZLGfxEnum::_ attachment, s32 level, s32 layer ) {
+bool MOAITextureGL::MOAIFrameBufferAttachableGL_Attach ( ZLGfx& gfx, ZLGfxEnum::_ attachment, ZLGfxEnum::_ target, s32 level, s32 layer ) {
 
 	this->Affirm ();
 

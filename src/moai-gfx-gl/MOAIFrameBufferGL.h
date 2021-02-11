@@ -7,23 +7,25 @@
 #include <moai-gfx-gl/MOAIGfxResourceGL.h>
 
 class MOAIGfxMgrGL;
-class MOAIFrameBufferAttachmentGL;
+class MOAIFrameBufferAttachableGL;
+
+//================================================================//
+// MOAIFrameBufferAttachmentGL
+//================================================================//
+class MOAIFrameBufferAttachmentGL {
+public:
+
+	ZLStrongPtr < MOAIFrameBufferAttachableGL > mAttachable;
+	ZLGfxEnum::_		mAttachment;
+	ZLGfxEnum::_		mTarget;
+	u32					mLevel;
+	u32					mLayer;
+};
 
 //================================================================//
 // MOAIFrameBufferGL
 //================================================================//
-/**	@lua	MOAIFrameBufferGL
-	@text	MOAIFrameBufferGL is responsible for drawing a list of MOAIRenderable
-			objects. MOAIRenderable is the base class for any object that can be
-			drawn. This includes MOAIProp and MOAIPartitionViewLayer. To use MOAIFrameBufferGL
-			pass a table of MOAIRenderable objects to setRenderTable ().
-			The table will usually be a stack of MOAIPartitionViewLayer objects. The contents of
-			the table will be rendered the next time a frame is drawn. Note that the
-			table must be an array starting with index 1. Objects will be rendered
-			counting from the base index until 'nil' is encountered. The render
-			table may include other tables as entries. These must also be arrays
-			indexed from 1.
-*/
+// TODO: doxygen
 class MOAIFrameBufferGL :
 	public virtual MOAIFrameBuffer,
 	public virtual MOAIGfxResourceGL {
@@ -34,13 +36,10 @@ protected:
 	bool				mIsDefaultBuffer; // TODO: this is a hack; should probably be its own class (w/o attachments)
 	ZLGfxHandle			mGLFrameBuffer;
 
-	ZLStrongPtr < MOAIFrameBufferAttachmentGL >		mColorAttachment;
-	ZLStrongPtr < MOAIFrameBufferAttachmentGL >		mDepthAttachment;
-	ZLStrongPtr < MOAIFrameBufferAttachmentGL >		mStencilAttachment;
+	ZLLeanArray < MOAIFrameBufferAttachmentGL >	mAttachments;
 
 	//----------------------------------------------------------------//
-	static int			_getAttachment				( lua_State* L );
-	static int			_setAttachment				( lua_State* L );
+	static int			_addAttachment				( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	void				_RegisterLuaClass							( RTTIVisitorHistory& history, MOAILuaState& state );
@@ -50,13 +49,13 @@ protected:
 	void				MOAIGfxResourceGL_OnGPUDeleteOrDiscard		( bool shouldDelete );
 	void				MOAIGfxResourceGL_OnGPUUnbind				(); 
 	bool				MOAIGfxResourceGL_OnGPUUpdate				();
-	void				MOAILuaObject_OnPooledRemit					();
 
 public:
 	
 	DECL_LUA_FACTORY ( MOAIFrameBufferGL )
 	
 	//----------------------------------------------------------------//
+	void				AddAttachment				( ZLStrongPtr < MOAIFrameBufferAttachableGL > attachable, ZLGfxEnum::_ attachment, ZLGfxEnum::_ target, u32 level, u32 layer );
 	void				DetectGLFrameBufferID		( MOAIGfxMgrGL& gfxMgr );
 	ZLRect				GetBufferRect				() const;
 						MOAIFrameBufferGL			();

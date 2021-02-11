@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-gfx-gl/MOAIFrameBufferGL.h>
-#include <moai-gfx-gl/MOAIFrameBufferAttachmentGL.h>
+#include <moai-gfx-gl/MOAIFrameBufferAttachableGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL.h>
 
 //================================================================//
@@ -11,22 +11,17 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-int MOAIFrameBufferGL::_getAttachment ( lua_State* L ) {
+int MOAIFrameBufferGL::_addAttachment ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFrameBufferGL, "U" )
 	
-	if ( self->mColorAttachment ) {
-		state.Push (( MOAILuaObject* )self->mColorAttachment );
-		return 1;
-	}
-	return 0;
-}
-
-//----------------------------------------------------------------//
-int MOAIFrameBufferGL::_setAttachment ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIFrameBufferGL, "U" )
+	MOAIFrameBufferAttachableGL* attachable = state.GetLuaObject < MOAIFrameBufferAttachableGL >( 2, false );
 	
-	MOAIFrameBufferAttachmentGL* attachment = state.GetLuaObject < MOAIFrameBufferAttachmentGL >( 2, false );
-	self->mColorAttachment = attachment;
+	ZLGfxEnum::_ attachment		= state.GetEnum < ZLGfxEnum::_ >( 3, ZLGfxEnum::FRAMEBUFFER_ATTACHMENT_COLOR );
+	ZLGfxEnum::_ target			= state.GetEnum < ZLGfxEnum::_ >( 4, ZLGfxEnum::FRAMEBUFFER_TARGET_DRAW_READ );
+	u32 level					= state.GetValue < u32 >( 5, 0 );
+	u32 layer					= state.GetValue < u32 >( 6, 0 );
+	
+	self->AddAttachment ( attachable, attachment, target, level, layer );
 	self->ScheduleForGPUUpdate ();
 
 	MOAI_LUA_RETURN_SELF
@@ -35,6 +30,20 @@ int MOAIFrameBufferGL::_setAttachment ( lua_State* L ) {
 //================================================================//
 // MOAIFrameBufferGL
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAIFrameBufferGL::AddAttachment ( ZLStrongPtr < MOAIFrameBufferAttachableGL > attachable, ZLGfxEnum::_ attachment, ZLGfxEnum::_ target, u32 level, u32 layer ) {
+
+	ZLIndex index = this->mAttachments.Size ();
+	this->mAttachments.Grow ( index + 1 );
+	MOAIFrameBufferAttachmentGL& attach = this->mAttachments [ index ];
+	
+	attach.mAttachable		= attachable;
+	attach.mAttachment 		= attachment;
+	attach.mTarget 			= target;
+	attach.mLevel 			= level;
+	attach.mLayer 			= layer;
+}
 
 //----------------------------------------------------------------//
 void MOAIFrameBufferGL::DetectGLFrameBufferID ( MOAIGfxMgrGL& gfxMgr ) {
@@ -94,9 +103,16 @@ void MOAIFrameBufferGL::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILua
 void MOAIFrameBufferGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.Visit ( *this )) return;
 
+	state.SetEnum ( -1, "COLOR",		ZLGfxEnum::FRAMEBUFFER_ATTACHMENT_COLOR );
+	state.SetEnum ( -1, "DEPTH",		ZLGfxEnum::FRAMEBUFFER_ATTACHMENT_DEPTH );
+	state.SetEnum ( -1, "STENCIL",		ZLGfxEnum::FRAMEBUFFER_ATTACHMENT_STENCIL );
+	
+	state.SetEnum ( -1, "DRAW",			ZLGfxEnum::FRAMEBUFFER_TARGET_DRAW );
+	state.SetEnum ( -1, "READ",			ZLGfxEnum::FRAMEBUFFER_TARGET_READ );
+	state.SetEnum ( -1, "DRAW_READ",	ZLGfxEnum::FRAMEBUFFER_TARGET_DRAW_READ );
+
 	luaL_Reg regTable [] = {
-		{ "getAttachment",				_getAttachment },
-		{ "setAttachment",				_setAttachment },
+		{ "addAttachment",				_addAttachment },
 		{ NULL, NULL }
 	};
 
@@ -111,18 +127,13 @@ void MOAIFrameBufferGL::MOAIGfxResourceGL_OnGPUBind () {
 	
 	if ( this->mIsDefaultBuffer ) return;
 	
-	if ( this->mColorAttachment ) {
-		this->mColorAttachment->Attach ( gfx, ZLGfxEnum::FRAMEBUFFER_TARGET_DRAW_READ, ZLGfxEnum::FRAMEBUFFER_ATTACHMENT_COLOR, 0, 0 );
-	}
+	for ( ZLIndex i = 0; i < this->mAttachments.Size (); ++i ) {
 	
-	if ( this->mDepthAttachment ) {
-		this->mColorAttachment->Attach ( gfx, ZLGfxEnum::FRAMEBUFFER_TARGET_DRAW_READ, ZLGfxEnum::FRAMEBUFFER_ATTACHMENT_DEPTH, 0, 0 );
+		MOAIFrameBufferAttachmentGL& attach = this->mAttachments [ i ];
+		if ( !attach.mAttachable ) continue;
+		attach.mAttachable->Attach ( gfx, attach.mAttachment, attach.mTarget, attach.mLevel, attach.mLayer );
 	}
-	
-	if ( this->mStencilAttachment ) {
-		this->mColorAttachment->Attach ( gfx, ZLGfxEnum::FRAMEBUFFER_TARGET_DRAW_READ, ZLGfxEnum::FRAMEBUFFER_ATTACHMENT_STENCIL, 0, 0 );
-	}
-	
+
 	// TODO: check buffers OK?
 //	gfx.CheckFramebufferStatus ( ZLGfxEnum::FRAMEBUFFER_TARGET_DRAW_READ );
 //	bool status = gfx.PushSuccessHandler ();
@@ -156,14 +167,6 @@ void MOAIFrameBufferGL::MOAIGfxResourceGL_OnGPUUnbind () {
 bool MOAIFrameBufferGL::MOAIGfxResourceGL_OnGPUUpdate () {
 
 	return true;
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBufferGL::MOAILuaObject_OnPooledRemit () {
-
-	MOAIPool::ReleaseIfPooled < MOAIFrameBufferAttachmentGL >( this->mColorAttachment );
-	MOAIPool::ReleaseIfPooled < MOAIFrameBufferAttachmentGL >( this->mDepthAttachment );
-	MOAIPool::ReleaseIfPooled < MOAIFrameBufferAttachmentGL >( this->mStencilAttachment );
 }
 
 //================================================================//

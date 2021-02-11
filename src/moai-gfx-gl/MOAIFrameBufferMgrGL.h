@@ -5,7 +5,7 @@
 #define	MOAIFRAMEBUFFERMGRGL_H
 
 class MOAIFrameBufferGL;
-class MOAIFrameBufferAttachmentGL;
+class MOAIFrameBufferAttachableGL;
 
 //================================================================//
 // MOAIFrameBufferAttachmentFactory
@@ -16,12 +16,12 @@ class MOAIFrameBufferAttachmentFactory :
 protected:
 
 	//----------------------------------------------------------------//
-	virtual MOAIFrameBufferAttachmentGL*	MOAIFrameBufferAttachmentFactory_MakeAttachment		( u32 factoryID, u32 width, u32 height );
+	virtual MOAIFrameBufferAttachableGL*	MOAIFrameBufferAttachmentFactory_MakeAttachment		( u32 factoryID, u32 width, u32 height );
 
 public:
 	
 	//----------------------------------------------------------------//
-	MOAIFrameBufferAttachmentGL*		MakeAttachment							( u32 factoryID, u32 width, u32 height );
+	MOAIFrameBufferAttachableGL*		MakeAttachment							( u32 factoryID, u32 width, u32 height );
 										MOAIFrameBufferAttachmentFactory		();
 	virtual								~MOAIFrameBufferAttachmentFactory 		();
 };
@@ -69,7 +69,7 @@ private:
 	
 	STLMap < u32, ZLStrongPtr < MOAIFrameBufferAttachmentFactory > > 		mAttachmentFactories;
 	
-	STLMap < MOAIFrameBufferAttachmentKey, MOAIFrameBufferAttachmentGL* > 	mAttachmentPool;
+	STLMap < MOAIFrameBufferAttachmentKey, MOAIFrameBufferAttachableGL* > 	mAttachmentPool;
 	STLSet < MOAIFrameBuffer* >												mFrameBufferPool;
 	
 	//----------------------------------------------------------------//

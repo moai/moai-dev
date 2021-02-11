@@ -8,8 +8,10 @@ MOAISim.openWindow ( "test", 320, 480 )
 
 COLOR_FBO_256_256 = MOAIPool.addFactory (
 	function ()
+		local texture = MOAITexture.new ():init ( 256, 256 );
 		local frameBuffer = MOAIFrameBuffer.new ();
-		frameBuffer:setAttachment ( MOAITexture.new ():init ( 256, 256 ));
+		frameBuffer:addAttachment ( texture, MOAIFrameBuffer.COLOR );
+		frameBuffer.color = texture;
 		return frameBuffer;
 	end
 )
@@ -54,7 +56,7 @@ function render ( draw )
 	draw:setViewRect ( viewport )
 	draw:clearSurface ()
 	draw:setViewProj ( viewport )
-	draw:setTexture ( frameBuffer:getAttachment ())
+	draw:setTexture ( frameBuffer.color )
 
 	local partitionResults = MOAIPool.provision ( MOAIPartitionResultBuffer )
 	partition:hullsForViewProj ( partitionResults, viewport, nil, MOAIRenderNode.getRenderTypeID ())
