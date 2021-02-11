@@ -41,8 +41,6 @@ prop:setPartition ( partition )
 
 function render ( draw )
 
-	local scope = MOAIPool.provision ( MOAIScope )
-
 	local frameBuffer = MOAIPool.provision ( COLOR_FBO_256_256, scope )
 
 	draw:setFrameBuffer ( frameBuffer )
@@ -58,14 +56,12 @@ function render ( draw )
 	draw:setViewProj ( viewport )
 	draw:setTexture ( frameBuffer:getAttachment ())
 
-	local partitionResults = MOAIPool.provision ( MOAIPartitionResultBuffer, scope )
+	local partitionResults = MOAIPool.provision ( MOAIPartitionResultBuffer )
 	partition:hullsForViewProj ( partitionResults, viewport, nil, MOAIRenderNode.getRenderTypeID ())
-
 	partitionResults:render ()
 
-	MOAIPool.remit ( scope )
+	MOAIPool.remit ( partitionResults )
+	MOAIPool.remit ( frameBuffer )
 end
 
-node = MOAIRenderNode.new ():setRender ( render )
--- MOAIGfxMgr.setRenderRoot ( node )
-MOAIGfxMgr.pushRenderNode ( node )
+MOAIGfxMgr.pushRenderable ( render )

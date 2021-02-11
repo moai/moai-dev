@@ -12,7 +12,7 @@
 // TODO: doxygen
 int MOAIAbstractLayer::_pushRenderPass ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractLayer, "U" )
-	MOAIGfxMgr::Get ().PushRenderNode ( *self );
+	MOAIGfxMgr::Get ().PushRenderable ( *self );
 	return 0;
 }
 

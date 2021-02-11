@@ -39,7 +39,7 @@ protected:
 	//----------------------------------------------------------------//
 	static int			_getRenderCount				( lua_State* L );
 	static int			_getRenderRoot				( lua_State* L );
-	static int			_pushRenderNode				( lua_State* L );
+	static int			_pushRenderable				( lua_State* L );
 	static int			_setRenderRoot				( lua_State* L );
 
 	//----------------------------------------------------------------//

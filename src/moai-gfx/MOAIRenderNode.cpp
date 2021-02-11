@@ -81,18 +81,18 @@ void MOAIRenderNode::PushChild ( MOAILuaState& state, int idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIRenderNode::Render ( MOAIRenderPhaseEnum::_ renderPhase, MOAILuaMemberRef& ref, MOAIRenderNode* caller ) {
+void MOAIRenderNode::Render ( MOAIRenderPhaseEnum::_ renderPhase, MOAILuaMemberRef& ref ) {
 
 	if ( ref ) {
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		state.Push ( ref );
-		MOAIRenderNode::Render ( renderPhase, state, -1, caller );
+		MOAIRenderNode::Render ( renderPhase, state, -1 );
 		state.Pop ( 1 );
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAIRenderNode::Render ( MOAIRenderPhaseEnum::_ renderPhase, MOAILuaState& state, int idx, MOAIRenderNode* caller ) {
+void MOAIRenderNode::Render ( MOAIRenderPhaseEnum::_ renderPhase, MOAILuaState& state, int idx ) {
 
 	idx = state.AbsIndex ( idx );
 	int valType = lua_type ( state, idx );
@@ -113,7 +113,7 @@ void MOAIRenderNode::Render ( MOAIRenderPhaseEnum::_ renderPhase, MOAILuaState& 
 			size_t tableSize = state.GetTableSize ( idx );
 			for ( size_t i = 0; i < tableSize; ++i ) {
 				lua_rawgeti ( state, idx, i + 1 );
-				MOAIRenderNode::Render ( renderPhase, state, -1, caller );
+				MOAIRenderNode::Render ( renderPhase, state, -1 );
 				lua_pop ( state, 1 );
 			}
 			break;
@@ -123,13 +123,9 @@ void MOAIRenderNode::Render ( MOAIRenderPhaseEnum::_ renderPhase, MOAILuaState& 
 
 			state.CopyToTop ( idx ); // copy the function to the top
 			MOAIDraw::Get ().PushCmdInterface ( state );
-			if ( caller ) {
-				state.Push ( renderPhase );
-				state.DebugCall ( 2, 0 );
-			}
-			else {
-				state.DebugCall ( 1, 0 );
-			}
+			state.Push ( renderPhase );
+			state.DebugCall ( 2, 0 );
+
 			break;
 		}
 	}
@@ -164,6 +160,6 @@ void MOAIRenderNode::MOAIAbstractRenderNode_Render ( MOAIRenderPhaseEnum::_ rend
 	if ( this->mRenderRoot ) {
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		state.Push ( this->mRenderRoot );
-		MOAIRenderNode::Render ( renderPhase, state, -1, this );
+		MOAIRenderNode::Render ( renderPhase, state, -1 );
 	}
 }

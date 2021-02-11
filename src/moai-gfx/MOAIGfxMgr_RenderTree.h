@@ -31,8 +31,8 @@ public:
 	//----------------------------------------------------------------//
 						MOAIGfxMgr_RenderTree		();
 	virtual				~MOAIGfxMgr_RenderTree		();
-	void				PushRenderNode				( MOAIAbstractRenderNode& node ); // goes into the default batch, if it exists
-	void				PushRenderNode				( MOAILuaState& state, int idx );
+	void				PushRenderable				( MOAIAbstractRenderNode& node ); // goes into the default batch, if it exists
+	void				PushRenderable				( MOAILuaState& state, int idx );
 	void				Render						();
 };
 

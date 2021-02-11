@@ -38,10 +38,10 @@ int MOAIGfxMgr::_getRenderRoot ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 // TODO: doxygen
-int MOAIGfxMgr::_pushRenderNode ( lua_State* L ) {
+int MOAIGfxMgr::_pushRenderable ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIGfxMgr, "" )
 	
-	self->PushRenderNode ( state, 1 );
+	self->PushRenderable ( state, 1 );
 	return 0;
 }
 
@@ -310,7 +310,7 @@ void MOAIGfxMgr::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& 
 	luaL_Reg regTable [] = {
 		{ "getRenderCount",				_getRenderCount },
 		{ "getRenderRoot",				_getRenderRoot },
-		{ "pushRenderNode",				_pushRenderNode },
+		{ "pushRenderable",				_pushRenderable },
 		{ "setRenderRoot",				_setRenderRoot },
 		{ NULL, NULL }
 	};

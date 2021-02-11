@@ -36,8 +36,8 @@ public:
 	virtual 			~MOAIRenderNode				();
 	void				PushChild					( MOAIAbstractRenderNode& node );
 	void				PushChild					( MOAILuaState& state, int idx );
-	static void			Render						( MOAIRenderPhaseEnum::_ renderPhase, MOAILuaMemberRef& ref, MOAIRenderNode* caller );
-	static void			Render						( MOAIRenderPhaseEnum::_ renderPhase, MOAILuaState& state, int idx, MOAIRenderNode* caller );
+	static void			Render						( MOAIRenderPhaseEnum::_ renderPhase, MOAILuaMemberRef& ref );
+	static void			Render						( MOAIRenderPhaseEnum::_ renderPhase, MOAILuaState& state, int idx );
 };
 
 #endif
