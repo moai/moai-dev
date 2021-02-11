@@ -19,7 +19,7 @@ layer:pushRenderPass ()
 
 camera = MOAICamera.new ()
 camera:setType ( MOAICamera.CAMERA_TYPE_3D )
-print ( camera:getFocalLength ( 320 ))
+print ( 'CAMERA FOCAL LENGTH:', camera:getFocalLength ( 320 ))
 --camera:moveLoc ( 0, 0, camera:getFocalLength ( 320 ), 6 )
 camera:setLoc ( 0, 0, camera:getFocalLength ( 320 ))
 --camera:moveLoc ( 0, 0, -500, 6 )

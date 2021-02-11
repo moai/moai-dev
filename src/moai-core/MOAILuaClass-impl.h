@@ -90,6 +90,8 @@ void MOAILuaFactoryClass < TYPE >::MOAILuaClass_RegisterLuaClass ( MOAILuaState&
 	};
 	
 	luaL_register ( state, 0, regTable );
+	
+	state.SetField ( -1, "typeID", ZLType::GetID < TYPE >());
 }
 
 //================================================================//

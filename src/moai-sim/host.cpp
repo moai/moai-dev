@@ -414,9 +414,6 @@ void AKUSimContextInitialize () {
 	#if MOAI_WITH_FREETYPE
 		REGISTER_LUA_CLASS ( MOAIFreeTypeFontReader )
 	#endif
-	
-	// pool
-	MOAIPool::Get ().AffirmFactory < MOAIPartitionResultBuffer >();
 }
 
 //----------------------------------------------------------------//

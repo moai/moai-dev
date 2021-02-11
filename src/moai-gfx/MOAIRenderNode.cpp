@@ -124,9 +124,8 @@ void MOAIRenderNode::Render ( MOAIRenderPhaseEnum::_ renderPhase, MOAILuaState& 
 			state.CopyToTop ( idx ); // copy the function to the top
 			MOAIDraw::Get ().PushCmdInterface ( state );
 			if ( caller ) {
-				state.Push ( caller );
 				state.Push ( renderPhase );
-				state.DebugCall ( 3, 0 );
+				state.DebugCall ( 2, 0 );
 			}
 			else {
 				state.DebugCall ( 1, 0 );

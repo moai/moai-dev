@@ -36,19 +36,38 @@ int MOAIPool::_addFactory ( lua_State* L ) {
 int MOAIPool::_provision ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIPool, "" )
 
-	u32 typeID 				= state.GetValue < u32 >( 1, MOAILuaObject::NOT_IN_POOL );
-	MOAIScope* scope		= state.GetLuaObject < MOAIScope >( 2, true );
+	u32 typeID = MOAILuaObject::NOT_IN_POOL;
 	
-	if ( scope ) {
-		
-		MOAILuaObject* resource = self->Provision ( typeID, scope );
-		assert ( resource );
+	if ( state.IsType ( 1, LUA_TNUMBER )) {
+		typeID = state.GetValue < u32 >( 1, MOAILuaObject::NOT_IN_POOL );
+	}
 
-		if ( resource ) {
-			state.Push ( resource );
-			assert ( state.IsType ( -1, LUA_TUSERDATA ));
-			return 1;
-		}
+	if ( state.IsType ( 1, LUA_TTABLE )) {
+		typeID = state.GetFieldValue < cc8*, u32 >( 1, "typeID", MOAILuaObject::NOT_IN_POOL );
+	}
+
+	MOAIScope* scope = state.GetLuaObject < MOAIScope >( 2, true );
+		
+	MOAILuaObject* resource = self->Provision ( typeID, scope );
+	assert ( resource );
+
+	if ( resource ) {
+		state.Push ( resource );
+		assert ( state.IsType ( -1, LUA_TUSERDATA ));
+		return 1;
+	}
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIPool::_remit ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIPool, "U" )
+
+	MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( 1, true );
+
+	if ( object ) {
+		self->Remit ( object );
 	}
 	return 0;
 }
@@ -148,6 +167,7 @@ void MOAIPool::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& st
 	luaL_Reg regTable [] = {
 		{ "addFactory",				_addFactory },
 		{ "provision",				_provision },
+		{ "remit",					_remit },
 		{ NULL, NULL }
 	};
 

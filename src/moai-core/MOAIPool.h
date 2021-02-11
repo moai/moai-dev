@@ -31,6 +31,7 @@ private:
 	//----------------------------------------------------------------//
 	static int 				_addFactory						( lua_State* L );
 	static int				_provision						( lua_State* L );
+	static int				_remit							( lua_State* L );
 	
 	//----------------------------------------------------------------//
 	MOAILuaObject* 			Provision						( u32 poolType, MOAIScope* scope );

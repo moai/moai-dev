@@ -9,7 +9,8 @@
 class MOAILuaState;
 
 #define REGISTER_LUA_CLASS(type)							\
-	type::RegisterLuaType ();
+	type::RegisterLuaType ();								\
+	MOAIPool::Get ().AffirmFactory < type >();
 
 #define REGISTER_LUA_CLASS_WITH_ALIAS(type, alias)			\
 	type::RegisterLuaType ();								\

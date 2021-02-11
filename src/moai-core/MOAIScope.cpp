@@ -20,6 +20,8 @@ int MOAIScope::_countRetained ( lua_State* L ) {
 int MOAIScope::_newindex ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIScope, "U" )
 
+	// TODO: worth scanning containers and retaining their members?
+
 	// on stack:
 	// 1: userdata
 	// 2: key
@@ -43,7 +45,7 @@ int MOAIScope::_newindex ( lua_State* L ) {
 				self->RemoveObject ( *object );
 			}
 		}
-	
+		
 		// if the new value is a lua object, add it.
 		if ( state.IsType ( 3, LUA_TUSERDATA )) {
 			MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( 3, false );
@@ -67,6 +69,22 @@ int MOAIScope::_newindex ( lua_State* L ) {
 int MOAIScope::_purge ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIScope, "U" )
 	self->Purge ();
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIScope::_release ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIScope, "U" )
+	self->ScopeRelease ();
+	return 0;
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIScope::_retain ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIScope, "U" )
+	self->ScopeRetain ();
 	return 0;
 }
 
@@ -166,6 +184,9 @@ void MOAIScope::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& s
 	luaL_Reg regTable [] = {
 		{ "countRetained",		_countRetained },
 		{ "purge",				_purge },
+		{ "release",			_release },
+		{ "retain",				_retain },
+		
 		{ NULL, NULL }
 	};
 
@@ -179,4 +200,10 @@ void MOAIScope::MOAILuaObject_DecorateLuaBinding ( MOAILuaState& state ) {
 	lua_pushcfunction ( state, MOAIScope::_newindex );
 	lua_setfield ( state, -2, "__newindex" );
 	lua_pop ( state, 1 );
+}
+
+//----------------------------------------------------------------//
+void MOAIScope::MOAILuaObject_OnPooledRemit () {
+
+	this->Purge ();
 }

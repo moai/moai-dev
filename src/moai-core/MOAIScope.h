@@ -21,11 +21,14 @@ private:
 	static int			_countRetained				( lua_State* L );
 	static int			_newindex					( lua_State* L );
 	static int			_purge						( lua_State* L );
+	static int			_release					( lua_State* L );
+	static int			_retain						( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void				_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
 	void				_RegisterLuaFuncs						( RTTIVisitorHistory& history, MOAILuaState& state );
 	void				MOAILuaObject_DecorateLuaBinding		( MOAILuaState& state );
+	void				MOAILuaObject_OnPooledRemit				();
 
 public:
 
