@@ -26,6 +26,7 @@ public:
 	GET_SET		( bool, Landscape, mLandscape )
 
 	//----------------------------------------------------------------//
+	ZLRect			GetRect						();
 					MOAIFrameBuffer				();
 					~MOAIFrameBuffer			();
 	void			SetBufferSize				( u32 width, u32 height );

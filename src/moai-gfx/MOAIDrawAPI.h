@@ -26,6 +26,12 @@ class MOAIViewport;
 namespace MOAIDrawAPIParam {
 
 	//----------------------------------------------------------------//
+	struct Compose {
+		ZLVec2D 			mV0;
+		ZLVec2D 			mD;
+	};
+
+	//----------------------------------------------------------------//
 	struct DrawAxis2D {
 		ZLVec2D 			mV0;
 		ZLVec2D 			mD;
@@ -109,6 +115,7 @@ public:
 	enum {
 		BIND_VECTOR_PRESETS,
 		CLEAR_SURFACE,
+		COMPOSE,
 		
 		DISABLE_SCISSOR_RECT,
 		DISABLE_VIEW_RECT,
@@ -158,6 +165,7 @@ protected:
 	//----------------------------------------------------------------//
 	static int			_bindVectorPresets			( lua_State* L );
 	static int			_clearSurface				( lua_State* L );
+	static int			_compose					( lua_State* L );
 	static int			_drawAnimCurve				( lua_State* L );
 	static int			_drawBezierCurve			( lua_State* L );
 	static int			_drawBoxOutline				( lua_State* L );
@@ -214,6 +222,7 @@ public:
 	//----------------------------------------------------------------//
 	void 				BindVectorPresets			();
 	void				ClearSurface				();
+	void				Compose						( MOAIShader* shader );
 	void				Draw						();
 	void				DrawAnimCurve				( MOAIAnimCurve& curve, u32 resolution );
 	void				DrawAxis2D					( float x, float y, float dx, float dy );

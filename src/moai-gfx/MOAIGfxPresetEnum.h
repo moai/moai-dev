@@ -21,7 +21,9 @@ enum MOAIShaderPresetEnum {
 
 enum MOAIVertexFormatPresetEnum {
 	XYZC,
+	XYZUV,
 	XYZWC,
+	XYZWUV,
 	XYZWUVC,
 	XYZWNNNC,
 	XYZWNNNUVC,

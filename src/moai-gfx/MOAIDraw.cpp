@@ -6,6 +6,7 @@
 #include <moai-gfx/MOAIBlendMode.h>
 #include <moai-gfx/MOAICamera.h>
 #include <moai-gfx/MOAIDraw.h>
+#include <moai-gfx/MOAIFrameBuffer.h>
 #include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIShader.h>
 #include <moai-gfx/MOAITexture.h>
@@ -15,6 +16,50 @@
 //================================================================//
 // MOAIDraw
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAIDraw::ExecuteCompose ( MOAIGfxMgr& gfxMgr, MOAIShader* shader ) {
+
+	MOAIFrameBuffer* frameBuffer = gfxMgr.GetFrameBuffer ();
+	if ( ! frameBuffer ) return;
+
+	if ( shader ) {
+		gfxMgr.SetShader ( shader );
+	}
+	else {
+		gfxMgr.SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
+	}
+	
+	gfxMgr.SetViewRect ();
+	gfxMgr.SetScissorRect ();
+	gfxMgr.SetViewProj ();
+	gfxMgr.SetCullFunc ();
+	gfxMgr.SetBlendMode ();
+	gfxMgr.SetVertexTransform ();
+	gfxMgr.SetPenColor ( 0xffffffff );
+	
+	gfxMgr.SetVertexFormat ( MOAIVertexFormatPresetEnum::XYZWUVC );
+	
+	gfxMgr.BeginPrim ( MOAIGfxTopologyEnum::TRIANGLE_STRIP, 4 );
+	
+		gfxMgr.WriteVtx ( -1.0f, 1.0f, 0.0f );
+		gfxMgr.WriteUV ( 0.0f, 1.0f );
+		gfxMgr.WritePenColor4b ();
+	
+		gfxMgr.WriteVtx ( -1.0f, -1.0f, 0.0f );
+		gfxMgr.WriteUV ( 0.0f, 0.0f );
+		gfxMgr.WritePenColor4b ();
+	
+		gfxMgr.WriteVtx ( 1.0f, 1.0f, 0.0f );
+		gfxMgr.WriteUV ( 1.0f, 1.0f );
+		gfxMgr.WritePenColor4b ();
+		
+		gfxMgr.WriteVtx ( 1.0f, -1.0f, 0.0f );
+		gfxMgr.WriteUV ( 1.0f, 0.0f );
+		gfxMgr.WritePenColor4b ();
+
+	gfxMgr.EndPrim ();
+}
 
 //----------------------------------------------------------------//
 void MOAIDraw::ExecuteDrawAnimCurve ( MOAIGfxMgr& gfxMgr, const MOAIDrawAPIParam::DrawAnimCurve& param ) {
@@ -411,6 +456,10 @@ void MOAIDraw::MOAIAbstractCmdHandler_HandleCommand ( u32 cmd, const void* param
 			gfxMgr.ClearSurface ();
 			break;
 		}
+		
+		case MOAIDrawAPI::COMPOSE:
+			this->ExecuteCompose ( gfxMgr, *( MOAIShader** )param );
+			break;
 		
 		case MOAIDrawAPI::DISABLE_SCISSOR_RECT:
 			gfxMgr.SetScissorRect ();

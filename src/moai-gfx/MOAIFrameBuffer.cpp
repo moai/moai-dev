@@ -9,6 +9,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
+ZLRect MOAIFrameBuffer::GetRect () {
+
+	return ZLRect ( this->mBufferWidth, this->mBufferHeight );
+}
+
+//----------------------------------------------------------------//
 MOAIFrameBuffer::MOAIFrameBuffer () :
 	mBufferWidth ( 0 ),
 	mBufferHeight ( 0 ),

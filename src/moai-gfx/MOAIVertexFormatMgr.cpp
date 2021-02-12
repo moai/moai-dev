@@ -46,9 +46,19 @@ MOAIVertexFormat* MOAIVertexFormatMgr::GetFormat ( MOAIVertexFormatPresetEnum fo
 					format->DeclareAttribute ( XYZC_COLOR, MOAIGfxTypeEnum::UNSIGNED_BYTE, 4, MOAIVertexFormat::ATTRIBUTE_COLOR, true );
 					break;
 				
+				case MOAIVertexFormatPresetEnum::XYZUV:
+					format->DeclareAttribute ( XYZUV_POSITION, MOAIGfxTypeEnum::FLOAT, 3, MOAIVertexFormat::ATTRIBUTE_COORD, false );
+					format->DeclareAttribute ( XYZUV_TEXCOORD, MOAIGfxTypeEnum::FLOAT, 2, MOAIVertexFormat::ATTRIBUTE_TEX_COORD, false );
+					break;
+				
 				case MOAIVertexFormatPresetEnum::XYZWC:
 					format->DeclareAttribute ( XYZWC_POSITION, MOAIGfxTypeEnum::FLOAT, 4, MOAIVertexFormat::ATTRIBUTE_COORD, false );
 					format->DeclareAttribute ( XYZWC_COLOR, MOAIGfxTypeEnum::UNSIGNED_BYTE, 4, MOAIVertexFormat::ATTRIBUTE_COLOR, true );
+					break;
+				
+				case MOAIVertexFormatPresetEnum::XYZWUV:
+					format->DeclareAttribute ( XYZWUV_POSITION, MOAIGfxTypeEnum::FLOAT, 4, MOAIVertexFormat::ATTRIBUTE_COORD, false );
+					format->DeclareAttribute ( XYZWUV_TEXCOORD, MOAIGfxTypeEnum::FLOAT, 2, MOAIVertexFormat::ATTRIBUTE_TEX_COORD, false );
 					break;
 				
 				case MOAIVertexFormatPresetEnum::XYZWUVC:
@@ -131,7 +141,9 @@ void MOAIVertexFormatMgr::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAIL
 	if ( history.Visit ( *this )) return;
 
 	state.SetField ( -1, "XYZC",			( u32 )MOAIVertexFormatPresetEnum::XYZC );
+	state.SetField ( -1, "XYZUV",			( u32 )MOAIVertexFormatPresetEnum::XYZUV );
 	state.SetField ( -1, "XYZWC",			( u32 )MOAIVertexFormatPresetEnum::XYZWC );
+	state.SetField ( -1, "XYZWUV",			( u32 )MOAIVertexFormatPresetEnum::XYZWUV );
 	state.SetField ( -1, "XYZWUVC",			( u32 )MOAIVertexFormatPresetEnum::XYZWUVC );
 	state.SetField ( -1, "XYZWNNNC",		( u32 )MOAIVertexFormatPresetEnum::XYZWNNNC );
 	state.SetField ( -1, "XYZWNNNUVC",		( u32 )MOAIVertexFormatPresetEnum::XYZWNNNUVC );

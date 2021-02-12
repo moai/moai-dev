@@ -4,26 +4,10 @@
 -- http://getmoai.com
 ----------------------------------------------------------------
 
-MOAIDebugLinesMgr.setStyle ( MOAIProp.DEBUG_DRAW_MODEL_BOUNDS, 2, 1, 1, 1 )
-MOAIDebugLinesMgr.setStyle ( MOAIProp.DEBUG_DRAW_WORLD_BOUNDS, 1, 0.5, 0.5, 0.5 )
+WIN_WIDTH = 320
+WIN_HEIGHT = 480
 
-MOAISim.openWindow ( "test", 320, 480 )
-
-viewport = MOAIViewport.new ()
-	:setViewSize ( 320, 480 )
-	:setViewScale ( 320, 480 )
-
-layer = MOAIPartitionViewLayer.new ()
-layer:setViewport ( viewport )
-layer:pushRenderPass ()
-
-camera = MOAICamera.new ()
-camera:setType ( MOAICamera.CAMERA_TYPE_3D )
-print ( 'CAMERA FOCAL LENGTH:', camera:getFocalLength ( 320 ))
---camera:moveLoc ( 0, 0, camera:getFocalLength ( 320 ), 6 )
-camera:setLoc ( 0, 0, camera:getFocalLength ( 320 ))
---camera:moveLoc ( 0, 0, -500, 6 )
-layer:setCamera ( camera )
+MOAISim.openWindow ( "test", WIN_WIDTH, WIN_HEIGHT )
 
 function makeBoxMesh ( xMin, yMin, zMin, xMax, yMax, zMax, texture )
 	
@@ -115,8 +99,46 @@ end
 
 local mesh = makeCube ( 128, '../resources/moai.png' )
 
-prop = MOAIProp.new ()
-prop:setDeck ( mesh )
-prop:setLoc ( 0, 0, 0 )
-prop:moveRot ( 360, 360, 0, 6 )
-prop:setPartition ( layer )
+OFFSCREEN = MOAIPool.addFactory (
+	function ()
+		local texture = MOAITexture.new ():init ( WIN_WIDTH, WIN_HEIGHT );
+		local frameBuffer = MOAIFrameBuffer.new ();
+		frameBuffer:addAttachment ( texture, MOAIFrameBuffer.COLOR );
+		frameBuffer.color = texture;
+		return frameBuffer;
+	end
+)
+
+offscreenViewport = MOAIViewport.new ()
+offscreenViewport:setViewSize ( WIN_WIDTH, WIN_HEIGHT )
+offscreenViewport:setViewScale ( WIN_WIDTH, WIN_HEIGHT )
+
+offscreenCamera = MOAICamera.new ()
+offscreenCamera:setType ( MOAICamera.CAMERA_TYPE_3D )
+offscreenCamera:setLoc ( 0, 0, offscreenCamera:getFocalLength ( WIN_WIDTH ))
+
+offscreenLayer = MOAIPartitionViewLayer.new ()
+offscreenLayer:setViewport ( offscreenViewport )
+offscreenLayer:setCamera ( offscreenCamera )
+
+offscreenProp = MOAIProp.new ()
+offscreenProp:setDeck ( mesh )
+offscreenProp:moveRot ( 360, 360, 0, 6 )
+offscreenProp:setPartition ( offscreenLayer )
+
+function render ( draw )
+
+	local frameBuffer = MOAIPool.provision ( OFFSCREEN, scope )
+
+	draw:setFrameBuffer ( frameBuffer )
+	draw:clearSurface ()
+	offscreenLayer:render ()
+
+	draw:setFrameBuffer ()
+	draw:setTexture ( frameBuffer.color )
+	draw:compose ()
+
+	MOAIPool.remit ( frameBuffer )
+end
+
+MOAIGfxMgr.pushRenderable ( render )

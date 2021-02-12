@@ -31,8 +31,18 @@ public:
 	};
 	
 	enum {
+		XYZUV_POSITION,
+		XYZUV_TEXCOORD,
+	};
+	
+	enum {
 		XYZWC_POSITION,
 		XYZWC_COLOR,
+	};
+	
+	enum {
+		XYZWUV_POSITION,
+		XYZWUV_TEXCOORD,
 	};
 	
 	enum {

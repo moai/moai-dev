@@ -18,6 +18,7 @@ class MOAIDraw :
 protected:
 
 	//----------------------------------------------------------------//
+	void			ExecuteCompose					( MOAIGfxMgr& gfxMgr, MOAIShader* shader );
 	void			ExecuteDrawAnimCurve			( MOAIGfxMgr& gfxMgr, const MOAIDrawAPIParam::DrawAnimCurve& param );
 	void 			ExecuteDrawAxis2D 				( MOAIGfxMgr& gfxMgr, const MOAIDrawAPIParam::DrawAxis2D& param );
 	void 			ExecuteDrawAxisGrid2D			( MOAIGfxMgr& gfxMgr, const MOAIDrawAPIParam::DrawAxisGrid2D& param );

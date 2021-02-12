@@ -63,7 +63,7 @@ public:
 	void					SetPenColor					( const ZLColorVec& colorVec );
 	void					SetPenColor					( float r, float g, float b, float a );
 	
-	void					SetViewProj					( ZLViewport* viewport, ZLCamera* camera, ZLCamera* debug = 0, const ZLVec3D& parallax = ZLVec3D::AXIS );
+	void					SetViewProj					( ZLViewport* viewport = NULL, ZLCamera* camera = NULL, ZLCamera* debug = 0, const ZLVec3D& parallax = ZLVec3D::AXIS );
 	
 	//----------------------------------------------------------------//
 	static inline u64 GetAttrFlagForID ( u32 globalID ) {

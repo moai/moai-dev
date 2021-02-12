@@ -782,6 +782,11 @@ public:
 	ZLMetaRect ( ZLMetaVec3D < TYPE >& vec ) {
 		this->Init ( vec );
 	}
+	
+	//----------------------------------------------------------------//
+	ZLMetaRect ( TYPE xMax, TYPE yMax ) {
+		this->Init ( 0, 0, xMax, yMax );
+	}
 
 	//----------------------------------------------------------------//
 	ZLMetaRect ( TYPE xMin, TYPE yMin, TYPE xMax, TYPE yMax ) {

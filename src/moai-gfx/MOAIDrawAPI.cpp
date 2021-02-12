@@ -86,6 +86,16 @@ int MOAIDrawAPI::_clearSurface ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+int MOAIDrawAPI::_compose ( lua_State* L ) {
+	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
+
+	MOAIShader* shader = MOAIGfxMgr::Get ().AffirmShader ( state, 2 );
+	self->Compose ( shader );
+
+	MOAI_LUA_RETURN_SELF
+}
+
+//----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIDrawAPI::_drawAnimCurve ( lua_State* L ) {
 	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
@@ -771,6 +781,13 @@ void MOAIDrawAPI::BindVectorPresets () {
 void MOAIDrawAPI::ClearSurface () {
 
 	this->SubmitCommand ( CLEAR_SURFACE );
+}
+
+//----------------------------------------------------------------//
+void MOAIDrawAPI::Compose ( MOAIShader* shader ) {
+
+	this->SubmitCommand < MOAIShader* >( COMPOSE, shader );
+	this->RetainObject ( shader );
 }
 
 //----------------------------------------------------------------//
@@ -1580,6 +1597,7 @@ void MOAIDrawAPI::MOAIAbstractCmdAPI_RegisterLuaAPI ( MOAILuaState& state ) {
 	luaL_Reg regTable [] = {
 		{ "bindVectorPresets",			_bindVectorPresets },
 		{ "clearSurface",				_clearSurface },
+		{ "compose",					_compose },
 		{ "drawAnimCurve",				_drawAnimCurve },
 		{ "drawBezierCurve",			_drawBezierCurve },
 		{ "drawBoxOutline",				_drawBoxOutline },
