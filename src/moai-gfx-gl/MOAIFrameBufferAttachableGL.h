@@ -10,7 +10,8 @@
 // MOAIFrameBufferAttachableGL
 //================================================================//
 class MOAIFrameBufferAttachableGL :
-	public virtual MOAIGfxResourceGL {
+	public virtual MOAIGfxResourceGL,
+	public virtual ZLFrameSize {
 private:
 	
 	//----------------------------------------------------------------//

@@ -7,8 +7,8 @@
 MOAISim.openWindow ( "test", 320, 480 )
 
 viewport = MOAIViewport.new ()
-viewport:setSize ( 320, 480 )
-viewport:setScale ( 320, 480 )
+viewport:setViewSize ( 320, 480 )
+viewport:setViewScale ( 320, 480 )
 
 layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
@@ -21,8 +21,8 @@ grid:setRow ( 1, 	0x00000001, 0x20000002 )
 grid:setRow ( 2,	0x40000003, 0x60000004 )
 
 tileDeck = MOAITileDeck2D.new ()
-tileDeck:setTexture ( '../resources/test.png' )
 tileDeck:setSize ( 2, 2 )
+tileDeck:gfx ():setTexture ( '../resources/test.png' )
 
 prop = MOAIGraphicsGridProp.new ()
 prop:setDeck ( tileDeck )

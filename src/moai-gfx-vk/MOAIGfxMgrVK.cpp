@@ -347,7 +347,7 @@ void MOAIGfxMgrVK::InitFrameBuffers () {
     for ( ZLIndex i = 0; i < imageCount; ++i ) {
     
 		MOAIFrameBufferVK* frameBuffer = new MOAIFrameBufferVK ();
-		frameBuffer->SetBufferSize ( width, height );
+		frameBuffer->SetFrameSize ( width, height );
     
 		frameBuffer->SetLogicalDevice ( this->mLogicalDevice );
 		frameBuffer->SetRenderPass ( *this->mRenderPass );

@@ -10,8 +10,6 @@
 
 //----------------------------------------------------------------//
 MOAITexture::MOAITexture () :
-	mWidth ( 0 ),
-	mHeight ( 0 ),
 	mMinFilter ( MOAITextureFilterEnum::LINEAR ),
 	mMagFilter ( MOAITextureFilterEnum::NEAREST ),
 	mWrap ( MOAITextureWrapEnum::CLAMP ),

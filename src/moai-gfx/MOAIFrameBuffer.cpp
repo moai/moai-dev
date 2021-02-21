@@ -9,15 +9,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-ZLRect MOAIFrameBuffer::GetRect () {
-
-	return ZLRect ( this->mBufferWidth, this->mBufferHeight );
-}
-
-//----------------------------------------------------------------//
 MOAIFrameBuffer::MOAIFrameBuffer () :
-	mBufferWidth ( 0 ),
-	mBufferHeight ( 0 ),
 	mBufferScale ( 1.0 ),
 	mLandscape ( false ) {
 	
@@ -31,20 +23,13 @@ MOAIFrameBuffer::~MOAIFrameBuffer () {
 }
 
 //----------------------------------------------------------------//
-void MOAIFrameBuffer::SetBufferSize ( u32 width, u32 height ) {
-
-	this->mBufferWidth = width;
-	this->mBufferHeight = height;
-}
-
-//----------------------------------------------------------------//
 ZLRect MOAIFrameBuffer::WndRectToDevice ( ZLRect rect ) const {
 
 	rect.Bless ();
 
 	if ( this->mLandscape ) {
 	
-		float width = ( float )this->mBufferWidth;
+		float width = ( float )this->mWidth;
 		
 		float xMin = rect.mYMin;
 		float yMin = width - rect.mXMax;
@@ -58,7 +43,7 @@ ZLRect MOAIFrameBuffer::WndRectToDevice ( ZLRect rect ) const {
 	}
 	else {
 	
-		float height = ( float )this->mBufferHeight;
+		float height = ( float )this->mHeight;
 		
 		float xMin = rect.mXMin;
 		float yMin = height - rect.mYMax;

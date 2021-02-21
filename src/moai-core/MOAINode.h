@@ -54,11 +54,11 @@ protected:
 	static int		_getAttr			( lua_State* L );
 	static int		_getAttrLink		( lua_State* L );
 	static int		_getNodeState		( lua_State* L );
-//	static int		_moveAttr			( lua_State* L ); // TODO: this should be a static method exposed by MOAIEaseDriver.
+	static int		_moveAttr			( lua_State* L ); // TODO: this should be a static method exposed by MOAIEaseDriver.
 	static int		_scheduleUpdate		( lua_State* L );
-//	static int		_seekAttr			( lua_State* L ); // TODO: this should be a static method exposed by MOAIEaseDriver.
-	static int		_setAttrLink		( lua_State* L );
+	static int		_seekAttr			( lua_State* L ); // TODO: this should be a static method exposed by MOAIEaseDriver.
 	static int		_setAttr			( lua_State* L );
+	static int		_setAttrLink		( lua_State* L );
 	static int		_setNodeLink		( lua_State* L );
 	
 	//----------------------------------------------------------------//

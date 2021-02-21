@@ -5,8 +5,8 @@ attribute vec4 position;
 attribute vec2 uv;
 attribute vec4 color;
 
-varying vec4 colorVarying;
-varying vec2 uvVarying;
+varying LOWP vec4 colorVarying;
+varying MEDP vec2 uvVarying;
 
 uniform float xWarp;
 uniform float yWarp;
@@ -20,7 +20,7 @@ void main () {
 
 	gl_Position.x = position.x * xScale;
 	gl_Position.y = position.y * yScale;
-	
+    
 	uvVarying = uv;
     colorVarying = color;
 }

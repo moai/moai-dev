@@ -184,6 +184,9 @@ u32  ZLGfxEnum::MapZLToNative ( _ value ) {
 			case PIXEL_FORMAT_BGRA:						return GL_BGRA;
 		#endif
 
+		case PIXEL_FORMAT_DEPTH_COMPONENT16:			return GL_DEPTH_COMPONENT16;
+		case PIXEL_FORMAT_STENCIL_INDEX8:				return GL_STENCIL_INDEX8;
+
 		case PIXEL_TYPE_BYTE:							return GL_BYTE;
 
 		#ifdef MOAI_OS_IPHONE

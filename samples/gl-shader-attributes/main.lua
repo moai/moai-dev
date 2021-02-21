@@ -9,25 +9,17 @@ print ( 'hello, moai!' )
 MOAISim.openWindow ( "test", 512, 512 )
 
 viewport = MOAIViewport.new ()
-viewport:setSize ( 512, 512 )
-viewport:setScale ( 512, 512 )
+viewport:setViewSize ( 512, 512 )
+viewport:setViewScale ( 512, 512 )
 
 layer = MOAIPartitionViewLayer.new ()
 layer:setViewport ( viewport )
 layer:pushRenderPass ()
 
-file = assert ( io.open ( 'shader.vsh', mode ))
-vsh = file:read ( '*all' )
-file:close ()
-
-file = assert ( io.open ( 'shader.fsh', mode ))
-fsh = file:read ( '*all' )
-file:close ()
-
 tileDeck = MOAITileDeck2D.new ()
-tileDeck:setTexture ( "numbers.png" )
 tileDeck:setSize ( 8, 8 )
 tileDeck:setRect ( -0.5, 0.5, 0.5, -0.5 )
+-- tileDeck:gfx ():setTexture ( "../resources/numbers.png" )
 
 grid = MOAIGrid.new ()
 grid:setSize ( 8, 8, 32, 32 )
@@ -42,15 +34,15 @@ grid:setRow ( 6, 	0x29, 0x2a, 0x2b, 0x2c, 0x2d, 0x2e, 0x2f, 0x30 )
 grid:setRow ( 7, 	0x31, 0x32, 0x33, 0x34, 0x35, 0x36, 0x37, 0x38 )
 grid:setRow ( 8, 	0x39, 0x3a, 0x3b, 0x3c, 0x3d, 0x3e, 0x3f, 0x40 )
 
-prop = MOAIProp.new ()
+prop = MOAIGraphicsGridProp.new ()
 prop:setDeck ( tileDeck )
 prop:setGrid ( grid )
 prop:setLoc ( -128, 128 )
 prop:setScl ( 1, -1 )
 prop:setPartition ( layer )
 
-prop:moveRot ( 360, 6 )
-prop:moveLoc ( -512, 0, 6 )
+prop:moveRot ( 0, 0, 360, 6 )
+prop:moveLoc ( -512, 0, 0, 6 )
 
 program = MOAIShaderProgram.new ()
 
@@ -59,17 +51,18 @@ program:setVertexAttribute ( 2, 'uv' )
 program:setVertexAttribute ( 3, 'color' )
 
 program:reserveUniforms ( 2 )
-program:declareUniform ( 1, 'xWarp', MOAIShaderProgram.UNIFORM_FLOAT )
-program:declareUniform ( 2, 'yWarp', MOAIShaderProgram.UNIFORM_FLOAT )
+program:declareUniform ( 1, 'xWarp', MOAIShaderProgram.UNIFORM_TYPE_FLOAT )
+program:declareUniform ( 2, 'yWarp', MOAIShaderProgram.UNIFORM_TYPE_FLOAT )
 
-program:load ( vsh, fsh )
+program:load ( MOAIFileSystem.loadFile ( 'shader.vsh' ), MOAIFileSystem.loadFile ( 'shader.fsh' ))
 
 shader = MOAIShader.new ()
 shader:setProgram ( program )
-tileDeck:setShader ( shader )
+
+tileDeck:gfx ():setTexture ( "../resources/numbers.png" ):setShader ( shader )
 
 shader:setAttr ( 1, 2 )
 shader:setAttr ( 2, 0 )
 
-shader:seekAttr ( 1, 0, 6 )
-shader:seekAttr ( 2, 2, 6 )
+shader:moveAttr ( 1, -2, 6 )
+shader:moveAttr ( 2, 2, 6 )

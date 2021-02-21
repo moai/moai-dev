@@ -7,6 +7,7 @@
 #include <zl-util/ZLAccessors.h>
 #include <zl-util/ZLColor.h>
 #include <zl-util/ZLCopyOnWrite.h>
+#include <zl-util/ZLFrameSize.h>
 
 //================================================================//
 // ZLImageTransform
@@ -23,7 +24,8 @@ namespace ZLImageTransform {
 //================================================================//
 // ZLImage
 //================================================================//
-class ZLImage {
+class ZLImage :
+	public virtual ZLFrameSize {
 public:
 
 	enum PixelFormat {
@@ -39,9 +41,6 @@ protected:
 
 	PixelFormat				mPixelFormat;
 	ZLColor::ColorFormat	mColorFormat;
-
-	u32		mWidth;
-	u32		mHeight;
 	
 	ZLCopyOnWrite	mBitmap;
 	ZLCopyOnWrite	mPalette;
@@ -66,9 +65,6 @@ public:
 
 	GET_CONST ( PixelFormat, PixelFormat, mPixelFormat )
 	GET_CONST ( ZLColor::ColorFormat, ColorFormat, mColorFormat )
-
-	GET_CONST ( u32, Width, mWidth )
-	GET_CONST ( u32, Height, mHeight )
 	
 	GET_CONST ( void*, Bitmap, mBitmap.GetConstBuffer ())
 	GET_CONST ( void*, Palette, mPalette.GetConstBuffer ())

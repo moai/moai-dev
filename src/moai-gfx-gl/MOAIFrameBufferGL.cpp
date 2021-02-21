@@ -54,16 +54,16 @@ void MOAIFrameBufferGL::DetectGLFrameBufferID ( MOAIGfxMgrGL& gfxMgr ) {
 }
 
 //----------------------------------------------------------------//
-ZLRect MOAIFrameBufferGL::GetBufferRect () const {
-
-	ZLRect rect;
-	rect.mXMin = 0;
-	rect.mYMin = 0;
-	rect.mXMax = ( float )this->mBufferWidth;
-	rect.mYMax = ( float )this->mBufferHeight;
-	
-	return rect;
-}
+//ZLRect MOAIFrameBufferGL::GetBufferRect () const {
+//
+//	ZLRect rect;
+//	rect.mXMin = 0;
+//	rect.mYMin = 0;
+//	rect.mXMax = ( float )this->mBufferWidth;
+//	rect.mYMax = ( float )this->mBufferHeight;
+//	
+//	return rect;
+//}
 
 //----------------------------------------------------------------//
 MOAIFrameBufferGL::MOAIFrameBufferGL () :
@@ -97,12 +97,7 @@ void MOAIFrameBufferGL::SetGLFrameBuffer ( MOAIGfxMgrGL& gfxMgr, const ZLGfxHand
 //----------------------------------------------------------------//
 void MOAIFrameBufferGL::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.Visit ( *this )) return;
-}
-
-//----------------------------------------------------------------//
-void MOAIFrameBufferGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
-	if ( history.Visit ( *this )) return;
-
+	
 	state.SetEnum ( -1, "COLOR",		ZLGfxEnum::FRAMEBUFFER_ATTACHMENT_COLOR );
 	state.SetEnum ( -1, "DEPTH",		ZLGfxEnum::FRAMEBUFFER_ATTACHMENT_DEPTH );
 	state.SetEnum ( -1, "STENCIL",		ZLGfxEnum::FRAMEBUFFER_ATTACHMENT_STENCIL );
@@ -110,6 +105,11 @@ void MOAIFrameBufferGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILua
 	state.SetEnum ( -1, "DRAW",			ZLGfxEnum::FRAMEBUFFER_TARGET_DRAW );
 	state.SetEnum ( -1, "READ",			ZLGfxEnum::FRAMEBUFFER_TARGET_READ );
 	state.SetEnum ( -1, "DRAW_READ",	ZLGfxEnum::FRAMEBUFFER_TARGET_DRAW_READ );
+}
+
+//----------------------------------------------------------------//
+void MOAIFrameBufferGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& state ) {
+	if ( history.Visit ( *this )) return;
 
 	luaL_Reg regTable [] = {
 		{ "addAttachment",				_addAttachment },
@@ -127,15 +127,27 @@ void MOAIFrameBufferGL::MOAIGfxResourceGL_OnGPUBind () {
 	
 	if ( this->mIsDefaultBuffer ) return;
 	
+	u32 width = 0;
+	u32 height = 0;
+	
 	for ( ZLIndex i = 0; i < this->mAttachments.Size (); ++i ) {
 	
 		MOAIFrameBufferAttachmentGL& attach = this->mAttachments [ i ];
 		if ( !attach.mAttachable ) continue;
+		
+		u32 attachWidth = attach.mAttachable->GetWidth ();
+		u32 attachHeight = attach.mAttachable->GetHeight ();
+		
+		width = (( i == 0 ) || ( attachWidth < width )) ? attachWidth : width;
+		height = (( i == 0 ) || ( attachHeight < height )) ? attachHeight : height;
+		
 		attach.mAttachable->Attach ( gfx, attach.mAttachment, attach.mTarget, attach.mLevel, attach.mLayer );
 	}
 
+	this->SetFrameSize ( width, height );
+
 	// TODO: check buffers OK?
-//	gfx.CheckFramebufferStatus ( ZLGfxEnum::FRAMEBUFFER_TARGET_DRAW_READ );
+	gfx.CheckFramebufferStatus ( ZLGfxEnum::FRAMEBUFFER_TARGET_DRAW_READ );
 //	bool status = gfx.PushSuccessHandler ();
 //	gfx.PopSection ();
 }

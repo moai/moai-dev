@@ -24,7 +24,7 @@
 	@out	nil
 */
 int MOAIShaderProgramGL::_declareUniform ( lua_State* L ) {
-	MOAI_LUA_SETUP ( MOAIShaderProgramGL, "UNSN" )
+	MOAI_LUA_SETUP ( MOAIShaderProgramGL, "UNS" )
 
 	ZLIndex idx			= state.GetValue < MOAILuaIndex >( 2, 0 );
 	STLString name		= state.GetValue < cc8* >( 3, "" );
@@ -143,9 +143,13 @@ ZLGfxHandle MOAIShaderProgramGL::CompileShader ( ZLGfxEnum::_ type, cc8* source 
 
 	STLString buffer;
 
-	buffer.append ( gfxMgr.IsOpenGLES () ? OPENGL_ES_PREPROC : OPENGL_PREPROC );
-	if (( type == ZLGfxEnum::SHADER_TYPE_FRAGMENT ) && gfxMgr.IsOpenGLES ()) {
-		buffer.append ( WEBGL_PREPROC );
+	// TODO: well this is a hack and a half
+	if ( strncmp ( "#version", source, 8 ) != 0 ) {
+
+		buffer.append ( gfxMgr.IsOpenGLES () ? OPENGL_ES_PREPROC : OPENGL_PREPROC );
+		if (( type == ZLGfxEnum::SHADER_TYPE_FRAGMENT ) && gfxMgr.IsOpenGLES ()) {
+			buffer.append ( WEBGL_PREPROC );
+		}
 	}
 
 	buffer.append ( source );
@@ -240,6 +244,15 @@ void MOAIShaderProgramGL::SetVertexAttribute ( u32 idx, cc8* attribute ) {
 //----------------------------------------------------------------//
 void MOAIShaderProgramGL::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.Visit ( *this )) return;
+	
+	state.SetEnum ( -1, "UNIFORM_TYPE_FLOAT",					MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT );
+	state.SetEnum ( -1, "UNIFORM_TYPE_INT",						MOAIUniformDescriptor::UNIFORM_TYPE_INT );
+	
+	state.SetEnum ( -1, "UNIFORM_WIDTH_VEC_2",					MOAIUniformDescriptor::UNIFORM_WIDTH_VEC_2 );
+	state.SetEnum ( -1, "UNIFORM_WIDTH_VEC_3",					MOAIUniformDescriptor::UNIFORM_WIDTH_VEC_3 );
+	state.SetEnum ( -1, "UNIFORM_WIDTH_VEC_4",					MOAIUniformDescriptor::UNIFORM_WIDTH_VEC_4 );
+	state.SetEnum ( -1, "UNIFORM_WIDTH_MATRIX_3X3",				MOAIUniformDescriptor::UNIFORM_WIDTH_MATRIX_3X3 );
+	state.SetEnum ( -1, "UNIFORM_WIDTH_MATRIX_4X4",				MOAIUniformDescriptor::UNIFORM_WIDTH_MATRIX_4X4 );
 }
 
 //----------------------------------------------------------------//

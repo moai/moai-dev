@@ -8,11 +8,10 @@
 // MOAIFrameBuffer
 //================================================================//
 class MOAIFrameBuffer :
-	public virtual MOAILuaObject {
+	public virtual MOAILuaObject,
+	public virtual ZLFrameSize {
 protected:
 
-	u32					mBufferWidth;
-	u32					mBufferHeight;
 	float				mBufferScale;
 	bool				mLandscape;
 
@@ -20,16 +19,12 @@ protected:
 
 public:
 
-	GET_CONST	( u32, BufferWidth, mBufferWidth )
-	GET_CONST	( u32, BufferHeight, mBufferHeight )
 	GET_SET		( float, BufferScale, mBufferScale )
 	GET_SET		( bool, Landscape, mLandscape )
 
 	//----------------------------------------------------------------//
-	ZLRect			GetRect						();
 					MOAIFrameBuffer				();
 					~MOAIFrameBuffer			();
-	void			SetBufferSize				( u32 width, u32 height );
 	ZLRect			WndRectToDevice 			( ZLRect rect ) const;
 };
 

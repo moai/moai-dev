@@ -2,6 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-core/MOAIEaseDriver.h>
 #include <moai-core/MOAINode.h>
 #include <moai-core/MOAINodeMgr.h>
 #include <moai-core/strings.h>
@@ -196,30 +197,30 @@ int MOAINode::_getNodeState ( lua_State* L ) {
 
 	@out	MOAIEaseDriver easeDriver
 */
-//int MOAINode::_moveAttr ( lua_State* L ) {
-//	MOAI_LUA_SETUP ( MOAINode, "UNNN" )
-//
-//	MOAIEaseDriver* action = new MOAIEaseDriver ();
-//	action->ReserveLinks ( 1 );
-//	
-//	ZLAttrID attrID	= ZLAttrID::FromRaw ( state.GetValue < u32 >( 2, 0 ));
-//	float value			= state.GetValue < float >( 3, 0.0f );
-//	float length		= state.GetValue < float >( 4, 0.0f );
-//	u32 mode			= state.GetValue < u32 >( 5, ZLInterpolate::kSmooth );
-//	
-//	if ( self->CheckAttrExists ( attrID )) {
-//	
-//		action->SetLink ( 0, self, attrID, value, mode );
-//		action->SetSpan ( length );
-//		action->Start ( 0, false );
-//		action->PushLuaUserdata ( state );
-//
-//		return 1;
-//	}
-//	
-//	MOAILogF ( L, ZLLog::LOG_ERROR, MOAISTRING_MOAINode_AttributeNotFound );
-//	return 0;
-//}
+int MOAINode::_moveAttr ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAINode, "UNNN" )
+
+	ZLAttrID attrID	= ZLAttrID::FromRaw ( state.GetValue < u32 >( 2, 0 ));
+	float value			= state.GetValue < float >( 3, 0.0f );
+	float length		= state.GetValue < float >( 4, 0.0f );
+	u32 mode			= state.GetValue < u32 >( 5, ZLInterpolate::kSmooth );
+	
+	if ( self->CheckAttrExists ( attrID )) {
+	
+		MOAIEaseDriver* action = new MOAIEaseDriver ();
+		action->ReserveLinks ( 1 );
+	
+		action->SetLink ( 0, self, attrID, value, mode );
+		action->SetSpan ( length );
+		action->Start ( 0, false );
+		action->PushLuaUserdata ( state );
+
+		return 1;
+	}
+	
+	MOAILogF ( L, ZLLog::LOG_ERROR, MOAISTRING_MOAINode_AttributeNotFound );
+	return 0;
+}
 
 //----------------------------------------------------------------//
 /**	@lua	scheduleUpdate
@@ -254,35 +255,35 @@ int MOAINode::_scheduleUpdate ( lua_State* L ) {
 
 	@out	MOAIEaseDriver easeDriver
 */
-//int MOAINode::_seekAttr ( lua_State* L ) {
-//	MOAI_LUA_SETUP ( MOAINode, "UNNN" )
-//
-//	MOAIEaseDriver* action = new MOAIEaseDriver ();
-//	action->ReserveLinks ( 1 );
-//
-//	ZLAttrID attrID = ZLAttrID::FromRaw ( state.GetValue < u32 >( 2, 0 ));
-//	if ( self->CheckAttrExists ( attrID )) {
-//
-//		ZLAttribute getter;
-//		self->ApplyAttrOp ( attrID, getter, ZLAttribute::GET );
-//		if ( !getter.IsValid ()) return 0;
-//
-//		float value		= state.GetValue < float >( 3, 0.0f );
-//		float delay		= state.GetValue < float >( 4, 0.0f );
-//		u32 mode		= state.GetValue < u32 >( 5, ZLInterpolate::kSmooth );
-//
-//		action->SetLink ( 0, self, attrID, value - getter.GetValue ( 0.0f ), mode );
-//
-//		action->SetSpan ( delay );
-//		action->Start ( 0, false );
-//		action->PushLuaUserdata ( state );
-//
-//		return 1;
-//	}
-//
-//	MOAILogF ( L, ZLLog::LOG_ERROR, MOAISTRING_MOAINode_AttributeNotFound );
-//	return 0;
-//}
+int MOAINode::_seekAttr ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAINode, "UNNN" )
+
+	ZLAttrID attrID = ZLAttrID::FromRaw ( state.GetValue < u32 >( 2, 0 ));
+	if ( self->CheckAttrExists ( attrID )) {
+
+		ZLAttribute getter;
+		self->ApplyAttrOp ( attrID, getter, ZLAttribute::GET );
+		if ( !getter.IsValid ()) return 0;
+
+		float value		= state.GetValue < float >( 3, 0.0f );
+		float delay		= state.GetValue < float >( 4, 0.0f );
+		u32 mode		= state.GetValue < u32 >( 5, ZLInterpolate::kSmooth );
+
+		MOAIEaseDriver* action = new MOAIEaseDriver ();
+		action->ReserveLinks ( 1 );
+
+		action->SetLink ( 0, self, attrID, value - getter.GetValue ( 0.0f ), mode );
+
+		action->SetSpan ( delay );
+		action->Start ( 0, false );
+		action->PushLuaUserdata ( state );
+
+		return 1;
+	}
+
+	MOAILogF ( L, ZLLog::LOG_ERROR, MOAISTRING_MOAINode_AttributeNotFound );
+	return 0;
+}
 
 //----------------------------------------------------------------//
 /**	@lua	setAttr
@@ -296,7 +297,7 @@ int MOAINode::_scheduleUpdate ( lua_State* L ) {
 int MOAINode::_setAttr ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAINode, "UNN" );
 	
-	ZLAttrID attrID	= ZLAttrID::FromRaw ( state.GetValue < u32 >( 2, 0 ));
+	ZLAttrID attrID		= ZLAttrID::FromRaw ( state.GetValue < u32 >( 2, 0 ));
 	float value			= state.GetValue < float >( 3, 0.0f );
 	
 	if ( self->CheckAttrExists ( attrID )) {
@@ -788,7 +789,9 @@ void MOAINode::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& st
 		{ "getAttr",				_getAttr },
 		{ "getAttrLink",			_getAttrLink },
 		{ "getNodeState",			_getNodeState },
+		{ "moveAttr",				_moveAttr },
 		{ "scheduleUpdate",			_scheduleUpdate },
+		{ "seekAttr",				_seekAttr },
 		{ "setAttr",				_setAttr },
 		{ "setAttrLink",			_setAttrLink },
 		{ "setNodeLink",			_setNodeLink },

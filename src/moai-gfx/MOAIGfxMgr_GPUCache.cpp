@@ -40,24 +40,24 @@ void MOAIGfxMgr_GPUCache::DrawPrims ( MOAIGfxTopologyEnum::_ primType, u32 base,
 //----------------------------------------------------------------//
 MOAIBlendMode MOAIGfxMgr_GPUCache::GetBlendMode () const {
 
-	assert ( this->mCurrentState );
-	this->mCurrentState->mBlendMode;
+	assert ( this->mPendingState );
+	this->mPendingState->mBlendMode;
 }
 
 //----------------------------------------------------------------//
 u32 MOAIGfxMgr_GPUCache::GetBufferHeight () const {
 
-	assert ( this->mCurrentState );
-	const MOAIFrameBuffer* frameBuffer = this->mCurrentState->mFrameBuffer;
-	return frameBuffer ? frameBuffer->GetBufferHeight () : 0;
+	assert ( this->mPendingState );
+	const MOAIFrameBuffer* frameBuffer = this->mPendingState->mFrameBuffer ? this->mPendingState->mFrameBuffer : this->mDefaultFrameBuffer;
+	return frameBuffer ? frameBuffer->GetHeight () : 0;
 }
 
 //----------------------------------------------------------------//
 u32 MOAIGfxMgr_GPUCache::GetBufferWidth () const {
 
-	assert ( this->mCurrentState );
-	const MOAIFrameBuffer* frameBuffer = this->mCurrentState->mFrameBuffer;
-	return frameBuffer ? frameBuffer->GetBufferWidth () : 0;
+	assert ( this->mPendingState );
+	const MOAIFrameBuffer* frameBuffer = this->mPendingState->mFrameBuffer ? this->mPendingState->mFrameBuffer : this->mDefaultFrameBuffer;
+	return frameBuffer ? frameBuffer->GetWidth () : 0;
 }
 
 //----------------------------------------------------------------//
@@ -73,57 +73,57 @@ MOAITexture* MOAIGfxMgr_GPUCache::GetDefaultTexture () {
 //----------------------------------------------------------------//
 bool MOAIGfxMgr_GPUCache::GetDepthMask () const {
 
-	assert ( this->mCurrentState );
-	return this->mCurrentState->mDepthMask;
+	assert ( this->mPendingState );
+	return this->mPendingState->mDepthMask;
 }
 
 //----------------------------------------------------------------//
 MOAIFrameBuffer* MOAIGfxMgr_GPUCache::GetFrameBuffer () {
 
-	assert ( this->mCurrentState );
-	return this->mCurrentState->mFrameBuffer;
+	assert ( this->mPendingState );
+	return this->mPendingState->mFrameBuffer ? this->mPendingState->mFrameBuffer : this->mDefaultFrameBuffer;
 }
 
 //----------------------------------------------------------------//
 MOAIShader* MOAIGfxMgr_GPUCache::GetShader () {
 
-	assert ( this->mCurrentState );
-	return this->mCurrentState->mShader;
+	assert ( this->mPendingState );
+	return this->mPendingState->mShader;
 }
 
 //----------------------------------------------------------------//
 MOAITexture* MOAIGfxMgr_GPUCache::GetTexture ( ZLIndex textureUnit ) {
 
-	assert ( this->mCurrentState );
-	return this->mCurrentState->mTextureUnits [ textureUnit ];
+	assert ( this->mPendingState );
+	return this->mPendingState->mTextureUnits [ textureUnit ];
 }
 
 //----------------------------------------------------------------//
 MOAIVertexFormat* MOAIGfxMgr_GPUCache::GetVertexFormat () {
 
-	assert ( this->mCurrentState );
-	return this->mCurrentState->mVtxFormat;
+	assert ( this->mPendingState );
+	return this->mPendingState->mVtxFormat;
 }
 
 //----------------------------------------------------------------//
 float MOAIGfxMgr_GPUCache::GetViewHeight () const {
 
-	assert ( this->mCurrentState );
-	return this->mCurrentState->mViewRect.Height ();
+	assert ( this->mPendingState );
+	return this->mPendingState->mViewRect.Height ();
 }
 
 //----------------------------------------------------------------//
 ZLRect MOAIGfxMgr_GPUCache::GetViewRect () const {
 
-	assert ( this->mCurrentState );
-	return this->mCurrentState->mViewRect;
+	assert ( this->mPendingState );
+	return this->mPendingState->mViewRect;
 }
 
 //----------------------------------------------------------------//
 float MOAIGfxMgr_GPUCache::GetViewWidth () const {
 
-	assert ( this->mCurrentState );
-	return this->mCurrentState->mViewRect.Width ();
+	assert ( this->mPendingState );
+	return this->mPendingState->mViewRect.Width ();
 }
 
 //----------------------------------------------------------------//

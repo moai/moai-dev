@@ -113,6 +113,14 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
+	inline void WritePenColor4b ( u32 color32 ) {
+		
+		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
+		assert ( this->mVtxBuffer );
+		this->mVtxBuffer->Write < u32 >( color32 );
+	}
+	
+	//----------------------------------------------------------------//
 	inline void WritePenColor4f () {
 		
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)

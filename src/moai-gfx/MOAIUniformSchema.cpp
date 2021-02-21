@@ -59,7 +59,7 @@ MOAIUniformHandle MOAIUniformSchema::GetUniformHandleForAttributeID ( void* buff
 
 	// TODO: check for overflow
 
-	u32 rawID = attrID.Unpack ();
+	u32 rawID = attrID.Unpack () - 1; // TODO: this should be handled automatically
 
 	ZLSize uniformID = rawID / MAX_UNIFORM_ARRAY_SIZE;
 	ZLSize index = rawID - ( uniformID * MAX_UNIFORM_ARRAY_SIZE );

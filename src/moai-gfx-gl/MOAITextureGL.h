@@ -43,6 +43,8 @@ protected:
 	static int			_release					( lua_State* L );
 	static int			_setDebugName				( lua_State* L );
 	static int			_setFilter					( lua_State* L );
+	static int			_setInternalFormat			( lua_State* L );
+	static int			_setPixelType				( lua_State* L );
 	static int			_setWrap					( lua_State* L );
 
 	//----------------------------------------------------------------//

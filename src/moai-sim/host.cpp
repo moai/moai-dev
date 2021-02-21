@@ -289,7 +289,7 @@ void AKUSetViewSize ( int width, int height ) {
 	
 	if (( currentWidth != ( u32 )width ) || ( currentHeight != ( u32 )height )) {
 	
-		gfxMgr.GetDefaultFrameBuffer ()->SetBufferSize ( width, height );
+		gfxMgr.GetDefaultFrameBuffer ()->SetFrameSize ( width, height );
 		
 		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
 		if ( gfxMgr.PushListener ( MOAIGfxMgr::EVENT_RESIZE, state )) {

@@ -57,7 +57,7 @@ public:
 	//----------------------------------------------------------------//
 	void				AddAttachment				( ZLStrongPtr < MOAIFrameBufferAttachableGL > attachable, ZLGfxEnum::_ attachment, ZLGfxEnum::_ target, u32 level, u32 layer );
 	void				DetectGLFrameBufferID		( MOAIGfxMgrGL& gfxMgr );
-	ZLRect				GetBufferRect				() const;
+//	ZLRect				GetBufferRect				() const;
 						MOAIFrameBufferGL			();
 						~MOAIFrameBufferGL			();
 	void				SetGLFrameBuffer			( MOAIGfxMgrGL& gfxMgr, const ZLGfxHandle& frameBuffer );

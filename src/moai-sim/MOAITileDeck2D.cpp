@@ -344,6 +344,6 @@ void MOAITileDeck2D::MOAIDeck_Render ( ZLIndex idx, MOAIRenderPhaseEnum::_ rende
 	callable.mVOff = uvRect.mYMin - ( 0.5f * callable.mVScale );
 
 	callable.mBrush = this->mQuad;
-	
 	gfxScript->ExecuteBytecode ( &callable );
+	callable.Flush ();
 }

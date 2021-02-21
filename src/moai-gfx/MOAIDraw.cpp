@@ -34,6 +34,8 @@ void MOAIDraw::ExecuteCompose ( MOAIGfxMgr& gfxMgr, MOAIShader* shader ) {
 	gfxMgr.SetScissorRect ();
 	gfxMgr.SetViewProj ();
 	gfxMgr.SetCullFunc ();
+	gfxMgr.SetDepthFunc ();
+	gfxMgr.SetDepthMask ( false );
 	gfxMgr.SetBlendMode ();
 	gfxMgr.SetVertexTransform ();
 	gfxMgr.SetPenColor ( 0xffffffff );
@@ -57,6 +59,40 @@ void MOAIDraw::ExecuteCompose ( MOAIGfxMgr& gfxMgr, MOAIShader* shader ) {
 		gfxMgr.WriteVtx ( 1.0f, -1.0f, 0.0f );
 		gfxMgr.WriteUV ( 1.0f, 0.0f );
 		gfxMgr.WritePenColor4b ();
+
+	gfxMgr.EndPrim ();
+}
+
+//----------------------------------------------------------------//
+void MOAIDraw::ExecuteDebugTri ( MOAIGfxMgr& gfxMgr ) {
+
+	MOAIFrameBuffer* frameBuffer = gfxMgr.GetFrameBuffer ();
+	if ( ! frameBuffer ) return;
+
+	gfxMgr.SetShader ( MOAIShaderPresetEnum::LINE_SHADER );
+	
+	gfxMgr.SetViewRect ();
+	gfxMgr.SetScissorRect ();
+	gfxMgr.SetViewProj ();
+	gfxMgr.SetCullFunc ();
+	gfxMgr.SetDepthFunc ();
+	gfxMgr.SetDepthMask ( false );
+	gfxMgr.SetBlendMode ();
+	gfxMgr.SetVertexTransform ();
+	gfxMgr.SetPenColor ( 0xffffffff );
+	
+	gfxMgr.SetVertexFormat ( MOAIVertexFormatPresetEnum::XYZWC );
+	
+	gfxMgr.BeginPrim ( MOAIGfxTopologyEnum::TRIANGLE_LIST, 3 );
+	
+		gfxMgr.WriteVtx ( -1.0f, -0.5f, 0.0f );
+		gfxMgr.WritePenColor4b ( ZLColor::PackRGBA ( 0, 0, 255, 255 ));
+	
+		gfxMgr.WriteVtx ( 1.0f, -0.5f, 0.0f );
+		gfxMgr.WritePenColor4b ( ZLColor::PackRGBA ( 0, 255, 0, 255 ));
+	
+		gfxMgr.WriteVtx ( 0.0f, 0.5f, 0.0f );
+		gfxMgr.WritePenColor4b ( ZLColor::PackRGBA ( 255, 0, 0, 255 ));
 
 	gfxMgr.EndPrim ();
 }
@@ -450,15 +486,19 @@ void MOAIDraw::MOAIAbstractCmdHandler_HandleCommand ( u32 cmd, const void* param
 				MOAIClearFlagsEnum::DEPTH_BUFFER_BIT |
 				MOAIClearFlagsEnum::STENCIL_BUFFER_BIT
 			);
-			gfxMgr.SetClearFlags (
-				MOAIClearFlagsEnum::COLOR_BUFFER_BIT
-			);
+//			gfxMgr.SetClearFlags (
+//				MOAIClearFlagsEnum::COLOR_BUFFER_BIT
+//			);
 			gfxMgr.ClearSurface ();
 			break;
 		}
 		
 		case MOAIDrawAPI::COMPOSE:
 			this->ExecuteCompose ( gfxMgr, *( MOAIShader** )param );
+			break;
+		
+		case MOAIDrawAPI::DEBUG_TRI:
+			this->ExecuteDebugTri ( gfxMgr );
 			break;
 		
 		case MOAIDrawAPI::DISABLE_SCISSOR_RECT:

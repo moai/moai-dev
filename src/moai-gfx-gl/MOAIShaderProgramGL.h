@@ -7,6 +7,11 @@
 #include <moai-gfx-gl/MOAIGfxResourceGL.h>
 #include <moai-gfx-gl/MOAIShaderUniformBindingGL.h>
 
+// TODO: for OpenGL upgrade
+//#define		OPENGL_PREPROC		"#version 100\n #define LOWP lowp\n #define MEDP mediump\n #define HIGHP \n"
+//#define		OPENGL_ES_PREPROC	"#version 100 es\n #define LOWP lowp\n #define MEDP mediump\n #define HIGHP highp\n"
+//#define		WEBGL_PREPROC		"#version 100\n precision mediump int;\n precision mediump float;\n"
+
 #define		OPENGL_PREPROC		"#define LOWP\n #define MEDP\n #define HIGHP\n"
 #define		OPENGL_ES_PREPROC	"#define LOWP lowp\n #define MEDP mediump\n #define HIGHP highp\n"
 #define		WEBGL_PREPROC		"precision mediump int;\n precision mediump float;\n"

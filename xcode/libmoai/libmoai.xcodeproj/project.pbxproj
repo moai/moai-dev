@@ -1897,6 +1897,7 @@
 		CD3371CD1CAF8E62008B8BC7 /* tesselator.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3371CC1CAF8E62008B8BC7 /* tesselator.h */; };
 		CD3371CE1CAF8E62008B8BC7 /* tesselator.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3371CC1CAF8E62008B8BC7 /* tesselator.h */; };
 		CD34A24F19C7D77A00BFF405 /* assert.h in Headers */ = {isa = PBXBuildFile; fileRef = CD34A24E19C7D77A00BFF405 /* assert.h */; };
+		CD37D1DE25E0DB27006536C0 /* ZLFrameSize.h in Headers */ = {isa = PBXBuildFile; fileRef = CD37D1DD25E0DB27006536C0 /* ZLFrameSize.h */; };
 		CD38E6371F7384CB00802DDB /* ZLHashWriterMbedTLS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD38E6361F7384CA00802DDB /* ZLHashWriterMbedTLS.cpp */; };
 		CD38E6381F7384CB00802DDB /* ZLHashWriterMbedTLS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD38E6361F7384CA00802DDB /* ZLHashWriterMbedTLS.cpp */; };
 		CD38E6391F7384E200802DDB /* aes.c in Sources */ = {isa = PBXBuildFile; fileRef = CD38E61D1F7383DF00802DDB /* aes.c */; };
@@ -6465,6 +6466,7 @@
 		CD3371AF1CAF8E56008B8BC7 /* tess.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tess.h; path = ../../3rdparty/libtess2/Source/tess.h; sourceTree = "<group>"; };
 		CD3371CC1CAF8E62008B8BC7 /* tesselator.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = tesselator.h; path = ../../3rdparty/libtess2/Include/tesselator.h; sourceTree = "<group>"; };
 		CD34A24E19C7D77A00BFF405 /* assert.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = assert.h; sourceTree = "<group>"; };
+		CD37D1DD25E0DB27006536C0 /* ZLFrameSize.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLFrameSize.h; sourceTree = "<group>"; };
 		CD38E5EE1F7383D200802DDB /* ecjpake.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = ecjpake.c; path = ../../3rdparty/mbedtls/library/ecjpake.c; sourceTree = "<group>"; };
 		CD38E5EF1F7383D200802DDB /* ecp_curves.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = ecp_curves.c; path = ../../3rdparty/mbedtls/library/ecp_curves.c; sourceTree = "<group>"; };
 		CD38E5F01F7383D200802DDB /* asn1parse.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = asn1parse.c; path = ../../3rdparty/mbedtls/library/asn1parse.c; sourceTree = "<group>"; };
@@ -9772,6 +9774,7 @@
 				89BE68C0173974FC00DFE837 /* ZLDistance.cpp */,
 				89BE68C1173974FC00DFE837 /* ZLDistance.h */,
 				89BE68C7173974FC00DFE837 /* ZLFloat.h */,
+				CD37D1DD25E0DB27006536C0 /* ZLFrameSize.h */,
 				CDE4400E1AC0D27600C745DB /* ZLFrustum.cpp */,
 				CDE4400F1AC0D27600C745DB /* ZLFrustum.h */,
 				CDE440101AC0D27600C745DB /* ZLFrustumFitter.cpp */,
@@ -14863,6 +14866,7 @@
 				89BE6A44173974FD00DFE837 /* ZLQuadCoord.h in Headers */,
 				89BE6A48173974FD00DFE837 /* ZLQuaternion.h in Headers */,
 				89BE6A4A173974FD00DFE837 /* ZLRadixSort16.h in Headers */,
+				CD37D1DE25E0DB27006536C0 /* ZLFrameSize.h in Headers */,
 				CDEEC77E1C7BCEDC0014CC3F /* ZLResult.h in Headers */,
 				89BE6A4C173974FD00DFE837 /* ZLRadixSort32.h in Headers */,
 				CD2FB1AC1C473AC4005F8D8D /* ZLRefCountedObject.h in Headers */,

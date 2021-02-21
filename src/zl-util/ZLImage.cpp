@@ -2061,9 +2061,7 @@ bool ZLImage::Write ( ZLStream& stream, cc8* formatName ) const {
 //----------------------------------------------------------------//
 ZLImage::ZLImage () :
 	mPixelFormat ( PXL_FMT_UNKNOWN ),
-	mColorFormat ( ZLColor::CLR_FMT_UNKNOWN ),
-	mWidth ( 0 ),
-	mHeight ( 0 ) {
+	mColorFormat ( ZLColor::CLR_FMT_UNKNOWN ) {
 }
 
 //----------------------------------------------------------------//

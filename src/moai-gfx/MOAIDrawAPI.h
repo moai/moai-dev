@@ -117,6 +117,8 @@ public:
 		CLEAR_SURFACE,
 		COMPOSE,
 		
+		DEBUG_TRI,
+		
 		DISABLE_SCISSOR_RECT,
 		DISABLE_VIEW_RECT,
 		
@@ -166,6 +168,7 @@ protected:
 	static int			_bindVectorPresets			( lua_State* L );
 	static int			_clearSurface				( lua_State* L );
 	static int			_compose					( lua_State* L );
+	static int			_debugTri					( lua_State* L );
 	static int			_drawAnimCurve				( lua_State* L );
 	static int			_drawBezierCurve			( lua_State* L );
 	static int			_drawBoxOutline				( lua_State* L );
@@ -223,6 +226,7 @@ public:
 	void 				BindVectorPresets			();
 	void				ClearSurface				();
 	void				Compose						( MOAIShader* shader );
+	void				DebugTri					();
 	void				Draw						();
 	void				DrawAnimCurve				( MOAIAnimCurve& curve, u32 resolution );
 	void				DrawAxis2D					( float x, float y, float dx, float dy );

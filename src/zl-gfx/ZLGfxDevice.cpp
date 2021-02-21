@@ -66,6 +66,21 @@ cc8* ZLGfxDevice::GetErrorString ( ZLGfxEnum::_ error ) {
 }
 
 //----------------------------------------------------------------//
+cc8* ZLGfxDevice::GetFrameBufferStatusString ( GLenum status ) {
+	
+	switch ( status ) {
+		case GL_FRAMEBUFFER_UNDEFINED:							return "GL_FRAMEBUFFER_UNDEFINED";
+		case GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT:				return "GL_FRAMEBUFFER_INCOMPLETE_ATTACHMENT";
+		case GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT:		return "GL_FRAMEBUFFER_INCOMPLETE_MISSING_ATTACHMENT";
+		case GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER:				return "GL_FRAMEBUFFER_INCOMPLETE_DRAW_BUFFER";
+		case GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER:				return "GL_FRAMEBUFFER_INCOMPLETE_READ_BUFFER";
+		case GL_FRAMEBUFFER_UNSUPPORTED:						return "GL_FRAMEBUFFER_UNSUPPORTED";
+		case GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE:				return "GL_FRAMEBUFFER_INCOMPLETE_MULTISAMPLE";
+	}
+	return "";
+}
+
+//----------------------------------------------------------------//
 cc8* ZLGfxDevice::GetString ( ZLGfxEnum::_ stringID ) {
 
 	return ( cc8* )glGetString ( ZLGfxEnum::MapZLToNative ( stringID ));

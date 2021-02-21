@@ -255,7 +255,7 @@ MOAIPickResult MOAIPropWithDeckAndGrid::MOAIAbstractProp_PickByRay ( ZLVec3D loc
 //----------------------------------------------------------------//
 void MOAIPropWithDeckAndGrid::MOAIAbstractRenderNode_Render ( MOAIRenderPhaseEnum::_ renderPhase ) {
 	
-	if ( renderPhase == MOAIRenderPhaseEnum::RENDER_PHASE_DRAW ) {
+	if ( renderPhase == MOAIRenderPhaseEnum::RENDER_PHASE_DRAW_DEBUG ) {
 		this->DrawDebug ();
 		return;
 	}

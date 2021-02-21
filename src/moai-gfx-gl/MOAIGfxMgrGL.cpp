@@ -85,8 +85,8 @@ int MOAIGfxMgrGL::_getViewSize ( lua_State* L  ) {
 
 	MOAIFrameBufferGL* frameBuffer = MOAICast < MOAIFrameBufferGL >( MOAIGfxMgrGL::Get ().GetFrameBuffer ());
 	
-	lua_pushnumber ( L, frameBuffer->GetBufferWidth ());
-	lua_pushnumber ( L, frameBuffer->GetBufferHeight ());
+	lua_pushnumber ( L, frameBuffer->GetWidth ());
+	lua_pushnumber ( L, frameBuffer->GetHeight ());
 	
 	return 2;
 }

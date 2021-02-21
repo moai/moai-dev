@@ -165,8 +165,12 @@ void ZLGfxImmediate::CheckFramebufferStatus ( ZLGfxEnum::_ target ) {
 	GLenum status = glCheckFramebufferStatus ( ZLGfxEnum::MapZLToNative ( target ));
 	GL_LOG_ERRORS ( "glCheckFramebufferStatus" )
 	
-	if ( status == ZLGfxEnum::FRAMEBUFFER_STATUS_COMPLETE ) {
+	if ( status == GL_FRAMEBUFFER_COMPLETE ) {
 		this->mError = false;
+	}
+	else {
+		ZLLog_Error ( "GL ERROR: %s\n", ZLGfxDevice::GetFrameBufferStatusString ( status ));
+		assert ( false );
 	}
 }
 

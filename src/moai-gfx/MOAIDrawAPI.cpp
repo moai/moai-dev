@@ -96,6 +96,16 @@ int MOAIDrawAPI::_compose ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: docygen
+int MOAIDrawAPI::_debugTri ( lua_State* L ) {
+	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
+	
+	self->DebugTri ();
+	
+	MOAI_LUA_RETURN_SELF
+}
+
+//----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIDrawAPI::_drawAnimCurve ( lua_State* L ) {
 	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
@@ -788,6 +798,12 @@ void MOAIDrawAPI::Compose ( MOAIShader* shader ) {
 
 	this->SubmitCommand < MOAIShader* >( COMPOSE, shader );
 	this->RetainObject ( shader );
+}
+
+//----------------------------------------------------------------//
+void MOAIDrawAPI::DebugTri () {
+
+	this->SubmitCommand ( DEBUG_TRI );
 }
 
 //----------------------------------------------------------------//
@@ -1508,12 +1524,6 @@ void MOAIDrawAPI::SetViewRect ( MOAIViewport* viewport ) {
 void MOAIDrawAPI::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.Visit ( *this )) return;
 
-	state.SetField ( -1, "UNIFORM_WIDTH_VEC_2",						( u32 )MOAIUniformDescriptor::UNIFORM_WIDTH_VEC_2 );
-	state.SetField ( -1, "UNIFORM_WIDTH_VEC_3",						( u32 )MOAIUniformDescriptor::UNIFORM_WIDTH_VEC_3 );
-	state.SetField ( -1, "UNIFORM_WIDTH_VEC_4",						( u32 )MOAIUniformDescriptor::UNIFORM_WIDTH_VEC_4 );
-	state.SetField ( -1, "UNIFORM_WIDTH_MATRIX_3X3",				( u32 )MOAIUniformDescriptor::UNIFORM_WIDTH_MATRIX_3X3 );
-	state.SetField ( -1, "UNIFORM_WIDTH_MATRIX_4X4",				( u32 )MOAIUniformDescriptor::UNIFORM_WIDTH_MATRIX_4X4 );
-
 	state.SetField ( -1, "GLOBAL_CLIP_TO_DISPLAY_MTX",				( u32 )MOAIGfxMgr::CLIP_TO_DISPLAY_MTX );
 	state.SetField ( -1, "GLOBAL_CLIP_TO_MODEL_MTX",				( u32 )MOAIGfxMgr::CLIP_TO_MODEL_MTX );
 	state.SetField ( -1, "GLOBAL_CLIP_TO_VIEW_MTX",					( u32 )MOAIGfxMgr::CLIP_TO_VIEW_MTX );
@@ -1598,6 +1608,7 @@ void MOAIDrawAPI::MOAIAbstractCmdAPI_RegisterLuaAPI ( MOAILuaState& state ) {
 		{ "bindVectorPresets",			_bindVectorPresets },
 		{ "clearSurface",				_clearSurface },
 		{ "compose",					_compose },
+		{ "debugTri",					_debugTri },
 		{ "drawAnimCurve",				_drawAnimCurve },
 		{ "drawBezierCurve",			_drawBezierCurve },
 		{ "drawBoxOutline",				_drawBoxOutline },

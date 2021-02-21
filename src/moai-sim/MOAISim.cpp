@@ -250,7 +250,7 @@ int MOAISim::_openWindow ( lua_State* L ) {
 	if ( openWindow ) {
 		MOAIFrameBuffer* buffer = gfxMgr.GetDefaultFrameBuffer ();
 		assert ( buffer );
-		buffer->SetBufferSize ( width, height );
+		buffer->SetFrameSize ( width, height );
 		openWindow.mFunc ( title, width, height, openWindow.mUserdata );
 	}
 

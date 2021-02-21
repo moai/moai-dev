@@ -85,6 +85,26 @@ int MOAITextureGL::_setFilter ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAITextureGL::_setInternalFormat ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextureGL, "U" )
+	
+	self->mGLInternalFormat = state.GetEnum ( 2, ZLGfxEnum::PIXEL_FORMAT_RGBA );
+	
+	MOAI_LUA_RETURN_SELF
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAITextureGL::_setPixelType ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAITextureGL, "U" )
+	
+	self->mGLPixelType = state.GetEnum ( 2, ZLGfxEnum::PIXEL_TYPE_UNSIGNED_BYTE );
+	
+	MOAI_LUA_RETURN_SELF
+}
+
+//----------------------------------------------------------------//
 /**	@lua	setWrap
 	@text	Set wrapping mode for texture.
  
@@ -432,28 +452,52 @@ bool MOAITextureGL::UpdateTextureFromImage ( ZLImage& image, ZLIntRect rect ) {
 void MOAITextureGL::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.Visit ( *this )) return;
 	
-	state.SetField ( -1, "GL_LINEAR",					( u32 )MOAITextureFilterEnum::LINEAR );
-	state.SetField ( -1, "GL_LINEAR_MIPMAP_LINEAR",		( u32 )MOAITextureFilterEnum::LINEAR_MIPMAP_LINEAR );
-	state.SetField ( -1, "GL_LINEAR_MIPMAP_NEAREST",	( u32 )MOAITextureFilterEnum::LINEAR_MIPMAP_NEAREST );
+	state.SetEnum ( -1, "FILTER_LINEAR",						MOAITextureFilterEnum::LINEAR );
+	state.SetEnum ( -1, "FILTER_LINEAR_MIPMAP_LINEAR",			MOAITextureFilterEnum::LINEAR_MIPMAP_LINEAR );
+	state.SetEnum ( -1, "FILTER_LINEAR_MIPMAP_NEAREST",			MOAITextureFilterEnum::LINEAR_MIPMAP_NEAREST );
 	
-	state.SetField ( -1, "GL_NEAREST",					( u32 )MOAITextureFilterEnum::NEAREST );
-	state.SetField ( -1, "GL_NEAREST_MIPMAP_LINEAR",	( u32 )MOAITextureFilterEnum::NEAREST_MIPMAP_LINEAR );
-	state.SetField ( -1, "GL_NEAREST_MIPMAP_NEAREST",	( u32 )MOAITextureFilterEnum::NEAREST_MIPMAP_NEAREST );
+	state.SetEnum ( -1, "FILTER_NEAREST",						MOAITextureFilterEnum::NEAREST );
+	state.SetEnum ( -1, "FILTER_NEAREST_MIPMAP_LINEAR",			MOAITextureFilterEnum::NEAREST_MIPMAP_LINEAR );
+	state.SetEnum ( -1, "FILTER_NEAREST_MIPMAP_NEAREST",		MOAITextureFilterEnum::NEAREST_MIPMAP_NEAREST );
 	
-	state.SetField ( -1, "GL_RGBA4",					( u32 )ZLGfxEnum::PIXEL_FORMAT_RGBA4 );
-	state.SetField ( -1, "GL_RGB5_A1",					( u32 )ZLGfxEnum::PIXEL_FORMAT_RGB5_A1 );
-	state.SetField ( -1, "GL_DEPTH_COMPONENT16",		( u32 )ZLGfxEnum::PIXEL_FORMAT_DEPTH_COMPONENT16 );
-	//***state.SetField ( -1, "GL_DEPTH_COMPONENT24",	( u32 )GL_DEPTH_COMPONENT24 );
-	//***state.SetField ( -1, "GL_STENCIL_INDEX1",		( u32 )GL_STENCIL_INDEX1 );
-	//***state.SetField ( -1, "GL_STENCIL_INDEX4",		( u32 )GL_STENCIL_INDEX4 );
-	state.SetField ( -1, "GL_STENCIL_INDEX8",			( u32 )ZLGfxEnum::PIXEL_FORMAT_STENCIL_INDEX8 );
-	//***state.SetField ( -1, "GL_STENCIL_INDEX16",		( u32 )GL_STENCIL_INDEX16 );
+	state.SetEnum ( -1, "PIXEL_FORMAT_RGBA4",					ZLGfxEnum::PIXEL_FORMAT_RGBA4 );
+	state.SetEnum ( -1, "PIXEL_FORMAT_RGB5_A1",					ZLGfxEnum::PIXEL_FORMAT_RGB5_A1 );
+	state.SetEnum ( -1, "PIXEL_FORMAT_DEPTH_COMPONENT16",		ZLGfxEnum::PIXEL_FORMAT_DEPTH_COMPONENT16 );
+	//state.SetEnum ( -1, "PIXEL_FORMAT_DEPTH_COMPONENT24",		GL_DEPTH_COMPONENT24 );
+	//state.SetEnum ( -1, "PIXEL_FORMAT_STENCIL_INDEX1",		GL_STENCIL_INDEX1 );
+	//state.SetEnum ( -1, "PIXEL_FORMAT_STENCIL_INDEX4",		GL_STENCIL_INDEX4 );
+	state.SetEnum ( -1, "PIXEL_FORMAT_STENCIL_INDEX8",			ZLGfxEnum::PIXEL_FORMAT_STENCIL_INDEX8 );
+	//state.SetEnum ( -1, "PIXEL_FORMAT_STENCIL_INDEX16",		GL_STENCIL_INDEX16 );
+	
+	state.SetEnum ( -1, "PIXEL_TYPE_BYTE",										ZLGfxEnum::PIXEL_TYPE_BYTE );
+	state.SetEnum ( -1, "PIXEL_TYPE_COMPRESSED_RGB_PVRTC_2BPPV1_IMG",			ZLGfxEnum::PIXEL_TYPE_COMPRESSED_RGB_PVRTC_2BPPV1_IMG );
+	state.SetEnum ( -1, "PIXEL_TYPE_COMPRESSED_RGB_PVRTC_4BPPV1_IMG",			ZLGfxEnum::PIXEL_TYPE_COMPRESSED_RGB_PVRTC_4BPPV1_IMG );
+	state.SetEnum ( -1, "PIXEL_TYPE_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG",			ZLGfxEnum::PIXEL_TYPE_COMPRESSED_RGBA_PVRTC_2BPPV1_IMG );
+	state.SetEnum ( -1, "PIXEL_TYPE_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG",			ZLGfxEnum::PIXEL_TYPE_COMPRESSED_RGBA_PVRTC_4BPPV1_IMG );
+	state.SetEnum ( -1, "PIXEL_TYPE_FLOAT",										ZLGfxEnum::PIXEL_TYPE_FLOAT );
+	state.SetEnum ( -1, "PIXEL_TYPE_INT",										ZLGfxEnum::PIXEL_TYPE_INT );
+	state.SetEnum ( -1, "PIXEL_TYPE_SHORT",										ZLGfxEnum::PIXEL_TYPE_SHORT );
+	state.SetEnum ( -1, "PIXEL_TYPE_UNSIGNED_BYTE",								ZLGfxEnum::PIXEL_TYPE_UNSIGNED_BYTE );
+	state.SetEnum ( -1, "PIXEL_TYPE_UNSIGNED_BYTE_2_3_3_REV",					ZLGfxEnum::PIXEL_TYPE_UNSIGNED_BYTE_2_3_3_REV );
+	state.SetEnum ( -1, "PIXEL_TYPE_UNSIGNED_BYTE_3_3_2",						ZLGfxEnum::PIXEL_TYPE_UNSIGNED_BYTE_3_3_2 );
+	state.SetEnum ( -1, "PIXEL_TYPE_UNSIGNED_INT",								ZLGfxEnum::PIXEL_TYPE_UNSIGNED_INT );
+	state.SetEnum ( -1, "PIXEL_TYPE_UNSIGNED_INT_8_8_8_8",						ZLGfxEnum::PIXEL_TYPE_UNSIGNED_INT_8_8_8_8 );
+	state.SetEnum ( -1, "PIXEL_TYPE_UNSIGNED_INT_8_8_8_8_REV",					ZLGfxEnum::PIXEL_TYPE_UNSIGNED_INT_8_8_8_8_REV );
+	state.SetEnum ( -1, "PIXEL_TYPE_UNSIGNED_INT_2_10_10_10_REV",				ZLGfxEnum::PIXEL_TYPE_UNSIGNED_INT_2_10_10_10_REV );
+	state.SetEnum ( -1, "PIXEL_TYPE_UNSIGNED_INT_10_10_10_2",					ZLGfxEnum::PIXEL_TYPE_UNSIGNED_INT_10_10_10_2 );
+	state.SetEnum ( -1, "PIXEL_TYPE_UNSIGNED_SHORT",							ZLGfxEnum::PIXEL_TYPE_UNSIGNED_SHORT );
+	state.SetEnum ( -1, "PIXEL_TYPE_UNSIGNED_SHORT_5_6_5",						ZLGfxEnum::PIXEL_TYPE_UNSIGNED_SHORT_5_6_5 );
+	state.SetEnum ( -1, "PIXEL_TYPE_UNSIGNED_SHORT_5_6_5_REV",					ZLGfxEnum::PIXEL_TYPE_UNSIGNED_SHORT_5_6_5_REV );
+	state.SetEnum ( -1, "PIXEL_TYPE_UNSIGNED_SHORT_4_4_4_4",					ZLGfxEnum::PIXEL_TYPE_UNSIGNED_SHORT_4_4_4_4 );
+	state.SetEnum ( -1, "PIXEL_TYPE_UNSIGNED_SHORT_4_4_4_4_REV",				ZLGfxEnum::PIXEL_TYPE_UNSIGNED_SHORT_4_4_4_4_REV );
+	state.SetEnum ( -1, "PIXEL_TYPE_UNSIGNED_SHORT_1_5_5_5_REV",				ZLGfxEnum::PIXEL_TYPE_UNSIGNED_SHORT_1_5_5_5_REV );
+	state.SetEnum ( -1, "PIXEL_TYPE_UNSIGNED_SHORT_5_5_5_1",					ZLGfxEnum::PIXEL_TYPE_UNSIGNED_SHORT_5_5_5_1 );
 	
 	// TODO:
 	#ifdef MOAI_OS_ANDROID
-		state.SetField ( -1, "GL_RGB565",				( u32 )ZLGfxEnum::PIXEL_FORMAT_RGB565 );
+		state.SetEnum ( -1, "PIXEL_FORMAT_RGB565",				ZLGfxEnum::PIXEL_FORMAT_RGB565 );
 	#else
-		state.SetField ( -1, "GL_RGBA8",				( u32 )ZLGfxEnum::PIXEL_FORMAT_RGBA8 );
+		state.SetEnum ( -1, "PIXEL_FORMAT_RGBA8",				ZLGfxEnum::PIXEL_FORMAT_RGBA8 );
 	#endif
 }
 
@@ -466,6 +510,8 @@ void MOAITextureGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaStat
 		{ "release",				_release },
 		{ "setDebugName",			_setDebugName },
 		{ "setFilter",				_setFilter },
+		{ "setInternalFormat",		_setInternalFormat },
+		{ "setPixelType",			_setPixelType },
 		{ "setWrap",				_setWrap },
 		{ NULL, NULL }
 	};

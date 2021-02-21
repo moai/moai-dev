@@ -52,6 +52,7 @@
 #include <zl-util/ZLFinalizable.h>
 #include <zl-util/ZLFinalizationVisitor.h>
 #include <zl-util/ZLFloat.h>
+#include <zl-util/ZLFrameSize.h>
 #include <zl-util/ZLFrustum.h>
 #include <zl-util/ZLFrustumFitter.h>
 #include <zl-util/ZLHashFNV1a.h>
