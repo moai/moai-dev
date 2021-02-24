@@ -16,7 +16,6 @@ void MOAIVertexFormatGL::Bind ( ZLGfx& gfx, ZLSharedConstBuffer* buffer ) const 
 		
 		const MOAIVertexAttribute& attr = this->mAttributes [ i ];
 		
-		gfx.EnableVertexAttribArray ( attr.mIndex );
 		gfx.VertexAttribPointer (
 			attr.mIndex,
 			attr.mSize,
@@ -26,6 +25,8 @@ void MOAIVertexFormatGL::Bind ( ZLGfx& gfx, ZLSharedConstBuffer* buffer ) const 
 			buffer,
 			attr.mOffset
 		);
+		
+		gfx.EnableVertexAttribArray ( attr.mIndex );
 	}
 }
 

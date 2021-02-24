@@ -21,7 +21,7 @@ protected:
 	
 public:
 	
-	friend class MOAIGfxMgrGL_DisplayListClerkGL;
+//	friend class MOAIGfxMgrGL_DisplayListClerkGL;
 	
 	DECL_LUA_FACTORY ( MOAIIndexBufferGL )
 	

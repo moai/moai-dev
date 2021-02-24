@@ -20,6 +20,7 @@
 #include <moai-gfx-gl/MOAIGfxStateGPUCacheFrameGL.h>
 #include <moai-gfx-gl/MOAIImageTextureGL.h>
 #include <moai-gfx-gl/MOAIIndexBufferGL.h>
+#include <moai-gfx-gl/MOAIMeshGL.h>
 #include <moai-gfx-gl/MOAIRenderBufferGL.h>
 #include <moai-gfx-gl/MOAIRenderRootGL.h>
 #include <moai-gfx-gl/MOAIShaderGL.h>
@@ -28,7 +29,6 @@
 #include <moai-gfx-gl/MOAIShaderUniformBindingGL.h>
 #include <moai-gfx-gl/MOAITexture2DGL.h>
 #include <moai-gfx-gl/MOAITextureGL.h>
-#include <moai-gfx-gl/MOAIVertexArrayGL.h>
 #include <moai-gfx-gl/MOAIVertexBufferGL.h>
 #include <moai-gfx-gl/MOAIVertexFormatGL.h>
 

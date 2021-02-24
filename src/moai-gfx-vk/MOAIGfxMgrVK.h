@@ -110,7 +110,6 @@ protected:
 	MOAIIndexBuffer*				MOAIGfxMgr_CreateIndexBuffer				();
 	MOAIRenderNode*					MOAIGfxMgr_CreateRenderRoot					();
 	MOAITexture2D*					MOAIGfxMgr_CreateTexture2D					();
-	MOAIVertexArray*				MOAIGfxMgr_CreateVertexArray				();
 	MOAIVertexBuffer*				MOAIGfxMgr_CreateVertexBuffer				();
 	MOAIVertexFormat*				MOAIGfxMgr_CreateVertexFormat				();
 	void							MOAIGfxMgr_EndFrame							();

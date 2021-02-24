@@ -64,10 +64,8 @@ void ZLGfxImmediate::AllocateResource ( ZLGfxResource& resource, ZLGfxEnum::_ pa
 			break;
 			
 		case ZLGfxResource::VERTEXARRAY:
-			#ifndef MOAI_OS_ANDROID
-				glGenVertexArrays ( 1, &resource.mGLID );
-				GL_LOG_ERRORS ( "glGenVertexArrays" )
-			#endif
+			glGenVertexArrays ( 1, &resource.mGLID );
+			GL_LOG_ERRORS ( "glGenVertexArrays" )
 			break;
 		
 		default:
@@ -200,13 +198,6 @@ void ZLGfxImmediate::ClearColor ( float r, float g, float b, float a ) {
 
 	glClearColor ( r, g, b, a );
 	GL_LOG_ERRORS ( "glClearColor" )
-}
-
-//----------------------------------------------------------------//
-void ZLGfxImmediate::Color ( float r, float g, float b, float a ) {
-
-	glColor4f ( r, g, b, a );
-	GL_LOG_ERRORS ( "glColor4f" )
 }
 
 //----------------------------------------------------------------//
@@ -361,15 +352,6 @@ void ZLGfxImmediate::Disable ( ZLGfxEnum::_ cap ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxImmediate::DisableClientState ( ZLGfxEnum::_ cap ) {
-
-	#if !MOAI_OS_NACL
-		glDisableClientState ( ZLGfxEnum::MapZLToNative ( cap ));
-		GL_LOG_ERRORS ( "glDisableClientState" )
-	#endif
-}
-
-//----------------------------------------------------------------//
 void ZLGfxImmediate::DisableVertexAttribArray ( u32 index ) {
 
 	glDisableVertexAttribArray (( GLuint )index );
@@ -400,15 +382,6 @@ void ZLGfxImmediate::Enable ( ZLGfxEnum::_ cap ) {
 
 	glEnable ( ZLGfxEnum::MapZLToNative ( cap ));
 	GL_LOG_ERRORS ( "glEnable" )
-}
-
-//----------------------------------------------------------------//
-void ZLGfxImmediate::EnableClientState ( ZLGfxEnum::_ cap ) {
-
-	#if !MOAI_OS_NACL
-		glEnableClientState ( ZLGfxEnum::MapZLToNative ( cap ));
-		GL_LOG_ERRORS ( "glEnableClientState" )
-	#endif
 }
 
 //----------------------------------------------------------------//
@@ -627,15 +600,6 @@ void ZLGfxImmediate::ShaderSource ( ZLGfxResource& shader, cc8* source, size_t l
 
 	glShaderSource (( GLuint )shader.GLID (), 1, stringArray, lengthArray );
 	GL_LOG_ERRORS ( "glShaderSource" )
-}
-
-//----------------------------------------------------------------//
-void ZLGfxImmediate::TexEnvi ( ZLGfxEnum::_ pname, ZLGfxEnum::_ param ) {
-
-	#if !MOAI_OS_NACL
-		glTexEnvi ( GL_TEXTURE_ENV, ZLGfxEnum::MapZLToNative ( pname ), ( GLint )ZLGfxEnum::MapZLToNative ( param ));
-		GL_LOG_ERRORS ( "glTexEnvi" )
-	#endif
 }
 
 //----------------------------------------------------------------//

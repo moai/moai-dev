@@ -9,6 +9,7 @@
 #include <moai-gfx/MOAIAbstractBaseTransform.h>
 #include <moai-gfx/MOAIAbstractChildTransform.h>
 #include <moai-gfx/MOAIAbstractGfxScriptCallback.h>
+#include <moai-gfx/MOAIAbstractMesh.h>
 #include <moai-gfx/MOAIAbstractRenderable.h>
 #include <moai-gfx/MOAIAbstractUniformBuffer.h>
 #include <moai-gfx/MOAIBlendMode.h>
@@ -47,7 +48,6 @@
 #include <moai-gfx/MOAIUniformDescriptor.h>
 #include <moai-gfx/MOAIUniformHandle.h>
 #include <moai-gfx/MOAIUniformSchema.h>
-#include <moai-gfx/MOAIVertexArray.h>
 #include <moai-gfx/MOAIVertexBuffer.h>
 #include <moai-gfx/MOAIVertexFormat.h>
 #include <moai-gfx/MOAIVertexFormatMgr.h>

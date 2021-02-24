@@ -26,13 +26,13 @@ public:
 	//----------------------------------------------------------------//
 	void MOAIAbstractGfxScriptCallback_Call () {
 	
-		MOAIMeshSpan* span = this->mSpan;
-	
-		for ( ; span; span = span->mNext ) {
-			if ( span->mBase == span->mTop ) continue;
-			assert (( span->mBase < span->mTop ) && ( span->mTop <= this->mTotalElements ));
-			MOAIGfxMgr::Get ().DrawPrims ( this->mPrimType, span->mBase, ( u32 )( span->mTop - span->mBase ));
-		}
+//		MOAIMeshSpan* span = this->mSpan;
+//	
+//		for ( ; span; span = span->mNext ) {
+//			if ( span->mBase == span->mTop ) continue;
+//			assert (( span->mBase < span->mTop ) && ( span->mTop <= this->mTotalElements ));
+//			MOAIGfxMgr::Get ().DrawPrims ( this->mPrimType, span->mBase, ( u32 )( span->mTop - span->mBase ));
+//		}
 	}
 };
 

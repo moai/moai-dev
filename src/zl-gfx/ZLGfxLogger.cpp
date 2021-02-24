@@ -143,12 +143,6 @@ void ZLGfxLogger::ClearColor ( float r, float g, float b, float a ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::Color ( float r, float g, float b, float a ) {
-
-	this->PrintLine ( "glColor4f - r: %f g: %f b: %f a: %f\n", r, g, b, a );
-}
-
-//----------------------------------------------------------------//
 void ZLGfxLogger::Comment ( cc8* comment ) {
 
 	this->PrintLine ( comment ? "COMMENT - %s\n" : "\n", comment );
@@ -239,14 +233,6 @@ void ZLGfxLogger::Disable ( ZLGfxEnum::_ cap ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxLogger::DisableClientState ( ZLGfxEnum::_ cap ) {
-
-	#if !MOAI_OS_NACL
-		this->PrintLine ( "glDisableClientState - cap: %d\n", cap );
-	#endif
-}
-
-//----------------------------------------------------------------//
 void ZLGfxLogger::DisableVertexAttribArray ( u32 index ) {
 
 	this->PrintLine ( "glDisableVertexAttribArray - index: %d\n", index );
@@ -269,14 +255,6 @@ void ZLGfxLogger::DrawElements ( ZLGfxEnum::_ primType, u32 count, ZLGfxEnum::_ 
 void ZLGfxLogger::Enable ( ZLGfxEnum::_ cap ) {
 
 	this->PrintLine ( "glEnable - cap: %d\n", cap );
-}
-
-//----------------------------------------------------------------//
-void ZLGfxLogger::EnableClientState ( ZLGfxEnum::_ cap ) {
-
-	#if !MOAI_OS_NACL
-		this->PrintLine ( "glEnableClientState - cap: %d\n", cap );
-	#endif
 }
 
 //----------------------------------------------------------------//
@@ -440,14 +418,6 @@ void ZLGfxLogger::ShaderSource ( ZLGfxResource& shader, cc8* source, size_t leng
 	UNUSED ( shader );
 
 	this->PrintLine ( "glShaderSource - length: %d\n", length );
-}
-
-//----------------------------------------------------------------//
-void ZLGfxLogger::TexEnvi ( ZLGfxEnum::_ pname, ZLGfxEnum::_ param ) {
-
-	#if !MOAI_OS_NACL
-		this->PrintLine ( "glTexEnvi - pname: %d param: %d\n", pname, param );
-	#endif
 }
 
 //----------------------------------------------------------------//

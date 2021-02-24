@@ -44,11 +44,8 @@ void SDLHostGL::SDLAbstractHost_OpenWindow ( const char* title, int width, int h
 	if ( !this->mWindow ) {
 		
 		this->GetDeviceToPixelScale ( this->mDeviceScaleX, this->mDeviceScaleY );
-	
-		// TODO: for OpenGL update
-//		SDL_GL_SetAttribute ( SDL_GL_CONTEXT_MAJOR_VERSION, 3 );
-//		SDL_GL_SetAttribute ( SDL_GL_CONTEXT_MINOR_VERSION, 2 );
-//		SDL_GL_SetAttribute ( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE );
+		
+		SDL_Init ( SDL_INIT_VIDEO );
 	
 		this->mWindow = SDL_CreateWindow (
 			title,
@@ -58,11 +55,18 @@ void SDLHostGL::SDLAbstractHost_OpenWindow ( const char* title, int width, int h
 			( int )( height / this->mDeviceScaleY ),
 			SDL_WINDOW_OPENGL | SDL_WINDOW_SHOWN | SDL_WINDOW_ALLOW_HIGHDPI
 		);
-		this->mGLContext = SDL_GL_CreateContext ( this->mWindow );
-
+		
+		// TODO: for OpenGL update
+		SDL_GL_SetAttribute ( SDL_GL_CONTEXT_MAJOR_VERSION, 4 );
+		SDL_GL_SetAttribute ( SDL_GL_CONTEXT_MINOR_VERSION, 1 );
+		SDL_GL_SetAttribute ( SDL_GL_CONTEXT_PROFILE_MASK, SDL_GL_CONTEXT_PROFILE_CORE );
+	
 		SDL_GL_SetAttribute ( SDL_GL_SHARE_WITH_CURRENT_CONTEXT, 1 );
 		SDL_GL_SetAttribute ( SDL_GL_MULTISAMPLEBUFFERS, 1 );
 		SDL_GL_SetAttribute ( SDL_GL_MULTISAMPLESAMPLES, 16 );
+		
+		this->mGLContext = SDL_GL_CreateContext ( this->mWindow );
+		assert ( this->mGLContext );
 
 		SDL_GL_SetSwapInterval ( 1 );
 

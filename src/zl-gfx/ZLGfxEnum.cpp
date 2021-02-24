@@ -84,10 +84,6 @@ u32  ZLGfxEnum::MapZLToNative ( _ value ) {
 			case BUFFER_USAGE_STREAM_READ:				return GL_STREAM_READ;
 		#endif
 
-		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_BLACKBERRY )
-			case COMPOSE_MODULATE:						return GL_MODULATE;
-		#endif
-
 		case CULL_ALL:									return GL_FRONT_AND_BACK;
 		case CULL_BACK:									return GL_BACK;
 		case CULL_FRONT:								return GL_FRONT;
@@ -114,42 +110,20 @@ u32  ZLGfxEnum::MapZLToNative ( _ value ) {
 
 		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID ) && !defined ( MOAI_OS_HTML )
 			case MATRIX_COLOR:							return GL_COLOR;
-			case MATRIX_MODELVIEW:						return GL_MODELVIEW;
-			case MATRIX_PROJECTION:						return GL_PROJECTION;
 		#endif
 
 		case MATRIX_TEXTURE:							return GL_TEXTURE;
 
 		case PIPELINE_BLEND:							return GL_BLEND;
-
-		#if !defined ( MOAI_OS_NACL )
-		  case PIPELINE_COLOR_ARRAY:					return GL_COLOR_ARRAY;
-		#endif
 		case PIPELINE_CULL:								return GL_CULL_FACE;
 		case PIPELINE_DEPTH:							return GL_DEPTH_TEST;
 
-		#if !defined ( MOAI_OS_NACL )
-			case PIPELINE_NORMAL_ARRAY:					return GL_NORMAL_ARRAY;
-		#endif
-
 		case PIPELINE_SCISSOR:							return GL_SCISSOR_TEST;
 		case PIPELINE_TEXTURE_2D:						return GL_TEXTURE_2D;
-
-		#if !defined ( MOAI_OS_NACL )
-			case PIPELINE_TEXTURE_COORD_ARRAY:			return GL_TEXTURE_COORD_ARRAY;
-			case PIPELINE_VERTEX_ARRAY:					return GL_VERTEX_ARRAY;
-		#endif
-
-		#if !defined ( MOAI_OS_IPHONE )
-			//case COLOR_INDEX:								return GL_COLOR_INDEX;
-			//case STENCIL_INDEX:								return GL_STENCIL_INDEX;
-		#endif
 		
 		case DEPTH_COMPONENT:							return GL_DEPTH_COMPONENT;
 
 		case PIXEL_FORMAT_ALPHA:						return GL_ALPHA;
-		case PIXEL_FORMAT_LUMINANCE:					return GL_LUMINANCE;
-		case PIXEL_FORMAT_LUMINANCE_ALPHA:				return GL_LUMINANCE_ALPHA;
 
 		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID ) && !defined ( MOAI_OS_HTML )
 			case PIXEL_FORMAT_RED:						return GL_RED;
@@ -284,8 +258,6 @@ u32  ZLGfxEnum::MapZLToNative ( _ value ) {
 			case TEXTURE_BASE_LEVEL:				return GL_TEXTURE_BASE_LEVEL;
 			case TEXTURE_COMPARE_FUNC:				return GL_TEXTURE_COMPARE_FUNC;
 			case TEXTURE_COMPARE_MODE:				return GL_TEXTURE_COMPARE_MODE;
-			//case TEXTURE_DEPTH_STENCIL_MODE:		return GL_DEPTH_STENCIL_TEXTURE_MODE;
-			case TEXTURE_ENV_MODE:					return GL_TEXTURE_ENV_MODE;
 		#endif
 
 		#if !defined ( MOAI_OS_NACL ) && !defined ( MOAI_OS_IPHONE ) && !defined ( MOAI_OS_BLACKBERRY ) && !defined ( MOAI_OS_ANDROID ) && !defined ( MOAI_OS_HTML )

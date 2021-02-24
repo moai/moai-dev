@@ -19,8 +19,8 @@ class MOAIVertexBufferGL :
 	public virtual MOAIGfxBufferGL {
 private:
 	
-	friend class MOAIGfxMgrGL_DisplayListClerkGL;
-	friend class MOAIVertexBufferWithFormatGL;
+//	friend class MOAIGfxMgrGL_DisplayListClerkGL;
+//	friend class MOAIVertexBufferWithFormatGL;
 	
 	//----------------------------------------------------------------//
 	

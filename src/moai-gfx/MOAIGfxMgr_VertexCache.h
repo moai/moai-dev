@@ -4,6 +4,7 @@
 #ifndef	MOAIGFXMGR_VERTEXCACHE_H
 #define	MOAIGFXMGR_VERTEXCACHE_H
 
+#include <moai-gfx/MOAIAbstractMesh.h>
 #include <moai-gfx/MOAIGfxConsts.h>
 #include <moai-gfx/MOAIGfxMgrComponents.h>
 #include <moai-gfx/MOAIGfxMgr_CPUCache.h>
@@ -58,8 +59,10 @@ protected:
 	bool								mApplyUVTransform;
 	ZLMatrix4x4							mUVTransform;
 	
+	ZLStrongPtr < MOAIVertexFormat >	mVtxFormat;
 	ZLStrongPtr < MOAIVertexBuffer >	mVtxBuffer;
 	ZLStrongPtr < MOAIIndexBuffer >		mIdxBuffer;
+	ZLStrongPtr < MOAIAbstractMesh >	mMesh;
 	
 	//----------------------------------------------------------------//
 	void			TransformAndWriteQuad			( ZLVec4D* vtx, ZLVec2D* uv );
@@ -94,6 +97,9 @@ public:
 	void			SetUVTransform					();
 	void			SetUVTransform					( u32 mtxID );
 	void			SetUVTransform					( const ZLMatrix4x4& uvTransform );
+	
+	void			SetVertexFormat					( MOAIVertexFormat* format = NULL );
+	void			SetVertexFormat					( MOAIVertexFormatPresetEnum preset );
 	
 	void			SetVertexTransform				();
 	void			SetVertexTransform				( u32 mtxID );

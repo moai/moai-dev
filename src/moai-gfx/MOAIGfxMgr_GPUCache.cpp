@@ -2,15 +2,13 @@
 // http://getmoai.com
 
 #include "pch.h"
+#include <moai-gfx/MOAIAbstractMesh.h>
 #include <moai-gfx/MOAIFrameBuffer.h>
 #include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIGfxMgr_GPUCache.h>
 #include <moai-gfx/MOAIIndexBuffer.h>
 #include <moai-gfx/MOAIShader.h>
 #include <moai-gfx/MOAITexture.h>
-#include <moai-gfx/MOAIVertexArray.h>
-#include <moai-gfx/MOAIVertexBuffer.h>
-#include <moai-gfx/MOAIVertexFormat.h>
 #include <moai-gfx/MOAIViewport.h>
 
 //================================================================//
@@ -32,10 +30,10 @@ size_t MOAIGfxMgr_GPUCache::CountTextureUnits () {
 	return this->MOAIGfxMgr_GPUCache_CountTextureUnits ();
 }
 
-//----------------------------------------------------------------//
-void MOAIGfxMgr_GPUCache::DrawPrims ( MOAIGfxTopologyEnum::_ primType, u32 base, u32 count ) {
-	return this->MOAIGfxMgr_GPUCache_DrawPrims ( primType, base, count );
-}
+////----------------------------------------------------------------//
+//void MOAIGfxMgr_GPUCache::DrawPrims ( MOAIGfxTopologyEnum::_ primType, u32 base, u32 count ) {
+//	return this->MOAIGfxMgr_GPUCache_DrawPrims ( primType, base, count );
+//}
 
 //----------------------------------------------------------------//
 MOAIBlendMode MOAIGfxMgr_GPUCache::GetBlendMode () const {
@@ -85,6 +83,13 @@ MOAIFrameBuffer* MOAIGfxMgr_GPUCache::GetFrameBuffer () {
 }
 
 //----------------------------------------------------------------//
+MOAIAbstractMesh* MOAIGfxMgr_GPUCache::GetMesh () {
+
+	assert ( this->mPendingState );
+	return this->mPendingState->mMesh;
+}
+
+//----------------------------------------------------------------//
 MOAIShader* MOAIGfxMgr_GPUCache::GetShader () {
 
 	assert ( this->mPendingState );
@@ -96,13 +101,6 @@ MOAITexture* MOAIGfxMgr_GPUCache::GetTexture ( ZLIndex textureUnit ) {
 
 	assert ( this->mPendingState );
 	return this->mPendingState->mTextureUnits [ textureUnit ];
-}
-
-//----------------------------------------------------------------//
-MOAIVertexFormat* MOAIGfxMgr_GPUCache::GetVertexFormat () {
-
-	assert ( this->mPendingState );
-	return this->mPendingState->mVtxFormat;
 }
 
 //----------------------------------------------------------------//
@@ -274,12 +272,12 @@ void MOAIGfxMgr_GPUCache::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgr_GPUCache::SetIndexBuffer ( MOAIIndexBuffer* buffer ) {
-	
+void MOAIGfxMgr_GPUCache::SetMesh ( MOAIAbstractMesh* mesh ) {
+
 	assert ( !this->mApplyingStateChanges );
-	
-	this->mPendingState->mIdxBuffer = buffer;
-	this->SetFlag ( this->mActiveState->mIdxBuffer == buffer, INDEX_BUFFER );
+
+	this->mPendingState->mMesh = mesh;
+	this->SetFlag ( this->mActiveState->mMesh == mesh, MESH );
 }
 
 //----------------------------------------------------------------//
@@ -357,50 +355,6 @@ void MOAIGfxMgr_GPUCache::SetTexture ( MOAITexture* texture, ZLIndex textureUnit
 	else {
 		this->mTextureDirtyFlags = this->mTextureDirtyFlags | mask;
 	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgr_GPUCache::SetVertexArray ( MOAIVertexArray* vtxArray ) {
-
-	assert ( !this->mApplyingStateChanges );
-
-	if ( vtxArray ) {
-		this->mPendingState->mVtxBuffer = NULL;
-		this->mPendingState->mVtxFormat = NULL;
-		this->mDirtyFlags &= ~VERTEX_BUFFER;
-	}
-
-	this->mPendingState->mVtxArray = vtxArray;
-	this->SetFlag ( this->mActiveState->mVtxArray == vtxArray, VERTEX_ARRAY );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgr_GPUCache::SetVertexBuffer ( MOAIVertexBuffer* buffer ) {
-
-	assert ( !this->mApplyingStateChanges );
-	
-	if ( buffer ) {
-		this->mPendingState->mVtxArray = NULL;
-		this->mDirtyFlags &= ~VERTEX_ARRAY;
-	}
-
-	this->mPendingState->mVtxBuffer = buffer;
-	this->SetFlag ( this->mActiveState->mVtxBuffer == buffer, VERTEX_BUFFER );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgr_GPUCache::SetVertexFormat ( MOAIVertexFormat* format ) {
-
-	assert ( !this->mApplyingStateChanges );
-
-	this->mPendingState->mVtxFormat = format;
-	this->SetFlag ( this->mActiveState->mVtxFormat == format, VERTEX_FORMAT );
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgr_GPUCache::SetVertexFormat ( MOAIVertexFormatPresetEnum preset ) {
-
-	this->SetVertexFormat ( this->GetGfxMgr ().GetVertexFormatPreset ( preset ));
 }
 
 //----------------------------------------------------------------//

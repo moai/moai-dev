@@ -38,8 +38,9 @@ size_t MOAIGfxBufferGL::CountVBOs () {
 
 //----------------------------------------------------------------//
 ZLSharedConstBuffer* MOAIGfxBufferGL::GetBufferForBind ( ZLGfx& gfx ) {
-	UNUSED(gfx);
-	return this->mUseVBOs ? 0 : this->ZLCopyOnWrite::GetSharedConstBuffer ();
+	UNUSED ( gfx );
+	return 0;
+//	return this->mUseVBOs ? 0 : this->ZLCopyOnWrite::GetSharedConstBuffer ();
 
 //	if ( this->mUseVBOs ) return 0;
 //
@@ -51,7 +52,6 @@ ZLSharedConstBuffer* MOAIGfxBufferGL::GetBufferForBind ( ZLGfx& gfx ) {
 MOAIGfxBufferGL::MOAIGfxBufferGL () :
 	mCurrentVBO ( 0 ),
 	mTarget ( ZLGfxEnum::BUFFER_TARGET_ARRAY ),
-	mUseVBOs ( false ),
 	mCopyOnUpdate ( false ) {
 		
 	RTTI_BEGIN ( MOAIGfxBufferGL )
@@ -60,6 +60,8 @@ MOAIGfxBufferGL::MOAIGfxBufferGL () :
 		RTTI_EXTEND ( MOAIGfxResourceGL )
 		RTTI_EXTEND ( MOAIGfxBuffer )
 	RTTI_END
+	
+	this->ReserveVBOs ( 1 );
 }
 
 //----------------------------------------------------------------//
@@ -81,6 +83,13 @@ void MOAIGfxBufferGL::ReserveVBOs ( ZLSize gpuBuffers ) {
 	}
 
 	this->MOAIGfxResourceGL::ScheduleForGPUUpdate ();
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxBufferGL::Update () {
+
+	this->ScheduleForGPUUpdate ();
+	this->Bind ();
 }
 
 //================================================================//
@@ -124,9 +133,7 @@ void MOAIGfxBufferGL::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState&
 
 //----------------------------------------------------------------//
 void MOAIGfxBufferGL::MOAIGfxResourceGL_OnGPUBind () {
-	
-	if ( !this->mUseVBOs ) return;
-	
+		
 	const ZLGfxHandle& vbo = this->mVBOs [ this->mCurrentVBO ];
 	
 	if ( vbo.CanBind ()) {
@@ -139,34 +146,23 @@ bool MOAIGfxBufferGL::MOAIGfxResourceGL_OnGPUCreate () {
 
 	u32 count = 0;
 
-	this->mUseVBOs = ( this->mVBOs.Size () > 0 );
+	ZLGfx& gfx = this->mGfxMgr->GetDrawingAPI ();
+	ZLGfxEnum::_ hint = this->mVBOs.Size () > 1 ? ZLGfxEnum::BUFFER_USAGE_STREAM_DRAW : ZLGfxEnum::BUFFER_USAGE_STATIC_DRAW;
+
+	for ( ZLIndex i = 0; i < this->mVBOs.Size (); ++i ) {
+		
+		ZLGfxHandle vbo = gfx.CreateBuffer ();
+		assert ( vbo ); // TODO: error handling
+		
+		ZLSharedConstBuffer* buffer = this->GetCursor () ? this->GetSharedConstBuffer () : NULL;
 	
-	if ( this->mUseVBOs ) {
+		gfx.BindBuffer ( this->mTarget, vbo );
+		gfx.BufferData ( this->mTarget, this->GetLength (), buffer, 0, hint );
+		gfx.BindBuffer ( this->mTarget, ZLGfxResource::UNBIND );
+	
+		count++;
 
-		ZLGfx& gfx = this->mGfxMgr->GetDrawingAPI ();
-		ZLGfxEnum::_ hint = this->mVBOs.Size () > 1 ? ZLGfxEnum::BUFFER_USAGE_STREAM_DRAW : ZLGfxEnum::BUFFER_USAGE_STATIC_DRAW;
-
-		for ( ZLIndex i = 0; i < this->mVBOs.Size (); ++i ) {
-			
-			ZLGfxHandle vbo = gfx.CreateBuffer ();
-			
-			// TODO: error handling
-			//if ( vbo ) {
-			
-				ZLSharedConstBuffer* buffer = this->GetCursor () ? this->GetSharedConstBuffer () : 0;
-			
-//				if ( this->mCopyOnUpdate ) {
-//					buffer = gfx.CopyBuffer ( buffer );
-//				}
-			
-				gfx.BindBuffer ( this->mTarget, vbo );
-				gfx.BufferData ( this->mTarget, this->GetLength (), buffer, 0, hint );
-				gfx.BindBuffer ( this->mTarget, ZLGfxResource::UNBIND );
-			
-				count++;
-			//}
-			this->mVBOs [ i ] = vbo;
-		}
+		this->mVBOs [ i ] = vbo;
 	}
 	
 	return count == this->mVBOs.Size ();
@@ -188,8 +184,6 @@ void MOAIGfxBufferGL::MOAIGfxResourceGL_OnGPUUnbind () {
 
 //----------------------------------------------------------------//
 bool MOAIGfxBufferGL::MOAIGfxResourceGL_OnGPUUpdate () {
-
-	if ( !this->mUseVBOs ) return true;
 	
 	bool dirty = this->GetCursor () > 0;
 	
@@ -211,11 +205,6 @@ bool MOAIGfxBufferGL::MOAIGfxResourceGL_OnGPUUpdate () {
 			
 		ZLSharedConstBuffer* buffer = this->GetSharedConstBuffer ();
 		
-//		if ( this->mCopyOnUpdate ) {
-//			buffer = gfx.CopyBuffer ( buffer );
-//		}
-		
-		ZLGfxHandle vbo = gfx.CreateBuffer ();
 		gfx.BindBuffer ( this->mTarget, vbo );
 		gfx.BufferSubData ( this->mTarget, 0, this->GetCursor (), buffer, 0 );
 		gfx.BindBuffer ( this->mTarget, ZLGfxResource::UNBIND );

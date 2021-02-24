@@ -48,9 +48,13 @@ void MOAIFrameBufferGL::AddAttachment ( ZLStrongPtr < MOAIFrameBufferAttachableG
 //----------------------------------------------------------------//
 void MOAIFrameBufferGL::DetectGLFrameBufferID ( MOAIGfxMgrGL& gfxMgr ) {
 
-	this->SetGLFrameBuffer ( gfxMgr, gfxMgr.GetDrawingAPI ().GetCurrentFramebuffer ());
+	ZLGfx& gfx = gfxMgr.GetDrawingAPI ();
+
+	this->SetGLFrameBuffer ( gfxMgr, gfx.GetCurrentFramebuffer ());
 	this->mState = STATE_READY_TO_BIND;
 	this->mIsDefaultBuffer = true;
+	
+	gfx.CheckFramebufferStatus ( ZLGfxEnum::FRAMEBUFFER_TARGET_DRAW_READ );
 }
 
 //----------------------------------------------------------------//

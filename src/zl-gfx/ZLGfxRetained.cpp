@@ -197,18 +197,6 @@ void ZLGfxRetained::ClearColor ( float r, float g, float b, float a ) {
 }
 
 //----------------------------------------------------------------//
-void ZLGfxRetained::Color ( float r, float g, float b, float a ) {
-
-	assert ( this->mStream );
-
-	this->mStream->Write < u32 >( ZLGFX_COLOR );
-	this->mStream->Write < float >( r );
-	this->mStream->Write < float >( g );
-	this->mStream->Write < float >( b );
-	this->mStream->Write < float >( a );
-}
-
-//----------------------------------------------------------------//
 void ZLGfxRetained::Comment ( cc8* comment ) {
 	
 	assert ( this->mStream );
@@ -288,15 +276,6 @@ void ZLGfxRetained::Disable ( ZLGfxEnum::_ cap ) {
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( ZLGFX_DISABLE );
-	this->mStream->Write < u32 >( cap );
-}
-
-//----------------------------------------------------------------//
-void ZLGfxRetained::DisableClientState ( ZLGfxEnum::_ cap ) {
-
-	assert ( this->mStream );
-
-	this->mStream->Write < u32 >( ZLGFX_DISABLE_CLIENT_STATE );
 	this->mStream->Write < u32 >( cap );
 }
 
@@ -481,16 +460,6 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 				);
 				break;
 			}
-			case ZLGFX_COLOR: {
-			
-				draw.Color (
-					this->mStream->Read < float >( 0 ),
-					this->mStream->Read < float >( 0 ),
-					this->mStream->Read < float >( 0 ),
-					this->mStream->Read < float >( 0 )
-				);
-				break;
-			}
 			case ZLGFX_COMMENT: {
 	
 				size_t size				= this->mStream->Read < size_t >( 0 );
@@ -564,13 +533,6 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 				);
 				break;
 			}
-			case ZLGFX_DISABLE_CLIENT_STATE: {
-			
-				draw.DisableClientState (
-					( ZLGfxEnum::_ )*this->mStream->Read < u32 >( 0 )
-				);
-				break;
-			}
 			case ZLGFX_DISABLE_VERTEX_ATTRIB_ARRAY: {
 			
 				draw.DisableVertexAttribArray (
@@ -602,13 +564,6 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 			case ZLGFX_ENABLE: {
 			
 				draw.Enable (
-					( ZLGfxEnum::_ )*this->mStream->Read < u32 >( 0 )
-				);
-				break;
-			}
-			case ZLGFX_ENABLE_CLIENT_STATE: {
-			
-				draw.EnableClientState (
 					( ZLGfxEnum::_ )*this->mStream->Read < u32 >( 0 )
 				);
 				break;
@@ -749,14 +704,6 @@ void ZLGfxRetained::Draw ( ZLGfx& draw ) {
 				draw.ShaderSource ( *shader, source, length );
 				
 				shader->Release ();
-				break;
-			}
-			case ZLGFX_TEX_ENVI: {
-			
-				draw.TexEnvi (
-					( ZLGfxEnum::_ )*this->mStream->Read < u32 >( 0 ),
-					( ZLGfxEnum::_ )*this->mStream->Read < u32 >( 0 )
-				);
 				break;
 			}
 			case ZLGFX_TEX_IMAGE_2D: {
@@ -905,15 +852,6 @@ void ZLGfxRetained::Enable ( ZLGfxEnum::_ cap ) {
 	assert ( this->mStream );
 
 	this->mStream->Write < u32 >( ZLGFX_ENABLE );
-	this->mStream->Write < u32 >( cap );
-}
-
-//----------------------------------------------------------------//
-void ZLGfxRetained::EnableClientState ( ZLGfxEnum::_ cap ) {
-
-	assert ( this->mStream );
-
-	this->mStream->Write < u32 >( ZLGFX_ENABLE_CLIENT_STATE );
 	this->mStream->Write < u32 >( cap );
 }
 
@@ -1175,16 +1113,6 @@ void ZLGfxRetained::ShaderSource ( ZLGfxResource& shader, cc8* source, size_t le
 	this->mStream->Write < ZLGfxResource* >( shader.RetainForWrite ());
 	this->mStream->Write < size_t >( length );
 	this->mStream->WriteBytes ( source, length );
-}
-
-//----------------------------------------------------------------//
-void ZLGfxRetained::TexEnvi ( ZLGfxEnum::_ pname, ZLGfxEnum::_ param ) {
-
-	assert ( this->mStream );
-
-	this->mStream->Write < u32 >( ZLGFX_TEX_ENVI );
-	this->mStream->Write < u32 >( pname );
-	this->mStream->Write < u32 >( param );
 }
 
 //----------------------------------------------------------------//

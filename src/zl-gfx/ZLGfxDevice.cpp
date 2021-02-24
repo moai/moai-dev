@@ -93,8 +93,8 @@ char Lower(char c) {
 //----------------------------------------------------------------//
 void ZLGfxDevice::Initialize () {
 
-	//u32 majorVersion = 0;
-	//u32 minorVersion = 0;
+	int buffer;
+	glGetIntegerv ( GL_FRAMEBUFFER_BINDING, &buffer );
 
 	bool isOpenGLES = false;
 

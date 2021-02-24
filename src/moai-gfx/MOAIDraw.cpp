@@ -572,10 +572,6 @@ void MOAIDraw::MOAIAbstractCmdHandler_HandleCommand ( u32 cmd, const void* param
 			break;
 		}
 		
-		case MOAIDrawAPI::SET_INDEX_BUFFER:
-			gfxMgr.SetIndexBuffer ( *( MOAIIndexBuffer** )param );
-			break;
-		
 		case MOAIDrawAPI::SET_MATRIX: {
 			const MOAIDrawAPIParam::SetMatrix* cast = ( const MOAIDrawAPIParam::SetMatrix* )param;
 			gfxMgr.SetMtx ( cast->mMatrixID, cast->mMatrix );
@@ -587,6 +583,10 @@ void MOAIDraw::MOAIAbstractCmdHandler_HandleCommand ( u32 cmd, const void* param
 			gfxMgr.SetMtx ( cast->mMatrixID, cast->mTransform->GetLocalToWorldMtx ());
 			break;
 		}
+		
+		case MOAIDrawAPI::SET_MESH:
+			gfxMgr.SetMesh ( *( MOAIAbstractMesh** )param );
+			break;
 		
 		case MOAIDrawAPI::SET_PEN_COLOR:
 			gfxMgr.SetPenColor ( *( u32* )param );
@@ -614,17 +614,13 @@ void MOAIDraw::MOAIAbstractCmdHandler_HandleCommand ( u32 cmd, const void* param
 			break;
 		}
 		
-		case MOAIDrawAPI::SET_VERTEX_ARRAY:
-			gfxMgr.SetVertexArray ( *( MOAIVertexArray** )param );
-			break;
-		
-		case MOAIDrawAPI::SET_VERTEX_BUFFER:
-			gfxMgr.SetVertexBuffer ( *( MOAIVertexBuffer** )param );
-			break;
-		
-		case MOAIDrawAPI::SET_VERTEX_FORMAT:
-			gfxMgr.SetVertexFormat ( *( MOAIVertexFormat** )param );
-			break;
+//		case MOAIDrawAPI::SET_VERTEX_BUFFER:
+//			gfxMgr.SetVertexBuffer ( *( MOAIVertexBuffer** )param );
+//			break;
+//
+//		case MOAIDrawAPI::SET_VERTEX_FORMAT:
+//			gfxMgr.SetVertexFormat ( *( MOAIVertexFormat** )param );
+//			break;
 		
 		case MOAIDrawAPI::SET_VIEW_PROJ: {
 			const MOAIDrawAPIParam::SetViewProj* cast = ( const MOAIDrawAPIParam::SetViewProj* )param;

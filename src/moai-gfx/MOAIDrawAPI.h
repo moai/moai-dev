@@ -9,6 +9,7 @@
 typedef MOAIRetainedCmdStream MOAIGfxScript;
 
 class MOAIAbstractChildTransform;
+class MOAIAbstractMesh;
 class MOAIBlendMode;
 class MOAICamera;
 class MOAIFrameBuffer;
@@ -139,18 +140,15 @@ public:
 		SET_DEPTH_FUNC,
 		SET_DEPTH_MASK,
 		SET_FRAME_BUFFER,
-		SET_INDEX_BUFFER,
 		SET_MATRIX,
 		SET_MATRIX_FROM_TRANSFORM,
+		SET_MESH,
 		SET_PEN_COLOR,
 		SET_PEN_WIDTH,
 		SET_SCISSOR_RECT,
 		SET_SCISSOR_RECT_FROM_VIEWPORT,
 		SET_SHADER,
 		SET_TEXTURE,
-		SET_VERTEX_ARRAY,
-		SET_VERTEX_BUFFER,
-		SET_VERTEX_FORMAT,
 		SET_VIEW_PROJ,
 		SET_VIEW_RECT,
 		SET_VIEW_RECT_FROM_VIEWPORT,
@@ -195,16 +193,13 @@ protected:
 	static int			_setDepthFunc				( lua_State* L );
 	static int			_setDepthMask				( lua_State* L );
 	static int			_setFrameBuffer				( lua_State* L );
-	static int			_setIndexBuffer				( lua_State* L );
 	static int			_setMatrix					( lua_State* L );
+	static int			_setMesh					( lua_State* L );
 	static int			_setPenColor				( lua_State* L );
 	static int			_setPenWidth				( lua_State* L );
 	static int			_setScissorRect				( lua_State* L );
 	static int			_setShader					( lua_State* L );
 	static int			_setTexture					( lua_State* L );
-	static int			_setVertexArray				( lua_State* L );
-	static int			_setVertexBuffer			( lua_State* L );
-	static int			_setVertexFormat			( lua_State* L );
 	static int			_setViewProj				( lua_State* L );
 	static int			_setViewRect				( lua_State* L );
 	static int			_strokeRoundedRect			( lua_State* L );
@@ -271,9 +266,9 @@ public:
 	void				SetDepthFunc				( MOAIDepthFuncEnum::_ depthFunc );
 	void				SetDepthMask				( bool depthMask );
 	void				SetFrameBuffer				( MOAIFrameBuffer* frameBuffer );
-	void				SetIndexBuffer				( MOAIIndexBuffer* indexBuffer );
 	void 				SetMatrix					( u32 matrixID, const ZLMatrix4x4& mtx );
 	void 				SetMatrixFromTransform		( u32 matrixID, MOAIAbstractChildTransform& transform );
+	void				SetMesh						( MOAIAbstractMesh* mesh );
 	void				SetPenColor					( u32 color );
 	void				SetPenWidth					( float width );
 	void				SetScissorRect				();
@@ -281,9 +276,6 @@ public:
 	void				SetScissorRect				( MOAIViewport* viewport );
 	void				SetShader					( MOAIShader* shader );
 	void				SetTexture					( MOAITexture* texture, ZLIndex textureUnit );
-	void				SetVertexArray				( MOAIVertexArray* vertexArray );
-	void				SetVertexBuffer				( MOAIVertexBuffer* vertexBuffer );
-	void				SetVertexFormat				( MOAIVertexFormat* vertexFormat );
 	void				SetViewProj					( MOAIViewport* viewport, MOAICamera* camera );
 	void				SetViewRect					();
 	void				SetViewRect					( const ZLRect& rect );

@@ -25,6 +25,7 @@ protected:
 	friend class MOAIGfxMgrGL_GPUCacheGL;
 	friend class MOAIVertexArrayItem;
 	friend class MOAIVertexArrayGL;
+	friend class MOAIMeshGL;
 	
 	enum {
 		UPDATE_MODE_MAPBUFFER,
@@ -36,7 +37,6 @@ protected:
 	ZLIndex							mCurrentVBO;
 	ZLGfxEnum::_					mTarget;
 
-	bool							mUseVBOs;
 	bool							mCopyOnUpdate;
 	
 	//----------------------------------------------------------------//
@@ -62,13 +62,14 @@ public:
 	GET ( u32, Target, mTarget )
 	GET_SET ( bool, CopyOnUpdate, mCopyOnUpdate )
 	
-	IS ( UsingVBOs, mUseVBOs, true )
+//	IS ( UsingVBOs, mUseVBOs, true )
 	
 	//----------------------------------------------------------------//
 	size_t					CountVBOs					();
 							MOAIGfxBufferGL				();
 							~MOAIGfxBufferGL			();
 	void					ReserveVBOs					( ZLSize gpuBuffers );
+	void					Update						();
 };
 
 #endif

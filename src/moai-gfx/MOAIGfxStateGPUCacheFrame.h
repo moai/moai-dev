@@ -7,13 +7,10 @@
 #include <moai-gfx/MOAIBlendMode.h>
 #include <moai-gfx/MOAIGfxMgrComponents.h>
 
+class MOAIAbstractMesh;
+class MOAIFrameBuffer;
 class MOAIShader;
 class MOAITexture;
-class MOAIFrameBuffer;
-class MOAIIndexBuffer;
-class MOAIVertexArray;
-class MOAIVertexBuffer;
-class MOAIVertexFormat;
 
 //================================================================//
 // MOAIGfxStateGPUCacheFrame
@@ -41,10 +38,7 @@ public:
 	ZLStrongPtr < MOAIShader >				mShader;
 
 	ZLStrongPtr < MOAIFrameBuffer >			mFrameBuffer;
-	ZLStrongPtr < MOAIIndexBuffer >			mIdxBuffer;
-	ZLStrongPtr < MOAIVertexArray >			mVtxArray;
-	ZLStrongPtr < MOAIVertexBuffer >		mVtxBuffer;
-	ZLStrongPtr < MOAIVertexFormat >		mVtxFormat;
+	ZLStrongPtr < MOAIAbstractMesh >		mMesh;
 
 	ZLRect									mViewRect;
 	

@@ -3,6 +3,7 @@
 
 #include "pch.h"
 
+#include <moai-gfx/MOAIAbstractMesh.h>
 #include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIImageTexture.h>
 #include <moai-gfx/MOAITexture2D.h>
@@ -104,6 +105,12 @@ MOAIIndexBuffer* MOAIGfxMgr::CreateIndexBuffer () {
 }
 
 //----------------------------------------------------------------//
+MOAIAbstractMesh* MOAIGfxMgr::CreateMesh () {
+
+	return this->MOAIGfxMgr_CreateMesh ();
+}
+
+//----------------------------------------------------------------//
 MOAIRenderNode* MOAIGfxMgr::CreateRenderRoot () {
 
 	return this->MOAIGfxMgr_CreateRenderRoot ();
@@ -113,12 +120,6 @@ MOAIRenderNode* MOAIGfxMgr::CreateRenderRoot () {
 MOAITexture2D* MOAIGfxMgr::CreateTexture2D () {
 
 	return this->MOAIGfxMgr_CreateTexture2D ();
-}
-
-//----------------------------------------------------------------//
-MOAIVertexArray* MOAIGfxMgr::CreateVertexArray () {
-
-	return this->MOAIGfxMgr_CreateVertexArray ();
 }
 
 //----------------------------------------------------------------//

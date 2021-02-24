@@ -58,7 +58,6 @@ public:
 	
 	virtual void					Clear						( u32 mask ) = 0;
 	virtual void					ClearColor					( float r, float g, float b, float a ) = 0;
-	virtual void					Color						( float r, float g, float b, float a ) = 0;
 	
 	virtual void					Comment						( cc8* comment = 0 ) = 0;
 	
@@ -80,7 +79,6 @@ public:
 	virtual void					DepthFunc					( ZLGfxEnum::_ depthFunc ) = 0;
 	virtual void					DepthMask					( bool flag ) = 0;
 	virtual void					Disable						( ZLGfxEnum::_ cap ) = 0;
-	virtual void					DisableClientState			( ZLGfxEnum::_ cap ) = 0;
 	virtual void					DisableVertexAttribArray	( u32 index ) = 0;
 	
 	static void						DiscardResource				( ZLGfxResource& resource );
@@ -88,7 +86,6 @@ public:
 	virtual void					DrawArrays					( ZLGfxEnum::_ primType, u32 first, u32 count ) = 0;
 	virtual void					DrawElements				( ZLGfxEnum::_ primType, u32 count, ZLGfxEnum::_ indexType, ZLSharedConstBuffer* buffer, size_t offset ) = 0;
 	virtual void					Enable						( ZLGfxEnum::_ cap ) = 0;
-	virtual void					EnableClientState			( ZLGfxEnum::_ cap ) = 0;
 	virtual void					EnableVertexAttribArray		( u32 index ) = 0;
 	
 	virtual void					Event						( ZLGfxListener* listener, u32 event, void* userdata ) = 0;
@@ -120,7 +117,6 @@ public:
 	
 	virtual void					ShaderSource				( ZLGfxResource& shader, cc8* source, size_t length ) = 0;
 	
-	virtual void					TexEnvi						( ZLGfxEnum::_ pname, ZLGfxEnum::_ param ) = 0;
 	virtual void					TexImage2D					( u32 level, ZLGfxEnum::_ internalFormat, u32 width, u32 height, ZLGfxEnum::_ format, ZLGfxEnum::_ type, ZLSharedConstBuffer* buffer ) = 0;
 	virtual void					TexParameteri				( ZLGfxEnum::_ pname, ZLGfxEnum::_ param ) = 0;
 	virtual void					TexSubImage2D				( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 height, ZLGfxEnum::_ format, ZLGfxEnum::_ type, ZLSharedConstBuffer* buffer ) = 0;

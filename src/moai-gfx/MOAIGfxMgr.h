@@ -13,6 +13,7 @@
 
 class MOAIAbstractDrawingObject;
 class MOAIImageTexture;
+class MOAIAbstractMesh;
 class MOAIRenderNode;
 class MOAITexture2D;
 
@@ -48,9 +49,9 @@ protected:
 	virtual void						MOAIGfxMgr_BeginFrame					() = 0;
 	virtual MOAIImageTexture*			MOAIGfxMgr_CreateImageTexture			() = 0;
 	virtual MOAIIndexBuffer*			MOAIGfxMgr_CreateIndexBuffer			() = 0;
+	virtual MOAIAbstractMesh*			MOAIGfxMgr_CreateMesh					() = 0;
 	virtual MOAIRenderNode*				MOAIGfxMgr_CreateRenderRoot				() = 0;
 	virtual MOAITexture2D*				MOAIGfxMgr_CreateTexture2D				() = 0;
-	virtual MOAIVertexArray*			MOAIGfxMgr_CreateVertexArray			() = 0;
 	virtual MOAIVertexBuffer*			MOAIGfxMgr_CreateVertexBuffer			() = 0;
 	virtual MOAIVertexFormat*			MOAIGfxMgr_CreateVertexFormat			() = 0;
 	virtual void						MOAIGfxMgr_EndFrame						() = 0;
@@ -84,9 +85,9 @@ public:
 	void							BeginFrame					();
 	MOAIImageTexture*				CreateImageTexture			();
 	MOAIIndexBuffer*				CreateIndexBuffer			();
+	MOAIAbstractMesh*				CreateMesh					();
 	MOAIRenderNode*					CreateRenderRoot			();
 	MOAITexture2D*					CreateTexture2D				();
-	MOAIVertexArray*				CreateVertexArray			();
 	MOAIVertexBuffer*				CreateVertexBuffer			();
 	MOAIVertexFormat*				CreateVertexFormat			();
 	void							EndFrame					();

@@ -3,6 +3,7 @@
 
 #include "pch.h"
 #include <moai-gfx/MOAIAbstractChildTransform.h>
+#include <moai-gfx/MOAIAbstractMesh.h>
 #include <moai-gfx/MOAIDrawAPI.h>
 #include <moai-gfx/MOAIBlendMode.h>
 #include <moai-gfx/MOAICamera.h>
@@ -11,9 +12,6 @@
 #include <moai-gfx/MOAIIndexBuffer.h>
 #include <moai-gfx/MOAIShader.h>
 #include <moai-gfx/MOAITexture.h>
-#include <moai-gfx/MOAIVertexArray.h>
-#include <moai-gfx/MOAIVertexBuffer.h>
-#include <moai-gfx/MOAIVertexFormat.h>
 #include <moai-gfx/MOAIViewport.h>
 
 //================================================================//
@@ -583,15 +581,6 @@ int MOAIDrawAPI::_setFrameBuffer ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
-int MOAIDrawAPI::_setIndexBuffer ( lua_State* L ) {
-	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
-
-	self->SetIndexBuffer ( state.GetLuaObject < MOAIIndexBuffer >( 2, false ));
-	
-	MOAI_LUA_RETURN_SELF
-}
-
-//----------------------------------------------------------------//
 int MOAIDrawAPI::_setMatrix ( lua_State* L ) {
 	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
 
@@ -612,6 +601,15 @@ int MOAIDrawAPI::_setMatrix ( lua_State* L ) {
 			self->SetMatrix ( matrixID, mtx );
 		}
 	}
+	MOAI_LUA_RETURN_SELF
+}
+
+//----------------------------------------------------------------//
+int MOAIDrawAPI::_setMesh ( lua_State* L ) {
+	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
+	
+	self->SetMesh ( state.GetLuaObject < MOAIAbstractMesh >( 2, false ));
+	
 	MOAI_LUA_RETURN_SELF
 }
 
@@ -691,34 +689,6 @@ int MOAIDrawAPI::_setTexture ( lua_State* L ) {
 	ZLIndex textureUnit		= state.GetValue < u32 >( 3, 0 );
 
 	self->SetTexture ( texture, textureUnit );
-	
-	MOAI_LUA_RETURN_SELF
-}
-
-//----------------------------------------------------------------//
-int MOAIDrawAPI::_setVertexArray ( lua_State* L ) {
-	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
-	
-	self->SetVertexArray ( state.GetLuaObject < MOAIVertexArray >( 2, false ));
-	
-	MOAI_LUA_RETURN_SELF
-}
-
-//----------------------------------------------------------------//
-int MOAIDrawAPI::_setVertexBuffer ( lua_State* L ) {
-	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
-
-	self->SetVertexBuffer ( state.GetLuaObject < MOAIVertexBuffer >( 2, false ));
-	
-	MOAI_LUA_RETURN_SELF
-}
-
-//----------------------------------------------------------------//
-int MOAIDrawAPI::_setVertexFormat ( lua_State* L ) {
-	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
-
-	MOAIVertexFormat* vertexFormat = MOAIGfxMgr::Get ().AffirmVertexFormat ( state, 2 );
-	self->SetVertexFormat ( vertexFormat );
 	
 	MOAI_LUA_RETURN_SELF
 }
@@ -1392,13 +1362,6 @@ void MOAIDrawAPI::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawAPI::SetIndexBuffer ( MOAIIndexBuffer* indexBuffer ) {
-
-	this->SubmitCommand < MOAIIndexBuffer* >( SET_INDEX_BUFFER, indexBuffer );
-	this->RetainObject ( indexBuffer );
-}
-
-//----------------------------------------------------------------//
 void MOAIDrawAPI::SetMatrix ( u32 matrixID, const ZLMatrix4x4& mtx ) {
 	
 	MOAIDrawAPIParam::SetMatrix param;
@@ -1415,6 +1378,13 @@ void MOAIDrawAPI::SetMatrixFromTransform ( u32 matrixID, MOAIAbstractChildTransf
 	param.mTransform = &transform;
 	this->SubmitCommand < MOAIDrawAPIParam::SetMatrixFromTransform >( SET_MATRIX_FROM_TRANSFORM, param );
 	this->RetainObject ( &transform );
+}
+
+//----------------------------------------------------------------//
+void MOAIDrawAPI::SetMesh ( MOAIAbstractMesh* mesh ) {
+
+	this->SubmitCommand < MOAIAbstractMesh* >( SET_MESH, mesh );
+	this->RetainObject ( mesh );
 }
 
 //----------------------------------------------------------------//
@@ -1463,27 +1433,6 @@ void MOAIDrawAPI::SetTexture ( MOAITexture* texture, ZLIndex textureUnit ) {
 	param.mTextureUnit = textureUnit;
 	this->SubmitCommand < MOAIDrawAPIParam::SetTexture >( SET_TEXTURE, param );
 	this->RetainObject ( texture );
-}
-
-//----------------------------------------------------------------//
-void MOAIDrawAPI::SetVertexArray ( MOAIVertexArray* vertexArray ) {
-
-	this->SubmitCommand < MOAIVertexArray* >( SET_VERTEX_ARRAY, vertexArray );
-	this->RetainObject ( vertexArray );
-}
-
-//----------------------------------------------------------------//
-void MOAIDrawAPI::SetVertexBuffer ( MOAIVertexBuffer* vertexBuffer ) {
-
-	this->SubmitCommand < MOAIVertexBuffer* >( SET_VERTEX_BUFFER, vertexBuffer );
-	this->RetainObject ( vertexBuffer );
-}
-
-//----------------------------------------------------------------//
-void MOAIDrawAPI::SetVertexFormat ( MOAIVertexFormat* vertexFormat ) {
-
-	this->SubmitCommand < MOAIVertexFormat* >( SET_VERTEX_FORMAT, vertexFormat );
-	this->RetainObject ( vertexFormat );
 }
 
 //----------------------------------------------------------------//
@@ -1635,16 +1584,13 @@ void MOAIDrawAPI::MOAIAbstractCmdAPI_RegisterLuaAPI ( MOAILuaState& state ) {
 		{ "setDepthFunc",				_setDepthFunc },
 		{ "setDepthMask",				_setDepthMask },
 		{ "setFrameBuffer",				_setFrameBuffer },
-		{ "setIndexBuffer",				_setIndexBuffer },
 		{ "setMatrix",					_setMatrix },
+		{ "setMesh",					_setMesh },
 		{ "setPenColor",				_setPenColor },
 		{ "setPenWidth",				_setPenWidth },
 		{ "setScissorRect",				_setScissorRect },
 		{ "setShader",					_setShader },
 		{ "setTexture",					_setTexture },
-		{ "setVertexArray",				_setVertexArray },
-		{ "setVertexBuffer",			_setVertexBuffer },
-		{ "setVertexFormat",			_setVertexFormat },
 		{ "setViewProj",				_setViewProj },
 		{ "setViewRect",				_setViewRect },
 		{ "strokeRoundedRect",			_strokeRoundedRect },

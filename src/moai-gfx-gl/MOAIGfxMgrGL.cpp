@@ -8,11 +8,11 @@
 #include <moai-gfx-gl/MOAIGfxMgrGL.h>
 #include <moai-gfx-gl/MOAIImageTextureGL.h>
 #include <moai-gfx-gl/MOAIIndexBufferGL.h>
+#include <moai-gfx-gl/MOAIMeshGL.h>
 #include <moai-gfx-gl/MOAIRenderRootGL.h>
 #include <moai-gfx-gl/MOAIShaderGL.h>
 #include <moai-gfx-gl/MOAIShaderMgrGL.h>
 #include <moai-gfx-gl/MOAITexture2DGL.h>
-#include <moai-gfx-gl/MOAIVertexArrayGL.h>
 #include <moai-gfx-gl/MOAIVertexBufferGL.h>
 #include <moai-gfx-gl/MOAIVertexFormatGL.h>
 
@@ -331,6 +331,12 @@ MOAIIndexBuffer* MOAIGfxMgrGL::MOAIGfxMgr_CreateIndexBuffer () {
 }
 
 //----------------------------------------------------------------//
+MOAIAbstractMesh* MOAIGfxMgrGL::MOAIGfxMgr_CreateMesh () {
+
+	return new MOAIMeshGL ();
+}
+
+//----------------------------------------------------------------//
 MOAIRenderNode* MOAIGfxMgrGL::MOAIGfxMgr_CreateRenderRoot () {
 
 	return new MOAIRenderRootGL ();
@@ -340,12 +346,6 @@ MOAIRenderNode* MOAIGfxMgrGL::MOAIGfxMgr_CreateRenderRoot () {
 MOAITexture2D* MOAIGfxMgrGL::MOAIGfxMgr_CreateTexture2D () {
 
 	return new MOAITexture2DGL ();
-}
-
-//----------------------------------------------------------------//
-MOAIVertexArray* MOAIGfxMgrGL::MOAIGfxMgr_CreateVertexArray () {
-
-	return new MOAIVertexArrayGL ();
 }
 
 //----------------------------------------------------------------//

@@ -8,13 +8,10 @@
 #include <moai-gfx-gl/MOAIGfxMgrGL_DisplayListClerkGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_GPUCacheGL.h>
 #include <moai-gfx-gl/MOAIGfxMgrGL_VertexCacheGL.h>
-#include <moai-gfx-gl/MOAIIndexBufferGL.h>
+#include <moai-gfx-gl/MOAIMeshGL.h>
 #include <moai-gfx-gl/MOAIShaderGL.h>
 #include <moai-gfx-gl/MOAIShaderProgramGL.h>
 #include <moai-gfx-gl/MOAITextureGL.h>
-#include <moai-gfx-gl/MOAIVertexArrayGL.h>
-#include <moai-gfx-gl/MOAIVertexBufferGL.h>
-#include <moai-gfx-gl/MOAIVertexFormatGL.h>
 
 //#define MOAIGFXSTATECACHE_DEBUG_LOG
 
@@ -54,9 +51,9 @@ void MOAIGfxMgrGL_GPUCacheGL::ApplyStateChange ( u32 stateID ) {
 			this->FlushFrameBuffer ();
 			break;
 		
-		case INDEX_BUFFER:
+		case MESH:
 		
-			this->FlushIndexBuffer ();
+			this->FlushMesh ();
 			break;
 		
 		case PEN_WIDTH:
@@ -72,21 +69,6 @@ void MOAIGfxMgrGL_GPUCacheGL::ApplyStateChange ( u32 stateID ) {
 		case SHADER:
 		
 			this->FlushShader ();
-			break;
-		
-		case VERTEX_ARRAY:
-		
-			this->FlushVertexArray ();
-			break;
-		
-		case VERTEX_BUFFER:
-			
-			this->FlushVertexBuffer ();
-			break;
-		
-		case VERTEX_FORMAT:
-			
-			this->FlushVertexFormat ();
 			break;
 
 		case VIEW_RECT:
@@ -252,37 +234,65 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushFrameBuffer () {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgrGL_GPUCacheGL::FlushIndexBuffer () {
+void MOAIGfxMgrGL_GPUCacheGL::FlushMesh () {
 
 	assert ( this->mApplyingStateChanges );
 	
-	MOAIGfxStateGPUCacheFrame& active = *this->mActiveState;
 	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
 	
-	MOAIIndexBufferGL* prevBuffer = MOAICast < MOAIIndexBufferGL >( this->mActiveState->mIdxBuffer );
-	MOAIIndexBufferGL* nextBuffer = MOAICast < MOAIIndexBufferGL >( this->mPendingState->mIdxBuffer );
+	MOAIMeshGL* prevMesh = MOAICast < MOAIMeshGL >( this->mActiveState->mMesh );
+	MOAIMeshGL* nextMesh = MOAICast < MOAIMeshGL >( this->mPendingState->mMesh );
 	
-	ZLSharedConstBuffer* bufferForBind = nextBuffer ? nextBuffer->GetBufferForBind ( gfx ) : 0;
-	
-	if (( prevBuffer != nextBuffer ) || ( this->mBoundIdxBuffer != bufferForBind )) {
-	
+	if ( prevMesh != nextMesh ) {
+
 		this->GfxStateWillChange ();
-	
-		DEBUG_LOG ( "  binding index buffer: %p\n", buffer );
-		
-		if ( prevBuffer ) {
-			prevBuffer->Unbind ();
+
+		DEBUG_LOG ( "  binding vertex array: %p\n", nextMesh );
+
+		if ( prevMesh ) {
+			prevMesh->Unbind ();
 		}
 		
-		active.mIdxBuffer = nextBuffer;
-		this->mBoundIdxBuffer = 0;
+		this->mActiveState->mMesh = nextMesh;
 		
-		if ( nextBuffer ) {
-			nextBuffer->Bind ();
-			this->mBoundIdxBuffer = bufferForBind;
+		if ( nextMesh ) {
+			nextMesh->Bind ();
 		}
 	}
 }
+
+////----------------------------------------------------------------//
+//void MOAIGfxMgrGL_GPUCacheGL::FlushIndexBuffer () {
+//
+//	assert ( this->mApplyingStateChanges );
+//
+//	MOAIGfxStateGPUCacheFrame& active = *this->mActiveState;
+//	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
+//
+//	MOAIIndexBufferGL* prevBuffer = MOAICast < MOAIIndexBufferGL >( this->mActiveState->mIdxBuffer );
+//	MOAIIndexBufferGL* nextBuffer = MOAICast < MOAIIndexBufferGL >( this->mPendingState->mIdxBuffer );
+//
+//	ZLSharedConstBuffer* bufferForBind = nextBuffer ? nextBuffer->GetBufferForBind ( gfx ) : 0;
+//
+//	if (( prevBuffer != nextBuffer ) || ( this->mBoundIdxBuffer != bufferForBind )) {
+//
+//		this->GfxStateWillChange ();
+//
+//		DEBUG_LOG ( "  binding index buffer: %p\n", buffer );
+//
+//		if ( prevBuffer ) {
+//			prevBuffer->Unbind ();
+//		}
+//
+//		active.mIdxBuffer = nextBuffer;
+//		this->mBoundIdxBuffer = 0;
+//
+//		if ( nextBuffer ) {
+//			nextBuffer->Bind ();
+//			this->mBoundIdxBuffer = bufferForBind;
+//		}
+//	}
+//}
 
 //----------------------------------------------------------------//
 void MOAIGfxMgrGL_GPUCacheGL::FlushPenWidth () {
@@ -444,104 +454,74 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushTexture ( ZLIndex textureUnit ) {
 	}
 }
 
-//----------------------------------------------------------------//
-void MOAIGfxMgrGL_GPUCacheGL::FlushVertexArray () {
+////----------------------------------------------------------------//
+//void MOAIGfxMgrGL_GPUCacheGL::FlushVertexBuffer () {
+//
+//	assert ( this->mApplyingStateChanges );
+//
+//	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
+//
+//	MOAIVertexBufferGL* prevBuffer = MOAICast < MOAIVertexBufferGL >( this->mActiveState->mVtxBuffer );
+//	MOAIVertexBufferGL* nextBuffer = MOAICast < MOAIVertexBufferGL >( this->mPendingState->mVtxBuffer );
+//
+//	ZLSharedConstBuffer* bufferForBind = nextBuffer ? nextBuffer->GetBufferForBind ( gfx ) : 0;
+//
+//	MOAIVertexFormatGL* prevFormat = MOAICast < MOAIVertexFormatGL >( this->mActiveState->mVtxFormat );
+//	MOAIVertexFormatGL* nextFormat = MOAICast < MOAIVertexFormatGL >( this->mPendingState->mVtxFormat );
+//
+//	if (( prevBuffer != nextBuffer ) || ( this->mBoundVtxBuffer != bufferForBind )) {
+//
+//		this->GfxStateWillChange ();
+//
+//		DEBUG_LOG ( "  binding vertex buffer: (%p)\n", buffer );
+//
+//		if ( prevBuffer ) {
+//			assert ( prevFormat );
+//			prevFormat->Unbind ( gfx );
+//		}
+//
+//		this->mActiveState->mVtxBuffer = NULL;
+//		this->mBoundVtxBuffer = NULL;
+//
+//		if ( nextFormat && nextBuffer ) {
+//
+//			this->mPendingState->mVtxArray = NULL;
+//			this->FlushVertexArray (); // force the unbind in case it hasn't happened yet
+//
+//			nextBuffer->Bind ();
+//			nextFormat->Bind ( gfx, bufferForBind );
+//			nextBuffer->Unbind ();
+//
+//			this->mActiveState->mVtxBuffer = nextBuffer;
+//			this->mBoundVtxBuffer = bufferForBind;
+//		}
+//	}
+//}
 
-	assert ( this->mApplyingStateChanges );
-	
-	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
-	
-	MOAIVertexArrayGL* prevArray = MOAICast < MOAIVertexArrayGL >( this->mActiveState->mVtxArray );
-	MOAIVertexArrayGL* nextArray = MOAICast < MOAIVertexArrayGL >( this->mPendingState->mVtxArray );
-	
-	if ( prevArray != nextArray ) {
-
-		this->GfxStateWillChange ();
-
-		DEBUG_LOG ( "  binding vertex array: %p\n", nextArray );
-
-		if ( prevArray ) {
-			prevArray->Unbind ();
-		}
-		
-		this->mActiveState->mVtxArray = nextArray;
-		
-		if ( nextArray ) {
-			this->mPendingState->mVtxBuffer = NULL;
-			this->FlushVertexBuffer (); // force the unbind in case it hasn't happened yet
-			nextArray->Bind ();
-		}
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrGL_GPUCacheGL::FlushVertexBuffer () {
-
-	assert ( this->mApplyingStateChanges );
-
-	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
-	
-	MOAIVertexBufferGL* prevBuffer = MOAICast < MOAIVertexBufferGL >( this->mActiveState->mVtxBuffer );
-	MOAIVertexBufferGL* nextBuffer = MOAICast < MOAIVertexBufferGL >( this->mPendingState->mVtxBuffer );
-	
-	ZLSharedConstBuffer* bufferForBind = nextBuffer ? nextBuffer->GetBufferForBind ( gfx ) : 0;
-
-	MOAIVertexFormatGL* prevFormat = MOAICast < MOAIVertexFormatGL >( this->mActiveState->mVtxFormat );
-	MOAIVertexFormatGL* nextFormat = MOAICast < MOAIVertexFormatGL >( this->mPendingState->mVtxFormat );
-
-	if (( prevBuffer != nextBuffer ) || ( this->mBoundVtxBuffer != bufferForBind )) {
-
-		this->GfxStateWillChange ();
-
-		DEBUG_LOG ( "  binding vertex buffer: (%p)\n", buffer );
-
-		if ( prevBuffer ) {
-			assert ( prevFormat );
-			prevFormat->Unbind ( gfx );
-		}
-		
-		this->mActiveState->mVtxBuffer = NULL;
-		this->mBoundVtxBuffer = NULL;
-		
-		if ( nextFormat && nextBuffer ) {
-			
-			this->mPendingState->mVtxArray = NULL;
-			this->FlushVertexArray (); // force the unbind in case it hasn't happened yet
-			
-			nextBuffer->Bind ();
-			nextFormat->Bind ( gfx, bufferForBind );
-			nextBuffer->Unbind ();
-			
-			this->mActiveState->mVtxBuffer = nextBuffer;
-			this->mBoundVtxBuffer = bufferForBind;
-		}
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrGL_GPUCacheGL::FlushVertexFormat () {
-
-	assert ( this->mApplyingStateChanges );
-	
-	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
-	
-	MOAIVertexFormatGL* prevFormat = MOAICast < MOAIVertexFormatGL >( this->mActiveState->mVtxFormat );
-	MOAIVertexFormatGL* nextFormat = MOAICast < MOAIVertexFormatGL >( this->mPendingState->mVtxFormat );
-	
-	if ( prevFormat != nextFormat ) {
-		
-		DEBUG_LOG ( "  binding vertex format: (%p)\n", vtxFormat );
-	
-		this->GfxStateWillChange ();
-		
-		if ( prevFormat && this->mActiveState->mVtxBuffer ) {
-			prevFormat->Unbind ( gfx );
-		}
-		
-		this->mActiveState->mVtxFormat = nextFormat;
-		this->mActiveState->mVtxBuffer = NULL; // must be set in a later step
-	}
-}
+////----------------------------------------------------------------//
+//void MOAIGfxMgrGL_GPUCacheGL::FlushVertexFormat () {
+//
+//	assert ( this->mApplyingStateChanges );
+//
+//	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
+//
+//	MOAIVertexFormatGL* prevFormat = MOAICast < MOAIVertexFormatGL >( this->mActiveState->mVtxFormat );
+//	MOAIVertexFormatGL* nextFormat = MOAICast < MOAIVertexFormatGL >( this->mPendingState->mVtxFormat );
+//
+//	if ( prevFormat != nextFormat ) {
+//
+//		DEBUG_LOG ( "  binding vertex format: (%p)\n", vtxFormat );
+//
+//		this->GfxStateWillChange ();
+//
+//		if ( prevFormat && this->mActiveState->mVtxBuffer ) {
+//			prevFormat->Unbind ( gfx );
+//		}
+//
+//		this->mActiveState->mVtxFormat = nextFormat;
+//		this->mActiveState->mVtxBuffer = NULL; // must be set in a later step
+//	}
+//}
 
 //----------------------------------------------------------------//
 void MOAIGfxMgrGL_GPUCacheGL::FlushViewRect () {
@@ -573,47 +553,47 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushViewRect () {
 	}
 }
 
-//----------------------------------------------------------------//
-void MOAIGfxMgrGL_GPUCacheGL::ForceIndexBuffer ( MOAIIndexBufferGL* buffer ) {
+////----------------------------------------------------------------//
+//void MOAIGfxMgrGL_GPUCacheGL::ForceIndexBuffer ( MOAIIndexBufferGL* buffer ) {
+//
+//	assert ( this->mApplyingStateChanges );
+//
+//	MOAIGfxStateGPUCacheFrame& active = *this->mActiveState;
+//	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
+//
+//	DEBUG_LOG ( "  binding index buffer: %p\n", buffer );
+//
+//	active.mIdxBuffer = buffer;
+//	this->mBoundIdxBuffer = NULL;
+//
+//	if ( buffer ) {
+//		buffer->Bind ();
+//		this->mBoundIdxBuffer = buffer->GetBufferForBind ( gfx );
+//	}
+//}
 
-	assert ( this->mApplyingStateChanges );
-	
-	MOAIGfxStateGPUCacheFrame& active = *this->mActiveState;
-	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
-	
-	DEBUG_LOG ( "  binding index buffer: %p\n", buffer );
-	
-	active.mIdxBuffer = buffer;
-	this->mBoundIdxBuffer = NULL;
-	
-	if ( buffer ) {
-		buffer->Bind ();
-		this->mBoundIdxBuffer = buffer->GetBufferForBind ( gfx );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIGfxMgrGL_GPUCacheGL::ForceVertexBuffer ( MOAIVertexBufferGL* buffer ) {
-
-	assert ( this->mApplyingStateChanges );
-	assert ( !this->mActiveState->mVtxArray );
-
-	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
-	
-	MOAIVertexFormatGL* format = MOAICast < MOAIVertexFormatGL >( this->mActiveState->mVtxFormat );
-	
-	if ( format && buffer ) {
-		
-		ZLSharedConstBuffer* bufferForBind = buffer->GetBufferForBind ( gfx );
-		
-		buffer->Bind ();
-		format->Bind ( gfx, bufferForBind );
-		buffer->Unbind ();
-		
-		this->mActiveState->mVtxBuffer = buffer;
-		this->mBoundVtxBuffer = bufferForBind;
-	}
-}
+////----------------------------------------------------------------//
+//void MOAIGfxMgrGL_GPUCacheGL::ForceVertexBuffer ( MOAIVertexBufferGL* buffer ) {
+//
+//	assert ( this->mApplyingStateChanges );
+//	assert ( !this->mActiveState->mVtxArray );
+//
+//	ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
+//
+//	MOAIVertexFormatGL* format = MOAICast < MOAIVertexFormatGL >( this->mActiveState->mVtxFormat );
+//
+//	if ( format && buffer ) {
+//
+//		ZLSharedConstBuffer* bufferForBind = buffer->GetBufferForBind ( gfx );
+//
+//		buffer->Bind ();
+//		format->Bind ( gfx, bufferForBind );
+//		buffer->Unbind ();
+//
+//		this->mActiveState->mVtxBuffer = buffer;
+//		this->mBoundVtxBuffer = bufferForBind;
+//	}
+//}
 
 //----------------------------------------------------------------//
 MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgrGL_GPUCacheGL () :
@@ -644,7 +624,7 @@ void MOAIGfxMgrGL_GPUCacheGL::RecalculateDirtyFlags () {
 	this->SetDepthFunc ( this->mPendingState->mDepthFunc );
 	this->SetDepthMask ( this->mPendingState->mDepthMask );
 	this->SetFrameBuffer ( this->mPendingState->mFrameBuffer );
-	this->SetIndexBuffer ( this->mPendingState->mIdxBuffer );
+	this->SetMesh ( this->mPendingState->mMesh );
 	this->SetPenWidth ( this->mPendingState->mPenWidth );
 	
 	if ( this->mPendingState->mScissorEnabled ) {
@@ -655,10 +635,7 @@ void MOAIGfxMgrGL_GPUCacheGL::RecalculateDirtyFlags () {
 	}
 	
 	this->SetShader ( this->mPendingState->mShader );
-	this->SetVertexArray ( this->mPendingState->mVtxArray );
 	this->SetViewRect ( this->mPendingState->mViewRect );
-	this->SetVertexBuffer ( this->mPendingState->mVtxBuffer );
-	this->SetVertexFormat ( this->mPendingState->mVtxFormat );
 	
 	for ( ZLIndex i = 0; i < MAX_TEXTURE_UNITS; ++i ) {
 		this->SetTexture ( this->mPendingState->mTextureUnits [ i ], i );
@@ -771,37 +748,37 @@ size_t MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_CountTextureUnits () {
 	return this->mActiveState->mTextureUnits.Size ();
 }
 
-//----------------------------------------------------------------//
-void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_DrawPrims ( MOAIGfxTopologyEnum::_ primType, u32 base, u32 count ) {
-
-	DEBUG_LOG ( "DRAW PRIMS: %d %d %d\n", primType, base, count );
-	
-	this->ApplyStateChanges ();
-
-	ZLGfxEnum::_ primTypeZGL = MOAIGfxConstsGL::Remap ( primType );
-
-	MOAIShaderGL* shader = MOAICast < MOAIShaderGL >( this->mActiveState->mShader );
-
-	if ( shader && ( this->mActiveState->mVtxBuffer || this->mActiveState->mVtxArray )) {
-		
-		ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
-		
-		MOAIIndexBufferGL* idxBuffer = MOAICast < MOAIIndexBufferGL >( this->mActiveState->mIdxBuffer );
-		
-		if ( idxBuffer ) {
-		
-			DEBUG_LOG ( "drawing prims with index and vertex buffer\n" );
-			
-			size_t indexSize = idxBuffer->GetIndexSize ();
-			ZLGfxEnum::_ indexType = indexSize == 2 ? ZLGfxEnum::TYPE_UNSIGNED_SHORT : ZLGfxEnum::TYPE_UNSIGNED_INT;
-			gfx.DrawElements ( primTypeZGL, count, indexType, this->mBoundIdxBuffer, base * indexSize );
-		}
-		else {
-			DEBUG_LOG ( "drawing prims with vertex buffer\n" );
-			gfx.DrawArrays ( primTypeZGL, base, count );
-		}
-	}
-}
+////----------------------------------------------------------------//
+//void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_DrawPrims ( MOAIGfxTopologyEnum::_ primType, u32 base, u32 count ) {
+//
+//	DEBUG_LOG ( "DRAW PRIMS: %d %d %d\n", primType, base, count );
+//	
+//	this->ApplyStateChanges ();
+//
+//	ZLGfxEnum::_ primTypeZGL = MOAIGfxConstsGL::Remap ( primType );
+//
+//	MOAIShaderGL* shader = MOAICast < MOAIShaderGL >( this->mActiveState->mShader );
+//
+//	if ( shader && ( this->mActiveState->mVtxBuffer || this->mActiveState->mVtxArray )) {
+//
+//		ZLGfx& gfx = this->GetDisplayListClerkGL ().GetDrawingAPI ();
+//
+//		MOAIIndexBufferGL* idxBuffer = MOAICast < MOAIIndexBufferGL >( this->mActiveState->mIdxBuffer );
+//
+//		if ( idxBuffer ) {
+//
+//			DEBUG_LOG ( "drawing prims with index and vertex buffer\n" );
+//
+//			size_t indexSize = idxBuffer->GetIndexSize ();
+//			ZLGfxEnum::_ indexType = indexSize == 2 ? ZLGfxEnum::TYPE_UNSIGNED_SHORT : ZLGfxEnum::TYPE_UNSIGNED_INT;
+//			gfx.DrawElements ( primTypeZGL, count, indexType, this->mBoundIdxBuffer, base * indexSize );
+//		}
+//		else {
+//			DEBUG_LOG ( "drawing prims with vertex buffer\n" );
+//			gfx.DrawArrays ( primTypeZGL, base, count );
+//		}
+//	}
+//}
 
 //----------------------------------------------------------------//
 void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_ResetGPUState () {
@@ -854,28 +831,22 @@ void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_ResetGPUState () {
 	}
 	gfx.ActiveTexture ( 0 );
 	
-	MOAIVertexArrayGL* activeVtxArray = MOAICast < MOAIVertexArrayGL >( active.mVtxArray );
-	if ( activeVtxArray ) {
-		activeVtxArray->Unbind ();
+	MOAIMeshGL* mesh = MOAICast < MOAIMeshGL >( active.mMesh  );
+	if ( mesh ) {
+		mesh->Unbind ();
 	}
 	
-	pending.mShader			= 0;
-	pending.mIdxBuffer		= 0;
-	pending.mVtxArray		= 0;
-	pending.mVtxBuffer		= 0;
-	pending.mVtxFormat		= 0;
+	pending.mShader			= NULL;
+	pending.mMesh			= NULL;
 	
-	active.mShader			= 0;
-	active.mIdxBuffer		= 0;
-	active.mVtxArray		= 0;
-	active.mVtxBuffer		= 0;
-	active.mVtxFormat		= 0;
+	active.mShader			= NULL;
+	active.mMesh			= NULL;
 	
-	pending.mFrameBuffer = this->mDefaultFrameBuffer;
-	active.mFrameBuffer = this->mDefaultFrameBuffer;
+	pending.mFrameBuffer 	= this->mDefaultFrameBuffer;
+	active.mFrameBuffer 	= this->mDefaultFrameBuffer;
 	
 	MOAIFrameBufferGL* defaultFrameBuffer = MOAICast < MOAIFrameBufferGL >( this->mDefaultFrameBuffer );
-	gfx.BindFramebuffer ( ZLGfxEnum::FRAMEBUFFER_TARGET_DRAW_READ, defaultFrameBuffer->mGLFrameBuffer );
+	defaultFrameBuffer->Bind ();
 	
 	this->mDirtyFlags = 0;
 	this->mTextureDirtyFlags = 0;
@@ -891,13 +862,9 @@ void MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgr_GPUCache_UnbindAll () {
 	ZGL_COMMENT ( gfx, "GFX UNBIND ALL" );
 
 	this->SetFrameBuffer ();
-	this->SetIndexBuffer ();
 	this->SetShader ();
 	this->SetTexture ();
-	this->SetVertexArray ();
-	this->SetVertexBuffer ();
-	this->SetVertexFormat ();
+	this->SetMesh ();
 	
 	ZGL_COMMENT ( gfx, "" );
 }
-

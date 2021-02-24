@@ -44,7 +44,6 @@ public:
 
 	void					Clear						( u32 mask );
 	void					ClearColor					( float r, float g, float b, float a );
-	void					Color						( float r, float g, float b, float a );
 	
 	void					Comment						( cc8* comment );
 	
@@ -58,12 +57,10 @@ public:
 	void					DepthFunc					( ZLGfxEnum::_ depthFunc );
 	void					DepthMask					( bool flag );
 	void					Disable						( ZLGfxEnum::_ cap );
-	void					DisableClientState			( ZLGfxEnum::_ cap );
 	void					DisableVertexAttribArray	( u32 index );
 	void					DrawArrays					( ZLGfxEnum::_ primType, u32 first, u32 count );
 	void					DrawElements				( ZLGfxEnum::_ primType, u32 count, ZLGfxEnum::_ indexType, ZLSharedConstBuffer* buffer, size_t offset );
 	void					Enable						( ZLGfxEnum::_ cap );
-	void					EnableClientState			( ZLGfxEnum::_ cap );
 	void					EnableVertexAttribArray		( u32 index );
 
 	void					Event						( ZLGfxListener* listener, u32 event, void* userdata );
@@ -93,7 +90,6 @@ public:
 	
 	void					ShaderSource				( ZLGfxResource& shader, cc8* source, size_t length );
 	
-	void					TexEnvi						( ZLGfxEnum::_ pname, ZLGfxEnum::_ param );
 	void					TexImage2D					( u32 level, ZLGfxEnum::_ internalFormat, u32 width, u32 height, ZLGfxEnum::_ format, ZLGfxEnum::_ type, ZLSharedConstBuffer* buffer );
 	void					TexParameteri				( ZLGfxEnum::_ pname, ZLGfxEnum::_ param );
 	void					TexSubImage2D				( u32 level, s32 xOffset, s32 yOffset, u32 width, u32 height, ZLGfxEnum::_ format, ZLGfxEnum::_ type, ZLSharedConstBuffer* buffer );

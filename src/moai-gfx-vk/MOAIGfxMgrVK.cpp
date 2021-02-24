@@ -530,12 +530,6 @@ MOAITexture2D* MOAIGfxMgrVK::MOAIGfxMgr_CreateTexture2D () {
 }
 
 //----------------------------------------------------------------//
-MOAIVertexArray* MOAIGfxMgrVK::MOAIGfxMgr_CreateVertexArray () {
-
-	return NULL;
-}
-
-//----------------------------------------------------------------//
 MOAIVertexBuffer* MOAIGfxMgrVK::MOAIGfxMgr_CreateVertexBuffer () {
 
 	MOAIVertexBufferVK* buffer = new MOAIVertexBufferVK ();

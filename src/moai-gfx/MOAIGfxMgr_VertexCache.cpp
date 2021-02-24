@@ -22,10 +22,12 @@
 //----------------------------------------------------------------//
 void MOAIGfxMgr_VertexCache::AffirmBuffers () {
 
-	if ( !this->mVtxBuffer ) {
+	if ( !this->mMesh ) {
 
-		this->mVtxBuffer = this->GetGfxMgr ().CreateVertexBuffer ();
-		this->mIdxBuffer = this->GetGfxMgr ().CreateIndexBuffer ();
+		this->mMesh 		= this->GetGfxMgr ().CreateMesh ();
+
+		this->mVtxBuffer 	= this->GetGfxMgr ().CreateVertexBuffer ();
+		this->mIdxBuffer 	= this->GetGfxMgr ().CreateIndexBuffer ();
 		
 		this->mIdxBuffer->SetIndexSize ( INDEX_SIZE );
 
@@ -33,6 +35,7 @@ void MOAIGfxMgr_VertexCache::AffirmBuffers () {
 		this->mIdxBuffer->Reserve ( DEFAULT_INDEX_BUFFER_SIZE );
 	}
 
+	assert ( this->mMesh );
 	assert ( this->mVtxBuffer );
 	assert ( this->mIdxBuffer);
 }
@@ -40,34 +43,37 @@ void MOAIGfxMgr_VertexCache::AffirmBuffers () {
 //----------------------------------------------------------------//
 bool MOAIGfxMgr_VertexCache::BeginPrim ( MOAIGfxTopologyEnum::_ primType, u32 vtxCount, u32 idxCount ) {
 	
+	
 	DEBUG_LOG ( "BEGIN INDEXED PRIM: %d %d %d\n", ( int )primType, vtxCount, idxCount );
 	
-	MOAIGfxMgr_GPUCache& gpuCache = this->GetGPUCache ();
-	MOAIVertexFormat* format = gpuCache.GetVertexFormat ();
-	
+	MOAIVertexFormat* format = this->mVtxFormat;
 	u32 vtxSize = format ? format->GetVertexSize () : 0;
 	if ( !vtxSize ) return false;
-	
-	bool useIdxBuffer = ( idxCount > 0 );
+
+	MOAIVertexFormat* prevFormat = this->mMesh->GetVertexFormat ();
+	MOAIIndexBuffer* prevIndexBuffer = this->mMesh->GetIndexBuffer ();
+
+	MOAIIndexBuffer* indexBuffer = ( idxCount > 0 ) ? ( MOAIIndexBuffer* )this->mIdxBuffer : NULL;
 
 	// flush if ya gotta
-	if (( this->mPrimType != primType ) || ( this->mVtxSize != vtxSize ) || ( this->mUseIdxBuffer != useIdxBuffer )) {
+	if (( this->mPrimType != primType ) || ( format != prevFormat ) || ( indexBuffer != prevIndexBuffer )) {
 		this->FlushToGPU ();
 	}
 	this->mFlushOnPrimEnd = !(( primType == MOAIGfxTopologyEnum::POINT_LIST ) || ( primType == MOAIGfxTopologyEnum::LINE_LIST ) || ( primType == MOAIGfxTopologyEnum::TRIANGLE_LIST ));
+	this->mUseIdxBuffer = ( indexBuffer != NULL );
 	
-	// these will get bound later, just before drawing; clear them for now
-	// we have to bind them later since their contents will change as the primitive is drawn
-	gpuCache.SetIndexBuffer ();
-	gpuCache.SetVertexBuffer ();
+	this->mMesh->SetVertexBuffer ( 0, this->mVtxBuffer, format );
+	this->mMesh->SetIndexBuffer ( indexBuffer );
 	
+	MOAIGfxMgr_GPUCache& gpuCache = this->GetGPUCache ();
+	gpuCache.SetMesh ( this->mMesh );
 	gpuCache.ApplyStateChanges (); // must happen here in case there needs to be a flush
 	
 	this->mPrimType = primType;
 	this->mVtxSize = vtxSize;
-	this->mUseIdxBuffer = useIdxBuffer;
 
-	if ( useIdxBuffer ) {
+	if ( indexBuffer ) {
+		
 		u32 vtxCursor = ( u32 )this->mVtxBuffer->GetCursor ();
 		this->mVtxBase = vtxCursor / vtxSize;
 
@@ -187,6 +193,18 @@ void MOAIGfxMgr_VertexCache::SetUVTransform ( const ZLMatrix4x4& uvTransform ) {
 }
 
 //----------------------------------------------------------------//
+void MOAIGfxMgr_VertexCache::SetVertexFormat ( MOAIVertexFormat* format ) {
+
+	this->mVtxFormat = format;
+}
+
+//----------------------------------------------------------------//
+void MOAIGfxMgr_VertexCache::SetVertexFormat ( MOAIVertexFormatPresetEnum preset ) {
+
+	this->SetVertexFormat ( this->GetGfxMgr ().GetVertexFormatPreset ( preset ));
+}
+
+//----------------------------------------------------------------//
 void MOAIGfxMgr_VertexCache::SetVertexTransform () {
 
 	this->mApplyVertexTransform = false;
@@ -223,7 +241,7 @@ void MOAIGfxMgr_VertexCache::TransformAndWriteQuad ( ZLVec4D* vtx, ZLVec2D* uv )
 		// TODO: put back an optimized write (i.e. WriteUnsafe or an equivalent)
 	
 		u32 finalColor32 = this->GetCPUCache ().GetFinalColor32 ();
-	
+		
 		// left top
 		this->mVtxBuffer->Write ( vtx [ 0 ]);
 		this->mVtxBuffer->Write ( uv [ 0 ]);

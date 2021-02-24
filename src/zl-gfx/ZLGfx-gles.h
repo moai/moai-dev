@@ -11,12 +11,12 @@
 
 #ifdef MOAI_OS_OSX
 	//#include <GL/glew.h>
-	#include <OpenGL/gl.h>
-	#include <OpenGL/glext.h>
+	#include <OpenGL/gl3.h>
+	#include <OpenGL/gl3ext.h>
 
-	#define glGenVertexArrays		glGenVertexArraysAPPLE
-	#define glBindVertexArray		glBindVertexArrayAPPLE
-	#define glDeleteVertexArrays	glDeleteVertexArraysAPPLE
+//	#define glGenVertexArrays		glGenVertexArraysAPPLE
+//	#define glBindVertexArray		glBindVertexArrayAPPLE
+//	#define glDeleteVertexArrays	glDeleteVertexArraysAPPLE
 
 #endif
 
