@@ -685,8 +685,16 @@ int MOAIDrawAPI::_setShader ( lua_State* L ) {
 int MOAIDrawAPI::_setTexture ( lua_State* L ) {
 	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
 	
-	MOAITexture* texture	= MOAIGfxMgr::Get ().AffirmTexture ( state, 2 );
-	ZLIndex textureUnit		= state.GetValue < u32 >( 3, 0 );
+	MOAITexture* texture 	= NULL;
+	ZLIndex textureUnit 	= 0;
+
+	if ( state.IsType ( 2, LUA_TNUMBER )) {
+		textureUnit 	= state.GetValue < MOAILuaIndex >( 2, 0 );
+		texture 		= MOAIGfxMgr::Get ().AffirmTexture ( state, 3 );
+	}
+	else {
+		texture			= MOAIGfxMgr::Get ().AffirmTexture ( state, 2 );
+	}
 
 	self->SetTexture ( texture, textureUnit );
 	

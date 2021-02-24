@@ -688,26 +688,26 @@ void ZLGfxImmediate::UniformFloat ( u32 location, u32 index, u32 width, u32 coun
 
 //----------------------------------------------------------------//
 void ZLGfxImmediate::UniformInt ( u32 location, u32 index, u32 width, u32 count, const s32* value ) {
-	UNUSED(index);
+
 	switch ( width ) {
 	
 		case 1:
-			glUniform1iv (( GLint )location, count, ( const GLint* )value );
+			glUniform1iv (( GLint )( location + index ), count, ( const GLint* )value );
 			GL_LOG_ERRORS ( "glUniform1iv" )
 			break;
 			
 		case 2:
-			glUniform2iv (( GLint )location, count, ( const GLint* )value );
+			glUniform2iv (( GLint )( location + index ), count, ( const GLint* )value );
 			GL_LOG_ERRORS ( "glUniform2iv" )
 			break;
 			
 		case 3:
-			glUniform3iv (( GLint )location, count, ( const GLint* )value );
+			glUniform3iv (( GLint )( location + index ), count, ( const GLint* )value );
 			GL_LOG_ERRORS ( "glUniform3iv" )
 			break;
 			
 		case 4:
-			glUniform4iv (( GLint )location, count, ( const GLint* )value );
+			glUniform4iv (( GLint )( location + index ), count, ( const GLint* )value );
 			GL_LOG_ERRORS ( "glUniform4iv" )
 			break;
 	}

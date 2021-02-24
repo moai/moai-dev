@@ -96,11 +96,13 @@ protected:
 
 	friend class MOAIMeshPrimReader;
 
-	u32								mTotalElements;
-	ZLBounds						mBounds;
-	MOAIGfxTopologyEnum::_			mPrimType;
-	float							mPenWidth;
-	MOAIMeshPartition*				mPartition;
+	ZLStrongPtr < MOAIAbstractMesh >	mMesh;
+
+	u32									mTotalElements;
+	ZLBounds							mBounds;
+	MOAIGfxTopologyEnum::_				mPrimType;
+	float								mPenWidth;
+	MOAIMeshPartition*					mPartition;
 
 	//----------------------------------------------------------------//
 	static int			_buildQuadTree				( lua_State* L );
@@ -114,6 +116,10 @@ protected:
 	static int			_setPenWidth				( lua_State* L );
 	static int			_setPrimType				( lua_State* L );
 	static int			_setTotalElements			( lua_State* L );
+	static int			_setVertexBuffer			( lua_State* L );
+
+	//----------------------------------------------------------------//
+	void				AffirmMesh					();
 
 	//----------------------------------------------------------------//
 	void				_RegisterLuaClass			( RTTIVisitorHistory& history, MOAILuaState& state );

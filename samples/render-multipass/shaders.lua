@@ -32,5 +32,29 @@ gaussProgram:setVertexAttribute ( 3, 'color' )
 
 gaussProgram:load ( MOAIFileSystem.loadFile ( 'shaders/gauss.vsh' ), MOAIFileSystem.loadFile ( 'shaders/gauss.fsh' ))
 
+gaussProgram:reserveUniforms ( 1 )
+gaussProgram:declareUniform ( 1, 'direction', MOAIShaderProgram.UNIFORM_TYPE_FLOAT, MOAIShaderProgram.UNIFORM_WIDTH_VEC_2 )
+
 gaussShader = MOAIShader.new ()
 gaussShader:setProgram ( gaussProgram )
+
+----------------------------------------------------------------
+local glowProgram = MOAIShaderProgram.new ()
+
+glowProgram:setVertexAttribute ( 1, 'position' )
+glowProgram:setVertexAttribute ( 2, 'uv' )
+glowProgram:setVertexAttribute ( 3, 'color' )
+
+glowProgram:load ( MOAIFileSystem.loadFile ( 'shaders/glow.vsh' ), MOAIFileSystem.loadFile ( 'shaders/glow.fsh' ))
+
+glowProgram:reserveUniforms ( 3 )
+glowProgram:declareUniform ( 1, 'glow', MOAIShaderProgram.UNIFORM_TYPE_FLOAT )
+glowProgram:declareUniform ( 2, 'colorSampler', MOAIShaderProgram.UNIFORM_TYPE_INT )
+glowProgram:declareUniform ( 3, 'glowSampler', MOAIShaderProgram.UNIFORM_TYPE_INT )
+
+glowShader = MOAIShader.new ()
+glowShader:setProgram ( glowProgram )
+
+glowShader:setUniform ( 1, 0.5 )
+glowShader:setUniform ( 2, 0 )
+glowShader:setUniform ( 3, 1 )

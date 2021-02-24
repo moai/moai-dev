@@ -20,19 +20,20 @@ class MOAIMeshCallable :
 public:
 
 	MOAIGfxTopologyEnum::_		mPrimType;
+	MOAIAbstractMesh*			mMesh;
 	MOAIMeshSpan*				mSpan;
 	u32							mTotalElements;
 
 	//----------------------------------------------------------------//
 	void MOAIAbstractGfxScriptCallback_Call () {
 	
-//		MOAIMeshSpan* span = this->mSpan;
-//	
-//		for ( ; span; span = span->mNext ) {
-//			if ( span->mBase == span->mTop ) continue;
-//			assert (( span->mBase < span->mTop ) && ( span->mTop <= this->mTotalElements ));
-//			MOAIGfxMgr::Get ().DrawPrims ( this->mPrimType, span->mBase, ( u32 )( span->mTop - span->mBase ));
-//		}
+		MOAIMeshSpan* span = this->mSpan;
+	
+		for ( ; span; span = span->mNext ) {
+			if ( span->mBase == span->mTop ) continue;
+			assert (( span->mBase < span->mTop ) && ( span->mTop <= this->mTotalElements ));
+			this->mMesh->DrawPrims ( this->mPrimType, span->mBase, ( u32 )( span->mTop - span->mBase ));
+		}
 	}
 };
 
@@ -226,7 +227,7 @@ int MOAIMesh::_buildQuadTree ( lua_State* L ) {
 //		quadTree->Init ( coordReader, targetPrimsPerNode );
 //		self->mPartition = quadTree;
 //	}
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -246,7 +247,7 @@ int MOAIMesh::_buildTernaryTree ( lua_State* L ) {
 //		ternaryTree->Init ( coordReader, targetPrimsPerNode, axisMask );
 //		self->mPartition = ternaryTree;
 //	}
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -458,7 +459,7 @@ int MOAIMesh::_setBounds ( lua_State* L ) {
 	if ( state.CheckParams ( 2, "NNNNNN-" )) {
 		self->SetBounds ( state.GetValue < ZLBox >( 2, ZLBox::EMPTY ));
 	}
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -474,7 +475,7 @@ int MOAIMesh::_setPenWidth ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMesh, "UN" )
 	
 	self->mPenWidth = state.GetValue < float >( 2, 1.0f );
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
 //----------------------------------------------------------------//
@@ -490,21 +491,40 @@ int MOAIMesh::_setPrimType ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMesh, "UN" )
 	
 	self->SetPrimType (( MOAIGfxTopologyEnum::_ )state.GetValue < u32 >( 2, 0 ));
-	return 0;
+	MOAI_LUA_RETURN_SELF
 }
 
-//----------------------------------------------------------------///
+//----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIMesh::_setTotalElements ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMesh, "U" )
 
 	self->SetTotalElements ( state.GetValue < u32 >( 2, 0 ));
-	return 0;
+	MOAI_LUA_RETURN_SELF
+}
+
+//----------------------------------------------------------------//
+int MOAIMesh::_setVertexBuffer ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIMesh, "U" )
+	
+	MOAIVertexBuffer* vertexBuffer = state.GetLuaObject < MOAIVertexBuffer >( 2, false );
+	MOAIVertexFormat* vertexFormat = state.GetLuaObject < MOAIVertexFormat >( 3, false );
+	
+	self->AffirmMesh ();
+	self->mMesh->SetVertexBuffer ( 0, vertexBuffer, vertexFormat );
+	
+	MOAI_LUA_RETURN_SELF
 }
 
 //================================================================//
 // MOAIMesh
 //================================================================//
+
+//----------------------------------------------------------------//
+void MOAIMesh::AffirmMesh () {
+
+	this->mMesh = MOAIGfxMgr::Get ().CreateMesh ();
+}
 
 //----------------------------------------------------------------//
 void MOAIMesh::ClearBounds () {
@@ -522,11 +542,14 @@ u32 MOAIMesh::CountPrims () const {
 void MOAIMesh::DrawIndex ( ZLIndex idx, MOAIMeshSpan* span ) {
 	UNUSED ( idx );
 
+	if ( !this->mMesh ) return;
+
 	MOAIGfxScript* gfxScript = this->GetGfxScript ();
 	if ( !gfxScript ) return;
 
 	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	gfxMgr.SetShader ( MOAIShaderPresetEnum::MESH_SHADER );
+	gfxMgr.SetMesh ( this->mMesh );
 
 	MOAIMeshSpan defaultSpan;
 	if ( !span ) {
@@ -538,6 +561,7 @@ void MOAIMesh::DrawIndex ( ZLIndex idx, MOAIMeshSpan* span ) {
 	
 	MOAIMeshCallable callable;
 	callable.mPrimType 			= this->mPrimType;
+	callable.mMesh				= this->mMesh;
 	callable.mSpan	 			= span;
 	callable.mTotalElements		= this->mTotalElements;
 	gfxScript->ExecuteBytecode ( &callable );
@@ -610,6 +634,7 @@ void MOAIMesh::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& st
 		{ "setPenWidth",				_setPenWidth },
 		{ "setPrimType",				_setPrimType },
 		{ "setTotalElements",			_setTotalElements },
+		{ "setVertexBuffer",			_setVertexBuffer },
 		{ NULL, NULL }
 	};
 	

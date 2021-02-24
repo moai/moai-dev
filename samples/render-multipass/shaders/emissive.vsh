@@ -1,9 +1,10 @@
-attribute vec4 position;
-attribute vec2 uv;
-attribute vec4 color;
 
-varying LOWP vec4 colorVarying;
-varying MEDP vec2 uvVarying;
+in vec4 position;
+in vec2 uv;
+in vec4 color;
+
+out MEDP vec2 uvVarying;
+out LOWP vec4 colorVarying;
 
 void main () {
     gl_Position = position;

@@ -62,14 +62,32 @@ function render ( draw )
 	draw:clearSurface ()
 	offscreenLayer:render ()
 
-    draw:setFrameBuffer ( gaussFB0 )
+    draw:setFrameBuffer ( gaussFB1 )
     draw:clearSurface ()
     draw:setTexture ( mainFB.color )
     draw:compose ( emissiveShader )
 
+    for i = 1, 9 do
+
+        gaussShader:setUniform( 1, 0.707, 0.707 )
+
+        draw:setFrameBuffer ( gaussFB0 )
+        draw:clearSurface ()
+        draw:setTexture ( gaussFB1.color )
+        draw:compose ( gaussShader )
+
+        gaussShader:setUniform( 1, 0.707, -0.707 )
+
+        draw:setFrameBuffer ( gaussFB1 )
+        draw:clearSurface ()
+        draw:setTexture ( gaussFB0.color )
+        draw:compose ( gaussShader )
+    end
+
 	draw:setFrameBuffer ()
-	draw:setTexture ( gaussFB0.color )
-	draw:compose ( deck2DShader )
+    draw:setTexture ( 1, mainFB.color )
+	draw:setTexture ( 2, gaussFB1.color )
+	draw:compose ( glowShader )
 end
 
 MOAIGfxMgr.pushRenderable ( render )

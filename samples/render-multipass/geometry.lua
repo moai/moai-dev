@@ -76,12 +76,11 @@ function makeBoxMesh ( xMin, yMin, zMin, xMax, yMax, zMax, texture )
     mesh:setTotalElements ( vertexBuffer:countElements ( vertexFormat ))
     mesh:setBounds ( vertexBuffer:computeBounds ( vertexFormat ))
     mesh:setPrimType ( MOAIMesh.GL_TRIANGLES )
+    mesh:setVertexBuffer ( vertexBuffer, vertexFormat )
 
 	mesh:gfx ()
 		:setTexture ( texture )
     	:setShader ( MOAIShaderMgr.MESH_SHADER )
-    	:setVertexFormat ( vertexFormat )
-		:setVertexBuffer ( vertexBuffer )
     	:setCullFunc ( MOAIGraphicsProp.CULL_BACK )
 
 	return mesh

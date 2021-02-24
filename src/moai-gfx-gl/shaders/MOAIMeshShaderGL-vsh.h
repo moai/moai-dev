@@ -7,16 +7,16 @@
 #define SHADER(str) #str
 
 static cc8* _meshShaderVSH = SHADER (
-
-	attribute vec4 position;
-	attribute vec2 uv;
-	attribute vec4 color;
+	
+	in vec4 position;
+	in vec2 uv;
+	in vec4 color;
 
 	uniform mat4 transform;
 	uniform vec4 ucolor;
 
-	varying LOWP vec4 colorVarying;
-	varying MEDP vec2 uvVarying;
+	out MEDP vec2 uvVarying;
+	out LOWP vec4 colorVarying;
 
 	void main () {
 		gl_Position = transform * position;
