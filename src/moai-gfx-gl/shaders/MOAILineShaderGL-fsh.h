@@ -8,10 +8,12 @@
 
 static cc8* _lineShaderFSH = SHADER (
 
-	varying LOWP vec4 colorVarying;
-
+	in LOWP vec4 colorVarying;
+	
+	out MEDP vec4 fragColor;
+	
 	void main () {
-		gl_FragColor = colorVarying;
+		fragColor = colorVarying;
 	}
 );
 

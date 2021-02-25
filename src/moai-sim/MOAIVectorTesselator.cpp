@@ -2,7 +2,6 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIGeometryWriter.h>
 #include <moai-sim/MOAIGrid.h>
 #include <moai-sim/MOAIRegion.h>
 #include <moai-sim/MOAIVectorCombo.h>
@@ -1176,7 +1175,7 @@ int MOAIVectorTesselator::Tesselate ( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuff
 	int totalIndices = this->Tesselate ( vtxStream, idxStream, format, flags );
 	
 	if ( totalIndices > 0 ) {
-		return MOAIGeometryWriter::GetMesh ( format, vtxStream, vtxStream.GetLength (), idxStream, idxStream.GetLength (), vtxBuffer, idxBuffer, idxSizeInBytes );
+		return MOAIMeshWriter::GetMesh ( format, vtxStream, vtxStream.GetLength (), idxStream, idxStream.GetLength (), vtxBuffer, idxBuffer, idxSizeInBytes );
 	}
 	
 	// something went wrong, return error code

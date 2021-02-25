@@ -331,7 +331,7 @@ MOAIIndexBuffer* MOAIGfxMgrGL::MOAIGfxMgr_CreateIndexBuffer () {
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractMesh* MOAIGfxMgrGL::MOAIGfxMgr_CreateMesh () {
+MOAIMesh* MOAIGfxMgrGL::MOAIGfxMgr_CreateMesh () {
 
 	return new MOAIMeshGL ();
 }

@@ -8,13 +8,15 @@
 
 static cc8* _fontShaderFSH = SHADER (
 
-	varying LOWP vec4 colorVarying;
-	varying MEDP vec2 uvVarying;
+	in LOWP vec4 colorVarying;
+	in MEDP vec2 uvVarying;
 	
-	uniform sampler2D sampler;
+	out MEDP vec4 fragColor;
+	
+	uniform MEDP sampler2D sampler;
 
 	void main () {
-		gl_FragColor = colorVarying * texture2D ( sampler, uvVarying )[ 3 ];
+		fragColor = texture ( sampler, uvVarying )[ 3 ] * colorVarying;
 	}
 );
 

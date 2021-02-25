@@ -9,7 +9,7 @@
 typedef MOAIRetainedCmdStream MOAIGfxScript;
 
 class MOAIAbstractChildTransform;
-class MOAIAbstractMesh;
+class MOAIMesh;
 class MOAIBlendMode;
 class MOAICamera;
 class MOAIFrameBuffer;
@@ -268,7 +268,7 @@ public:
 	void				SetFrameBuffer				( MOAIFrameBuffer* frameBuffer );
 	void 				SetMatrix					( u32 matrixID, const ZLMatrix4x4& mtx );
 	void 				SetMatrixFromTransform		( u32 matrixID, MOAIAbstractChildTransform& transform );
-	void				SetMesh						( MOAIAbstractMesh* mesh );
+	void				SetMesh						( MOAIMesh* mesh );
 	void				SetPenColor					( u32 color );
 	void				SetPenWidth					( float width );
 	void				SetScissorRect				();

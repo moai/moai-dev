@@ -10,7 +10,7 @@
 #include <moai-gfx/MOAIGfxPresetEnum.h>
 #include <moai-gfx/MOAIGfxStateGPUCacheFrame.h>
 
-class MOAIAbstractMesh;
+class MOAIMesh;
 class MOAIShader;
 class MOAITexture;
 class MOAIFrameBuffer;
@@ -84,7 +84,7 @@ public:
 	MOAITexture*			GetDefaultTexture			();
 	bool					GetDepthMask				() const;
 	MOAIFrameBuffer*		GetFrameBuffer				();
-	MOAIAbstractMesh*		GetMesh						();
+	MOAIMesh*		GetMesh						();
 	MOAIShader*				GetShader					();
 	MOAITexture*			GetTexture					( ZLIndex textureUnit = 0 );
 	float					GetViewHeight				() const;
@@ -106,7 +106,7 @@ public:
 	void					SetDepthMask				( bool depthMask );
 	void					SetFlag						( bool isClean, u32 flag );
 	void					SetFrameBuffer				( MOAIFrameBuffer* frameBuffer = NULL );
-	void					SetMesh						( MOAIAbstractMesh* mesh = NULL );
+	void					SetMesh						( MOAIMesh* mesh = NULL );
 	void					SetPenWidth					( float penWidth );
 	void					SetScissorRect				();
 	void					SetScissorRect				( ZLRect rect );

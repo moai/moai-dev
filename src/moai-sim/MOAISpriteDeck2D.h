@@ -105,8 +105,6 @@ private:
 	//----------------------------------------------------------------//
 	void					_RegisterLuaClass				( RTTIVisitorHistory& history, MOAILuaState& state );
 	void					_RegisterLuaFuncs				( RTTIVisitorHistory& history, MOAILuaState& state );
-	void					_SerializeIn					( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
-	void					_SerializeOut					( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
 	ZLBounds				MOAIDeck_GetBounds				();
 	ZLBounds				MOAIDeck_GetBounds				( ZLIndex idx );
 	MOAIPickResult			MOAIDeck_PickByPoint			( ZLIndex idx, ZLVec3D loc );

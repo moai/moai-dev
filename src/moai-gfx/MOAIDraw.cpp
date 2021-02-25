@@ -585,7 +585,7 @@ void MOAIDraw::MOAIAbstractCmdHandler_HandleCommand ( u32 cmd, const void* param
 		}
 		
 		case MOAIDrawAPI::SET_MESH:
-			gfxMgr.SetMesh ( *( MOAIAbstractMesh** )param );
+			gfxMgr.SetMesh ( *( MOAIMesh** )param );
 			break;
 		
 		case MOAIDrawAPI::SET_PEN_COLOR:

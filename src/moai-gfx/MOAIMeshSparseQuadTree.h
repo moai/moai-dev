@@ -4,7 +4,8 @@
 #ifndef	MOAIMESHSPARSEQUADTREE_H
 #define	MOAIMESHSPARSEQUADTREE_H
 
-#include <moai-sim/MOAIMeshPartition.h>
+#include <moai-gfx/MOAIMeshPartition.h>
+#include <moai-gfx/MOAIMeshPrimReader.h>
 
 class MOAIMeshSparseQuadTree;
 class MOAIMeshSparseQuadTreeNode;

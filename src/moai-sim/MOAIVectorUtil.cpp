@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-sim/MOAIGeometryWriter.h>
+#include <moai-sim/MOAIMeshWriter.h>
 #include <moai-sim/MOAIVectorUtil.h>
 #include <signal.h>
 #include <setjmp.h>
@@ -101,7 +101,7 @@ u32 SafeTesselator::GetTriangles ( MOAIVertexFormat& format, MOAIVertexBuffer& v
 
 	this->GetTriangles ( format, vtxStream, idxStream );
 	
-	return MOAIGeometryWriter::GetMesh ( format, vtxStream, vtxStream.GetLength (), idxStream, idxStream.GetLength (), vtxBuffer, idxBuffer, idxSizeInBytes );
+	return MOAIMeshWriter::GetMesh ( format, vtxStream, vtxStream.GetLength (), idxStream, idxStream.GetLength (), vtxBuffer, idxBuffer, idxSizeInBytes );
 }
 
 //------------------------------------------------------------------//

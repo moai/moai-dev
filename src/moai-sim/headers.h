@@ -39,7 +39,6 @@
 #include <moai-sim/MOAIDeckRemapper.h>
 #include <moai-sim/MOAIDrawDeck.h>
 #include <moai-sim/MOAIFancyGrid.h>
-#include <moai-sim/MOAIGeometryWriter.h>
 #include <moai-sim/MOAIGraphicsProp.h>
 #include <moai-sim/MOAIGraphicsGridProp.h>
 #include <moai-sim/MOAIGrid.h>
@@ -53,10 +52,8 @@
 #include <moai-sim/MOAIKeyboardSensor.h>
 #include <moai-sim/MOAILayoutFrame.h>
 #include <moai-sim/MOAILocationSensor.h>
-#include <moai-sim/MOAIMesh.h>
-#include <moai-sim/MOAIMeshPartition.h>
-#include <moai-sim/MOAIMeshSparseQuadTree.h>
-#include <moai-sim/MOAIMeshTernaryTree.h>
+#include <moai-sim/MOAIMeshDeck.h>
+#include <moai-sim/MOAIMeshWriter.h>
 #include <moai-sim/MOAIMetaTileDeck2D.h>
 #include <moai-sim/MOAIMotionSensor.h>
 #include <moai-sim/MOAIMoveConstraint2D.h>

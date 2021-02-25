@@ -117,7 +117,7 @@ MOAIMeshGL::MOAIMeshGL () {
 	RTTI_BEGIN ( MOAIMeshGL )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIMeshGL >)
 		RTTI_VISITOR ( MOAIAbstractLuaSerializationVisitor, MOAILuaSerializationVisitor < MOAIMeshGL >)
-		RTTI_EXTEND ( MOAIVertexArray )
+		RTTI_EXTEND ( MOAIMesh )
 		RTTI_EXTEND ( MOAIGfxResourceGL )
 	RTTI_END
 }
@@ -213,7 +213,7 @@ void MOAIMeshGL::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& stat
 }
 
 //----------------------------------------------------------------//
-void MOAIMeshGL::MOAIAbstractMesh_DrawPrims ( MOAIGfxTopologyEnum::_ primType, u32 base, u32 count ) {
+void MOAIMeshGL::MOAIMesh_DrawPrims ( MOAIGfxTopologyEnum::_ primType, u32 base, u32 count ) {
 	
 	this->mGfxMgr->ApplyStateChanges ();
 
@@ -233,25 +233,25 @@ void MOAIMeshGL::MOAIAbstractMesh_DrawPrims ( MOAIGfxTopologyEnum::_ primType, u
 }
 
 //----------------------------------------------------------------//
-MOAIIndexBuffer* MOAIMeshGL::MOAIAbstractMesh_GetIndexBuffer () {
+MOAIIndexBuffer* MOAIMeshGL::MOAIMesh_GetIndexBuffer () {
 
 	return this->mIndexBuffer;
 }
 
 //----------------------------------------------------------------//
-MOAIVertexBuffer* MOAIMeshGL::MOAIAbstractMesh_GetVertexBuffer ( ZLIndex idx ) {
+MOAIVertexBuffer* MOAIMeshGL::MOAIMesh_GetVertexBuffer ( ZLIndex idx ) {
 
 	return idx < this->mVertexBuffers.Size () ? ( MOAIVertexBufferGL* )this->mVertexBuffers [ idx ].mBuffer : ( MOAIVertexBufferGL* )0;
 }
 
 //----------------------------------------------------------------//
-MOAIVertexFormat* MOAIMeshGL::MOAIAbstractMesh_GetVertexFormat ( ZLIndex idx ) {
+MOAIVertexFormat* MOAIMeshGL::MOAIMesh_GetVertexFormat ( ZLIndex idx ) {
 
 	return idx < this->mVertexBuffers.Size () ? ( MOAIVertexFormatGL* )this->mVertexBuffers [ idx ].mFormat : ( MOAIVertexFormatGL* )0;
 }
 
 //----------------------------------------------------------------//
-void MOAIMeshGL::MOAIAbstractMesh_ReserveVertexBuffers ( ZLSize size ) {
+void MOAIMeshGL::MOAIMesh_ReserveVertexBuffers ( ZLSize size ) {
 
 	for ( ZLIndex i = 0; i < this->mVertexBuffers.Size (); ++i ) {
 		this->mVertexBuffers [ i ].SetBufferAndFormat ( 0, 0 );
@@ -262,14 +262,14 @@ void MOAIMeshGL::MOAIAbstractMesh_ReserveVertexBuffers ( ZLSize size ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIMeshGL::MOAIAbstractMesh_SetIndexBuffer ( MOAIIndexBuffer* idxBuffer ) {
+void MOAIMeshGL::MOAIMesh_SetIndexBuffer ( MOAIIndexBuffer* idxBuffer ) {
 
 	this->mIndexBuffer = MOAICastAssert < MOAIIndexBufferGL >( idxBuffer );
 	this->ScheduleForGPUUpdate ();
 }
 
 //----------------------------------------------------------------//
-void MOAIMeshGL::MOAIAbstractMesh_SetVertexBuffer ( ZLIndex idx, MOAIVertexBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat ) {
+void MOAIMeshGL::MOAIMesh_SetVertexBuffer ( ZLIndex idx, MOAIVertexBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat ) {
 
 	MOAIVertexBufferGL* vertexBufferGL = MOAICastAssert < MOAIVertexBufferGL >( vtxBuffer );
 	MOAIVertexFormatGL* vertexFormatGL = MOAICastAssert < MOAIVertexFormatGL >( vtxFormat );

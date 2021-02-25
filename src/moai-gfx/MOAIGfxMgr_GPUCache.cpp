@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx/MOAIAbstractMesh.h>
+#include <moai-gfx/MOAIMesh.h>
 #include <moai-gfx/MOAIFrameBuffer.h>
 #include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIGfxMgr_GPUCache.h>
@@ -83,7 +83,7 @@ MOAIFrameBuffer* MOAIGfxMgr_GPUCache::GetFrameBuffer () {
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractMesh* MOAIGfxMgr_GPUCache::GetMesh () {
+MOAIMesh* MOAIGfxMgr_GPUCache::GetMesh () {
 
 	assert ( this->mPendingState );
 	return this->mPendingState->mMesh;
@@ -272,7 +272,7 @@ void MOAIGfxMgr_GPUCache::SetFrameBuffer ( MOAIFrameBuffer* frameBuffer ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIGfxMgr_GPUCache::SetMesh ( MOAIAbstractMesh* mesh ) {
+void MOAIGfxMgr_GPUCache::SetMesh ( MOAIMesh* mesh ) {
 
 	assert ( !this->mApplyingStateChanges );
 

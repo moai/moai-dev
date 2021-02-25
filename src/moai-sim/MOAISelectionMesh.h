@@ -5,7 +5,7 @@
 #define	MOAISELECTIONMESH_H
 
 #include <moai-sim/MOAIDeckProxy.h>
-#include <moai-sim/MOAIMesh.h>
+#include <moai-sim/MOAIMeshDeck.h>
 
 //================================================================//
 // MOAISelectionSpan
@@ -34,7 +34,7 @@ protected:
 	ZLLeanArray < MOAIMeshSpan* >			mSets;
 
 	MOAISelectionSpan*	mSpanListHead;
-	MOAIMesh*			mMesh;
+	MOAIMeshDeck*			mMesh;
 
 	//----------------------------------------------------------------//
 	static int				_addSelection				( lua_State* L );

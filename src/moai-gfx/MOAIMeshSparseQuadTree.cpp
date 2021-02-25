@@ -3,9 +3,7 @@
 
 #include "pch.h"
 
-#include <moai-sim/MOAIGrid.h>
-#include <moai-sim/MOAIMesh.h>
-#include <moai-sim/MOAIMeshSparseQuadTree.h>
+#include <moai-gfx/MOAIMeshSparseQuadTree.h>
 
 //================================================================//
 // MOAIMeshSparseQuadTreeBuilder

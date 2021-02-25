@@ -7,7 +7,7 @@
 #include <moai-gfx/MOAIBlendMode.h>
 #include <moai-gfx/MOAIGfxMgrComponents.h>
 
-class MOAIAbstractMesh;
+class MOAIMesh;
 class MOAIFrameBuffer;
 class MOAIShader;
 class MOAITexture;
@@ -38,7 +38,7 @@ public:
 	ZLStrongPtr < MOAIShader >				mShader;
 
 	ZLStrongPtr < MOAIFrameBuffer >			mFrameBuffer;
-	ZLStrongPtr < MOAIAbstractMesh >		mMesh;
+	ZLStrongPtr < MOAIMesh >		mMesh;
 
 	ZLRect									mViewRect;
 	

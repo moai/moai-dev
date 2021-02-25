@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-gfx/MOAIAbstractChildTransform.h>
-#include <moai-gfx/MOAIAbstractMesh.h>
+#include <moai-gfx/MOAIMesh.h>
 #include <moai-gfx/MOAIDrawAPI.h>
 #include <moai-gfx/MOAIBlendMode.h>
 #include <moai-gfx/MOAICamera.h>
@@ -608,7 +608,7 @@ int MOAIDrawAPI::_setMatrix ( lua_State* L ) {
 int MOAIDrawAPI::_setMesh ( lua_State* L ) {
 	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
 	
-	self->SetMesh ( state.GetLuaObject < MOAIAbstractMesh >( 2, false ));
+	self->SetMesh ( state.GetLuaObject < MOAIMesh >( 2, false ));
 	
 	MOAI_LUA_RETURN_SELF
 }
@@ -1389,9 +1389,9 @@ void MOAIDrawAPI::SetMatrixFromTransform ( u32 matrixID, MOAIAbstractChildTransf
 }
 
 //----------------------------------------------------------------//
-void MOAIDrawAPI::SetMesh ( MOAIAbstractMesh* mesh ) {
+void MOAIDrawAPI::SetMesh ( MOAIMesh* mesh ) {
 
-	this->SubmitCommand < MOAIAbstractMesh* >( SET_MESH, mesh );
+	this->SubmitCommand < MOAIMesh* >( SET_MESH, mesh );
 	this->RetainObject ( mesh );
 }
 

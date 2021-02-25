@@ -16,7 +16,7 @@
 #include <moai-gfx/MOAIIndexBuffer.h>
 #include <moai-gfx/MOAITexture.h>
 
-#include <moai-sim/MOAIMesh.h>
+#include <moai-sim/MOAIMeshDeck.h>
 
 //================================================================//
 // lua

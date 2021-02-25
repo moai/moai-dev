@@ -4,9 +4,10 @@
 #ifndef	MOAIMESHTERNARYTREE_H
 #define	MOAIMESHTERNARYTREE_H
 
-#include <moai-sim/MOAIMeshPartition.h>
+#include <moai-gfx/MOAIMeshPartition.h>
 
-class MOAIMesh;
+class MOAIMeshDeck;
+class MOAIMeshPrimReader;
 class MOAIMeshTernaryTreeBuilder;
 class MOAIMeshTernaryTree;
 class MOAIMeshTernaryTreeNode;

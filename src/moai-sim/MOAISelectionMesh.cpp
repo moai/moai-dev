@@ -3,7 +3,7 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIGrid.h>
-#include <moai-sim/MOAIMesh.h>
+#include <moai-sim/MOAIMeshDeck.h>
 #include <moai-sim/MOAISelectionMesh.h>
 
 //================================================================//
@@ -103,7 +103,7 @@ int MOAISelectionMesh::_reserveSelections ( lua_State* L ) {
 int MOAISelectionMesh::_setMesh ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAISelectionMesh, "U" )
 
-	MOAIMesh* mesh = state.GetLuaObject < MOAIMesh >( 2, true );
+	MOAIMeshDeck* mesh = state.GetLuaObject < MOAIMeshDeck >( 2, true );
 
 	self->mDeck.Set ( *self, mesh );
 	self->mMesh = mesh;

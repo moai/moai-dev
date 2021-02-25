@@ -3,7 +3,7 @@
 
 #include "pch.h"
 
-#include <moai-gfx/MOAIAbstractMesh.h>
+#include <moai-gfx/MOAIMesh.h>
 #include <moai-gfx/MOAIGfxMgr.h>
 #include <moai-gfx/MOAIImageTexture.h>
 #include <moai-gfx/MOAITexture2D.h>
@@ -105,7 +105,7 @@ MOAIIndexBuffer* MOAIGfxMgr::CreateIndexBuffer () {
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractMesh* MOAIGfxMgr::CreateMesh () {
+MOAIMesh* MOAIGfxMgr::CreateMesh () {
 
 	return this->MOAIGfxMgr_CreateMesh ();
 }

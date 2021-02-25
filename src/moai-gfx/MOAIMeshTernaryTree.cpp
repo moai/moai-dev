@@ -3,9 +3,8 @@
 
 #include "pch.h"
 
-#include <moai-sim/MOAIGrid.h>
-#include <moai-sim/MOAIMesh.h>
-#include <moai-sim/MOAIMeshTernaryTree.h>
+#include <moai-gfx/MOAIMeshPrimReader.h>
+#include <moai-gfx/MOAIMeshTernaryTree.h>
 
 //================================================================//
 // MOAIMeshTernaryTreeBuilder

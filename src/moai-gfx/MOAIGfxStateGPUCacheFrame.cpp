@@ -2,7 +2,7 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-gfx/MOAIAbstractMesh.h>
+#include <moai-gfx/MOAIMesh.h>
 #include <moai-gfx/MOAIFrameBuffer.h>
 #include <moai-gfx/MOAIGfxStateGPUCacheFrame.h>
 #include <moai-gfx/MOAIShader.h>

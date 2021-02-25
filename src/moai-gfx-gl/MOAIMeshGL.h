@@ -30,7 +30,7 @@ public:
 //================================================================//
 // TODO: doxygen
 class MOAIMeshGL :
-	public virtual MOAIAbstractMesh,
+	public virtual MOAIMesh,
 	public virtual MOAIGfxResourceGL {
 protected:
 
@@ -40,27 +40,27 @@ protected:
 	ZLLeanArray < MOAIVertexBufferWithFormatGL >	mVertexBuffers;
 
 	//----------------------------------------------------------------//
-	static int				_reserveVertexBuffers		( lua_State* L );
-	static int				_setIndexBuffer				( lua_State* L );
-	static int				_setVertexBuffer			( lua_State* L );
+	static int				_reserveVertexBuffers			( lua_State* L );
+	static int				_setIndexBuffer					( lua_State* L );
+	static int				_setVertexBuffer				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	bool					AffirmVertexBuffers			( u32 idx );
-	void					BindVertexArrayItems		();
-	void					UnbindVertexArrayItems		();
+	bool					AffirmVertexBuffers				( u32 idx );
+	void					BindVertexArrayItems			();
+	void					UnbindVertexArrayItems			();
 	
 	//----------------------------------------------------------------//
 	void					_RegisterLuaClass							( RTTIVisitorHistory& history, MOAILuaState& state );
 	void					_RegisterLuaFuncs							( RTTIVisitorHistory& history, MOAILuaState& state );
 	void					_SerializeIn								( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
 	void					_SerializeOut								( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
-	void 					MOAIAbstractMesh_DrawPrims					( MOAIGfxTopologyEnum::_ primType, u32 base, u32 count );
-	MOAIIndexBuffer*		MOAIAbstractMesh_GetIndexBuffer				();
-	MOAIVertexBuffer*		MOAIAbstractMesh_GetVertexBuffer			( ZLIndex idx );
-	MOAIVertexFormat*		MOAIAbstractMesh_GetVertexFormat			( ZLIndex idx );
-	void					MOAIAbstractMesh_ReserveVertexBuffers		( ZLSize size );
-	void					MOAIAbstractMesh_SetIndexBuffer				( MOAIIndexBuffer* idxBuffer );
-	void					MOAIAbstractMesh_SetVertexBuffer			( ZLIndex idx, MOAIVertexBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat );
+	void 					MOAIMesh_DrawPrims							( MOAIGfxTopologyEnum::_ primType, u32 base, u32 count );
+	MOAIIndexBuffer*		MOAIMesh_GetIndexBuffer						();
+	MOAIVertexBuffer*		MOAIMesh_GetVertexBuffer					( ZLIndex idx );
+	MOAIVertexFormat*		MOAIMesh_GetVertexFormat					( ZLIndex idx );
+	void					MOAIMesh_ReserveVertexBuffers				( ZLSize size );
+	void					MOAIMesh_SetIndexBuffer						( MOAIIndexBuffer* idxBuffer );
+	void					MOAIMesh_SetVertexBuffer					( ZLIndex idx, MOAIVertexBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat );
 	void					MOAIGfxResourceGL_OnGPUBind					(); // select GPU-side resource on device for use
 	bool					MOAIGfxResourceGL_OnGPUCreate				(); // create GPU-side resource
 	void					MOAIGfxResourceGL_OnGPUDeleteOrDiscard		( bool shouldDelete ); // delete or discard GPU resource

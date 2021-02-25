@@ -78,12 +78,16 @@ function makeBoxMesh ( xMin, yMin, zMin, xMax, yMax, zMax, texture )
     mesh:setPrimType ( MOAIMesh.GL_TRIANGLES )
     mesh:setVertexBuffer ( vertexBuffer, vertexFormat )
 
-	mesh:gfx ()
+    local meshDeck = MOAIMeshDeck.new ()
+
+    meshDeck:setMesh ( mesh )
+
+	meshDeck:gfx ()
 		:setTexture ( texture )
     	:setShader ( MOAIShaderMgr.MESH_SHADER )
     	:setCullFunc ( MOAIGraphicsProp.CULL_BACK )
 
-	return mesh
+	return meshDeck
 end
 
 function makeCube ( size, texture )

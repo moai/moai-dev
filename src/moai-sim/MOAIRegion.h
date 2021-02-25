@@ -24,44 +24,44 @@ private:
 	ZLLeanArray < ZLPolygon2D > mPolygons;
 	
 	//----------------------------------------------------------------//
-	static int		_append				( lua_State* L );
-	static int		_bless				( lua_State* L );
-	static int		_boolean			( lua_State* L );
-	static int		_clear				( lua_State* L );
-	static int		_clip				( lua_State* L );
-	static int		_convexHull			( lua_State* L );
-	static int		_copy				( lua_State* L );
-	static int		_countPolygons		( lua_State* L );
-	static int		_cull				( lua_State* L );
-	static int		_drawDebug			( lua_State* L );
-	static int		_edge				( lua_State* L );
-	static int		_findExtremity		( lua_State* L );
-	static int		_getDistance		( lua_State* L );
-	static int		_getPolygon			( lua_State* L );
-	static int		_getTriangles		( lua_State* L );
-	static int		_getVertices		( lua_State* L );
-	static int		_pad				( lua_State* L );
-	static int		_pointInside		( lua_State* L );
-	static int		_print				( lua_State* L );
-	static int		_reservePolygons	( lua_State* L );
-	static int		_reserveVertices	( lua_State* L );
-	static int		_reverseWinding		( lua_State* L );
-	static int		_setVertex			( lua_State* L );
-	static int		_setWinding			( lua_State* L );
-	static int		_snap				( lua_State* L );
-	static int		_stroke				( lua_State* L );
-	static int		_tesselate			( lua_State* L );
-	static int		_translate			( lua_State* L );
+	static int				_append					( lua_State* L );
+	static int				_bless					( lua_State* L );
+	static int				_boolean				( lua_State* L );
+	static int				_clear					( lua_State* L );
+	static int				_clip					( lua_State* L );
+	static int				_convexHull				( lua_State* L );
+	static int				_copy					( lua_State* L );
+	static int				_countPolygons			( lua_State* L );
+	static int				_cull					( lua_State* L );
+	static int				_drawDebug				( lua_State* L );
+	static int				_edge					( lua_State* L );
+	static int				_findExtremity			( lua_State* L );
+	static int				_getDistance			( lua_State* L );
+	static int				_getPolygon				( lua_State* L );
+	static int				_getTriangles			( lua_State* L );
+	static int				_getVertices			( lua_State* L );
+	static int				_pad					( lua_State* L );
+	static int				_pointInside			( lua_State* L );
+	static int				_print					( lua_State* L );
+	static int				_reservePolygons		( lua_State* L );
+	static int				_reserveVertices		( lua_State* L );
+	static int				_reverseWinding			( lua_State* L );
+	static int				_setVertex				( lua_State* L );
+	static int				_setWinding				( lua_State* L );
+	static int				_snap					( lua_State* L );
+	static int				_stroke					( lua_State* L );
+	static int				_tesselate				( lua_State* L );
+	static int				_translate				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void			Read					( ZLStream& verts, ZLStream& polySizes );
-	bool			ShouldCull				( const ZLPolygon2D& poly, u32 flag, bool checkArea, float minArea );
+	void					Read					( ZLStream& verts, ZLStream& polySizes );
+	bool					ShouldCull				( const ZLPolygon2D& poly, u32 flag, bool checkArea, float minArea );
 
 	//----------------------------------------------------------------//
-	void			_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
-	void			_SerializeIn			( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
-	void			_SerializeOut			( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
+	void					_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void					_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
+	void					_SerializeIn			( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
+	void					_SerializeOut			( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer );
 
 public:
 	

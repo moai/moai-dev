@@ -332,7 +332,7 @@ void AKUSimContextInitialize () {
 	MOAISim::Affirm ();
 	MOAISim::RegisterAlias < MOAIUpdateMgr >();
 	
-	MOAIGeometryWriter::Affirm ();
+	MOAIMeshWriter::Affirm ();
 	MOAIKeyCode::Affirm ();
 	
 	// MOAI
@@ -349,7 +349,6 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIDeckRemapper )
 	REGISTER_LUA_CLASS ( MOAIDrawDeck )
 	REGISTER_LUA_CLASS ( MOAIFancyGrid )
-	REGISTER_LUA_CLASS ( MOAIGeometryWriter )
 	REGISTER_LUA_CLASS ( MOAIGraphicsProp )
 	REGISTER_LUA_CLASS ( MOAIGraphicsGridProp )
 	REGISTER_LUA_CLASS ( MOAIGrid )
@@ -364,7 +363,8 @@ void AKUSimContextInitialize () {
 	REGISTER_LUA_CLASS ( MOAIKeyCode )
 	REGISTER_LUA_CLASS ( MOAIKeyboardSensor )
 	REGISTER_LUA_CLASS ( MOAILocationSensor )
-	REGISTER_LUA_CLASS ( MOAIMesh )
+	REGISTER_LUA_CLASS ( MOAIMeshDeck )
+	REGISTER_LUA_CLASS ( MOAIMeshWriter )
 	REGISTER_LUA_CLASS ( MOAIMetaTileDeck2D )
 	REGISTER_LUA_CLASS ( MOAIMotionSensor )
 	REGISTER_LUA_CLASS ( MOAIParticleCallbackPlugin )

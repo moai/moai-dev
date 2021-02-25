@@ -82,8 +82,6 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 
 	MOAIShaderProgramGL* program = 0;
 
-	if (( shaderID != MOAIShaderPresetEnum::DECK2D_SHADER ) && ( shaderID != MOAIShaderPresetEnum::MESH_SHADER )) return NULL;
-
 	if ( shaderID < MOAIShaderPresetEnum::TOTAL_SHADERS ) {
 	
 		program = this->mPrograms [ shaderID ];

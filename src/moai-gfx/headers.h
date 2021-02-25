@@ -9,7 +9,6 @@
 #include <moai-gfx/MOAIAbstractBaseTransform.h>
 #include <moai-gfx/MOAIAbstractChildTransform.h>
 #include <moai-gfx/MOAIAbstractGfxScriptCallback.h>
-#include <moai-gfx/MOAIAbstractMesh.h>
 #include <moai-gfx/MOAIAbstractRenderable.h>
 #include <moai-gfx/MOAIAbstractUniformBuffer.h>
 #include <moai-gfx/MOAIBlendMode.h>
@@ -37,6 +36,11 @@
 #include <moai-gfx/MOAIImageTexture.h>
 #include <moai-gfx/MOAIIndexBuffer.h>
 #include <moai-gfx/MOAIMatrix.h>
+#include <moai-gfx/MOAIMesh.h>
+#include <moai-gfx/MOAIMeshPartition.h>
+#include <moai-gfx/MOAIMeshSparseQuadTree.h>
+#include <moai-gfx/MOAIMeshTernaryTree.h>
+#include <moai-gfx/MOAIMeshPrimReader.h>
 #include <moai-gfx/MOAIQuadBrush.h>
 #include <moai-gfx/MOAIRenderNode.h>
 #include <moai-gfx/MOAIScissorRect.h>

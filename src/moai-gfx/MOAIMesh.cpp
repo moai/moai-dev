@@ -2,210 +2,13 @@
 // http://getmoai.com
 
 #include "pch.h"
-
-#include <tesselator.h>
-
-#include <moai-sim/MOAIGrid.h>
-#include <moai-sim/MOAIMesh.h>
-#include <moai-sim/MOAIMeshSparseQuadTree.h>
-#include <moai-sim/MOAIMeshTernaryTree.h>
-#include <moai-sim/MOAIRegion.h>
-#include <moai-sim/MOAIVectorUtil.h>
-
-//================================================================//
-// MOAIMeshCallable
-//================================================================//
-class MOAIMeshCallable :
-	public MOAIAbstractGfxScriptCallback {
-public:
-
-	MOAIGfxTopologyEnum::_		mPrimType;
-	MOAIAbstractMesh*			mMesh;
-	MOAIMeshSpan*				mSpan;
-	u32							mTotalElements;
-
-	//----------------------------------------------------------------//
-	void MOAIAbstractGfxScriptCallback_Call () {
-	
-		MOAIMeshSpan* span = this->mSpan;
-	
-		for ( ; span; span = span->mNext ) {
-			if ( span->mBase == span->mTop ) continue;
-			assert (( span->mBase < span->mTop ) && ( span->mTop <= this->mTotalElements ));
-			this->mMesh->DrawPrims ( this->mPrimType, span->mBase, ( u32 )( span->mTop - span->mBase ));
-		}
-	}
-};
-
-//================================================================//
-// MOAIMeshPrim
-//================================================================//
-	
-//----------------------------------------------------------------//
-ZLBox MOAIMeshPrimCoords::GetAABB () {
-
-	ZLBox aabb;
-	aabb.Init ( this->mCoords [ 0 ]);
-	
-	if ( this->mPrimSize > 1 ) {
-	
-		aabb.Grow ( this->mCoords [ 1 ]);
-	
-		if ( this->mPrimSize > 2 ) {
-			aabb.Grow ( this->mCoords [ 2 ]);
-		}
-	}
-	return aabb;
-}
-
-//================================================================//
-// MOAIMeshPrimReader
-//================================================================//
-
-//----------------------------------------------------------------//
-bool MOAIMeshPrimReader::GetPrimCoords ( u32 idx, MOAIMeshPrimCoords& prim ) const {
-
-	// TODO: should return index instead of bool?
-	
-	assert ( this->mVertexFormat && this->mVertexBuffer );
-	
-	prim.mIndex = idx;
-	
-	switch ( this->mPrimType ) {
-		
-		case MOAIGfxTopologyEnum::POINT_LIST: {
-		
-			prim.mPrimSize = 1;
-			prim.mCoords [ 0 ] = this->ReadCoord ( idx );
-			return true;
-		}
-		
-		case MOAIGfxTopologyEnum::LINE_LIST:
-		
-			idx = idx * 2;
-
-		case MOAIGfxTopologyEnum::LINE_LOOP:
-		case MOAIGfxTopologyEnum::LINE_STRIP: {
-		
-			prim.mPrimSize = 2;
-			
-			prim.mCoords [ 0 ] = this->ReadCoord ( idx++ );
-			prim.mCoords [ 1 ] = this->ReadCoord ( idx );
-			return true;
-		}
-		
-		case MOAIGfxTopologyEnum::TRIANGLE_LIST: {
-		
-			prim.mPrimSize = 3;
-		
-			idx = idx * 3;
-			
-			prim.mCoords [ 0 ] = this->ReadCoord ( idx++ );
-			prim.mCoords [ 1 ] = this->ReadCoord ( idx++ );
-			prim.mCoords [ 2 ] = this->ReadCoord ( idx );
-			return true;
-		}
-		
-		case MOAIGfxTopologyEnum::TRIANGLE_FAN: {
-		
-			prim.mPrimSize = 3;
-		
-			prim.mCoords [ 0 ] = this->ReadCoord ( 0 );
-		
-			idx = idx + 1;
-		
-			prim.mCoords [ 1 ] = this->ReadCoord ( idx++ );
-			prim.mCoords [ 2 ] = this->ReadCoord ( idx );
-			return true;
-		}
-		
-		case MOAIGfxTopologyEnum::TRIANGLE_STRIP: {
-		
-			// 0   1   2   3   4   5   6
-			// 012 213 234 435 456 657 678
-		
-			prim.mPrimSize = 3;
-		
-			if ( idx & 1 ) {
-				
-				// odd
-				prim.mCoords [ 0 ] = this->ReadCoord ( idx + 1 );
-				prim.mCoords [ 1 ] = this->ReadCoord ( idx );
-				prim.mCoords [ 2 ] = this->ReadCoord ( idx + 2 );
-			}
-			else {
-			
-				// even
-				prim.mCoords [ 0 ] = this->ReadCoord ( idx++ );
-				prim.mCoords [ 1 ] = this->ReadCoord ( idx++ );
-				prim.mCoords [ 2 ] = this->ReadCoord ( idx );
-			}
-			return true;
-		}
-	}
-	
-	return false;
-}
-
-//----------------------------------------------------------------//
-bool MOAIMeshPrimReader::Init ( MOAIVertexFormat& vertexFormat, MOAIVertexBuffer& vertexBuffer, MOAIGfxTopologyEnum::_ primType, u32 totalElements, MOAIIndexBuffer* indexBuffer ) {
-
-	if ( !vertexFormat.CountAttributesByUse ( MOAIVertexFormat::ATTRIBUTE_COORD )) return false;
-
-	this->mVertexFormat		= &vertexFormat;
-	
-	this->mAttribute		= vertexFormat.GetAttributeByUse ( MOAIVertexFormat::ATTRIBUTE_COORD, 0 );
-	this->mVertexBuffer		= vertexBuffer.GetConstBuffer ();
-	this->mIndexBuffer		= indexBuffer;
-	
-	this->mPrimType			= primType;
-	this->mTotalElements	= totalElements;
-	this->mTotalPrims		= 0;
-	
-	switch ( this->mPrimType ) {
-		
-		case MOAIGfxTopologyEnum::POINT_LIST:
-		case MOAIGfxTopologyEnum::LINE_LOOP:
-			this->mTotalPrims = totalElements;
-			break;
-		
-		case MOAIGfxTopologyEnum::LINE_LIST:
-			this->mTotalPrims = totalElements / 2;
-			break;
-		
-		case MOAIGfxTopologyEnum::LINE_STRIP:
-			this->mTotalPrims = totalElements - 1;
-			break;
-		
-		case MOAIGfxTopologyEnum::TRIANGLE_LIST:
-			this->mTotalPrims = totalElements / 3;
-			break;
-		
-		case MOAIGfxTopologyEnum::TRIANGLE_FAN:
-		case MOAIGfxTopologyEnum::TRIANGLE_STRIP:
-			this->mTotalPrims = totalElements - 2;
-			break;
-	}
-	
-	return true;
-}
-
-//----------------------------------------------------------------//
-ZLVec3D MOAIMeshPrimReader::ReadCoord ( u32 idx ) const {
-
-	if ( !( this->mVertexFormat && this->mAttribute && this->mVertexBuffer )) return ZLVec3D::ORIGIN; // TODO: report error
-
-	idx %= this->mTotalElements;
-
-	if ( this->mIndexBuffer ) {
-		idx = this->mIndexBuffer->GetIndex ( idx );
-	}
-	
-	const void* packedCoord = this->mVertexFormat->GetAttributeAddress ( *this->mAttribute, this->mVertexBuffer, idx );
-	ZLVec4D coord = this->mVertexFormat->UnpackCoord ( packedCoord, *this->mAttribute );
-	
-	return ZLVec3D ( coord.mX, coord.mY, coord.mZ );
-}
+#include <moai-gfx/MOAIMesh.h>
+#include <moai-gfx/MOAIMeshPrimReader.h>
+#include <moai-gfx/MOAIIndexBuffer.h>
+#include <moai-gfx/MOAIMeshSparseQuadTree.h>
+#include <moai-gfx/MOAIMeshTernaryTree.h>
+#include <moai-gfx/MOAIVertexBuffer.h>
+#include <moai-gfx/MOAIVertexFormat.h>
 
 //================================================================//
 // lua
@@ -242,12 +45,22 @@ int MOAIMesh::_buildTernaryTree ( lua_State* L ) {
 	MOAIMeshPrimReader coordReader;
 	
 //	if ( coordReader.Init ( *self, vertexBufferIndex )) {
-//	
+//
 //		MOAIMeshTernaryTree* ternaryTree = new MOAIMeshTernaryTree ();
 //		ternaryTree->Init ( coordReader, targetPrimsPerNode, axisMask );
 //		self->mPartition = ternaryTree;
 //	}
 	MOAI_LUA_RETURN_SELF
+}
+
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIMesh::_getIndexBuffer ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIMesh, "U" )
+	
+	state.Push ( self->MOAIMesh_GetIndexBuffer ());
+	
+	return 1;
 }
 
 //----------------------------------------------------------------//
@@ -348,6 +161,18 @@ int MOAIMesh::_getRegionForPrim ( lua_State* L ) {
 //	return 1;
 
 	return 0;
+}
+//----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIMesh::_getVertexBuffer ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIMesh, "U" )
+	
+	ZLIndex index = state.GetValue < MOAILuaIndex >( 2, 0 );
+	
+	state.Push ( self->MOAIMesh_GetVertexBuffer ( index ));
+	state.Push ( self->MOAIMesh_GetVertexFormat ( index ));
+	
+	return 2;
 }
 
 //----------------------------------------------------------------//
@@ -463,6 +288,18 @@ int MOAIMesh::_setBounds ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
+int MOAIMesh::_setIndexBuffer ( lua_State* L ) {
+	MOAI_LUA_SETUP ( MOAIMesh, "U" )
+	
+	MOAIIndexBuffer* indexBuffer = state.GetLuaObject < MOAIIndexBuffer >( 2, false );
+	
+	self->SetIndexBuffer ( indexBuffer );
+	
+	MOAI_LUA_RETURN_SELF
+}
+
+//----------------------------------------------------------------//
 /**	@lua	setPenWidth
 	@text	Sets the pen with for drawing prims in this vertex buffer.
 			Only valid with prim types GL_LINES, GL_LINE_LOOP, GL_LINE_STRIP.
@@ -504,14 +341,16 @@ int MOAIMesh::_setTotalElements ( lua_State* L ) {
 }
 
 //----------------------------------------------------------------//
+// TODO: doxygen
 int MOAIMesh::_setVertexBuffer ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIMesh, "U" )
+	
+	ZLIndex index = 0;
 	
 	MOAIVertexBuffer* vertexBuffer = state.GetLuaObject < MOAIVertexBuffer >( 2, false );
 	MOAIVertexFormat* vertexFormat = state.GetLuaObject < MOAIVertexFormat >( 3, false );
 	
-	self->AffirmMesh ();
-	self->mMesh->SetVertexBuffer ( 0, vertexBuffer, vertexFormat );
+	self->SetVertexBuffer ( 0, vertexBuffer, vertexFormat );
 	
 	MOAI_LUA_RETURN_SELF
 }
@@ -519,12 +358,6 @@ int MOAIMesh::_setVertexBuffer ( lua_State* L ) {
 //================================================================//
 // MOAIMesh
 //================================================================//
-
-//----------------------------------------------------------------//
-void MOAIMesh::AffirmMesh () {
-
-	this->mMesh = MOAIGfxMgr::Get ().CreateMesh ();
-}
 
 //----------------------------------------------------------------//
 void MOAIMesh::ClearBounds () {
@@ -539,34 +372,27 @@ u32 MOAIMesh::CountPrims () const {
 }
 
 //----------------------------------------------------------------//
-void MOAIMesh::DrawIndex ( ZLIndex idx, MOAIMeshSpan* span ) {
-	UNUSED ( idx );
+void MOAIMesh::DrawPrims ( MOAIGfxTopologyEnum::_ primType, u32 base, u32 count ) {
 
-	if ( !this->mMesh ) return;
+	this->MOAIMesh_DrawPrims ( primType, base, count );
+}
 
-	MOAIGfxScript* gfxScript = this->GetGfxScript ();
-	if ( !gfxScript ) return;
+//----------------------------------------------------------------//
+MOAIIndexBuffer* MOAIMesh::GetIndexBuffer () {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	gfxMgr.SetShader ( MOAIShaderPresetEnum::MESH_SHADER );
-	gfxMgr.SetMesh ( this->mMesh );
+	return this->MOAIMesh_GetIndexBuffer ();
+}
 
-	MOAIMeshSpan defaultSpan;
-	if ( !span ) {
-		defaultSpan.mBase = 0;
-		defaultSpan.mTop = this->mTotalElements;
-		defaultSpan.mNext = 0;
-		span = &defaultSpan;
-	}
-	
-	MOAIMeshCallable callable;
-	callable.mPrimType 			= this->mPrimType;
-	callable.mMesh				= this->mMesh;
-	callable.mSpan	 			= span;
-	callable.mTotalElements		= this->mTotalElements;
-	gfxScript->ExecuteBytecode ( &callable );
-	
-	callable.Flush ();
+//----------------------------------------------------------------//
+MOAIVertexBuffer* MOAIMesh::GetVertexBuffer ( ZLIndex idx ) {
+
+	return this->MOAIMesh_GetVertexBuffer ( idx );
+}
+
+//----------------------------------------------------------------//
+MOAIVertexFormat* MOAIMesh::GetVertexFormat ( ZLIndex idx ) {
+
+	return this->MOAIMesh_GetVertexFormat ( idx );
 }
 
 //----------------------------------------------------------------//
@@ -579,8 +405,7 @@ MOAIMesh::MOAIMesh () :
 	RTTI_BEGIN ( MOAIMesh )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIMesh >)
 		RTTI_VISITOR ( MOAIAbstractLuaSerializationVisitor, MOAILuaSerializationVisitor < MOAIMesh >)
-		RTTI_EXTEND ( MOAIDeck )
-		RTTI_EXTEND ( MOAIHasGfxScript )
+		RTTI_EXTEND ( MOAIGfxResource )
 	RTTI_END
 
 	this->ClearBounds ();
@@ -591,9 +416,21 @@ MOAIMesh::~MOAIMesh () {
 }
 
 //----------------------------------------------------------------//
-void MOAIMesh::SetBounds ( const ZLBox& aabb ) {
+void MOAIMesh::ReserveVertexBuffers ( ZLSize size ) {
 
-	this->mBounds.Init ( aabb );
+	this->MOAIMesh_ReserveVertexBuffers ( size );
+}
+
+//----------------------------------------------------------------//
+void MOAIMesh::SetIndexBuffer ( MOAIIndexBuffer* indexBuffer ) {
+
+	this->MOAIMesh_SetIndexBuffer ( indexBuffer );
+}
+
+//----------------------------------------------------------------//
+void MOAIMesh::SetVertexBuffer ( ZLIndex idx, MOAIVertexBuffer* vtxBuffer, MOAIVertexFormat* vtxFormat ) {
+
+	this->MOAIMesh_SetVertexBuffer ( idx, vtxBuffer, vtxFormat );
 }
 
 //================================================================//
@@ -625,12 +462,15 @@ void MOAIMesh::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& st
 	luaL_Reg regTable [] = {
 		{ "buildQuadTree",				_buildQuadTree },
 		{ "buildTernaryTree",			_buildTernaryTree },
+		{ "getIndexBuffer",				_getIndexBuffer },
 		{ "getPrimsForPoint",			_getPrimsForPoint },
 		{ "getRegionForPrim",			_getRegionForPrim },
+		{ "setVertexBuffer",			_getVertexBuffer },
 		{ "intersectRay",				_intersectRay },
 		{ "printPartition",				_printPartition },
 		{ "readPrimCoords",				_readPrimCoords },
 		{ "setBounds",					_setBounds },
+		{ "setIndexBuffer",				_setIndexBuffer },
 		{ "setPenWidth",				_setPenWidth },
 		{ "setPrimType",				_setPrimType },
 		{ "setTotalElements",			_setTotalElements },
@@ -644,10 +484,6 @@ void MOAIMesh::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& st
 //----------------------------------------------------------------//
 void MOAIMesh::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer ) {
 	if ( history.Visit ( *this )) return;
-
-//	this->SetIndexBuffer (
-//		serializer.MemberIDToObject < MOAIIndexBuffer >( state.GetFieldValue < cc8*, MOAISerializer::ObjID >( -1, "mIndexBuffer", 0 ))
-//	);
 	
 	this->mTotalElements = state.GetFieldValue < cc8*, u32 >( -1, "mTotalElements", 0 );
 	
@@ -674,8 +510,6 @@ void MOAIMesh::_SerializeIn ( RTTIVisitorHistory& history, MOAILuaState& state, 
 //----------------------------------------------------------------//
 void MOAIMesh::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state, MOAISerializer& serializer ) {
 	if ( history.Visit ( *this )) return;
-
-//	state.SetField ( -1, "mIndexBuffer", serializer.AffirmMemberID ( this->mIndexBuffer ));
 	
 	state.SetField < cc8*, u32 >( -1, "mTotalElements", this->mTotalElements );
 	
@@ -692,23 +526,4 @@ void MOAIMesh::_SerializeOut ( RTTIVisitorHistory& history, MOAILuaState& state,
 	lua_setfield ( state, -2, "mBounds" );
 	
 	state.SetField < cc8*, u32 >( -1, "mPenWidth", ( u32 )this->mPenWidth );
-}
-
-//----------------------------------------------------------------//
-ZLBounds MOAIMesh::MOAIDeck_GetBounds () {
-
-	return this->mBounds;
-}
-
-//----------------------------------------------------------------//
-ZLBounds MOAIMesh::MOAIDeck_GetBounds ( ZLIndex idx ) {
-	UNUSED ( idx );
-
-	return this->mBounds;
-}
-
-//----------------------------------------------------------------//
-void MOAIMesh::MOAIDeck_Render ( ZLIndex idx, MOAIRenderPhaseEnum::_ renderPhase ) {
-
-	this->DrawIndex ( idx, 0 );
 }
