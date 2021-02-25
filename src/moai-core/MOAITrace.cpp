@@ -112,7 +112,7 @@ void MOAITrace::HandleTrace ( lua_State* L, lua_Debug *ar ) {
 	}
 	
 	this->mCurrentThread = L;
-	MOAIThreadTrace& threadTrace = this->mThreadTrace [ this->mCurrentThread ];
+	ZLThreadTrace& threadTrace = this->mThreadTrace [ this->mCurrentThread ];
 	this->mCurrentThreadTrace = &threadTrace;
 	
 	if ( !threadTrace.mThread ) {

@@ -21,7 +21,7 @@ const ZLHashedString MOAIProfiler::kMainThreadName ( "main" );
 //----------------------------------------------------------------//
 void MOAIProfiler::BeginFrame () {
 	
-	MOAIThread* curThread = MOAIThread::GetCurrentThread ();
+	ZLThread* curThread = ZLThread::GetCurrentThread ();
 	MOAIProfilerContext* context = _GetProfilingContext ( curThread ? curThread->GetName () : kMainThreadName, true );
 
 	if ( context )
@@ -42,7 +42,7 @@ void MOAIProfiler::EnableProfiling ( const bool enable ) {
 //----------------------------------------------------------------//
 void MOAIProfiler::EndFrame () {
 
-	MOAIThread* curThread = MOAIThread::GetCurrentThread ();
+	ZLThread* curThread = ZLThread::GetCurrentThread ();
 	MOAIProfilerContext* context = _GetProfilingContext ( curThread ? curThread->GetName () : kMainThreadName );
 
 	if ( context )
@@ -52,7 +52,7 @@ void MOAIProfiler::EndFrame () {
 //----------------------------------------------------------------//
 void MOAIProfiler::EnterScope ( const ZLHashedString& name ) {
 	
-	MOAIThread* curThread = MOAIThread::GetCurrentThread ();
+	ZLThread* curThread = ZLThread::GetCurrentThread ();
 	MOAIProfilerContext* context = _GetProfilingContext ( curThread ? curThread->GetName () : kMainThreadName );
 
 	if ( context )
@@ -122,7 +122,7 @@ MOAIProfilerContext* MOAIProfiler::_GetProfilingContext ( const ZLHashedString& 
 //----------------------------------------------------------------//
 bool MOAIProfiler::InFrame () {
 
-	MOAIThread* curThread = MOAIThread::GetCurrentThread ();
+	ZLThread* curThread = ZLThread::GetCurrentThread ();
 	MOAIProfilerContext* context = _GetProfilingContext ( curThread ? curThread->GetName () : kMainThreadName );
 
 	return context ? context->InFrame () : true;
@@ -131,7 +131,7 @@ bool MOAIProfiler::InFrame () {
 //----------------------------------------------------------------//
 void MOAIProfiler::LeaveScope ( const ZLHashedString& name ) {
 
-	MOAIThread* curThread = MOAIThread::GetCurrentThread ();
+	ZLThread* curThread = ZLThread::GetCurrentThread ();
 	MOAIProfilerContext* context = _GetProfilingContext ( curThread ? curThread->GetName () : kMainThreadName );
 
 	if ( context )

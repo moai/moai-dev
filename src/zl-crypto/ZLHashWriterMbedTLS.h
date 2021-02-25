@@ -4,7 +4,7 @@
 #ifndef ZLHASHWRITEREMBEDTLS_H
 #define ZLHASHWRITEREMBEDTLS_H
 
-#include <zl-util/ZLHashWriter.h>
+#include <zl-core/ZLHashWriter.h>
 
 #define ZL_DECL_MBEDTLS_HASH_WRITER(name, initStr, blocksize)			\
 	class ZLHashWriter##name :											\

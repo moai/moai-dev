@@ -10,7 +10,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITaskQueue::_main ( void* param, MOAIThreadState& threadState ) {
+void MOAITaskQueue::_main ( void* param, ZLThreadState& threadState ) {
 	UNUSED ( threadState );
 
 	(( MOAITaskQueue* )param )->Main ();

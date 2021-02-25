@@ -6,11 +6,11 @@
 #include <lua-headers/moai_lua.h>
 #include <lua-headers/moai_test_mgr_lua.h>
 
-#include <zl-vfs/zl_replace.h>
-#include <zl-common/zl_types.h>
+#include <zl-core/zl_replace.h>
+#include <zl-core/zl_types.h>
 
-#include <zl-util/ZLLog.h>
-#include <zl-util/ZLResult.h>
+#include <zl-core/ZLLog.h>
+#include <zl-core/ZLResult.h>
 
 // TODO: Gfx
 #if AKU_WITH_SIM

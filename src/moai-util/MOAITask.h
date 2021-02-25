@@ -4,8 +4,6 @@
 #ifndef MOAITASK_H
 #define MOAITASK_H
 
-#include <moai-util/MOAIMutex.h>
-
 class MOAITaskQueue;
 class MOAITaskSubscriber;
 

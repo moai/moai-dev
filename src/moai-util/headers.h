@@ -20,9 +20,6 @@
 #include <moai-util/MOAILuaUtil.h>
 #include <moai-util/MOAIMath.h>
 #include <moai-util/MOAIMemStream.h>
-#include <moai-util/MOAIMutex.h>
-#include <moai-util/MOAIMutex_posix.h>
-#include <moai-util/MOAIMutex_win32.h>
 #include <moai-util/MOAIParser.h>
 #include <moai-util/MOAIStream.h>
 #include <moai-util/MOAIStreamAdapter.h>
@@ -31,9 +28,6 @@
 #include <moai-util/MOAITask.h>
 #include <moai-util/MOAITaskQueue.h>
 #include <moai-util/MOAITaskSubscriber.h>
-#include <moai-util/MOAIThread.h>
-#include <moai-util/MOAIThread_posix.h>
-#include <moai-util/MOAIThread_win32.h>
 
 #if MOAI_WITH_TINYXML
   #include <moai-util/MOAIXmlParser.h>

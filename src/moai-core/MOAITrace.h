@@ -52,9 +52,9 @@ public:
 };
 
 //================================================================//
-// MOAIThreadTrace
+// ZLThreadTrace
 //================================================================//
-class MOAIThreadTrace {
+class ZLThreadTrace {
 public:
 	
 	const void*		mThread;
@@ -63,7 +63,7 @@ public:
 	double			mLastSleptAt;
 	
 	//----------------------------------------------------------------//
-	MOAIThreadTrace () :
+	ZLThreadTrace () :
 		mThread ( 0 ),
 		mLastSleptAt ( 0 ) {
 	}
@@ -95,7 +95,7 @@ protected:
 	typedef STLMap < const void*, MOAIFuncTrace >::iterator FuncTraceIt;
 	STLMap < const void*, MOAIFuncTrace >	mFuncTrace;
 
-	STLMap < const void*, MOAIThreadTrace >	mThreadTrace;
+	STLMap < const void*, ZLThreadTrace >	mThreadTrace;
 
 	bool					mIsActive;
 	bool					mEnableTrace;
@@ -104,7 +104,7 @@ protected:
 	double					mLastRunAt; // timestamp for resuming run
 	
 	lua_State*				mCurrentThread;
-	MOAIThreadTrace*		mCurrentThreadTrace;
+	ZLThreadTrace*		mCurrentThreadTrace;
 	
 	bool					mVerbose;
 	

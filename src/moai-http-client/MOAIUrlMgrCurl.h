@@ -18,8 +18,8 @@ private:
 	STLMap < CURL*, MOAIHttpTaskCurl* > mHandleMap;
 	CURLM*	    mMultiHandle;
 	bool	    mMore;
-	MOAIThread* mThread;
-	MOAIMutex   mLock;
+	ZLThread* mThread;
+	ZLMutex   mLock;
 
 	//----------------------------------------------------------------//
 	void			AddHandle				( MOAIHttpTaskCurl& task );

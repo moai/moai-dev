@@ -54,7 +54,7 @@ private:
 
 	MOAIProfilerReport			mProfileReport;
 	
-	MOAIMutex					mReportMutex;
+	ZLMutex					mReportMutex;
 	bool						mReportIsLocked;
 
 	//----------------------------------------------------------------//

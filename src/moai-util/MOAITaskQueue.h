@@ -4,8 +4,7 @@
 #ifndef MOAITASKQUEUE_H
 #define MOAITASKQUEUE_H
 
-#include <moai-util/MOAIConditionVariable.h>
-#include <moai-util/MOAIThread.h>
+#include <zl-core/ZLThread.h>
 #include <moai-util/MOAITask.h>
 
 class MOAITaskSubscriber;
@@ -19,14 +18,14 @@ private:
 
 	friend class MOAITask;
 
-	MOAIThread		mThread; // TODO: inherit?
+	ZLThread					mThread;
 	
-	MOAIConditionVariable		mCondition;
+	ZLConditionVariable			mCondition;
 	ZLLeanList < MOAITask* >	mPendingTasks;
 	bool						mIsRunning;
 	
 	//----------------------------------------------------------------//
-	static void		_main					( void* param, MOAIThreadState& threadState );
+	static void		_main					( void* param, ZLThreadState& threadState );
 
 	//----------------------------------------------------------------//
 	void			Main					();

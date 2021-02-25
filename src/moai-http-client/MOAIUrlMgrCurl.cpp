@@ -71,11 +71,11 @@ MOAIUrlMgrCurl::~MOAIUrlMgrCurl () {
 }
 
 //----------------------------------------------------------------//
-static void Loop( void* param, MOAIThreadState& threadState ) {
+static void Loop( void* param, ZLThreadState& threadState ) {
 	
 	MOAIUrlMgrCurl *manager = (MOAIUrlMgrCurl*)param;
 	
-	while (threadState.GetState() == MOAIThreadState::RUNNING) {
+	while (threadState.GetState() == ZLThreadState::RUNNING) {
 		
 		manager->ProcessAsync();
 	}
@@ -128,7 +128,7 @@ void MOAIUrlMgrCurl::ProcessAsync () {
 void MOAIUrlMgrCurl::Start () {
 	
 	if ( !this->mThread ) {
-		this->mThread = new MOAIThread();
+		this->mThread = new ZLThread();
 		this->mThread->Start ( Loop, this, 0 );
 	}
 }
@@ -140,7 +140,7 @@ void MOAIUrlMgrCurl::StopIfDone ( bool force ) {
 	
 	if ( ( this->mHandleMap.empty () || force ) && this->mThread ) {
 		
-		MOAIThread *thread = this->mThread;
+		ZLThread *thread = this->mThread;
 		thread->Stop();
 		
 		// release lock before joining

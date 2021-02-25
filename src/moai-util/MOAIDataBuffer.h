@@ -5,7 +5,6 @@
 #define MOAIDATABUFFER_H
 
 #include <moai-util/MOAIDataBuffer.h>
-#include <moai-util/MOAIMutex.h>
 
 class MOAIDataIOTask;
 
@@ -21,7 +20,7 @@ class MOAIDataBuffer :
 	public virtual MOAILuaObject {
 private:
 	
-	MOAIMutex			mMutex;
+	ZLMutex				mMutex;
 	ZLLeanArray < u8 >	mBytes;
 	
 	//----------------------------------------------------------------//

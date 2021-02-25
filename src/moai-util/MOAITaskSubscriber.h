@@ -4,14 +4,12 @@
 #ifndef MOAITASKSUBSCRIBER_H
 #define MOAITASKSUBSCRIBER_H
 
-#include <moai-util/MOAIMutex.h>
-
 class MOAITask;
 
 //================================================================//
 // MOAITaskSubscriber
 //================================================================//
-// TODO: Roll this into MOAIThread. There should really be one subscriber
+// TODO: Roll this into ZLThread. There should really be one subscriber
 // per thread. Tasks should automatically be published back to the thread
 // that started them, unless explicitely overridden.
 //
@@ -34,7 +32,7 @@ private:
 	ZLLeanList < MOAITask* >	mCompletedTasks;
 	ZLLeanList < MOAITask* >	mCompletedTasksLatent;
 	
-	MOAIMutex					mMutex;
+	ZLMutex					mMutex;
 	double						mLatentPublishDuration;
 
 	//----------------------------------------------------------------//

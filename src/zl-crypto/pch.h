@@ -2,6 +2,6 @@
 #define	ZL_CRYPTO_PCH_H
 
 #include <moai_config.h>
-#include <zl-util/headers.h>
+#include <zl-core/headers.h>
 
 #endif

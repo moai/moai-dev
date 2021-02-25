@@ -3,9 +3,9 @@
 
 #include "pch.h"
 #include <moai-util/MOAIFileSystem.h>
-#include <zl-vfs/ZLVfsFileSystem.h>
-#include <zl-vfs/ZLVfsVirtualPath.h>
-#include <zl-vfs/ZLVfsZipArchive.h>
+#include <zl-core/ZLVfsFileSystem.h>
+#include <zl-core/ZLVfsVirtualPath.h>
+#include <zl-core/ZLVfsZipArchive.h>
 
 // TODO: these are getting reintroduced somewhere; find them and kill them
 

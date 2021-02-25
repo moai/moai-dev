@@ -11,5 +11,5 @@ extern "C" {
 	#define LUA_HOOKTAILRET LUA_HOOKTAILCALL
 #endif
 
-#include <zl-util/headers.h>
+#include <zl-core/headers.h>
 #include <moai_config.h>
