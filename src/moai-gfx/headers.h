@@ -37,10 +37,6 @@
 #include <moai-gfx/MOAIIndexBuffer.h>
 #include <moai-gfx/MOAIMatrix.h>
 #include <moai-gfx/MOAIMesh.h>
-#include <moai-gfx/MOAIMeshPartition.h>
-#include <moai-gfx/MOAIMeshSparseQuadTree.h>
-#include <moai-gfx/MOAIMeshTernaryTree.h>
-#include <moai-gfx/MOAIMeshPrimReader.h>
 #include <moai-gfx/MOAIQuadBrush.h>
 #include <moai-gfx/MOAIRenderNode.h>
 #include <moai-gfx/MOAIScissorRect.h>

@@ -19,26 +19,16 @@ class MOAIMesh :
 	public virtual MOAIGfxResource {
 protected:
 
-	friend class MOAIMeshPrimReader;
-
 	MOAI_LUA_OBJECT_VISITOR_FRIEND
 
 	u32									mTotalElements;
 	ZLBounds							mBounds;
 	MOAIGfxTopologyEnum::_				mPrimType;
 	float								mPenWidth;
-	MOAIMeshPartition*					mPartition;
 
 	//----------------------------------------------------------------//
-	static int			_buildQuadTree				( lua_State* L );
-	static int			_buildTernaryTree			( lua_State* L );
 	static int			_getIndexBuffer				( lua_State* L );
-	static int			_getPrimsForPoint			( lua_State* L );
-	static int			_getRegionForPrim			( lua_State* L );
 	static int			_getVertexBuffer			( lua_State* L );
-	static int			_intersectRay				( lua_State* L );
-	static int			_printPartition				( lua_State* L );
-	static int			_readPrimCoords				( lua_State* L );
 	static int			_setBounds					( lua_State* L );
 	static int			_setIndexBuffer				( lua_State* L );
 	static int			_setPenWidth				( lua_State* L );

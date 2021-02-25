@@ -34,15 +34,7 @@ class MOAIMeshDeck :
 	public virtual MOAIHasGfxScript {
 protected:
 
-	friend class MOAIMeshPrimReader;
-
 	ZLStrongPtr < MOAIMesh >	mMesh;
-
-//	u32									mTotalElements;
-//	ZLBounds							mBounds;
-//	MOAIGfxTopologyEnum::_				mPrimType;
-//	float								mPenWidth;
-//	MOAIMeshPartition*					mPartition;
 
 	//----------------------------------------------------------------//
 	static int			_setMesh					( lua_State* L );
