@@ -22,7 +22,7 @@ private:
 
 	//----------------------------------------------------------------//
 	void			Broadcast						();
-					ZLConditionVariableImpl		();
+					ZLConditionVariableImpl			();
 					~ZLConditionVariableImpl		();
 	void			Signal							();
 	void			Wait							( MOAIMutexImpl& mutexImpl );

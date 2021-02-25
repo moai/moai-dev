@@ -40,7 +40,7 @@ public:
 	//----------------------------------------------------------------//
 	ZLThread*		GetCurrentThread		() const;
 					ZLThreadLocalImpl		();
-					~ZLThreadLocalImpl	();
+					~ZLThreadLocalImpl		();
 	void			SetCurrentThread		( ZLThread* thread );
 };
 

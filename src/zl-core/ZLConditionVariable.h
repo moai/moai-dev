@@ -30,7 +30,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void			Broadcast					();
-					ZLConditionVariable		();
+					ZLConditionVariable			();
 					~ZLConditionVariable		();
 	void			Signal						();
 	void			Wait						();

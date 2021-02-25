@@ -27,7 +27,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void			Lock				();
-					ZLMutex			();
+					ZLMutex				();
 	virtual			~ZLMutex			();
 	void			Unlock				();
 };

@@ -22,7 +22,7 @@ private:
 
 	//----------------------------------------------------------------//
 	void			Lock				();
-					ZLMutexImpl		();
+					ZLMutexImpl			();
 					~ZLMutexImpl		();
 	void			Unlock				();
 };
