@@ -4865,8 +4865,6 @@
 		8942AFFD1731BB90009E233E /* SFMT-sse2.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "SFMT-sse2.h"; path = "../../3rdparty/sfmt-1.4/SFMT-sse2.h"; sourceTree = "<group>"; };
 		8942AFFE1731BB90009E233E /* SFMT.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = SFMT.c; path = "../../3rdparty/sfmt-1.4/SFMT.c"; sourceTree = "<group>"; };
 		8942AFFF1731BB90009E233E /* SFMT.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = SFMT.h; path = "../../3rdparty/sfmt-1.4/SFMT.h"; sourceTree = "<group>"; };
-		89BE6888173974FC00DFE837 /* zl_platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zl_platform.h; sourceTree = "<group>"; };
-		89BE6889173974FC00DFE837 /* zl_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zl_types.h; sourceTree = "<group>"; };
 		89BE688B173974FC00DFE837 /* headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = headers.h; sourceTree = "<group>"; };
 		89BE688C173974FC00DFE837 /* pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pch.cpp; sourceTree = "<group>"; };
 		89BE688D173974FC00DFE837 /* pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pch.h; sourceTree = "<group>"; };
@@ -8503,7 +8501,6 @@
 				89BE6F19173AD0CA00DFE837 /* moai-sim */,
 				89BE6B5F17399FEB00DFE837 /* moai-untz */,
 				89BE6CC21739A42500DFE837 /* moai-util */,
-				89BE6887173974FC00DFE837 /* zl-common */,
 				89BE692E173974FD00DFE837 /* zl-core */,
 				CDC122D317FA802700FB64BB /* zl-crypto */,
 				89BE688A173974FC00DFE837 /* zl-gfx */,
@@ -8674,15 +8671,6 @@
 			);
 			name = "luasocket-embed";
 			path = "../../3rdparty/luasocket-2.0.2-embed";
-			sourceTree = "<group>";
-		};
-		89BE6887173974FC00DFE837 /* zl-common */ = {
-			isa = PBXGroup;
-			children = (
-				89BE6888173974FC00DFE837 /* zl_platform.h */,
-				89BE6889173974FC00DFE837 /* zl_types.h */,
-			);
-			path = "zl-common";
 			sourceTree = "<group>";
 		};
 		89BE688A173974FC00DFE837 /* zl-gfx */ = {
