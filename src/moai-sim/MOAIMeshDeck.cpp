@@ -27,7 +27,7 @@ public:
 		for ( ; span; span = span->mNext ) {
 			if ( span->mBase == span->mTop ) continue;
 			assert (( span->mBase < span->mTop ) && ( span->mTop <= this->mTotalElements ));
-			this->mMesh->DrawPrims ( this->mMesh->GetPrimType (), span->mBase, ( u32 )( span->mTop - span->mBase ));
+			this->mMesh->DrawPrims ( span->mBase, ( u32 )( span->mTop - span->mBase ));
 		}
 	}
 };

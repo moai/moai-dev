@@ -132,9 +132,9 @@ u32 MOAIMesh::CountPrims () const {
 }
 
 //----------------------------------------------------------------//
-void MOAIMesh::DrawPrims ( MOAIGfxTopologyEnum::_ primType, u32 base, u32 count ) {
+void MOAIMesh::DrawPrims ( u32 base, u32 count ) {
 
-	this->MOAIMesh_DrawPrims ( primType, base, count );
+	this->MOAIMesh_DrawPrims ( this->mPrimType, base, count );
 }
 
 //----------------------------------------------------------------//

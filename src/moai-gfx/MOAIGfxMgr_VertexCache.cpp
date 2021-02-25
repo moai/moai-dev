@@ -56,12 +56,13 @@ bool MOAIGfxMgr_VertexCache::BeginPrim ( MOAIGfxTopologyEnum::_ primType, u32 vt
 	MOAIIndexBuffer* indexBuffer = ( idxCount > 0 ) ? ( MOAIIndexBuffer* )this->mIdxBuffer : NULL;
 
 	// flush if ya gotta
-	if (( this->mPrimType != primType ) || ( format != prevFormat ) || ( indexBuffer != prevIndexBuffer )) {
+	if (( this->mMesh->GetPrimType () != primType ) || ( format != prevFormat ) || ( indexBuffer != prevIndexBuffer )) {
 		this->FlushToGPU ();
 	}
 	this->mFlushOnPrimEnd = !(( primType == MOAIGfxTopologyEnum::POINT_LIST ) || ( primType == MOAIGfxTopologyEnum::LINE_LIST ) || ( primType == MOAIGfxTopologyEnum::TRIANGLE_LIST ));
 	this->mUseIdxBuffer = ( indexBuffer != NULL );
 	
+	this->mMesh->SetPrimType ( primType );
 	this->mMesh->SetVertexBuffer ( 0, this->mVtxBuffer, format );
 	this->mMesh->SetIndexBuffer ( indexBuffer );
 	
@@ -69,7 +70,6 @@ bool MOAIGfxMgr_VertexCache::BeginPrim ( MOAIGfxTopologyEnum::_ primType, u32 vt
 	gpuCache.SetMesh ( this->mMesh );
 	gpuCache.ApplyStateChanges (); // must happen here in case there needs to be a flush
 	
-	this->mPrimType = primType;
 	this->mVtxSize = vtxSize;
 
 	if ( indexBuffer ) {
@@ -140,7 +140,6 @@ MOAIGfxMgr_VertexCache::MOAIGfxMgr_VertexCache () :
 	mVtxBase ( 0 ),
 	mIdxBase ( 0 ),
 	mVtxSize ( 0 ),
-	mPrimType ( MOAIGfxTopologyEnum::UNKNOWN ),
 	mFlushOnPrimEnd ( false ),
 	mFlushAlways ( true ),
 	mUseIdxBuffer ( false ),

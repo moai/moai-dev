@@ -55,7 +55,7 @@ void MOAIGfxMgrGL_VertexCacheGL::MOAIGfxMgr_VertexCache_FlushToGPU () {
 		if ( count > 0 ) {
 			vtxBuffer->Update ();
 
-			this->mMesh->DrawPrims ( this->mPrimType, offset, count );
+			this->mMesh->DrawPrims ( offset, count );
 		}
 		
 		this->mIsDrawing = false;

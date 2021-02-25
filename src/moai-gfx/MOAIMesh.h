@@ -21,20 +21,20 @@ protected:
 
 	MOAI_LUA_OBJECT_VISITOR_FRIEND
 
-	u32									mTotalElements;
-	ZLBounds							mBounds;
-	MOAIGfxTopologyEnum::_				mPrimType;
-	float								mPenWidth;
+	u32								mTotalElements;
+	ZLBounds						mBounds;
+	MOAIGfxTopologyEnum::_			mPrimType;
+	float							mPenWidth;
 
 	//----------------------------------------------------------------//
-	static int			_getIndexBuffer				( lua_State* L );
-	static int			_getVertexBuffer			( lua_State* L );
-	static int			_setBounds					( lua_State* L );
-	static int			_setIndexBuffer				( lua_State* L );
-	static int			_setPenWidth				( lua_State* L );
-	static int			_setPrimType				( lua_State* L );
-	static int			_setTotalElements			( lua_State* L );
-	static int			_setVertexBuffer			( lua_State* L );
+	static int				_getIndexBuffer				( lua_State* L );
+	static int				_getVertexBuffer			( lua_State* L );
+	static int				_setBounds					( lua_State* L );
+	static int				_setIndexBuffer				( lua_State* L );
+	static int				_setPenWidth				( lua_State* L );
+	static int				_setPrimType				( lua_State* L );
+	static int				_setTotalElements			( lua_State* L );
+	static int				_setVertexBuffer			( lua_State* L );
 
 	//----------------------------------------------------------------//
 	void							_RegisterLuaClass				( RTTIVisitorHistory& history, MOAILuaState& state );
@@ -58,7 +58,7 @@ public:
 	//----------------------------------------------------------------//
 	void					ClearBounds					();
 	u32						CountPrims					() const;
-	void					DrawPrims					( MOAIGfxTopologyEnum::_ primType, u32 base, u32 count );
+	void					DrawPrims					( u32 base, u32 count );
 	MOAIIndexBuffer*		GetIndexBuffer				();
 	MOAIVertexBuffer*		GetVertexBuffer				( ZLIndex idx = 0 );
 	MOAIVertexFormat*		GetVertexFormat				( ZLIndex idx = 0 );
