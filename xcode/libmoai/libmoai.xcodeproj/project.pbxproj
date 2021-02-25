@@ -2264,20 +2264,6 @@
 		CD4B4EF624DB711600AA7634 /* MOAIDrawAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4B4EF424DB711600AA7634 /* MOAIDrawAPI.h */; };
 		CD4B4EF924DB7CBC00AA7634 /* MOAIDraw.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4B4EF724DB7CBC00AA7634 /* MOAIDraw.cpp */; };
 		CD4B4EFA24DB7CBC00AA7634 /* MOAIDraw.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4B4EF824DB7CBC00AA7634 /* MOAIDraw.h */; };
-		CD4BCF2A1E51F1C5002306C2 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD792FFC1E51D73400388A4B /* host.cpp */; };
-		CD4BCF2B1E51F1C5002306C2 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CD792FFD1E51D73400388A4B /* host.h */; };
-		CD4BCF2C1E51F1C5002306C2 /* MOAIHeadTransform.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD792FFE1E51D73400388A4B /* MOAIHeadTransform.cpp */; };
-		CD4BCF2D1E51F1C5002306C2 /* MOAIHeadTransform.h in Headers */ = {isa = PBXBuildFile; fileRef = CD792FFF1E51D73400388A4B /* MOAIHeadTransform.h */; };
-		CD4BCF2E1E51F1C5002306C2 /* MOAIVrMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4BCF121E51ECA7002306C2 /* MOAIVrMgr.cpp */; };
-		CD4BCF2F1E51F1C5002306C2 /* MOAIVrMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4BCF131E51ECA7002306C2 /* MOAIVrMgr.h */; };
-		CD4BCF301E51F1C5002306C2 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4BCF0E1E51E9C4002306C2 /* pch.cpp */; };
-		CD4BCF311E51F1C5002306C2 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4BCF0F1E51E9C4002306C2 /* pch.h */; };
-		CD4BCF8D1E542768002306C2 /* host.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD4BCF871E542768002306C2 /* host.mm */; };
-		CD4BCF8E1E542768002306C2 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4BCF881E542768002306C2 /* host.h */; };
-		CD4BCF8F1E542768002306C2 /* MOAIMarkerMgr.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD4BCF891E542768002306C2 /* MOAIMarkerMgr.mm */; };
-		CD4BCF901E542768002306C2 /* MOAIMarkerMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4BCF8A1E542768002306C2 /* MOAIMarkerMgr.h */; };
-		CD4BCF911E542768002306C2 /* pch.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4BCF8B1E542768002306C2 /* pch.cpp */; };
-		CD4BCF921E542768002306C2 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4BCF8C1E542768002306C2 /* pch.h */; };
 		CD4C050F18500C18005B0520 /* MOAIVectorStyle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4C050C18500C18005B0520 /* MOAIVectorStyle.cpp */; };
 		CD4C051018500C18005B0520 /* MOAIVectorUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4C050D18500C18005B0520 /* MOAIVectorUtil.cpp */; };
 		CD4C051118500C18005B0520 /* MOAIVectorUtil.h in Headers */ = {isa = PBXBuildFile; fileRef = CD4C050E18500C18005B0520 /* MOAIVectorUtil.h */; };
@@ -3056,8 +3042,6 @@
 		CD5BFC011E3737370057CFDB /* MOAIStretchPatch2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6FF7173AD0CA00DFE837 /* MOAIStretchPatch2D.h */; };
 		CD5BFC021E3737370057CFDB /* MOAITileDeck2D.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE700A173AD0CB00DFE837 /* MOAITileDeck2D.cpp */; };
 		CD5BFC031E3737370057CFDB /* MOAITileDeck2D.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE700B173AD0CB00DFE837 /* MOAITileDeck2D.h */; };
-		CD5C681E1E7BA47D00E93612 /* trackingThread.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD5C68151E7A216700E93612 /* trackingThread.cpp */; };
-		CD5C681F1E7BA47D00E93612 /* trackingThread.h in Headers */ = {isa = PBXBuildFile; fileRef = CD5C68161E7A216700E93612 /* trackingThread.h */; };
 		CD5C6B0B1E7CFF3C00E93612 /* ar3DCreateHandle.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6ADB1E7CFF3C00E93612 /* ar3DCreateHandle.c */; };
 		CD5C6B0C1E7CFF3C00E93612 /* ar3DUtil.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6ADC1E7CFF3C00E93612 /* ar3DUtil.c */; };
 		CD5C6B0D1E7CFF3C00E93612 /* arCreateHandle.c in Sources */ = {isa = PBXBuildFile; fileRef = CD5C6ADD1E7CFF3C00E93612 /* arCreateHandle.c */; };
@@ -3364,8 +3348,6 @@
 		CD6D751C17EE415D00964415 /* ZLVfsVirtualPath.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6943173974FD00DFE837 /* ZLVfsVirtualPath.cpp */; };
 		CD6D751D17EE415D00964415 /* ZLVfsZipArchive.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6945173974FD00DFE837 /* ZLVfsZipArchive.cpp */; };
 		CD6D751E17EE415D00964415 /* ZLVfsZipStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6947173974FD00DFE837 /* ZLVfsZipStream.cpp */; };
-		CD6E82061E5ED7BD0001AC9B /* MOAIMarker.h in Headers */ = {isa = PBXBuildFile; fileRef = CD6E82041E5ED7BD0001AC9B /* MOAIMarker.h */; };
-		CD6E82071E5ED7BD0001AC9B /* MOAIMarker.mm in Sources */ = {isa = PBXBuildFile; fileRef = CD6E82051E5ED7BD0001AC9B /* MOAIMarker.mm */; };
 		CD7038F421CB7A6400DB4A9D /* MOAIAbstractProp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7038F221CB7A6400DB4A9D /* MOAIAbstractProp.cpp */; };
 		CD7038F521CB7A6400DB4A9D /* MOAIAbstractProp.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD7038F221CB7A6400DB4A9D /* MOAIAbstractProp.cpp */; };
 		CD7038F621CB7A6400DB4A9D /* MOAIAbstractProp.h in Headers */ = {isa = PBXBuildFile; fileRef = CD7038F321CB7A6400DB4A9D /* MOAIAbstractProp.h */; };
@@ -4128,14 +4110,6 @@
 		CDD0AC951F8C8287004BA3BB /* ioapi.c in Sources */ = {isa = PBXBuildFile; fileRef = CD8325561D18D02E002CE2A1 /* ioapi.c */; };
 		CDD0AC971F8C8287004BA3BB /* unzip.c in Sources */ = {isa = PBXBuildFile; fileRef = CD8325581D18D02E002CE2A1 /* unzip.c */; };
 		CDD0ACC81F8C8674004BA3BB /* OpenDDLStream.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CDD0ACC71F8C8673004BA3BB /* OpenDDLStream.cpp */; };
-		CDD340201E5540AB0049EF72 /* MOAIVideoTexture.mm in Sources */ = {isa = PBXBuildFile; fileRef = CDD3401E1E5540AB0049EF72 /* MOAIVideoTexture.mm */; };
-		CDD340211E5540AB0049EF72 /* MOAIVideoTexture.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD3401F1E5540AB0049EF72 /* MOAIVideoTexture.h */; };
-		CDD340291E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-fsh.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD340231E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-fsh.h */; };
-		CDD3402A1E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-vsh.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD340241E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-vsh.h */; };
-		CDD3402B1E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-fsh.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD340251E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-fsh.h */; };
-		CDD3402C1E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-vsh.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD340261E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-vsh.h */; };
-		CDD3402D1E56CA1F0049EF72 /* MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-fsh.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD340271E56CA1F0049EF72 /* MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-fsh.h */; };
-		CDD3402E1E56CA1F0049EF72 /* MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-vsh.h in Headers */ = {isa = PBXBuildFile; fileRef = CDD340281E56CA1F0049EF72 /* MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-vsh.h */; };
 		CDD48B4E17FA794B00525B77 /* SFMT-alti.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF01731BB90009E233E /* SFMT-alti.h */; };
 		CDD48B4F17FA794B00525B77 /* SFMT-common.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF11731BB90009E233E /* SFMT-common.h */; };
 		CDD48B5017FA794B00525B77 /* SFMT-params.h in Headers */ = {isa = PBXBuildFile; fileRef = 8942AFF21731BB90009E233E /* SFMT-params.h */; };
@@ -6714,17 +6688,6 @@
 		CD4B4EF424DB711600AA7634 /* MOAIDrawAPI.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIDrawAPI.h; path = "moai-gfx/MOAIDrawAPI.h"; sourceTree = "<group>"; };
 		CD4B4EF724DB7CBC00AA7634 /* MOAIDraw.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIDraw.cpp; path = "moai-gfx/MOAIDraw.cpp"; sourceTree = "<group>"; };
 		CD4B4EF824DB7CBC00AA7634 /* MOAIDraw.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIDraw.h; path = "moai-gfx/MOAIDraw.h"; sourceTree = "<group>"; };
-		CD4BCF0E1E51E9C4002306C2 /* pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pch.cpp; path = "moai-vr/pch.cpp"; sourceTree = "<group>"; };
-		CD4BCF0F1E51E9C4002306C2 /* pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pch.h; path = "moai-vr/pch.h"; sourceTree = "<group>"; };
-		CD4BCF121E51ECA7002306C2 /* MOAIVrMgr.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIVrMgr.cpp; path = "moai-vr/MOAIVrMgr.cpp"; sourceTree = "<group>"; };
-		CD4BCF131E51ECA7002306C2 /* MOAIVrMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIVrMgr.h; path = "moai-vr/MOAIVrMgr.h"; sourceTree = "<group>"; };
-		CD4BCF851E542277002306C2 /* libmoai-ios-ar.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-ar.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD4BCF871E542768002306C2 /* host.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = host.mm; path = "moai-ar/host.mm"; sourceTree = "<group>"; };
-		CD4BCF881E542768002306C2 /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-ar/host.h"; sourceTree = "<group>"; };
-		CD4BCF891E542768002306C2 /* MOAIMarkerMgr.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIMarkerMgr.mm; path = "moai-ar/MOAIMarkerMgr.mm"; sourceTree = "<group>"; };
-		CD4BCF8A1E542768002306C2 /* MOAIMarkerMgr.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIMarkerMgr.h; path = "moai-ar/MOAIMarkerMgr.h"; sourceTree = "<group>"; };
-		CD4BCF8B1E542768002306C2 /* pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pch.cpp; path = "moai-ar/pch.cpp"; sourceTree = "<group>"; };
-		CD4BCF8C1E542768002306C2 /* pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pch.h; path = "moai-ar/pch.h"; sourceTree = "<group>"; };
 		CD4C050C18500C18005B0520 /* MOAIVectorStyle.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVectorStyle.cpp; sourceTree = "<group>"; };
 		CD4C050D18500C18005B0520 /* MOAIVectorUtil.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIVectorUtil.cpp; sourceTree = "<group>"; };
 		CD4C050E18500C18005B0520 /* MOAIVectorUtil.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIVectorUtil.h; sourceTree = "<group>"; };
@@ -6838,8 +6801,6 @@
 		CD5B572F2498DF0500B0E546 /* MOAIHasHitMask.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIHasHitMask.h; sourceTree = "<group>"; };
 		CD5B57332498E06400B0E546 /* MOAIHasHitMaskBatch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIHasHitMaskBatch.cpp; sourceTree = "<group>"; };
 		CD5B57342498E06400B0E546 /* MOAIHasHitMaskBatch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIHasHitMaskBatch.h; sourceTree = "<group>"; };
-		CD5C68151E7A216700E93612 /* trackingThread.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = trackingThread.cpp; path = "moai-ar/trackingThread.cpp"; sourceTree = "<group>"; };
-		CD5C68161E7A216700E93612 /* trackingThread.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = trackingThread.h; path = "moai-ar/trackingThread.h"; sourceTree = "<group>"; };
 		CD5C6ACE1E7CFD7000E93612 /* libmoai-ios-3rdparty-artoolkit5.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-3rdparty-artoolkit5.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD5C6ADB1E7CFF3C00E93612 /* ar3DCreateHandle.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ar3DCreateHandle.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/ar3DCreateHandle.c; sourceTree = "<group>"; };
 		CD5C6ADC1E7CFF3C00E93612 /* ar3DUtil.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = ar3DUtil.c; path = ../../3rdparty/artoolkit5/lib/SRC/AR/ar3DUtil.c; sourceTree = "<group>"; };
@@ -7121,8 +7082,6 @@
 		CD6A30C61E2A317D00C926EE /* MOAIAbstractLayer.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIAbstractLayer.cpp; sourceTree = "<group>"; };
 		CD6A30C71E2A317D00C926EE /* MOAIAbstractLayer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIAbstractLayer.h; sourceTree = "<group>"; };
 		CD6D752517EE415D00964415 /* libzl-osx-vfs.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libzl-osx-vfs.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD6E82041E5ED7BD0001AC9B /* MOAIMarker.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIMarker.h; path = "moai-ar/MOAIMarker.h"; sourceTree = "<group>"; };
-		CD6E82051E5ED7BD0001AC9B /* MOAIMarker.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIMarker.mm; path = "moai-ar/MOAIMarker.mm"; sourceTree = "<group>"; };
 		CD7038F221CB7A6400DB4A9D /* MOAIAbstractProp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIAbstractProp.cpp; sourceTree = "<group>"; };
 		CD7038F321CB7A6400DB4A9D /* MOAIAbstractProp.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIAbstractProp.h; sourceTree = "<group>"; };
 		CD73A5F8188F0AD200DFACDB /* MOAICollisionProp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAICollisionProp.cpp; sourceTree = "<group>"; };
@@ -7171,11 +7130,6 @@
 		CD7852DD1D18C79A003F15D0 /* pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = pch.cpp; path = "moai-assimp/pch.cpp"; sourceTree = "<group>"; };
 		CD7852DE1D18C79A003F15D0 /* pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = pch.h; path = "moai-assimp/pch.h"; sourceTree = "<group>"; };
 		CD792FB01E4DEC4700388A4B /* ZLRefCountedObjectBase.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLRefCountedObjectBase.cpp; sourceTree = "<group>"; };
-		CD792FFB1E51D51800388A4B /* libmoai-ios-vr.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-vr.a"; sourceTree = BUILT_PRODUCTS_DIR; };
-		CD792FFC1E51D73400388A4B /* host.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = host.cpp; path = "moai-vr/host.cpp"; sourceTree = "<group>"; };
-		CD792FFD1E51D73400388A4B /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = host.h; path = "moai-vr/host.h"; sourceTree = "<group>"; };
-		CD792FFE1E51D73400388A4B /* MOAIHeadTransform.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; name = MOAIHeadTransform.cpp; path = "moai-vr/MOAIHeadTransform.cpp"; sourceTree = "<group>"; };
-		CD792FFF1E51D73400388A4B /* MOAIHeadTransform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIHeadTransform.h; path = "moai-vr/MOAIHeadTransform.h"; sourceTree = "<group>"; };
 		CD795EFE17F0901A006AEB47 /* mongoose.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; name = mongoose.c; path = ../../3rdparty/mongoose/mongoose.c; sourceTree = "<group>"; };
 		CD795EFF17F0901A006AEB47 /* mongoose.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = mongoose.h; path = ../../3rdparty/mongoose/mongoose.h; sourceTree = "<group>"; };
 		CD7CE6AF21C9D3F200CABB74 /* MOAIProjectionProp.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIProjectionProp.cpp; sourceTree = "<group>"; };
@@ -8026,14 +7980,6 @@
 		CDD0A9521F8C810A004BA3BB /* revision.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = revision.h; path = "../../3rdparty/assimp-config/revision.h"; sourceTree = "<group>"; };
 		CDD0A9531F8C8121004BA3BB /* config.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; name = config.h; path = "../../3rdparty/assimp-config/assimp/config.h"; sourceTree = "<group>"; };
 		CDD0ACC71F8C8673004BA3BB /* OpenDDLStream.cpp */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.cpp.cpp; name = OpenDDLStream.cpp; path = ../../3rdparty/assimp/contrib/openddlparser/code/OpenDDLStream.cpp; sourceTree = "<group>"; };
-		CDD3401E1E5540AB0049EF72 /* MOAIVideoTexture.mm */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.objcpp; name = MOAIVideoTexture.mm; path = "moai-ar/MOAIVideoTexture.mm"; sourceTree = "<group>"; };
-		CDD3401F1E5540AB0049EF72 /* MOAIVideoTexture.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = MOAIVideoTexture.h; path = "moai-ar/MOAIVideoTexture.h"; sourceTree = "<group>"; };
-		CDD340231E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-fsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-fsh.h"; path = "moai-ar/shaders/MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-fsh.h"; sourceTree = "<group>"; };
-		CDD340241E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-vsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-vsh.h"; path = "moai-ar/shaders/MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-vsh.h"; sourceTree = "<group>"; };
-		CDD340251E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-fsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-fsh.h"; path = "moai-ar/shaders/MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-fsh.h"; sourceTree = "<group>"; };
-		CDD340261E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-vsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-vsh.h"; path = "moai-ar/shaders/MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-vsh.h"; sourceTree = "<group>"; };
-		CDD340271E56CA1F0049EF72 /* MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-fsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-fsh.h"; path = "moai-ar/shaders/MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-fsh.h"; sourceTree = "<group>"; };
-		CDD340281E56CA1F0049EF72 /* MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-vsh.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = "MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-vsh.h"; path = "moai-ar/shaders/MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-vsh.h"; sourceTree = "<group>"; };
 		CDD5D68D1C24DDF10070237E /* MOAIPath.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPath.cpp; sourceTree = "<group>"; };
 		CDD5D68E1C24DDF10070237E /* MOAIPath.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIPath.h; sourceTree = "<group>"; };
 		CDD5D6931C24EB6A0070237E /* MOAIPathStepper.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIPathStepper.cpp; sourceTree = "<group>"; };
@@ -8290,13 +8236,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CD4BCF801E542277002306C2 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CD4C3A7B180A623200C02381 /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -8389,13 +8328,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 		};
 		CD7852C71D18C669003F15D0 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CD792FF61E51D51800388A4B /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -8790,7 +8722,6 @@
 			children = (
 				CD318BF524D81D10009E32EF /* config */,
 				CD257B241A6253F70057A53A /* moai-apple */,
-				CD4BCF861E542724002306C2 /* moai-ar */,
 				CD7852D11D18C761003F15D0 /* moai-assimp */,
 				CDA0D9F61A01AFC3002B71B6 /* moai-audio-sampler */,
 				89BE74A2173AD2FA00DFE837 /* moai-box2d */,
@@ -8815,7 +8746,6 @@
 				89BE6F19173AD0CA00DFE837 /* moai-sim */,
 				89BE6B5F17399FEB00DFE837 /* moai-untz */,
 				89BE6CC21739A42500DFE837 /* moai-util */,
-				CD792FB71E51D4B700388A4B /* moai-vr */,
 				89BE6887173974FC00DFE837 /* zl-common */,
 				CDC122D317FA802700FB64BB /* zl-crypto */,
 				89BE688A173974FC00DFE837 /* zl-gfx */,
@@ -8884,8 +8814,6 @@
 				CD7852CD1D18C669003F15D0 /* libmoai-osx-assimp.a */,
 				CDA1D0881D1B75B20006C5E5 /* libmoai-osx-image-tga.a */,
 				CDD813521E16FE7100996311 /* libmoai-osx-google-test.a */,
-				CD792FFB1E51D51800388A4B /* libmoai-ios-vr.a */,
-				CD4BCF851E542277002306C2 /* libmoai-ios-ar.a */,
 				CD5C6ACE1E7CFD7000E93612 /* libmoai-ios-3rdparty-artoolkit5.a */,
 				095A1721218DE699003543B8 /* libmoai-osx-expat.a */,
 				CD582AD622717F85009CD0B6 /* libmoai-osx-gfx-gl.a */,
@@ -10826,26 +10754,6 @@
 			name = resource;
 			sourceTree = "<group>";
 		};
-		CD4BCF861E542724002306C2 /* moai-ar */ = {
-			isa = PBXGroup;
-			children = (
-				CDD340221E5675F10049EF72 /* shaders */,
-				CD4BCF871E542768002306C2 /* host.mm */,
-				CD4BCF881E542768002306C2 /* host.h */,
-				CD6E82041E5ED7BD0001AC9B /* MOAIMarker.h */,
-				CD6E82051E5ED7BD0001AC9B /* MOAIMarker.mm */,
-				CD4BCF8A1E542768002306C2 /* MOAIMarkerMgr.h */,
-				CD4BCF891E542768002306C2 /* MOAIMarkerMgr.mm */,
-				CDD3401F1E5540AB0049EF72 /* MOAIVideoTexture.h */,
-				CDD3401E1E5540AB0049EF72 /* MOAIVideoTexture.mm */,
-				CD4BCF8B1E542768002306C2 /* pch.cpp */,
-				CD4BCF8C1E542768002306C2 /* pch.h */,
-				CD5C68151E7A216700E93612 /* trackingThread.cpp */,
-				CD5C68161E7A216700E93612 /* trackingThread.h */,
-			);
-			name = "moai-ar";
-			sourceTree = "<group>";
-		};
 		CD4C383A242CBDAA00B1AC6A /* action */ = {
 			isa = PBXGroup;
 			children = (
@@ -12039,21 +11947,6 @@
 				CD7852DE1D18C79A003F15D0 /* pch.h */,
 			);
 			name = "moai-assimp";
-			sourceTree = "<group>";
-		};
-		CD792FB71E51D4B700388A4B /* moai-vr */ = {
-			isa = PBXGroup;
-			children = (
-				CD792FFC1E51D73400388A4B /* host.cpp */,
-				CD792FFD1E51D73400388A4B /* host.h */,
-				CD792FFE1E51D73400388A4B /* MOAIHeadTransform.cpp */,
-				CD792FFF1E51D73400388A4B /* MOAIHeadTransform.h */,
-				CD4BCF121E51ECA7002306C2 /* MOAIVrMgr.cpp */,
-				CD4BCF131E51ECA7002306C2 /* MOAIVrMgr.h */,
-				CD4BCF0E1E51E9C4002306C2 /* pch.cpp */,
-				CD4BCF0F1E51E9C4002306C2 /* pch.h */,
-			);
-			name = "moai-vr";
 			sourceTree = "<group>";
 		};
 		CD795CBA17F0834F006AEB47 /* sdl */ = {
@@ -13488,19 +13381,6 @@
 				CDD0A9521F8C810A004BA3BB /* revision.h */,
 			);
 			name = config;
-			sourceTree = "<group>";
-		};
-		CDD340221E5675F10049EF72 /* shaders */ = {
-			isa = PBXGroup;
-			children = (
-				CDD340231E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-fsh.h */,
-				CDD340241E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-vsh.h */,
-				CDD340251E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-fsh.h */,
-				CDD340261E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-vsh.h */,
-				CDD340271E56CA1F0049EF72 /* MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-fsh.h */,
-				CDD340281E56CA1F0049EF72 /* MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-vsh.h */,
-			);
-			name = shaders;
 			sourceTree = "<group>";
 		};
 		CDD7814C1A1162F400AD133E /* moai-ios-motion */ = {
@@ -15512,25 +15392,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CD4BCF761E542277002306C2 /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CD5C681F1E7BA47D00E93612 /* trackingThread.h in Headers */,
-				CDD3402C1E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-vsh.h in Headers */,
-				CDD3402E1E56CA1F0049EF72 /* MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-vsh.h in Headers */,
-				CD4BCF921E542768002306C2 /* pch.h in Headers */,
-				CD4BCF8E1E542768002306C2 /* host.h in Headers */,
-				CDD340211E5540AB0049EF72 /* MOAIVideoTexture.h in Headers */,
-				CDD3402A1E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-vsh.h in Headers */,
-				CD4BCF901E542768002306C2 /* MOAIMarkerMgr.h in Headers */,
-				CD6E82061E5ED7BD0001AC9B /* MOAIMarker.h in Headers */,
-				CDD3402D1E56CA1F0049EF72 /* MOAIVideoShaderYCrCbITURec601FullRangeBiPlanar-fsh.h in Headers */,
-				CDD3402B1E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601VideoRangeBiPlanar-fsh.h in Headers */,
-				CDD340291E56CA1F0049EF72 /* MOAIVideoShaderYCbCrITURec601FullRangeBiPlanar-fsh.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CD4C3A6A180A623200C02381 /* Headers */ = {
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
@@ -15887,17 +15748,6 @@
 				CD7852E71D18C79A003F15D0 /* MOAIAssimpScene.h in Headers */,
 				CD4E00FE1D1B300200FC2F16 /* MOAIAssimpSceneMember.h in Headers */,
 				CD7852DF1D18C79A003F15D0 /* headers.h in Headers */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CD792FB91E51D51800388A4B /* Headers */ = {
-			isa = PBXHeadersBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CD4BCF2B1E51F1C5002306C2 /* host.h in Headers */,
-				CD4BCF2D1E51F1C5002306C2 /* MOAIHeadTransform.h in Headers */,
-				CD4BCF311E51F1C5002306C2 /* pch.h in Headers */,
-				CD4BCF2F1E51F1C5002306C2 /* MOAIVrMgr.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -16774,23 +16624,6 @@
 			productReference = CD4A94C2229DE21A00F9E400 /* libmoai-osx-gfx.a */;
 			productType = "com.apple.product-type.library.static";
 		};
-		CD4BCF751E542277002306C2 /* libmoai-ios-ar */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CD4BCF811E542277002306C2 /* Build configuration list for PBXNativeTarget "libmoai-ios-ar" */;
-			buildPhases = (
-				CD4BCF761E542277002306C2 /* Headers */,
-				CD4BCF7B1E542277002306C2 /* Sources */,
-				CD4BCF801E542277002306C2 /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "libmoai-ios-ar";
-			productName = OpenUSLS;
-			productReference = CD4BCF851E542277002306C2 /* libmoai-ios-ar.a */;
-			productType = "com.apple.product-type.library.static";
-		};
 		CD4C3A69180A623200C02381 /* libmoai-ios-crypto */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = CD4C3A7C180A623200C02381 /* Build configuration list for PBXNativeTarget "libmoai-ios-crypto" */;
@@ -17027,23 +16860,6 @@
 			name = "libmoai-osx-assimp";
 			productName = OpenUSLS;
 			productReference = CD7852CD1D18C669003F15D0 /* libmoai-osx-assimp.a */;
-			productType = "com.apple.product-type.library.static";
-		};
-		CD792FB81E51D51800388A4B /* libmoai-ios-vr */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = CD792FF71E51D51800388A4B /* Build configuration list for PBXNativeTarget "libmoai-ios-vr" */;
-			buildPhases = (
-				CD792FB91E51D51800388A4B /* Headers */,
-				CD792FC51E51D51800388A4B /* Sources */,
-				CD792FF61E51D51800388A4B /* Frameworks */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = "libmoai-ios-vr";
-			productName = OpenUSLS;
-			productReference = CD792FFB1E51D51800388A4B /* libmoai-ios-vr.a */;
 			productType = "com.apple.product-type.library.static";
 		};
 		CD807DF81831C42100E658D9 /* libzl-osx-zl-crypto */ = {
@@ -17473,7 +17289,6 @@
 				CD83142C1BED395600745C8A /* libmoai-ios-3rdparty-tlsf */,
 				CD83127E1BED38F600745C8A /* libmoai-ios-3rdparty-zlib */,
 				CD257B251A6255380057A53A /* libmoai-ios-apple */,
-				CD4BCF751E542277002306C2 /* libmoai-ios-ar */,
 				CDA0D9F71A01B111002B71B6 /* libmoai-ios-audio-sampler */,
 				89BE737C173AD2B600DFE837 /* libmoai-ios-box2d */,
 				CD4C3A69180A623200C02381 /* libmoai-ios-crypto */,
@@ -17489,7 +17304,6 @@
 				CDC097D41AE9C72E002E325F /* libmoai-ios-movie */,
 				89BE6EF5173AD06700DFE837 /* libmoai-ios-sim */,
 				CD07C3A313A182AA00C9386C /* libmoai-ios-untz */,
-				CD792FB81E51D51800388A4B /* libmoai-ios-vr */,
 				CD04AABB14725568009C20E5 /* libmoai-ios-zl-core */,
 				CDC122D417FA804C00FB64BB /* libmoai-ios-zl-crypto */,
 				CDF287EC17ED41CF00FD4F59 /* libmoai-ios-zl-vfs */,
@@ -18986,19 +18800,6 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
-		CD4BCF7B1E542277002306C2 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CD4BCF911E542768002306C2 /* pch.cpp in Sources */,
-				CD4BCF8F1E542768002306C2 /* MOAIMarkerMgr.mm in Sources */,
-				CD4BCF8D1E542768002306C2 /* host.mm in Sources */,
-				CD5C681E1E7BA47D00E93612 /* trackingThread.cpp in Sources */,
-				CD6E82071E5ED7BD0001AC9B /* MOAIMarker.mm in Sources */,
-				CDD340201E5540AB0049EF72 /* MOAIVideoTexture.mm in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
 		CD4C3A73180A623200C02381 /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -19808,17 +19609,6 @@
 				CD7852E41D18C79A003F15D0 /* MOAIAssimpMesh.cpp in Sources */,
 				CD7852E81D18C79A003F15D0 /* MOAIAssimpUtil.cpp in Sources */,
 				CD4E00FD1D1B300200FC2F16 /* MOAIAssimpSceneMember.cpp in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		CD792FC51E51D51800388A4B /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				CD4BCF2C1E51F1C5002306C2 /* MOAIHeadTransform.cpp in Sources */,
-				CD4BCF2A1E51F1C5002306C2 /* host.cpp in Sources */,
-				CD4BCF2E1E51F1C5002306C2 /* MOAIVrMgr.cpp in Sources */,
-				CD4BCF301E51F1C5002306C2 /* pch.cpp in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -23168,115 +22958,6 @@
 			};
 			name = "Release-NoSymbols";
 		};
-		CD4BCF821E542277002306C2 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					MOAI_WITH_ARTOOLKIT,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				ONLY_ACTIVE_ARCH = NO;
-				PRODUCT_NAME = "moai-ios-ar";
-				SEPARATE_STRIP = NO;
-				STRIP_STYLE = all;
-				WARNING_CFLAGS = "-w";
-			};
-			name = Debug;
-		};
-		CD4BCF831E542277002306C2 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					MOAI_WITH_ARTOOLKIT,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-ar";
-				SEPARATE_STRIP = NO;
-				STRIP_STYLE = all;
-				WARNING_CFLAGS = "-w";
-			};
-			name = Release;
-		};
-		CD4BCF841E542277002306C2 /* Release-NoSymbols */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					MOAI_WITH_ARTOOLKIT,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-ar";
-				SEPARATE_STRIP = NO;
-				STRIP_STYLE = all;
-				WARNING_CFLAGS = "-w";
-			};
-			name = "Release-NoSymbols";
-		};
 		CD4C3A7D180A623200C02381 /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -24814,120 +24495,6 @@
 					"$(inherited)",
 					"-Wno-address-of-packed-member",
 				);
-			};
-			name = "Release-NoSymbols";
-		};
-		CD792FF81E51D51800388A4B /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					GVR_NO_CPP_WRAPPER,
-					MOAI_WITH_LIBGVR,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-vr";
-				SDKROOT = iphoneos;
-				SEPARATE_STRIP = NO;
-				STRIP_STYLE = all;
-				WARNING_CFLAGS = "-w";
-			};
-			name = Debug;
-		};
-		CD792FF91E51D51800388A4B /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					GVR_NO_CPP_WRAPPER,
-					MOAI_WITH_LIBGVR,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-vr";
-				SDKROOT = iphoneos;
-				SEPARATE_STRIP = NO;
-				STRIP_STYLE = all;
-				WARNING_CFLAGS = "-w";
-			};
-			name = Release;
-		};
-		CD792FFA1E51D51800388A4B /* Release-NoSymbols */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CLANG_ENABLE_OBJC_WEAK = YES;
-				GCC_PREPROCESSOR_DEFINITIONS = (
-					"$(inherited)",
-					GVR_NO_CPP_WRAPPER,
-					MOAI_WITH_LIBGVR,
-				);
-				GCC_WARN_64_TO_32_BIT_CONVERSION = NO;
-				GCC_WARN_ABOUT_DEPRECATED_FUNCTIONS = NO;
-				GCC_WARN_ABOUT_INVALID_OFFSETOF_MACRO = NO;
-				GCC_WARN_ABOUT_MISSING_FIELD_INITIALIZERS = NO;
-				GCC_WARN_ABOUT_MISSING_PROTOTYPES = NO;
-				GCC_WARN_ABOUT_POINTER_SIGNEDNESS = NO;
-				GCC_WARN_ABOUT_RETURN_TYPE = NO;
-				GCC_WARN_ALLOW_INCOMPLETE_PROTOCOL = NO;
-				GCC_WARN_HIDDEN_VIRTUAL_FUNCTIONS = NO;
-				GCC_WARN_MISSING_PARENTHESES = NO;
-				GCC_WARN_NON_VIRTUAL_DESTRUCTOR = NO;
-				GCC_WARN_PROTOTYPE_CONVERSION = NO;
-				GCC_WARN_SHADOW = NO;
-				GCC_WARN_SIGN_COMPARE = NO;
-				GCC_WARN_TYPECHECK_CALLS_TO_PRINTF = NO;
-				GCC_WARN_UNKNOWN_PRAGMAS = NO;
-				GCC_WARN_UNUSED_FUNCTION = NO;
-				GCC_WARN_UNUSED_LABEL = NO;
-				GCC_WARN_UNUSED_PARAMETER = NO;
-				GCC_WARN_UNUSED_VALUE = NO;
-				GCC_WARN_UNUSED_VARIABLE = NO;
-				PRODUCT_NAME = "moai-ios-vr";
-				SDKROOT = iphoneos;
-				SEPARATE_STRIP = NO;
-				STRIP_STYLE = all;
-				WARNING_CFLAGS = "-w";
 			};
 			name = "Release-NoSymbols";
 		};
@@ -28097,16 +27664,6 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		CD4BCF811E542277002306C2 /* Build configuration list for PBXNativeTarget "libmoai-ios-ar" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CD4BCF821E542277002306C2 /* Debug */,
-				CD4BCF831E542277002306C2 /* Release */,
-				CD4BCF841E542277002306C2 /* Release-NoSymbols */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
 		CD4C3A7C180A623200C02381 /* Build configuration list for PBXNativeTarget "libmoai-ios-crypto" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -28243,16 +27800,6 @@
 				CD7852C91D18C669003F15D0 /* Debug */,
 				CD7852CA1D18C669003F15D0 /* Release */,
 				CD7852CC1D18C669003F15D0 /* Release-NoSymbols */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		CD792FF71E51D51800388A4B /* Build configuration list for PBXNativeTarget "libmoai-ios-vr" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				CD792FF81E51D51800388A4B /* Debug */,
-				CD792FF91E51D51800388A4B /* Release */,
-				CD792FFA1E51D51800388A4B /* Release-NoSymbols */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
