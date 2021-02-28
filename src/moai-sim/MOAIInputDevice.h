@@ -45,7 +45,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void			ClearSensorState		();
-					MOAIInputDevice			();
+					MOAIInputDevice			( ZLContext& context );
 					~MOAIInputDevice		();
 	void			ReserveSensors			( ZLSize total );
 	void			ResetSensorState		();

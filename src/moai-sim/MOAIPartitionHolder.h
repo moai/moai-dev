@@ -31,7 +31,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	MOAIPartition*		GetPartition				();
-						MOAIPartitionHolder			();
+						MOAIPartitionHolder			( ZLContext& context );
 						~MOAIPartitionHolder		();
 };
 

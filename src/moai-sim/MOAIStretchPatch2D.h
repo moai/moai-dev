@@ -93,7 +93,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			DrawStretch				( ZLIndex idx );
-					MOAIStretchPatch2D		();
+					MOAIStretchPatch2D		( ZLContext& context );
 					~MOAIStretchPatch2D		();
 	void			SetColumn				( ZLIndex idx, float percent, bool canStretch );
 	void			SetRow					( ZLIndex idx, float percent, bool canStretch );

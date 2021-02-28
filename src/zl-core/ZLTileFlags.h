@@ -1,13 +1,13 @@
 // Copyright (c) 2010-2017 Zipline Games, Inc. All Rights Reserved.
 // http://getmoai.com
 
-#ifndef MOAITILEFLAGS_H
-#define MOAITILEFLAGS_H
+#ifndef ZLTILEFLAGS_H
+#define ZLTILEFLAGS_H
 
 //================================================================//
-// MOAITileFlags
+// ZLTileFlags
 //================================================================//
-class MOAITileFlags {
+class ZLTileFlags {
 public:
 	
 	static const u32 ROT_90				= 0x10000000;

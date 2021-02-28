@@ -223,17 +223,16 @@ size_t MOAITextLayout::CountSprites () {
 }
 
 //----------------------------------------------------------------//
-void MOAITextLayout::Draw ( u32 reveal ) {
+void MOAITextLayout::Draw ( MOAIGfxMgr& gfxMgr, u32 reveal ) {
 	
 	if ( reveal ) {
 		
 		MOAIShader* currentShader = NULL; // TODO: used to be set based on the state of MOAIMaterialMgr
 		bool useSpriteShaders = ( currentShader == NULL );
-		MOAIShader* defaultShader = MOAIGfxMgr::Get ().GetShaderPreset ( MOAIShaderPresetEnum::FONT_SNAPPING_SHADER );
-//		MOAIShader* defaultShader = MOAIGfxMgr::Get ().GetShaderPreset ( MOAIShaderPresetEnum::FONT_SHADER );
+		MOAIShader* defaultShader = gfxMgr.GetShaderPreset ( MOAIShaderPresetEnum::FONT_SNAPPING_SHADER );
+//		MOAIShader* defaultShader = gfxMgr.GetShaderPreset ( MOAIShaderPresetEnum::FONT_SHADER );
 		
-		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-		MOAIQuadBrush::BindVertexFormat ();
+		MOAIQuadBrush::BindVertexFormat ( gfxMgr );
 
 		ZLColorVec baseColor = gfxMgr.GetPenColor ();
 		ZLColorVec blendColor;
@@ -265,19 +264,15 @@ void MOAITextLayout::Draw ( u32 reveal ) {
 					currentShader = spriteShader;
 				}
 			}
-			sprite.mGlyph->Draw ( *sprite.mTexture, sprite.mPen.mX, sprite.mPen.mY, sprite.mScale.mX, sprite.mScale.mY, style->mPadding );
+			sprite.mGlyph->Draw ( gfxMgr, *sprite.mTexture, sprite.mPen.mX, sprite.mPen.mY, sprite.mScale.mX, sprite.mScale.mY, style->mPadding );
 		}
 	}
 }
 
 //----------------------------------------------------------------//
-void MOAITextLayout::DrawDebug () {
+void MOAITextLayout::DrawDebug ( MOAIDebugLinesMgr& debugLines, MOAIDraw& draw ) {
 
-	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAITextLabel >())) return;
-	
-	MOAIDraw& draw = MOAIDraw::Get ();
-	UNUSED ( draw ); // mystery warning in vs2008
 	
 	if ( debugLines.Bind ( MOAITextLabel::DEBUG_DRAW_TEXT_LABEL_GLYPHS )) {
 	

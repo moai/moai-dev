@@ -43,7 +43,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIParticleDistanceEmitter )
 
 	//----------------------------------------------------------------//
-					MOAIParticleDistanceEmitter		();
+					MOAIParticleDistanceEmitter		( ZLContext& context );
 					~MOAIParticleDistanceEmitter	();
 	void			SetDistanceRange				( float min, float max );
 };

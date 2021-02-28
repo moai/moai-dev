@@ -60,16 +60,18 @@ int MOAIWheelSensor::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIWheelSensor::EnqueueWheelEvent ( ZLIndex deviceID, ZLIndex sensorID, float value ) {
+void MOAIWheelSensor::EnqueueWheelEvent ( MOAIInputMgr& inputMgr, ZLIndex deviceID, ZLIndex sensorID, float value ) {
 
-	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
 	if ( inputMgr.WriteEventHeader < MOAIWheelSensor >( deviceID, sensorID )) {
 		inputMgr.Write < float >( value );
 	}
 }
 
 //----------------------------------------------------------------//
-MOAIWheelSensor::MOAIWheelSensor () :
+MOAIWheelSensor::MOAIWheelSensor ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAISensor ( context ),
 	mValue ( 0 ),
 	mDelta ( 0 ) {
 		

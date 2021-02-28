@@ -13,7 +13,7 @@
 class MOAIPartitionLevel {
 private:
 	
-	MOAIGridSpace							mGridSpace;
+	ZLGridSpace								mGridSpace;
 	ZLLeanArray < MOAIPartitionCell >		mCells;
 	float									mCellSize;
 
@@ -36,8 +36,8 @@ public:
 	friend class MOAIPartitionHull;
 
 	//----------------------------------------------------------------//
-					MOAIPartitionLevel	();
-					~MOAIPartitionLevel	();
+					MOAIPartitionLevel		();
+					~MOAIPartitionLevel		();
 };
 
 #endif

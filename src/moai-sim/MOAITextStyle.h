@@ -54,7 +54,7 @@ public:
 */
 class MOAITextStyle :
 	public virtual MOAINode,
-	public MOAITextStyleState {
+	public virtual MOAITextStyleState {
 private:
 
 	friend class MOAITextLabel;
@@ -86,7 +86,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			Init					( MOAITextStyleState& style );
-					MOAITextStyle			();
+					MOAITextStyle			( ZLContext& context );
 					~MOAITextStyle			();
 	void			SetFont					( MOAIFont* font );
 	void			SetShader				( MOAIShader* shader );

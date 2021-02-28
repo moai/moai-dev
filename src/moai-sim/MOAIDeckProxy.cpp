@@ -26,7 +26,10 @@ int MOAIDeckProxy::_setDeck ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIDeckProxy::MOAIDeckProxy () {
+MOAIDeckProxy::MOAIDeckProxy ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIDeck ( context ) {
 	
 	RTTI_BEGIN ( MOAIDeckProxy )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIDeckProxy >)

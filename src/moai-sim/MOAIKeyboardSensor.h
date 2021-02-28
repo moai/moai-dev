@@ -55,16 +55,16 @@ public:
 
 	//----------------------------------------------------------------//
 	void				ClearState					();
-	static void			EnqueueKeyboardCharEvent	( ZLIndex deviceID, ZLIndex sensorID, u32 unicodeChar );
-	static void			EnqueueKeyboardEditEvent	( ZLIndex deviceID, ZLIndex sensorID, char const* text, u32 start, u32 editLength, u32 maxLength );
-	static void			EnqueueKeyboardKeyEvent		( ZLIndex deviceID, ZLIndex sensorID, u32 keyID, bool down );
-	static void			EnqueueKeyboardTextEvent	( ZLIndex deviceID, ZLIndex sensorID, cc8* text );
+	static void			EnqueueKeyboardCharEvent	( MOAIInputMgr& inputMgr, ZLIndex deviceID, ZLIndex sensorID, u32 unicodeChar );
+	static void			EnqueueKeyboardEditEvent	( MOAIInputMgr& inputMgr, ZLIndex deviceID, ZLIndex sensorID, char const* text, u32 start, u32 editLength, u32 maxLength );
+	static void			EnqueueKeyboardKeyEvent		( MOAIInputMgr& inputMgr, ZLIndex deviceID, ZLIndex sensorID, u32 keyID, bool down );
+	static void			EnqueueKeyboardTextEvent	( MOAIInputMgr& inputMgr, ZLIndex deviceID, ZLIndex sensorID, cc8* text );
 	static int			CheckKeys					( lua_State* L, bool ( MOAIKeyboardSensor::*predicate )( u32 keyCode ));
 	bool				KeyDown						( u32 keyID );
 	bool				KeyIsDown					( u32 keyID );
 	bool				KeyIsUp						( u32 keyID );
 	bool				KeyUp						( u32 keyID );
-						MOAIKeyboardSensor			();
+						MOAIKeyboardSensor			( ZLContext& context );
 						~MOAIKeyboardSensor			();
 	void				ParseEvent					( ZLStream& eventStream );
 	void				ResetState					();

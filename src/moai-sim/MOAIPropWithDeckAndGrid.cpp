@@ -71,9 +71,9 @@ int MOAIPropWithDeckAndGrid::_setGridScale ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIPropWithDeckAndGrid::DrawGrid ( MOAIRenderPhaseEnum::_ renderPhase, const MOAICellCoord &c0, const MOAICellCoord &c1 ) {
+void MOAIPropWithDeckAndGrid::DrawGrid ( MOAIRenderPhaseEnum::_ renderPhase, const ZLGridCoord &c0, const ZLGridCoord &c1 ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr = this->Get < MOAIGfxMgr >();
 
 	ZLVec3D offset	= ZLVec3D::ORIGIN;
 	ZLVec3D scale	= ZLVec3D::AXIS;
@@ -96,17 +96,17 @@ void MOAIPropWithDeckAndGrid::DrawGrid ( MOAIRenderPhaseEnum::_ renderPhase, con
 			ZLIndex addr = grid.GetCellAddr ( x, y );
 			u32 idx = grid.GetTile ( addr );
 			
-			if ( !idx || ( idx & MOAITileFlags::HIDDEN )) continue;
+			if ( !idx || ( idx & ZLTileFlags::HIDDEN )) continue;
 			
-			MOAICellCoord coord ( x, y );
+			ZLGridCoord coord ( x, y );
 			ZLVec2D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER );
 
-			float xScale = ( idx & MOAITileFlags::XFLIP ) ? -tileWidth : tileWidth;
-			float yScale = ( idx & MOAITileFlags::YFLIP ) ? -tileHeight : tileHeight;
+			float xScale = ( idx & ZLTileFlags::XFLIP ) ? -tileWidth : tileWidth;
+			float yScale = ( idx & ZLTileFlags::YFLIP ) ? -tileHeight : tileHeight;
 
 			ZLAffine3D mtx = modelToWorldMtx;
 
-			if ( idx & MOAITileFlags::ROT_90 ) {
+			if ( idx & ZLTileFlags::ROT_90 ) {
 				mtx.PrependRot90SclTr2D ( xScale, yScale, loc.mX, loc.mY );
 			}
 			else {
@@ -119,7 +119,7 @@ void MOAIPropWithDeckAndGrid::DrawGrid ( MOAIRenderPhaseEnum::_ renderPhase, con
 				gfxMgr.SetPenColor ( penColor * fancyGrid->GetTileColor ( addr ));
 			}
 			
-			this->mDeck->Render (( idx & MOAITileFlags::CODE_MASK ) - 1, renderPhase );
+			this->mDeck->Render (( idx & ZLTileFlags::CODE_MASK ) - 1, renderPhase );
 		}
 	}
 }
@@ -136,8 +136,8 @@ void MOAIPropWithDeckAndGrid::DrawGrid ( MOAIRenderPhaseEnum::_ renderPhase, con
 	//
 	//	ZLRect localRect = sampler.GetLocalRect ();
 	//
-	//	MOAICellCoord c0;
-	//	MOAICellCoord c1;
+	//	ZLGridCoord c0;
+	//	ZLGridCoord c1;
 	//
 	//	ZLRect deckBounds = this->mDeck->GetBounds ().GetRect( ZLBox::PLANE_XY );
 
@@ -150,9 +150,9 @@ void MOAIPropWithDeckAndGrid::DrawGrid ( MOAIRenderPhaseEnum::_ renderPhase, con
 //}
 
 //----------------------------------------------------------------//
-void MOAIPropWithDeckAndGrid::GetGridFrameInView ( const ZLAffine3D& worldToLocalMtx, MOAICellCoord& c0, MOAICellCoord& c1 ) {
+void MOAIPropWithDeckAndGrid::GetGridFrameInView ( const ZLAffine3D& worldToLocalMtx, ZLGridCoord& c0, ZLGridCoord& c1 ) {
 
-	const ZLFrustum& frustum = MOAIGfxMgr::Get ().GetViewVolume ();
+	const ZLFrustum& frustum = this->Get < MOAIGfxMgr >().GetViewVolume ();
 	
 	ZLRect viewRect;
 	//if ( frustum.GetXYSectRect ( this->GetWorldToLocalMtx (), viewRect )) {
@@ -168,7 +168,21 @@ void MOAIPropWithDeckAndGrid::GetGridFrameInView ( const ZLAffine3D& worldToLoca
 }
 
 //----------------------------------------------------------------//
-MOAIPropWithDeckAndGrid::MOAIPropWithDeckAndGrid () :
+MOAIPropWithDeckAndGrid::MOAIPropWithDeckAndGrid ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIAbstractPickable ( context ),
+	MOAIPartitionHull ( context ),
+	MOAIHasGfxScriptsForPhases ( context ),
+	MOAIAbstractRenderable ( context ),
+	MOAIAbstractBaseTransform ( context ),
+	MOAIAbstractChildTransform ( context ),
+	MOAITransform ( context ),
+	MOAIAbstractProp ( context ),
+	MOAIHasDeck ( context ),
 	mGridScale ( 1.0f, 1.0f ) {
 	
 	RTTI_BEGIN ( MOAIPropWithDeckAndGrid )
@@ -260,9 +274,9 @@ void MOAIPropWithDeckAndGrid::MOAIAbstractRenderNode_Render ( MOAIRenderPhaseEnu
 		return;
 	}
 	
-	MOAICellCoord c0, c1;
+	ZLGridCoord c0, c1;
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr = this->Get < MOAIGfxMgr >();
 	u32 subPrimID = gfxMgr.GetIndex ();
 
 	if ( subPrimID == MOAIPartitionHull::NO_SUBPRIM_ID ) {
@@ -292,8 +306,8 @@ void MOAIPropWithDeckAndGrid::MOAIPartitionHull_AddToSortBuffer ( MOAIPartitionR
 
 		MOAIGrid& grid = *this->mGrid;
 
-		MOAICellCoord c0;
-		MOAICellCoord c1;
+		ZLGridCoord c0;
+		ZLGridCoord c1;
 
 		// TODO: this needs to be pushed up one level to GatherHulls
 		// should not assume anything about the view or rendering
@@ -304,11 +318,11 @@ void MOAIPropWithDeckAndGrid::MOAIPartitionHull_AddToSortBuffer ( MOAIPartitionR
 		for ( int y = c0.mY; y <= c1.mY; ++y ) {
 			for ( int x = c0.mX; x <= c1.mX; ++x ) {
 
-				MOAICellCoord wrap = grid.WrapCellCoord ( x, y );
+				ZLGridCoord wrap = grid.WrapCellCoord ( x, y );
 				u32 idx = grid.GetTile ( wrap.mX, wrap.mY );
-				if ( !idx || ( idx & MOAITileFlags::HIDDEN )) continue;
+				if ( !idx || ( idx & ZLTileFlags::HIDDEN )) continue;
 
-				MOAICellCoord coord ( x, y );
+				ZLGridCoord coord ( x, y );
 				int subPrimID = grid.GetCellAddr ( coord );
 
 				ZLVec3D loc;

@@ -25,7 +25,7 @@ public:
 	void			DrawString				( cc8* text, float x, float y, float width, float height );
 	void			DrawString				( cc8* text, float x, float y, float scale, MOAIFont& font, float fontSize, float shadowOffsetX, float shadowOffsetY, float width, float height );
 	void			EndDrawString			();
-					MOAIDrawUI				();
+					MOAIDrawUI				( ZLContext& context );
 					~MOAIDrawUI				();
 };
 

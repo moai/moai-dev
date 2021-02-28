@@ -42,7 +42,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIDrawDeck )
 	
 	//----------------------------------------------------------------//
-							MOAIDrawDeck					();
+							MOAIDrawDeck					( ZLContext& context );
 							~MOAIDrawDeck					();
 };
 

@@ -12,7 +12,12 @@
 //----------------------------------------------------------------//
 void MOAITileDeck2DCallable::MOAIAbstractGfxScriptCallback_Call () {
 
-	this->mBrush.Draw ( 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, this->mUOff, this->mVOff, this->mUScale, this->mVScale );
+	this->mBrush.Draw ( this->mGfxMgr, 0.0f, 0.0f, 0.0f, 1.0f, 1.0f, this->mUOff, this->mVOff, this->mUScale, this->mVScale );
+}
+
+//----------------------------------------------------------------//
+MOAITileDeck2DCallable::MOAITileDeck2DCallable ( MOAIGfxMgr& gfxMgr ) :
+	mGfxMgr ( gfxMgr ) {
 }
 
 //================================================================//
@@ -234,7 +239,12 @@ int MOAITileDeck2D::_transformUV ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAITileDeck2D::MOAITileDeck2D () {
+MOAITileDeck2D::MOAITileDeck2D ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIDeck ( context ),
+	MOAIHasGfxScriptBatchesForPhases ( context ),
+	MOAIGridSpace ( context ) {
 	
 	RTTI_BEGIN ( MOAITileDeck2D )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAITileDeck2D >)
@@ -324,18 +334,18 @@ void MOAITileDeck2D::MOAIDeck_Render ( ZLIndex idx, MOAIRenderPhaseEnum::_ rende
 	MOAIGfxScript* gfxScript = this->GetGfxScript ( idx, renderPhase );
 	if ( !gfxScript ) return;
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	MOAIQuadBrush::BindVertexFormat ();
+	MOAIGfxMgr& gfxMgr = this->Get < MOAIGfxMgr >();
+	MOAIQuadBrush::BindVertexFormat ( gfxMgr );
 	
 	gfxMgr.SetVertexTransform ( MOAIGfxMgr::MODEL_TO_DISPLAY_MTX );
 	gfxMgr.SetUVTransform ( MOAIGfxMgr::UV_TO_MODEL_MTX );
 	gfxMgr.SetBlendMode ( MOAIBlendMode ());
 	gfxMgr.SetShader ( MOAIShaderPresetEnum::DECK2D_SHADER );
 
-	MOAICellCoord coord = this->GetCellCoord ( idx );
+	ZLGridCoord coord = this->GetCellCoord ( idx );
 	ZLRect uvRect = this->GetTileRect ( coord );
 
-	MOAITileDeck2DCallable callable;
+	MOAITileDeck2DCallable callable ( gfxMgr );
 
 	callable.mUScale = ( uvRect.mXMax - uvRect.mXMin );
 	callable.mVScale = -( uvRect.mYMax - uvRect.mYMin );

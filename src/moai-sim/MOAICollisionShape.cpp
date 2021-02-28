@@ -34,15 +34,9 @@ void MOAICollisionShape::Clear () {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionShape::Draw ( const ZLAffine3D& localToWorldMtx ) {
-
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+void MOAICollisionShape::Draw ( MOAIGfxMgr& gfxMgr, MOAIDraw& draw, const ZLAffine3D& localToWorldMtx ) {
 
 	gfxMgr.SetUVTransform ( gfxMgr.GetMtx ( MOAIGfxMgr::UV_TO_MODEL_MTX ));
-
-	MOAIDraw& draw = MOAIDraw::Get ();
-	UNUSED ( draw ); // mystery warning in vs2008
-
 	draw.BindVectorPresets ();
 
 	for ( ZLIndex i = 0; i < this->mShapes.Size (); ++i ) {

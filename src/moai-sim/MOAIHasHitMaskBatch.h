@@ -22,7 +22,7 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-					MOAIHasHitMaskBatch			();
+					MOAIHasHitMaskBatch			( ZLContext& context );
 					~MOAIHasHitMaskBatch		();
 	void			SetHitMaskBatch				( MOAIAbstractHitMaskBatch* hitMaskBatch );
 };

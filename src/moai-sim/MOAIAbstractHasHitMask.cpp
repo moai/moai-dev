@@ -63,7 +63,9 @@ MOAIAbstractHitMask& MOAIAbstractHasHitMask::AffirmHitMask () {
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractHasHitMask::MOAIAbstractHasHitMask () {
+MOAIAbstractHasHitMask::MOAIAbstractHasHitMask ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ) {
 
 	RTTI_BEGIN ( MOAIAbstractHasHitMask )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractHasHitMask >)

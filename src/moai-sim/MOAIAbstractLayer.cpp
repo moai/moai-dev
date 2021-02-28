@@ -12,7 +12,7 @@
 // TODO: doxygen
 int MOAIAbstractLayer::_pushRenderPass ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIAbstractLayer, "U" )
-	MOAIGfxMgr::Get ().PushRenderable ( *self );
+	self->Get < MOAIGfxMgr >().PushRenderable ( *self );
 	return 0;
 }
 
@@ -31,7 +31,16 @@ int MOAIAbstractLayer::_setFrameBuffer ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIAbstractLayer::MOAIAbstractLayer () {
+MOAIAbstractLayer::MOAIAbstractLayer ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIHasGfxScriptsForPhases ( context ),
+	MOAIAbstractRenderable ( context ),
+	MOAISurfaceClearColor ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIColor ( context ) {
 	
 	this->mClearFlags = 0; // no clear on default
 	
@@ -77,7 +86,7 @@ bool MOAIAbstractLayer::MOAIAbstractRenderNode_LoadGfxState ( MOAIRenderPhaseEnu
 	if ( !this->MOAIAbstractRenderable::MOAIAbstractRenderNode_LoadGfxState ( renderPhase )) return false;
 	if ( this->IsClear ()) return false;
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr = this->Get < MOAIGfxMgr >();
 
 	// TODO: change this to a push/pop
 	if ( this->mFrameBuffer ) {

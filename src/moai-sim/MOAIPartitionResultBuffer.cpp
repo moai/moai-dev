@@ -282,7 +282,9 @@ void MOAIPartitionResultBuffer::GenerateKeys ( u32 mode, float xScale, float ySc
 }
 
 //----------------------------------------------------------------//
-MOAIPartitionResultBuffer::MOAIPartitionResultBuffer () :
+MOAIPartitionResultBuffer::MOAIPartitionResultBuffer ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
 	mResults ( 0 ),
 	mMainBuffer ( 0 ),
 	mSwapBuffer ( 0 ),
@@ -471,7 +473,7 @@ u32 MOAIPartitionResultBuffer::SortResultsIso () {
 //----------------------------------------------------------------//
 void MOAIPartitionResultBuffer::Render ( MOAIRenderPhaseEnum::_ renderPhase ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr = this->Get < MOAIGfxMgr >();
 	u32 totalResults = this->GetTotalResults ();
 
 	for ( u32 i = 0; i < totalResults; ++i ) {

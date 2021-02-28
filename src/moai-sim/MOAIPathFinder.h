@@ -114,7 +114,7 @@ public:
 	float				ComputeTerrainCost		( float moveCost, u32 terrain0, u32 terrain1 );
 	bool				FindPath				( int iterations );
 	bool				IsVisited				( ZLIndex nodeID );
-						MOAIPathFinder			();
+						MOAIPathFinder			( ZLContext& context );
 						~MOAIPathFinder			();
 	void				PushState				( ZLIndex nodeID, float cost, float estimate );
 };

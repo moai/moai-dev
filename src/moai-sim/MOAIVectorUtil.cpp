@@ -101,7 +101,7 @@ u32 SafeTesselator::GetTriangles ( MOAIVertexFormat& format, MOAIVertexBuffer& v
 
 	this->GetTriangles ( format, vtxStream, idxStream );
 	
-	return MOAIMeshWriter::GetMesh ( format, vtxStream, vtxStream.GetLength (), idxStream, idxStream.GetLength (), vtxBuffer, idxBuffer, idxSizeInBytes );
+	return this->Get < MOAIMeshWriter >().GetMesh ( format, vtxStream, vtxStream.GetLength (), idxStream, idxStream.GetLength (), vtxBuffer, idxBuffer, idxSizeInBytes );
 }
 
 //------------------------------------------------------------------//
@@ -136,7 +136,8 @@ void SafeTesselator::Reset () {
 }
 
 //------------------------------------------------------------------//
-SafeTesselator::SafeTesselator () :
+SafeTesselator::SafeTesselator ( ZLContext& context ) :
+	ZLHasContext ( context ),
 	mTess ( 0 ) {
 	this->Reset ();
 }

@@ -48,7 +48,7 @@ public:
 	};
 
 	//----------------------------------------------------------------//
-						MOAIProjectionProp			();
+						MOAIProjectionProp			( ZLContext& context );
 	virtual				~MOAIProjectionProp			();
 };
 

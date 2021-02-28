@@ -52,7 +52,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void				DrawIndex					( ZLIndex idx, MOAIMeshSpan* span );
-						MOAIMeshDeck				();
+						MOAIMeshDeck				( ZLContext& context );
 						~MOAIMeshDeck				();
 };
 

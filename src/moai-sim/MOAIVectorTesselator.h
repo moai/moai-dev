@@ -62,7 +62,7 @@ public:
 	DECL_LUA_OPAQUE ( MOAIVectorTesselatorWriter )
 
 	//----------------------------------------------------------------//
-							MOAIVectorTesselatorWriter			();
+							MOAIVectorTesselatorWriter			( ZLContext& context );
 							~MOAIVectorTesselatorWriter			();
 	MOAIVectorShape*		ReadShape							( ZLStream& stream );
 	void					WriteShape							( ZLStream& stream, const MOAIVectorShape& shape );
@@ -75,7 +75,7 @@ public:
 	@text	Convert vector primitives into triangles.
 */
 class MOAIVectorTesselator :
-	public MOAILuaObject {
+	public virtual MOAILuaObject {
 private:
 
 	enum {
@@ -182,7 +182,7 @@ public:
 	void				ClearTransforms				();
 	u32					CountVertices				( const MOAIVertexFormat& format, ZLStream& vtxStream );
 	int					Finish						();
-						MOAIVectorTesselator		();
+						MOAIVectorTesselator		( ZLContext& context );
 						~MOAIVectorTesselator		();
 	void				PopTransform				();
 	void				PushBezierVertices			( const ZLVec2D& p0, const ZLVec2D& p1, const ZLVec2D& p2, const ZLVec2D& p3 );

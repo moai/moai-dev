@@ -18,7 +18,9 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIVectorTesselatorWriter::MOAIVectorTesselatorWriter () :
+MOAIVectorTesselatorWriter::MOAIVectorTesselatorWriter ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
 	mFlushStyle ( true ) {
 	
 	RTTI_BEGIN ( MOAIVectorTesselatorWriter )
@@ -273,7 +275,7 @@ int MOAIVectorTesselator::_getTransform ( lua_State* L ) {
 int MOAIVectorTesselator::_openWriter ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIVectorTesselator, "U" )
 
-	MOAIVectorTesselatorWriter* writer = new MOAIVectorTesselatorWriter ();
+	MOAIVectorTesselatorWriter* writer = new MOAIVectorTesselatorWriter ( self->GetContext ());
 	state.Push ( writer );
 		
 	return 1;
@@ -889,7 +891,9 @@ int MOAIVectorTesselator::Finish () {
 }
 
 //----------------------------------------------------------------//
-MOAIVectorTesselator::MOAIVectorTesselator () :
+MOAIVectorTesselator::MOAIVectorTesselator ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
 	mDepthBias ( 0 ),
 	mDepthOffset ( 0 ),
 	mVerbose ( false ),
@@ -1072,7 +1076,7 @@ void MOAIVectorTesselator::ReadShapes ( ZLStream& stream ) {
 
 	this->ClearShapes ();
 
-	MOAIVectorTesselatorWriter writer;
+	MOAIVectorTesselatorWriter writer ( this->GetContext ());
 	writer.mStyle = this->mStyle;
 	
 	while ( MOAIVectorShape* shape = writer.ReadShape ( stream )) {
@@ -1130,7 +1134,7 @@ int MOAIVectorTesselator::Tesselate ( MOAIRegion& region, u32 flags ) {
 		
 		region.Clear ();
 	
-		SafeTesselator tess;
+		SafeTesselator tess ( this->GetContext ());
 		if ( !this->Tesselate ( tess, flags )) return 0;
 		
 		int error = tess.Tesselate (( int )this->mStyle.mWindingRule, TESS_BOUNDARY_CONTOURS, 0, 0 );
@@ -1175,7 +1179,7 @@ int MOAIVectorTesselator::Tesselate ( MOAIVertexBuffer& vtxBuffer, MOAIIndexBuff
 	int totalIndices = this->Tesselate ( vtxStream, idxStream, format, flags );
 	
 	if ( totalIndices > 0 ) {
-		return MOAIMeshWriter::GetMesh ( format, vtxStream, vtxStream.GetLength (), idxStream, idxStream.GetLength (), vtxBuffer, idxBuffer, idxSizeInBytes );
+		return this->Get < MOAIMeshWriter >().GetMesh ( format, vtxStream, vtxStream.GetLength (), idxStream, idxStream.GetLength (), vtxBuffer, idxBuffer, idxSizeInBytes );
 	}
 	
 	// something went wrong, return error code
@@ -1187,7 +1191,7 @@ void MOAIVectorTesselator::WriteShapes ( ZLStream& stream, MOAIVectorTesselatorW
 
 	assert ( writer );
 
-	MOAIVectorTesselatorWriter defaultWriter;
+	MOAIVectorTesselatorWriter defaultWriter ( this->GetContext ());
 	writer = writer ? writer : &defaultWriter;
 	
 	u32 nShapes = this->mShapeStack.GetTop ();

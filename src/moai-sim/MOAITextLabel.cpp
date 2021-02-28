@@ -858,7 +858,24 @@ int MOAITextLabel::_spool ( lua_State* L ) {
 const float MOAITextLabel::DEFAULT_SPOOL_SPEED = 24.0f;
 
 //----------------------------------------------------------------//
-MOAITextLabel::MOAITextLabel () :
+MOAITextLabel::MOAITextLabel ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIAbstractPickable ( context ),
+	MOAIPartitionHull ( context ),
+	MOAIHasGfxScriptsForPhases ( context ),
+	MOAIAbstractRenderable ( context ),
+	MOAIAbstractBaseTransform ( context ),
+	MOAIAbstractChildTransform ( context ),
+	MOAITransform ( context ),
+	MOAIAbstractProp ( context ),
+	MOAIColor ( context ),
+	MOAIAbstractGraphicsProp ( context ),
+	MOAIBlocker ( context ),
+	MOAIAction ( context ),
 	mNeedsLayout ( false ),
 	mSpool ( 0.0f ),
 	mSpeed ( DEFAULT_SPOOL_SPEED ),
@@ -982,7 +999,7 @@ void MOAITextLabel::SetText ( cc8* text ) {
 void MOAITextLabel::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.Visit ( *this )) return;
 
-	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAITextLabel >( TOTAL_DEBUG_LINE_STYLES );
+	this->Get <MOAIDebugLinesMgr >().ReserveStyleSet < MOAITextLabel >( TOTAL_DEBUG_LINE_STYLES );
 
 	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL_MASTER",				MOAIDebugLinesMgr::Pack < MOAITextLabel >( (u32) -1 ));
 	state.SetField ( -1, "DEBUG_DRAW_TEXT_LABEL",						MOAIDebugLinesMgr::Pack < MOAITextLabel >( DEBUG_DRAW_TEXT_LABEL ));
@@ -1183,7 +1200,7 @@ ZLMatrix4x4 MOAITextLabel::MOAIAbstractProp_GetWorldDrawingMtx () const {
 	
 	if ( this->mAutoFlip ) {
 		
-		ZLMatrix4x4 viewProj = MOAIGfxMgr::Get ().GetMtx ( MOAIGfxMgr::WORLD_TO_CLIP_MTX );
+		ZLMatrix4x4 viewProj = this->Get < MOAIGfxMgr >().GetMtx ( MOAIGfxMgr::WORLD_TO_CLIP_MTX );
 
 		ZLVec3D upVec = worldDrawingMtx.GetYAxis ();
 
@@ -1216,7 +1233,7 @@ ZLMatrix4x4 MOAITextLabel::MOAIAbstractProp_GetWorldDrawingMtx () const {
 //----------------------------------------------------------------//
 bool MOAITextLabel::MOAIAbstractRenderNode_LoadGfxState ( MOAIRenderPhaseEnum::_ renderPhase ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr = this->Get < MOAIGfxMgr >();
 
 	// TODO: was for drawing a label background. this is not the place for it.
 //	if ( this->mDeck ) {
@@ -1303,7 +1320,7 @@ void MOAITextLabel::MOAIAbstractRenderNode_Render ( MOAIRenderPhaseEnum::_ rende
 //		}
 //	}
 	
-	this->mLayout.Draw ( this->mReveal );
+	this->mLayout.Draw ( this->Get < MOAIGfxMgr >(), this->mReveal );
 }
 
 //----------------------------------------------------------------//

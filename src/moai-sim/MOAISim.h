@@ -15,7 +15,6 @@ class MOAIProp;
 //================================================================//
 // TODO: doxygen
 class MOAISim :
-	public virtual ZLContextClass,
 	public virtual MOAIUpdateMgr {
 public:
 
@@ -70,15 +69,9 @@ public:
 	GET_SET ( SetTextInputRectFunc, SetTextInputRectFunc, mSetTextInputRectFunc );
 	
 	//----------------------------------------------------------------//
-					MOAISim						();
+					MOAISim						( ZLContext& context );
 					~MOAISim					();
 	void			SetStep						( double step );
-	
-	//----------------------------------------------------------------//
-	// disambiguate
-	static MOAISim& Get () {
-		return ZLContextClass < MOAISim >::Get ();
-	}
 };
 
 #endif

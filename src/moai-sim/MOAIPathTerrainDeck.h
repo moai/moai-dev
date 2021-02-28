@@ -48,7 +48,7 @@ public:
 	GET ( ZLSize, VectorSize, mVectorSize )
 	
 	//----------------------------------------------------------------//
-					MOAIPathTerrainDeck			();
+					MOAIPathTerrainDeck			( ZLContext& context );
 					~MOAIPathTerrainDeck		();
 };
 

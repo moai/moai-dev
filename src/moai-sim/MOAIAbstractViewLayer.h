@@ -53,7 +53,7 @@ public:
 	float				GetFitting					( ZLRect& worldRect, float hPad, float vPad );
 	ZLMatrix4x4			GetWndToWorldMtx			() const;
 	ZLMatrix4x4			GetWorldToWndMtx			() const;
-						MOAIAbstractViewLayer		();
+						MOAIAbstractViewLayer		( ZLContext& context );
 						~MOAIAbstractViewLayer		();
 };
 

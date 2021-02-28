@@ -124,8 +124,8 @@ public:
 	void				ClearHighlight			( u32 base, u32 top );
 	void				ClearHighlights			();
 	size_t				CountSprites			();
-	void				Draw					( u32 reveal );
-	void				DrawDebug				();
+	void				Draw					( MOAIGfxMgr& gfxMgr, u32 reveal );
+	void				DrawDebug				( MOAIDebugLinesMgr& debugLines, MOAIDraw& draw );
 	bool				GetFrame				( ZLRect& frame );
 	bool				GetFrameForRange		( u32 idx, u32 size, ZLRect& frame );
 						MOAITextLayout			();

@@ -108,7 +108,10 @@ int MOAIMetaTileDeck2D::_setMetaTile ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIMetaTileDeck2D::MOAIMetaTileDeck2D () {
+MOAIMetaTileDeck2D::MOAIMetaTileDeck2D ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIDeck ( context ) {
 	
 	RTTI_BEGIN ( MOAIMetaTileDeck2D )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIMetaTileDeck2D >)
@@ -192,8 +195,8 @@ void MOAIMetaTileDeck2D::MOAIDeck_Render ( ZLIndex idx, MOAIRenderPhaseEnum::_ r
 	idx =  ZLIndexOp::SubtractAndWrap ( idx, 1, size );
 	MOAIMetaTile& brush = this->mBrushes [ idx ];
 	
-	MOAICellCoord c0 = brush.mMin;
-	MOAICellCoord c1 = brush.mMax;
+	ZLGridCoord c0 = brush.mMin;
+	ZLGridCoord c1 = brush.mMax;
 	
 	MOAIGrid& grid = *this->mGrid;
 	
@@ -208,16 +211,16 @@ void MOAIMetaTileDeck2D::MOAIDeck_Render ( ZLIndex idx, MOAIRenderPhaseEnum::_ r
 	float xOff = brush.mOffset.mX - ( c0.mX * tileWidth );
 	float yOff = brush.mOffset.mY - ( c0.mY * tileHeight );
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr = this->Get < MOAIGfxMgr >();
 	const ZLAffine3D& modelToWorldMtx = gfxMgr.GetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX );
 	
 	for ( int y = c0.mY; y <= c1.mY; ++y ) {
 		for ( int x = c0.mX; x <= c1.mX; ++x ) {
 			
-			MOAICellCoord wrap = grid.WrapCellCoord ( x, y );
+			ZLGridCoord wrap = grid.WrapCellCoord ( x, y );
 			idx = grid.GetTile ( wrap.mX, wrap.mY );
 			
-			MOAICellCoord coord ( x, y );
+			ZLGridCoord coord ( x, y );
 			ZLVec3D loc = grid.GetTilePoint ( coord, MOAIGridSpace::TILE_CENTER, 0.0f );
 			
 			ZLAffine3D mtx = modelToWorldMtx;

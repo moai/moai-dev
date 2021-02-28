@@ -218,7 +218,9 @@ int MOAIFontReader::GetKernVec ( u32 c, MOAIKernVec& kernVec ) {
 }
 
 //----------------------------------------------------------------//
-MOAIFontReader::MOAIFontReader () {
+MOAIFontReader::MOAIFontReader ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ) {
 	
 	RTTI_BEGIN ( MOAIFontReader )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIFontReader >)

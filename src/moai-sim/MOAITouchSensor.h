@@ -123,9 +123,9 @@ public:
 
 	//----------------------------------------------------------------//
 	void				ClearState					();
-	static void			EnqueueTouchEvent			( ZLIndex deviceID, ZLIndex sensorID, u32 touchID, bool down, float x, float y );
-	static void			EnqueueTouchEventCancel		( ZLIndex deviceID, ZLIndex sensorID );
-						MOAITouchSensor				();
+	static void			EnqueueTouchEvent			( MOAIInputMgr& inputMgr, ZLIndex deviceID, ZLIndex sensorID, u32 touchID, bool down, float x, float y );
+	static void			EnqueueTouchEventCancel		( MOAIInputMgr& inputMgr, ZLIndex deviceID, ZLIndex sensorID );
+						MOAITouchSensor				( ZLContext& context );
 						~MOAITouchSensor			();
 	void				ParseEvent					( ZLStream& eventStream );
 	void				ResetState					();

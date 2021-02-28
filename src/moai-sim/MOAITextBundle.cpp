@@ -102,14 +102,14 @@ void MOAITextBundle::Clear ( ) {
 }
 
 //----------------------------------------------------------------//
-bool MOAITextBundle::Load(const char *filename) {
-	Clear();
+bool MOAITextBundle::Load ( const char *filename ) {
+	Clear ();
 
 	if( filename == 0 ) {
 		return false;
 	}
 	
-	MOAIDataBuffer buf;
+	MOAIDataBuffer buf ( this->GetContext ());
 	if( !buf.Load ( filename ) ) {
 		// TODO: log error message?
 		return false;
@@ -239,7 +239,9 @@ const char *MOAITextBundle::Lookup(const char *key) {
 }
 
 //----------------------------------------------------------------//
-MOAITextBundle::MOAITextBundle () :
+MOAITextBundle::MOAITextBundle ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
 	mData ( 0 ) {
 	
 	RTTI_BEGIN ( MOAITextBundle )

@@ -25,7 +25,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			Init							( AKUParticleInitFunc initFunc, AKUParticleRenderFunc renderFunc, int size );
-					MOAIParticleCallbackPlugin		();
+					MOAIParticleCallbackPlugin		( ZLContext& context );
 					~MOAIParticleCallbackPlugin		();
 	void			OnInit							( float* particle, float* registers );
 	void			OnRender						( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1, float term );

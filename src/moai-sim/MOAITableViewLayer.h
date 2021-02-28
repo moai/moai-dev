@@ -24,7 +24,7 @@ public:
 	DECL_LUA_FACTORY ( MOAITableViewLayer )
 	
 	//----------------------------------------------------------------//
-					MOAITableViewLayer			();
+					MOAITableViewLayer			( ZLContext& context );
 					~MOAITableViewLayer			();
 };
 

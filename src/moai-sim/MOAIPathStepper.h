@@ -55,7 +55,7 @@ public:
 	GET ( float, Length, mLength )
 	
 	//----------------------------------------------------------------//
-					MOAIPathStepper			();
+					MOAIPathStepper			( ZLContext& context );
 					~MOAIPathStepper		();
 	bool			More					();
 	ZLVec2D			Next					();

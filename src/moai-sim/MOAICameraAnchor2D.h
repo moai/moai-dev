@@ -45,7 +45,7 @@ public:
 	DECL_ATTR_ID ( INHERIT_LOC );
 
 	//----------------------------------------------------------------//
-					MOAICameraAnchor2D		();
+					MOAICameraAnchor2D		( ZLContext& context );
 	virtual			~MOAICameraAnchor2D		();
 };
 

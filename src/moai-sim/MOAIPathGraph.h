@@ -28,7 +28,7 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-					MOAIPathGraph			();
+					MOAIPathGraph			( ZLContext& context );
 					~MOAIPathGraph			();
 };
 

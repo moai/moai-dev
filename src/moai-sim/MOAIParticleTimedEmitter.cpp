@@ -39,7 +39,18 @@ float MOAIParticleTimedEmitter::GetRandomFrequency () {
 }
 
 //----------------------------------------------------------------//
-MOAIParticleTimedEmitter::MOAIParticleTimedEmitter () :
+MOAIParticleTimedEmitter::MOAIParticleTimedEmitter ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIAbstractBaseTransform ( context ),
+	MOAIAbstractChildTransform ( context ),
+	MOAITransform ( context ),
+	MOAIBlocker ( context ),
+	MOAIAction ( context ),
+	MOAIParticleEmitter ( context ),
 	mTime ( 0.0f ),
 	mEmitTime ( 0.0f ),
 	mMinFrequency ( 1.0f ),

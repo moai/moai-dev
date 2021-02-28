@@ -176,7 +176,7 @@ bool MOAIAbstractGraphicsProp::IsVisible () {
 //----------------------------------------------------------------//
 void MOAIAbstractGraphicsProp::LoadUVTransform () {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr = this->Get < MOAIGfxMgr >();
 	
 	if ( this->mUVTransform ) {
 		ZLAffine3D uvMtx = this->mUVTransform->GetLocalToWorldMtx ();
@@ -188,7 +188,21 @@ void MOAIAbstractGraphicsProp::LoadUVTransform () {
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractGraphicsProp::MOAIAbstractGraphicsProp () :
+MOAIAbstractGraphicsProp::MOAIAbstractGraphicsProp ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIAbstractPickable ( context ),
+	MOAIPartitionHull ( context ),
+	MOAIHasGfxScriptsForPhases ( context ),
+	MOAIAbstractRenderable ( context ),
+	MOAIAbstractBaseTransform ( context ),
+	MOAIAbstractChildTransform ( context ),
+	MOAITransform ( context ),
+	MOAIAbstractProp ( context ),
+	MOAIColor ( context ),
 	mBillboard ( BILLBOARD_NONE ) {
 	
 	RTTI_BEGIN ( MOAIAbstractGraphicsProp )
@@ -292,7 +306,7 @@ void MOAIAbstractGraphicsProp::_RegisterLuaFuncs ( RTTIVisitorHistory& history, 
 //----------------------------------------------------------------//
 ZLMatrix4x4 MOAIAbstractGraphicsProp::MOAIAbstractProp_GetWorldDrawingMtx () const {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr = this->Get < MOAIGfxMgr >();
 
 	ZLMatrix4x4 worldDrawingMtx;
 
@@ -501,7 +515,7 @@ bool MOAIAbstractGraphicsProp::MOAIAbstractRenderNode_LoadGfxState ( MOAIRenderP
 
 	if ( !MOAIAbstractProp::MOAIAbstractRenderNode_LoadGfxState ( renderPhase )) return false;
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr = this->Get < MOAIGfxMgr >();
 
 	gfxMgr.SetPenColor ( this->mColor );
 	

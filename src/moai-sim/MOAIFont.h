@@ -151,7 +151,7 @@ public:
 	void				InitWithBMFont			( cc8* filename, const u32 numPreloadedTextures, MOAITexture** preloadedTextures );
 	static bool			IsControl				( u32 c );
 	static bool			IsWhitespace			( u32 c );
-						MOAIFont				();
+						MOAIFont				( ZLContext& context );
 						~MOAIFont				();
 	void				ProcessGlyphs			();
 	void				RebuildKerning			();

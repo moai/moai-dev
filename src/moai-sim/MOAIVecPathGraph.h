@@ -43,7 +43,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIVecPathGraph )
 	
 	//----------------------------------------------------------------//
-					MOAIVecPathGraph			();
+					MOAIVecPathGraph			( ZLContext& context );
 					~MOAIVecPathGraph			();
 };
 

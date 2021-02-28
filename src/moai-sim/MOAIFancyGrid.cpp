@@ -214,7 +214,7 @@ u32 MOAIFancyGrid::GetColor ( int addr ) const {
 //----------------------------------------------------------------//
 u32 MOAIFancyGrid::GetColor ( int xTile, int yTile ) const {
 
-	MOAICellCoord coord ( xTile, yTile );
+	ZLGridCoord coord ( xTile, yTile );
 	
 	if ( this->IsValidCoord ( coord )) {
 		return this->GetColor ( this->GetCellAddr ( coord ));
@@ -254,7 +254,7 @@ ZLColorVec MOAIFancyGrid::GetTileColor ( int addr ) const {
 //----------------------------------------------------------------//
 ZLColorVec MOAIFancyGrid::GetTileColor ( int xTile, int yTile ) const {
 
-	MOAICellCoord coord ( xTile, yTile );
+	ZLGridCoord coord ( xTile, yTile );
 	
 	if ( this->IsValidCoord ( coord )) {
 		this->GetTileColor ( this->GetCellAddr ( coord ));
@@ -263,7 +263,11 @@ ZLColorVec MOAIFancyGrid::GetTileColor ( int xTile, int yTile ) const {
 }
 
 //----------------------------------------------------------------//
-MOAIFancyGrid::MOAIFancyGrid () :
+MOAIFancyGrid::MOAIFancyGrid ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIGridSpace ( context ),
+	MOAIGrid ( context ),
 	mColorSize ( COLOR_SIZE_32 ),
 	mColorSet ( 0 ) {
 		
@@ -345,7 +349,7 @@ void MOAIFancyGrid::SetColor ( int addr, u32 value ) {
 //----------------------------------------------------------------//
 void MOAIFancyGrid::SetColor ( int xTile, int yTile, u32 value ) {
 
-	MOAICellCoord coord ( xTile, yTile );
+	ZLGridCoord coord ( xTile, yTile );
 	
 	if ( this->IsValidCoord ( coord )) {
 		this->SetColor ( this->GetCellAddr ( coord ), value );

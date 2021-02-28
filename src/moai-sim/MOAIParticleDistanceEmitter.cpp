@@ -54,7 +54,18 @@ float MOAIParticleDistanceEmitter::GetRandomDistance () {
 }
 
 //----------------------------------------------------------------//
-MOAIParticleDistanceEmitter::MOAIParticleDistanceEmitter () :
+MOAIParticleDistanceEmitter::MOAIParticleDistanceEmitter ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIAbstractBaseTransform ( context ),
+	MOAIAbstractChildTransform ( context ),
+	MOAITransform ( context ),
+	MOAIBlocker ( context ),
+	MOAIAction ( context ),
+	MOAIParticleEmitter ( context ),
 	mReset ( true ),
 	mMinDistance ( 0.0f ),
 	mMaxDistance ( 0.0f ),

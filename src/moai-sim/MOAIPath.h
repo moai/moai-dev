@@ -47,7 +47,7 @@ public:
 	ZLVec2D				Evaluate				( float t );
 	ZLCubicBezier2D		GetSegment				( ZLIndex idx );
 	ZLCubicBezier2D		GetSegmentForTime		( float t, float* st = 0 );
-						MOAIPath				();
+						MOAIPath				( ZLContext& context );
 						~MOAIPath				();
 	void				Reserve					( ZLSize size );
 	void				SetPoint				( ZLIndex idx, float x, float y );

@@ -12,8 +12,8 @@ private:
 
 	friend class MOAIMetaTileDeck2D;
 	
-	MOAICellCoord	mMin;
-	MOAICellCoord	mMax;
+	ZLGridCoord	mMin;
+	ZLGridCoord	mMax;
 	ZLVec2D			mOffset;
 
 public:
@@ -59,7 +59,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIMetaTileDeck2D )
 		
 	//----------------------------------------------------------------//
-					MOAIMetaTileDeck2D		();
+					MOAIMetaTileDeck2D		( ZLContext& context );
 					~MOAIMetaTileDeck2D		();
 };
 

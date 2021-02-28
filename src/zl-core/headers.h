@@ -59,6 +59,7 @@
 #include <zl-core/ZLFrameSize.h>
 #include <zl-core/ZLFrustum.h>
 #include <zl-core/ZLFrustumFitter.h>
+#include <zl-core/ZLGridSpace.h>
 #include <zl-core/ZLHashFNV1a.h>
 #include <zl-core/ZLHashedString.h>
 #include <zl-core/ZLHashWriter.h>
@@ -119,6 +120,7 @@
 #include <zl-core/ZLSurface2D.h>
 #include <zl-core/ZLSyntaxNode.h>
 #include <zl-core/ZLSyntaxScanner.h>
+#include <zl-core/ZLTileFlags.h>
 #include <zl-core/ZLThread.h>
 #include <zl-core/ZLThread_posix.h>
 #include <zl-core/ZLThread_win32.h>

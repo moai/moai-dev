@@ -64,12 +64,12 @@ public:
 	DECL_LUA_FACTORY ( MOAITextBundle )
 	
 	//----------------------------------------------------------------//
-	MOAITextBundle			();
-	~MOAITextBundle			();
-	void					Clear();
-	bool					Load(const char *filename);
-	bool					Load(MOAIDataBuffer *buffer);
-	const char *			Lookup(const char *key);
+	void					Clear					();
+	bool					Load					(const char *filename);
+	bool					Load					(MOAIDataBuffer *buffer);
+	const char *			Lookup					(const char *key);
+							MOAITextBundle			( ZLContext& context );
+							~MOAITextBundle			();
 };
 
 

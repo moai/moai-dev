@@ -32,10 +32,10 @@
 	@out	nil
 */
 int MOAISim::_crash ( lua_State* L ) {
-	UNUSED(L);
+	UNUSED ( L );
 	
 	int *p = NULL;
-	(*p) = 0;
+	( *p ) = 0;
 	
 	return 0;
 }
@@ -47,10 +47,9 @@ int MOAISim::_crash ( lua_State* L ) {
 	@out	nil
 */
 int MOAISim::_enterFullscreenMode ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAISim, "" )
 
-	MOAILuaState state ( L );
-
-	EnterFullscreenModeFunc func = MOAISim::Get ().GetEnterFullscreenModeFunc ();
+	EnterFullscreenModeFunc func = self->GetEnterFullscreenModeFunc ();
 	if ( func ) {
 		func.mFunc ( func.mUserdata );
 	}
@@ -65,10 +64,9 @@ int MOAISim::_enterFullscreenMode ( lua_State* L ) {
 	@out	nil
 */
 int MOAISim::_exitFullscreenMode ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAISim, "" )
 
-	MOAILuaState state ( L );
-
-	ExitFullscreenModeFunc func = MOAISim::Get ().GetExitFullscreenModeFunc ();
+	ExitFullscreenModeFunc func = self->GetExitFullscreenModeFunc ();
 	if ( func ) {
 		func.mFunc ( func.mUserdata );
 	}
@@ -87,6 +85,10 @@ int MOAISim::_exitFullscreenMode ( lua_State* L ) {
 	@out	table	usage		The breakdown of each subsystem's memory usage, in bytes. There is also a "total" field that contains the summed value.
 */
 int MOAISim::_getMemoryUsage ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAISim, "" )
+	
+	MOAILuaRuntime& runtime = self->Get < MOAILuaRuntime >();
+	MOAIGfxMgr& gfxMgr = self->Get < MOAIGfxMgr >();
 	
 	float divisor = 1.0f;
 	
@@ -107,7 +109,7 @@ int MOAISim::_getMemoryUsage ( lua_State* L ) {
 	
 	size_t count;
 	
-	count = MOAILuaRuntime::Get().GetMemoryUsage ();
+	count = runtime.GetMemoryUsage ();
 	lua_pushnumber(L, count / divisor);
 	lua_setfield(L, -2, "lua");
 	total += count;
@@ -118,7 +120,7 @@ int MOAISim::_getMemoryUsage ( lua_State* L ) {
 	lua_pushnumber ( L, luabytes / divisor  );
 	lua_setfield ( L, -2, "_luagc_count" );
 	
-	count = MOAIGfxMgr::Get ().GetTextureMemoryUsage ();
+	count = gfxMgr.GetTextureMemoryUsage ();
 	lua_pushnumber ( L, count / divisor );
 	lua_setfield ( L, -2, "texture" );
 	total += count;
@@ -173,9 +175,10 @@ int MOAISim::_getMemoryUsage ( lua_State* L ) {
 	@out	number texture memory usage in bytes
 */
 int MOAISim::_getMemoryUsagePlain ( lua_State *L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAISim, "" )
 	
-	size_t lua = MOAILuaRuntime::Get().GetMemoryUsage ();
-	size_t tex = MOAIGfxMgr::Get ().GetTextureMemoryUsage ();
+	size_t lua = self->Get < MOAILuaRuntime >().GetMemoryUsage ();
+	size_t tex = self->Get < MOAIGfxMgr >().GetTextureMemoryUsage ();
 	
 	lua_pushnumber ( L, ( lua_Number )lua );
 	lua_pushnumber ( L, ( lua_Number )tex );
@@ -195,14 +198,14 @@ int MOAISim::_getMemoryUsagePlain ( lua_State *L ) {
 	@out	number seconds  Last render duration
 */
 int MOAISim::_getPerformance ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAISim, "" )
 
-	MOAISim& sim = MOAISim::Get ();
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr = self->Get < MOAIGfxMgr >();
 
-	lua_pushnumber ( L, sim.mFrameRate );
-	lua_pushnumber ( L, sim.mLastActionTreeTime );
-	lua_pushnumber ( L, sim.mLastNodeMgrTime );
-	lua_pushnumber ( L, sim.mSimDuration );
+	lua_pushnumber ( L, self->mFrameRate );
+	lua_pushnumber ( L, self->mLastActionTreeTime );
+	lua_pushnumber ( L, self->mLastNodeMgrTime );
+	lua_pushnumber ( L, self->mSimDuration );
 	lua_pushnumber ( L, gfxMgr.GetRenderDuration ());
 
 	return 5;
@@ -215,14 +218,12 @@ int MOAISim::_getPerformance ( lua_State* L ) {
 	@out	nil
 */
 int MOAISim::_hideCursor ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAISim, "" )
 
-	MOAILuaState state ( L );
-
-	HideCursorFunc func = MOAISim::Get ().GetHideCursorFunc ();
+	HideCursorFunc func =self->GetHideCursorFunc ();
 	if ( func ) {
 		func.mFunc ( func.mUserdata );
 	}
-
 	return 0;
 }
 
@@ -236,24 +237,21 @@ int MOAISim::_hideCursor ( lua_State* L ) {
 	@out	nil
 */
 int MOAISim::_openWindow ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAISim, "SNN" )
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	
-	MOAILuaState state ( L );
-	if ( !state.CheckParams ( 1, "SNN" )) return 0;
-	
+	MOAIGfxMgr& gfxMgr = self->Get < MOAIGfxMgr >();
+
 	cc8* title = lua_tostring ( state, 1 );
 	u32 width = state.GetValue < u32 >( 2, 320 );
 	u32 height = state.GetValue < u32 >( 3, 480 );
 
-	OpenWindowFunc openWindow = MOAISim::Get ().GetOpenWindowFunc ();
+	OpenWindowFunc openWindow = self->GetOpenWindowFunc ();
 	if ( openWindow ) {
 		MOAIFrameBuffer* buffer = gfxMgr.GetDefaultFrameBuffer ();
 		assert ( buffer );
 		buffer->SetFrameSize ( width, height );
 		openWindow.mFunc ( title, width, height, openWindow.mUserdata );
 	}
-
 	return 0;
 }
 
@@ -265,8 +263,8 @@ int MOAISim::_openWindow ( lua_State* L ) {
 	@out	nil
 */
 int MOAISim::_setStep ( lua_State* L ) {
-	MOAILuaState state ( L );
-	MOAISim::Get ().SetStep ( state.GetValue < double >( 1, 1.0 / ( double )DEFAULT_STEPS_PER_SECOND ));
+	MOAI_LUA_SETUP_SINGLE ( MOAISim, "" )
+	self->SetStep ( state.GetValue < double >( 1, 1.0 / ( double )DEFAULT_STEPS_PER_SECOND ));
 	return 0;
 }
 
@@ -277,16 +275,15 @@ int MOAISim::_setStep ( lua_State* L ) {
 	@out	nil
  */
 int MOAISim::_setTextInputRect ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAISim, "" )
 	
-	MOAILuaState state ( L );
 	ZLIntRect rect = state.GetRect< int >( 1 );
 	rect.Bless();
 	
-	SetTextInputRectFunc func = MOAISim::Get ().GetSetTextInputRectFunc ();
+	SetTextInputRectFunc func = self->GetSetTextInputRectFunc ();
 	if ( func ) {
 		func.mFunc ( rect.mXMin, rect.mYMin, rect.mXMax, rect.mYMax, func.mUserdata );
 	}
-	
 	return 0;
 }
 
@@ -297,14 +294,12 @@ int MOAISim::_setTextInputRect ( lua_State* L ) {
 	@out	nil
 */
 int MOAISim::_showCursor ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAISim, "" )
 
-	MOAILuaState state ( L );
-
-	ShowCursorFunc func = MOAISim::Get ().GetShowCursorFunc ();
+	ShowCursorFunc func = self->GetShowCursorFunc ();
 	if ( func ) {
 		func.mFunc ( func.mUserdata );
 	}
-
 	return 0;
 }
 
@@ -313,7 +308,13 @@ int MOAISim::_showCursor ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAISim::MOAISim () :
+MOAISim::MOAISim ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	ZLContextClass ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIGlobalEventSource ( context ),
+	MOAIUpdateMgr ( context ),
 	mEnterFullscreenModeFunc ( NULL, NULL ),
 	mExitFullscreenModeFunc ( NULL, NULL ),
 	mOpenWindowFunc ( NULL, NULL ),
@@ -377,17 +378,17 @@ void MOAISim::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState& sta
 //----------------------------------------------------------------//
 void MOAISim::MOAIUpdateMgr_DidResume ( double skip ) {
 
-	MOAIInputMgr::Get ().FlushEvents ( skip );
+	this->Get < MOAIInputMgr >().FlushEvents ( skip );
 }
 
 //----------------------------------------------------------------//
 void MOAISim::MOAIUpdateMgr_WillStep ( double step ) {
 
-	MOAIInputMgr::Get ().Update ( step );
+	this->Get < MOAIInputMgr >().Update ( step );
 }
 
 //----------------------------------------------------------------//
 void MOAISim::MOAIUpdateMgr_WillUpdate () {
 
-	MOAIMainThreadTaskSubscriber::Get ().Publish ();
+	this->Get < MOAIMainThreadTaskSubscriber >().Publish ();
 }

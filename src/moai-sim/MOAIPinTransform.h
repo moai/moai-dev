@@ -46,7 +46,7 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-					MOAIPinTransform			();
+					MOAIPinTransform			( ZLContext& context );
 					~MOAIPinTransform			();
 };
 

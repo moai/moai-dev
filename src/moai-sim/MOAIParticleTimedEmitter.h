@@ -13,7 +13,7 @@
 	@text	Particle emitter.
 */
 class MOAIParticleTimedEmitter :
-	public MOAIParticleEmitter {
+	public virtual MOAIParticleEmitter {
 private:
 	
 	float	mTime;
@@ -38,7 +38,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIParticleTimedEmitter )
 
 	//----------------------------------------------------------------//
-					MOAIParticleTimedEmitter		();
+					MOAIParticleTimedEmitter		( ZLContext& context );
 					~MOAIParticleTimedEmitter		();
 	void			SetFrequencyRange				( float min, float max );
 };

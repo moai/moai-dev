@@ -38,62 +38,62 @@ typedef void ( *AKUShowCursorFunc )				( void* userdata );
 // setup
 AKU_API void			AKUSimAppFinalize				();
 AKU_API void			AKUSimAppInitialize				();
-AKU_API void			AKUSimContextInitialize			();
+AKU_API void			AKUSimContextInitialize			( AKUContextID contextID );
 
 // management api
-AKU_API double			AKUGetSimStep					();
-AKU_API void			AKUPause						( bool pause );
-AKU_API void			AKURender						();
-AKU_API void			AKUSetOrientation				( int orientation );
-AKU_API void			AKUSetScreenDpi					( int dpi );
-AKU_API void			AKUSetScreenSize				( int width, int height );
-AKU_API void			AKUSetViewSize					( int width, int height );
-AKU_API void			AKUUpdate						();
+AKU_API double			AKUGetSimStep					( AKUContextID contextID );
+AKU_API void			AKUPause						( AKUContextID contextID, bool pause );
+AKU_API void			AKURender						( AKUContextID contextID );
+AKU_API void			AKUSetOrientation				( AKUContextID contextID, int orientation );
+AKU_API void			AKUSetScreenDpi					( AKUContextID contextID, int dpi );
+AKU_API void			AKUSetScreenSize				( AKUContextID contextID, int width, int height );
+AKU_API void			AKUSetViewSize					( AKUContextID contextID, int width, int height );
+AKU_API void			AKUUpdate						( AKUContextID contextID );
 
 // callback management
-AKU_API void			AKUSetFunc_EnterFullscreenMode	( AKUEnterFullscreenModeFunc func, void* userdata );
-AKU_API void			AKUSetFunc_ExitFullscreenMode	( AKUExitFullscreenModeFunc func, void* userdata );
-AKU_API void			AKUSetFunc_ShowCursor			( AKUShowCursorFunc func, void* userdata );
-AKU_API void			AKUSetFunc_HideCursor			( AKUHideCursorFunc func, void* userdata );
-AKU_API void			AKUSetFunc_OpenWindow			( AKUOpenWindowFunc func, void* userdata );
-AKU_API void			AKUSetFunc_SetSimStep			( AKUSetSimStepFunc func, void* userdata );
-AKU_API void			AKUSetFunc_SetTextInputRect		( AKUSetTextInputRectFunc func, void* userdata );
+AKU_API void			AKUSetFunc_EnterFullscreenMode	( AKUContextID contextID, AKUEnterFullscreenModeFunc func, void* userdata );
+AKU_API void			AKUSetFunc_ExitFullscreenMode	( AKUContextID contextID, AKUExitFullscreenModeFunc func, void* userdata );
+AKU_API void			AKUSetFunc_ShowCursor			( AKUContextID contextID, AKUShowCursorFunc func, void* userdata );
+AKU_API void			AKUSetFunc_HideCursor			( AKUContextID contextID, AKUHideCursorFunc func, void* userdata );
+AKU_API void			AKUSetFunc_OpenWindow			( AKUContextID contextID, AKUOpenWindowFunc func, void* userdata );
+AKU_API void			AKUSetFunc_SetSimStep			( AKUContextID contextID, AKUSetSimStepFunc func, void* userdata );
+AKU_API void			AKUSetFunc_SetTextInputRect		( AKUContextID contextID, AKUSetTextInputRectFunc func, void* userdata );
 
 // input device api
-AKU_API void			AKUReserveInputDevices			( int total );
-AKU_API void			AKUReserveInputDeviceSensors	( int deviceID, int total );
-AKU_API void			AKUSetInputAutoTimestamp		( bool autotimestamp ); // optional: causes the input manager to automatically assign timestamps
-AKU_API void			AKUSetInputConfigurationName	( char const* name );
-AKU_API void			AKUSetInputDevice				( int deviceID, char const* name );
-AKU_API void			AKUSetInputDeviceHardwareInfo	( int deviceID, char const* hardwareInfo );
-AKU_API void			AKUSetInputDeviceActive			( int deviceID, bool active );
-AKU_API void			AKUSetInputDeviceButton			( int deviceID, int sensorID, char const* name );
-AKU_API void			AKUSetInputDeviceCompass		( int deviceID, int sensorID, char const* name );
-AKU_API void			AKUSetInputDeviceKeyboard		( int deviceID, int sensorID, char const* name );
-AKU_API void			AKUSetInputDeviceJoystick		( int deviceID, int sensorID, char const* name );
-AKU_API void			AKUSetInputDeviceLevel			( int deviceID, int sensorID, char const* name );
-AKU_API void			AKUSetInputDeviceLocation		( int deviceID, int sensorID, char const* name );
-AKU_API void			AKUSetInputDevicePointer		( int deviceID, int sensorID, char const* name );
-AKU_API void			AKUSetInputDeviceTouch			( int deviceID, int sensorID, char const* name );
-AKU_API void			AKUSetInputDeviceVector			( int deviceID, int sensorID, char const* name );
-AKU_API void			AKUSetInputDeviceWheel			( int deviceID, int sensorID, char const* name );
-AKU_API void			AKUSetInputTimebase				( double timebase ); // optional: sets timebase event timestamps
-AKU_API void			AKUSetInputTimestamp			( double timestamp ); // optional: sets timestamp for next input event
+AKU_API void			AKUReserveInputDevices			( AKUContextID contextID, int total );
+AKU_API void			AKUReserveInputDeviceSensors	( AKUContextID contextID, int deviceID, int total );
+AKU_API void			AKUSetInputAutoTimestamp		( AKUContextID contextID, bool autotimestamp ); // optional: causes the input manager to automatically assign timestamps
+AKU_API void			AKUSetInputConfigurationName	( AKUContextID contextID, char const* name );
+AKU_API void			AKUSetInputDevice				( AKUContextID contextID, int deviceID, char const* name );
+AKU_API void			AKUSetInputDeviceHardwareInfo	( AKUContextID contextID, int deviceID, char const* hardwareInfo );
+AKU_API void			AKUSetInputDeviceActive			( AKUContextID contextID, int deviceID, bool active );
+AKU_API void			AKUSetInputDeviceButton			( AKUContextID contextID, int deviceID, int sensorID, char const* name );
+AKU_API void			AKUSetInputDeviceCompass		( AKUContextID contextID, int deviceID, int sensorID, char const* name );
+AKU_API void			AKUSetInputDeviceKeyboard		( AKUContextID contextID, int deviceID, int sensorID, char const* name );
+AKU_API void			AKUSetInputDeviceJoystick		( AKUContextID contextID, int deviceID, int sensorID, char const* name );
+AKU_API void			AKUSetInputDeviceLevel			( AKUContextID contextID, int deviceID, int sensorID, char const* name );
+AKU_API void			AKUSetInputDeviceLocation		( AKUContextID contextID, int deviceID, int sensorID, char const* name );
+AKU_API void			AKUSetInputDevicePointer		( AKUContextID contextID, int deviceID, int sensorID, char const* name );
+AKU_API void			AKUSetInputDeviceTouch			( AKUContextID contextID, int deviceID, int sensorID, char const* name );
+AKU_API void			AKUSetInputDeviceVector			( AKUContextID contextID, int deviceID, int sensorID, char const* name );
+AKU_API void			AKUSetInputDeviceWheel			( AKUContextID contextID, int deviceID, int sensorID, char const* name );
+AKU_API void			AKUSetInputTimebase				( AKUContextID contextID, double timebase ); // optional: sets timebase event timestamps
+AKU_API void			AKUSetInputTimestamp			( AKUContextID contextID, double timestamp ); // optional: sets timestamp for next input event
 
 // input events api
-AKU_API void			AKUEnqueueButtonEvent			( int deviceID, int sensorID, bool down );
-AKU_API void			AKUEnqueueCompassEvent			( int deviceID, int sensorID, float heading );
-AKU_API void			AKUEnqueueJoystickEvent			( int deviceID, int sensorID, float x, float y );
-AKU_API void			AKUEnqueueKeyboardCharEvent		( int deviceID, int sensorID, int unicodeChar );
-AKU_API void			AKUEnqueueKeyboardEditEvent		( int deviceID, int sensorID, char const* text, int start, int editLength, int maxLength);
-AKU_API void			AKUEnqueueKeyboardKeyEvent		( int deviceID, int sensorID, int keyID, bool down );
-AKU_API void			AKUEnqueueKeyboardTextEvent		( int deviceID, int sensorID, const char* text );
-AKU_API void			AKUEnqueueLevelEvent			( int deviceID, int sensorID, float x, float y, float z );
-AKU_API void			AKUEnqueueLocationEvent			( int deviceID, int sensorID, double longitude, double latitude, double altitude, float hAccuracy, float vAccuracy, float speed );
-AKU_API void			AKUEnqueuePointerEvent			( int deviceID, int sensorID, int x, int y );
-AKU_API void			AKUEnqueueTouchEvent			( int deviceID, int sensorID, int touchID, bool down, float x, float y );
-AKU_API void			AKUEnqueueTouchEventCancel		( int deviceID, int sensorID );
-AKU_API void			AKUEnqueueVectorEvent			( int deviceID, int sensorID, float x, float y, float z );
-AKU_API void			AKUEnqueueWheelEvent			( int deviceID, int sensorID, float value );
+AKU_API void			AKUEnqueueButtonEvent			( AKUContextID contextID, int deviceID, int sensorID, bool down );
+AKU_API void			AKUEnqueueCompassEvent			( AKUContextID contextID, int deviceID, int sensorID, float heading );
+AKU_API void			AKUEnqueueJoystickEvent			( AKUContextID contextID, int deviceID, int sensorID, float x, float y );
+AKU_API void			AKUEnqueueKeyboardCharEvent		( AKUContextID contextID, int deviceID, int sensorID, int unicodeChar );
+AKU_API void			AKUEnqueueKeyboardEditEvent		( AKUContextID contextID, int deviceID, int sensorID, char const* text, int start, int editLength, int maxLength);
+AKU_API void			AKUEnqueueKeyboardKeyEvent		( AKUContextID contextID, int deviceID, int sensorID, int keyID, bool down );
+AKU_API void			AKUEnqueueKeyboardTextEvent		( AKUContextID contextID, int deviceID, int sensorID, const char* text );
+AKU_API void			AKUEnqueueLevelEvent			( AKUContextID contextID, int deviceID, int sensorID, float x, float y, float z );
+AKU_API void			AKUEnqueueLocationEvent			( AKUContextID contextID, int deviceID, int sensorID, double longitude, double latitude, double altitude, float hAccuracy, float vAccuracy, float speed );
+AKU_API void			AKUEnqueuePointerEvent			( AKUContextID contextID, int deviceID, int sensorID, int x, int y );
+AKU_API void			AKUEnqueueTouchEvent			( AKUContextID contextID, int deviceID, int sensorID, int touchID, bool down, float x, float y );
+AKU_API void			AKUEnqueueTouchEventCancel		( AKUContextID contextID, int deviceID, int sensorID );
+AKU_API void			AKUEnqueueVectorEvent			( AKUContextID contextID, int deviceID, int sensorID, float x, float y, float z );
+AKU_API void			AKUEnqueueWheelEvent			( AKUContextID contextID, int deviceID, int sensorID, float value );
 
 #endif

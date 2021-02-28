@@ -26,7 +26,7 @@
 #define DECL_LUA_OPAQUE(type)																			\
 	IMPLEMENT_DEPENDS_ON ( type )																		\
 	MOAI_LUA_OBJECT_VISITOR_FRIEND																		\
-	MOAILuaClass* GetLuaClass () { return &MOAILuaFactoryClass < type >::Get (); }						\
+	MOAILuaClass* GetLuaClass () { return &this->Get < MOAILuaFactoryClass < type > >(); }				\
 	cc8* TypeName () const { return #type; }
 
 #define DECL_LUA_SINGLETON(type)																		\

@@ -32,7 +32,7 @@ public:
 
 	//----------------------------------------------------------------//
 	MOAIAbstractHitMask&		AffirmHitMask				();
-								MOAIAbstractHasHitMask		();
+								MOAIAbstractHasHitMask		( ZLContext& context );
 								~MOAIAbstractHasHitMask		();
 	void						SetImage					( MOAIImage* image );
 	void						SetScalar					( u32 scalar );

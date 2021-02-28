@@ -26,7 +26,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIGraphicsProp )
 
 	//----------------------------------------------------------------//
-							MOAIGraphicsProp			();
+							MOAIGraphicsProp			( ZLContext& context );
 	virtual					~MOAIGraphicsProp			();
 };
 

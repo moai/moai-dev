@@ -124,16 +124,18 @@ void MOAIButtonSensor::ClearState () {
 }
 
 //----------------------------------------------------------------//
-void MOAIButtonSensor::EnqueueButtonEvent ( ZLIndex deviceID, ZLIndex sensorID, bool down ) {
+void MOAIButtonSensor::EnqueueButtonEvent ( MOAIInputMgr& inputMgr, ZLIndex deviceID, ZLIndex sensorID, bool down ) {
 
-	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
 	if ( inputMgr.WriteEventHeader < MOAIButtonSensor >( deviceID, sensorID )) {
 		inputMgr.Write < bool >( down );
 	}
 }
 
 //----------------------------------------------------------------//
-MOAIButtonSensor::MOAIButtonSensor () :
+MOAIButtonSensor::MOAIButtonSensor ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAISensor ( context ),
 	mState ( 0 ) {
 	
 	RTTI_BEGIN ( MOAIButtonSensor )

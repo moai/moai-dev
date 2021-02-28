@@ -6,7 +6,7 @@
 
 #include <moai-sim/MOAIAbstractPickable.h>
 
-class MOAICellCoord;
+class ZLGridCoord;
 class MOAICollisionProp;
 class MOAIDeck;
 class MOAIGrid;
@@ -108,7 +108,7 @@ public:
 	//----------------------------------------------------------------//
 	MOAIPartition*		GetPartitionTrait		();
 	bool				GetCellRect				( ZLRect* cellRect, ZLRect* paddedRect = 0 );
-						MOAIPartitionHull		();
+						MOAIPartitionHull		( ZLContext& context );
 						~MOAIPartitionHull		();
 	void				SetPartition			( MOAIPartition* partition );
 	void				UpdateWorldBounds		( const ZLBounds& bounds );

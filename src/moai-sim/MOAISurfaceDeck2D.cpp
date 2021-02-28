@@ -23,8 +23,8 @@ SUPPRESS_EMPTY_FILE_WARNING
 	//	
 	//	ZLRect localRect = sampler.GetLocalRect ();
 	//	
-	//	MOAICellCoord c0;
-	//	MOAICellCoord c1;
+	//	ZLGridCoord c0;
+	//	ZLGridCoord c1;
 	//	
 	//	ZLRect deckBounds = this->mDeck->GetBounds ().GetRect( ZLBox::PLANE_XY );
 
@@ -171,7 +171,7 @@ int MOAISurfaceDeck2D::_setSurface ( lua_State* L ) {
 //}
 
 //----------------------------------------------------------------//
-//void MOAISurfaceDeck2D::DrawDebug ( const ZLAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, ZLVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 ) {
+//void MOAISurfaceDeck2D::DrawDebug ( const ZLAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, ZLVec2D& gridScale, ZLGridCoord& c0, ZLGridCoord& c1 ) {
 //	UNUSED ( gridScale ); // TODO
 //	
 //	MOAIDebugLines& debugLines = MOAIDebugLines::Get ();
@@ -184,15 +184,15 @@ int MOAISurfaceDeck2D::_setSurface ( lua_State* L ) {
 //			u32 tile = grid.GetTile ( x, y );
 //			tile = remapper ? remapper->Remap ( tile ) : tile;
 //			
-//			if ( tile & MOAITileFlags::HIDDEN ) continue;
+//			if ( tile & ZLTileFlags::HIDDEN ) continue;
 //			
-//			MOAICellCoord coord ( x, y );
+//			ZLGridCoord coord ( x, y );
 //			ZLVec2D loc = grid.GetCellPoint ( coord, MOAIGridSpace::TILE_CENTER );
 //			
-//			bool xFlip = (( tile & MOAITileFlags::XFLIP ) != 0 );
-//			bool yFlip = (( tile & MOAITileFlags::YFLIP ) != 0 );
+//			bool xFlip = (( tile & ZLTileFlags::XFLIP ) != 0 );
+//			bool yFlip = (( tile & ZLTileFlags::YFLIP ) != 0 );
 //			
-//			this->DrawDebug (( tile & MOAITileFlags::CODE_MASK ) - 1, loc.mX, loc.mY, xFlip, yFlip );
+//			this->DrawDebug (( tile & ZLTileFlags::CODE_MASK ) - 1, loc.mX, loc.mY, xFlip, yFlip );
 //		}
 //	}
 //}
@@ -219,7 +219,7 @@ int MOAISurfaceDeck2D::_setSurface ( lua_State* L ) {
 //}
 
 //----------------------------------------------------------------//
-//void MOAISurfaceDeck2D::GatherSurfaces ( MOAIGrid& grid, MOAIDeckRemapper* remapper, ZLVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1, MOAISurfaceSampler2D& sampler ) {
+//void MOAISurfaceDeck2D::GatherSurfaces ( MOAIGrid& grid, MOAIDeckRemapper* remapper, ZLVec2D& gridScale, ZLGridCoord& c0, ZLGridCoord& c1, MOAISurfaceSampler2D& sampler ) {
 //	UNUSED ( gridScale ); // TODO
 //
 //	for ( int y = c0.mY; y <= c1.mY; ++y ) {
@@ -228,15 +228,15 @@ int MOAISurfaceDeck2D::_setSurface ( lua_State* L ) {
 //			u32 tile = grid.GetTile ( x, y );
 //			tile = remapper ? remapper->Remap ( tile ) : tile;
 //			
-//			if ( tile & MOAITileFlags::HIDDEN ) continue;
+//			if ( tile & ZLTileFlags::HIDDEN ) continue;
 //			
-//			MOAICellCoord coord ( x, y );
+//			ZLGridCoord coord ( x, y );
 //			ZLVec2D loc = grid.GetCellPoint ( coord, MOAIGridSpace::TILE_CENTER );
 //			
-//			bool xFlip = (( tile & MOAITileFlags::XFLIP ) != 0 );
-//			bool yFlip = (( tile & MOAITileFlags::YFLIP ) != 0 );
+//			bool xFlip = (( tile & ZLTileFlags::XFLIP ) != 0 );
+//			bool yFlip = (( tile & ZLTileFlags::YFLIP ) != 0 );
 //			
-//			this->GatherSurfaces ( tile & MOAITileFlags::CODE_MASK, loc.mX, loc.mY, xFlip, yFlip, sampler );
+//			this->GatherSurfaces ( tile & ZLTileFlags::CODE_MASK, loc.mX, loc.mY, xFlip, yFlip, sampler );
 //		}
 //	}
 //}

@@ -141,7 +141,9 @@ float* MOAIPathTerrainDeck::GetVector ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-MOAIPathTerrainDeck::MOAIPathTerrainDeck () :
+MOAIPathTerrainDeck::MOAIPathTerrainDeck ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
 	mDeckSize ( 0 ),
 	mVectorSize ( 0 ) {
 	

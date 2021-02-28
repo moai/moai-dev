@@ -23,7 +23,7 @@ private:
 
 	s16							mRefCount;
 	MOAIProfilerContext*		mContexts [ MAX_NUM_CONTEXTS ];
-	ZLMutex					mContextMutex;
+	ZLMutex						mContextMutex;
 
 	//----------------------------------------------------------------//
 	MOAIProfilerContext*		_GetProfilingContext		( const ZLHashedString& name, bool create = false );

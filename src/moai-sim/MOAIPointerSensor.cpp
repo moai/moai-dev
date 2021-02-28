@@ -47,9 +47,8 @@ int MOAIPointerSensor::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIPointerSensor::EnqueuePointerEvent ( ZLIndex deviceID, ZLIndex sensorID, int x, int y ) {
+void MOAIPointerSensor::EnqueuePointerEvent ( MOAIInputMgr& inputMgr, ZLIndex deviceID, ZLIndex sensorID, int x, int y ) {
 
-	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
 	if ( inputMgr.WriteEventHeader < MOAIPointerSensor >( deviceID, sensorID )) {
 		inputMgr.Write < int >( x );
 		inputMgr.Write < int >( y );
@@ -57,7 +56,10 @@ void MOAIPointerSensor::EnqueuePointerEvent ( ZLIndex deviceID, ZLIndex sensorID
 }
 
 //----------------------------------------------------------------//
-MOAIPointerSensor::MOAIPointerSensor () {
+MOAIPointerSensor::MOAIPointerSensor ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAISensor ( context ) {
 	
 	RTTI_BEGIN ( MOAIPointerSensor )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIPointerSensor >)

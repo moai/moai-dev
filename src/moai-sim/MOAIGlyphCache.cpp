@@ -11,7 +11,9 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIGlyphCache::MOAIGlyphCache () {
+MOAIGlyphCache::MOAIGlyphCache ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ) {
 	
 	RTTI_BEGIN ( MOAIGlyphCache )
 		RTTI_EXTEND ( MOAILuaObject )

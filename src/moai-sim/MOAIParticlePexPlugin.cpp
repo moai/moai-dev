@@ -115,7 +115,7 @@ int MOAIParticlePexPlugin::_getTextureName( lua_State* L ){
 	@in		string fileName					file to load
 	@out	MOAIParticlePexPlugin plugin	The plugin object that has been initialized with XML's data
 */
-int MOAIParticlePexPlugin::_load( lua_State* L ){
+int MOAIParticlePexPlugin::_load ( lua_State* L ){
 	UNUSED ( L );
 
 	MOAILuaState state ( L );
@@ -129,7 +129,7 @@ int MOAIParticlePexPlugin::_load( lua_State* L ){
 	if ( MOAILogMgr::CheckFileExists ( xml, L )) {
 		TiXmlDocument doc;
 		doc.LoadFile ( xml );
-		MOAIParticlePexPlugin *particle = new MOAIParticlePexPlugin();
+		MOAIParticlePexPlugin *particle = new MOAIParticlePexPlugin ( state.GetContext ());
 		MOAIParticlePexPlugin::Parse ( xml, *particle, doc.RootElement ());
 		particle->PushLuaUserdata ( state );
 		return 1;
@@ -162,7 +162,10 @@ static void read_n_values ( float *array, TiXmlAttribute *attribute, int max, in
 }
 
 //----------------------------------------------------------------//
-MOAIParticlePexPlugin::MOAIParticlePexPlugin () :
+MOAIParticlePexPlugin::MOAIParticlePexPlugin ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIParticlePlugin ( context ),
 	mLifespanRegister(-1),
 	mAngleRegister(-1),
 	mStartSizeRegister(-1),

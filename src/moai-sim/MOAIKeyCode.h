@@ -122,7 +122,7 @@ public:
 	DECL_LUA_SINGLETON ( MOAIKeyCode )
 	
 	//----------------------------------------------------------------//
-						MOAIKeyCode				();
+						MOAIKeyCode				( ZLContext& context );
 						~MOAIKeyCode			();
 };
 #endif

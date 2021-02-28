@@ -612,7 +612,7 @@ void MOAIRegion::BooleanAnd ( const MOAIRegion& regionA, const MOAIRegion& regio
 //----------------------------------------------------------------//
 void MOAIRegion::BooleanNot ( const MOAIRegion& regionA, const MOAIRegion& regionB, float precision ) {
 
-	MOAIRegion regionOr;
+	MOAIRegion regionOr ( this->GetContext ());
 	int error = regionOr.CombineAndTesselate ( regionA, regionB, TESS_WINDING_POSITIVE, precision );
 
 	if ( !error ) {
@@ -674,7 +674,7 @@ void MOAIRegion::Clip ( const MOAIRegion& region, const MOAIRegion& clip, const 
 //----------------------------------------------------------------//
 int MOAIRegion::CombineAndTesselate ( const MOAIRegion& regionA, const MOAIRegion& regionB, int windingRule, float precision ) {
 
-	SafeTesselator tess;
+	SafeTesselator tess ( this->GetContext ());
 	
 	regionA.AddFillContours ( tess, precision );
 	regionB.AddFillContours ( tess, precision );
@@ -763,7 +763,7 @@ void MOAIRegion::Cull ( const MOAIRegion& region, u32 flag, bool checkArea, floa
 	}
 	
 	const MOAIRegion* srcRegion = &region;
-	MOAIRegion copyRegion;
+	MOAIRegion copyRegion ( this->GetContext ());
 	
 	if ( this == srcRegion ) {
 		copyRegion.Copy ( region );
@@ -796,9 +796,9 @@ void MOAIRegion::DrawDebug () const {
 	
 	static u32 POLY_CORRUPT_COLOR					= ZLColor::PackRGBA ( 1.0f, 0.0f, 0.0f, 1.0f );
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr = this->Get < MOAIGfxMgr >();
 
-	MOAIDraw& draw = MOAIDraw::Get ();
+	MOAIDraw& draw = this->Get < MOAIDraw >();
 	draw.BindVectorPresets ();
 
 	ZLSize nPolys = this->mPolygons.Size ();
@@ -856,7 +856,7 @@ void MOAIRegion::Edge ( const MOAIRegion& region, const ZLVec2D& offset ) {
 	static const ZLIndex IDX_2 = 2;
 	static const ZLIndex IDX_3 = 3;
 
-	SafeTesselator tess;
+	SafeTesselator tess ( this->GetContext ());
 	
 	ZLSize size = region.mPolygons.Size ();
 
@@ -1001,7 +1001,7 @@ u32 MOAIRegion::GetTriangles ( SafeTesselator& tess ) const {
 //----------------------------------------------------------------//
 u32 MOAIRegion::GetTriangles ( MOAIVertexFormat& format, ZLStream& vtxStream, ZLStream& idxStream ) const {
 
-	SafeTesselator tess;
+	SafeTesselator tess ( this->GetContext ());
 	int error = this->GetTriangles ( tess );
 	
 	if ( !error ) {
@@ -1013,7 +1013,7 @@ u32 MOAIRegion::GetTriangles ( MOAIVertexFormat& format, ZLStream& vtxStream, ZL
 //----------------------------------------------------------------//
 u32 MOAIRegion::GetTriangles ( MOAIVertexFormat& format, MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytes ) const {
 
-	SafeTesselator tess;
+	SafeTesselator tess ( this->GetContext ());
 	int error = this->GetTriangles ( tess );
 	
 	if ( !error ) {
@@ -1045,7 +1045,9 @@ ZLSizeResult MOAIRegion::GetVertices ( ZLStream& vtxStream ) const {
 }
 
 //----------------------------------------------------------------//
-MOAIRegion::MOAIRegion () {
+MOAIRegion::MOAIRegion ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ) {
 		
 	RTTI_BEGIN ( MOAIRegion )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIRegion >)
@@ -1237,7 +1239,7 @@ void MOAIRegion::Snap ( const MOAIRegion& region, float xSnap, float ySnap ) {
 //----------------------------------------------------------------//
 void MOAIRegion::Stroke ( const MOAIRegion& region, float exterior, bool strokeExterior, float interior, bool strokeInterior ) {
 
-	SafeTesselator tess;
+	SafeTesselator tess ( this->GetContext ());
 	
 	ZLSize size = region.mPolygons.Size ();
 
@@ -1288,7 +1290,7 @@ void MOAIRegion::Stroke ( const MOAIRegion& region, float exterior, bool strokeE
 //----------------------------------------------------------------//
 int MOAIRegion::Tesselate ( const MOAIRegion& region, int windingRule, float precision ) {
 
-	SafeTesselator tess;
+	SafeTesselator tess ( this->GetContext ());
 	
 	region.AddFillContours ( tess, precision );
 	

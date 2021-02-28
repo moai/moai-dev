@@ -38,7 +38,7 @@ protected:
 public:
 	
 	//----------------------------------------------------------------//
-					MOAIAbstractLayer			();
+					MOAIAbstractLayer			( ZLContext& context );
 					~MOAIAbstractLayer			();
 };
 

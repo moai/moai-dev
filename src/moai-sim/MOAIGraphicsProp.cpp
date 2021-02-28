@@ -22,7 +22,24 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIGraphicsProp::MOAIGraphicsProp () {
+MOAIGraphicsProp::MOAIGraphicsProp ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIAbstractPickable ( context ),
+	MOAIPartitionHull ( context ),
+	MOAIHasGfxScriptsForPhases ( context ),
+	MOAIAbstractRenderable ( context ),
+	MOAIAbstractBaseTransform ( context ),
+	MOAIAbstractChildTransform ( context ),
+	MOAITransform ( context ),
+	MOAIAbstractProp ( context ),
+	MOAIHasDeck ( context ),
+	MOAIPropWithDeckAndIndex ( context ),
+	MOAIColor ( context ),
+	MOAIAbstractGraphicsProp ( context ) {
 	
 	RTTI_BEGIN ( MOAIGraphicsProp )
 		RTTI_EXTEND ( MOAIPropWithDeckAndIndex )

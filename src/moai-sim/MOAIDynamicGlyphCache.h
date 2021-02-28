@@ -68,7 +68,7 @@ public:
 	MOAITexture*		GetGlyphTexture				( MOAIGlyph& glyph );
 	MOAIImage*			GetImage					();
 	bool				IsDynamic					();
-						MOAIDynamicGlyphCache		();
+						MOAIDynamicGlyphCache		( ZLContext& context );
 						~MOAIDynamicGlyphCache		();
 	int					PlaceGlyph					( MOAIFont& font, MOAIGlyph& glyph );
 };

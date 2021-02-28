@@ -35,7 +35,7 @@ protected:
 public:
 	
 	//----------------------------------------------------------------//
-							MOAIDeckProxy					();
+							MOAIDeckProxy					( ZLContext& context );
 							~MOAIDeckProxy					();
 };
 

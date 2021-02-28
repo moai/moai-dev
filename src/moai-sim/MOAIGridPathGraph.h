@@ -34,7 +34,7 @@ private:
 	static int		_setGrid					( lua_State* L );
 
 	//----------------------------------------------------------------//
-	float			ComputeHeuristic			( MOAIGridPathGraphParams& params, const MOAICellCoord& c0, const MOAICellCoord& c1 );
+	float			ComputeHeuristic			( MOAIGridPathGraphParams& params, const ZLGridCoord& c0, const ZLGridCoord& c1 );
 	void			PushNeighbor				( MOAIPathFinder& pathFinder, MOAIGridPathGraphParams& params, u32 tile0, int xTile, int yTile, float moveCost );
 	void			PushNeighbors				( MOAIPathFinder& pathFinder, ZLIndex nodeID );
 
@@ -55,7 +55,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIGridPathGraph )
 	
 	//----------------------------------------------------------------//
-					MOAIGridPathGraph			();
+					MOAIGridPathGraph			( ZLContext& context );
 					~MOAIGridPathGraph			();
 	void			SetGrid						( MOAIGrid* grid );
 };

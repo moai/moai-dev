@@ -27,8 +27,8 @@ protected:
 	static int			_setGridScale			( lua_State* L );
 
 	//----------------------------------------------------------------//
-	void				DrawGrid								( MOAIRenderPhaseEnum::_ renderPhase, const MOAICellCoord &c0, const MOAICellCoord &c1 );
-	void				GetGridFrameInView						( const ZLAffine3D& worldToLocalMtx, MOAICellCoord& c0, MOAICellCoord& c1 ); // TODO: this shoudln't be here
+	void				DrawGrid								( MOAIRenderPhaseEnum::_ renderPhase, const ZLGridCoord &c0, const ZLGridCoord &c1 );
+	void				GetGridFrameInView						( const ZLAffine3D& worldToLocalMtx, ZLGridCoord& c0, ZLGridCoord& c1 ); // TODO: this shoudln't be here
 
 	//----------------------------------------------------------------//
 	void				_RegisterLuaClass						( RTTIVisitorHistory& history, MOAILuaState& state );
@@ -45,7 +45,7 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-						MOAIPropWithDeckAndGrid			();
+						MOAIPropWithDeckAndGrid			( ZLContext& context );
 						~MOAIPropWithDeckAndGrid		();
 };
 

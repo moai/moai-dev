@@ -15,7 +15,9 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIPathGraph::MOAIPathGraph () {
+MOAIPathGraph::MOAIPathGraph ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ) {
 	
 	RTTI_BEGIN ( MOAIPathGraph )
 		RTTI_EXTEND ( MOAILuaObject )

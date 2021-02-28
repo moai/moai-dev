@@ -269,35 +269,6 @@ int MOAITouchSensor::_up ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITouchSensor::EnqueueTouchEvent ( ZLIndex deviceID, ZLIndex sensorID, u32 touchID, bool down, float x, float y ) {
-
-	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
-	if ( inputMgr.WriteEventHeader < MOAITouchSensor >( deviceID, sensorID )) {
-	
-		float time = ( float )ZLDeviceTime::GetTimeInSeconds ();
-		
-		u32 eventType = down ? TOUCH_DOWN : TOUCH_UP;
-
-		inputMgr.Write < u32 >( eventType );
-		inputMgr.Write < u32 >( touchID );
-		inputMgr.Write < float >( x );
-		inputMgr.Write < float >( y );
-		inputMgr.Write < float >( time );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAITouchSensor::EnqueueTouchEventCancel ( ZLIndex deviceID, ZLIndex sensorID ) {
-
-	DEBUG_LOG ( "ENQUEUE TOUCHES CANCELLED\n" );
-
-	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
-	if ( inputMgr.WriteEventHeader < MOAITouchSensor >( deviceID, sensorID )) {
-		inputMgr.Write < u32 >( TOUCH_CANCEL );
-	}
-}
-
-//----------------------------------------------------------------//
 void MOAITouchSensor::AddLingerTouch ( MOAITouchLinger& touch ) {
 
 	if ( this->mLingerTop < MAX_TOUCHES ) {
@@ -356,6 +327,33 @@ void MOAITouchSensor::ClearState () {
 }
 
 //----------------------------------------------------------------//
+void MOAITouchSensor::EnqueueTouchEvent ( MOAIInputMgr& inputMgr, ZLIndex deviceID, ZLIndex sensorID, u32 touchID, bool down, float x, float y ) {
+
+	if ( inputMgr.WriteEventHeader < MOAITouchSensor >( deviceID, sensorID )) {
+	
+		float time = ( float )ZLDeviceTime::GetTimeInSeconds ();
+		
+		u32 eventType = down ? TOUCH_DOWN : TOUCH_UP;
+
+		inputMgr.Write < u32 >( eventType );
+		inputMgr.Write < u32 >( touchID );
+		inputMgr.Write < float >( x );
+		inputMgr.Write < float >( y );
+		inputMgr.Write < float >( time );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAITouchSensor::EnqueueTouchEventCancel ( MOAIInputMgr& inputMgr, ZLIndex deviceID, ZLIndex sensorID ) {
+
+	DEBUG_LOG ( "ENQUEUE TOUCHES CANCELLED\n" );
+
+	if ( inputMgr.WriteEventHeader < MOAITouchSensor >( deviceID, sensorID )) {
+		inputMgr.Write < u32 >( TOUCH_CANCEL );
+	}
+}
+
+//----------------------------------------------------------------//
 u32 MOAITouchSensor::FindTouch ( u32 touchID ) {
 
 	for ( u32 i = 0; i < this->mTop; ++i ) {
@@ -368,7 +366,10 @@ u32 MOAITouchSensor::FindTouch ( u32 touchID ) {
 }
 
 //----------------------------------------------------------------//
-MOAITouchSensor::MOAITouchSensor () {
+MOAITouchSensor::MOAITouchSensor ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAISensor ( context ) {
 	
 	RTTI_BEGIN ( MOAITouchSensor )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAITouchSensor >)

@@ -27,7 +27,7 @@ ZLVec3D MOAIStretchDeck::BindStretchVertexTransform () const {
 
 	ZLVec3D stretch ( 1.0f, 1.0f, 1.0f );
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr = this->Get < MOAIGfxMgr >();
 
 	if ( this->mStretchFactor > 0.0f ) {
 		
@@ -50,7 +50,10 @@ ZLVec3D MOAIStretchDeck::BindStretchVertexTransform () const {
 }
 
 //----------------------------------------------------------------//
-MOAIStretchDeck::MOAIStretchDeck () :
+MOAIStretchDeck::MOAIStretchDeck ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIDeck ( context ),
 	mStretchFactor ( 1.0f ) {
 
 	RTTI_BEGIN ( MOAIStretchDeck )

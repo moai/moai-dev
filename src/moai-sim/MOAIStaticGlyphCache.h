@@ -38,7 +38,7 @@ public:
 	MOAIImage*			GetImage					();
 	MOAITexture*		GetTexture					( ZLIndex id );
 	bool				IsDynamic					();
-						MOAIStaticGlyphCache		();
+						MOAIStaticGlyphCache		( ZLContext& context );
 						~MOAIStaticGlyphCache		();
 	void				ReserveTextures				( u32 total );
 	int					SetImage					( MOAIFont& font, MOAIImage& image );

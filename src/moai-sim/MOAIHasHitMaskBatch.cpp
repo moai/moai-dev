@@ -10,7 +10,11 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIHasHitMaskBatch::MOAIHasHitMaskBatch () {
+MOAIHasHitMaskBatch::MOAIHasHitMaskBatch ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIAbstractHasHitMask ( context ),
+	MOAIAbstractHasHitMaskBatch ( context ) {
 
 	RTTI_BEGIN ( MOAIHasHitMaskBatch )
 		RTTI_EXTEND ( MOAIAbstractHasHitMaskBatch )
@@ -41,7 +45,7 @@ MOAIAbstractHitMask& MOAIHasHitMaskBatch::MOAIAbstractHasHitMask_AffirmHitMask (
 MOAIAbstractHitMaskBatch& MOAIHasHitMaskBatch::MOAIAbstractHasHitMaskBatch_AffirmHitMaskBatch () {
 
 	if ( !this->mHitMaskBatch ) {
-		this->mHitMaskBatch = new MOAIHitMaskBatch ();
+		this->mHitMaskBatch = new MOAIHitMaskBatch ( this->GetContext ());
 	}
 	return *this->mHitMaskBatch;
 }

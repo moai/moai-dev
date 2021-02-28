@@ -45,16 +45,18 @@ int MOAICompassSensor::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAICompassSensor::EnqueueCompassEvent ( ZLIndex deviceID, ZLIndex sensorID, float heading ) {
+void MOAICompassSensor::EnqueueCompassEvent ( MOAIInputMgr& inputMgr, ZLIndex deviceID, ZLIndex sensorID, float heading ) {
 
-	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
 	if ( inputMgr.WriteEventHeader < MOAICompassSensor >( deviceID, sensorID )) {
 		inputMgr.Write < float >( heading );
 	}
 }
 
 //----------------------------------------------------------------//
-MOAICompassSensor::MOAICompassSensor () :
+MOAICompassSensor::MOAICompassSensor ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAISensor ( context ),
 	mHeading ( 0.0f ) {
 	
 	RTTI_BEGIN ( MOAICompassSensor )

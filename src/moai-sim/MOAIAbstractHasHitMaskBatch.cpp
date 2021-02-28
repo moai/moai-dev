@@ -71,7 +71,10 @@ MOAIAbstractHitMask* MOAIAbstractHasHitMaskBatch::GetHitMask ( ZLIndex index ) {
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractHasHitMaskBatch::MOAIAbstractHasHitMaskBatch () {
+MOAIAbstractHasHitMaskBatch::MOAIAbstractHasHitMaskBatch ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIAbstractHasHitMask ( context ) {
 
 	RTTI_BEGIN ( MOAIAbstractHasHitMaskBatch )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractHasHitMaskBatch >)

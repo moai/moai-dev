@@ -38,7 +38,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIDeckRemapper )
 	
 	//----------------------------------------------------------------//
-						MOAIDeckRemapper		();
+						MOAIDeckRemapper		( ZLContext& context );
 						~MOAIDeckRemapper		();
 };
 

@@ -128,7 +128,7 @@ public:
 
 	//----------------------------------------------------------------//
 	bool					IsVisible						();
-							MOAIAbstractGraphicsProp		();
+							MOAIAbstractGraphicsProp		( ZLContext& context );
 	virtual					~MOAIAbstractGraphicsProp		();
 	void					SetVisible						( bool visible );
 };

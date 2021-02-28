@@ -19,7 +19,19 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAITableViewLayer::MOAITableViewLayer () {
+MOAITableViewLayer::MOAITableViewLayer ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIHasGfxScriptsForPhases ( context ),
+	MOAIAbstractRenderable ( context ),
+	MOAISurfaceClearColor ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIColor ( context ),
+	MOAIAbstractLayer ( context ),
+	MOAIAbstractViewLayer ( context ),
+	MOAIRenderNode ( context ) {
 	
 	RTTI_BEGIN ( MOAITableViewLayer )
 		RTTI_EXTEND ( MOAIAbstractViewLayer )
@@ -49,7 +61,7 @@ void MOAITableViewLayer::MOAIAbstractRenderNode_Render ( MOAIRenderPhaseEnum::_ 
 
 	MOAIRenderNode::MOAIAbstractRenderNode_Render ( renderPhase );
 	
-	if ( MOAIDebugLinesMgr::Get ().IsVisible () && this->mShowDebugLines ) {
+	if ( this->Get < MOAIDebugLinesMgr >().IsVisible () && this->mShowDebugLines ) {
 		MOAIRenderNode::MOAIAbstractRenderNode_Render ( MOAIRenderPhaseEnum::RENDER_PHASE_DRAW_DEBUG );
 	}
 }

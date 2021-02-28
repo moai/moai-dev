@@ -52,7 +52,10 @@ bool MOAIStaticGlyphCache::IsDynamic () {
 }
 
 //----------------------------------------------------------------//
-MOAIStaticGlyphCache::MOAIStaticGlyphCache () {
+MOAIStaticGlyphCache::MOAIStaticGlyphCache ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIGlyphCache ( context ) {
 	
 	RTTI_BEGIN ( MOAIStaticGlyphCache )
 		RTTI_EXTEND ( MOAIGlyphCache )

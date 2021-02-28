@@ -110,7 +110,7 @@ public:
 	u32						GetTriangles			( MOAIVertexFormat& format, ZLStream& vtxStream, ZLStream& idxStream ) const;
 	u32						GetTriangles			( MOAIVertexFormat& format, MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytex ) const;
 	ZLSizeResult			GetVertices				( ZLStream& vtxStream ) const;
-							MOAIRegion				();
+							MOAIRegion				( ZLContext& context );
 							~MOAIRegion				();
 	void					Pad						( const MOAIRegion& region, float pad );
 	bool					PointInside				( const ZLVec2D& p, float pad ) const;

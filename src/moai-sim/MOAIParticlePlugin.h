@@ -30,7 +30,7 @@ protected:
 public:
 	
 	//----------------------------------------------------------------//
-					MOAIParticlePlugin			();
+					MOAIParticlePlugin			( ZLContext& context );
 					~MOAIParticlePlugin			();	
 	virtual void	OnInit						( float* particle, float* registers ) = 0;
 	virtual void	OnRender					( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1, float term ) = 0;

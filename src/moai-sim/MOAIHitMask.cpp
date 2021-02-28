@@ -10,7 +10,11 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIHitMask::MOAIHitMask () {
+MOAIHitMask::MOAIHitMask ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIAbstractHasHitMask ( context ),
+	MOAIAbstractHitMask ( context ) {
 
 	RTTI_BEGIN ( MOAIHitMask )
 		RTTI_EXTEND ( MOAIAbstractHasHitMask )

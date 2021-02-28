@@ -62,7 +62,9 @@ int MOAIAbstractPickable::_pickByRay ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIAbstractPickable::MOAIAbstractPickable () {
+MOAIAbstractPickable::MOAIAbstractPickable ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ) {
 
 	RTTI_BEGIN ( MOAILayoutFrame )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractPickable >)

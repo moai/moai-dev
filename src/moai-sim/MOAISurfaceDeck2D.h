@@ -55,10 +55,10 @@ public:
 	
 	//----------------------------------------------------------------//
 	//void			DrawDebug				( const ZLAffine3D& transform, u32 idx, MOAIDeckRemapper* remapper );
-	//void			DrawDebug				( const ZLAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, ZLVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1 );
+	//void			DrawDebug				( const ZLAffine3D& transform, MOAIGrid& grid, MOAIDeckRemapper* remapper, ZLVec2D& gridScale, ZLGridCoord& c0, ZLGridCoord& c1 );
 	//void			GatherSurfaces			( u32 idx, MOAIDeckRemapper* remapper, MOAISurfaceSampler2D& sampler );
-	//void			GatherSurfaces			( MOAIGrid& grid, MOAIDeckRemapper* remapper, ZLVec2D& gridScale, MOAICellCoord& c0, MOAICellCoord& c1, MOAISurfaceSampler2D& sampler );
-					MOAISurfaceDeck2D		();
+	//void			GatherSurfaces			( MOAIGrid& grid, MOAIDeckRemapper* remapper, ZLVec2D& gridScale, ZLGridCoord& c0, ZLGridCoord& c1, MOAISurfaceSampler2D& sampler );
+					MOAISurfaceDeck2D		( ZLContext& context );
 					~MOAISurfaceDeck2D		();
 	
 };

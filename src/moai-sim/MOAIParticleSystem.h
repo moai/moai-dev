@@ -91,7 +91,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIParticleSystem )
 
 	//----------------------------------------------------------------//
-					MOAIParticleSystem		();
+					MOAIParticleSystem		( ZLContext& context );
 					~MOAIParticleSystem		();
 	bool			PushParticle			( float x, float y );
 	bool			PushParticle			( float x, float y, float dx, float dy );

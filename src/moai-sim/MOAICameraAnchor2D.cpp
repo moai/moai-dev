@@ -64,7 +64,12 @@ ZLRect MOAICameraAnchor2D::GetRect () {
 }
 
 //----------------------------------------------------------------//
-MOAICameraAnchor2D::MOAICameraAnchor2D () :
+MOAICameraAnchor2D::MOAICameraAnchor2D ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
 	mRect ( ZLRect::EMPTY ),
 	mLoc ( ZLVec3D::ORIGIN ) {
 	

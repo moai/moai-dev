@@ -241,7 +241,9 @@ void MOAIParticleState::InitParticle ( MOAIParticleSystem& system, MOAIParticle&
 }
 
 //----------------------------------------------------------------//
-MOAIParticleState::MOAIParticleState () :
+MOAIParticleState::MOAIParticleState ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
 	mDamping ( 0.0f ) {
 
 	RTTI_BEGIN ( MOAIParticleState )

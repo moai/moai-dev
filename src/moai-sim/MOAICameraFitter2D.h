@@ -108,7 +108,7 @@ public:
 	void			AddAnchor				( MOAICameraAnchor2D& anchor );
 	void			Clear					();
 	float			GetFitDistance			();
-					MOAICameraFitter2D		();
+					MOAICameraFitter2D		( ZLContext& context );
 					~MOAICameraFitter2D		();
 	void			RemoveAnchor			( MOAICameraAnchor2D& anchor );
 	void			StartTrackingNode		( MOAITransform& node );

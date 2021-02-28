@@ -11,11 +11,10 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIGlyph::Draw ( MOAITexture& texture, float x, float y, float xScale, float yScale, const ZLRect& padding ) const {
+void MOAIGlyph::Draw ( MOAIGfxMgr& gfxMgr, MOAITexture& texture, float x, float y, float xScale, float yScale, const ZLRect& padding ) const {
 	
 	if ( !texture.IsReadyForUse ()) return;
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 	gfxMgr.SetTexture ( &texture );
 	
 	MOAIQuadBrush glQuad;
@@ -43,7 +42,7 @@ void MOAIGlyph::Draw ( MOAITexture& texture, float x, float y, float xScale, flo
 		u + (( this->mWidth + padding.mXMax ) * uScale ),
 		v + (( this->mHeight + padding.mYMax ) * vScale )
 	);
-	glQuad.Draw ();
+	glQuad.Draw ( gfxMgr );
 }
 
 //----------------------------------------------------------------//

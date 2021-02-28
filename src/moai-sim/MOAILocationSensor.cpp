@@ -55,9 +55,8 @@ int MOAILocationSensor::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAILocationSensor::EnqueueLocationEvent ( ZLIndex deviceID, ZLIndex sensorID, double longitude, double latitude, double altitude, float hAccuracy, float vAccuracy, float speed ) {
+void MOAILocationSensor::EnqueueLocationEvent ( MOAIInputMgr& inputMgr, ZLIndex deviceID, ZLIndex sensorID, double longitude, double latitude, double altitude, float hAccuracy, float vAccuracy, float speed ) {
 
-	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
 	if ( inputMgr.WriteEventHeader < MOAILocationSensor >( deviceID, sensorID )) {
 		inputMgr.Write < double >( longitude );
 		inputMgr.Write < double >( latitude );
@@ -69,7 +68,10 @@ void MOAILocationSensor::EnqueueLocationEvent ( ZLIndex deviceID, ZLIndex sensor
 }
 
 //----------------------------------------------------------------//
-MOAILocationSensor::MOAILocationSensor () :
+MOAILocationSensor::MOAILocationSensor ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAISensor ( context ),
 	mLongitude ( 0.0 ),
 	mLatitude ( 0.0 ),
 	mAltitude ( 0.0 ),

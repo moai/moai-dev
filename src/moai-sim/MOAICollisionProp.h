@@ -12,6 +12,7 @@ class MOAICollisionProp;
 class MOAICollisionWorld;
 class MOAIContactPoint2D;
 class MOAIContactPointAccumulator2D;
+class MOAIDebugLinesMgr;
 class MOAIDrawAPI;
 class MOAIMoveConstraint2D;
 class MOAIOverlapHandler;
@@ -58,8 +59,7 @@ private:
 //================================================================//
 // TODO: doxygen
 class MOAICollisionProp :
-	public virtual MOAIPropWithDeckAndIndex,
-	public virtual MOAIAbstractRenderable {
+	public virtual MOAIPropWithDeckAndIndex {
 private:
 	
 	friend class MOAICollisionWorld;
@@ -90,7 +90,7 @@ private:
 	
 	//----------------------------------------------------------------//
 	void				ClearOverlapLink		( MOAIPropOverlap& overlap );
-	static void			DrawContactPoints		( MOAIDrawAPI& draw, const MOAIMoveConstraint2D* contacts, u32 nContacts );
+	static void			DrawContactPoints		( MOAIDebugLinesMgr& debugLines, MOAIDrawAPI& draw, const MOAIMoveConstraint2D* contacts, u32 nContacts );
 	void				GatherAndProcess		( MOAICollisionPrimVisitor& visitor, const ZLBox& worldBounds );
 	bool				IsActive				();
 	
@@ -149,7 +149,7 @@ public:
 	//----------------------------------------------------------------//
 	MOAICollisionShape*			GetCollisionShape				();
 	void						Move							( ZLVec3D move, u32 detach, u32 maxSteps );
-								MOAICollisionProp				();
+								MOAICollisionProp				( ZLContext& context );
 	virtual						~MOAICollisionProp				();
 };
 

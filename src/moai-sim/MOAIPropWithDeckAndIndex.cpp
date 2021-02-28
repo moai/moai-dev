@@ -45,7 +45,21 @@ int MOAIPropWithDeckAndIndex::_setIndex ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIPropWithDeckAndIndex::MOAIPropWithDeckAndIndex () :
+MOAIPropWithDeckAndIndex::MOAIPropWithDeckAndIndex ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIAbstractPickable ( context ),
+	MOAIPartitionHull ( context ),
+	MOAIHasGfxScriptsForPhases ( context ),
+	MOAIAbstractRenderable ( context ),
+	MOAIAbstractBaseTransform ( context ),
+	MOAIAbstractChildTransform ( context ),
+	MOAITransform ( context ),
+	MOAIAbstractProp ( context ),
+	MOAIHasDeck ( context ),
 	mIndex ( 0 ) {
 	
 	RTTI_BEGIN ( MOAIPropWithDeckAndIndex )

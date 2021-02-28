@@ -14,8 +14,8 @@ class MOAIPartitionHull;
 	@text	Particle emitter.
 */
 class MOAIParticleEmitter :
-	public MOAITransform,
-	public MOAIAction {
+	public virtual MOAITransform,
+	public virtual MOAIAction {
 protected:
 
 	u32			mShapeID;
@@ -76,7 +76,7 @@ public:
 	SET ( u32, ShapeID, mShapeID )
 
 	//----------------------------------------------------------------//
-					MOAIParticleEmitter		();
+					MOAIParticleEmitter		( ZLContext& context );
 					~MOAIParticleEmitter	();
 	void			SetAngleRange			( float min, float max );
 	void			SetEmissionRange		( u32 min, u32 max );

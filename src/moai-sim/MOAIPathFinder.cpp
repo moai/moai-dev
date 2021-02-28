@@ -161,7 +161,7 @@ int MOAIPathFinder::_setGraph ( lua_State* L ) {
 
 	MOAIGrid* grid = state.GetLuaObject < MOAIGrid >( 2, false );
 	if ( grid ) {
-		MOAIGridPathGraph* gridPathGraph = new MOAIGridPathGraph ();
+		MOAIGridPathGraph* gridPathGraph = new MOAIGridPathGraph ( self->GetContext ());
 		gridPathGraph->SetGrid ( grid );
 		self->mGraph.Set ( *self, gridPathGraph );
 		return 0;
@@ -325,10 +325,10 @@ void MOAIPathFinder::CloseState ( MOAIPathState* stateToClose ) {
 //----------------------------------------------------------------//
 bool MOAIPathFinder::CheckMask ( u32 terrain ) {
 
-	if ( !terrain || ( terrain & MOAITileFlags::HIDDEN )) return false;
+	if ( !terrain || ( terrain & ZLTileFlags::HIDDEN )) return false;
 
 	if ( this->mTerrainDeck ) {
-		return ( this->mMask & this->mTerrainDeck->GetMask ( terrain & MOAITileFlags::CODE_MASK )) ? true : false;
+		return ( this->mMask & this->mTerrainDeck->GetMask ( terrain & ZLTileFlags::CODE_MASK )) ? true : false;
 	}
 	return true;
 }
@@ -338,13 +338,13 @@ float MOAIPathFinder::ComputeTerrainCost ( float moveCost, u32 terrain0, u32 ter
 
 	if ( !this->mTerrainDeck ) return 0.0f;
 
-	if ( terrain0 & MOAITileFlags::HIDDEN ) return 0.0f;
-	if ( terrain1 & MOAITileFlags::HIDDEN ) return 0.0f;
+	if ( terrain0 & ZLTileFlags::HIDDEN ) return 0.0f;
+	if ( terrain1 & ZLTileFlags::HIDDEN ) return 0.0f;
 
 	u32 total = MIN ( this->mTerrainDeck->GetVectorSize (), ( u32 )this->mWeights.Size ());
 	
-	float* v0 = this->mTerrainDeck->GetVector ( terrain0 & MOAITileFlags::CODE_MASK );
-	float* v1 = this->mTerrainDeck->GetVector ( terrain1 & MOAITileFlags::CODE_MASK );
+	float* v0 = this->mTerrainDeck->GetVector ( terrain0 & ZLTileFlags::CODE_MASK );
+	float* v1 = this->mTerrainDeck->GetVector ( terrain1 & ZLTileFlags::CODE_MASK );
 	
 	float terrainCost = 0.0f;
 	for ( ZLIndex i = 0; i < total; ++i ) {
@@ -401,7 +401,9 @@ bool MOAIPathFinder::IsVisited ( ZLIndex nodeID ) {
 }
 
 //----------------------------------------------------------------//
-MOAIPathFinder::MOAIPathFinder () :
+MOAIPathFinder::MOAIPathFinder ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
 	mOpen ( 0 ),
 	mClosed ( 0 ),
 	mStartNodeID ( 0 ),

@@ -40,7 +40,7 @@ public:
 	DECL_LUA_FACTORY ( MOAICollisionDeck )
 	
 	//----------------------------------------------------------------//
-					MOAICollisionDeck		();
+					MOAICollisionDeck		( ZLContext& context );
 					~MOAICollisionDeck		();
 	void			ReserveShapes			( u32 totalShapes );
 	void			SetBox					( ZLIndex idx, const ZLBox& box );

@@ -63,7 +63,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void			Eval					( const ZLVec3D& loc, float mass, ZLVec3D& acceleration, ZLVec3D& offset );
-					MOAIParticleForce		();
+					MOAIParticleForce		( ZLContext& context );
 					~MOAIParticleForce		();
 };
 

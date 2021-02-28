@@ -58,7 +58,9 @@ MOAISensor* MOAIInputDevice::GetSensor ( ZLIndex sensorID ) {
 }
 
 //----------------------------------------------------------------//
-MOAIInputDevice::MOAIInputDevice () :
+MOAIInputDevice::MOAIInputDevice ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
 	mIsActive ( true ) {
 		
 	RTTI_BEGIN ( MOAIInputDevice )

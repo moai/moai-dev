@@ -14,7 +14,7 @@
 //----------------------------------------------------------------//
 int MOAIVectorCombo::AddFillContours ( SafeTesselator& tess ) {
 
-	SafeTesselator outline;
+	SafeTesselator outline ( tess.GetContext ());
 	int error = 0;
 
 	for ( ZLIndex i = 0; i < this->mShapes.Size (); ++i ) {

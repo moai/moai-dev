@@ -437,7 +437,17 @@ ZLMatrix4x4 MOAIAbstractViewLayer::GetWorldToWndMtx () const {
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractViewLayer::MOAIAbstractViewLayer () :
+MOAIAbstractViewLayer::MOAIAbstractViewLayer ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIHasGfxScriptsForPhases ( context ),
+	MOAIAbstractRenderable ( context ),
+	MOAISurfaceClearColor ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIColor ( context ),
+	MOAIAbstractLayer ( context ),
 	mParallax ( 1.0f, 1.0f, 1.0f ),
 	mShowDebugLines ( true ) {
 	
@@ -504,7 +514,7 @@ bool MOAIAbstractViewLayer::MOAIAbstractRenderNode_LoadGfxState ( MOAIRenderPhas
 	if ( !this->mViewport ) return false;
 	if ( !this->MOAIAbstractLayer::MOAIAbstractRenderNode_LoadGfxState ( renderPhase )) return false;
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr =this->Get < MOAIGfxMgr >();
 
 	ZLViewport viewport = this->mViewport->GetWorldViewport (); // make a copy of the viewport before transform
 

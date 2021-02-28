@@ -110,7 +110,7 @@ void MOAIFont::InitWithBMFont ( cc8* filename, const u32 numPreloadedTextures, M
 	char* endp = p + len;
 
 	MOAIGlyphSet* glyphSet = 0;
-	MOAIStaticGlyphCache* glyphCache = new MOAIStaticGlyphCache ();
+	MOAIStaticGlyphCache* glyphCache = new MOAIStaticGlyphCache ( this->GetContext ());
 
 	this->mCache.Set ( *this, glyphCache );
 	this->mReader.Set ( *this, 0 );
@@ -187,7 +187,7 @@ void MOAIFont::InitWithBMFont ( cc8* filename, const u32 numPreloadedTextures, M
 			}
 			
 			if ( texture == 0 ) {
-				MOAITexture2D* texture2D = MOAIGfxMgr::Get ().CreateTexture2D ();
+				MOAITexture2D* texture2D = this->Get < MOAIGfxMgr >().CreateTexture2D ();
 				texture2D->Init ( texturename, MOAITexture2D::DEFAULT_TRANSFORM );
 				texture = texture2D;
 			}

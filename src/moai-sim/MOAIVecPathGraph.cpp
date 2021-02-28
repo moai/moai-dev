@@ -182,7 +182,10 @@ u32 MOAIVecPathGraph::GetNodeCount () {
 }
 
 //----------------------------------------------------------------//
-MOAIVecPathGraph::MOAIVecPathGraph () {
+MOAIVecPathGraph::MOAIVecPathGraph ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIPathGraph ( context ) {
 		
 	RTTI_BEGIN ( MOAIVecPathGraph )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIVecPathGraph >)

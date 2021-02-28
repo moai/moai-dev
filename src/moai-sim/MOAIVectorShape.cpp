@@ -26,14 +26,14 @@ int MOAIVectorShape::AddStrokeContours ( SafeTesselator& tess, bool inside, bool
 
 	int error = 0;
 
-	SafeTesselator outline;
+	SafeTesselator outline ( tess.GetContext ());
 	
 	this->AddFillContours ( outline );
 	error = outline.Tesselate ( ( int )this->mStyle.mWindingRule, TESS_BOUNDARY_CONTOURS, 0, 0 );
 	if ( error ) return error;
 	
-	SafeTesselator exterior;
-	SafeTesselator interior;
+	SafeTesselator exterior ( tess.GetContext ());
+	SafeTesselator interior ( tess.GetContext ());
 	
 	float width = this->mStyle.GetStrokeWidth ();
 	
@@ -53,7 +53,7 @@ int MOAIVectorShape::AddStrokeContours ( SafeTesselator& tess, bool inside, bool
 		exteriorWidth = interiorWidth;
 	}
 	
-	SafeTesselator stroke;
+	SafeTesselator stroke ( tess.GetContext ());
 	
 	if ( outside ) {
 		this->StrokeBoundaries ( exterior, outline, exteriorWidth, true, false );
@@ -200,7 +200,7 @@ int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, ZLStream& vtxStr
 		// only draw the skirt if we are *not* stroked
 		if ( isExtruded && !isStroked ) {
 			
-			SafeTesselator skirt;
+			SafeTesselator skirt ( drawing.GetContext ());
 			
 			error = this->AddFillContours ( skirt );
 			if ( error ) return error;
@@ -211,7 +211,7 @@ int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, ZLStream& vtxStr
 			drawing.WriteSkirt ( skirt, vtxStream, idxStream, format, this->mStyle, this->mStyle.GetFillColor (), fillExtraID );
 		}
 		
-		SafeTesselator triangles;
+		SafeTesselator triangles ( drawing.GetContext ());
 		
 		error = this->AddFillContours ( triangles );
 		if ( error ) return error;
@@ -226,7 +226,7 @@ int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, ZLStream& vtxStr
 		
 		if ( isExtruded ) {
 			
-			SafeTesselator skirt;
+			SafeTesselator skirt ( drawing.GetContext ());
 			
 			// only add the interior skirt we are *not* filled
 			error = this->AddStrokeContours ( skirt, !isFilled, true );
@@ -238,7 +238,7 @@ int MOAIVectorShape::Tesselate ( MOAIVectorTesselator& drawing, ZLStream& vtxStr
 			drawing.WriteSkirt ( skirt, vtxStream, idxStream, format, this->mStyle, this->mStyle.GetStrokeColor (), strokeExtraID );
 		}
 		
-		SafeTesselator triangles;
+		SafeTesselator triangles ( drawing.GetContext ());
 		
 		error = this->AddStrokeContours ( triangles, true, true );
 		if ( error ) return error;

@@ -327,6 +327,8 @@ MOAIUpdateMgr::MOAIUpdateMgr ( ZLContext& context ) :
 	ZLHasContext ( context ),
 	ZLContextClass ( context ),
 	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIGlobalEventSource ( context ),
 	mLoopState ( START ),
 	mStep ( 1.0 / ( double )DEFAULT_STEPS_PER_SECOND ),
 	mSimTime ( 0.0 ),

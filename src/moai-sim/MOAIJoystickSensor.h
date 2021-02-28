@@ -34,8 +34,8 @@ public:
 	DECL_LUA_FACTORY ( MOAIJoystickSensor )
 
 	//----------------------------------------------------------------//
-	static void			EnqueueJoystickEvent	( ZLIndex deviceID, ZLIndex sensorID, float x, float y );
-						MOAIJoystickSensor		();
+	static void			EnqueueJoystickEvent	( MOAIInputMgr& inputMgr, ZLIndex deviceID, ZLIndex sensorID, float x, float y );
+						MOAIJoystickSensor		( ZLContext& context );
 						~MOAIJoystickSensor		();
 	void				ParseEvent				( ZLStream& eventStream );
 };

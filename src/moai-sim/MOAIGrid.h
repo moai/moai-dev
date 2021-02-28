@@ -17,7 +17,7 @@ class MOAIGfxScriptBatch;
 			Grid indices will wrap if out of range.
 */
 class MOAIGrid :
-	public MOAIGridSpace {
+	public virtual MOAIGridSpace {
 private:
 
 	ZLLeanArray < u32 >			mTiles; // TODO: fix size
@@ -53,7 +53,7 @@ public:
 	void			Fill				( u32 value );
 	u32				GetTile				( ZLIndex addr ) const;
 	u32				GetTile				( int xTile, int yTile ) const;
-					MOAIGrid			();
+					MOAIGrid			( ZLContext& context );
 					~MOAIGrid			();
 	void			RowFromString		( u32 rowID, cc8* str );
 	STLString		RowToString			( u32 rowID );

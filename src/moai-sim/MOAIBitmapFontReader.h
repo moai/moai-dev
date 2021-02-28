@@ -31,7 +31,7 @@ private:
 	typedef STLMap < u32, MOAIBitmapGlyph >::iterator BitmapGlyphsIt;
 	STLMap < u32, MOAIBitmapGlyph > mBitmapGlyphs;
 	
-	MOAIImage mImage;
+	ZLStrongPtr < MOAIImage > mImage;
 	
 	u32 mBase;
 	u32 mHeight;
@@ -41,7 +41,7 @@ private:
 	ZLIntRect		GetGlyphFrame			( u32 x, u32 y, u32 maskColor );
 	u32				GetRGB					( u32 x, u32 y );
 	u32				GetRGBA					( u32 x, u32 y );
-	void			RipBitmap				( cc8* filename, cc8* charCodes );
+	void			RipBitmap				( ZLContext& context, cc8* filename, cc8* charCodes );
 
 public:
 
@@ -66,7 +66,7 @@ public:
 			
 */
 class MOAIBitmapFontReader :
-	public MOAIFontReader {
+	public virtual MOAIFontReader {
 private:
 
 	typedef STLMap < float, MOAIBitmapFontPage >::iterator PagesIt;
@@ -93,7 +93,7 @@ public:
 	//----------------------------------------------------------------//
 	int				GetFaceMetrics				( MOAIFontFaceMetrics& faceMetrics );
 	int				GetGlyphMetrics				( MOAIGlyphMetrics& glyphMetrics );
-					MOAIBitmapFontReader		();
+					MOAIBitmapFontReader		( ZLContext& context );
 					~MOAIBitmapFontReader		();
 	int				RenderGlyph					( MOAIImage& image, float x, float y );
 	int				SelectFace					( float size );

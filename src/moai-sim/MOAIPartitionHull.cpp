@@ -217,8 +217,8 @@ void MOAIPartitionHull::BoundsDidChange () {
 	//	
 	//	ZLRect localRect = sampler.GetLocalRect ();
 	//	
-	//	MOAICellCoord c0;
-	//	MOAICellCoord c1;
+	//	ZLGridCoord c0;
+	//	ZLGridCoord c1;
 	//	
 	//	ZLRect deckBounds = this->mDeck->GetBounds ().GetRect( ZLBox::PLANE_XY );
 
@@ -240,7 +240,7 @@ bool MOAIPartitionHull::GetCellRect ( ZLRect* cellRect, ZLRect* paddedRect ) {
 		ZLVec3D center;
 		this->mWorldBounds.mAABB.GetCenter ( center );
 		
-		MOAICellCoord coord = this->mLevel->mGridSpace.GetCellCoord ( center.mX, center.mY );
+		ZLGridCoord coord = this->mLevel->mGridSpace.GetCellCoord ( center.mX, center.mY );
 		ZLRect rect = this->mLevel->mGridSpace.GetCellRect ( coord );
 		
 		if ( cellRect ) {
@@ -278,7 +278,13 @@ MOAIPartition* MOAIPartitionHull::GetPartitionTrait () {
 //}
 
 //----------------------------------------------------------------//
-MOAIPartitionHull::MOAIPartitionHull () :
+MOAIPartitionHull::MOAIPartitionHull ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIAbstractPickable ( context ),
 	mPartition ( 0 ),
 	mCell ( 0 ),
 	mLevel ( 0 ),

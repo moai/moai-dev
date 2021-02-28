@@ -85,7 +85,7 @@ public:
 	//----------------------------------------------------------------//
 	ZLRect				GetFrame				();
 	ZLRect				GetScissorRect			();
-						MOAILayoutFrame			();
+						MOAILayoutFrame			( ZLContext& context );
 						~MOAILayoutFrame		();
 	void				SetParent				( MOAIAbstractChildTransform* parent );
 };

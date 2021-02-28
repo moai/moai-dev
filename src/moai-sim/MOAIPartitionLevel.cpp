@@ -58,7 +58,7 @@ void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIP
 	cellPoint.mX = cellPoint.mX - halfSize;
 	cellPoint.mY = cellPoint.mY + halfSize;
 
-	MOAICellCoord coord = this->mGridSpace.GetCellCoord ( cellPoint.mX, cellPoint.mY );
+	ZLGridCoord coord = this->mGridSpace.GetCellCoord ( cellPoint.mX, cellPoint.mY );
 	
 	int width = this->mGridSpace.GetWidth ();
 	int height = this->mGridSpace.GetHeight ();
@@ -69,7 +69,7 @@ void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIP
 	for ( int y = 0; y < yTotal; ++y ) {
 		for ( int x = 0; x < xTotal; ++x ) {
 			
-			MOAICellCoord offset = this->mGridSpace.WrapCellCoord ( coord.mX + x, coord.mY - y );
+			ZLGridCoord offset = this->mGridSpace.WrapCellCoord ( coord.mX + x, coord.mY - y );
 			ZLIndex addr = this->mGridSpace.GetCellAddr ( offset );
 			this->mCells [ addr ].GatherHulls ( results, ignore, point, typeID, queryMask );
 		}
@@ -91,8 +91,8 @@ void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIP
 
 	float halfSize = this->mCellSize * 0.5f;
 
-	MOAICellCoord coord0 = this->mGridSpace.GetCellCoord ( rect.mXMin - halfSize, rect.mYMin - halfSize );
-	MOAICellCoord coord1 = this->mGridSpace.GetCellCoord ( rect.mXMax + halfSize, rect.mYMax + halfSize );
+	ZLGridCoord coord0 = this->mGridSpace.GetCellCoord ( rect.mXMin - halfSize, rect.mYMin - halfSize );
+	ZLGridCoord coord1 = this->mGridSpace.GetCellCoord ( rect.mXMax + halfSize, rect.mYMax + halfSize );
 
 	int xTotal = coord1.mX - coord0.mX + 1;
 	int yTotal = coord1.mY - coord0.mY + 1;
@@ -106,7 +106,7 @@ void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIP
 	for ( int y = 0; y < yTotal; ++y ) {
 		for ( int x = 0; x < xTotal; ++x ) {
 			
-			MOAICellCoord offset = this->mGridSpace.WrapCellCoord ( coord0.mX + x, coord0.mY + y );
+			ZLGridCoord offset = this->mGridSpace.WrapCellCoord ( coord0.mX + x, coord0.mY + y );
 			ZLIndex addr = this->mGridSpace.GetCellAddr ( offset );
 			this->mCells [ addr ].GatherHulls ( results, ignore, rect, typeID, queryMask );
 		}
@@ -119,8 +119,8 @@ void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIP
 	float halfSize = this->mCellSize * 0.5f;
 
 	ZLRect rect = box.GetRect ( planeID );
-	MOAICellCoord coord0 = this->mGridSpace.GetCellCoord ( rect.mXMin - halfSize, rect.mYMin - halfSize );
-	MOAICellCoord coord1 = this->mGridSpace.GetCellCoord ( rect.mXMax + halfSize, rect.mYMax + halfSize );
+	ZLGridCoord coord0 = this->mGridSpace.GetCellCoord ( rect.mXMin - halfSize, rect.mYMin - halfSize );
+	ZLGridCoord coord1 = this->mGridSpace.GetCellCoord ( rect.mXMax + halfSize, rect.mYMax + halfSize );
 
 	int xTotal = coord1.mX - coord0.mX + 1;
 	int yTotal = coord1.mY - coord0.mY + 1;
@@ -134,7 +134,7 @@ void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIP
 	for ( int y = 0; y < yTotal; ++y ) {
 		for ( int x = 0; x < xTotal; ++x ) {
 			
-			MOAICellCoord offset = this->mGridSpace.WrapCellCoord ( coord0.mX + x, coord0.mY + y );
+			ZLGridCoord offset = this->mGridSpace.WrapCellCoord ( coord0.mX + x, coord0.mY + y );
 			ZLIndex addr = this->mGridSpace.GetCellAddr ( offset );
 			this->mCells [ addr ].GatherHulls ( results, ignore, box, typeID, queryMask );
 		}
@@ -147,8 +147,8 @@ void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIP
 	float halfSize = this->mCellSize * 0.5f;
 
 	ZLRect rect = frustum.mAABB.GetRect ( planeID );
-	MOAICellCoord coord0 = this->mGridSpace.GetCellCoord ( rect.mXMin - halfSize, rect.mYMin - halfSize );
-	MOAICellCoord coord1 = this->mGridSpace.GetCellCoord ( rect.mXMax + halfSize, rect.mYMax + halfSize );
+	ZLGridCoord coord0 = this->mGridSpace.GetCellCoord ( rect.mXMin - halfSize, rect.mYMin - halfSize );
+	ZLGridCoord coord1 = this->mGridSpace.GetCellCoord ( rect.mXMax + halfSize, rect.mYMax + halfSize );
 
 	int xTotal = coord1.mX - coord0.mX + 1;
 	int yTotal = coord1.mY - coord0.mY + 1;
@@ -162,7 +162,7 @@ void MOAIPartitionLevel::GatherHulls ( MOAIPartitionResultBuffer& results, MOAIP
 	for ( int y = 0; y < yTotal; ++y ) {
 		for ( int x = 0; x < xTotal; ++x ) {
 			
-			MOAICellCoord offset = this->mGridSpace.WrapCellCoord ( coord0.mX + x, coord0.mY + y );
+			ZLGridCoord offset = this->mGridSpace.WrapCellCoord ( coord0.mX + x, coord0.mY + y );
 			ZLIndex addr = this->mGridSpace.GetCellAddr ( offset );
 			this->mCells [ addr ].GatherHulls ( results, ignore, frustum, typeID, queryMask );
 		}
@@ -188,7 +188,7 @@ MOAIPartitionCell* MOAIPartitionLevel::GetCell ( MOAIPartitionHull& hull ) {
 	ZLVec3D loc;
 	hull.mWorldBounds.mAABB.GetCenter ( loc );
 	
-	MOAICellCoord coord = this->mGridSpace.GetCellCoord ( loc.mX, loc.mY );
+	ZLGridCoord coord = this->mGridSpace.GetCellCoord ( loc.mX, loc.mY );
 	ZLIndex cellAddr = this->mGridSpace.GetCellAddr ( coord );
 	return &this->mCells [ cellAddr ];
 }

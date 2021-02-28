@@ -21,7 +21,7 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-					MOAIHasHitMask			();
+					MOAIHasHitMask			( ZLContext& context );
 					~MOAIHasHitMask			();
 	void			SetHitMash				( MOAIAbstractHitMask* hitMask );
 };

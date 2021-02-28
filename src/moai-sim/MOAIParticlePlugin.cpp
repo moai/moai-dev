@@ -28,7 +28,9 @@ int MOAIParticlePlugin::_getSize ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIParticlePlugin::MOAIParticlePlugin () :
+MOAIParticlePlugin::MOAIParticlePlugin ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
 	mSize ( 0 ) {
 	
 	RTTI_BEGIN ( MOAIParticlePlugin )

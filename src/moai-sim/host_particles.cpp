@@ -10,23 +10,29 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void AKUNewParticlePlugin ( lua_State* L, AKUParticleInitFunc initFunc, AKUParticleRenderFunc renderFunc, int size ) {
+void AKUNewParticlePlugin ( AKUContextID contextID, lua_State* L, AKUParticleInitFunc initFunc, AKUParticleRenderFunc renderFunc, int size ) {
 	UNUSED ( L );
 	UNUSED ( initFunc );
 	UNUSED ( renderFunc );
 	UNUSED ( size );
 	
+	assert ( contextID );
+	ZLContext* context = ( ZLContext* )contextID;
+	
 	MOAILuaState state ( L );
 	
-	MOAIParticleCallbackPlugin* plugin = new MOAIParticleCallbackPlugin ();
+	MOAIParticleCallbackPlugin* plugin = new MOAIParticleCallbackPlugin ( *context );
 	plugin->Init ( initFunc, renderFunc, size );
 	plugin->PushLuaUserdata ( state );
 }
 
 //----------------------------------------------------------------//
-void AKUSetParticlePreset ( const char* presetTable, const char* presetName, AKUParticleInitFunc initFunc, AKUParticleRenderFunc renderFunc, int size ) {
+void AKUSetParticlePreset ( AKUContextID contextID, const char* presetTable, const char* presetName, AKUParticleInitFunc initFunc, AKUParticleRenderFunc renderFunc, int size ) {
 
-	lua_State* L = AKUGetLuaState ();
+	assert ( contextID );
+	ZLContext* context = ( ZLContext* )contextID;
+
+	lua_State* L = AKUGetLuaState ( contextID );
 	
 	lua_getglobal ( L, presetTable );
 	
@@ -38,7 +44,7 @@ void AKUSetParticlePreset ( const char* presetTable, const char* presetName, AKU
 	lua_getglobal ( L, presetTable );
 	assert ( lua_isnil ( L, -1 ) == false );
 	
-	AKUNewParticlePlugin ( L, initFunc, renderFunc, size );
+	AKUNewParticlePlugin ( contextID, L, initFunc, renderFunc, size );
 	lua_setfield ( L, -2, presetName );
 	
 	lua_pop ( L, 1 );

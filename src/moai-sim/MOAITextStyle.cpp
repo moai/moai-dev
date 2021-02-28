@@ -178,7 +178,7 @@ int MOAITextStyle::_setFont ( lua_State* L ) {
 int MOAITextStyle::_setShader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAITextStyle, "U" )
 	
-	MOAIShader* shader = MOAIGfxMgr::Get ().AffirmShader ( state, 2 );
+	MOAIShader* shader = self->Get < MOAIGfxMgr >().AffirmShader ( state, 2 );
 	self->SetShader ( shader );
 	state.Push ( shader->AsType < MOAILuaObject >());
 	return 1;
@@ -289,7 +289,12 @@ void MOAITextStyle::Init ( MOAITextStyleState& style ) {
 }
 
 //----------------------------------------------------------------//
-MOAITextStyle::MOAITextStyle () {
+MOAITextStyle::MOAITextStyle ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ) {
 	
 	RTTI_BEGIN ( MOAITextStyle )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAITextStyle >)

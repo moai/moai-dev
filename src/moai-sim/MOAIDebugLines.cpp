@@ -105,7 +105,7 @@ int MOAIDebugLinesMgr::_showDebugLines ( lua_State* L ) {
 //----------------------------------------------------------------//
 bool MOAIDebugLinesMgr::Bind ( u32 styleID ) {
 
-	return this->Bind ( styleID, MOAIDraw::Get ());
+	return this->Bind ( styleID, this->Get < MOAIDraw >());
 }
 
 //----------------------------------------------------------------//
@@ -160,7 +160,10 @@ bool MOAIDebugLinesMgr::IsVisible ( u32 styleID ) {
 }
 
 //----------------------------------------------------------------//
-MOAIDebugLinesMgr::MOAIDebugLinesMgr () :
+MOAIDebugLinesMgr::MOAIDebugLinesMgr ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	ZLContextClass ( context ),
+	MOAILuaObject ( context ),
 	mActiveStyleSet ( 0 ),
 	mShowDebugLines ( true ) {
 	

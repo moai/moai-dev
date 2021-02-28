@@ -45,7 +45,7 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-								MOAIAbstractPickable		();
+								MOAIAbstractPickable		( ZLContext& context );
 								~MOAIAbstractPickable		();
 	MOAIPickResult				PickByPoint					( ZLVec3D loc );
 	static MOAIPickResult		PickByPointHelper			( ZLBounds bounds, ZLVec3D loc );

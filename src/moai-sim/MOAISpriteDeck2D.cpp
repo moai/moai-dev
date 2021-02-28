@@ -12,7 +12,12 @@
 //----------------------------------------------------------------//
 void MOAISpriteDeck2DCallable::MOAIAbstractGfxScriptCallback_Call () {
 
-	this->mBrush.Draw ();
+	this->mBrush.Draw ( this->mGfxMgr );
+}
+
+//----------------------------------------------------------------//
+MOAISpriteDeck2DCallable::MOAISpriteDeck2DCallable ( MOAIGfxMgr& gfxMgr ) :
+	mGfxMgr ( gfxMgr ) {
 }
 
 //================================================================//
@@ -412,14 +417,14 @@ MOAIDeck* MOAISpriteDeck2D::AffirmDeck ( MOAILuaState& state, int idx ) {
 	MOAIDeck* deck = state.GetLuaObject < MOAIDeck >( idx, false );
 	if ( deck ) return deck;
 	
-	MOAITexture* texture = MOAIGfxMgr::Get ().AffirmTexture ( state, idx );
+	MOAITexture* texture = state.Get < MOAIGfxMgr >().AffirmTexture ( state, idx );
 		
 	if ( texture ) {
 		
-		MOAISpriteDeck2D* spriteDeck = new MOAISpriteDeck2D ();
+		MOAISpriteDeck2D* spriteDeck = new MOAISpriteDeck2D ( state.GetContext ());
 		assert ( spriteDeck );
 
-		spriteDeck->_ < MOAIDrawAPI >( MOAIDraw::Get (), 0, MOAIRenderPhaseEnum::RENDER_PHASE_DRAW ).SetTexture ( texture, 0 );
+		spriteDeck->_ < MOAIDrawAPI >( state.Get < MOAIDraw >(), 0, MOAIRenderPhaseEnum::RENDER_PHASE_DRAW ).SetTexture ( texture, 0 );
 		
 		int hWidth = ( int )( texture->GetWidth () / 2 );
 		int hHeight = ( int )( texture->GetHeight () / 2 );
@@ -531,7 +536,14 @@ ZLQuad MOAISpriteDeck2D::GetUVQuad ( ZLIndex index ) const {
 }
 
 //----------------------------------------------------------------//
-MOAISpriteDeck2D::MOAISpriteDeck2D () {
+MOAISpriteDeck2D::MOAISpriteDeck2D ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIDeck ( context ),
+	MOAIHasGfxScriptBatchesForPhases ( context ),
+	MOAIAbstractHasHitMask ( context ),
+	MOAIAbstractHasHitMaskBatch ( context ),
+	MOAIHasHitMaskBatch ( context ) {
 	
 	RTTI_BEGIN ( MOAISpriteDeck2D )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAISpriteDeck2D >)
@@ -744,8 +756,8 @@ MOAIPickResult MOAISpriteDeck2D::MOAIDeck_PickByRay ( ZLIndex idx, ZLVec3D loc, 
 //----------------------------------------------------------------//
 void MOAISpriteDeck2D::MOAIDeck_Render ( ZLIndex idx, MOAIRenderPhaseEnum::_ renderPhase ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	MOAIQuadBrush::BindVertexFormat ();
+	MOAIGfxMgr& gfxMgr = this->Get < MOAIGfxMgr >();
+	MOAIQuadBrush::BindVertexFormat ( gfxMgr );
 	
 	gfxMgr.SetVertexTransform ( MOAIGfxMgr::MODEL_TO_DISPLAY_MTX );
 	gfxMgr.SetUVTransform ( MOAIGfxMgr::UV_TO_MODEL_MTX );
@@ -758,7 +770,7 @@ void MOAISpriteDeck2D::MOAIDeck_Render ( ZLIndex idx, MOAIRenderPhaseEnum::_ ren
 	ZLIndex top = base + spriteList.mTotalSprites;
 	
 	for ( ZLIndex i = base; i < top; ++i ) {
-		MOAISpriteDeck2DCallable callable;
+		MOAISpriteDeck2DCallable callable ( gfxMgr );
 		callable.mBrush = this->GetSpriteBrush ( i );
 		
 		MOAIGfxScript* gfxScript = this->GetGfxScript ( callable.mBrush.mMaterialID, renderPhase );

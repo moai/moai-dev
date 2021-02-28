@@ -83,7 +83,7 @@ public:
 	GET ( u32, NextPass, ( mOverlapPass + 1 ))
 	
 	//----------------------------------------------------------------//
-					MOAICollisionWorld		();
+					MOAICollisionWorld		( ZLContext& context );
 					~MOAICollisionWorld		();
 };
 

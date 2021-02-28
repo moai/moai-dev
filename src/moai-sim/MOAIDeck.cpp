@@ -88,7 +88,9 @@ MOAICollisionShape* MOAIDeck::GetCollisionShape ( ZLIndex idx ) {
 }
 
 //----------------------------------------------------------------//
-MOAIDeck::MOAIDeck () {
+MOAIDeck::MOAIDeck ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ) {
 	
 	RTTI_BEGIN ( MOAIDeck )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIDeck >)

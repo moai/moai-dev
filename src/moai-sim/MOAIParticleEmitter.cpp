@@ -247,7 +247,17 @@ bool MOAIParticleEmitter::MaskParticle ( const ZLVec3D& loc ) {
 }
 
 //----------------------------------------------------------------//
-MOAIParticleEmitter::MOAIParticleEmitter () :
+MOAIParticleEmitter::MOAIParticleEmitter ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIAbstractBaseTransform ( context ),
+	MOAIAbstractChildTransform ( context ),
+	MOAITransform ( context ),
+	MOAIBlocker ( context ),
+	MOAIAction ( context ),
 	mShapeID ( POINT ),
 	mInnerRadius ( 0.0f ),
 	mOuterRadius ( 0.0f ),

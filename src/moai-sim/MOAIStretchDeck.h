@@ -29,7 +29,7 @@ public:
 		
 	//----------------------------------------------------------------//
 	ZLVec3D			BindStretchVertexTransform				() const;
-					MOAIStretchDeck							();
+					MOAIStretchDeck							( ZLContext& context );
 					~MOAIStretchDeck						();
 };
 

@@ -10,8 +10,7 @@ class MOAIAbstractHitMask;
 // MOAIAbstractHitMaskBatch
 //================================================================//
 class MOAIAbstractHitMaskBatch :
-	public virtual MOAIAbstractHasHitMask,
-	public virtual MOAILuaObject {
+	public virtual MOAIAbstractHasHitMask {
 protected:
 
 	friend class MOAIAbstractHasHitMaskBatch;
@@ -25,7 +24,7 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-					MOAIAbstractHitMaskBatch		();
+					MOAIAbstractHitMaskBatch		( ZLContext& context );
 					~MOAIAbstractHitMaskBatch		();
 };
 

@@ -61,7 +61,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIPartitionViewLayer )
 	
 	//----------------------------------------------------------------//
-					MOAIPartitionViewLayer			();
+					MOAIPartitionViewLayer			( ZLContext& context );
 					~MOAIPartitionViewLayer			();
 };
 

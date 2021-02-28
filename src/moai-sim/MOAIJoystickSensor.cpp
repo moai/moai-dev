@@ -56,9 +56,8 @@ int MOAIJoystickSensor::_setCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIJoystickSensor::EnqueueJoystickEvent( ZLIndex deviceID, ZLIndex sensorID, float x, float y ) {
+void MOAIJoystickSensor::EnqueueJoystickEvent ( MOAIInputMgr& inputMgr, ZLIndex deviceID, ZLIndex sensorID, float x, float y ) {
 
-	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
 	if ( inputMgr.WriteEventHeader < MOAIJoystickSensor >( deviceID, sensorID )) {
 		inputMgr.Write < float >( x );
 		inputMgr.Write < float >( y );
@@ -66,7 +65,10 @@ void MOAIJoystickSensor::EnqueueJoystickEvent( ZLIndex deviceID, ZLIndex sensorI
 }
 
 //----------------------------------------------------------------//
-MOAIJoystickSensor::MOAIJoystickSensor () {
+MOAIJoystickSensor::MOAIJoystickSensor ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAISensor ( context ) {
 	
 	RTTI_BEGIN ( MOAIJoystickSensor )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIJoystickSensor >)

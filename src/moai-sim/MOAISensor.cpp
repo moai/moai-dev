@@ -23,7 +23,9 @@ int MOAISensor::_getTimestamp ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAISensor::MOAISensor () :
+MOAISensor::MOAISensor ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
 	mType ( 0 ),
 	mTimestamp ( 0 ) {
 	

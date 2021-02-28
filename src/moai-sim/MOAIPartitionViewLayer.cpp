@@ -53,7 +53,7 @@ int	MOAIPartitionViewLayer::_getPropViewList ( lua_State* L ) {
 		viewVolume.Init ( invViewProjMtx );
 		
 		ZLStrongPtr < MOAIPartitionResultBuffer > buffer;
-		MOAIPool::Get ().Provision < MOAIPartitionResultBuffer >( buffer );
+		self->Get < MOAIPool >().Provision < MOAIPartitionResultBuffer >( buffer );
 		
 		u32 totalResults = 0;
 		
@@ -187,12 +187,12 @@ int	MOAIPartitionViewLayer::_setSortScale ( lua_State* L ) {
 //----------------------------------------------------------------//
 void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition, MOAIRenderPhaseEnum::_ renderPhase ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr = this->Get < MOAIGfxMgr >();
 
 	ZLTypeID typeID = ZLType::GetID < MOAIAbstractRenderable >();
 	
 	ZLStrongPtr < MOAIPartitionResultBuffer > buffer;
-	MOAIPool::Get ().Provision < MOAIPartitionResultBuffer >( buffer );
+	this->Get < MOAIPool >().Provision < MOAIPartitionResultBuffer >( buffer );
 	
 	const ZLFrustum& viewVolume = gfxMgr.GetViewVolume ();
 	
@@ -222,7 +222,7 @@ void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition, MOAIRende
 	buffer->Sort ( this->mSortMode );
 	buffer->Render ( renderPhase );
 	
-	if ( MOAIDebugLinesMgr::Get ().IsVisible () && this->mShowDebugLines ) {
+	if ( this->Get < MOAIDebugLinesMgr >().IsVisible () && this->mShowDebugLines ) {
 		partition.DrawDebugBack ();
 		buffer->Render ( MOAIRenderPhaseEnum::RENDER_PHASE_DRAW_DEBUG );
 		partition.DrawDebugFront ();
@@ -230,7 +230,19 @@ void MOAIPartitionViewLayer::DrawPartition ( MOAIPartition& partition, MOAIRende
 }
 
 //----------------------------------------------------------------//
-MOAIPartitionViewLayer::MOAIPartitionViewLayer () :
+MOAIPartitionViewLayer::MOAIPartitionViewLayer ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIHasGfxScriptsForPhases ( context ),
+	MOAIAbstractRenderable ( context ),
+	MOAISurfaceClearColor ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIColor ( context ),
+	MOAIAbstractLayer ( context ),
+	MOAIAbstractViewLayer ( context ),
+	MOAIPartitionHolder ( context ),
 	mSortMode ( MOAIPartitionResultBuffer::SORT_PRIORITY_ASCENDING ),
 	mSortInViewSpace ( false ),
 	mPartitionCull2D ( true ) {

@@ -82,7 +82,7 @@ public:
 	void			InsertHull				( MOAIPartitionHull& hull );
 	bool			IsEmpty					( MOAIPartitionHull& hull );
 	bool			IsGlobal				( MOAIPartitionHull& hull );
-					MOAIPartition			();
+					MOAIPartition			( ZLContext& context );
 					~MOAIPartition			();
 	void			RemoveHull				( MOAIPartitionHull& hull );
 	void			ReserveLevels			( ZLSize totalLevels );

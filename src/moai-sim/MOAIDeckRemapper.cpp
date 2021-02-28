@@ -3,7 +3,6 @@
 
 #include "pch.h"
 #include <moai-sim/MOAIDeckRemapper.h>
-#include <moai-sim/MOAITileFlags.h>
 
 //================================================================//
 // lua
@@ -76,7 +75,14 @@ int MOAIDeckRemapper::_setRemap ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIDeckRemapper::MOAIDeckRemapper () :
+MOAIDeckRemapper::MOAIDeckRemapper ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIDeck ( context ),
+	MOAIDeckProxy ( context ),
 	mBase ( 0 ) {
 	
 	RTTI_BEGIN ( MOAIDeckRemapper )

@@ -13,7 +13,7 @@ class MOAIInputMgr;
 	@text	Base class for sensors.
 */
 class MOAISensor :
-	public MOAILuaObject {
+	public virtual MOAILuaObject {
 protected:
 
 	MOAI_LUA_OBJECT_VISITOR_FRIEND
@@ -40,7 +40,7 @@ public:
 	//----------------------------------------------------------------//
 	virtual void	ClearState			() {}
 	virtual void	ParseEvent			( ZLStream& eventStream ) = 0;
-					MOAISensor			();
+					MOAISensor			( ZLContext& context );
 					~MOAISensor			();
 	virtual void	ResetState			() {}
 };

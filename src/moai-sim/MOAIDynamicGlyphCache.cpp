@@ -129,7 +129,7 @@ MOAIImage* MOAIDynamicGlyphCache::GetImage () {
 	}
 	
 	MOAIImage& srcImage0 = *this->mPages [ 0 ]->mImageTexture;
-	MOAIImage* image = new MOAIImage ();
+	MOAIImage* image = new MOAIImage ( this->GetContext ());
 	
 	image->Init (
 		width,
@@ -157,7 +157,10 @@ bool MOAIDynamicGlyphCache::IsDynamic () {
 }
 
 //----------------------------------------------------------------//
-MOAIDynamicGlyphCache::MOAIDynamicGlyphCache () :
+MOAIDynamicGlyphCache::MOAIDynamicGlyphCache ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIGlyphCache ( context ),
 	mColorFormat ( ZLColor::A_8 ),
 	mPadding ( -1.0f, -1.0f, 1.0f, 1.0f ) {
 	

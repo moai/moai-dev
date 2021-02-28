@@ -418,7 +418,15 @@ void MOAILayoutFrame::Layout ( u32 axis ) {
 }
 
 //----------------------------------------------------------------//
-MOAILayoutFrame::MOAILayoutFrame () {
+MOAILayoutFrame::MOAILayoutFrame ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIAbstractBaseTransform ( context ),
+	MOAIAbstractChildTransform ( context ),
+	MOAITransform ( context ) {
 	
 	RTTI_BEGIN ( MOAILayoutFrame )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAILayoutFrame >)

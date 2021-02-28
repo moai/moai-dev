@@ -30,7 +30,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIHitMaskBatch )
 
 	//----------------------------------------------------------------//
-							MOAIHitMaskBatch		();
+							MOAIHitMaskBatch		( ZLContext& context );
 							~MOAIHitMaskBatch		();
 };
 

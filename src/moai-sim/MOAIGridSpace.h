@@ -4,37 +4,6 @@
 #ifndef MOAIGRIDSPACE_H
 #define MOAIGRIDSPACE_H
 
-#include <moai-sim/MOAITileFlags.h>
-
-//================================================================//
-// MOAICellCoord
-//================================================================//
-class MOAICellCoord :
-	public ZLIntVec2D {
-public:
-	
-	//----------------------------------------------------------------//
-	u32			GetID				();
-	bool		IsEqual				( MOAICellCoord cellCoord );
-				MOAICellCoord		();
-				~MOAICellCoord		();
-	
-	//----------------------------------------------------------------//
-	inline MOAICellCoord ( int x, int y ) :
-		ZLIntVec2D ( x, y ) {
-	}
-	
-	//----------------------------------------------------------------//
-	inline MOAICellCoord MakeOffset ( int x, int y ) {
-		
-		MOAICellCoord result;
-		result.mX = this->mX + x;
-		result.mY = this->mY + y;
-		
-		return result;
-	}
-};
-
 //================================================================//
 // MOAIGridSpace
 //================================================================//
@@ -67,23 +36,9 @@ public:
 	@const	AXIAL_HEX_SHAPE
 */
 class MOAIGridSpace :
-	public virtual MOAILuaObject {
+	public virtual MOAILuaObject,
+	public virtual ZLGridSpace {
 protected:
-
-	float		mXOff;
-	float		mYOff;
-
-	float		mCellWidth;
-	float		mCellHeight;
-	
-	float		mTileWidth;
-	float		mTileHeight;
-
-	int			mWidth;
-	int			mHeight;
-
-	u32			mShape;
-	u32			mRepeat;
 
 	//----------------------------------------------------------------//
 	static int		_cellAddrToCoord		( lua_State* L );
@@ -106,13 +61,6 @@ protected:
 	static int		_wrapCoord				( lua_State* L );
 
 	//----------------------------------------------------------------//
-	MOAICellCoord	GetAxialHexCellCoord	( float x, float y ) const;
-	MOAICellCoord	GetHexCellCoord			( float x, float y, float a, float b ) const;
-	MOAICellCoord	GetObliqueCellCoord		( float x, float y ) const;
-	ZLVec2D			GetRectPoint			( float x, float y, float width, float height, u32 position ) const;
-	virtual void	OnResize				();
-
-	//----------------------------------------------------------------//
 	void			_RegisterLuaClass		( RTTIVisitorHistory& history, MOAILuaState& state );
 	void			_RegisterLuaFuncs		( RTTIVisitorHistory& history, MOAILuaState& state );
 	void			_SerializeIn			( RTTIVisitorHistory& history, MOAILuaState& state, MOAIDeserializer& serializer );
@@ -122,83 +70,9 @@ public:
 	
 	DECL_LUA_FACTORY ( MOAIGridSpace )
 	
-	enum {
-		TILE_LEFT_TOP,
-		TILE_RIGHT_TOP,
-		TILE_LEFT_BOTTOM,
-		TILE_RIGHT_BOTTOM,
-		
-		TILE_LEFT_CENTER,
-		TILE_RIGHT_CENTER,
-		TILE_TOP_CENTER,
-		TILE_BOTTOM_CENTER,
-		
-		TILE_CENTER,
-	};
-	
-	static const u32 REPEAT_X			= 0x00000001;
-	static const u32 REPEAT_Y			= 0x00000002;
-	
-	static const u32 STAGGER_FLAG		= 0x80000000;
-	static const u32 STAGGER_MASK		= 0x80000000;
-	static const u32 SHAPE_MASK			= 0x7FFFFFFF;
-	
-	static const u32 RECT_SHAPE			= 0x00000000;
-	static const u32 DIAMOND_SHAPE		= 0x00000001 | STAGGER_FLAG;
-	static const u32 OBLIQUE_SHAPE		= 0x00000002;
-	static const u32 HEX_SHAPE			= 0x00000003 | STAGGER_FLAG;
-	static const u32 AXIAL_HEX_SHAPE	= 0x00000004;
-	
-	GET_SET_CONST ( float, XOff, mXOff )
-	GET_SET_CONST ( float, YOff, mYOff )
-	
-	GET_SET_CONST ( float, CellWidth, mCellWidth )
-	GET_SET_CONST ( float, CellHeight, mCellHeight )
-	
-	GET_SET_CONST ( float, TileWidth, mTileWidth )
-	GET_SET_CONST ( float, TileHeight, mTileHeight )
-	
-	GET_SET_CONST ( int, Width, mWidth )
-	GET_SET_CONST ( int, Height, mHeight )
-	
-	GET_SET_CONST ( u32, Shape, mShape )
-	GET_SET_CONST ( u32, Repeat, mRepeat )
-	
 	//----------------------------------------------------------------//
-	ZLVec2D				CellToWorld				( MOAICellCoord cellCoord, ZLVec2D loc ) const;
-	
-	MOAICellCoord		Clamp					( MOAICellCoord cellCoord ) const;
-	MOAICellCoord		ClampX					( MOAICellCoord cellCoord ) const;
-	MOAICellCoord		ClampY					( MOAICellCoord cellCoord ) const;
-	
-	ZLIndex				GetCellAddr				( MOAICellCoord cellCoord ) const;
-	ZLIndex				GetCellAddr				( int xCell, int yCell ) const;
-	MOAICellCoord		GetCellCoord			( ZLIndex cellAddr ) const;
-	MOAICellCoord		GetCellCoord			( ZLVec2D loc ) const;
-	MOAICellCoord		GetCellCoord			( float x, float y ) const;
-	MOAICellCoord		GetCellCoord			( int xCell, int yCell ) const;
-	
-	ZLVec2D				GetCellPoint			( MOAICellCoord cellCoord, u32 position ) const;
-	ZLRect				GetCellRect				( MOAICellCoord cellCoord ) const;
-	
-	ZLRect				GetFrame				() const;
-	ZLRect				GetFrame				( MOAICellCoord c0, MOAICellCoord c1 ) const;
-	void				GetFrameInRect			( ZLRect rect, MOAICellCoord& c0, MOAICellCoord& c1, ZLRect maxSize ) const;
-	
-	ZLVec2D				GetTilePoint			( MOAICellCoord cellCoord, u32 position ) const;
-	ZLVec3D				GetTilePoint			( MOAICellCoord cellCoord, u32 position, float z ) const;
-	ZLRect				GetTileRect				( MOAICellCoord cellCoord ) const;
-	
-	int					GetTotalCells			() const;
-	
-	ZLVec2D				GridToWorld				( ZLVec2D loc ) const;
-	void				Init					( int width, int height, float tileWidth, float tileHeight );
-	bool				IsValidCoord			( MOAICellCoord cellCoord ) const;
-						MOAIGridSpace			();
-						~MOAIGridSpace			();
-	MOAICellCoord		WrapCellCoord			( int xCell, int yCell ) const;
-	ZLVec2D				WorldToCell				( MOAICellCoord cellCoord, ZLVec2D loc ) const;
-	ZLVec2D				WorldToGrid				( ZLVec2D loc ) const;
+					MOAIGridSpace			( ZLContext& context );
+					~MOAIGridSpace			();
 };
 
 #endif

@@ -391,7 +391,9 @@ bool MOAIPartition::IsGlobal ( MOAIPartitionHull& hull ) {
 }
 
 //----------------------------------------------------------------//
-MOAIPartition::MOAIPartition () :
+MOAIPartition::MOAIPartition ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
 	mPriorityCounter ( 0 ),
 	mPlaneID ( ZLBox::PLANE_XY ) {
 	

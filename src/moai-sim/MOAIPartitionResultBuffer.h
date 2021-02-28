@@ -108,7 +108,7 @@ public:
 	void					Clear							();
 	MOAIPartitionHull*		FindBest						();
 	void					GenerateKeys					( u32 mode, float xScale, float yScale, float zScale, float priority );
-							MOAIPartitionResultBuffer		();
+							MOAIPartitionResultBuffer		( ZLContext& context );
 							~MOAIPartitionResultBuffer		();
 	MOAIPartitionResult*	PopResult						();
 	void					Project							( const ZLMatrix4x4& mtx );

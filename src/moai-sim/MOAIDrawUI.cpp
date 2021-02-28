@@ -61,7 +61,7 @@ void MOAIDrawUI::DrawString ( cc8* text, float x, float y, float width, float he
 	assert ( g_CurrentTextDrawContext );
 
 	// Transform the center into 'world' space
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr = this->Get < MOAIGfxMgr >();
 	
 	const ZLMatrix4x4& orgWorldTransform = gfxMgr.GetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX );
 	ZLVec2D pos ( x, y );
@@ -156,7 +156,7 @@ void MOAIDrawUI::DrawString	( cc8* text, float x, float y, float scale, MOAIFont
 void MOAIDrawUI::EndDrawString () {
 
 	// Setup for drawing
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr = this->Get < MOAIGfxMgr >();
 
 	// Get current state
 	//const ZLMatrix4x4& orgWorldTransform = gfxState.GetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX );
@@ -171,7 +171,7 @@ void MOAIDrawUI::EndDrawString () {
 	
 	gfxMgr.SetBlendMode ( MOAIBlendFactorEnum::ONE, MOAIBlendFactorEnum::ONE_MINUS_SRC_ALPHA );
 	gfxMgr.SetVertexTransform ( MOAIGfxMgr::MODEL_TO_WORLD_MTX );
-	MOAIQuadBrush::BindVertexFormat ();
+	MOAIQuadBrush::BindVertexFormat ( gfxMgr );
 
 	// Get the context data
 	assert( g_CurrentTextDrawContext );
@@ -230,7 +230,9 @@ void MOAIDrawUI::EndDrawString () {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIDrawUI::MOAIDrawUI () {
+MOAIDrawUI::MOAIDrawUI ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	ZLContextClass ( context ) {
 }
 
 //----------------------------------------------------------------//

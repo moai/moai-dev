@@ -21,7 +21,7 @@ void MOAIDynamicGlyphCachePage::AffirmCanvas ( MOAIDynamicGlyphCache& owner, MOA
 		STLString debugName;
 		debugName.write ( "page %d - %s (%p)", ( int )this->mPageID, font.GetFilename (), &font );
 		
-		this->mImageTexture = MOAIGfxMgr::Get ().CreateImageTexture ();
+		this->mImageTexture = owner.Get < MOAIGfxMgr >().CreateImageTexture ();
 		this->mImageTexture->Init ( MAX_TEXTURE_SIZE, ( u32 )this->mRows.mSize, owner.mColorFormat, MOAIImage::TRUECOLOR );
 		this->mImageTexture->SetDebugName ( debugName );
 		this->mImageTexture->SetFilter ( font.GetMinFilter (), font.GetMagFilter ());

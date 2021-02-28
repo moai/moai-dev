@@ -263,7 +263,7 @@ u32 MOAIGrid::GetTile ( ZLIndex addr ) const {
 //----------------------------------------------------------------//
 u32 MOAIGrid::GetTile ( int xTile, int yTile ) const {
 
-	MOAICellCoord coord ( xTile, yTile );
+	ZLGridCoord coord ( xTile, yTile );
 	if ( this->IsValidCoord ( coord )) {
 		ZLIndex addr = this->GetCellAddr ( coord );
 		if ( addr < this->mTiles.Size ()) {
@@ -274,7 +274,10 @@ u32 MOAIGrid::GetTile ( int xTile, int yTile ) const {
 }
 
 //----------------------------------------------------------------//
-MOAIGrid::MOAIGrid () {
+MOAIGrid::MOAIGrid ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIGridSpace ( context ) {
 		
 	RTTI_BEGIN ( MOAIGrid )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIGrid >)
@@ -310,7 +313,7 @@ void MOAIGrid::SetTile ( ZLIndex addr, u32 tile ) {
 //----------------------------------------------------------------//
 void MOAIGrid::SetTile ( int xTile, int yTile, u32 tile ) {
 
-	MOAICellCoord coord ( xTile, yTile );
+	ZLGridCoord coord ( xTile, yTile );
 	if ( this->IsValidCoord ( coord )) {
 	
 		ZLIndex addr = this->GetCellAddr ( coord );

@@ -35,8 +35,8 @@ public:
 	DECL_LUA_FACTORY ( MOAIWheelSensor )
 
 	//----------------------------------------------------------------//
-	static void			EnqueueWheelEvent		( ZLIndex deviceID, ZLIndex sensorID, float value );
-						MOAIWheelSensor			();
+	static void			EnqueueWheelEvent		( MOAIInputMgr& inputMgr, ZLIndex deviceID, ZLIndex sensorID, float value );
+						MOAIWheelSensor			( ZLContext& context );
 						~MOAIWheelSensor		();
 	void				ParseEvent				( ZLStream& eventStream );
 	void				ResetState				();

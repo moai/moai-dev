@@ -7,7 +7,10 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIKeyCode::MOAIKeyCode () {
+MOAIKeyCode::MOAIKeyCode ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	ZLContextClass ( context ),
+	MOAILuaObject ( context ) {
 
 	RTTI_BEGIN ( MOAIKeyCode )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIKeyCode >)

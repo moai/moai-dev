@@ -73,7 +73,7 @@ public:
 	ZLBounds			GetModelBounds				(); // get the prop bounds in model space
 	ZLMatrix4x4			GetWorldDrawingMtx			() const;
 	bool				InsideModelBounds			( const ZLVec3D& vec, float pad );
-						MOAIAbstractProp			();
+						MOAIAbstractProp			( ZLContext& context );
 	virtual				~MOAIAbstractProp			();
 };
 

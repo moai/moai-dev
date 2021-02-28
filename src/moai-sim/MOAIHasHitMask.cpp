@@ -11,7 +11,10 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIHasHitMask::MOAIHasHitMask () {
+MOAIHasHitMask::MOAIHasHitMask ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIAbstractHasHitMask ( context ) {
 
 	RTTI_BEGIN ( MOAIHasHitMask )
 		RTTI_EXTEND ( MOAIAbstractHasHitMask )
@@ -36,7 +39,7 @@ void MOAIHasHitMask::SetHitMash ( MOAIAbstractHitMask* hitMask ) {
 MOAIAbstractHitMask& MOAIHasHitMask::MOAIAbstractHasHitMask_AffirmHitMask () {
 
 	if ( !this->mHitMask ) {
-		this->mHitMask = new MOAIHitMask ();
+		this->mHitMask = new MOAIHitMask ( this->GetContext ());
 	}
 	return *this->mHitMask;
 }

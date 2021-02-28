@@ -37,7 +37,7 @@ public:
 	MOAIAbstractHitMask&			AffirmHitMask						( ZLIndex index );
 	MOAIAbstractHitMaskBatch&		AffirmHitMaskBatch					();
 	MOAIAbstractHitMask*			GetHitMask							( ZLIndex index );
-									MOAIAbstractHasHitMaskBatch			();
+									MOAIAbstractHasHitMaskBatch			( ZLContext& context );
 									~MOAIAbstractHasHitMaskBatch		();
 	void							ReserveHitMasks						( ZLSize size );
 	void							SetHitMask							( ZLIndex index, MOAIAbstractHitMask* hitMask );

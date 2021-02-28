@@ -16,7 +16,7 @@ int MOAIVectorPoly::AddFillContours ( SafeTesselator& tess ) {
 	
 	if ( this->mVertices.Size () < 3 ) return 0;
 	
-	SafeTesselator outline;
+	SafeTesselator outline ( tess.GetContext ());
 	outline.AddContour2D ( this->mVertices.GetBuffer (), this->mVertices.Size (), this->mStyle.mPrecision );
 	
 	int error = outline.Tesselate (( int )this->mStyle.GetWindingRule (), TESS_BOUNDARY_CONTOURS, 0, 0 );

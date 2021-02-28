@@ -680,7 +680,9 @@ u8* MOAIParticleScript::Compile () {
 }
 
 //----------------------------------------------------------------//
-MOAIParticleScript::MOAIParticleScript () :
+MOAIParticleScript::MOAIParticleScript ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
 	mCompiled ( false ) {
 
 	int i;

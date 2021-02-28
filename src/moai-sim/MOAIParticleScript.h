@@ -181,7 +181,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	u8*				Compile					();
-					MOAIParticleScript		();
+					MOAIParticleScript		( ZLContext& context );
 					~MOAIParticleScript		();
 	void			Run						( MOAIParticleSystem& system, MOAIParticle& particle, float t0, float t1 );
 };

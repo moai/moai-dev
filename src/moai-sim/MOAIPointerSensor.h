@@ -34,8 +34,8 @@ public:
 	DECL_LUA_FACTORY ( MOAIPointerSensor )
 
 	//----------------------------------------------------------------//
-	static void			EnqueuePointerEvent		( ZLIndex deviceID, ZLIndex sensorID, int x, int y );
-						MOAIPointerSensor		();
+	static void			EnqueuePointerEvent		( MOAIInputMgr& inputMgr, ZLIndex deviceID, ZLIndex sensorID, int x, int y );
+						MOAIPointerSensor		( ZLContext& context );
 						~MOAIPointerSensor		();
 	void				ParseEvent				( ZLStream& eventStream );
 };

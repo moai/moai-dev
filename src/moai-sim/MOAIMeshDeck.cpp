@@ -59,7 +59,7 @@ void MOAIMeshDeck::DrawIndex ( ZLIndex idx, MOAIMeshSpan* span ) {
 	MOAIGfxScript* gfxScript = this->GetGfxScript ();
 	if ( !gfxScript ) return;
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr = this->Get < MOAIGfxMgr >();
 	gfxMgr.SetShader ( MOAIShaderPresetEnum::MESH_SHADER );
 	gfxMgr.SetMesh ( this->mMesh );
 
@@ -81,7 +81,11 @@ void MOAIMeshDeck::DrawIndex ( ZLIndex idx, MOAIMeshSpan* span ) {
 }
 
 //----------------------------------------------------------------//
-MOAIMeshDeck::MOAIMeshDeck () {
+MOAIMeshDeck::MOAIMeshDeck ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIDeck ( context ),
+	MOAIHasGfxScript ( context ) {
 
 	RTTI_BEGIN ( MOAIMeshDeck )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIMeshDeck >)

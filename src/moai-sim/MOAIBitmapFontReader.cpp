@@ -50,8 +50,8 @@ ZLIntRect MOAIBitmapFontPage::GetGlyphFrame ( u32 x, u32 y, u32 maskColor ) {
 
 	ZLIntRect rect = ZLRect::EMPTY;
 
-	int width = this->mImage.GetWidth ();
-	int height = this->mImage.GetHeight ();
+	int width = this->mImage->GetWidth ();
+	int height = this->mImage->GetHeight ();
 
 	int left = x + 1;
 	
@@ -85,13 +85,13 @@ ZLIntRect MOAIBitmapFontPage::GetGlyphFrame ( u32 x, u32 y, u32 maskColor ) {
 //----------------------------------------------------------------//
 u32 MOAIBitmapFontPage::GetRGB ( u32 x, u32 y ) {
 
-	return this->mImage.GetColor ( x, y ) & 0x00ffffff;
+	return this->mImage->GetColor ( x, y ) & 0x00ffffff;
 }
 
 //----------------------------------------------------------------//
 u32 MOAIBitmapFontPage::GetRGBA ( u32 x, u32 y ) {
 
-	return this->mImage.GetColor ( x, y );
+	return this->mImage->GetColor ( x, y );
 }
 
 //----------------------------------------------------------------//
@@ -105,18 +105,19 @@ MOAIBitmapFontPage::~MOAIBitmapFontPage () {
 }
 
 //----------------------------------------------------------------//
-void MOAIBitmapFontPage::RipBitmap ( cc8* filename, cc8* charCodes ) {
+void MOAIBitmapFontPage::RipBitmap ( ZLContext& context, cc8* filename, cc8* charCodes ) {
 
+	this->mImage = new MOAIImage ( context );
 	this->mBitmapGlyphs.clear ();
 
-	this->mImage.Load ( filename );
-	if ( !this->mImage.IsOK ()) return;
+	this->mImage->Load ( filename );
+	if ( !this->mImage->IsOK ()) return;
 
 	this->mHeight = 0;
 	this->mBase = 0;
 
-	u32 width = this->mImage.GetWidth ();
-	u32 height = this->mImage.GetHeight ();
+	u32 width = this->mImage->GetWidth ();
+	u32 height = this->mImage->GetHeight ();
 	u32 bgColor = ( u32 )this->GetRGB ( 0, 0 );
 
 	int idx = 0;
@@ -238,11 +239,14 @@ int MOAIBitmapFontReader::GetGlyphMetrics ( MOAIGlyphMetrics& glyphMetrics ) {
 void MOAIBitmapFontReader::LoadPage ( cc8* filename, float size, cc8* charCodes ) {
 
 	MOAIBitmapFontPage& page = this->mPages [ size ];
-	page.RipBitmap ( filename, charCodes );
+	page.RipBitmap ( this->GetContext (), filename, charCodes );
 }
 
 //----------------------------------------------------------------//
-MOAIBitmapFontReader::MOAIBitmapFontReader () :
+MOAIBitmapFontReader::MOAIBitmapFontReader ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIFontReader ( context ),
 	mCurrentPage ( 0 ),
 	mCurrentPageSize ( 0.0f ),
 	mCurrentGlyph ( 0 ) {
@@ -271,7 +275,7 @@ int MOAIBitmapFontReader::RenderGlyph ( MOAIImage& image, float x, float y ) {
 	destRect.mYMax = destRect.mYMin + ( int )bitmapGlyph.mSrcRect.Height ();
 	
 	image.CopyRect (
-		this->mCurrentPage->mImage,
+		*this->mCurrentPage->mImage,
 		bitmapGlyph.mSrcRect,
 		destRect,
 		MOAIImage::FILTER_LINEAR,

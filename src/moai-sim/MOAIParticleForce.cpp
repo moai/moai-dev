@@ -185,7 +185,15 @@ void MOAIParticleForce::Eval ( const ZLVec3D& loc, float mass, ZLVec3D& accelera
 }
 
 //----------------------------------------------------------------//
-MOAIParticleForce::MOAIParticleForce () :
+MOAIParticleForce::MOAIParticleForce ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIAbstractBaseTransform ( context ),
+	MOAIAbstractChildTransform ( context ),
+	MOAITransform ( context ),
 	mShape ( LINEAR ),
 	mType ( GRAVITY ) {
 	

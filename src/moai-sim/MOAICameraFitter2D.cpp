@@ -517,7 +517,14 @@ float MOAICameraFitter2D::GetFitDistance () {
 }
 
 //----------------------------------------------------------------//
-MOAICameraFitter2D::MOAICameraFitter2D () :
+MOAICameraFitter2D::MOAICameraFitter2D ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIBlocker ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAIAction ( context ),
+	MOAINode ( context ),
 	mFitLoc ( ZLVec3D::ORIGIN ),
 	mFitScale ( 1.0 ),
 	mTargetLoc ( ZLVec3D::ORIGIN ),

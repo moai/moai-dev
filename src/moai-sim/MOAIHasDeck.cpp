@@ -62,8 +62,8 @@ int MOAIHasDeck::_setDeck ( lua_State* L ) {
 	//	
 	//	ZLRect localRect = sampler.GetLocalRect ();
 	//	
-	//	MOAICellCoord c0;
-	//	MOAICellCoord c1;
+	//	ZLGridCoord c0;
+	//	ZLGridCoord c1;
 	//	
 	//	ZLRect deckBounds = this->mDeck->GetBounds ().GetRect( ZLBox::PLANE_XY );
 
@@ -76,7 +76,12 @@ int MOAIHasDeck::_setDeck ( lua_State* L ) {
 //}
 
 //----------------------------------------------------------------//
-MOAIHasDeck::MOAIHasDeck () {
+MOAIHasDeck::MOAIHasDeck ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ) {
 		
 	RTTI_BEGIN ( MOAIHasDeck )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIHasDeck >)

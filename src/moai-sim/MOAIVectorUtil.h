@@ -17,7 +17,8 @@ typedef float TESSreal;
 //================================================================//
 // SafeTesselator
 //================================================================//
-class SafeTesselator {
+class SafeTesselator :
+	public virtual ZLHasContext {
 public:
 
 	static const ZLVec3D	sNormal;
@@ -32,7 +33,7 @@ public:
 	u32				GetTriangles			( MOAIVertexFormat& format, MOAIVertexBuffer& vtxBuffer, MOAIIndexBuffer& idxBuffer, u32 idxSizeInBytes );
 	void			Print					();
 	void			Reset					();
-					SafeTesselator			();
+					SafeTesselator			( ZLContext& context );
 					~SafeTesselator			();
 	int				Tesselate				( int windingRule, int elementType, int polySize, int vertexSize, const TESSreal* normal = 0 );
 };

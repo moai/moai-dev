@@ -10,7 +10,10 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIAbstractHitMaskBatch::MOAIAbstractHitMaskBatch () {
+MOAIAbstractHitMaskBatch::MOAIAbstractHitMaskBatch ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIAbstractHasHitMask ( context ) {
 }
 
 //----------------------------------------------------------------//

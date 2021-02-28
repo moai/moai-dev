@@ -203,7 +203,10 @@ void MOAIInputMgr::InvokeCallback ( u32 event, double timestamp ) {
 //}
 
 //----------------------------------------------------------------//
-MOAIInputMgr::MOAIInputMgr () :
+MOAIInputMgr::MOAIInputMgr ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	ZLContextClass ( context ),
+	MOAILuaObject ( context ),
 	mTimebase ( 0 ),
 	mTimestamp ( 0 ),
 	mAutoTimestamp ( false ),
@@ -343,7 +346,7 @@ void MOAIInputMgr::SetDevice ( ZLIndex deviceID, cc8* name ) {
 
 	this->LuaRelease ( this->mDevices [ deviceID ]);
 	
-	MOAIInputDevice* device = new MOAIInputDevice ();
+	MOAIInputDevice* device = new MOAIInputDevice ( this->GetContext ());
 	this->mDevices [ deviceID ] = device;
 	this->LuaRetain ( device );
 	

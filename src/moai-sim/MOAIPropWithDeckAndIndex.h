@@ -45,7 +45,7 @@ public:
 	GET_SET ( ZLIndex, Index, mIndex )
 
 	//----------------------------------------------------------------//
-						MOAIPropWithDeckAndIndex		();
+						MOAIPropWithDeckAndIndex		( ZLContext& context );
 						~MOAIPropWithDeckAndIndex		();
 };
 

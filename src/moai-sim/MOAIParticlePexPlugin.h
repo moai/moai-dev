@@ -138,7 +138,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIParticlePexPlugin )
 	
 	//----------------------------------------------------------------//
-					MOAIParticlePexPlugin		();
+					MOAIParticlePexPlugin		( ZLContext& context );
 					~MOAIParticlePexPlugin		();
 	void			OnInit						( float* particle, float* registers );
 	void			OnRender					( float* particle, float* registers, AKUParticleSprite* sprite, float t0, float t1, float term );

@@ -78,7 +78,15 @@ int MOAIPinTransform::_init ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIPinTransform::MOAIPinTransform () :
+MOAIPinTransform::MOAIPinTransform ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIAbstractBaseTransform ( context ),
+	MOAIAbstractChildTransform ( context ),
+	MOAITransform ( context ),
 	mFront ( 1.0 ),
 	mWorldBounds ( ZLBounds::EMPTY ) {
 		

@@ -400,7 +400,27 @@ AKUParticleSprite* MOAIParticleSystem::GetTopSprite () {
 }
 
 //----------------------------------------------------------------//
-MOAIParticleSystem::MOAIParticleSystem () :
+MOAIParticleSystem::MOAIParticleSystem ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIAbstractPickable ( context ),
+	MOAIPartitionHull ( context ),
+	MOAIHasGfxScriptsForPhases ( context ),
+	MOAIAbstractRenderable ( context ),
+	MOAIAbstractBaseTransform ( context ),
+	MOAIAbstractChildTransform ( context ),
+	MOAITransform ( context ),
+	MOAIAbstractProp ( context ),
+	MOAIHasDeck ( context ),
+	MOAIPropWithDeckAndIndex ( context ),
+	MOAIColor ( context ),
+	MOAIAbstractGraphicsProp ( context ),
+	MOAIGraphicsProp ( context ),
+	MOAIBlocker ( context ),
+	MOAIAction ( context ),
 	mParticleSize ( 0 ),
 	mCapParticles ( false ),
 	mCapSprites ( false ),
@@ -630,7 +650,7 @@ bool MOAIParticleSystem::MOAIAbstractRenderNode_LoadGfxState ( MOAIRenderPhaseEn
 void MOAIParticleSystem::MOAIAbstractRenderNode_Render ( MOAIRenderPhaseEnum::_ renderPhase ) {
 	UNUSED ( renderPhase );
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr = this->Get < MOAIGfxMgr >();
 	
 	ZLAffine3D drawingMtx;
 	ZLAffine3D spriteMtx;

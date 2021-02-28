@@ -36,7 +36,16 @@ int MOAIProjectionProp::_init ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIProjectionProp::MOAIProjectionProp () :
+MOAIProjectionProp::MOAIProjectionProp ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIHasGfxScriptsForPhases ( context ),
+	MOAIAbstractRenderable ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIAbstractPickable ( context ),
+	MOAIPartitionHull ( context ),
 	mFront ( 1.0 ) {
 	
 	RTTI_BEGIN ( MOAIProjectionProp )
@@ -58,7 +67,7 @@ MOAIProjectionProp::~MOAIProjectionProp () {
 void MOAIProjectionProp::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.Visit ( *this )) return;
 
-	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAIProjectionProp >( TOTAL_DEBUG_LINE_STYLES );
+	this->Get <MOAIDebugLinesMgr >().ReserveStyleSet < MOAIProjectionProp >( TOTAL_DEBUG_LINE_STYLES );
 	
 	state.SetField ( -1, "DEBUG_DRAW_WORLD_BOUNDS",		MOAIDebugLinesMgr::Pack < MOAIProjectionProp >( DEBUG_DRAW_WORLD_BOUNDS ));
 	state.SetField ( -1, "ATTR_FRONT",					AttrID::Pack ( ATTR_FRONT ).ToRaw ());
@@ -82,13 +91,13 @@ void MOAIProjectionProp::MOAIAbstractRenderNode_Render ( MOAIRenderPhaseEnum::_ 
 
 	if ( this->GetWorldBounds ().IsEmpty ()) return;
 
-	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
+	MOAIDebugLinesMgr& debugLines = this->Get < MOAIDebugLinesMgr >();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAIProjectionProp >())) return;
 	if ( !debugLines.Bind ( DEBUG_DRAW_WORLD_BOUNDS )) return;
 
-	MOAIGfxMgr::Get ().SetVertexTransform ( MOAIGfxMgr::WORLD_TO_DISPLAY_MTX );
+	this->Get < MOAIGfxMgr >().SetVertexTransform ( MOAIGfxMgr::WORLD_TO_DISPLAY_MTX );
 
-	MOAIDraw& draw = MOAIDraw::Get ();
+	MOAIDraw& draw = this->Get < MOAIDraw >();
 	UNUSED ( draw ); // mystery warning in vs2008
 
 	draw.BindVectorPresets ();

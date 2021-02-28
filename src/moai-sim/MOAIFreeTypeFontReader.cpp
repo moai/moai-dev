@@ -230,7 +230,10 @@ bool MOAIFreeTypeFontReader::HasKerning () {
 }
 
 //----------------------------------------------------------------//
-MOAIFreeTypeFontReader::MOAIFreeTypeFontReader () :
+MOAIFreeTypeFontReader::MOAIFreeTypeFontReader ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIFontReader ( context ),
 	mGlyphCode ( GLYPH_CODE_NULL ),
 	mFaceSize ( 0.0f ),
 	mLibrary ( 0 ),

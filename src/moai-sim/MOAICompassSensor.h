@@ -33,8 +33,8 @@ public:
 	DECL_LUA_FACTORY ( MOAICompassSensor )
 
 	//----------------------------------------------------------------//
-	static void			EnqueueCompassEvent		( ZLIndex deviceID, ZLIndex sensorID, float heading );
-						MOAICompassSensor		();
+	static void			EnqueueCompassEvent		( MOAIInputMgr& inputMgr, ZLIndex deviceID, ZLIndex sensorID, float heading );
+						MOAICompassSensor		( ZLContext& context );
 						~MOAICompassSensor		();
 	void				ParseEvent				( ZLStream& eventStream );
 	

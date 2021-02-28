@@ -57,7 +57,7 @@ public:
 	int				GetGlyphMetrics				( MOAIGlyphMetrics& glyphMetrics );
 	int				GetKernVec					( u32 c, MOAIKernVec& kernVec );
 	bool			HasKerning					();
-					MOAIFreeTypeFontReader		();
+					MOAIFreeTypeFontReader		( ZLContext& context );
 					~MOAIFreeTypeFontReader		();
 	int				OpenFontFile				( cc8* filename );
 	int				RenderGlyph					( MOAIImage& image, float x, float y );

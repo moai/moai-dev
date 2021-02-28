@@ -157,58 +157,6 @@ void MOAIKeyboardSensor::ClearState () {
 }
 
 //----------------------------------------------------------------//
-void MOAIKeyboardSensor::EnqueueKeyboardCharEvent ( ZLIndex deviceID, ZLIndex sensorID, u32 unicodeChar ) {
-
-	// Don't allow non-printable characters
-	if ( unicodeChar < ' ' ) return;
-
-	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
-	if ( inputMgr.WriteEventHeader < MOAIKeyboardSensor >( deviceID, sensorID )) {
-		inputMgr.Write < u32 >( KeyboardEventType::CHAR );
-		inputMgr.Write < u32 >( unicodeChar );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIKeyboardSensor::EnqueueKeyboardEditEvent ( ZLIndex deviceID, ZLIndex sensorID, char const* text, u32 start, u32 editLength, u32 maxLength ) {
-	
-	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
-	if ( inputMgr.WriteEventHeader < MOAIKeyboardSensor >( deviceID, sensorID )) {
-		inputMgr.Write < u32 >( KeyboardEventType::EDIT );
-		inputMgr.Write < u32 >( start );
-		inputMgr.Write < u32 >( editLength );
-		inputMgr.Write < u32 >( maxLength );
-		
-		for ( u32 i = 0; i < maxLength; i++ ) {
-			inputMgr.Write < char >( text[i] );
-		}
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIKeyboardSensor::EnqueueKeyboardKeyEvent ( ZLIndex deviceID, ZLIndex sensorID, u32 keyID, bool down ) {
-
-	if ( keyID >= MOAI_KEY_TOTAL ) return;
-
-	MOAIInputMgr& inputMgr = MOAIInputMgr::Get ();
-	if ( inputMgr.WriteEventHeader < MOAIKeyboardSensor >( deviceID, sensorID )) {
-		inputMgr.Write < u32 >( KeyboardEventType::KEY );
-		inputMgr.Write < u32 >( keyID );
-		inputMgr.Write < bool >( down );
-	}
-}
-
-//----------------------------------------------------------------//
-void MOAIKeyboardSensor::EnqueueKeyboardTextEvent ( ZLIndex deviceID, ZLIndex sensorID, cc8* text ) {
-	
-	int i = 0;
-	while ( text [ i ]) {
-		u_int32_t uc = moai_u8_nextchar ( text, &i );
-		MOAIKeyboardSensor::EnqueueKeyboardCharEvent ( deviceID, sensorID, uc );
-	}
-}
-
-//----------------------------------------------------------------//
 // For each key, returns whether the specified predicate returns true.
 // Expects self and a number of keycodes or strings on the stack.
 int MOAIKeyboardSensor::CheckKeys ( lua_State* L, bool ( MOAIKeyboardSensor::* predicate )( u32 keyCode )) {
@@ -246,6 +194,55 @@ int MOAIKeyboardSensor::CheckKeys ( lua_State* L, bool ( MOAIKeyboardSensor::* p
 }
 
 //----------------------------------------------------------------//
+void MOAIKeyboardSensor::EnqueueKeyboardCharEvent ( MOAIInputMgr& inputMgr, ZLIndex deviceID, ZLIndex sensorID, u32 unicodeChar ) {
+
+	// Don't allow non-printable characters
+	if ( unicodeChar < ' ' ) return;
+
+	if ( inputMgr.WriteEventHeader < MOAIKeyboardSensor >( deviceID, sensorID )) {
+		inputMgr.Write < u32 >( KeyboardEventType::CHAR );
+		inputMgr.Write < u32 >( unicodeChar );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIKeyboardSensor::EnqueueKeyboardEditEvent ( MOAIInputMgr& inputMgr, ZLIndex deviceID, ZLIndex sensorID, char const* text, u32 start, u32 editLength, u32 maxLength ) {
+	
+	if ( inputMgr.WriteEventHeader < MOAIKeyboardSensor >( deviceID, sensorID )) {
+		inputMgr.Write < u32 >( KeyboardEventType::EDIT );
+		inputMgr.Write < u32 >( start );
+		inputMgr.Write < u32 >( editLength );
+		inputMgr.Write < u32 >( maxLength );
+		
+		for ( u32 i = 0; i < maxLength; i++ ) {
+			inputMgr.Write < char >( text[i] );
+		}
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIKeyboardSensor::EnqueueKeyboardKeyEvent ( MOAIInputMgr& inputMgr, ZLIndex deviceID, ZLIndex sensorID, u32 keyID, bool down ) {
+
+	if ( keyID >= MOAI_KEY_TOTAL ) return;
+
+	if ( inputMgr.WriteEventHeader < MOAIKeyboardSensor >( deviceID, sensorID )) {
+		inputMgr.Write < u32 >( KeyboardEventType::KEY );
+		inputMgr.Write < u32 >( keyID );
+		inputMgr.Write < bool >( down );
+	}
+}
+
+//----------------------------------------------------------------//
+void MOAIKeyboardSensor::EnqueueKeyboardTextEvent ( MOAIInputMgr& inputMgr, ZLIndex deviceID, ZLIndex sensorID, cc8* text ) {
+	
+	int i = 0;
+	while ( text [ i ]) {
+		u_int32_t uc = moai_u8_nextchar ( text, &i );
+		MOAIKeyboardSensor::EnqueueKeyboardCharEvent ( inputMgr, deviceID, sensorID, uc );
+	}
+}
+
+//----------------------------------------------------------------//
 bool MOAIKeyboardSensor::KeyDown ( u32 keyID ) {
 
 	return (( this->mState [ keyID ] & DOWN ) == DOWN );
@@ -270,7 +267,10 @@ bool MOAIKeyboardSensor::KeyUp ( u32 keyID ) {
 }
 
 //----------------------------------------------------------------//
-MOAIKeyboardSensor::MOAIKeyboardSensor () :
+MOAIKeyboardSensor::MOAIKeyboardSensor ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAISensor ( context ),
 	mClearCount ( 0 ) {
 		
 	RTTI_BEGIN ( MOAIKeyboardSensor )

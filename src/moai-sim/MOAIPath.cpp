@@ -152,7 +152,9 @@ ZLCubicBezier2D MOAIPath::GetSegmentForTime ( float t, float* st ) {
 }
 
 //----------------------------------------------------------------//
-MOAIPath::MOAIPath () :
+MOAIPath::MOAIPath ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
 	mFlatness ( DEFAULT_FLATNESS ),
 	mAngle ( DEFAULT_ANGLE ),
 	mLength ( 0.0f ) {

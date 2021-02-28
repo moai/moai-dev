@@ -50,10 +50,12 @@ public:
 
 	friend class MOAISpriteDeck2D;
 
+	MOAIGfxMgr&			mGfxMgr;
 	MOAISpriteBrush		mBrush;
 
 	//----------------------------------------------------------------//
 	void 		MOAIAbstractGfxScriptCallback_Call 		();
+				MOAISpriteDeck2DCallable				( MOAIGfxMgr& gfxMgr );
 };
 
 //================================================================//
@@ -120,7 +122,7 @@ public:
 	bool					Contains						( ZLIndex idx, const ZLVec2D& vec );
 	void					DrawIndex						( ZLIndex idx, MOAIGfxScriptBatch* materials, ZLVec3D offset, ZLVec3D scale );
 	bool					Inside							( ZLIndex idx, MOAIGfxScriptBatch* materials, u32 granularity, ZLVec3D vec, float pad );
-							MOAISpriteDeck2D				();
+							MOAISpriteDeck2D				( ZLContext& context );
 							~MOAISpriteDeck2D				();
 	void					ReserveLists					( ZLSize total );
 	void					ReservePairs					( ZLSize total );

@@ -48,7 +48,7 @@ int MOAIGridPathGraph::_setGrid ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-float MOAIGridPathGraph::ComputeHeuristic ( MOAIGridPathGraphParams& params, const MOAICellCoord& c0, const MOAICellCoord& c1 ) {
+float MOAIGridPathGraph::ComputeHeuristic ( MOAIGridPathGraphParams& params, const ZLGridCoord& c0, const ZLGridCoord& c1 ) {
 
 	float hMove = ( float )abs ( c1.mX - c0.mX );
 	float vMove = ( float )abs ( c1.mY - c0.mY );
@@ -78,7 +78,10 @@ float MOAIGridPathGraph::ComputeHeuristic ( MOAIGridPathGraphParams& params, con
 }
 
 //----------------------------------------------------------------//
-MOAIGridPathGraph::MOAIGridPathGraph () {
+MOAIGridPathGraph::MOAIGridPathGraph ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIPathGraph ( context ) {
 		
 	RTTI_BEGIN ( MOAIGridPathGraph )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIGridPathGraph >)
@@ -95,7 +98,7 @@ MOAIGridPathGraph::~MOAIGridPathGraph () {
 //----------------------------------------------------------------//
 void MOAIGridPathGraph::PushNeighbor ( MOAIPathFinder& pathFinder, MOAIGridPathGraphParams& params, u32 tile0, int xTile, int yTile, float moveCost ) {
 
-	MOAICellCoord coord = this->mGrid->GetCellCoord ( xTile, yTile );
+	ZLGridCoord coord = this->mGrid->GetCellCoord ( xTile, yTile );
 
 	if ( this->mGrid->IsValidCoord ( coord )) {
 		
@@ -110,7 +113,7 @@ void MOAIGridPathGraph::PushNeighbor ( MOAIPathFinder& pathFinder, MOAIGridPathG
 				float g = ( moveCost + pathFinder.ComputeTerrainCost ( moveCost, tile0, tile1 )) * params.mGWeight;
 				
 				ZLIndex targetID = pathFinder.GetTargetNodeID ();
-				MOAICellCoord targetCoord = this->mGrid->GetCellCoord ( targetID );
+				ZLGridCoord targetCoord = this->mGrid->GetCellCoord ( targetID );
 				
 				float h = this->ComputeHeuristic ( params, coord, targetCoord ) * params.mHWeight;
 				
@@ -134,7 +137,7 @@ void MOAIGridPathGraph::PushNeighbors ( MOAIPathFinder& pathFinder, ZLIndex node
 	
 	u32 flags = pathFinder.GetFlags ();
 	
-	MOAICellCoord coord = this->mGrid->GetCellCoord ( nodeID );
+	ZLGridCoord coord = this->mGrid->GetCellCoord ( nodeID );
 	
 	int xTile = coord.mX;
 	int yTile = coord.mY;

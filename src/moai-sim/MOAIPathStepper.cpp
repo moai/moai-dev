@@ -54,7 +54,9 @@ int MOAIPathStepper::_start ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIPathStepper::MOAIPathStepper () :
+MOAIPathStepper::MOAIPathStepper ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
 	mStepCount ( 0 ),
 	mTotalSteps ( 0 ),
 	mStepSize ( 0.0f ),

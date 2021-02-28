@@ -232,7 +232,7 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-						MOAITextLabel			();
+						MOAITextLabel			( ZLContext& context );
 						~MOAITextLabel			();
 	bool				More					();
 	void				NextPage				( bool reveal );

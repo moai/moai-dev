@@ -104,9 +104,8 @@ void MOAICollisionProp::ClearOverlapLink ( MOAIPropOverlap& overlap ) {
 }
 
 //----------------------------------------------------------------//
-void MOAICollisionProp::DrawContactPoints ( MOAIDrawAPI& draw, const MOAIMoveConstraint2D* contacts, u32 nContacts ) {
+void MOAICollisionProp::DrawContactPoints ( MOAIDebugLinesMgr& debugLines, MOAIDrawAPI& draw, const MOAIMoveConstraint2D* contacts, u32 nContacts ) {
 
-	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAICollisionProp >())) return;
 
 	draw.SetPenWidth ( 1.0f );
@@ -169,7 +168,7 @@ void MOAICollisionProp::GatherAndProcess ( MOAICollisionPrimVisitor& visitor, co
 	MOAICollisionWorld& world = *this->mCollisionWorld;
 
 	ZLStrongPtr < MOAIPartitionResultBuffer > buffer;
-	MOAIPool::Get ().Provision < MOAIPartitionResultBuffer >( buffer );
+	this->Get < MOAIPool >().Provision < MOAIPartitionResultBuffer >( buffer );
 
 	u32 totalResults = world.GatherHulls ( *buffer, this, worldBounds, ZLType::GetID < MOAICollisionProp >());
 	
@@ -195,7 +194,22 @@ bool MOAICollisionProp::IsActive () {
 }
 
 //----------------------------------------------------------------//
-MOAICollisionProp::MOAICollisionProp () :
+MOAICollisionProp::MOAICollisionProp ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIAbstractPickable ( context ),
+	MOAIPartitionHull ( context ),
+	MOAIHasGfxScriptsForPhases ( context ),
+	MOAIAbstractRenderable ( context ),
+	MOAIAbstractBaseTransform ( context ),
+	MOAIAbstractChildTransform ( context ),
+	MOAITransform ( context ),
+	MOAIAbstractProp ( context ),
+	MOAIHasDeck ( context ),
+	MOAIPropWithDeckAndIndex ( context ),
 	mCategory ( CATEGORY_MASK_ALL ),
 	mMask ( CATEGORY_MASK_ALL ),
 	mOverlapFlags ( DEFAULT_OVERLAP_FLAGS ),
@@ -208,7 +222,6 @@ MOAICollisionProp::MOAICollisionProp () :
 	RTTI_BEGIN ( MOAICollisionProp )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAICollisionProp >)
 		RTTI_EXTEND ( MOAIPropWithDeckAndIndex )
-		RTTI_EXTEND ( MOAIAbstractRenderable )
 	RTTI_END
 	
 	this->mActiveListLink.Data ( this );
@@ -221,7 +234,7 @@ MOAICollisionProp::~MOAICollisionProp () {
 //----------------------------------------------------------------//
 void MOAICollisionProp::Move ( ZLVec3D move, u32 detach, u32 maxSteps ) {
 
-	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
+	MOAIDebugLinesMgr& debugLines = this->Get < MOAIDebugLinesMgr >();
 	bool drawDebug = ( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAICollisionProp >());
 
 	// just cram everything in here for now.
@@ -358,9 +371,9 @@ void MOAICollisionProp::Move ( ZLVec3D move, u32 detach, u32 maxSteps ) {
 		}
 	}
 	
-	MOAIDrawAPI& draw = this->mCollisionWorld->mDebugDraw._ < MOAIDrawAPI >( MOAIDraw::Get ());
+	MOAIDrawAPI& draw = this->mCollisionWorld->mDebugDraw._ < MOAIDrawAPI >( this->Get < MOAIDraw >());
 	
-	MOAICollisionProp::DrawContactPoints ( draw, contacts, contactAccumulator.Top ());
+	MOAICollisionProp::DrawContactPoints ( this->Get < MOAIDebugLinesMgr >(), draw, contacts, contactAccumulator.Top ());
 	
 	// resolve overlaps
 	MOAIOverlapResolver overlapResolver;
@@ -398,7 +411,7 @@ void MOAICollisionProp::Move ( ZLVec3D move, u32 detach, u32 maxSteps ) {
 void MOAICollisionProp::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.Visit ( *this )) return;
 	
-	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAICollisionProp >( TOTAL_DEBUG_LINE_STYLES );
+	this->Get <MOAIDebugLinesMgr >().ReserveStyleSet < MOAICollisionProp >( TOTAL_DEBUG_LINE_STYLES );
 	
 	state.SetField ( -1, "DEBUG_DRAW_COLLISION_PROP_MASTER",						MOAIDebugLinesMgr::Pack < MOAICollisionProp >( (u32) -1 ));
 	state.SetField ( -1, "DEBUG_DRAW_COLLISION_ACTIVE_PROP_BOUNDS",					MOAIDebugLinesMgr::Pack < MOAICollisionProp >( DEBUG_DRAW_COLLISION_ACTIVE_PROP_BOUNDS ));
@@ -462,12 +475,12 @@ ZLBounds MOAICollisionProp::MOAIAbstractProp_GetModelBounds () {
 void MOAICollisionProp::MOAIAbstractRenderNode_Render ( MOAIRenderPhaseEnum::_ renderPhase ) {
 	UNUSED ( renderPhase );
 
-	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
+	MOAIDebugLinesMgr& debugLines = this->Get < MOAIDebugLinesMgr >();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAICollisionProp >())) return;
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr = this->Get < MOAIGfxMgr >();
 
-	MOAIDraw& draw = MOAIDraw::Get ();
+	MOAIDraw& draw = this->Get < MOAIDraw >();
 	UNUSED ( draw ); // mystery warning in vs2008
 
 	draw.BindVectorPresets ();
@@ -482,7 +495,7 @@ void MOAICollisionProp::MOAIAbstractRenderNode_Render ( MOAIRenderPhaseEnum::_ r
 	if ( shape ) {
 		const ZLAffine3D& localToWorldMtx = this->GetLocalToWorldMtx ();
 		gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX, localToWorldMtx );
-		shape->Draw ( localToWorldMtx );
+		shape->Draw ( gfxMgr, draw, localToWorldMtx );
 	}
 
 	bool visible = false;
@@ -513,7 +526,7 @@ void MOAICollisionProp::MOAIAbstractRenderNode_Render ( MOAIRenderPhaseEnum::_ r
 		if ( shape ) {
 			const ZLAffine3D& localToWorldMtx = this->GetLocalToWorldMtx ();
 			gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX, localToWorldMtx );
-			shape->Draw ( localToWorldMtx );
+			shape->Draw ( gfxMgr, draw, localToWorldMtx );
 		}
 		else {
 			gfxMgr.SetVertexTransform ( MOAIGfxMgr::WORLD_TO_CLIP_MTX );

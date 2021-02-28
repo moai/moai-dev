@@ -262,9 +262,17 @@ void MOAICollisionWorld::MakeInactive ( MOAICollisionProp& prop ) {
 }
 
 //----------------------------------------------------------------//
-MOAICollisionWorld::MOAICollisionWorld () :
+MOAICollisionWorld::MOAICollisionWorld ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIBlocker ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAIAction ( context ),
+	MOAIPartition ( context ),
 	mUpdated ( false ),
-	mOverlapPass ( OVERLAP_PASS_INIT ) {
+	mOverlapPass ( OVERLAP_PASS_INIT ),
+	mDebugDraw ( context ) {
 	
 	RTTI_BEGIN ( MOAICollisionWorld )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAICollisionWorld >)
@@ -307,7 +315,7 @@ void MOAICollisionWorld::ProcessOverlaps () {
 		// this gives us the coarse filter based on world space bounds
 		// TODO: find a way to utilize overlap flags?
 		ZLStrongPtr < MOAIPartitionResultBuffer > buffer;
-		MOAIPool::Get ().Provision < MOAIPartitionResultBuffer >( buffer );
+		this->Get < MOAIPool >().Provision < MOAIPartitionResultBuffer >( buffer );
 
 		u32 totalResults = this->GatherHulls ( *buffer, &prop, prop.GetWorldBounds ().mAABB, ZLType::GetID < MOAICollisionProp >());
 		
@@ -417,7 +425,7 @@ void MOAICollisionWorld::MOAIPartition_DrawDebugFront () {
 	
 	if ( this->mDebugDraw.HasContent ()) {
 	
-		MOAIGfxMgr::Get ().SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX );
+		this->Get < MOAIGfxMgr >().SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX );
 		this->mDebugDraw.ExecuteBytecode ();
 	}
 }

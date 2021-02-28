@@ -36,7 +36,7 @@ public:
 	GET ( MOAIDeck*, Deck, mDeck )
 
 	//----------------------------------------------------------------//
-						MOAIHasDeck				();
+						MOAIHasDeck				( ZLContext& context );
 						~MOAIHasDeck			();
 };
 

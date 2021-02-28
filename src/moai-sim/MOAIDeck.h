@@ -6,7 +6,7 @@
 
 class MOAIAbstractPickable;
 class MOAIBoundsDeck;
-class MOAICellCoord;
+class ZLGridCoord;
 class MOAICollisionShape;
 class MOAIColor;
 class MOAIGrid;
@@ -54,7 +54,7 @@ public:
 	ZLBounds				GetBounds						();
 	ZLBounds				GetBounds						( ZLIndex idx );
 	MOAICollisionShape*		GetCollisionShape				( ZLIndex idx );
-							MOAIDeck						();
+							MOAIDeck						( ZLContext& context );
 							~MOAIDeck						();
 	MOAIPickResult			PickByPoint						( ZLIndex idx, ZLVec3D loc );
 	MOAIPickResult			PickByRay						( ZLIndex idx, ZLVec3D loc, ZLVec3D normal );

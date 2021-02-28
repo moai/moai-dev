@@ -163,12 +163,12 @@ void MOAIAbstractProp::DrawDebug () {
 
 	if ( this->GetWorldBounds ().IsEmpty ()) return;
 
-	MOAIDebugLinesMgr& debugLines = MOAIDebugLinesMgr::Get ();
+	MOAIDebugLinesMgr& debugLines = this->Get < MOAIDebugLinesMgr >();
 	if ( !( debugLines.IsVisible () && debugLines.SelectStyleSet < MOAIAbstractGraphicsProp >())) return;
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr = this->Get < MOAIGfxMgr >();
 
-	MOAIDraw& draw = MOAIDraw::Get ();
+	MOAIDraw& draw = this->Get < MOAIDraw >();
 	UNUSED ( draw ); // mystery warning in vs2008
 
 	draw.BindVectorPresets ();
@@ -254,15 +254,27 @@ ZLMatrix4x4 MOAIAbstractProp::GetWorldDrawingMtx () const {
 //----------------------------------------------------------------//
 void MOAIAbstractProp::LoadVertexTransform () {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr = this->Get < MOAIGfxMgr >();
 	gfxMgr.SetMtx ( MOAIGfxMgr::MODEL_TO_WORLD_MTX, this->GetWorldDrawingMtx ());
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractProp::MOAIAbstractProp () :
-		mFlags ( 0 ),
-		mModelBoundsOverride ( ZLBox::EMPTY ),
-		mModelBoundsPad ( ZLVec3D::ORIGIN ) {
+MOAIAbstractProp::MOAIAbstractProp ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIAbstractPickable ( context ),
+	MOAIPartitionHull ( context ),
+	MOAIHasGfxScriptsForPhases ( context ),
+	MOAIAbstractRenderable ( context ),
+	MOAIAbstractBaseTransform ( context ),
+	MOAIAbstractChildTransform ( context ),
+	MOAITransform ( context ),
+	mFlags ( 0 ),
+	mModelBoundsOverride ( ZLBox::EMPTY ),
+	mModelBoundsPad ( ZLVec3D::ORIGIN ) {
 	
 	RTTI_BEGIN ( MOAIAbstractProp )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractProp >)
@@ -284,7 +296,7 @@ MOAIAbstractProp::~MOAIAbstractProp () {
 void MOAIAbstractProp::_RegisterLuaClass ( RTTIVisitorHistory& history, MOAILuaState& state ) {
 	if ( history.Visit ( *this )) return;
 	
-	MOAIDebugLinesMgr::Get ().ReserveStyleSet < MOAIAbstractProp >( TOTAL_DEBUG_LINE_STYLES );
+	this->Get <MOAIDebugLinesMgr >().ReserveStyleSet < MOAIAbstractProp >( TOTAL_DEBUG_LINE_STYLES );
 	
 	state.SetField ( -1, "DEBUG_DRAW_GFX_PROP_MASTER",			MOAIDebugLinesMgr::Pack < MOAIAbstractProp >( (u32) -1 ));
 	state.SetField ( -1, "DEBUG_DRAW_PARTITION_CELLS",			MOAIDebugLinesMgr::Pack < MOAIAbstractProp >( DEBUG_DRAW_PARTITION_CELLS ));

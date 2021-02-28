@@ -249,6 +249,7 @@ void MOAIStretchPatch2D::DrawStretch ( ZLIndex idx ) {
 	ZLSize totalRows = this->mRows.Size ();
 	ZLSize totalCols = this->mCols.Size ();
 	
+	MOAIGfxMgr& gfxMgr = this->Get < MOAIGfxMgr >();
 	MOAIQuadBrush quad;
 	
 	ZLReal uSpan = uvRect.mXMax - uvRect.mXMin;
@@ -288,7 +289,7 @@ void MOAIStretchPatch2D::DrawStretch ( ZLIndex idx ) {
 			
 			quad.SetVerts ( x, y, x + w, y + h );
 			quad.SetUVs ( u, v, u + uStep, v + vStep );
-			quad.Draw ();
+			quad.Draw ( gfxMgr );
 			
 			x += w;
 			u += uStep;
@@ -300,7 +301,12 @@ void MOAIStretchPatch2D::DrawStretch ( ZLIndex idx ) {
 }
 
 //----------------------------------------------------------------//
-MOAIStretchPatch2D::MOAIStretchPatch2D () :
+MOAIStretchPatch2D::MOAIStretchPatch2D ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIDeck ( context ),
+	MOAIHasGfxScriptBatchesForPhases ( context ),
+	MOAIStretchDeck ( context ),
 	mRect ( ZLRect::EMPTY ),
 	mNeedsUpdate ( true ) {
 
@@ -419,8 +425,8 @@ void MOAIStretchPatch2D::MOAIDeck_Render ( ZLIndex idx, MOAIRenderPhaseEnum::_ r
 	MOAIGfxScript* gfxScript = this->GetGfxScript ( idx, renderPhase );
 	if ( !gfxScript ) return;
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	MOAIQuadBrush::BindVertexFormat ();
+	MOAIGfxMgr& gfxMgr = this->Get < MOAIGfxMgr >();
+	MOAIQuadBrush::BindVertexFormat ( gfxMgr );
 	
 	gfxMgr.SetUVTransform ( MOAIGfxMgr::UV_TO_MODEL_MTX );
 	gfxMgr.SetBlendMode ( MOAIBlendMode ());

@@ -87,7 +87,7 @@ public:
 	MOAISensor*			GetSensor					( ZLIndex deviceID, ZLIndex sensorID );
 	bool				HasEvents					();
 	//bool				IsDone						();
-						MOAIInputMgr				();
+						MOAIInputMgr				( ZLContext& context );
 						~MOAIInputMgr				();
 	void				ReserveDevices				( ZLSize total );
 	void				ReserveSensors				( ZLIndex deviceID, ZLSize total );
@@ -108,7 +108,7 @@ public:
 		MOAIInputDevice* device = this->GetDevice ( deviceID );
 		if ( device ) {
 			if ( sensorID < device->mSensors.Size ()) {
-				MOAISensor* sensor = new TYPE;
+				MOAISensor* sensor = new TYPE ( this->GetContext ());
 				sensor->SetType (( u32 )ZLType::RawID < TYPE >());
 				device->SetSensor ( sensorID, name, sensor );
 			}

@@ -71,7 +71,11 @@ int MOAIDrawDeck::_setDrawCallback ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIDrawDeck::MOAIDrawDeck () {
+MOAIDrawDeck::MOAIDrawDeck ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIDeck ( context ),
+	MOAIStretchDeck ( context ) {
 	
 	RTTI_BEGIN ( MOAIDrawDeck )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIDrawDeck >)
@@ -140,15 +144,15 @@ void MOAIDrawDeck::MOAIDeck_Render ( ZLIndex idx, MOAIRenderPhaseEnum::_ renderP
 	
 	if ( this->mOnDraw ) {
 	
-		MOAIDraw::Get ().BindVectorPresets ();
+		MOAIDraw& draw = this->Get < MOAIDraw >();
+		draw.BindVectorPresets ();
 	
-		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 		ZLVec3D stretch = this->BindStretchVertexTransform ();
 	
 		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 		this->mOnDraw.PushRef ( state );
 	
-		MOAIDraw::Get ().PushCmdInterface ( state );
+		draw.PushCmdInterface ( state );
 	
 		state.Push ( MOAILuaIndex ( idx ));
 		state.Push ( stretch.mX );

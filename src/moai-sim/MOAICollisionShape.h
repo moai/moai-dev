@@ -32,7 +32,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			Clear							();
-	void			Draw							( const ZLAffine3D& localToWorldMtx );
+	void			Draw							( MOAIGfxMgr& gfxMgr, MOAIDraw& draw, const ZLAffine3D& localToWorldMtx );
 					MOAICollisionShape				();
 					~MOAICollisionShape				();
 	void			Set								( ZLIndex idx, const ZLBox& box );

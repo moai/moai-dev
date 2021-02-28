@@ -333,7 +333,7 @@ int MOAIFont::_setImage ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "UU" )
 
 	if ( !self->mCache ) {
-		MOAIGlyphCache* glyphCache = new MOAIStaticGlyphCache ();
+		MOAIGlyphCache* glyphCache = new MOAIStaticGlyphCache ( self->GetContext ());
 		self->mCache.Set ( *self, glyphCache );
 	}
 
@@ -375,7 +375,7 @@ int MOAIFont::_setReader ( lua_State* L ) {
 int MOAIFont::_setShader ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIFont, "U" )
 
-	MOAIShader* shader = MOAIGfxMgr::Get ().AffirmShader ( state, 2 );
+	MOAIShader* shader = self->Get < MOAIGfxMgr >().AffirmShader ( state, 2 );
 	self->mShader = shader;
 
 	state.Push ( shader->AsType < MOAILuaObject >());
@@ -587,7 +587,11 @@ bool MOAIFont::IsWhitespace ( u32 c ) {
 }
 
 //----------------------------------------------------------------//
-MOAIFont::MOAIFont () :
+MOAIFont::MOAIFont ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
 	mFlags ( DEFAULT_FLAGS ),
 	mDefaultSize ( 0.0f ),
 	mMinFilter ( MOAITextureFilterEnum::LINEAR ),

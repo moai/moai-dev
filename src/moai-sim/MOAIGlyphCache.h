@@ -48,7 +48,7 @@ public:
 	virtual MOAITexture*		GetGlyphTexture			( MOAIGlyph& glyph ) = 0;
 	virtual MOAIImage*			GetImage				() = 0;
 	virtual bool				IsDynamic				() = 0;
-								MOAIGlyphCache			();
+								MOAIGlyphCache			( ZLContext& context );
 								~MOAIGlyphCache			();
 	virtual int					PlaceGlyph				( MOAIFont& font, MOAIGlyph& glyph );
 	virtual void				PostRender				( MOAIGlyph& glyph );

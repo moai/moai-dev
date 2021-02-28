@@ -96,7 +96,7 @@ public:
 	bool			Bind					( u32 styleID, MOAIDrawAPI& draw );
 	bool			IsVisible				();
 	bool			IsVisible				( u32 styleID );
-					MOAIDebugLinesMgr		();
+					MOAIDebugLinesMgr		( ZLContext& context );
 					~MOAIDebugLinesMgr		();
 
 	//----------------------------------------------------------------//

@@ -95,7 +95,6 @@
 #include <moai-sim/MOAISurfaceDeck2D.h>
 #include <moai-sim/MOAITableViewLayer.h>
 #include <moai-sim/MOAITileDeck2D.h>
-#include <moai-sim/MOAITileFlags.h>
 #include <moai-sim/MOAITouchSensor.h>
 #include <moai-sim/MOAIVecPathGraph.h>
 #include <moai-sim/MOAIVectorCombo.h>

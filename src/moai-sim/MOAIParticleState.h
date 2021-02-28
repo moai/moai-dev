@@ -62,7 +62,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void			ClearForces				();
-					MOAIParticleState		();
+					MOAIParticleState		( ZLContext& context );
 					~MOAIParticleState		();
 	void			PushForce				( MOAIParticleForce& force );
 };

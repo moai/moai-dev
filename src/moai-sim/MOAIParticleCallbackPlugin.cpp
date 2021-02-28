@@ -17,7 +17,10 @@ void MOAIParticleCallbackPlugin::Init ( AKUParticleInitFunc initFunc, AKUParticl
 }
 
 //----------------------------------------------------------------//
-MOAIParticleCallbackPlugin::MOAIParticleCallbackPlugin () :
+MOAIParticleCallbackPlugin::MOAIParticleCallbackPlugin ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIParticlePlugin ( context ),
 	mInitFunc ( 0 ),
 	mRenderFunc ( 0 ) {
 	

@@ -66,7 +66,7 @@ public:
 // this is a class to abstract getting glyph information from font
 // files and rendering glyphs
 class MOAIFontReader :
-	public MOAILuaObject {
+	public virtual MOAILuaObject {
 protected:
 
 	MOAI_LUA_OBJECT_VISITOR_FRIEND
@@ -105,7 +105,7 @@ public:
 	virtual int			GetGlyphMetrics			( MOAIGlyphMetrics& glyphMetrics ) = 0;
 	virtual int			GetKernVec				( u32 c, MOAIKernVec& kernVec );
 	virtual bool		HasKerning				();
-						MOAIFontReader			();
+						MOAIFontReader			( ZLContext& context );
 						~MOAIFontReader			();
 	virtual int			OpenFontFile			( cc8* filename );
 	virtual int			RenderGlyph				( MOAIImage& image, float x, float y ) = 0;

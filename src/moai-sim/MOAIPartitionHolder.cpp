@@ -65,14 +65,16 @@ int MOAIPartitionHolder::_setPartition ( lua_State* L ) {
 MOAIPartition* MOAIPartitionHolder::GetPartition () {
 
 	if ( !this->mPartition ) {
-		this->mPartition.Set ( *this, new MOAIPartition ());
+		this->mPartition.Set ( *this, new MOAIPartition ( this->GetContext ()));
 	}
 	assert ( this->mPartition );
 	return this->mPartition;
 }
 
 //----------------------------------------------------------------//
-MOAIPartitionHolder::MOAIPartitionHolder () {
+MOAIPartitionHolder::MOAIPartitionHolder ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ) {
 	
 	RTTI_BEGIN ( MOAIPartitionHolder )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIPartitionHolder >)

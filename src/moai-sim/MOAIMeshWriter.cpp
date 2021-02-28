@@ -92,12 +92,12 @@ int MOAIMeshWriter::_applyColor ( lua_State* L ) {
 			float pad	= state.GetValue < float >( 9, 0.0f );
 			u32 mode	= state.GetValue < u32 >( 10, COLOR_MULTIPLY );
 			
-			MOAIMeshWriter::ApplyColor ( *format, *vtxStream, length, mode, *region, pad, color );
+			self->ApplyColor ( *format, *vtxStream, length, mode, *region, pad, color );
 		}
 		else {
 		
 			u32 mode	= state.GetValue < u32 >( 8, COLOR_MULTIPLY );
-			MOAIMeshWriter::ApplyColor ( *format, *vtxStream, length, mode, color );
+			self->ApplyColor ( *format, *vtxStream, length, mode, color );
 		}
 	}
 	return 0;
@@ -206,7 +206,7 @@ int MOAIMeshWriter::_applyLinearGradient ( lua_State* L ) {
 		
 		u32 mode		= state.GetValue < u32 >( 20, COLOR_MULTIPLY );
 		
-		MOAIMeshWriter::ApplyLinearGradient ( *format, *vtxStream, length, mode, v0, v1, c0, c1, cap0, cap1 );
+		self->ApplyLinearGradient ( *format, *vtxStream, length, mode, v0, v1, c0, c1, cap0, cap1 );
 	}
 	return 0;
 }
@@ -256,7 +256,7 @@ int MOAIMeshWriter::_getMesh ( lua_State* L ) {
 		if ( vtxBuffer && idxBuffer ) {
 			
 			u32 idxSizeInBytes = state.GetValue < u32 >( 8, 4 );
-			u32 totalElements = MOAIMeshWriter::GetMesh ( *format, *vtxStream, vtxStreamLength, *idxStream, idxStreamLength, *vtxBuffer, *idxBuffer, idxSizeInBytes );
+			u32 totalElements = self->GetMesh ( *format, *vtxStream, vtxStreamLength, *idxStream, idxStreamLength, *vtxBuffer, *idxBuffer, idxSizeInBytes );
 			
 			state.Push ( totalElements );
 			return 1;
@@ -264,7 +264,7 @@ int MOAIMeshWriter::_getMesh ( lua_State* L ) {
 		else {
 	
 			u32 idxSizeInBytes = state.GetValue < u32 >( 6, 4 );
-			MOAIMeshDeck* mesh = MOAIMeshWriter::GetMesh ( *format, *vtxStream, vtxStreamLength, *idxStream, idxStreamLength, idxSizeInBytes );
+			MOAIMeshDeck* mesh = self->GetMesh ( *format, *vtxStream, vtxStreamLength, *idxStream, idxStreamLength, idxSizeInBytes );
 			state.Push ( mesh );
 			return 1;
 		}
@@ -284,7 +284,7 @@ int MOAIMeshWriter::_offsetIndices ( lua_State* L ) {
 		size_t length	= state.GetValue < u32 >( 2, ( u32 )( idxStream->GetLength () - idxStream->GetCursor ()));
 		s32 offset		= state.GetValue < s32 >( 3, 0 );
 	
-		MOAIMeshWriter::OffsetIndices ( *idxStream, length, offset );
+		self->OffsetIndices ( *idxStream, length, offset );
 	}
 	return 0;
 }
@@ -307,7 +307,7 @@ int MOAIMeshWriter::_pruneVertices ( lua_State* L ) {
 	MOAIStream* idxStream		= state.GetLuaObject < MOAIStream >( 3, true );
 	
 	if ( format && vtxStream && idxStream ) {
-		MOAIMeshWriter::PruneVertices ( *format, *vtxStream, *idxStream );
+		self->PruneVertices ( *format, *vtxStream, *idxStream );
 	}
 	return 0;
 }
@@ -338,7 +338,7 @@ int MOAIMeshWriter::_snapCoords ( lua_State* L ) {
 		float ySnap = state.GetValue < float >( 5, xSnap );
 		float zSnap = state.GetValue < float >( 6, ySnap );
 	
-		MOAIMeshWriter::SnapCoords ( *format, *vtxStream, length, xSnap, ySnap, zSnap );
+		self->SnapCoords ( *format, *vtxStream, length, xSnap, ySnap, zSnap );
 	}
 	return 0;
 }
@@ -359,7 +359,7 @@ int MOAIMeshWriter::_translateCoords ( lua_State* L ) {
 		float yOff = state.GetValue < float >( 5, 0.0f );
 		float zOff = state.GetValue < float >( 6, 0.0f );
 	
-		MOAIMeshWriter::TranslateCoords ( *format, *vtxStream, length, xOff, yOff, zOff );
+		self->TranslateCoords ( *format, *vtxStream, length, xOff, yOff, zOff );
 	}
 	return 0;
 }
@@ -385,7 +385,7 @@ int MOAIMeshWriter::_writeBox ( lua_State* L ) {
 	MOAIStream* stream			= state.GetLuaObject < MOAIStream >( 2, true );
 	
 	if ( format && stream  ) {
-		MOAIMeshWriter::WriteBox ( *format, *stream, state.GetBox ( 3 ));
+		self->WriteBox ( *format, *stream, state.GetBox ( 3 ));
 	}
 	return 0;
 }
@@ -434,7 +434,7 @@ int MOAIMeshWriter::_writeCube ( lua_State* L ) {
 			box.mMax.mY = origin.mY + halfSize;
 			box.mMax.mZ = origin.mZ + halfSize;
 	
-			MOAIMeshWriter::WriteBox ( *format, *stream, box );
+			self->WriteBox ( *format, *stream, box );
 		}
 	}
 	return 0;
@@ -598,12 +598,14 @@ void MOAIMeshWriter::ApplyLinearGradient ( const MOAIVertexFormat& format, ZLStr
 //----------------------------------------------------------------//
 MOAIMeshDeck* MOAIMeshWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream& vtxStream, size_t vtxStreamLength, ZLStream& idxStream, size_t idxStreamLength, u32 idxSizeInBytes ) {
 
-	MOAIVertexBuffer* vtxBuffer		= MOAIGfxMgr::Get ().CreateVertexBuffer ();
-	MOAIIndexBuffer* idxBuffer		= MOAIGfxMgr::Get ().CreateIndexBuffer ();
+	MOAIGfxMgr& gfxMgr = this->Get < MOAIGfxMgr >();
+
+	MOAIVertexBuffer* vtxBuffer		= gfxMgr.CreateVertexBuffer ();
+	MOAIIndexBuffer* idxBuffer		= gfxMgr.CreateIndexBuffer ();
 
 	u32 totalElements = MOAIMeshWriter::GetMesh ( format, vtxStream, vtxStreamLength, idxStream, idxStreamLength, *vtxBuffer, *idxBuffer, idxSizeInBytes );
 	
-	MOAIMeshDeck* mesh = new MOAIMeshDeck ();
+	MOAIMeshDeck* mesh = new MOAIMeshDeck ( this->GetContext ());
 
 //	mesh->GetVertexArray ().SetVertexBuffer ( 0, vtxBuffer, ( MOAIVertexFormat* )&format ); // not ideal, but we're gonna do it
 //	mesh->SetIndexBuffer ( idxBuffer );
@@ -652,7 +654,10 @@ u32 MOAIMeshWriter::GetMesh ( const MOAIVertexFormat& format, ZLStream& vtxStrea
 }
 
 //----------------------------------------------------------------//
-MOAIMeshWriter::MOAIMeshWriter () {
+MOAIMeshWriter::MOAIMeshWriter ( ZLContext& context  ) :
+	ZLHasContext ( context ),
+	ZLContextClass ( context ),
+	MOAILuaObject ( context ) {
 		
 	RTTI_BEGIN ( MOAIMeshWriter )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIMeshWriter >)

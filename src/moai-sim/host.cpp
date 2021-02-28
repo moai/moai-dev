@@ -10,279 +10,309 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void AKUEnqueueButtonEvent ( int deviceID, int sensorID, bool down ) {
+void AKUEnqueueButtonEvent ( AKUContextID contextID, int deviceID, int sensorID, bool down ) {
 
-	MOAIButtonSensor::EnqueueButtonEvent ( deviceID, sensorID, down );
+	MOAIInputMgr& inputMgr = (( ZLContext* )contextID )->Get < MOAIInputMgr >();
+	MOAIButtonSensor::EnqueueButtonEvent ( inputMgr, deviceID, sensorID, down );
 }
 
 //----------------------------------------------------------------//
-void AKUEnqueueCompassEvent ( int deviceID, int sensorID, float heading ) {
+void AKUEnqueueCompassEvent ( AKUContextID contextID, int deviceID, int sensorID, float heading ) {
 
-	MOAICompassSensor::EnqueueCompassEvent ( deviceID, sensorID, heading );
+	MOAIInputMgr& inputMgr = (( ZLContext* )contextID )->Get < MOAIInputMgr >();
+	MOAICompassSensor::EnqueueCompassEvent ( inputMgr, deviceID, sensorID, heading );
 }
 
 //----------------------------------------------------------------//
-void AKUEnqueueJoystickEvent( int deviceID, int sensorID, float x, float y ) {
+void AKUEnqueueJoystickEvent ( AKUContextID contextID, int deviceID, int sensorID, float x, float y ) {
 
-	MOAIJoystickSensor::EnqueueJoystickEvent ( deviceID, sensorID, x, y );
+	MOAIInputMgr& inputMgr = (( ZLContext* )contextID )->Get < MOAIInputMgr >();
+	MOAIJoystickSensor::EnqueueJoystickEvent ( inputMgr, deviceID, sensorID, x, y );
 }
 
 //----------------------------------------------------------------//
-void AKUEnqueueKeyboardCharEvent ( int deviceID, int sensorID, int unicodeChar ) {
+void AKUEnqueueKeyboardCharEvent ( AKUContextID contextID, int deviceID, int sensorID, int unicodeChar ) {
 
-	MOAIKeyboardSensor::EnqueueKeyboardCharEvent ( deviceID, sensorID, unicodeChar );
+	MOAIInputMgr& inputMgr = (( ZLContext* )contextID )->Get < MOAIInputMgr >();
+	MOAIKeyboardSensor::EnqueueKeyboardCharEvent ( inputMgr, deviceID, sensorID, unicodeChar );
 }
 
 //----------------------------------------------------------------//
-void AKUEnqueueKeyboardEditEvent ( int deviceID, int sensorID, char const* text, int start, int editLength, int maxLength) {
+void AKUEnqueueKeyboardEditEvent ( AKUContextID contextID, int deviceID, int sensorID, char const* text, int start, int editLength, int maxLength) {
 	
-	MOAIKeyboardSensor::EnqueueKeyboardEditEvent ( deviceID, sensorID, text, ( u32 )start, ( u32 )editLength, ( u32 )maxLength );
+	MOAIInputMgr& inputMgr = (( ZLContext* )contextID )->Get < MOAIInputMgr >();
+	MOAIKeyboardSensor::EnqueueKeyboardEditEvent ( inputMgr, deviceID, sensorID, text, ( u32 )start, ( u32 )editLength, ( u32 )maxLength );
 }
 
 //----------------------------------------------------------------//
-void AKUEnqueueKeyboardKeyEvent ( int deviceID, int sensorID, int keyID, bool down ) {
+void AKUEnqueueKeyboardKeyEvent ( AKUContextID contextID, int deviceID, int sensorID, int keyID, bool down ) {
 
-	MOAIKeyboardSensor::EnqueueKeyboardKeyEvent ( deviceID, sensorID, keyID, down );
+	MOAIInputMgr& inputMgr = (( ZLContext* )contextID )->Get < MOAIInputMgr >();
+	MOAIKeyboardSensor::EnqueueKeyboardKeyEvent ( inputMgr, deviceID, sensorID, keyID, down );
 }
 
 //----------------------------------------------------------------//
-void AKUEnqueueKeyboardTextEvent ( int deviceID, int sensorID, const char* text ) {
+void AKUEnqueueKeyboardTextEvent ( AKUContextID contextID, int deviceID, int sensorID, const char* text ) {
 
-	MOAIKeyboardSensor::EnqueueKeyboardTextEvent ( deviceID, sensorID, text );
+	MOAIInputMgr& inputMgr = (( ZLContext* )contextID )->Get < MOAIInputMgr >();
+	MOAIKeyboardSensor::EnqueueKeyboardTextEvent ( inputMgr, deviceID, sensorID, text );
 }
 
 //----------------------------------------------------------------//
-void AKUEnqueueLevelEvent ( int deviceID, int sensorID, float x, float y, float z ) {
+void AKUEnqueueLevelEvent ( AKUContextID contextID, int deviceID, int sensorID, float x, float y, float z ) {
 
-	MOAIMotionSensor::EnqueueLevelEvent ( deviceID, sensorID, x, y, z );
+	MOAIInputMgr& inputMgr = (( ZLContext* )contextID )->Get < MOAIInputMgr >();
+	MOAIMotionSensor::EnqueueLevelEvent ( inputMgr, deviceID, sensorID, x, y, z );
 }
 
 //----------------------------------------------------------------//
-void AKUEnqueueLocationEvent ( int deviceID, int sensorID, double longitude, double latitude, double altitude, float hAccuracy, float vAccuracy, float speed ) {
+void AKUEnqueueLocationEvent ( AKUContextID contextID, int deviceID, int sensorID, double longitude, double latitude, double altitude, float hAccuracy, float vAccuracy, float speed ) {
 
-	MOAILocationSensor::EnqueueLocationEvent ( deviceID, sensorID, longitude, latitude, altitude, hAccuracy, vAccuracy, speed );
+	MOAIInputMgr& inputMgr = (( ZLContext* )contextID )->Get < MOAIInputMgr >();
+	MOAILocationSensor::EnqueueLocationEvent ( inputMgr, deviceID, sensorID, longitude, latitude, altitude, hAccuracy, vAccuracy, speed );
 }
 
 //----------------------------------------------------------------//
-void AKUEnqueuePointerEvent ( int deviceID, int sensorID, int x, int y ) {
+void AKUEnqueuePointerEvent ( AKUContextID contextID, int deviceID, int sensorID, int x, int y ) {
 
-	MOAIPointerSensor::EnqueuePointerEvent ( deviceID, sensorID, x, y );
+	MOAIInputMgr& inputMgr = (( ZLContext* )contextID )->Get < MOAIInputMgr >();
+	MOAIPointerSensor::EnqueuePointerEvent ( inputMgr, deviceID, sensorID, x, y );
 }
 
 //----------------------------------------------------------------//
-void AKUEnqueueTouchEvent ( int deviceID, int sensorID, int touchID, bool down, float x, float y ) {
+void AKUEnqueueTouchEvent ( AKUContextID contextID, int deviceID, int sensorID, int touchID, bool down, float x, float y ) {
 
-	MOAITouchSensor::EnqueueTouchEvent ( deviceID, sensorID, ( u32 )touchID, down, x, y );
+	MOAIInputMgr& inputMgr = (( ZLContext* )contextID )->Get < MOAIInputMgr >();
+	MOAITouchSensor::EnqueueTouchEvent ( inputMgr, deviceID, sensorID, ( u32 )touchID, down, x, y );
 }
 
 //----------------------------------------------------------------//
-void AKUEnqueueTouchEventCancel ( int deviceID, int sensorID ) {
+void AKUEnqueueTouchEventCancel ( AKUContextID contextID, int deviceID, int sensorID ) {
 
-	MOAITouchSensor::EnqueueTouchEventCancel ( deviceID, sensorID );
+	MOAIInputMgr& inputMgr = (( ZLContext* )contextID )->Get < MOAIInputMgr >();
+	MOAITouchSensor::EnqueueTouchEventCancel ( inputMgr, deviceID, sensorID );
 }
 
 //----------------------------------------------------------------//
-void AKUEnqueueVectorEvent ( int deviceID, int sensorID, float x, float y, float z ) {
+void AKUEnqueueVectorEvent ( AKUContextID contextID, int deviceID, int sensorID, float x, float y, float z ) {
 
-	MOAIVectorSensor::EnqueueVectorEvent ( deviceID, sensorID, x, y, z );
+	MOAIInputMgr& inputMgr = (( ZLContext* )contextID )->Get < MOAIInputMgr >();
+	MOAIVectorSensor::EnqueueVectorEvent ( inputMgr, deviceID, sensorID, x, y, z );
 }
 
 //----------------------------------------------------------------//
-void AKUEnqueueWheelEvent ( int deviceID, int sensorID, float value ) {
+void AKUEnqueueWheelEvent ( AKUContextID contextID, int deviceID, int sensorID, float value ) {
 
-	MOAIWheelSensor::EnqueueWheelEvent ( deviceID, sensorID, value );
+	MOAIInputMgr& inputMgr = (( ZLContext* )contextID )->Get < MOAIInputMgr >();
+	MOAIWheelSensor::EnqueueWheelEvent ( inputMgr, deviceID, sensorID, value );
 }
 
 //----------------------------------------------------------------//
-double AKUGetSimStep () {
+double AKUGetSimStep ( AKUContextID contextID ) {
 
-	return MOAISim::Get ().GetStep ();
+	return (( ZLContext* )contextID )->Get < MOAISim >().GetStep ();
 }
 
 //----------------------------------------------------------------//
-void AKUPause ( bool pause ) {
+void AKUPause ( AKUContextID contextID, bool pause ) {
+
+	MOAISim& sim = (( ZLContext* )contextID )->Get < MOAISim >();
 
 	if ( pause ) {
-		MOAISim::Get().Pause ();
+		sim.Pause ();
 	}
 	else {
-		MOAISim::Get().Resume ();
+		sim.Resume ();
 	}
 }
 
 //----------------------------------------------------------------//
-void AKURender () {
+void AKURender ( AKUContextID contextID ) {
 
-	MOAIGfxMgr::Get ().Render ();
+	(( ZLContext* )contextID )->Get < MOAIGfxMgr >().Render ();
 }
 
 //----------------------------------------------------------------//
-void AKUSetFunc_HideCursor ( AKUHideCursorFunc func, void* userdata ) {
+void AKUReserveInputDevices ( AKUContextID contextID, int total ) {
 
-	MOAISim::Get ().SetHideCursorFunc ( MOAISim::HideCursorFunc ( func, userdata ));
+	(( ZLContext* )contextID )->Get < MOAIInputMgr >().ReserveDevices (( ZLSize )total );
 }
 
 //----------------------------------------------------------------//
-void AKUReserveInputDevices ( int total ) {
+void AKUReserveInputDeviceSensors ( AKUContextID contextID, int deviceID, int total ) {
 
-	MOAIInputMgr::Get ().ReserveDevices (( ZLSize )total );
+	(( ZLContext* )contextID )->Get < MOAIInputMgr >().ReserveSensors ( deviceID, ( ZLSize )total );
 }
 
 //----------------------------------------------------------------//
-void AKUReserveInputDeviceSensors ( int deviceID, int total ) {
+void AKUSetFunc_EnterFullscreenMode ( AKUContextID contextID, AKUEnterFullscreenModeFunc func, void* userdata ) {
 
-	MOAIInputMgr::Get ().ReserveSensors ( deviceID, ( ZLSize )total );
+	(( ZLContext* )contextID )->Get < MOAISim >().SetEnterFullscreenModeFunc ( MOAISim::EnterFullscreenModeFunc ( func, userdata ));
 }
 
 //----------------------------------------------------------------//
-void AKUSetFunc_EnterFullscreenMode ( AKUEnterFullscreenModeFunc func, void* userdata ) {
+void AKUSetFunc_ExitFullscreenMode ( AKUContextID contextID, AKUExitFullscreenModeFunc func, void* userdata ) {
 
-	MOAISim::Get ().SetEnterFullscreenModeFunc ( MOAISim::EnterFullscreenModeFunc ( func, userdata ));
+	(( ZLContext* )contextID )->Get < MOAISim >().SetExitFullscreenModeFunc ( MOAISim::ExitFullscreenModeFunc ( func, userdata ));
 }
 
 //----------------------------------------------------------------//
-void AKUSetFunc_ExitFullscreenMode ( AKUExitFullscreenModeFunc func, void* userdata ) {
+void AKUSetFunc_HideCursor ( AKUContextID contextID, AKUHideCursorFunc func, void* userdata ) {
 
-	MOAISim::Get ().SetExitFullscreenModeFunc ( MOAISim::ExitFullscreenModeFunc ( func, userdata ));
+	(( ZLContext* )contextID )->Get < MOAISim >().SetHideCursorFunc ( MOAISim::HideCursorFunc ( func, userdata ));
 }
 
 //----------------------------------------------------------------//
-void AKUSetFunc_OpenWindow ( AKUOpenWindowFunc func, void* userdata ) {
+void AKUSetFunc_OpenWindow ( AKUContextID contextID, AKUOpenWindowFunc func, void* userdata ) {
 
-	MOAISim::Get ().SetOpenWindowFunc ( MOAISim::OpenWindowFunc ( func, userdata ));
+	(( ZLContext* )contextID )->Get < MOAISim >().SetOpenWindowFunc ( MOAISim::OpenWindowFunc ( func, userdata ));
 }
 
 //----------------------------------------------------------------//
-void AKUSetFunc_SetSimStep ( AKUSetSimStepFunc func, void* userdata ) {
+void AKUSetFunc_SetSimStep ( AKUContextID contextID, AKUSetSimStepFunc func, void* userdata ) {
 
-	MOAISim::Get ().SetSetSimStepFunc ( MOAISim::SetSimStepFunc ( func, userdata ));
+	(( ZLContext* )contextID )->Get < MOAISim >().SetSetSimStepFunc ( MOAISim::SetSimStepFunc ( func, userdata ));
 }
 
 //----------------------------------------------------------------//
-void AKUSetInputAutoTimestamp ( bool autotimestamp ) {
-
-	MOAIInputMgr::Get ().SetAutotimestamp ( autotimestamp );
+void AKUSetFunc_SetTextInputRect ( AKUContextID contextID, AKUSetTextInputRectFunc func, void* userdata ) {
+	
+	(( ZLContext* )contextID )->Get < MOAISim >().SetSetTextInputRectFunc ( MOAISim::SetTextInputRectFunc ( func, userdata ));
 }
 
 //----------------------------------------------------------------//
-void AKUSetInputConfigurationName ( char const* name ) {
+void AKUSetFunc_ShowCursor ( AKUContextID contextID, AKUShowCursorFunc func, void* userdata ) {
 
-	MOAIInputMgr::Get ().SetConfigurationName ( name );
+	(( ZLContext* )contextID )->Get < MOAISim >().SetShowCursorFunc ( MOAISim::ShowCursorFunc ( func, userdata ));
 }
 
 //----------------------------------------------------------------//
-void AKUSetInputDevice ( int deviceID, char const* name ) {
+void AKUSetInputAutoTimestamp ( AKUContextID contextID, bool autotimestamp ) {
 
-	MOAIInputMgr::Get ().SetDevice ( deviceID, name );
+	(( ZLContext* )contextID )->Get < MOAIInputMgr >().SetAutotimestamp ( autotimestamp );
 }
 
 //----------------------------------------------------------------//
-void AKUSetInputDeviceHardwareInfo ( int deviceID, char const* hardwareInfo ) {
+void AKUSetInputConfigurationName ( AKUContextID contextID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetDeviceHardwareInfo ( deviceID, hardwareInfo );
+	(( ZLContext* )contextID )->Get < MOAIInputMgr >().SetConfigurationName ( name );
 }
 
 //----------------------------------------------------------------//
-void AKUSetInputDeviceActive ( int deviceID, bool active ) {
+void AKUSetInputDevice ( AKUContextID contextID, int deviceID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetDeviceActive ( deviceID, active );
+	(( ZLContext* )contextID )->Get < MOAIInputMgr >().SetDevice ( deviceID, name );
 }
 
 //----------------------------------------------------------------//
-void AKUSetInputDeviceButton ( int deviceID, int sensorID, char const* name ) {
+void AKUSetInputDeviceHardwareInfo ( AKUContextID contextID, int deviceID, char const* hardwareInfo ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAIButtonSensor >( deviceID, sensorID, name );
+	(( ZLContext* )contextID )->Get < MOAIInputMgr >().SetDeviceHardwareInfo ( deviceID, hardwareInfo );
 }
 
 //----------------------------------------------------------------//
-void AKUSetInputDeviceCompass ( int deviceID, int sensorID, char const* name ) {
+void AKUSetInputDeviceActive ( AKUContextID contextID, int deviceID, bool active ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAICompassSensor >( deviceID, sensorID, name );
+	(( ZLContext* )contextID )->Get < MOAIInputMgr >().SetDeviceActive ( deviceID, active );
 }
 
 //----------------------------------------------------------------//
-void AKUSetInputDeviceKeyboard ( int deviceID, int sensorID, char const* name ) {
+void AKUSetInputDeviceButton ( AKUContextID contextID, int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAIKeyboardSensor >( deviceID, sensorID, name );
+	(( ZLContext* )contextID )->Get < MOAIInputMgr >().SetSensor < MOAIButtonSensor >( deviceID, sensorID, name );
 }
 
 //----------------------------------------------------------------//
-void AKUSetInputDeviceJoystick ( int deviceID, int sensorID, char const* name ) {
+void AKUSetInputDeviceCompass ( AKUContextID contextID, int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAIJoystickSensor >( deviceID, sensorID, name );
+	(( ZLContext* )contextID )->Get < MOAIInputMgr >().SetSensor < MOAICompassSensor >( deviceID, sensorID, name );
 }
 
 //----------------------------------------------------------------//
-void AKUSetInputDeviceLevel ( int deviceID, int sensorID, char const* name ) {
+void AKUSetInputDeviceKeyboard ( AKUContextID contextID, int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAIMotionSensor >( deviceID, sensorID, name );
+	(( ZLContext* )contextID )->Get < MOAIInputMgr >().SetSensor < MOAIKeyboardSensor >( deviceID, sensorID, name );
 }
 
 //----------------------------------------------------------------//
-void AKUSetInputDeviceLocation ( int deviceID, int sensorID, char const* name ) {
+void AKUSetInputDeviceJoystick ( AKUContextID contextID, int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAILocationSensor >( deviceID, sensorID, name );
+	(( ZLContext* )contextID )->Get < MOAIInputMgr >().SetSensor < MOAIJoystickSensor >( deviceID, sensorID, name );
 }
 
 //----------------------------------------------------------------//
-void AKUSetInputDevicePointer ( int deviceID, int sensorID, char const* name ) {
+void AKUSetInputDeviceLevel ( AKUContextID contextID, int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAIPointerSensor >( deviceID, sensorID, name );
+	(( ZLContext* )contextID )->Get < MOAIInputMgr >().SetSensor < MOAIMotionSensor >( deviceID, sensorID, name );
 }
 
 //----------------------------------------------------------------//
-void AKUSetInputDeviceTouch ( int deviceID, int sensorID, char const* name ) {
+void AKUSetInputDeviceLocation ( AKUContextID contextID, int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAITouchSensor >( deviceID, sensorID, name );
+	(( ZLContext* )contextID )->Get < MOAIInputMgr >().SetSensor < MOAILocationSensor >( deviceID, sensorID, name );
 }
 
 //----------------------------------------------------------------//
-void AKUSetInputDeviceVector ( int deviceID, int sensorID, char const* name ) {
+void AKUSetInputDevicePointer ( AKUContextID contextID, int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAIVectorSensor >( deviceID, sensorID, name );
+	(( ZLContext* )contextID )->Get < MOAIInputMgr >().SetSensor < MOAIPointerSensor >( deviceID, sensorID, name );
 }
 
 //----------------------------------------------------------------//
-void AKUSetInputDeviceWheel ( int deviceID, int sensorID, char const* name ) {
+void AKUSetInputDeviceTouch ( AKUContextID contextID, int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetSensor < MOAIWheelSensor >( deviceID, sensorID, name );
+	(( ZLContext* )contextID )->Get < MOAIInputMgr >().SetSensor < MOAITouchSensor >( deviceID, sensorID, name );
 }
 
 //----------------------------------------------------------------//
-void AKUSetInputTimebase ( double timebase ) {
+void AKUSetInputDeviceVector ( AKUContextID contextID, int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetTimebase ( timebase );
+	(( ZLContext* )contextID )->Get < MOAIInputMgr >().SetSensor < MOAIVectorSensor >( deviceID, sensorID, name );
 }
 
 //----------------------------------------------------------------//
-void AKUSetInputTimestamp ( double timestamp ) {
+void AKUSetInputDeviceWheel ( AKUContextID contextID, int deviceID, int sensorID, char const* name ) {
 
-	MOAIInputMgr::Get ().SetTimestamp ( timestamp );
+	(( ZLContext* )contextID )->Get < MOAIInputMgr >().SetSensor < MOAIWheelSensor >( deviceID, sensorID, name );
 }
 
 //----------------------------------------------------------------//
-void AKUSetOrientation ( int orientation ) {
+void AKUSetInputTimebase ( AKUContextID contextID, double timebase ) {
 
-	MOAIGfxMgr::Get ().GetDefaultFrameBuffer ()->SetLandscape ( orientation == AKU_ORIENTATION_LANDSCAPE );
+	(( ZLContext* )contextID )->Get < MOAIInputMgr >().SetTimebase ( timebase );
+}
+
+//----------------------------------------------------------------//
+void AKUSetInputTimestamp ( AKUContextID contextID, double timestamp ) {
+
+	(( ZLContext* )contextID )->Get < MOAIInputMgr >().SetTimestamp ( timestamp );
+}
+
+//----------------------------------------------------------------//
+void AKUSetOrientation ( AKUContextID contextID, int orientation ) {
+
+	(( ZLContext* )contextID )->Get < MOAIGfxMgr >().GetDefaultFrameBuffer ()->SetLandscape ( orientation == AKU_ORIENTATION_LANDSCAPE );
 }
 
 //----------------------------------------------------------------//	
-void AKUSetScreenDpi ( int dpi ) {
+void AKUSetScreenDpi ( AKUContextID contextID, int dpi ) {
 
-	MOAIEnvironment::Get ().SetValue ( MOAI_ENV_screenDpi, dpi );
+	(( ZLContext* )contextID )->Get < MOAIEnvironment >().SetValue ( MOAI_ENV_screenDpi, dpi );
 }
 
 //----------------------------------------------------------------//
-void AKUSetScreenSize ( int width, int height) {
+void AKUSetScreenSize ( AKUContextID contextID, int width, int height) {
 
-	MOAIEnvironment::Get ().SetValue ( MOAI_ENV_horizontalResolution, width );
-	MOAIEnvironment::Get ().SetValue ( MOAI_ENV_verticalResolution, height );
+	MOAIEnvironment& environment = (( ZLContext* )contextID )->Get < MOAIEnvironment >();
+
+	environment.SetValue ( MOAI_ENV_horizontalResolution, width );
+	environment.SetValue ( MOAI_ENV_verticalResolution, height );
 }
 
 //----------------------------------------------------------------//
-void AKUSetViewSize ( int width, int height ) {
+void AKUSetViewSize ( AKUContextID contextID, int width, int height ) {
 	
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr = (( ZLContext* )contextID )->Get < MOAIGfxMgr >();
 	
 	u32 currentWidth = gfxMgr.GetBufferWidth ();
 	u32 currentHeight = gfxMgr.GetBufferHeight ();
@@ -291,25 +321,14 @@ void AKUSetViewSize ( int width, int height ) {
 	
 		gfxMgr.GetDefaultFrameBuffer ()->SetFrameSize ( width, height );
 		
-		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
+		MOAIScopedLuaState state = (( ZLContext* )contextID )->Get < MOAILuaRuntime >().State ();
+		
 		if ( gfxMgr.PushListener ( MOAIGfxMgr::EVENT_RESIZE, state )) {
 			lua_pushnumber ( state, width );
 			lua_pushnumber ( state, height );
 			state.DebugCall ( 2, 0 );
 		}
 	}
-}
-
-//----------------------------------------------------------------//
-void AKUSetFunc_ShowCursor ( AKUShowCursorFunc func, void* userdata ) {
-
-	MOAISim::Get ().SetShowCursorFunc ( MOAISim::ShowCursorFunc ( func, userdata ));
-}
-
-//----------------------------------------------------------------//
-void AKUSetFunc_SetTextInputRect ( AKUSetTextInputRectFunc func, void* userdata ) {
-	
-	MOAISim::Get ().SetSetTextInputRectFunc ( MOAISim::SetTextInputRectFunc ( func, userdata ));
 }
 
 //----------------------------------------------------------------//
@@ -321,102 +340,101 @@ void AKUSimAppInitialize () {
 }
 
 //----------------------------------------------------------------//
-void AKUSimContextInitialize () {
+void AKUSimContextInitialize ( AKUContextID contextID ) {
 
-	MOAIDebugLinesMgr::Affirm ();
-	MOAIInputMgr::Affirm ();
-	MOAIDraw::Affirm ();
+	assert ( contextID );
+	ZLContext* context = ( ZLContext* )contextID;
+
+	context->Affirm < MOAIDebugLinesMgr >();
+	context->Affirm < MOAIInputMgr >();
+	context->Affirm < MOAIDraw >();
 	
 	// this is a stopgap; eventually MOAISim will be split up.
 	// right now it's just a bag of legacy.
-	MOAISim::Affirm ();
-	MOAISim::RegisterAlias < MOAIUpdateMgr >();
+	context->Affirm < MOAISim >();
+	context->RegisterAlias < MOAISim, MOAIUpdateMgr >();
 	
-	MOAIMeshWriter::Affirm ();
-	MOAIKeyCode::Affirm ();
+	context->Affirm < MOAIMeshWriter >();
+	context->Affirm < MOAIKeyCode >();
 	
 	// MOAI
-	REGISTER_LUA_CLASS ( MOAIButtonSensor )
-	REGISTER_LUA_CLASS ( MOAICameraAnchor2D )
-	REGISTER_LUA_CLASS ( MOAICameraFitter2D )
-	REGISTER_LUA_CLASS ( MOAICollisionDeck )
-	REGISTER_LUA_CLASS ( MOAICollisionProp )
-	REGISTER_LUA_CLASS ( MOAICollisionWorld )
-	REGISTER_LUA_CLASS ( MOAIColor )
-	REGISTER_LUA_CLASS ( MOAICompassSensor )
-	REGISTER_LUA_CLASS ( MOAICoroutine )
-	REGISTER_LUA_CLASS ( MOAIDebugLinesMgr )
-	REGISTER_LUA_CLASS ( MOAIDeckRemapper )
-	REGISTER_LUA_CLASS ( MOAIDrawDeck )
-	REGISTER_LUA_CLASS ( MOAIFancyGrid )
-	REGISTER_LUA_CLASS ( MOAIGraphicsProp )
-	REGISTER_LUA_CLASS ( MOAIGraphicsGridProp )
-	REGISTER_LUA_CLASS ( MOAIGrid )
-	REGISTER_LUA_CLASS ( MOAIGridSpace )
-	REGISTER_LUA_CLASS ( MOAIGridPathGraph )
-	REGISTER_LUA_CLASS ( MOAIHitMask )
-	REGISTER_LUA_CLASS ( MOAIHitMaskBatch )
-	REGISTER_LUA_CLASS ( MOAIImage )
-	REGISTER_LUA_CLASS ( MOAIInputDevice )
-	REGISTER_LUA_CLASS ( MOAIInputMgr )
-	REGISTER_LUA_CLASS ( MOAIJoystickSensor )
-	REGISTER_LUA_CLASS ( MOAIKeyCode )
-	REGISTER_LUA_CLASS ( MOAIKeyboardSensor )
-	REGISTER_LUA_CLASS ( MOAILocationSensor )
-	REGISTER_LUA_CLASS ( MOAIMeshDeck )
-	REGISTER_LUA_CLASS ( MOAIMeshWriter )
-	REGISTER_LUA_CLASS ( MOAIMetaTileDeck2D )
-	REGISTER_LUA_CLASS ( MOAIMotionSensor )
-	REGISTER_LUA_CLASS ( MOAIParticleCallbackPlugin )
-	REGISTER_LUA_CLASS ( MOAIParticleDistanceEmitter )
-	REGISTER_LUA_CLASS ( MOAIParticleForce )
-	REGISTER_LUA_CLASS ( MOAIParticleScript )
-	REGISTER_LUA_CLASS ( MOAIParticleState )
-	REGISTER_LUA_CLASS ( MOAIParticleSystem )
-	REGISTER_LUA_CLASS ( MOAIParticleTimedEmitter )
-	REGISTER_LUA_CLASS ( MOAIPartition )
-	REGISTER_LUA_CLASS ( MOAIPartitionResultBuffer )
-	REGISTER_LUA_CLASS ( MOAIPartitionViewLayer )
-	REGISTER_LUA_CLASS ( MOAIPath )
-	REGISTER_LUA_CLASS ( MOAIPathFinder )
-	REGISTER_LUA_CLASS ( MOAIPathStepper )
-	REGISTER_LUA_CLASS ( MOAIPathTerrainDeck )
-	REGISTER_LUA_CLASS ( MOAIPinTransform )
-	REGISTER_LUA_CLASS ( MOAIPointerSensor )
-	REGISTER_LUA_CLASS ( MOAIProjectionProp )
-	REGISTER_LUA_CLASS ( MOAIRegion )
-	REGISTER_LUA_CLASS ( MOAIScissorRect )
-	REGISTER_LUA_CLASS ( MOAIScriptNode )
-	REGISTER_LUA_CLASS ( MOAISim )
-	REGISTER_LUA_CLASS ( MOAISpriteDeck2D )
-	REGISTER_LUA_CLASS ( MOAIStretchPatch2D )
-	REGISTER_LUA_CLASS ( MOAITableViewLayer )
-	REGISTER_LUA_CLASS ( MOAITileDeck2D )
-	REGISTER_LUA_CLASS ( MOAITouchSensor )
-	REGISTER_LUA_CLASS ( MOAIVecPathGraph )
-	REGISTER_LUA_CLASS ( MOAIVectorTesselator )
-	REGISTER_LUA_CLASS ( MOAIWheelSensor )
+	REGISTER_LUA_CLASS ( context, MOAIButtonSensor )
+	REGISTER_LUA_CLASS ( context, MOAICameraAnchor2D )
+	REGISTER_LUA_CLASS ( context, MOAICameraFitter2D )
+	REGISTER_LUA_CLASS ( context, MOAICollisionDeck )
+	REGISTER_LUA_CLASS ( context, MOAICollisionProp )
+	REGISTER_LUA_CLASS ( context, MOAICollisionWorld )
+	REGISTER_LUA_CLASS ( context, MOAICompassSensor )
+	REGISTER_LUA_CLASS ( context, MOAIDebugLinesMgr )
+	REGISTER_LUA_CLASS ( context, MOAIDeckRemapper )
+	REGISTER_LUA_CLASS ( context, MOAIDrawDeck )
+	REGISTER_LUA_CLASS ( context, MOAIFancyGrid )
+	REGISTER_LUA_CLASS ( context, MOAIGraphicsProp )
+	REGISTER_LUA_CLASS ( context, MOAIGraphicsGridProp )
+	REGISTER_LUA_CLASS ( context, MOAIGrid )
+	REGISTER_LUA_CLASS ( context, MOAIGridSpace )
+	REGISTER_LUA_CLASS ( context, MOAIGridPathGraph )
+	REGISTER_LUA_CLASS ( context, MOAIHitMask )
+	REGISTER_LUA_CLASS ( context, MOAIHitMaskBatch )
+	REGISTER_LUA_CLASS ( context, MOAIImage )
+	REGISTER_LUA_CLASS ( context, MOAIInputDevice )
+	REGISTER_LUA_CLASS ( context, MOAIInputMgr )
+	REGISTER_LUA_CLASS ( context, MOAIJoystickSensor )
+	REGISTER_LUA_CLASS ( context, MOAIKeyCode )
+	REGISTER_LUA_CLASS ( context, MOAIKeyboardSensor )
+	REGISTER_LUA_CLASS ( context, MOAILocationSensor )
+	REGISTER_LUA_CLASS ( context, MOAIMeshDeck )
+	REGISTER_LUA_CLASS ( context, MOAIMeshWriter )
+	REGISTER_LUA_CLASS ( context, MOAIMetaTileDeck2D )
+	REGISTER_LUA_CLASS ( context, MOAIMotionSensor )
+	REGISTER_LUA_CLASS ( context, MOAIParticleCallbackPlugin )
+	REGISTER_LUA_CLASS ( context, MOAIParticleDistanceEmitter )
+	REGISTER_LUA_CLASS ( context, MOAIParticleForce )
+	REGISTER_LUA_CLASS ( context, MOAIParticleScript )
+	REGISTER_LUA_CLASS ( context, MOAIParticleState )
+	REGISTER_LUA_CLASS ( context, MOAIParticleSystem )
+	REGISTER_LUA_CLASS ( context, MOAIParticleTimedEmitter )
+	REGISTER_LUA_CLASS ( context, MOAIPartition )
+	REGISTER_LUA_CLASS ( context, MOAIPartitionResultBuffer )
+	REGISTER_LUA_CLASS ( context, MOAIPartitionViewLayer )
+	REGISTER_LUA_CLASS ( context, MOAIPath )
+	REGISTER_LUA_CLASS ( context, MOAIPathFinder )
+	REGISTER_LUA_CLASS ( context, MOAIPathStepper )
+	REGISTER_LUA_CLASS ( context, MOAIPathTerrainDeck )
+	REGISTER_LUA_CLASS ( context, MOAIPinTransform )
+	REGISTER_LUA_CLASS ( context, MOAIPointerSensor )
+	REGISTER_LUA_CLASS ( context, MOAIProjectionProp )
+	REGISTER_LUA_CLASS ( context, MOAIRegion )
+	REGISTER_LUA_CLASS ( context, MOAISim )
+	REGISTER_LUA_CLASS ( context, MOAISpriteDeck2D )
+	REGISTER_LUA_CLASS ( context, MOAIStretchPatch2D )
+	REGISTER_LUA_CLASS ( context, MOAITableViewLayer )
+	REGISTER_LUA_CLASS ( context, MOAITileDeck2D )
+	REGISTER_LUA_CLASS ( context, MOAITouchSensor )
+	REGISTER_LUA_CLASS ( context, MOAIVecPathGraph )
+	REGISTER_LUA_CLASS ( context, MOAIVectorTesselator )
+	REGISTER_LUA_CLASS ( context, MOAIWheelSensor )
 	
 	// text stuff here for now
-	REGISTER_LUA_CLASS ( MOAIBitmapFontReader )
-	REGISTER_LUA_CLASS ( MOAIDynamicGlyphCache )
-	REGISTER_LUA_CLASS ( MOAIFont )
-	REGISTER_LUA_CLASS ( MOAIStaticGlyphCache )
-	REGISTER_LUA_CLASS ( MOAITextBundle )
-	REGISTER_LUA_CLASS ( MOAITextLabel )
-	REGISTER_LUA_CLASS ( MOAITextStyle )
+	REGISTER_LUA_CLASS ( context, MOAIBitmapFontReader )
+	REGISTER_LUA_CLASS ( context, MOAIDynamicGlyphCache )
+	REGISTER_LUA_CLASS ( context, MOAIFont )
+	REGISTER_LUA_CLASS ( context, MOAIStaticGlyphCache )
+	REGISTER_LUA_CLASS ( context, MOAITextBundle )
+	REGISTER_LUA_CLASS ( context, MOAITextLabel )context,
+	REGISTER_LUA_CLASS ( context, MOAITextStyle )
 	
 	#if MOAI_WITH_TINYXML
-		REGISTER_LUA_CLASS ( MOAIParticlePexPlugin )
+		REGISTER_LUA_CLASS ( context, MOAIParticlePexPlugin )
 	#endif
 	
 	#if MOAI_WITH_FREETYPE
-		REGISTER_LUA_CLASS ( MOAIFreeTypeFontReader )
+		REGISTER_LUA_CLASS ( context, MOAIFreeTypeFontReader )
 	#endif
 }
 
 //----------------------------------------------------------------//
-void AKUUpdate () {
+void AKUUpdate ( AKUContextID contextID ) {
 
-	MOAISim::Get ().Update ();
+	(( ZLContext* )contextID )->Get < MOAISim >().Update ();
 }

@@ -72,7 +72,7 @@ public:
 	ZLColorVec		GetTileColor		( int addr ) const;
 	ZLColorVec		GetTileColor		( int xTile, int yTile ) const;
 	
-					MOAIFancyGrid		();
+					MOAIFancyGrid		( ZLContext& context );
 					~MOAIFancyGrid		();
 	
 	void			ReservePalette		( ZLSize size );

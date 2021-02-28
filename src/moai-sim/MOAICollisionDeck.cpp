@@ -90,7 +90,10 @@ MOAICollisionShape& MOAICollisionDeck::AffirmShape ( ZLIndex idx ) {
 }
 
 //----------------------------------------------------------------//
-MOAICollisionDeck::MOAICollisionDeck () {
+MOAICollisionDeck::MOAICollisionDeck ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIDeck ( context ) {
 
 	RTTI_BEGIN ( MOAICollisionDeck )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAICollisionDeck >)
