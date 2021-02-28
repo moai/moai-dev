@@ -262,12 +262,6 @@
 		89BE6B7517399FEB00DFE837 /* MOAIUntzSystem.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE6B6617399FEB00DFE837 /* MOAIUntzSystem.cpp */; };
 		89BE6B7617399FEB00DFE837 /* MOAIUntzSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6B6717399FEB00DFE837 /* MOAIUntzSystem.h */; };
 		89BE6B7717399FEB00DFE837 /* MOAIUntzSystem.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6B6717399FEB00DFE837 /* MOAIUntzSystem.h */; };
-		89BE6CFA1739A42500DFE837 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6CC31739A42500DFE837 /* headers.h */; };
-		89BE6CFB1739A42500DFE837 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6CC31739A42500DFE837 /* headers.h */; };
-		89BE6CFE1739A42500DFE837 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6CC51739A42500DFE837 /* host.h */; };
-		89BE6CFF1739A42500DFE837 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6CC51739A42500DFE837 /* host.h */; };
-		89BE6D661739A42500DFE837 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6CF91739A42500DFE837 /* pch.h */; };
-		89BE6D671739A42500DFE837 /* pch.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE6CF91739A42500DFE837 /* pch.h */; };
 		89BE74C8173AD2FA00DFE837 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE74A3173AD2FA00DFE837 /* headers.h */; };
 		89BE74C9173AD2FA00DFE837 /* headers.h in Headers */ = {isa = PBXBuildFile; fileRef = 89BE74A3173AD2FA00DFE837 /* headers.h */; };
 		89BE74CA173AD2FA00DFE837 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = 89BE74A4173AD2FA00DFE837 /* host.cpp */; };
@@ -1101,10 +1095,6 @@
 		CD2E468F1C517FF6008E22A1 /* host.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD2E468C1C517FF6008E22A1 /* host.cpp */; };
 		CD2E46901C517FF6008E22A1 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2E468D1C517FF6008E22A1 /* host.h */; };
 		CD2E46911C517FF6008E22A1 /* host.h in Headers */ = {isa = PBXBuildFile; fileRef = CD2E468D1C517FF6008E22A1 /* host.h */; };
-		CD3024C01A68AB4B00CCEE32 /* MOAITestMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3024BE1A68AB4B00CCEE32 /* MOAITestMgr.cpp */; };
-		CD3024C11A68AB4B00CCEE32 /* MOAITestMgr.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD3024BE1A68AB4B00CCEE32 /* MOAITestMgr.cpp */; };
-		CD3024C21A68AB4B00CCEE32 /* MOAITestMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3024BF1A68AB4B00CCEE32 /* MOAITestMgr.h */; };
-		CD3024C31A68AB4B00CCEE32 /* MOAITestMgr.h in Headers */ = {isa = PBXBuildFile; fileRef = CD3024BF1A68AB4B00CCEE32 /* MOAITestMgr.h */; };
 		CD318BFC24D81D1D009E32EF /* moai_config.h in Headers */ = {isa = PBXBuildFile; fileRef = CD318BF724D81D1D009E32EF /* moai_config.h */; };
 		CD318BFD24D81D1D009E32EF /* moai_config.h in Headers */ = {isa = PBXBuildFile; fileRef = CD318BF724D81D1D009E32EF /* moai_config.h */; };
 		CD318BFE24D81D1D009E32EF /* moai_version_author.h in Headers */ = {isa = PBXBuildFile; fileRef = CD318BF824D81D1D009E32EF /* moai_version_author.h */; };
@@ -4845,11 +4835,6 @@
 		89BE6B6517399FEB00DFE837 /* MOAIUntzSound.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIUntzSound.h; sourceTree = "<group>"; };
 		89BE6B6617399FEB00DFE837 /* MOAIUntzSystem.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = MOAIUntzSystem.cpp; sourceTree = "<group>"; };
 		89BE6B6717399FEB00DFE837 /* MOAIUntzSystem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MOAIUntzSystem.h; sourceTree = "<group>"; };
-		89BE6CC31739A42500DFE837 /* headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = headers.h; sourceTree = "<group>"; };
-		89BE6CC41739A42500DFE837 /* host.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = host.cpp; sourceTree = "<group>"; };
-		89BE6CC51739A42500DFE837 /* host.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = host.h; sourceTree = "<group>"; };
-		89BE6CF81739A42500DFE837 /* pch.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = pch.cpp; sourceTree = "<group>"; };
-		89BE6CF91739A42500DFE837 /* pch.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = pch.h; sourceTree = "<group>"; };
 		89BE6F06173AD06700DFE837 /* libmoai-ios-sim.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-ios-sim.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		89BE6F18173AD07100DFE837 /* libmoai-osx-sim.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libmoai-osx-sim.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		89BE6F1A173AD0CA00DFE837 /* headers.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = headers.h; sourceTree = "<group>"; };
@@ -8456,7 +8441,6 @@
 				CD42F2D51A60A795001B6D72 /* moai-sdl */,
 				89BE6F19173AD0CA00DFE837 /* moai-sim */,
 				89BE6B5F17399FEB00DFE837 /* moai-untz */,
-				89BE6CC21739A42500DFE837 /* moai-util */,
 				89BE692E173974FD00DFE837 /* zl-core */,
 				CDC122D317FA802700FB64BB /* zl-crypto */,
 				89BE688A173974FC00DFE837 /* zl-gfx */,
@@ -8781,18 +8765,6 @@
 				89BE6B6717399FEB00DFE837 /* MOAIUntzSystem.h */,
 			);
 			path = "moai-untz";
-			sourceTree = "<group>";
-		};
-		89BE6CC21739A42500DFE837 /* moai-util */ = {
-			isa = PBXGroup;
-			children = (
-				89BE6CC31739A42500DFE837 /* headers.h */,
-				89BE6CC41739A42500DFE837 /* host.cpp */,
-				89BE6CC51739A42500DFE837 /* host.h */,
-				89BE6CF81739A42500DFE837 /* pch.cpp */,
-				89BE6CF91739A42500DFE837 /* pch.h */,
-			);
-			path = "moai-util";
 			sourceTree = "<group>";
 		};
 		89BE6F19173AD0CA00DFE837 /* moai-sim */ = {
@@ -13603,7 +13575,6 @@
 				CD4C386C242CC2E800B1AC6A /* MOAIAnimCurveBone.h in Headers */,
 				89BE6B1D173975E500DFE837 /* MOAILogMgr.h in Headers */,
 				CD318BFD24D81D1D009E32EF /* moai_config.h in Headers */,
-				CD3024C31A68AB4B00CCEE32 /* MOAITestMgr.h in Headers */,
 				CD17126122F446BA00381882 /* MOAILuaRuntime.h in Headers */,
 				CD17126322F446BA00381882 /* MOAILuaSharedPtr.h in Headers */,
 				CD4C3868242CC2E800B1AC6A /* MOAIAnim.h in Headers */,
@@ -13616,8 +13587,6 @@
 				CD2B8EF82582941400CEFA29 /* MOAIPool.h in Headers */,
 				CD37D4A325EBCA97006536C0 /* MOAIMemStream.h in Headers */,
 				CD17125D22F446BA00381882 /* MOAILuaRefTable.h in Headers */,
-				89BE6CFB1739A42500DFE837 /* headers.h in Headers */,
-				89BE6CFF1739A42500DFE837 /* host.h in Headers */,
 				CD4C386E242CC2E800B1AC6A /* MOAIAnimCurveFloat.h in Headers */,
 				CD4C3850242CBDED00B1AC6A /* MOAICoroutine.h in Headers */,
 				CD17124B22F446BA00381882 /* MOAILuaClass-impl.h in Headers */,
@@ -13670,7 +13639,6 @@
 				CD4C384C242CBDED00B1AC6A /* MOAIActionTree.h in Headers */,
 				CD4C3870242CC2E800B1AC6A /* MOAIAnimCurveIndex.h in Headers */,
 				CD17129522F446EF00381882 /* MOAIFoo.h in Headers */,
-				89BE6D671739A42500DFE837 /* pch.h in Headers */,
 				CD2B8F03258294E900CEFA29 /* MOAIPooledObjectFactory.h in Headers */,
 				89E9D7891743F7EE00033CDD /* MOAIVersion.h in Headers */,
 				CD318C0124D81D1D009E32EF /* moai_version.h in Headers */,
@@ -13699,10 +13667,8 @@
 				CD1844DF1A6269AB00FCCCE0 /* MOAINotificationsIOS.h in Headers */,
 				CD1844E31A6269AB00FCCCE0 /* MOAIWebViewIOS.h in Headers */,
 				89BE6B50173975E500DFE837 /* pch.h in Headers */,
-				89BE6CFA1739A42500DFE837 /* headers.h in Headers */,
 				CD18CB5C24E4DCB200019385 /* MOAICmdMedium.h in Headers */,
 				CDADCCFA1A3576A10029FEDA /* MOAITrace.h in Headers */,
-				89BE6CFE1739A42500DFE837 /* host.h in Headers */,
 				CDA1D0CF1D1BE5CF0006C5E5 /* tga_reader.h in Headers */,
 				CD18CB3024E35DFE00019385 /* MOAIAbstractCmdStream.h in Headers */,
 				CD17125822F446BA00381882 /* MOAILuaRef.h in Headers */,
@@ -13716,7 +13682,6 @@
 				CD1844E11A6269AB00FCCCE0 /* MOAIWebViewController.h in Headers */,
 				CD318C0024D81D1D009E32EF /* moai_version.h in Headers */,
 				CD18CB6824E4DF9A00019385 /* MOAIAbstractCmdHandler.h in Headers */,
-				CD3024C21A68AB4B00CCEE32 /* MOAITestMgr.h in Headers */,
 				CD17126422F446BA00381882 /* MOAILuaState-impl.h in Headers */,
 				CD18CB7524E4E80D00019385 /* MOAIRetainedCmdStream.h in Headers */,
 				CD1845C21A62751300FCCCE0 /* MOAIEnvironment.h in Headers */,
@@ -13731,7 +13696,6 @@
 				CD17125C22F446BA00381882 /* MOAILuaRefTable.h in Headers */,
 				CD0E3A7A24F090EA00E6C92C /* MOAICmdMediumWithAPI.h in Headers */,
 				CD17127A22F446C500381882 /* MOAIScriptNode.h in Headers */,
-				89BE6D661739A42500DFE837 /* pch.h in Headers */,
 				89E9D7881743F7EE00033CDD /* MOAIVersion.h in Headers */,
 				CD1844D41A6269AB00FCCCE0 /* headers.h in Headers */,
 				CD1844D71A6269AB00FCCCE0 /* MOAIAppIOS.h in Headers */,
@@ -17105,7 +17069,6 @@
 				CD17127922F446C500381882 /* MOAIScriptNode.cpp in Sources */,
 				CD37D4CF25EBCB09006536C0 /* MOAITaskSubscriber.cpp in Sources */,
 				CD37D4A525EBCA97006536C0 /* MOAIByteStream.cpp in Sources */,
-				CD3024C11A68AB4B00CCEE32 /* MOAITestMgr.cpp in Sources */,
 				CD17125B22F446BA00381882 /* MOAILuaRefTable.cpp in Sources */,
 				CD37D4DC25EBCB09006536C0 /* MOAIDataIOTask.cpp in Sources */,
 				CD17127522F446C500381882 /* MOAINodeMgr.cpp in Sources */,
@@ -17184,7 +17147,6 @@
 				89BE6B06173975E500DFE837 /* MOAIEventSource.cpp in Sources */,
 				CD17125622F446BA00381882 /* MOAILuaRef.cpp in Sources */,
 				89BE6B1A173975E500DFE837 /* MOAILogMgr.cpp in Sources */,
-				CD3024C01A68AB4B00CCEE32 /* MOAITestMgr.cpp in Sources */,
 				CD1844E21A6269AB00FCCCE0 /* MOAIWebViewController.mm in Sources */,
 				CD1844DE1A6269AB00FCCCE0 /* MOAIKeyboardIOS.mm in Sources */,
 				CDADCCF81A3576A10029FEDA /* MOAITrace.cpp in Sources */,
