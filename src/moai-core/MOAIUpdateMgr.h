@@ -64,7 +64,8 @@ public:
 	
 	u32					mStepCount;
 	
-	static const u32 FPS_BUFFER_SIZE = 30;
+	static const u32 	FPS_BUFFER_SIZE = 30;
+	
 	float				mFrameRate;
 	float				mFrameRateBuffer [ FPS_BUFFER_SIZE ];
 	u32					mFrameRateIdx;
@@ -162,7 +163,7 @@ public:
 	static const u32 DEFAULT_STEP_MULTIPLIER		= 1;
 	
 	//----------------------------------------------------------------//
-					MOAIUpdateMgr				();
+					MOAIUpdateMgr				( ZLContext& context );
 					~MOAIUpdateMgr				();
 	void			Pause						();
 	void			Resume						();

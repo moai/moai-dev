@@ -332,7 +332,10 @@ void MOAILuaUtil::ConvertString ( const MOAILuaHeader& srcFormat, const MOAILuaH
 }
 
 //----------------------------------------------------------------//
-MOAILuaUtil::MOAILuaUtil () {
+MOAILuaUtil::MOAILuaUtil ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	ZLContextClass ( context ),
+	MOAILuaObject ( context ) {
 }
 
 //----------------------------------------------------------------//

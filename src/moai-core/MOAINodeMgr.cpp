@@ -70,7 +70,10 @@ void MOAINodeMgr::InsertBefore ( MOAINode& cursor, MOAINode& node ) {
 }
 
 //----------------------------------------------------------------//
-MOAINodeMgr::MOAINodeMgr () :
+MOAINodeMgr::MOAINodeMgr ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	ZLContextClass ( context ),
+	MOAILuaObject ( context ),
 	mUpdateListHead ( 0 ),
 	mUpdateListTail ( 0 ),
 	mScheduled ( false ),

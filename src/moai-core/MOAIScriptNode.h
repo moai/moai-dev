@@ -38,7 +38,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIScriptNode )
 	
 	//----------------------------------------------------------------//
-					MOAIScriptNode			();
+					MOAIScriptNode			( ZLContext& context );
 					~MOAIScriptNode			();
 	void			NamedAttrAdd			( ZLIndex attrID, ZLAttribute& attr );
 	void			NamedAttrGet			( ZLIndex attrID, ZLAttribute& attr );

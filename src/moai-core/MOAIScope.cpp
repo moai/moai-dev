@@ -102,7 +102,9 @@ void MOAIScope::AffirmObject ( MOAILuaObject& object ) {
 }
 
 //----------------------------------------------------------------//
-MOAIScope::MOAIScope () :
+MOAIScope::MOAIScope ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
 	mScopeRefCount ( 0 ) {
 
 	RTTI_BEGIN ( MOAIScope )

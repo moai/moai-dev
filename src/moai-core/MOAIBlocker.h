@@ -30,7 +30,7 @@ public:
 
 	//----------------------------------------------------------------//
 	bool				IsBlocked				();
-						MOAIBlocker				();
+						MOAIBlocker				( ZLContext& context );
 	virtual				~MOAIBlocker			();
 	void				SetBlocker				( MOAIBlocker* blocker );
 	void				UnblockAll				();

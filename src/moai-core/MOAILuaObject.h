@@ -6,33 +6,33 @@
 
 #include <moai-core/MOAILuaRef.h>
 
-#define MOAI_LUA_OBJECT_VISITOR_FRIEND 																		\
-	template < typename TYPE > friend class MOAILuaRegistrationVisitor;										\
+#define MOAI_LUA_OBJECT_VISITOR_FRIEND 																	\
+	template < typename TYPE > friend class MOAILuaRegistrationVisitor;									\
 	template < typename TYPE > friend class MOAILuaSerializationVisitor;
 
-#define DECL_LUA_FACTORY(type)																				\
-	IMPLEMENT_DEPENDS_ON ( type )																			\
-	MOAI_LUA_OBJECT_VISITOR_FRIEND																			\
-	MOAILuaClass* GetLuaClass () { return &this->mContext->Get < MOAILuaFactoryClass < type > >(); }		\
+#define DECL_LUA_FACTORY(type)																			\
+	IMPLEMENT_DEPENDS_ON ( type )																		\
+	MOAI_LUA_OBJECT_VISITOR_FRIEND																		\
+	MOAILuaClass* GetLuaClass () { return &this->Get < MOAILuaFactoryClass < type > >(); }				\
 	static void RegisterLuaClass ( ZLContext* context ) { context->Get < MOAILuaFactoryClass < type > >().Register ( NULL ); } \
 	cc8* TypeName () const { return #type; }
 
-#define DECL_LUA_ABSTRACT(type)																				\
-	IMPLEMENT_DEPENDS_ON ( type )																			\
-	MOAI_LUA_OBJECT_VISITOR_FRIEND																			\
-	MOAILuaClass* GetLuaClass () { return 0; }																\
+#define DECL_LUA_ABSTRACT(type)																			\
+	IMPLEMENT_DEPENDS_ON ( type )																		\
+	MOAI_LUA_OBJECT_VISITOR_FRIEND																		\
+	MOAILuaClass* GetLuaClass () { return 0; }															\
 	cc8* TypeName () const { return #type; }
 
-#define DECL_LUA_OPAQUE(type)																				\
-	IMPLEMENT_DEPENDS_ON ( type )																			\
-	MOAI_LUA_OBJECT_VISITOR_FRIEND																			\
-	MOAILuaClass* GetLuaClass () { return &MOAILuaFactoryClass < type >::Get (); }							\
+#define DECL_LUA_OPAQUE(type)																			\
+	IMPLEMENT_DEPENDS_ON ( type )																		\
+	MOAI_LUA_OBJECT_VISITOR_FRIEND																		\
+	MOAILuaClass* GetLuaClass () { return &MOAILuaFactoryClass < type >::Get (); }						\
 	cc8* TypeName () const { return #type; }
 
-#define DECL_LUA_SINGLETON(type)																			\
-	IMPLEMENT_DEPENDS_ON ( type )																			\
-	MOAI_LUA_OBJECT_VISITOR_FRIEND 																			\
-	MOAILuaClass* GetLuaClass () { return &this->mContext->Get < MOAILuaSingletonClass < type > >(); } 		\
+#define DECL_LUA_SINGLETON(type)																		\
+	IMPLEMENT_DEPENDS_ON ( type )																		\
+	MOAI_LUA_OBJECT_VISITOR_FRIEND 																		\
+	MOAILuaClass* GetLuaClass () { return &this->Get < MOAILuaSingletonClass < type > >(); } 			\
 	static void RegisterLuaClass ( ZLContext* context ) { context->Get < MOAILuaSingletonClass < type > >().Register ( NULL ); } \
 	cc8* TypeName () const { return #type; }
 
@@ -128,7 +128,7 @@ public:
 	void					LuaRelease					( MOAILuaObject* object );
 	void					LuaRetain					();
 	void					LuaRetain					( MOAILuaObject* object );
-							MOAILuaObject				();
+							MOAILuaObject				( ZLContext& context );
 	virtual					~MOAILuaObject				();
 	void					PrintTracking				();
 	void					PushLuaClassTable			( MOAILuaState& state );

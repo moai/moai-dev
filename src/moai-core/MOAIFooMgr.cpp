@@ -27,7 +27,10 @@ int MOAIFooMgr::_singletonHello ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIFooMgr::MOAIFooMgr () {
+MOAIFooMgr::MOAIFooMgr ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	ZLContextClass ( context ),
+	MOAILuaObject ( context ) {
 	
 	// register all classes MOAIFooMgr derives from
 	// we need this for custom RTTI implementation

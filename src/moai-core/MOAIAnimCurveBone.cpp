@@ -154,7 +154,13 @@ void MOAIAnimCurveBone::GetValue ( const MOAIAnimKeySpan& span, ZLVec3D& pos, ZL
 }
 
 //----------------------------------------------------------------//
-MOAIAnimCurveBone::MOAIAnimCurveBone () {
+MOAIAnimCurveBone::MOAIAnimCurveBone ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIAnimCurve ( context ) {
 		
 	RTTI_BEGIN ( MOAIAnimCurveBone )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAnimCurveBone >)

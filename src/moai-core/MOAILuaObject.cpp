@@ -29,7 +29,7 @@ int MOAILuaObject::_gc ( lua_State* L ) {
 	MOAILuaState state ( L );
 	MOAILuaObject* self = ( MOAILuaObject* )state.GetPtrUserData ( 1 );
 	
-	MOAILuaRuntime& runtime = state.GetContext ()->Get < MOAILuaRuntime >();
+	MOAILuaRuntime& runtime = state.Get < MOAILuaRuntime >();
 	
 	// edgecase: ignore _gc() called by previous Lua userdata
 	self->mActiveUserdataCount--;
@@ -111,7 +111,7 @@ int MOAILuaObject::_getRefTable ( lua_State* L ) {
 int MOAILuaObject::_serializeIn ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILuaObject, "UT" )
 	
-	MOAIDeserializer dummy;
+	MOAIDeserializer dummy ( state.GetContext ());
 	self->SerializeIn ( state, dummy );
 	return 1;
 }
@@ -120,7 +120,7 @@ int MOAILuaObject::_serializeIn ( lua_State* L ) {
 int MOAILuaObject::_serializeOut ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAILuaObject, "UT" )
 	
-	MOAISerializer dummy;
+	MOAISerializer dummy ( state.GetContext ());
 	self->SerializeOut ( state, dummy );
 	return 1;
 }
@@ -389,7 +389,8 @@ void MOAILuaObject::LuaRetain ( MOAILuaObject* object ) {
 }
 
 //----------------------------------------------------------------//
-MOAILuaObject::MOAILuaObject () :
+MOAILuaObject::MOAILuaObject ( ZLContext& context ) :
+	ZLHasContext ( context ),
 	mActiveUserdataCount ( 0 ),
 	mPoolType ( NOT_IN_POOL ) {
 	

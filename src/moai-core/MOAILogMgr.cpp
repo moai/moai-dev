@@ -20,8 +20,7 @@
 int MOAILogMgr::_closeFile ( lua_State* L ) {
 	MOAILuaState state ( L );
 
-	ZLContext* context = state.GetContext ();
-	context->Get < MOAILogMgr >().CloseFile ();
+	state.Get < MOAILogMgr >().CloseFile ();
 
 	return 0;
 }
@@ -108,7 +107,7 @@ int MOAILogMgr::_openFile ( lua_State* L ) {
 	if ( !state.CheckParams ( 1, "S" )) return 0;
 
 	cc8* filename = state.GetValue < cc8* >( 1, "" );
-	state.GetContext ()->Get < MOAILogMgr >().OpenFile ( filename );
+	state.Get < MOAILogMgr >().OpenFile ( filename );
 
 	return 0;
 }
@@ -142,7 +141,7 @@ int MOAILogMgr::_setTypeCheckLuaParams ( lua_State* L ) {
 	MOAILuaState state ( L );
 
 	bool check = state.GetValue < bool >( 1, false );
-	state.GetContext ()->Get < MOAILogMgr >().mTypeCheckLuaParams = check;
+	state.Get < MOAILogMgr >().mTypeCheckLuaParams = check;
 
 	return 0;
 }
@@ -251,7 +250,10 @@ void MOAILogMgr::LogV ( lua_State *L, u32 level, cc8* message, va_list args ) {
 }
 
 //----------------------------------------------------------------//
-MOAILogMgr::MOAILogMgr () :
+MOAILogMgr::MOAILogMgr ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	ZLContextClass ( context ),
+	MOAILuaObject ( context ),
 	mFile ( 0 ),
 	mTypeCheckLuaParams ( true ) {
 	

@@ -53,7 +53,7 @@ public:
 	static void		LogF					( lua_State *L, u32 level, cc8* message, ... );
 	static void		LogV					( lua_State *L, u32 level, cc8* message, va_list args );
 	bool			LuaSetupClass			( MOAILuaState& state, cc8* typeStr );
-					MOAILogMgr				();
+					MOAILogMgr				( ZLContext& context );
 					~MOAILogMgr				();
 	void			OpenFile				( cc8* filename );
 };

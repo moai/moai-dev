@@ -90,7 +90,10 @@ bool MOAIRetainedCmdStream::HasContent () {
 }
 
 //----------------------------------------------------------------//
-MOAIRetainedCmdStream::MOAIRetainedCmdStream () {
+MOAIRetainedCmdStream::MOAIRetainedCmdStream ( ZLContext& context  ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIAbstractCmdStreamWithMedium ( context ) {
 
 	RTTI_BEGIN ( MOAIRetainedCmdStream )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIRetainedCmdStream >)

@@ -121,7 +121,7 @@ public:
 	ZLBox			GetBox						( int idx );
 	ZLColorVec		GetColor					( int idx, float r, float g, float b, float a );
 	u32				GetColor32					( int idx, float r, float g, float b, float a );
-	ZLContext*		GetContext					();
+	ZLContext&		GetContext					();
 	static cc8*		GetLuaTypeName				( int type );
 	ZLMatrix4x4		GetMatrix					( int idx, size_t size );
 	void*			GetPtrUserData				( int idx );
@@ -237,7 +237,7 @@ public:
 	//----------------------------------------------------------------//
 	template < typename TYPE >
 	TYPE& Get () {
-		return this->GetContext ()->Get < TYPE >();
+		return this->GetContext ().Get < TYPE >();
 	}
 	
 	//----------------------------------------------------------------//
@@ -261,8 +261,7 @@ public:
 		UNUSED ( typeStr );
 	
 		if ( !state.CheckParams ( 1, typeStr, true )) return NULL;
-		ZLContext* context = state.GetContext ();
-		return &context->Get < TYPE >();
+		return &state.Get < TYPE >();
 	}
 	
 	//----------------------------------------------------------------//

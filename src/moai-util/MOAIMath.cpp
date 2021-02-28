@@ -57,7 +57,10 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIMath::MOAIMath () {
+MOAIMath::MOAIMath ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	ZLContextClass ( context ),
+	MOAILuaObject ( context ) {
 
 	RTTI_BEGIN ( MOAIMath )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIMath >)

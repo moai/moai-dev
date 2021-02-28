@@ -112,7 +112,7 @@ public:
 	ZLReal					GetLength				() const;
 	MOAIAnimKeySpan			GetSpan					( ZLReal time ) const;
 	void					GetValue				( ZLAttribute& attr, ZLReal time );
-							MOAIAnimCurve			();
+							MOAIAnimCurve			( ZLContext& context );
 							~MOAIAnimCurve			();
 	void					ReserveKeys				( u32 total );
 	void					SetKey					( ZLIndex idx, ZLReal time, u32 mode, ZLReal weight = 1.0f );

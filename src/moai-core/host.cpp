@@ -16,6 +16,12 @@ public:
 
 	void*				mUserdata;
 	MOAILuaStrongRef	mLuaFunc;
+	
+	//----------------------------------------------------------------//
+	AKUContext ( ZLContext& context ) :
+		ZLHasContext ( context ),
+		ZLContextClass ( context ) {
+	}
 };
 
 //================================================================//
@@ -421,7 +427,7 @@ int AKULoadFuncFromBuffer ( AKUContextID contextID, void* data, size_t size, con
 
 	(( ZLContext* )contextID )->Get < AKUContext >().mLuaFunc.Clear ();
 
-	MOAIDataBuffer buffer;
+	MOAIDataBuffer buffer ( *( ZLContext* )contextID );
 	buffer.Load ( data, size );
 	
 	return _loadFuncFromBuffer ( *( ZLContext* )contextID, buffer, chunkname, compressed );
@@ -437,7 +443,7 @@ int AKULoadFuncFromFile ( AKUContextID contextID, const char* filename ) {
 		return AKU_ERROR;
 	}
 
-	MOAIDataBuffer buffer;
+	MOAIDataBuffer buffer ( *( ZLContext* )contextID );
 	if ( !buffer.Load ( filename )) return AKU_ERROR;
 	if ( !buffer.Size ()) return AKU_ERROR;
 	

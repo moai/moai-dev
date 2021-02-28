@@ -106,7 +106,7 @@ public:
 	float			GetWidthOfBand						( size_t band );
 	float			GetWidthOfOctave					( size_t octave );
 	void			Init								( size_t size, bool inverse );
-					MOAIFourier							();
+					MOAIFourier							( ZLContext& context );
 					~MOAIFourier						();
 	void			SetOutputType						( u32 outputType, size_t bands, u32 sampleRate, float minOctaveBandWidth );
 	void			SetWindowFunction					( u32 func, float a );

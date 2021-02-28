@@ -135,7 +135,7 @@ public:
 	GET_SET ( bool, Verbose, mVerbose )
 
 	//----------------------------------------------------------------//
-						MOAITrace				();
+						MOAITrace				( ZLContext& context );
 	virtual				~MOAITrace				();
 	void				ReportTrace				();
 	void				Start					();

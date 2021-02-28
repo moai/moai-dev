@@ -10,7 +10,10 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIImmediateCmdStream::MOAIImmediateCmdStream () {
+MOAIImmediateCmdStream::MOAIImmediateCmdStream ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIAbstractCmdStreamWithMedium ( context ) {
 
 	RTTI_BEGIN ( MOAIImmediateCmdStream )
 		RTTI_EXTEND ( MOAIAbstractCmdStreamWithMedium )

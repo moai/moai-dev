@@ -150,7 +150,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void				DetectEnvironment			();
-						MOAIEnvironment				();
+						MOAIEnvironment				( ZLContext& context );
 						~MOAIEnvironment			();
 	void				SetValue					( cc8* key );
 	

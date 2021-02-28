@@ -50,7 +50,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIParser )
 	
 	//----------------------------------------------------------------//
-					MOAIParser				();
+					MOAIParser				( ZLContext& context );
 					~MOAIParser				();
 };
 

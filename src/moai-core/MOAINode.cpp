@@ -207,7 +207,7 @@ int MOAINode::_moveAttr ( lua_State* L ) {
 	
 	if ( self->CheckAttrExists ( attrID )) {
 	
-		MOAIEaseDriver* action = new MOAIEaseDriver ();
+		MOAIEaseDriver* action = new MOAIEaseDriver ( self->GetContext ());
 		action->ReserveLinks ( 1 );
 	
 		action->SetLink ( 0, self, attrID, value, mode );
@@ -269,7 +269,7 @@ int MOAINode::_seekAttr ( lua_State* L ) {
 		float delay		= state.GetValue < float >( 4, 0.0f );
 		u32 mode		= state.GetValue < u32 >( 5, ZLInterpolate::kSmooth );
 
-		MOAIEaseDriver* action = new MOAIEaseDriver ();
+		MOAIEaseDriver* action = new MOAIEaseDriver ( self->GetContext ());
 		action->ReserveLinks ( 1 );
 
 		action->SetLink ( 0, self, attrID, value - getter.GetValue ( 0.0f ), mode );
@@ -539,7 +539,11 @@ bool MOAINode::IsNodeUpstream ( MOAINode* node ) {
 }
 
 //----------------------------------------------------------------//
-MOAINode::MOAINode () :
+MOAINode::MOAINode ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
 	mPullLinks ( 0 ),
 	mPushLinks ( 0 ),
 	mState ( STATE_IDLE ),

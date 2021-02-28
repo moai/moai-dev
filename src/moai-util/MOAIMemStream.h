@@ -38,7 +38,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIMemStream )
 
 	//----------------------------------------------------------------//
-					MOAIMemStream		();
+					MOAIMemStream		( ZLContext& context );
 					~MOAIMemStream		();
 	bool			Open				( u32 reserve, u32 chunkSize );
 };

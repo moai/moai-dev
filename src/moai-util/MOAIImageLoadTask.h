@@ -16,13 +16,13 @@ class MOAIImageLoadTask :
 	public MOAITask {
 private:
 	
-	MOAIImage				mImage;
+	ZLStrongPtr < MOAIImage >	mImage;
 
-	STLString				mFilename;
-	MOAIDataBuffer*			mDataBuffer;
-	MOAIImage*				mTarget;
-	MOAILuaStrongRef		mOnFinish;
-	u32						mTransform;
+	STLString					mFilename;
+	MOAIDataBuffer*				mDataBuffer;
+	MOAIImage*					mTarget;
+	MOAILuaStrongRef			mOnFinish;
+	u32							mTransform;
 
 	//----------------------------------------------------------------//
 	void		Execute					();

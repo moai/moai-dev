@@ -585,7 +585,9 @@ int MOAIStream::_writeU32 ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIStream::MOAIStream () {
+MOAIStream::MOAIStream ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ) {
 	
 	RTTI_BEGIN ( MOAIStream )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIStream >)

@@ -13,8 +13,8 @@
 //----------------------------------------------------------------//
 void MOAIImageLoadTask::Execute () {
 
-	if ( this->mFilename.size() ) {
-		this->mImage.Load ( this->mFilename, this->mTransform );
+	if ( this->mFilename.size ()) {
+		this->mImage->Load ( this->mFilename, this->mTransform );
 	}
 	else if ( this->mDataBuffer ) {
 
@@ -27,7 +27,7 @@ void MOAIImageLoadTask::Execute () {
 		stream.SetBuffer ( bytes, size );
 		stream.SetLength ( size );
 
-		this->mImage.Load ( stream, this->mTransform );
+		this->mImage->Load ( stream, this->mTransform );
 
 		this->mDataBuffer->Unlock();
 	}
@@ -35,6 +35,8 @@ void MOAIImageLoadTask::Execute () {
 
 //----------------------------------------------------------------//
 void MOAIImageLoadTask::Init ( cc8* filename, MOAIImage& target, u32 transform ) {
+
+	this->mImage = new MOAIImage ( target.GetContext ());
 
 	this->mTarget = &target;
 
@@ -45,6 +47,8 @@ void MOAIImageLoadTask::Init ( cc8* filename, MOAIImage& target, u32 transform )
 
 //----------------------------------------------------------------//
 void MOAIImageLoadTask::Init ( MOAIDataBuffer& data, MOAIImage& target, u32 transform ) {
+
+	this->mImage = new MOAIImage ( target.GetContext ());
 
 	this->mDataBuffer = &data;
 	this->mTarget = &target;
@@ -75,7 +79,10 @@ MOAIImageLoadTask::~MOAIImageLoadTask () {
 //----------------------------------------------------------------//
 void MOAIImageLoadTask::Publish () {
 
-	this->mTarget->Take ( this->mImage );
+	if ( this->mImage ) {
+		this->mTarget->Take ( *this->mImage );
+		this->mImage = NULL;
+	}
 
 	if ( this->mOnFinish ) {
 		MOAIScopedLuaState state = this->mTarget->Get < MOAILuaRuntime >().State ();

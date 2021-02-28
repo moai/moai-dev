@@ -49,7 +49,10 @@ int MOAIFileStream::_open ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIFileStream::MOAIFileStream () {
+MOAIFileStream::MOAIFileStream ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIStream ( context ) {
 	
 	RTTI_BEGIN ( MOAIFileStream )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIFileStream >)

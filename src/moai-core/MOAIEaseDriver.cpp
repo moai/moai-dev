@@ -87,7 +87,15 @@ int MOAIEaseDriver::_setLink ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIEaseDriver::MOAIEaseDriver () {
+MOAIEaseDriver::MOAIEaseDriver ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIBlocker ( context ),
+	MOAIAction ( context ),
+	MOAITimer ( context ) {
 		
 	RTTI_BEGIN ( MOAIEaseDriver )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIEaseDriver >)

@@ -43,7 +43,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	ZLVec3D			GetValue				( float time ) const;
-					MOAIAnimCurveVec		();
+					MOAIAnimCurveVec		( ZLContext& context );
 					~MOAIAnimCurveVec		();
 	void			ReserveSamples			( u32 total );
 	void			SetSample				( ZLIndex idx, const ZLVec3D& value );

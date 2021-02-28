@@ -185,7 +185,13 @@ void MOAIAnimCurveFloat::GetValueRange ( float t0, float t1, float &min, float &
 }
 
 //----------------------------------------------------------------//
-MOAIAnimCurveFloat::MOAIAnimCurveFloat () :
+MOAIAnimCurveFloat::MOAIAnimCurveFloat ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIAnimCurve ( context ),
 	mValue ( 0.0f ) {
 		
 	RTTI_BEGIN ( MOAIAnimCurveFloat )

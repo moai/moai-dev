@@ -596,7 +596,9 @@ void MOAIDataBuffer::Lock ( void** bytes, size_t* size ) {
 }
 
 //----------------------------------------------------------------//
-MOAIDataBuffer::MOAIDataBuffer () {
+MOAIDataBuffer::MOAIDataBuffer ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ) {
 		
 	RTTI_BEGIN ( MOAIDataBuffer )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIDataBuffer >)

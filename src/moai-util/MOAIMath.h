@@ -31,7 +31,7 @@ public:
 	DECL_LUA_SINGLETON ( MOAIMath )
 
 	//----------------------------------------------------------------//
-					MOAIMath			();
+					MOAIMath			( ZLContext& context );
 					~MOAIMath			();
 };
 

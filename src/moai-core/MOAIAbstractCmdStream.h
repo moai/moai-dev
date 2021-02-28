@@ -62,7 +62,7 @@ public:
 
 	//----------------------------------------------------------------//
 	MOAICmdMedium&		AffirmMedium						();
-						MOAIAbstractCmdStreamWithMedium		();
+						MOAIAbstractCmdStreamWithMedium		( ZLContext& context );
 						~MOAIAbstractCmdStreamWithMedium	();
 	void				SetMedium							( MOAICmdMedium* medium );
 	

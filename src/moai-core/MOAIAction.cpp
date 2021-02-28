@@ -430,7 +430,12 @@ bool MOAIAction::IsPaused () {
 }
 
 //----------------------------------------------------------------//
-MOAIAction::MOAIAction () :
+MOAIAction::MOAIAction ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIBlocker ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
 	mPass ( 0 ),
 	mParent ( 0 ),
 	mNextChildIt ( 0 ),

@@ -71,7 +71,10 @@ void MOAIByteStream::Close () {
 }
 
 //----------------------------------------------------------------//
-MOAIByteStream::MOAIByteStream () :
+MOAIByteStream::MOAIByteStream ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIStream ( context ),
 	mData ( 0 ) {
 	
 	RTTI_BEGIN ( MOAIByteStream )

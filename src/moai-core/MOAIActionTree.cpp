@@ -80,13 +80,19 @@ int MOAIActionTree::_setThreadInfoEnabled ( lua_State* L ) {
 MOAIAction* MOAIActionTree::AffirmRoot () {
 
 	if ( !this->mDefaultRoot ) {
-		this->SetRoot ( new MOAIAction ());
+		this->SetRoot ( new MOAIAction ( this->mContext ));
 	}
 	return this->mDefaultRoot;
 }
 
 //----------------------------------------------------------------//
-MOAIActionTree::MOAIActionTree () :
+MOAIActionTree::MOAIActionTree ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIBlocker ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAIAction ( context ),
 	mProfilingEnabled ( false ),
 	mThreadInfoEnabled ( false ),
 	mDefaultRoot ( NULL ) {

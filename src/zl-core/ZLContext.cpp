@@ -13,22 +13,20 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-template < typename TYPE >
-TYPE& ZLHasContext::Get () {
-	assert ( this->mContext );
-	return this->mContext->Get < TYPE >();
+ZLContext& ZLHasContext::GetContext () {
+	return this->mContext;
 }
 
 //----------------------------------------------------------------//
-void ZLHasContext::InitializeContext ( ZLContext* context ) {
+void ZLHasContext::InitializeContext ( ZLContext& context ) {
 	assert ( context );
 	assert (( this->mContext == NULL ) || ( this->mContext == context ));
 	this->mContext = context;
 }
 
 //----------------------------------------------------------------//
-ZLHasContext::ZLHasContext () :
-	mContext ( NULL ) {
+ZLHasContext::ZLHasContext ( ZLContext& context ) :
+	mContext ( context ) {
 }
 
 //----------------------------------------------------------------//
@@ -55,7 +53,8 @@ bool ZLContextClass::IsValid () {
 }
 
 //----------------------------------------------------------------//
-ZLContextClass::ZLContextClass () {
+ZLContextClass::ZLContextClass ( ZLContext& context ) :
+	ZLHasContext ( context ) {
 }
 
 //----------------------------------------------------------------//

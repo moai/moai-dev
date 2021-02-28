@@ -77,3 +77,17 @@ void MOAITaskSubscriber::PushTaskLatent ( MOAITask& task ) {
 	this->mCompletedTasksLatent.PushBack ( task.mLink );
 	this->mMutex.Unlock ();
 }
+
+//================================================================//
+// MOAIMainThreadTaskSubscriber
+//================================================================//
+	
+//----------------------------------------------------------------//
+MOAIMainThreadTaskSubscriber::MOAIMainThreadTaskSubscriber ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	ZLContextClass ( context ) {
+}
+
+//----------------------------------------------------------------//
+MOAIMainThreadTaskSubscriber::~MOAIMainThreadTaskSubscriber () {
+}

@@ -59,7 +59,10 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-	MOAIAbstractCmdHandlerWithAPI () {
+	MOAIAbstractCmdHandlerWithAPI ( ZLContext& context ) :
+		ZLHasContext ( context ),
+		MOAILuaObject ( context ),
+		MOAIAbstractCmdHandler ( context ) {
 
 		this->mStream 		= this;
 		this->mAPITypeID 	= ZLType::GetID < API_TYPE >();

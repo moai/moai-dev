@@ -133,7 +133,7 @@ int MOAIImage::_convert ( lua_State* L ) {
 	u32 colorFmt = state.GetValue < u32 >( 2, self->mColorFormat );
 	u32 pixelFmt = state.GetValue < u32 >( 3, self->mPixelFormat );
 	
-	MOAIImage* image = new MOAIImage ();
+	MOAIImage* image = new MOAIImage ( self->GetContext ());
 	image->Convert ( *self, ( ZLColor::ColorFormat )colorFmt, ( PixelFormat )pixelFmt );
 	image->PushLuaUserdata ( state );
 	
@@ -159,7 +159,7 @@ int MOAIImage::_convolve ( lua_State* L ) {
 	
 	if ( kernelWidth ) {
 	
-		MOAIImage* image = new MOAIImage ();
+		MOAIImage* image = new MOAIImage ( self->GetContext ());
 	
 		state.PushField ( 2, 1 );
 	
@@ -226,7 +226,7 @@ int MOAIImage::_convolve1D ( lua_State* L ) {
 	
 	if ( kernelWidth ) {
 	
-		MOAIImage* image = new MOAIImage ();
+		MOAIImage* image = new MOAIImage ( self->GetContext ());
 	
 		state.PushField ( 2, 1 );
 	
@@ -262,7 +262,7 @@ int MOAIImage::_convolve1D ( lua_State* L ) {
 int MOAIImage::_copy ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIImage, "U" )
 	
-	MOAIImage* image = new MOAIImage ();
+	MOAIImage* image = new MOAIImage ( self->GetContext ());
 	image->Copy ( *self );
 	image->PushLuaUserdata ( state );
 	
@@ -973,7 +973,7 @@ int MOAIImage::_mix ( lua_State* L ) {
 int MOAIImage::_padToPow2 ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIImage, "U" )
 	
-	MOAIImage* image = new MOAIImage ();
+	MOAIImage* image = new MOAIImage ( self->GetContext ());
 	image->PadToPow2 ( *self );
 	image->PushLuaUserdata ( state );
 	
@@ -1016,7 +1016,7 @@ int MOAIImage::_resize ( lua_State* L ) {
 	ZLIntRect srcRect ( 0, 0, self->mWidth, self->mHeight );
 	ZLIntRect destRect ( 0, 0, width, height );
 	
-	MOAIImage* image = new MOAIImage ();
+	MOAIImage* image = new MOAIImage ( self->GetContext ());
 	image->Init ( width, height, self->mColorFormat, self->mPixelFormat );
 	image->CopyRect ( *self, srcRect, destRect, filter );
 	image->PushLuaUserdata ( state );
@@ -1065,7 +1065,7 @@ int MOAIImage::_resizeCanvas ( lua_State* L ) {
 		rect.mYMax	= state.GetValue < int >( 3, 0 );
 	}
 	
-	MOAIImage* image = new MOAIImage ();
+	MOAIImage* image = new MOAIImage ( self->GetContext ());
 	image->ResizeCanvas ( *self, rect );
 	image->PushLuaUserdata ( state );
 	
@@ -1272,7 +1272,7 @@ MOAIImage* MOAIImage::AffirmImage ( MOAILuaState& state, int idx ) {
 		cc8* filename = state.GetValue < cc8* >( idx, "" );
 		if ( ZLFileSys::CheckFileExists ( filename )) {
 	
-			image = new MOAIImage ();
+			image = new MOAIImage ( state.GetContext ());
 			if ( !image->Load ( filename )) {
 				// TODO: report error
 				delete image;
@@ -1296,7 +1296,9 @@ bool MOAIImage::Load ( ZLStream& stream, u32 transform ) {
 }
 
 //----------------------------------------------------------------//
-MOAIImage::MOAIImage () {
+MOAIImage::MOAIImage ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ) {
 		
 	RTTI_BEGIN ( MOAIImage )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIImage >)

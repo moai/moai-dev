@@ -9,7 +9,10 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIEaseType::MOAIEaseType () {
+MOAIEaseType::MOAIEaseType ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	ZLContextClass ( context ),
+	MOAILuaObject ( context ) {
 
 	RTTI_BEGIN ( MOAIEaseDriver )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIEaseType >)

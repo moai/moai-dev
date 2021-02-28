@@ -19,7 +19,9 @@ public:
 public:
 
 	//----------------------------------------------------------------//
-	MOAICmdLuaInterfaceMgr () :
+	MOAICmdLuaInterfaceMgr ( ZLContext& context ) :
+		ZLHasContext ( context ),
+		ZLContextClass ( context ),
 		mRefID ( LUA_NOREF ) {
 	}
 };
@@ -113,7 +115,7 @@ void MOAIAbstractCmdMedium::PushLuaCmdAPI ( MOAILuaState& state ) {
 
 	ZLType::RAW_ID rawAPITypeID = ZLType::ToRaw ( adapter.mAPITypeID );
 
-	MOAICmdLuaInterfaceMgr& mgr = state.GetContext ()->Affirm < MOAICmdLuaInterfaceMgr >();
+	MOAICmdLuaInterfaceMgr& mgr = state.GetContext ().Affirm < MOAICmdLuaInterfaceMgr >();
 
 	// affirm the table of interfaces
 	if ( mgr.mRefID == LUA_NOREF ) {

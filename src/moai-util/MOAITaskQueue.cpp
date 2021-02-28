@@ -36,7 +36,9 @@ void MOAITaskQueue::Main () {
 }
 
 //----------------------------------------------------------------//
-MOAITaskQueue::MOAITaskQueue () :
+MOAITaskQueue::MOAITaskQueue ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
 	mIsRunning ( false ) {
 	
 	RTTI_BEGIN ( MOAITaskQueue )

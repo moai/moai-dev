@@ -255,7 +255,10 @@ int MOAIJsonParser::_encode ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIJsonParser::MOAIJsonParser () {
+MOAIJsonParser::MOAIJsonParser ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	ZLContextClass ( context ),
+	MOAILuaObject ( context ) {
 }
 
 //----------------------------------------------------------------//

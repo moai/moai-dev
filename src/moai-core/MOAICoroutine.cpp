@@ -212,7 +212,13 @@ MOAIAction* MOAICoroutine::GetDefaultParent () {
 }
 
 //----------------------------------------------------------------//
-MOAICoroutine::MOAICoroutine () :
+MOAICoroutine::MOAICoroutine ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIBlocker ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAIAction ( context ),
 	mState ( 0 ),
 	mNarg ( 0 ),
 	mIsUpdating ( false ),

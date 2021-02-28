@@ -58,7 +58,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	MOAIAction*			GetDefaultParent		();
-						MOAICoroutine			();
+						MOAICoroutine			( ZLContext& context );
 						~MOAICoroutine			();
 };
 

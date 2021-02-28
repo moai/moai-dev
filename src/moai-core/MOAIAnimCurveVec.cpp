@@ -122,7 +122,13 @@ ZLVec3D MOAIAnimCurveVec::GetValue ( const MOAIAnimKeySpan& span ) const {
 }
 
 //----------------------------------------------------------------//
-MOAIAnimCurveVec::MOAIAnimCurveVec () :
+MOAIAnimCurveVec::MOAIAnimCurveVec ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIAnimCurve ( context ),
 	mValue ( 0.0f, 0.0f, 0.0f ) {
 		
 	RTTI_BEGIN ( MOAIAnimCurveVec )

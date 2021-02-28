@@ -59,7 +59,7 @@ public:
 	DECL_LUA_SINGLETON ( MOAIEaseType )
 	
 	//----------------------------------------------------------------//
-					MOAIEaseType				();
+					MOAIEaseType				( ZLContext& context );
 					~MOAIEaseType				();
 };
 

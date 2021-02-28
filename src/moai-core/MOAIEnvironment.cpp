@@ -181,7 +181,12 @@ void MOAIEnvironment::DetectEnvironment () {
 }
 
 //----------------------------------------------------------------//
-MOAIEnvironment::MOAIEnvironment () {
+MOAIEnvironment::MOAIEnvironment ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	ZLContextClass ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIGlobalEventSource ( context ) {
 	
 	RTTI_BEGIN ( MOAIEnvironment )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIEnvironment >)

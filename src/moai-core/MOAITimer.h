@@ -32,7 +32,7 @@ class MOAIAnimCurveFloat;
 */
 class MOAITimer :
 	public virtual MOAINode,
-	public MOAIAction {
+	public virtual MOAIAction {
 protected:
 
 	MOAILuaSharedPtr < MOAIAnimCurveFloat > mCurve;
@@ -112,7 +112,7 @@ public:
 	float			GetLength			();
 	float			GetNormalizedTime	();
 	float			GetTime				();
-					MOAITimer			();
+					MOAITimer			( ZLContext& context );
 					~MOAITimer			();
 	void			SetSpan				( float span );
 	void			SetSpan				( float startTime, float endTime );

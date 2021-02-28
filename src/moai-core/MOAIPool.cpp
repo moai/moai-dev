@@ -77,7 +77,10 @@ int MOAIPool::_remit ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIPool::MOAIPool () :
+MOAIPool::MOAIPool ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	ZLContextClass ( context ),
+	MOAILuaObject ( context ),
 	mMaxID ( STARTING_ID ) {
 	
 	RTTI_BEGIN ( MOAIPool )
@@ -111,7 +114,7 @@ MOAILuaObject* MOAIPool::Provision ( u32 poolType, MOAIScope* scope ) {
 	
 	if ( !resource ) {
 		
-		resource = factory->Create ( *this->mContext );
+		resource = factory->Create ( this->mContext );
 		if ( !resource ) return NULL;
 		
 		assert ( !resource->IsInPool ());

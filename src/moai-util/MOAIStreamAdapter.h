@@ -52,7 +52,7 @@ public:
 	//----------------------------------------------------------------//
 	void			Clear					(); // closes *and* clears the adapter
 	void			Close					(); // clears the stream and closes the adapter, but *doesn't* also clear the adapter
-					MOAIStreamAdapter		();
+					MOAIStreamAdapter		( ZLContext& context );
 					~MOAIStreamAdapter		();
 	ZLResultCode	Open					( ZLStreamAdapter* adapter, MOAIStream* stream );
 };

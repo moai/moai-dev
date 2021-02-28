@@ -63,7 +63,10 @@ void MOAIDataBufferStream::Close () {
 }
 
 //----------------------------------------------------------------//
-MOAIDataBufferStream::MOAIDataBufferStream () {
+MOAIDataBufferStream::MOAIDataBufferStream ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIStream ( context ) {
 	
 	RTTI_BEGIN ( MOAIDataBufferStream )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIDataBufferStream >)

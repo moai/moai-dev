@@ -87,7 +87,9 @@ u32 ZLImageFormatMgr::HashName ( cc8* name ) {
 }
 
 //----------------------------------------------------------------//
-ZLImageFormatMgr::ZLImageFormatMgr () {
+ZLImageFormatMgr::ZLImageFormatMgr ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	ZLContextClass ( context ) {
 }
 
 //----------------------------------------------------------------//

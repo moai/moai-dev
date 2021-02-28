@@ -36,7 +36,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIFileStream )
 
 	//----------------------------------------------------------------//
-					MOAIFileStream			();
+					MOAIFileStream			( ZLContext& context );
 					~MOAIFileStream			();
 };
 

@@ -122,7 +122,10 @@ MOAILuaObject* MOAIDeserializer::MemberIDToObject ( ObjID objectID ) {
 }
 
 //----------------------------------------------------------------//
-MOAIDeserializer::MOAIDeserializer () {
+MOAIDeserializer::MOAIDeserializer ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAISerializerBase ( context ) {
 	
 	RTTI_BEGIN ( MOAIDeserializer )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIDeserializer >)

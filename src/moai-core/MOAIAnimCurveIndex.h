@@ -42,7 +42,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	ZLIndex			GetValue				( float time ) const;
-					MOAIAnimCurveIndex		();
+					MOAIAnimCurveIndex		( ZLContext& context );
 					~MOAIAnimCurveIndex		();
 	void			SetSample				( ZLIndex idx, ZLIndex value );
 };

@@ -56,7 +56,7 @@ public:
 	void			Apply					( float t0, float t1 );
 	void			Clear					();
 	void			ClearLinks				();
-					MOAIAnim				();
+					MOAIAnim				( ZLContext& context );
 					~MOAIAnim				();
 	void			ReserveLinks			( u32 totalLinks );
 	void			SetLink					( ZLIndex linkID, MOAIAnimCurve* curve, MOAINode* target, ZLAttrID attrID, bool relative );

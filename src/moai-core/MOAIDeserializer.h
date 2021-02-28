@@ -38,7 +38,7 @@ public:
 	u32					IsLuaFile					( cc8* filename );
 	MOAILuaObject*		MemberIDToObject			( ObjID memberID );
 	u32					SerializeFromFile			( cc8* filename );
-						MOAIDeserializer			();
+						MOAIDeserializer			( ZLContext& context );
 	virtual				~MOAIDeserializer			();
 	
 	//----------------------------------------------------------------//

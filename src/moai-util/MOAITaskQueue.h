@@ -43,7 +43,7 @@ public:
 	DECL_LUA_FACTORY ( MOAITaskQueue )
 
 	//----------------------------------------------------------------//
-					MOAITaskQueue			();
+					MOAITaskQueue			( ZLContext& context );
 					~MOAITaskQueue			();
 	void			Stop					();
 };

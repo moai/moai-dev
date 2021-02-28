@@ -911,7 +911,10 @@ int MOAILuaRuntime::MakeWeak ( int refID ) {
 }
 
 //----------------------------------------------------------------//
-MOAILuaRuntime::MOAILuaRuntime () :
+MOAILuaRuntime::MOAILuaRuntime ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	ZLContextClass ( context ),
+	MOAILuaObject ( context ),
 	mTrackingFlags ( 0 ),
 	mSingletonRefTableID ( LUA_NOREF ),
 	mTracebackFunc ( 0 ),
@@ -947,7 +950,7 @@ MOAIScopedLuaState MOAILuaRuntime::Open () {
 	lua_atpanic ( this->mState, &_panic );
 
 	this->PushContextKey ( this->mState );
-	lua_pushlightuserdata ( this->mState, ( void* )this->mContext );
+	lua_pushlightuserdata ( this->mState, ( void* )&this->mContext );
 	lua_settable ( this->mState, LUA_REGISTRYINDEX );
 	
 	// set up the ref tables

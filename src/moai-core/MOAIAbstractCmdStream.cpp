@@ -54,7 +54,9 @@ MOAICmdMedium& MOAIAbstractCmdStreamWithMedium::AffirmMedium () {
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractCmdStreamWithMedium::MOAIAbstractCmdStreamWithMedium () {
+MOAIAbstractCmdStreamWithMedium::MOAIAbstractCmdStreamWithMedium ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ) {
 
 	RTTI_BEGIN ( MOAIAbstractCmdStreamWithMedium )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractCmdStreamWithMedium >)

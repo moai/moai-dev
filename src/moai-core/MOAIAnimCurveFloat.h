@@ -46,7 +46,7 @@ public:
 	float			GetSample				( ZLIndex id );
 	float			GetValue				( float time ) const;
 	void			GetValueRange			( float t0, float t1, float &min, float &max );
-					MOAIAnimCurveFloat		();
+					MOAIAnimCurveFloat		( ZLContext& context );
 					~MOAIAnimCurveFloat		();
 	void			SetSample				( ZLIndex idx, float value );
 };

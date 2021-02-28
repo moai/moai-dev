@@ -175,7 +175,15 @@ void MOAIAnim::ClearLinks () {
 }
 
 //----------------------------------------------------------------//
-MOAIAnim::MOAIAnim () :
+MOAIAnim::MOAIAnim ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIBlocker ( context ),
+	MOAIAction ( context ),
+	MOAITimer ( context ),
 	mLength ( 0.0f ) {
 		
 	RTTI_BEGIN ( MOAIAnim )

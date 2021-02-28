@@ -147,7 +147,7 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-					MOAIStream			();
+					MOAIStream			( ZLContext& context );
 					~MOAIStream			();
 };
 

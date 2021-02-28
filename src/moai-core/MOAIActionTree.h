@@ -54,7 +54,7 @@ public:
 	GET_SET ( bool, ThreadInfoEnabled, mThreadInfoEnabled )
 
 	//----------------------------------------------------------------//
-						MOAIActionTree			();
+						MOAIActionTree			( ZLContext& context );
 						~MOAIActionTree			();
 	void				SetDefaultParent		();
 	void				SetDefaultParent		( MOAIAction* defaultParent );

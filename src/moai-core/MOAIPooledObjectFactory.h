@@ -118,8 +118,7 @@ protected:
 	
 	//----------------------------------------------------------------//
 	MOAILuaObject* MOAIAbstractPooledObjectFactory_Create ( ZLContext& context ) {
-		MOAILuaObject* object = new TYPE ();
-		object->InitializeContext ( &context );
+		MOAILuaObject* object = new TYPE ( context );
 		return object;
 	}
 

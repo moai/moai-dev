@@ -169,7 +169,11 @@ void MOAIAnimCurve::GetValue ( ZLAttribute& attr, float time ) {
 }
 
 //----------------------------------------------------------------//
-MOAIAnimCurve::MOAIAnimCurve () :
+MOAIAnimCurve::MOAIAnimCurve ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
 	mTime ( 0.0f ),
 	mWrapMode ( CLAMP ) {
 		

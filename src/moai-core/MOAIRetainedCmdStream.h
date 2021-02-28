@@ -56,7 +56,7 @@ public:
 	void				AffirmBytecode							();
 	void 				ExecuteBytecode							( MOAIAbstractCmdStreamFilter* filter = NULL );
 	bool				HasContent								();
-						MOAIRetainedCmdStream					();
+						MOAIRetainedCmdStream					( ZLContext& context );
 						~MOAIRetainedCmdStream					();
 	void				Reset									();
 };

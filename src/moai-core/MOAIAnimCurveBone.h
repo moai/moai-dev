@@ -47,7 +47,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	ZLAffine3D		GetValue				( float time ) const;
-					MOAIAnimCurveBone		();
+					MOAIAnimCurveBone		( ZLContext& context );
 					~MOAIAnimCurveBone		();
 	void			SetSamplePosition		( ZLIndex idx, float x, float y, float z );
 	void			SetSampleRotation		( ZLIndex idx, float x, float y, float z, float w );

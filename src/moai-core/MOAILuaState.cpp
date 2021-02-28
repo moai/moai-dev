@@ -342,7 +342,7 @@ u32 MOAILuaState::GetColor32 ( int idx, float r, float g, float b, float a ) {
 }
 
 //----------------------------------------------------------------//
-ZLContext* MOAILuaState::GetContext () {
+ZLContext& MOAILuaState::GetContext () {
 
 	if ( !this->mContext ) {
 		MOAILuaRuntime::PushContextKey ( *this );
@@ -351,7 +351,7 @@ ZLContext* MOAILuaState::GetContext () {
 		lua_pop ( this->mState, 1 );
 		assert ( this->mContext );
 	}
-    return this->mContext;
+    return *this->mContext;
 }
 
 //----------------------------------------------------------------//

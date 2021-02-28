@@ -13,8 +13,7 @@
 void MOAITrace::_callback ( lua_State* L, lua_Debug* ar ) {
 	
 	MOAILuaState state ( L );
-
-	state.GetContext ()->Get < MOAITrace >().Callback ( L, ar );
+	state.Get < MOAITrace >().Callback ( L, ar );
 }
 
 //----------------------------------------------------------------//
@@ -197,7 +196,10 @@ void MOAITrace::HandleTrace ( lua_State* L, lua_Debug *ar ) {
 }
 
 //----------------------------------------------------------------//
-MOAITrace::MOAITrace () :
+MOAITrace::MOAITrace ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	ZLContextClass ( context ),
+	MOAILuaObject ( context ),
 	mIsActive ( false ),
 	mEnableTrace ( false ),
 	mElapsedRunTime ( 0 ),

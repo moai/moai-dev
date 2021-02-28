@@ -36,7 +36,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void				AffirmObject				( MOAILuaObject& object );
-						MOAIScope					();
+						MOAIScope					( ZLContext& context );
 						~MOAIScope					();
 	void				Purge						();
 	void				RemoveObject				( MOAILuaObject& object );

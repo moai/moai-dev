@@ -323,7 +323,10 @@ int MOAIUpdateMgr::_timeToFrames ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIUpdateMgr::MOAIUpdateMgr () :
+MOAIUpdateMgr::MOAIUpdateMgr ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	ZLContextClass ( context ),
+	MOAILuaObject ( context ),
 	mLoopState ( START ),
 	mStep ( 1.0 / ( double )DEFAULT_STEPS_PER_SECOND ),
 	mSimTime ( 0.0 ),

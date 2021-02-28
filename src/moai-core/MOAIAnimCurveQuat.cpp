@@ -120,7 +120,13 @@ ZLQuaternion MOAIAnimCurveQuat::GetValue ( const MOAIAnimKeySpan& span ) const {
 }
 
 //----------------------------------------------------------------//
-MOAIAnimCurveQuat::MOAIAnimCurveQuat () {
+MOAIAnimCurveQuat::MOAIAnimCurveQuat ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIAnimCurve ( context ) {
 		
 	RTTI_BEGIN ( MOAIAnimCurveQuat )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAnimCurveQuat >)

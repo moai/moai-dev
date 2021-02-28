@@ -43,7 +43,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	ZLQuaternion	GetValue				( float time ) const;
-					MOAIAnimCurveQuat		();
+					MOAIAnimCurveQuat		( ZLContext& context );
 					~MOAIAnimCurveQuat		();
 	void			ReserveSamples			( u32 total );
 	void			SetSample				( ZLIndex idx, float x, float y, float z );

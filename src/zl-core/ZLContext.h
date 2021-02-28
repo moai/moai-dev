@@ -17,7 +17,7 @@ class ZLContext;
 class ZLHasContext {
 protected:
 
-	ZLContext*		mContext;
+	ZLContext&		mContext;
 
 public:
 
@@ -26,8 +26,8 @@ public:
 	template < typename TYPE > bool 	IsValid 	();
 	
 	//----------------------------------------------------------------//
-	void			InitializeContext		( ZLContext* context );
-					ZLHasContext			();
+	ZLContext&		GetContext				();
+					ZLHasContext			( ZLContext& context );
 					~ZLHasContext			();
 };
 
@@ -52,7 +52,7 @@ public:
 	void				Finalize					();
 	void				Initialize					();
 	bool				IsValid						();
-						ZLContextClass				();
+						ZLContextClass				( ZLContext& context );
 	virtual				~ZLContextClass				();
 };
 
@@ -124,9 +124,9 @@ public:
 		
 		if ( !this->mGlobals [ globalID ].mGlobal ) {
 			
-			TYPE* global = new TYPE;
+			TYPE* global = new TYPE ( *this );
 			ZLContextClass* contextClass = global;
-			contextClass->mContext 		= this;
+//			contextClass->mContext 		= this;
 			contextClass->mContextID 	= globalID;
 			
 			ZLContextPair& pair = this->mGlobals [ globalID ];
@@ -199,16 +199,15 @@ public:
 //----------------------------------------------------------------//
 template < typename TYPE >
 TYPE& ZLHasContext::Get () {
-	
-	assert ( this->mContext );
-	return this->mContext->Get < TYPE >();
+
+	return this->mContext.Get < TYPE >();
 }
 
 //----------------------------------------------------------------//
 template < typename TYPE >
 bool ZLHasContext::IsValid () {
 	
-	return this->mContext ? this->mContext->IsValid < TYPE >() : false;
+	return this->mContext.IsValid < TYPE >();
 }
 
 #endif

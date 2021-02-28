@@ -51,8 +51,8 @@ public:
 
 	//----------------------------------------------------------------//
 	virtual void	Clear					();
-					MOAISerializerBase		();
-	virtual			~MOAISerializerBase	();
+					MOAISerializerBase		( ZLContext& context );
+	virtual			~MOAISerializerBase		();
 };
 
 #endif

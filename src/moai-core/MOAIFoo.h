@@ -35,7 +35,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIFoo )
 
 	//----------------------------------------------------------------//
-					MOAIFoo				();
+					MOAIFoo				( ZLContext& context );
 					~MOAIFoo			();
 };
 

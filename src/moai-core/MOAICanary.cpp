@@ -28,7 +28,9 @@ int MOAICanary::_setMessage ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAICanary::MOAICanary () {
+MOAICanary::MOAICanary ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ) {
 	
 	RTTI_BEGIN ( MOAICanary )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAICanary >)

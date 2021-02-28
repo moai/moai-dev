@@ -27,7 +27,7 @@ public:
 
 	//----------------------------------------------------------------//
 	virtual void	InvokeListener			( u32 eventID ) = 0;
-					MOAIEventSource			();
+					MOAIEventSource			( ZLContext& context );
 	virtual			~MOAIEventSource		();
 	bool			PushListener			( u32 eventID, MOAILuaState& state );
 };
@@ -63,7 +63,7 @@ public:
 	//----------------------------------------------------------------//
 	void			InvokeListener				( u32 eventID );
 	void			InvokeListenerWithSelf		( u32 eventID );
-					MOAIInstanceEventSource		();
+					MOAIInstanceEventSource		( ZLContext& context );
 	virtual			~MOAIInstanceEventSource	();
 	bool			PushListenerAndSelf			( u32 eventID, MOAILuaState& state );
 };
@@ -145,7 +145,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void			InvokeListener				( u32 eventID );
-					MOAIGlobalEventSource		();
+					MOAIGlobalEventSource		( ZLContext& context );
 	virtual			~MOAIGlobalEventSource		();
 };
 

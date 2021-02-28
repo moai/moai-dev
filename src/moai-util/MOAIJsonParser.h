@@ -29,7 +29,7 @@ public:
 	DECL_LUA_SINGLETON ( MOAIJsonParser )
 	
 	//----------------------------------------------------------------//
-						MOAIJsonParser			();
+						MOAIJsonParser			( ZLContext& context );
 						~MOAIJsonParser			();
 };
 

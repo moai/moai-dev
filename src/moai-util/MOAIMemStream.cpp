@@ -120,7 +120,10 @@ int MOAIMemStream::_open ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIMemStream::MOAIMemStream () {
+MOAIMemStream::MOAIMemStream ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIStream ( context ) {
 	
 	RTTI_BEGIN ( MOAIMemStream )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIMemStream >)

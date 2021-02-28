@@ -47,7 +47,7 @@ public:
 	DECL_LUA_SINGLETON ( MOAIPool )
 	
 	//----------------------------------------------------------------//
-							MOAIPool			();
+							MOAIPool			( ZLContext& context );
 							~MOAIPool			();
 	void					PurgeAll			();
 	

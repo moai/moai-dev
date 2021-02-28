@@ -493,7 +493,9 @@ void MOAIFourier::Init ( size_t size, bool inverse ) {
 }
 
 //----------------------------------------------------------------//
-MOAIFourier::MOAIFourier () :
+MOAIFourier::MOAIFourier ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
 	mSize ( 0 ),
 	mInverse ( false ),
 	mKissFFT ( 0 ),

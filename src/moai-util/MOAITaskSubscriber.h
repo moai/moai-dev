@@ -52,11 +52,14 @@ public:
 //================================================================//
 // MOAIMainThreadTaskSubscriber
 //================================================================//
-// This is a temporary measure until everything runs in a thread and each
-// thread has its own task subscriber.
 class MOAIMainThreadTaskSubscriber :
 	public MOAITaskSubscriber,
 	public virtual ZLContextClass {
+public:
+
+	//----------------------------------------------------------------//
+				MOAIMainThreadTaskSubscriber		( ZLContext& context );
+				~MOAIMainThreadTaskSubscriber		();
 }; 
 
 #endif

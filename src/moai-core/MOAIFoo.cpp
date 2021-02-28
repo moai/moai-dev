@@ -42,7 +42,9 @@ int MOAIFoo::_instanceHello ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIFoo::MOAIFoo () {
+MOAIFoo::MOAIFoo ( ZLContext& context  ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ) {
 	
 	// register all classes MOAIFoo derives from
 	// we need this for custom RTTI implementation

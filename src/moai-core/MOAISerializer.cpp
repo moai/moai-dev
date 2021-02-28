@@ -101,7 +101,7 @@ int MOAISerializer::_serializeToFile ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 	
-	MOAISerializer defaultSerializer;
+	MOAISerializer defaultSerializer ( state.GetContext ());
 	MOAISerializer* serializer = &defaultSerializer;
 	int base = 2;
 	
@@ -152,7 +152,7 @@ int MOAISerializer::_serializeToString ( lua_State* L ) {
 
 	MOAILuaState state ( L );
 	
-	MOAISerializer defaultSerializer;
+	MOAISerializer defaultSerializer ( state.GetContext ());
 	MOAISerializer* serializer = &defaultSerializer;
 	int base = 1;
 	
@@ -345,7 +345,10 @@ bool MOAISerializer::IsSimpleStringKey ( cc8* str ) {
 }
 
 //----------------------------------------------------------------//
-MOAISerializer::MOAISerializer () :
+MOAISerializer::MOAISerializer ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAISerializerBase ( context ),
 	mBase64 ( true ) {
 	
 	RTTI_BEGIN ( MOAISerializer )

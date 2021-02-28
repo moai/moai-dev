@@ -185,7 +185,7 @@ public:
 	bool					IsMainThread				( lua_State* L );
 	bool					IsOpen						();
 	void					LoadLibs					();
-							MOAILuaRuntime				();
+							MOAILuaRuntime				( ZLContext& context );
 							~MOAILuaRuntime				();
 	MOAIScopedLuaState		Open						();
 	void					PurgeUserdata				( MOAILuaState& state, int idx );

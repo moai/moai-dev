@@ -33,7 +33,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void			Close					();
-					MOAIByteStream			();
+					MOAIByteStream			( ZLContext& context );
 					~MOAIByteStream			();
 	void			Open					( size_t size );
 	void			Open					( void* data, size_t size );

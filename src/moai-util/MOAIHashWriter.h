@@ -43,7 +43,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIHashWriter )
 
 	//----------------------------------------------------------------//
-					MOAIHashWriter			();
+					MOAIHashWriter			( ZLContext& context );
 					~MOAIHashWriter			();
 };
 

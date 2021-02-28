@@ -202,7 +202,11 @@ ZLHashWriter* MOAIHashWriter::GetHashWriter () {
 }
 
 //----------------------------------------------------------------//
-MOAIHashWriter::MOAIHashWriter () :
+MOAIHashWriter::MOAIHashWriter ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIStream ( context ),
+	MOAIStreamAdapter ( context ),
 	mHashWriter ( 0 ) {
 	
 	RTTI_BEGIN ( MOAIHashWriter )

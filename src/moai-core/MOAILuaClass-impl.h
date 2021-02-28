@@ -34,15 +34,14 @@ template < typename TYPE >
 int MOAILuaFactoryClass < TYPE >::_new ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
-	ZLContext* context = state.GetContext ();
+	ZLContext& context = state.GetContext ();
 	
-	MOAILuaObject* data = new TYPE ();
-	data->InitializeContext ( context );
+	MOAILuaObject* data = new TYPE ( context );
 	data->PushLuaUserdata ( state );
 	
 	// since we're creating this just to hand to Lua, we can safely
 	// remove it from the runtime's global cache
-	context->Get < MOAILuaRuntime >().PurgeUserdata ( state, -1 );
+	context.Get < MOAILuaRuntime >().PurgeUserdata ( state, -1 );
 	
 	return 1;
 }
@@ -72,7 +71,7 @@ void MOAILuaFactoryClass < TYPE >::Register ( MOAILuaObject* instance ) {
 		this->InitLuaFactoryClass ( *instance, state );
 	}
 	else {
-		TYPE type;
+		TYPE type ( this->mContext );
 		this->InitLuaFactoryClass ( type, state );
 	}
 }
@@ -106,7 +105,7 @@ template < typename TYPE >
 int MOAILuaSingletonClass < TYPE >::_get ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
-	MOAILuaObject* singleton = state.GetContext ()->Get < TYPE >();
+	MOAILuaObject* singleton = state.Get < TYPE >();
 	state.Push ( singleton );
 	return 1;
 }
@@ -116,7 +115,7 @@ template < typename TYPE >
 int MOAILuaSingletonClass < TYPE >::_getClassName ( lua_State* L ) {
 	
 	MOAILuaState state ( L );
-	MOAILuaObject* singleton = state.GetContext ()->Get < TYPE >();
+	MOAILuaObject* singleton = state.Get < TYPE >();
 	state.Push ( singleton->TypeName ());
 	return 1;
 }
@@ -143,7 +142,7 @@ int MOAILuaSingletonClass < TYPE >::_getTypeID ( lua_State* L ) {
 //----------------------------------------------------------------//
 template < typename TYPE >
 MOAILuaObject* MOAILuaSingletonClass < TYPE >::GetSingleton () {
-	return &this->mContext->template Get < TYPE >();
+	return &this->mContext.template Get < TYPE >();
 }
 
 //----------------------------------------------------------------//

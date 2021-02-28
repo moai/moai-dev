@@ -180,7 +180,10 @@ void MOAIStreamAdapter::Close () {
 }
 
 //----------------------------------------------------------------//
-MOAIStreamAdapter::MOAIStreamAdapter () :
+MOAIStreamAdapter::MOAIStreamAdapter ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIStream ( context ),
 	mAdapter ( 0 ) {
 	
 	RTTI_BEGIN ( MOAIStreamAdapter )

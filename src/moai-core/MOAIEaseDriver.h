@@ -51,7 +51,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIEaseDriver )
 
 	//----------------------------------------------------------------//
-					MOAIEaseDriver			();
+					MOAIEaseDriver			( ZLContext& context );
 					~MOAIEaseDriver			();
 	u32				ParseForMove			( MOAILuaState& state, int idx, MOAINode* dest, u32 total, int mode, ... );
 	u32				ParseForSeek			( MOAILuaState& state, int idx, MOAINode* dest, u32 total, int mode, ... );

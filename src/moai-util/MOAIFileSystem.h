@@ -47,7 +47,7 @@ public:
 	DECL_LUA_SINGLETON ( MOAIFileSystem )
 	
 	
-					MOAIFileSystem				();
+					MOAIFileSystem				( ZLContext& context );
 					~MOAIFileSystem				();
 };
 

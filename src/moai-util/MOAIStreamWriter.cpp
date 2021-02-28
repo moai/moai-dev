@@ -13,7 +13,11 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIStreamWriter::MOAIStreamWriter () {
+MOAIStreamWriter::MOAIStreamWriter ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIStream ( context ),
+	MOAIStreamAdapter ( context ) {
 	
 	RTTI_BEGIN ( MOAIStreamWriter )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIStreamWriter >)

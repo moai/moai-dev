@@ -75,7 +75,12 @@ int MOAIScriptNode::_setAttrName ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIScriptNode::MOAIScriptNode () {
+MOAIScriptNode::MOAIScriptNode ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ) {
 		
 	RTTI_BEGIN ( MOAIScriptNode )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIScriptNode >)

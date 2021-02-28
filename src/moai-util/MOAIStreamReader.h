@@ -25,7 +25,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIStreamReader )
 
 	//----------------------------------------------------------------//
-					MOAIStreamReader		();
+					MOAIStreamReader		( ZLContext& context );
 					~MOAIStreamReader		();
 };
 

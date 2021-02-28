@@ -40,7 +40,7 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-					MOAIAbstractCmdHandler			();
+					MOAIAbstractCmdHandler			( ZLContext& context );
 					~MOAIAbstractCmdHandler			();
 };
 

@@ -72,7 +72,7 @@ public:
 	void			Load					( void* bytes, size_t size );
 	void			Load					( MOAILuaState& state, int idx );
 	void			Lock					( void** bytes, size_t* size );
-					MOAIDataBuffer			();
+					MOAIDataBuffer			( ZLContext& context );
 					~MOAIDataBuffer			();
 	void			PushString				( MOAILuaState& state );
 	size_t			Read					( void* buffer, size_t size );

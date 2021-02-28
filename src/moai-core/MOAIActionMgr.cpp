@@ -51,9 +51,12 @@ MOAIAction* MOAIActionMgr::GetDefaultParent () {
 }
 
 //----------------------------------------------------------------//
-MOAIActionMgr::MOAIActionMgr () {
+MOAIActionMgr::MOAIActionMgr ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	ZLContextClass ( context ),
+	MOAILuaObject ( context ) {
 
-	this->mActionTree.Set ( *this, new MOAIActionTree ());
+	this->mActionTree.Set ( *this, new MOAIActionTree ( context ));
 }
 
 //----------------------------------------------------------------//

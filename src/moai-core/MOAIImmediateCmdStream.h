@@ -26,7 +26,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIImmediateCmdStream )
 
 	//----------------------------------------------------------------//
-				MOAIImmediateCmdStream					();
+				MOAIImmediateCmdStream					( ZLContext& context );
 				~MOAIImmediateCmdStream					();
 };
 

@@ -26,7 +26,9 @@ bool MOAIBlocker::IsBlocked () {
 }
 
 //----------------------------------------------------------------//
-MOAIBlocker::MOAIBlocker () :
+MOAIBlocker::MOAIBlocker ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
 	mBlocker ( 0 ),
 	mBlockedList ( 0 ),
 	mNextBlocked ( 0 ) {

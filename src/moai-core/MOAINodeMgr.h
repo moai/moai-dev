@@ -52,7 +52,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void			Reset				();
-					MOAINodeMgr			();
+					MOAINodeMgr			( ZLContext& context );
 					~MOAINodeMgr		();
 	void			Update				();
 };

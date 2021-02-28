@@ -15,7 +15,9 @@ void MOAIAbstractCmdHandler::HandleCommand ( u32 cmd, const void* param ) {
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractCmdHandler::MOAIAbstractCmdHandler () {
+MOAIAbstractCmdHandler::MOAIAbstractCmdHandler ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ) {
 
 	RTTI_BEGIN ( MOAIAbstractCmdHandler )
 		RTTI_EXTEND ( MOAILuaObject )

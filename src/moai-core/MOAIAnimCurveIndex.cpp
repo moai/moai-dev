@@ -80,7 +80,13 @@ ZLIndex MOAIAnimCurveIndex::GetValue ( const MOAIAnimKeySpan& span ) const {
 }
 
 //----------------------------------------------------------------//
-MOAIAnimCurveIndex::MOAIAnimCurveIndex () :
+MOAIAnimCurveIndex::MOAIAnimCurveIndex ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIAnimCurve ( context ),
 	mValue ( 0 ) {
 	
 	RTTI_BEGIN ( MOAIAnimCurveIndex )

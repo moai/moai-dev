@@ -505,7 +505,10 @@ int MOAIFileSystem::_stripPKZipTimestamps ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIFileSystem::MOAIFileSystem () {
+MOAIFileSystem::MOAIFileSystem ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	ZLContextClass ( context ),
+	MOAILuaObject ( context ) {
 		
 	RTTI_BEGIN ( MOAIFourier )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIFileSystem >)

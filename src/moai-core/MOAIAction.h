@@ -20,7 +20,7 @@ class MOAIActionTree;
 	@const	EVENT_STOP		ID of event stop callback. Signature is: nil onStop ()
 */
 class MOAIAction :
-	public MOAIBlocker,
+	public virtual MOAIBlocker,
 	public virtual MOAIInstanceEventSource {
 private:
 	
@@ -107,7 +107,7 @@ public:
 	bool					IsBusy					();
 	bool					IsDone					();
 	bool					IsPaused				();
-							MOAIAction				();
+							MOAIAction				( ZLContext& context );
 							~MOAIAction				();
 	void					Start					( MOAIAction* parent, bool defer );
 	void					Stop					();

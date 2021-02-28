@@ -128,7 +128,7 @@ public:
 	void			DepNodeUpdate			();
 	void			ForceUpdate				();
 	u32				GetAttrFlags			( ZLAttrID attrID );
-					MOAINode				();
+					MOAINode				( ZLContext& context );
 					~MOAINode				();
 	void			ScheduleUpdate			();
 	void			SetAttrLink				( ZLAttrID attrID, MOAINode* srcNode, ZLAttrID srcAttrID );

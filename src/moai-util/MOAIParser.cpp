@@ -126,7 +126,9 @@ int MOAIParser::_traverse ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIParser::MOAIParser () :
+MOAIParser::MOAIParser ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
 	mAST ( 0 ) {
 
 	RTTI_BEGIN ( MOAIParser )

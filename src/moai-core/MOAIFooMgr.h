@@ -34,7 +34,7 @@ public:
 	DECL_LUA_SINGLETON ( MOAIFooMgr )
 
 	//----------------------------------------------------------------//
-					MOAIFooMgr			();
+					MOAIFooMgr			( ZLContext& context );
 					~MOAIFooMgr			();
 };
 

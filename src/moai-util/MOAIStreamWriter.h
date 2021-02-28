@@ -25,7 +25,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIStreamWriter )
 
 	//----------------------------------------------------------------//
-					MOAIStreamWriter		();
+					MOAIStreamWriter		( ZLContext& context );
 					~MOAIStreamWriter		();
 };
 

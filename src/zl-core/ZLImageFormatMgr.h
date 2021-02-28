@@ -26,7 +26,7 @@ public:
 	//----------------------------------------------------------------//
 	ZLImageFormat*			FindFormat					( cc8* name );
 	ZLImageFormat*			FindFormat					( ZLStream& stream, cc8* name = 0 );
-							ZLImageFormatMgr			();
+							ZLImageFormatMgr			( ZLContext& context );
 							~ZLImageFormatMgr			();
 	
 	//----------------------------------------------------------------//

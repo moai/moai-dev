@@ -44,7 +44,7 @@ public:
 	GET ( MOAIActionTree&, ActionTree, *mActionTree );
 	
 	//----------------------------------------------------------------//
-						MOAIActionMgr		();
+						MOAIActionMgr		( ZLContext& context );
 						~MOAIActionMgr		();
 };
 

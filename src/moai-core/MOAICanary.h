@@ -30,7 +30,7 @@ public:
 	DECL_LUA_FACTORY ( MOAICanary )
 
 	//----------------------------------------------------------------//
-					MOAICanary			();
+					MOAICanary			( ZLContext& context );
 					~MOAICanary			();
 };
 

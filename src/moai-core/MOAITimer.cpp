@@ -403,7 +403,14 @@ float MOAITimer::GetTime () {
 }
 
 //----------------------------------------------------------------//
-MOAITimer::MOAITimer () :
+MOAITimer::MOAITimer ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIBlocker ( context ),
+	MOAIAction ( context ),
 	mTime ( 0.0f ),
 	mCycle ( 0.0f ),
 	mSpeed ( 1.0f ),

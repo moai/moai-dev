@@ -44,7 +44,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIXmlParser )
 	
 	//----------------------------------------------------------------//
-					MOAIXmlParser				();
+					MOAIXmlParser				( ZLContext& context );
 					~MOAIXmlParser				();
 	static void		Parse						( MOAILuaState& state, TiXmlNode* node );
 };

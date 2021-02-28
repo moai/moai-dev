@@ -36,7 +36,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void				Close						();
-						MOAIDataBufferStream		();
+						MOAIDataBufferStream		( ZLContext& context );
 						~MOAIDataBufferStream		();
 	bool				Open						( MOAIDataBuffer* buffer );
 };

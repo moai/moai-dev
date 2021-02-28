@@ -67,7 +67,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool				Convert					( const MOAILuaHeader& dstFormat, ZLStream& srcStream, ZLStream& dstStream );
-						MOAILuaUtil				();
+						MOAILuaUtil				( ZLContext& context );
 						~MOAILuaUtil			();
 };
 

@@ -80,7 +80,7 @@ public:
 	ObjID				AffirmMemberID				( MOAILuaObject* object, bool processMetatable = true );
 	ObjID				AffirmMemberID				( MOAILuaState& state, int idx, bool processMetatable = true );
 	void				Clear						();
-						MOAISerializer				();
+						MOAISerializer				( ZLContext& context );
 	virtual				~MOAISerializer				();
 	STLString			SerializeToString			();
 	void				SerializeToFile				( cc8* filename );
