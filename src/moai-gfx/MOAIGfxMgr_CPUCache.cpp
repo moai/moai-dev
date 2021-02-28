@@ -177,7 +177,9 @@ bool MOAIGfxMgr_CPUCache::IsInputMtx ( u32 mtxID ) {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxMgr_CPUCache::MOAIGfxMgr_CPUCache () {
+MOAIGfxMgr_CPUCache::MOAIGfxMgr_CPUCache ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAIGfxMgrComponents ( context ) {
 
 	assert ( TOTAL_GLOBALS < MAX_GLOBALS );
 

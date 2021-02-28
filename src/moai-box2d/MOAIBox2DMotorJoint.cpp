@@ -262,7 +262,11 @@ int MOAIBox2DMotorJoint::_getCorrectionFactor ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIBox2DMotorJoint::MOAIBox2DMotorJoint () {
+MOAIBox2DMotorJoint::MOAIBox2DMotorJoint ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIBox2DPrim ( context ),
+	MOAIBox2DJoint ( context ) {
 	
 	RTTI_BEGIN ( MOAIBox2DMotorJoint )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIBox2DMotorJoint >)

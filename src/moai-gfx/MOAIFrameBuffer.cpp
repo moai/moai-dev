@@ -9,7 +9,9 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIFrameBuffer::MOAIFrameBuffer () :
+MOAIFrameBuffer::MOAIFrameBuffer ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
 	mBufferScale ( 1.0 ),
 	mLandscape ( false ) {
 	

@@ -32,7 +32,7 @@ int MOAIHasGfxScriptBatchesForPhases::_gfx ( lua_State* L ) {
 	
 	MOAIGfxScript& gfxScript = self->AffirmGfxScript ( index, renderPhase );
 	gfxScript.Reset ();
-	gfxScript.AffirmMedium ().PushCmdInterfaceWithHandler ( state, MOAIDraw::Get ());
+	gfxScript.AffirmMedium ().PushCmdInterfaceWithHandler ( state, self->Get < MOAIDraw >());
 	return 1;
 }
 
@@ -111,7 +111,7 @@ MOAIGfxScript& MOAIHasGfxScriptBatchesForPhases::AffirmGfxScript ( ZLIndex index
 	MOAIGfxScript* gfxScript = batch.mGfxScripts [ index ];
 	
 	if ( !gfxScript ) {
-		gfxScript = new MOAIGfxScript ();
+		gfxScript = new MOAIGfxScript ( this->GetContext ());
 		batch.mGfxScripts [ index ] = gfxScript;
 	}
 	return *gfxScript;
@@ -143,7 +143,9 @@ MOAIGfxScriptBatch* MOAIHasGfxScriptBatchesForPhases::GetGfxScriptBatch ( MOAIRe
 }
 
 //----------------------------------------------------------------//
-MOAIHasGfxScriptBatchesForPhases::MOAIHasGfxScriptBatchesForPhases () {
+MOAIHasGfxScriptBatchesForPhases::MOAIHasGfxScriptBatchesForPhases ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ) {
 
 	RTTI_BEGIN ( MOAIHasGfxScriptBatchesForPhases )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIHasGfxScriptBatchesForPhases >)

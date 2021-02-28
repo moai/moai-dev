@@ -32,7 +32,7 @@ public:
 	//----------------------------------------------------------------//
 	MOAIGfxScript&		AffirmGfxScript					( MOAIRenderPhaseEnum::_ renderPhase );
 	MOAIGfxScript*		GetGfxScript					( MOAIRenderPhaseEnum::_ renderPhase );
-						MOAIHasGfxScriptsForPhases		();
+						MOAIHasGfxScriptsForPhases		( ZLContext& context );
 	virtual 			~MOAIHasGfxScriptsForPhases		();
 	void				SetGfxScript					( MOAIRenderPhaseEnum::_ renderPhase, MOAIGfxScript* gfxScript );
 	

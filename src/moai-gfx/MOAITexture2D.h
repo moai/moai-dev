@@ -57,7 +57,7 @@ public:
 	void				Init						( const void* data, size_t size, u32 transform, cc8* debugname );
 	bool				Init						( MOAILuaState& state, int idx );
 	void				Init						( MOAIDataBuffer& data, u32 transform, cc8* debugname );
-						MOAITexture2D				();
+						MOAITexture2D				( ZLContext& context );
 						~MOAITexture2D				();
 };
 

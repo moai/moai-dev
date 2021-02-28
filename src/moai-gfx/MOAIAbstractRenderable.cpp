@@ -60,7 +60,10 @@ int MOAIAbstractRenderable::_render ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIAbstractRenderable::MOAIAbstractRenderable () {
+MOAIAbstractRenderable::MOAIAbstractRenderable ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIHasGfxScriptsForPhases ( context ) {
 
 	RTTI_BEGIN ( MOAIAbstractRenderable )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractRenderable >)

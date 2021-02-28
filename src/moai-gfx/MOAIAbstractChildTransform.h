@@ -53,7 +53,7 @@ public:
 	DECL_ATTR_ID ( INHERIT_TRANSFORM )
 	
 	//----------------------------------------------------------------//
-				MOAIAbstractChildTransform			();
+				MOAIAbstractChildTransform			( ZLContext& context );
 				~MOAIAbstractChildTransform			();
 };
 

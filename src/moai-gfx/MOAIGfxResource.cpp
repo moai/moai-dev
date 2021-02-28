@@ -54,7 +54,9 @@ bool MOAIGfxResource::IsReadyForUse () const {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxResource::MOAIGfxResource () {
+MOAIGfxResource::MOAIGfxResource ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ) {
 	
 	RTTI_BEGIN ( MOAIGfxResource )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIGfxResource >)

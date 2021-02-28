@@ -29,7 +29,7 @@ int MOAIHasGfxScriptsForPhases::_gfx ( lua_State* L ) {
 	MOAIRenderPhaseEnum::_ renderPhase = state.GetEnum ( 3, MOAIRenderPhaseEnum::RENDER_PHASE_DRAW );
 	MOAIGfxScript& script = self->AffirmGfxScript ( renderPhase );
 	script.Reset ();
-	script.AffirmMedium ().PushCmdInterfaceWithHandler ( state, MOAIDraw::Get ());
+	script.AffirmMedium ().PushCmdInterfaceWithHandler ( state, self->Get < MOAIDraw >());
 	return 1;
 }
 
@@ -62,7 +62,7 @@ MOAIGfxScript& MOAIHasGfxScriptsForPhases::AffirmGfxScript ( MOAIRenderPhaseEnum
 
 	MOAIGfxScript* gfxScript = this->GetGfxScript ( renderPhase );
 	if ( !gfxScript ) {
-		gfxScript = new MOAIGfxScript ();
+		gfxScript = new MOAIGfxScript ( this->GetContext ());
 		this->mGfxScripts [ renderPhase ] = gfxScript;
 	}
 	assert ( gfxScript );
@@ -77,7 +77,9 @@ MOAIGfxScript* MOAIHasGfxScriptsForPhases::GetGfxScript ( MOAIRenderPhaseEnum::_
 }
 
 //----------------------------------------------------------------//
-MOAIHasGfxScriptsForPhases::MOAIHasGfxScriptsForPhases () {
+MOAIHasGfxScriptsForPhases::MOAIHasGfxScriptsForPhases ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ) {
 
 	RTTI_BEGIN ( MOAIHasGfxScriptsForPhases )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIHasGfxScriptsForPhases >)

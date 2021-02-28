@@ -32,7 +32,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIBox2DPulleyJoint )
 	
 	//----------------------------------------------------------------//
-					MOAIBox2DPulleyJoint	();
+					MOAIBox2DPulleyJoint	( ZLContext& context );
 					~MOAIBox2DPulleyJoint	();
 };
 

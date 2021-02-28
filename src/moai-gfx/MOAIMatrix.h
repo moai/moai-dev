@@ -36,7 +36,7 @@ public:
 	};
 	
 	//----------------------------------------------------------------//
-					MOAIMatrix				();
+					MOAIMatrix				( ZLContext& context );
 					~MOAIMatrix				();
 };
 

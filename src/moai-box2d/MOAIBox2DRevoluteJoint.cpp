@@ -114,7 +114,7 @@ int MOAIBox2DRevoluteJoint::_getMotorTorque ( lua_State* L ) {
 
 	float unitsToMeters = self->GetUnitsToMeters ();
 	b2RevoluteJoint* joint = ( b2RevoluteJoint* )self->mJoint;
-	float step = ( float )( 1.0 / MOAISim::Get ().GetStep ());
+	float step = ( float )( 1.0 / self->Get < MOAIUpdateMgr >().GetStep ());
 	/* Convert from N-m (kg m / s^2) * m => (kg unit / s^2) * unit */
 	state.Push ( joint->GetMotorTorque (step) / (unitsToMeters * unitsToMeters));
 	
@@ -348,7 +348,11 @@ int MOAIBox2DRevoluteJoint::_setMotorEnabled ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIBox2DRevoluteJoint::MOAIBox2DRevoluteJoint () {
+MOAIBox2DRevoluteJoint::MOAIBox2DRevoluteJoint ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIBox2DPrim ( context ),
+	MOAIBox2DJoint ( context ) {
 	
 	RTTI_BEGIN ( MOAIBox2DRevoluteJoint )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIBox2DRevoluteJoint >)

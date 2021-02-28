@@ -114,7 +114,11 @@ int MOAIBox2DFrictionJoint::_setMaxTorque ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIBox2DFrictionJoint::MOAIBox2DFrictionJoint () {
+MOAIBox2DFrictionJoint::MOAIBox2DFrictionJoint ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIBox2DPrim ( context ),
+	MOAIBox2DJoint ( context ) {
 	
 	RTTI_BEGIN ( MOAIBox2DFrictionJoint )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIBox2DFrictionJoint >)

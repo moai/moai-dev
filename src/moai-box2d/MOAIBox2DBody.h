@@ -84,7 +84,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void			Destroy					();
-					MOAIBox2DBody			();
+					MOAIBox2DBody			( ZLContext& context );
 					~MOAIBox2DBody			();
 };
 

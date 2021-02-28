@@ -61,7 +61,7 @@ public:
 	//----------------------------------------------------------------//
 	MOAIGfxScript&			AffirmGfxScript							( ZLIndex index, MOAIRenderPhaseEnum::_ renderPhase );
 	MOAIGfxScript*			GetGfxScript							( ZLIndex index, MOAIRenderPhaseEnum::_ renderPhase);
-							MOAIHasGfxScriptBatchesForPhases		();
+							MOAIHasGfxScriptBatchesForPhases		( ZLContext& context );
 							~MOAIHasGfxScriptBatchesForPhases		();
 	void					ReserveGfxScripts						( ZLSize size, MOAIRenderPhaseEnum::_ renderPhase );
 	void					SetGfxScript							( ZLIndex index, MOAIGfxScript* gfxScript, MOAIRenderPhaseEnum::_ renderPhase );

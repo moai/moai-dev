@@ -14,21 +14,6 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-
-//================================================================//
-// MOAIBox2DWheelJoint
-//================================================================//
-
-//----------------------------------------------------------------//
-MOAIBox2DWheelJoint::MOAIBox2DWheelJoint () {
-	
-	RTTI_BEGIN ( MOAIBox2DWheelJoint )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIBox2DWheelJoint >)
-		RTTI_EXTEND ( MOAIBox2DJoint )
-	RTTI_END
-}
-
-//----------------------------------------------------------------//
 /**	@lua	getJointTranslation
 	@text	See Box2D documentation.
 	
@@ -175,7 +160,7 @@ int MOAIBox2DWheelJoint::_getMotorTorque ( lua_State* L ) {
 	
 	b2WheelJoint* joint = ( b2WheelJoint* )self->mJoint;
 
-	float step = ( float )( 1.0 / MOAISim::Get ().GetStep ());
+	float step = ( float )( 1.0 / self->Get < MOAIUpdateMgr >().GetStep ());
 	/* Convert from N-m (kg m / s^2) * m => (kg unit / s^2) * unit */
 	state.Push ( joint->GetMotorTorque (step) / ( unitsToMeters * unitsToMeters ) );
 	
@@ -358,6 +343,23 @@ int MOAIBox2DWheelJoint::_setSpringFrequencyHz ( lua_State* L ) {
 	joint->SetSpringFrequencyHz( springFrequencyHz );
 	
 	return 0;
+}
+
+//================================================================//
+// MOAIBox2DWheelJoint
+//================================================================//
+
+//----------------------------------------------------------------//
+MOAIBox2DWheelJoint::MOAIBox2DWheelJoint ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIBox2DPrim ( context ),
+	MOAIBox2DJoint ( context ) {
+	
+	RTTI_BEGIN ( MOAIBox2DWheelJoint )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIBox2DWheelJoint >)
+		RTTI_EXTEND ( MOAIBox2DJoint )
+	RTTI_END
 }
 
 //----------------------------------------------------------------//

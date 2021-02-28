@@ -29,7 +29,7 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-					MOAIVertexBuffer		();
+					MOAIVertexBuffer		( ZLContext& context );
 					~MOAIVertexBuffer		();
 	void			PrintVertices			( MOAIVertexFormat& vertexFormat );
 };

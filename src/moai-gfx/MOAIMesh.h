@@ -62,7 +62,7 @@ public:
 	MOAIIndexBuffer*		GetIndexBuffer				();
 	MOAIVertexBuffer*		GetVertexBuffer				( ZLIndex idx = 0 );
 	MOAIVertexFormat*		GetVertexFormat				( ZLIndex idx = 0 );
-							MOAIMesh					();
+							MOAIMesh					( ZLContext& context );
 							~MOAIMesh					();
 	void					ReserveVertexBuffers		( ZLSize size );
 	void					SetIndexBuffer				( MOAIIndexBuffer* indexBuffer );

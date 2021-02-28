@@ -32,11 +32,11 @@ public:
 	DECL_LUA_FACTORY ( MOAIRenderNode )
 
 	//----------------------------------------------------------------//
-						MOAIRenderNode				();
+						MOAIRenderNode				( ZLContext& context );
 	virtual 			~MOAIRenderNode				();
 	void				PushChild					( MOAIAbstractRenderable& node );
 	void				PushChild					( MOAILuaState& state, int idx );
-	static void			Render						( MOAIRenderPhaseEnum::_ renderPhase, MOAILuaMemberRef& ref );
+//	static void			Render						( MOAIRenderPhaseEnum::_ renderPhase, MOAILuaMemberRef& ref );
 	static void			Render						( MOAIRenderPhaseEnum::_ renderPhase, MOAILuaState& state, int idx );
 };
 

@@ -39,7 +39,11 @@ int MOAIRenderNode::_setRender ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIRenderNode::MOAIRenderNode () {
+MOAIRenderNode::MOAIRenderNode ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIHasGfxScriptsForPhases ( context ),
+	MOAIAbstractRenderable ( context ) {
 
 	RTTI_BEGIN ( MOAIRenderNode )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIRenderNode >)
@@ -81,15 +85,15 @@ void MOAIRenderNode::PushChild ( MOAILuaState& state, int idx ) {
 }
 
 //----------------------------------------------------------------//
-void MOAIRenderNode::Render ( MOAIRenderPhaseEnum::_ renderPhase, MOAILuaMemberRef& ref ) {
-
-	if ( ref ) {
-		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
-		state.Push ( ref );
-		MOAIRenderNode::Render ( renderPhase, state, -1 );
-		state.Pop ( 1 );
-	}
-}
+//void MOAIRenderNode::Render ( MOAIRenderPhaseEnum::_ renderPhase, MOAILuaMemberRef& ref ) {
+//
+//	if ( ref ) {
+//		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
+//		state.Push ( ref );
+//		MOAIRenderNode::Render ( renderPhase, state, -1 );
+//		state.Pop ( 1 );
+//	}
+//}
 
 //----------------------------------------------------------------//
 void MOAIRenderNode::Render ( MOAIRenderPhaseEnum::_ renderPhase, MOAILuaState& state, int idx ) {
@@ -122,7 +126,7 @@ void MOAIRenderNode::Render ( MOAIRenderPhaseEnum::_ renderPhase, MOAILuaState& 
 		case LUA_TFUNCTION: {
 
 			state.CopyToTop ( idx ); // copy the function to the top
-			MOAIDraw::Get ().PushCmdInterface ( state );
+			state.Get < MOAIDraw >().PushCmdInterface ( state );
 			state.Push ( renderPhase );
 			state.DebugCall ( 2, 0 );
 

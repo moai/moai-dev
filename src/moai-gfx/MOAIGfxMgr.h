@@ -26,7 +26,7 @@ class MOAITexture2D;
 	@const	EVENT_RESIZE
 */
 class MOAIGfxMgr :
-	public ZLContextClassAlias < MOAIGfxMgr >,
+	public virtual ZLContextClass,
 	public virtual MOAIGlobalEventSource,
 	public virtual MOAIGfxMgrComponents,
 	public virtual MOAIGfxMgr_CPUCache,
@@ -49,7 +49,7 @@ protected:
 	virtual void						MOAIGfxMgr_BeginFrame					() = 0;
 	virtual MOAIImageTexture*			MOAIGfxMgr_CreateImageTexture			() = 0;
 	virtual MOAIIndexBuffer*			MOAIGfxMgr_CreateIndexBuffer			() = 0;
-	virtual MOAIMesh*			MOAIGfxMgr_CreateMesh					() = 0;
+	virtual MOAIMesh*					MOAIGfxMgr_CreateMesh					() = 0;
 	virtual MOAIRenderNode*				MOAIGfxMgr_CreateRenderRoot				() = 0;
 	virtual MOAITexture2D*				MOAIGfxMgr_CreateTexture2D				() = 0;
 	virtual MOAIVertexBuffer*			MOAIGfxMgr_CreateVertexBuffer			() = 0;
@@ -85,7 +85,7 @@ public:
 	void							BeginFrame					();
 	MOAIImageTexture*				CreateImageTexture			();
 	MOAIIndexBuffer*				CreateIndexBuffer			();
-	MOAIMesh*				CreateMesh					();
+	MOAIMesh*						CreateMesh					();
 	MOAIRenderNode*					CreateRenderRoot			();
 	MOAITexture2D*					CreateTexture2D				();
 	MOAIVertexBuffer*				CreateVertexBuffer			();
@@ -102,7 +102,7 @@ public:
 	ZLMatrix4x4						GetWndToNormMtx				( const ZLRect& wndRect );
 	ZLMatrix4x4						GetWndToWorldMtx			();
 	ZLMatrix4x4						GetWndToWorldMtx			( const ZLRect& wndRect );
-									MOAIGfxMgr					();
+									MOAIGfxMgr					( ZLContext& context );
 									~MOAIGfxMgr					();
 	void							PopState					();
 	void							PushState					();

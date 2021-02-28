@@ -97,7 +97,7 @@ int MOAIBox2DPrismaticJoint::_getMotorForce ( lua_State* L ) {
 
 	b2PrismaticJoint* joint = ( b2PrismaticJoint* )self->mJoint;
 
-	float step = ( float )( 1.0 / MOAISim::Get ().GetStep ());
+	float step = ( float )( 1.0 / self->Get < MOAIUpdateMgr >().GetStep ());
 	state.Push ( joint->GetMotorForce (step) / unitsToMeters );
 	
 	return 1;
@@ -356,7 +356,11 @@ int MOAIBox2DPrismaticJoint::_setMotorSpeed ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIBox2DPrismaticJoint::MOAIBox2DPrismaticJoint () {
+MOAIBox2DPrismaticJoint::MOAIBox2DPrismaticJoint ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIBox2DPrim ( context ),
+	MOAIBox2DJoint ( context ) {
 	
 	RTTI_BEGIN ( MOAIBox2DPrismaticJoint)
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIBox2DPrismaticJoint >)

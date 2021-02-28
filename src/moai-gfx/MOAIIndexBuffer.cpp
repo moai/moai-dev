@@ -161,7 +161,12 @@ u32 MOAIIndexBuffer::GetIndex ( u32 element ) {
 }
 
 //----------------------------------------------------------------//
-MOAIIndexBuffer::MOAIIndexBuffer () :
+MOAIIndexBuffer::MOAIIndexBuffer ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIGfxResource ( context ),
+	MOAIStream ( context ),
+	MOAIGfxBuffer ( context ),
 	mIndexSize ( 2 ) {
 		
 	RTTI_BEGIN ( MOAIIndexBuffer )

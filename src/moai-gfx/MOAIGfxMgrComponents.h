@@ -13,7 +13,8 @@ class MOAIGfxMgr_VertexCache;
 //================================================================//
 // MOAIGfxMgrComponents
 //================================================================//
-class MOAIGfxMgrComponents {
+class MOAIGfxMgrComponents :
+	public virtual ZLHasContext {
 protected:
 	
 	//----------------------------------------------------------------//
@@ -51,7 +52,8 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	MOAIGfxMgrComponents () {
+	MOAIGfxMgrComponents ( ZLContext& context ) :
+		ZLHasContext ( context ) {
 	}
 	
 	//----------------------------------------------------------------//

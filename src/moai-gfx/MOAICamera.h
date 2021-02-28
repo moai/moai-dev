@@ -63,7 +63,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			DrawDebug 				( MOAIDrawAPI& draw );
-					MOAICamera				();
+					MOAICamera				( ZLContext& context );
 					~MOAICamera				();
 };
 

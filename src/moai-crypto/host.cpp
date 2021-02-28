@@ -18,8 +18,11 @@ void AKUCryptoAppInitialize () {
 }
 
 //----------------------------------------------------------------//
-void AKUCryptoContextInitialize () {
+void AKUCryptoContextInitialize ( AKUContextID contextID ) {
+
+	assert ( contextID );
+	ZLContext* context = ( ZLContext* )contextID;
 
 	// MOAI
-	REGISTER_LUA_CLASS ( MOAIHashWriterCrypto )
+	REGISTER_LUA_CLASS ( context, MOAIHashWriterCrypto )
 }

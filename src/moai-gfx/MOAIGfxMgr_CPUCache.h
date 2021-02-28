@@ -48,7 +48,7 @@ public:
 	
 	static bool				IsInputMtx					( u32 mtxID );
 	
-							MOAIGfxMgr_CPUCache			();
+							MOAIGfxMgr_CPUCache			( ZLContext& context );
 	virtual					~MOAIGfxMgr_CPUCache		();
 
 	void					SetAmbientColor				( u32 color );

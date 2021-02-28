@@ -39,7 +39,12 @@ int MOAIImageTexture::_updateRegion ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIImageTexture::MOAIImageTexture () {
+MOAIImageTexture::MOAIImageTexture ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIImage ( context ),
+	MOAIGfxResource ( context ),
+	MOAITexture ( context ) {
 	
 	RTTI_BEGIN ( MOAIImageTexture )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIImageTexture >)

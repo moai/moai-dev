@@ -56,7 +56,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void			Destroy					();
-					MOAIBox2DFixture		();
+					MOAIBox2DFixture		( ZLContext& context );
 					~MOAIBox2DFixture		();
 };
 

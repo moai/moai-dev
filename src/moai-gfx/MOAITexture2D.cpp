@@ -207,7 +207,7 @@ bool MOAITexture2D::LoadFromStream ( ZLStream& stream, u32 transform ) {
 	UNUSED ( transform ); // TODO: why is transform unused?
 
 	bool result = false;
-	ZLImageFormat* imageFormat = ZLImageFormatMgr::Get ().FindFormat ( stream );
+	ZLImageFormat* imageFormat = this->Get < ZLImageFormatMgr >().FindFormat ( stream );
 //	ZLTextureFormat* textureFormat = imageFormat ? imageFormat->AsType < ZLTextureFormat >() : NULL;
 	
 	if ( imageFormat ) {
@@ -261,7 +261,11 @@ bool MOAITexture2D::LoadFromStream ( ZLStream& stream, u32 transform ) {
 }
 
 //----------------------------------------------------------------//
-MOAITexture2D::MOAITexture2D () :
+MOAITexture2D::MOAITexture2D ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIGfxResource ( context ),
+	MOAITexture ( context ),
 	mTransform ( DEFAULT_TRANSFORM ),
 	mTextureData ( 0 ),
 	mTextureDataSize ( 0 ),

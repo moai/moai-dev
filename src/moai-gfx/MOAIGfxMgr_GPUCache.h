@@ -84,14 +84,14 @@ public:
 	MOAITexture*			GetDefaultTexture			();
 	bool					GetDepthMask				() const;
 	MOAIFrameBuffer*		GetFrameBuffer				();
-	MOAIMesh*		GetMesh						();
+	MOAIMesh*				GetMesh						();
 	MOAIShader*				GetShader					();
 	MOAITexture*			GetTexture					( ZLIndex textureUnit = 0 );
 	float					GetViewHeight				() const;
 	ZLRect					GetViewRect					() const;
 	float					GetViewWidth				() const;
 	void					GfxStateWillChange			();
-							MOAIGfxMgr_GPUCache			();
+							MOAIGfxMgr_GPUCache			( ZLContext& context );
 	virtual					~MOAIGfxMgr_GPUCache		();
 	void					ResetGPUState				();
 	void					SetBlendMode				();

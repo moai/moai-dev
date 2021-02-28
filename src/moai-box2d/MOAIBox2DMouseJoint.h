@@ -35,7 +35,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIBox2DMouseJoint )
 	
 	//----------------------------------------------------------------//
-					MOAIBox2DMouseJoint		();
+					MOAIBox2DMouseJoint		( ZLContext& context );
 					~MOAIBox2DMouseJoint	();
 };
 

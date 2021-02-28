@@ -32,7 +32,7 @@ public:
 	//----------------------------------------------------------------//
 	MOAIGfxScript&		AffirmGfxScript				();
 	MOAIGfxScript*		GetGfxScript				();
-						MOAIHasGfxScript			();
+						MOAIHasGfxScript			( ZLContext& context );
 						~MOAIHasGfxScript			();
 	void				SetGfxScript				( MOAIGfxScript* gfxScript );
 	

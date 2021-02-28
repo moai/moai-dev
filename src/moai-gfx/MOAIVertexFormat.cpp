@@ -460,7 +460,9 @@ u32 MOAIVertexFormat::GetUseIDForLuaIndex ( u32 idx ) {
 }
 
 //----------------------------------------------------------------//
-MOAIVertexFormat::MOAIVertexFormat () :
+MOAIVertexFormat::MOAIVertexFormat ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
 	mTotalAttributes ( 0 ),
 	mVertexSize ( 0 ) {
 	

@@ -183,7 +183,7 @@ int MOAICamera::_moveFieldOfView ( lua_State* L ) {
 	
 		u32 mode = state.GetValue < u32 >( 4, ZLInterpolate::kSmooth );
 		
-		MOAIEaseDriver* action = new MOAIEaseDriver ();
+		MOAIEaseDriver* action = new MOAIEaseDriver ( self->GetContext ());
 		
 		action->ParseForMove ( state, 2, self, 1, mode,
 			AttrID::Pack ( ATTR_FOV ).ToRaw (), 0.0f
@@ -220,7 +220,7 @@ int MOAICamera::_seekFieldOfView ( lua_State* L ) {
 
 		u32 mode = state.GetValue < u32 >( 4, ZLInterpolate::kSmooth );
 		
-		MOAIEaseDriver* action = new MOAIEaseDriver ();
+		MOAIEaseDriver* action = new MOAIEaseDriver ( self->GetContext ());
 		
 		action->ParseForSeek ( state, 2, self, 1, mode,
 			AttrID::Pack ( ATTR_FOV ).ToRaw (), self->mFieldOfView, 0.0f
@@ -376,7 +376,15 @@ void MOAICamera::LookAt ( float x, float y, float z ) {
 }
 
 //----------------------------------------------------------------//
-MOAICamera::MOAICamera () {
+MOAICamera::MOAICamera ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIAbstractBaseTransform ( context ),
+	MOAIAbstractChildTransform ( context ),
+	MOAITransform ( context ) {
 
 	RTTI_BEGIN ( MOAICamera )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAICamera >)

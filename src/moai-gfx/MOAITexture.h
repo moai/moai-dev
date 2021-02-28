@@ -33,7 +33,7 @@ public:
 	GET_SET ( cc8*, DebugName, mDebugName );
 
 	//----------------------------------------------------------------//
-					MOAITexture					();
+					MOAITexture					( ZLContext& context );
 					~MOAITexture				();
 	void			SetFilter					( MOAITextureFilterEnum::_ filter );
 	void			SetFilter					( MOAITextureFilterEnum::_ min, MOAITextureFilterEnum::_ mag );

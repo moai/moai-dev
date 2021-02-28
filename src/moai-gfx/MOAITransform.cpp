@@ -217,7 +217,7 @@ int MOAITransform::_move ( lua_State* L ) {
 	
 		u32 mode = state.GetValue < u32 >( 12, ZLInterpolate::kSmooth );
 		
-		MOAIEaseDriver* action = new MOAIEaseDriver ();
+		MOAIEaseDriver* action = new MOAIEaseDriver ( self->GetContext ());
 		
 		action->ParseForMove ( state, 2, self, 9, mode,
 			AttrID::Pack ( ATTR_X_LOC ).ToRaw (), 0.0f,
@@ -282,7 +282,7 @@ int MOAITransform::_moveLoc ( lua_State* L ) {
 	
 		u32 mode = state.GetValue < u32 >( 6, ZLInterpolate::kSmooth );
 		
-		MOAIEaseDriver* action = new MOAIEaseDriver ();
+		MOAIEaseDriver* action = new MOAIEaseDriver ( self->GetContext ());
 		
 		action->ParseForMove ( state, 2, self, 3, mode,
 			AttrID::Pack ( ATTR_X_LOC ).ToRaw (), 0.0f,
@@ -332,7 +332,7 @@ int MOAITransform::_movePiv ( lua_State* L ) {
 	
 		u32 mode = state.GetValue < u32 >( 6, ZLInterpolate::kSmooth );
 		
-		MOAIEaseDriver* action = new MOAIEaseDriver ();
+		MOAIEaseDriver* action = new MOAIEaseDriver ( self->GetContext ());
 		
 		action->ParseForMove ( state, 2, self, 3, mode,
 			AttrID::Pack ( ATTR_X_PIV ).ToRaw (), 0.0f,
@@ -382,7 +382,7 @@ int MOAITransform::_moveRot ( lua_State* L ) {
 	
 		u32 mode = state.GetValue < u32 >( 6, ZLInterpolate::kSmooth );
 		
-		MOAIEaseDriver* action = new MOAIEaseDriver ();
+		MOAIEaseDriver* action = new MOAIEaseDriver ( self->GetContext ());
 		
 		action->ParseForMove ( state, 2, self, 3, mode,
 			AttrID::Pack ( ATTR_X_ROT ).ToRaw (), 0.0f,
@@ -432,7 +432,7 @@ int MOAITransform::_moveScl ( lua_State* L ) {
 	
 		u32 mode = state.GetValue < u32 >( 6, ZLInterpolate::kSmooth );
 		
-		MOAIEaseDriver* action = new MOAIEaseDriver ();
+		MOAIEaseDriver* action = new MOAIEaseDriver ( self->GetContext ());
 		
 		action->ParseForMove ( state, 2, self, 3, mode,
 			AttrID::Pack ( ATTR_X_SCL ).ToRaw (), 0.0f,
@@ -489,7 +489,7 @@ int MOAITransform::_seek ( lua_State* L ) {
 		
 		u32 mode = state.GetValue < u32 >( 12, ZLInterpolate::kSmooth );
 
-		MOAIEaseDriver* action = new MOAIEaseDriver ();
+		MOAIEaseDriver* action = new MOAIEaseDriver ( self->GetContext ());
 		
 		action->ParseForSeek ( state, 2, self, 9, mode,
 			AttrID::Pack ( ATTR_X_LOC ).ToRaw (), self->mLoc.mX, 0.0f,
@@ -548,7 +548,7 @@ int MOAITransform::_seekLoc ( lua_State* L ) {
 
 		u32 mode = state.GetValue < u32 >( 6, ZLInterpolate::kSmooth );		
 		
-		MOAIEaseDriver* action = new MOAIEaseDriver ();
+		MOAIEaseDriver* action = new MOAIEaseDriver ( self->GetContext ());
 		
 		action->ParseForSeek ( state, 2, self, 3, mode,
 			AttrID::Pack ( ATTR_X_LOC ).ToRaw (), self->mLoc.mX, 0.0f,
@@ -597,7 +597,7 @@ int MOAITransform::_seekPiv ( lua_State* L ) {
 
 		u32 mode = state.GetValue < u32 >( 6, ZLInterpolate::kSmooth );		
 		
-		MOAIEaseDriver* action = new MOAIEaseDriver ();
+		MOAIEaseDriver* action = new MOAIEaseDriver ( self->GetContext ());
 		
 		action->ParseForSeek ( state, 2, self, 3, mode,
 			AttrID::Pack ( ATTR_X_PIV ).ToRaw (), self->mPiv.mX, 0.0f,
@@ -646,7 +646,7 @@ int MOAITransform::_seekRot ( lua_State* L ) {
 	
 		u32 mode = state.GetValue < u32 >( 6, ZLInterpolate::kSmooth );
 		
-		MOAIEaseDriver* action = new MOAIEaseDriver ();
+		MOAIEaseDriver* action = new MOAIEaseDriver ( self->GetContext ());
 		
 		action->ParseForSeek ( state, 2, self, 3, mode,
 			AttrID::Pack ( ATTR_X_ROT ).ToRaw (), self->mRot.mX, 0.0f,
@@ -695,7 +695,7 @@ int MOAITransform::_seekScl ( lua_State* L ) {
 	
 		u32 mode = state.GetValue < u32 >( 6, ZLInterpolate::kSmooth );
 
-		MOAIEaseDriver* action = new MOAIEaseDriver ();
+		MOAIEaseDriver* action = new MOAIEaseDriver ( self->GetContext ());
 		
 		action->ParseForSeek ( state, 2, self, 3, mode,
 			AttrID::Pack ( ATTR_X_SCL ).ToRaw (), self->mScale.mX, 1.0f,
@@ -927,7 +927,14 @@ ZLAffine3D MOAITransform::GetBillboardMtx ( const ZLAffine3D& faceCameraMtx ) co
 }
 
 //----------------------------------------------------------------//
-MOAITransform::MOAITransform () :
+MOAITransform::MOAITransform ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIAbstractBaseTransform ( context ),
+	MOAIAbstractChildTransform ( context ),
 	mShearYX ( 0.0 ),
 	mShearZX ( 0.0 ),
 	mShearXY ( 0.0 ),

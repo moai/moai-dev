@@ -135,7 +135,7 @@ void MOAIDraw::ExecuteDrawAxis2D ( MOAIGfxMgr& gfxMgr, const MOAIDrawAPIParam::D
 	ZLVec2D loc = param.mV0;
 	ZLVec2D vec = param.mD;
 	
-	ZLMatrix4x4 mtx = MOAIGfxMgr::Get ().GetMtx ( MOAIGfxMgr::WORLD_TO_CLIP_MTX );
+	ZLMatrix4x4 mtx = gfxMgr.GetMtx ( MOAIGfxMgr::WORLD_TO_CLIP_MTX );
 	
 	ZLMatrix4x4 invMtx;
 	invMtx.Inverse ( mtx );
@@ -153,9 +153,7 @@ void MOAIDraw::ExecuteDrawAxis2D ( MOAIGfxMgr& gfxMgr, const MOAIDrawAPIParam::D
 		
 		invMtx.Transform ( p0 );
 		invMtx.Transform ( p1 );
-		
-		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-		
+				
 		gfxMgr.BeginPrim ( MOAIGfxTopologyEnum::LINE_LIST, 2 );
 		
 			gfxMgr.WriteVtx ( p0.mX, p0.mY, 0.0f );
@@ -175,7 +173,7 @@ void MOAIDraw::ExecuteDrawAxisGrid2D ( MOAIGfxMgr& gfxMgr, const MOAIDrawAPIPara
 	ZLVec2D vec = param.mD;
 	float size = param.mSize;
 
-	ZLMatrix4x4 mtx = MOAIGfxMgr::Get ().GetMtx ( MOAIGfxMgr::WORLD_TO_CLIP_MTX );
+	ZLMatrix4x4 mtx = this->Get < MOAIGfxMgr >().GetMtx ( MOAIGfxMgr::WORLD_TO_CLIP_MTX );
 	
 	ZLMatrix4x4 invMtx;
 	invMtx.Inverse ( mtx );
@@ -443,7 +441,12 @@ void MOAIDraw::ExecuteDrawTriangle ( MOAIGfxMgr& gfxMgr, const MOAIDrawAPIParam:
 //}
 
 //----------------------------------------------------------------//
-MOAIDraw::MOAIDraw () {
+MOAIDraw::MOAIDraw ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIAbstractCmdHandler ( context ),
+	MOAIAbstractCmdHandlerWithAPI < MOAIDrawAPI >( context ),
+	ZLContextClass ( context ) {
 
 	RTTI_BEGIN ( MOAIDraw )
 		RTTI_EXTEND ( MOAIAbstractCmdHandler )
@@ -461,7 +464,7 @@ MOAIDraw::~MOAIDraw () {
 //----------------------------------------------------------------//
 void MOAIDraw::MOAIAbstractCmdHandler_HandleCommand ( u32 cmd, const void* param ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr = this->Get < MOAIGfxMgr >();
 
 	switch ( cmd ) {
 		

@@ -34,7 +34,7 @@ public:
 
 	//----------------------------------------------------------------//
 	void				AffirmLocalScope			();
-						MOAIAbstractRenderable		();
+						MOAIAbstractRenderable		( ZLContext& context );
 	virtual 			~MOAIAbstractRenderable		();
 	void				Render						( MOAIRenderPhaseEnum::_ renderPhase );
 };

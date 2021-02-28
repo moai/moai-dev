@@ -37,7 +37,7 @@ public:
 	bool				ClearReloadable				();
 	bool				IsReadyForUse				() const;
 	bool				HasReloader					() const;
-						MOAIGfxResource				();
+						MOAIGfxResource				( ZLContext& context );
 						~MOAIGfxResource			();
 	bool				Reload						();
 	void				ScheduleForGPUDestroy		();

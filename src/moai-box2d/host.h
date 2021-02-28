@@ -11,6 +11,6 @@
 
 AKU_API void	AKUBox2DAppFinalize					();
 AKU_API void	AKUBox2DAppInitialize				();
-AKU_API void	AKUBox2DContextInitialize			();
+AKU_API void	AKUBox2DContextInitialize			( AKUContextID contextID );
 
 #endif

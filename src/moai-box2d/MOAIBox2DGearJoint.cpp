@@ -93,7 +93,11 @@ int MOAIBox2DGearJoint::_setRatio ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIBox2DGearJoint::MOAIBox2DGearJoint () {
+MOAIBox2DGearJoint::MOAIBox2DGearJoint ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIBox2DPrim ( context ),
+	MOAIBox2DJoint ( context ) {
 	
 	RTTI_BEGIN ( MOAIBox2DGearJoint )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIBox2DGearJoint >)

@@ -37,7 +37,7 @@ public:
 	u32				CountIndices			();
 	void			CopyFromStream			( ZLStream& stream, size_t size, u32 srcInputSizeInBytes );
 	u32				GetIndex				( u32 element );
-					MOAIIndexBuffer			();
+					MOAIIndexBuffer			( ZLContext& context );
 					~MOAIIndexBuffer		();
 	void			PrintIndices			();
 	void			SetIndexSize			( u32 idxSize );

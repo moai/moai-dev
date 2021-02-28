@@ -38,7 +38,8 @@ public:
 	//----------------------------------------------------------------//
 	virtual void	Destroy					() = 0;
 	float			GetUnitsToMeters		();
-					MOAIBox2DPrim			();
+					MOAIBox2DPrim			( ZLContext& context );
+					~MOAIBox2DPrim			();
 	
 	//----------------------------------------------------------------//
 	inline bool IsValid () {
@@ -149,7 +150,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	bool			IsLocked				();
-					MOAIBox2DWorld			();
+					MOAIBox2DWorld			( ZLContext& context );
 					~MOAIBox2DWorld			();
 };
 

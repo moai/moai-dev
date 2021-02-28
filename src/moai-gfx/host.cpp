@@ -18,17 +18,19 @@ void AKUGfxAppInitialize () {
 }
 
 //----------------------------------------------------------------//
-void AKUGfxContextInitialize () {
+void AKUGfxContextInitialize ( AKUContextID contextID ) {
 
-	MOAIDraw::Affirm ();
-	MOAIVertexFormatMgr::Affirm ();
+	assert ( contextID );
+	ZLContext* context = ( ZLContext* )contextID;
+
+	context->Affirm < MOAIDraw >();
+	context->Affirm < MOAIVertexFormatMgr >();
 	
-	REGISTER_LUA_CLASS ( MOAIDraw )
-	
-	REGISTER_LUA_CLASS ( MOAICamera )
-	REGISTER_LUA_CLASS ( MOAIMatrix )
-	REGISTER_LUA_CLASS ( MOAIRenderNode )
-	REGISTER_LUA_CLASS ( MOAITransform )
-	REGISTER_LUA_CLASS ( MOAIVertexFormatMgr )
-	REGISTER_LUA_CLASS ( MOAIViewport )
+	REGISTER_LUA_CLASS ( context, MOAICamera )
+	REGISTER_LUA_CLASS ( context, MOAIDraw )
+	REGISTER_LUA_CLASS ( context, MOAIMatrix )
+	REGISTER_LUA_CLASS ( context, MOAIRenderNode )
+	REGISTER_LUA_CLASS ( context, MOAITransform )
+	REGISTER_LUA_CLASS ( context, MOAIVertexFormatMgr )
+	REGISTER_LUA_CLASS ( context, MOAIViewport )
 }

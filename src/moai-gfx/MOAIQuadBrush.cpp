@@ -9,33 +9,33 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAIQuadBrush::BindVertexFormat () {
+void MOAIQuadBrush::BindVertexFormat ( MOAIGfxMgr& gfxMgr ) {
 	
-	MOAIGfxMgr::Get ().SetVertexFormat ( MOAIVertexFormatPresetEnum::XYZWUVC );
+	gfxMgr.SetVertexFormat ( MOAIVertexFormatPresetEnum::XYZWUVC );
 }
 
 //----------------------------------------------------------------//
-void MOAIQuadBrush::Draw () {
+void MOAIQuadBrush::Draw ( MOAIGfxMgr& gfxMgr ) {
 
-	MOAIGfxMgr::Get ().WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV );
+	gfxMgr.WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV );
 }
 
 //----------------------------------------------------------------//
-void MOAIQuadBrush::Draw ( float xOff, float yOff, float zOff ) {
+void MOAIQuadBrush::Draw ( MOAIGfxMgr& gfxMgr, float xOff, float yOff, float zOff ) {
 	
-	MOAIGfxMgr::Get ().WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff );
+	gfxMgr.WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff );
 }
 
 //----------------------------------------------------------------//
-void MOAIQuadBrush::Draw ( float xOff, float yOff, float zOff, float xScale, float yScale ) {
+void MOAIQuadBrush::Draw ( MOAIGfxMgr& gfxMgr, float xOff, float yOff, float zOff, float xScale, float yScale ) {
 	
-	MOAIGfxMgr::Get ().WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff, xScale, yScale );
+	gfxMgr.WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff, xScale, yScale );
 }
 
 //----------------------------------------------------------------//
-void MOAIQuadBrush::Draw ( float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale ) {
+void MOAIQuadBrush::Draw ( MOAIGfxMgr& gfxMgr, float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale ) {
 	
-	MOAIGfxMgr::Get ().WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff, xScale, yScale, uOff, vOff, uScale, vScale );
+	gfxMgr.WriteQuad ( this->mModelQuad.mV, this->mUVQuad.mV, xOff, yOff, zOff, xScale, yScale, uOff, vOff, uScale, vScale );
 }
 
 //----------------------------------------------------------------//

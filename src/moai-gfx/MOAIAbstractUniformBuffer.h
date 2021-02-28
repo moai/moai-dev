@@ -37,7 +37,7 @@ public:
 
 	//----------------------------------------------------------------//
 	const MOAIUniformSchema*	GetSchema						() const;
-								MOAIAbstractUniformBuffer		();
+								MOAIAbstractUniformBuffer		( ZLContext& context );
 								~MOAIAbstractUniformBuffer		();
 };
 

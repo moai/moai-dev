@@ -33,7 +33,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIBox2DFrictionJoint )
 	
 	//----------------------------------------------------------------//
-					MOAIBox2DFrictionJoint		();
+					MOAIBox2DFrictionJoint		( ZLContext& context );
 					~MOAIBox2DFrictionJoint		();
 };
 

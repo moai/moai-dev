@@ -13,7 +13,7 @@
 			stream. Currently only MD5 and SHA are available. 
 */
 class MOAIHashWriterCrypto :
-	public MOAIHashWriter {
+	public virtual MOAIHashWriter {
 private:
 	
 	//----------------------------------------------------------------//
@@ -33,7 +33,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIHashWriterCrypto )
 
 	//----------------------------------------------------------------//
-					MOAIHashWriterCrypto	();
+					MOAIHashWriterCrypto	( ZLContext& context );
 					~MOAIHashWriterCrypto	();
 };
 

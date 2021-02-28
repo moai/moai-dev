@@ -26,11 +26,11 @@ public:
 	ZLQuad	mUVQuad;
 
 	//----------------------------------------------------------------//
-	static void			BindVertexFormat	();
-	void				Draw				();
-	void				Draw				( float xOff, float yOff, float zOff );
-	void				Draw				( float xOff, float yOff, float zOff, float xScale, float yScale );
-	void				Draw				( float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale );
+	static void			BindVertexFormat	( MOAIGfxMgr& gfxMgr );
+	void				Draw				( MOAIGfxMgr& gfxMgr );
+	void				Draw				( MOAIGfxMgr& gfxMgr, float xOff, float yOff, float zOff );
+	void				Draw				( MOAIGfxMgr& gfxMgr, float xOff, float yOff, float zOff, float xScale, float yScale );
+	void				Draw				( MOAIGfxMgr& gfxMgr, float xOff, float yOff, float zOff, float xScale, float yScale, float uOff, float vOff, float uScale, float vScale );
 	ZLRect				GetUVBounds			();
 	bool				GetUVForCartesian	( u32 triangleID, float x, float y, ZLVec2D& uv );
 	ZLRect				GetVtxBounds		();

@@ -32,7 +32,7 @@ public:
 	//----------------------------------------------------------------//
 	bool					HasProgram				() const;
 	bool					IsReadyForUse			() const;
-							MOAIShader				();
+							MOAIShader				( ZLContext& context );
 							~MOAIShader				();
 };
 

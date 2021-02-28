@@ -86,11 +86,11 @@ public:
 	DECL_ATTR_ID ( TRANSFORM_TRAIT )
 	
 	//----------------------------------------------------------------//
-	const ZLAffine3D&		GetLocalToWorldMtx			() const;
-	const ZLAffine3D*		GetLocTrait					() const;
-	const ZLAffine3D*		GetTransformTrait			() const;
-	const ZLAffine3D&		GetWorldToLocalMtx			() const;
-							MOAIAbstractBaseTransform		();
+	const ZLAffine3D&		GetLocalToWorldMtx				() const;
+	const ZLAffine3D*		GetLocTrait						() const;
+	const ZLAffine3D*		GetTransformTrait				() const;
+	const ZLAffine3D&		GetWorldToLocalMtx				() const;
+							MOAIAbstractBaseTransform		( ZLContext& context );
 							~MOAIAbstractBaseTransform		();
 };
 

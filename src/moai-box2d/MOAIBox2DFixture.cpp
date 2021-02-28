@@ -290,7 +290,10 @@ u32 MOAIBox2DFixture::LoadVerts ( MOAILuaState& state, int idx, b2Vec2* verts, u
 }
 
 //----------------------------------------------------------------//
-MOAIBox2DFixture::MOAIBox2DFixture () :
+MOAIBox2DFixture::MOAIBox2DFixture ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIBox2DPrim ( context ),
 	mFixture ( 0 ),
 	mCollisionPhaseMask ( 0 ),
 	mCollisionCategoryMask ( 0 ) {

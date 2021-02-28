@@ -151,7 +151,9 @@ void MOAIGfxMgr_GPUCache::InitTextureUnits ( size_t nTextureUnits ) {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxMgr_GPUCache::MOAIGfxMgr_GPUCache () :
+MOAIGfxMgr_GPUCache::MOAIGfxMgr_GPUCache ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAIGfxMgrComponents ( context ),
 	mDirtyFlags ( 0 ),
 	mTextureDirtyFlags ( 0 ),
 	mMaxTextureUnits ( 0 ),

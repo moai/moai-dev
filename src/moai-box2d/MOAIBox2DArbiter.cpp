@@ -187,31 +187,27 @@ void MOAIBox2DArbiter::EndContact ( b2Contact* contact ) {
 }
 
 //----------------------------------------------------------------//
-float MOAIBox2DArbiter::GetUnitsToMeters ( ) const {
-	if (this->mWorld) {
-		return this->mWorld->GetUnitsToMeters();
-	} else {
+float MOAIBox2DArbiter::GetUnitsToMeters () const {
+
+	if ( this->mWorld ) {
+		return this->mWorld->GetUnitsToMeters ();
+	}
+	else {
 		return 1.0f;
 	}
 }
 
 //----------------------------------------------------------------//
-MOAIBox2DArbiter::MOAIBox2DArbiter () :
-	mContact ( 0 ),
-	mImpulse ( 0 ),
+MOAIBox2DArbiter::MOAIBox2DArbiter ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	mContact ( NULL ),
+	mImpulse ( NULL ),
+	mTotalPoints ( 0 ),
+	mNormalImpulse ( 0 ),
+	mTangentImpulse ( 0 ),
+	mContactDirty ( false ),
 	mWorld ( NULL ) {
-	
-	RTTI_BEGIN ( MOAIBox2DArbiter )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIBox2DArbiter >)
-		RTTI_EXTEND ( MOAILuaObject )
-	RTTI_END
-}
-
-//----------------------------------------------------------------//
-MOAIBox2DArbiter::MOAIBox2DArbiter ( const MOAIBox2DWorld& world ) :
-	mContact ( 0 ),
-	mImpulse ( 0 ),
-	mWorld ( &world ) {
 	
 	RTTI_BEGIN ( MOAIBox2DArbiter )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIBox2DArbiter >)

@@ -41,7 +41,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIBox2DPrismaticJoint )
 	
 	//----------------------------------------------------------------//
-					MOAIBox2DPrismaticJoint		();
+					MOAIBox2DPrismaticJoint		( ZLContext& context );
 					~MOAIBox2DPrismaticJoint	();
 };
 

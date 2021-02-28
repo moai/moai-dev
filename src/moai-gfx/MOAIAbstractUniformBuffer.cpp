@@ -65,7 +65,12 @@ const MOAIUniformSchema* MOAIAbstractUniformBuffer::GetSchema () const {
 }
 
 //----------------------------------------------------------------//
-MOAIAbstractUniformBuffer::MOAIAbstractUniformBuffer () {
+MOAIAbstractUniformBuffer::MOAIAbstractUniformBuffer ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ) {
 
 	RTTI_BEGIN ( MOAIAbstractUniformBuffer )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractUniformBuffer >)

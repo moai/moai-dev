@@ -31,7 +31,13 @@ int MOAIAbstractChildTransform::_setParent ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIAbstractChildTransform::MOAIAbstractChildTransform () {
+MOAIAbstractChildTransform::MOAIAbstractChildTransform ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIAbstractBaseTransform ( context ) {
 		
 	RTTI_BEGIN ( MOAIAbstractChildTransform )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIAbstractChildTransform >)

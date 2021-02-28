@@ -26,7 +26,7 @@ int MOAIHasGfxScript::_gfx ( lua_State* L ) {
 	
 	MOAIGfxScript& gfxScript = self->AffirmGfxScript ();
 	gfxScript.Reset ();
-	gfxScript.AffirmMedium ().PushCmdInterfaceWithHandler ( state, MOAIDraw::Get ());
+	gfxScript.AffirmMedium ().PushCmdInterfaceWithHandler ( state, self->Get < MOAIDraw >());
 	
 	return 1;
 }
@@ -48,7 +48,7 @@ int MOAIHasGfxScript::_setGfxScript ( lua_State* L ) {
 MOAIGfxScript& MOAIHasGfxScript::AffirmGfxScript () {
 
 	if ( !this->mGfxScript ) {
-		this->mGfxScript = new MOAIGfxScript ();
+		this->mGfxScript = new MOAIGfxScript ( this->GetContext ());
 	}
 	return *this->mGfxScript;
 }
@@ -60,7 +60,9 @@ MOAIGfxScript* MOAIHasGfxScript::GetGfxScript () {
 }
 
 //----------------------------------------------------------------//
-MOAIHasGfxScript::MOAIHasGfxScript () {
+MOAIHasGfxScript::MOAIHasGfxScript ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ) {
 
 	RTTI_BEGIN ( MOAIHasGfxScript )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIHasGfxScript >)

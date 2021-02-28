@@ -155,7 +155,11 @@ int MOAIBox2DDistanceJoint::_setLength ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIBox2DDistanceJoint::MOAIBox2DDistanceJoint () {
+MOAIBox2DDistanceJoint::MOAIBox2DDistanceJoint ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIBox2DPrim ( context ),
+	MOAIBox2DJoint ( context ) {
 	
 	RTTI_BEGIN ( MOAIBox2DDistanceJoint )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIBox2DDistanceJoint >)

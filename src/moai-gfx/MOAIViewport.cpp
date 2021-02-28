@@ -160,7 +160,15 @@ ZLViewport MOAIViewport::GetWorldViewport () const {
 }
 
 //----------------------------------------------------------------//
-MOAIViewport::MOAIViewport () {
+MOAIViewport::MOAIViewport ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIAbstractBaseTransform ( context ),
+	MOAIAbstractChildTransform ( context ),
+	MOAITransform ( context ) {
 		
 	RTTI_BEGIN ( MOAIViewport )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIViewport >)

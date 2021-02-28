@@ -15,7 +15,7 @@ class b2Joint;
 	@text Box2D joint.
 */
 class MOAIBox2DJoint :
-	public MOAIBox2DPrim {
+	public virtual MOAIBox2DPrim {
 protected:
 	
 	MOAI_LUA_OBJECT_VISITOR_FRIEND
@@ -45,7 +45,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	void				Destroy					();
-						MOAIBox2DJoint			();
+						MOAIBox2DJoint			( ZLContext& context );
 						~MOAIBox2DJoint			();
 };
 

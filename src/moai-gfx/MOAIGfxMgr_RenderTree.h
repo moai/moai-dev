@@ -4,13 +4,16 @@
 #ifndef	MOAIGFXMGR_RENDERTREE_H
 #define	MOAIGFXMGR_RENDERTREE_H
 
+#include <moai-gfx/MOAIGfxMgrComponents.h>
+
 class MOAIAbstractRenderable;
 
 //================================================================//
 // MOAIGfxMgr_RenderTree
 //================================================================//
 // TODO: doxygen
-class MOAIGfxMgr_RenderTree {
+class MOAIGfxMgr_RenderTree :
+	public virtual MOAIGfxMgrComponents {
 protected:
 
 	u32					mRenderCounter;	// increments every render
@@ -29,7 +32,7 @@ public:
 	GET ( double, RenderTime, mRenderTime )
 	
 	//----------------------------------------------------------------//
-						MOAIGfxMgr_RenderTree		();
+						MOAIGfxMgr_RenderTree		( ZLContext& context );
 	virtual				~MOAIGfxMgr_RenderTree		();
 	void				PushRenderable				( MOAIAbstractRenderable& node ); // goes into the default batch, if it exists
 	void				PushRenderable				( MOAILuaState& state, int idx );

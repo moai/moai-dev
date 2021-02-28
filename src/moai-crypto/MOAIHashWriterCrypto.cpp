@@ -109,7 +109,12 @@ int MOAIHashWriterCrypto::_openSHA512 ( lua_State* L ) {
 
 
 //----------------------------------------------------------------//
-MOAIHashWriterCrypto::MOAIHashWriterCrypto () {
+MOAIHashWriterCrypto::MOAIHashWriterCrypto ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIStream ( context ),
+	MOAIStreamAdapter ( context ),
+	MOAIHashWriter ( context ) {
 	
 	RTTI_BEGIN ( MOAIHashWriterCrypto )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIHashWriterCrypto >)

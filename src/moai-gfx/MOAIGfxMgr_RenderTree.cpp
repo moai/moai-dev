@@ -15,14 +15,16 @@ void MOAIGfxMgr_RenderTree::AffirmRenderRoot () {
 
 	if ( !this->mRenderRoot ) {
 		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
-		MOAIRenderNode* node = MOAIGfxMgr::Get ().CreateRenderRoot ();
+		MOAIRenderNode* node = this->GetGfxMgr ().CreateRenderRoot ();
 		node->PushLuaUserdata ( state );
 		this->mRenderRoot.SetRef ( state, -1 );
 	}
 }
 
 //----------------------------------------------------------------//
-MOAIGfxMgr_RenderTree::MOAIGfxMgr_RenderTree () :
+MOAIGfxMgr_RenderTree::MOAIGfxMgr_RenderTree ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAIGfxMgrComponents ( context ),
 	mRenderCounter ( 0 ),
 	mRenderDuration ( 1.0 / 60.0 ),
 	mRenderTime ( 0.0 ) {

@@ -41,7 +41,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIBox2DRevoluteJoint )
 	
 	//----------------------------------------------------------------//
-					MOAIBox2DRevoluteJoint		();
+					MOAIBox2DRevoluteJoint		( ZLContext& context );
 					~MOAIBox2DRevoluteJoint		();
 };
 

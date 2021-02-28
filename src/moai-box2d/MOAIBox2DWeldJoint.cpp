@@ -108,7 +108,11 @@ int MOAIBox2DWeldJoint::_setFrequency ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIBox2DWeldJoint::MOAIBox2DWeldJoint () {
+MOAIBox2DWeldJoint::MOAIBox2DWeldJoint ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIBox2DPrim ( context ),
+	MOAIBox2DJoint ( context ) {
 	
 	RTTI_BEGIN ( MOAIBox2DWeldJoint )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIBox2DWeldJoint >)

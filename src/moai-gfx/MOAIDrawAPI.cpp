@@ -35,8 +35,8 @@ public:
 	}
 	
 	//----------------------------------------------------------------//
-	MOAIAbstractDrawShapeVertexLineStripWriter2D () :
-		mGfxMgr ( MOAIGfxMgr::Get ()) {
+	MOAIAbstractDrawShapeVertexLineStripWriter2D ( MOAIGfxMgr& gfxMgr ) :
+		mGfxMgr ( gfxMgr ) {
 	}
 
 	//----------------------------------------------------------------//
@@ -87,7 +87,7 @@ int MOAIDrawAPI::_clearSurface ( lua_State* L ) {
 int MOAIDrawAPI::_compose ( lua_State* L ) {
 	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
 
-	MOAIShader* shader = MOAIGfxMgr::Get ().AffirmShader ( state, 2 );
+	MOAIShader* shader = state.Get < MOAIGfxMgr >().AffirmShader ( state, 2 );
 	self->Compose ( shader );
 
 	MOAI_LUA_RETURN_SELF
@@ -675,7 +675,7 @@ int MOAIDrawAPI::_setScissorRect ( lua_State* L ) {
 int MOAIDrawAPI::_setShader ( lua_State* L ) {
 	MOAI_LUA_CMD_SETUP ( MOAIDrawAPI )
 	
-	MOAIShader* shader 		= MOAIGfxMgr::Get ().AffirmShader ( state, 2 );
+	MOAIShader* shader = state.Get < MOAIGfxMgr >().AffirmShader ( state, 2 );
 	self->SetShader ( shader );
 	
 	MOAI_LUA_RETURN_SELF
@@ -690,10 +690,10 @@ int MOAIDrawAPI::_setTexture ( lua_State* L ) {
 
 	if ( state.IsType ( 2, LUA_TNUMBER )) {
 		textureUnit 	= state.GetValue < MOAILuaIndex >( 2, 0 );
-		texture 		= MOAIGfxMgr::Get ().AffirmTexture ( state, 3 );
+		texture 		= state.Get < MOAIGfxMgr >().AffirmTexture ( state, 3 );
 	}
 	else {
-		texture			= MOAIGfxMgr::Get ().AffirmTexture ( state, 2 );
+		texture			= state.Get < MOAIGfxMgr >().AffirmTexture ( state, 2 );
 	}
 
 	self->SetTexture ( texture, textureUnit );
@@ -870,12 +870,15 @@ void MOAIDrawAPI::DrawArcStroke ( float x, float y, float xRad, float yRad, floa
 
 //----------------------------------------------------------------//
 void MOAIDrawAPI::DrawBezierCurve ( const ZLCubicBezier2D& bezier ) {
-
-	MOAIAbstractDrawShapeVertexLineStripWriter2D writer;
+	UNUSED ( bezier );
 	
-	writer.Begin ();
-		bezier.Flatten ( writer );
-	writer.End ();
+	// TODO: implement as command
+
+//	MOAIAbstractDrawShapeVertexLineStripWriter2D writer;
+//
+//	writer.Begin ();
+//		bezier.Flatten ( writer );
+//	writer.End ();
 }
 
 //----------------------------------------------------------------//
@@ -1063,57 +1066,61 @@ void MOAIDrawAPI::DrawLine ( float x0, float y0, float z0, float x1, float y1, f
 //----------------------------------------------------------------//
 void MOAIDrawAPI::DrawLuaArray ( lua_State* L, MOAIGfxTopologyEnum::_ primType ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	MOAILuaState state ( L );
+	// TODO: implement as command
 
-	float x = 0.0f;
-	float y = 0.0f;
-	
-	size_t size = state.GetTableSize ( -1 ) >> 2;
-	
-	gfxMgr.BeginPrim ( primType, size );
-
-	u32 counter = 0;
-	lua_pushnil ( L );
-    while ( lua_next ( L, 1 ) != 0 ) {
-		// Assuming odd-numbered array entries to be x-coordinate (abscissa),
-		// even-numbered array entries to be y-coordinate (oordinate).
-		if ( counter % 2 == 0 ) {
-			x = state.GetValue < float >( -1, 0.0f );
-		} else {
-			y = state.GetValue < float >( -1, 0.0f );
-			gfxMgr.WriteVtx ( x, y );
-			gfxMgr.WritePenColor4b ();
-		}
-		++counter;
-		lua_pop ( L, 1 );
-	}
-
-	gfxMgr.EndPrim ();
+//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+//	MOAILuaState state ( L );
+//
+//	float x = 0.0f;
+//	float y = 0.0f;
+//
+//	size_t size = state.GetTableSize ( -1 ) >> 2;
+//
+//	gfxMgr.BeginPrim ( primType, size );
+//
+//	u32 counter = 0;
+//	lua_pushnil ( L );
+//    while ( lua_next ( L, 1 ) != 0 ) {
+//		// Assuming odd-numbered array entries to be x-coordinate (abscissa),
+//		// even-numbered array entries to be y-coordinate (oordinate).
+//		if ( counter % 2 == 0 ) {
+//			x = state.GetValue < float >( -1, 0.0f );
+//		} else {
+//			y = state.GetValue < float >( -1, 0.0f );
+//			gfxMgr.WriteVtx ( x, y );
+//			gfxMgr.WritePenColor4b ();
+//		}
+//		++counter;
+//		lua_pop ( L, 1 );
+//	}
+//
+//	gfxMgr.EndPrim ();
 }
 
 //----------------------------------------------------------------//
 void MOAIDrawAPI::DrawLuaParams ( lua_State* L, MOAIGfxTopologyEnum::_ primType ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
-	MOAILuaState state ( L );
+	// TODO: implement as command
 
-	u32 total = ( state.GetTop () - 1 ) >> 1;
-	
-	gfxMgr.BeginPrim ( primType, total );
-	
-	for ( u32 i = 0; i < total; ++i ) {
-		
-		u32 idx = ( i << 1 ) + 2;
-		
-		float x = state.GetValue < float >( idx, 0.0f );
-		float y = state.GetValue < float >( idx + 1, 0.0f );
-		
-		gfxMgr.WriteVtx ( x, y, 0.0f );
-		gfxMgr.WritePenColor4b ();
-	}
-	
-	gfxMgr.EndPrim ();
+//	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+//	MOAILuaState state ( L );
+//
+//	u32 total = ( state.GetTop () - 1 ) >> 1;
+//
+//	gfxMgr.BeginPrim ( primType, total );
+//
+//	for ( u32 i = 0; i < total; ++i ) {
+//
+//		u32 idx = ( i << 1 ) + 2;
+//
+//		float x = state.GetValue < float >( idx, 0.0f );
+//		float y = state.GetValue < float >( idx + 1, 0.0f );
+//
+//		gfxMgr.WriteVtx ( x, y, 0.0f );
+//		gfxMgr.WritePenColor4b ();
+//	}
+//
+//	gfxMgr.EndPrim ();
 }
 
 //----------------------------------------------------------------//

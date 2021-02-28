@@ -86,7 +86,7 @@ public:
 	void			EndPrim							();
 	void			FlushToGPU						();
 	
-					MOAIGfxMgr_VertexCache			();
+					MOAIGfxMgr_VertexCache			( ZLContext& context );
 	virtual			~MOAIGfxMgr_VertexCache			();
 
 	void			Reset							();

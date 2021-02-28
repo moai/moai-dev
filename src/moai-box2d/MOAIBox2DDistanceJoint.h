@@ -35,7 +35,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIBox2DDistanceJoint )
 	
 	//----------------------------------------------------------------//
-					MOAIBox2DDistanceJoint		();
+					MOAIBox2DDistanceJoint		( ZLContext& context );
 					~MOAIBox2DDistanceJoint		();
 };
 

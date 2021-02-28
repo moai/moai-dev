@@ -9,7 +9,10 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAITexture::MOAITexture () :
+MOAITexture::MOAITexture ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIGfxResource ( context ),
 	mMinFilter ( MOAITextureFilterEnum::LINEAR ),
 	mMagFilter ( MOAITextureFilterEnum::NEAREST ),
 	mWrap ( MOAITextureWrapEnum::CLAMP ),

@@ -15,7 +15,7 @@
 			stream.
 */
 class MOAIHashWriter :
-	public MOAIStreamAdapter {
+	public virtual MOAIStreamAdapter {
 protected:
 
 	ZLHashWriter*	mHashWriter;

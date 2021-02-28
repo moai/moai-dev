@@ -11,6 +11,6 @@
 
 AKU_API void	AKUCryptoAppFinalize				();
 AKU_API void	AKUCryptoAppInitialize				();
-AKU_API void	AKUCryptoContextInitialize			();
+AKU_API void	AKUCryptoContextInitialize			( AKUContextID contextID );
 
 #endif

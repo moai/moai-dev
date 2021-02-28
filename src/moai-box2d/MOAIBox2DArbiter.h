@@ -70,9 +70,10 @@ public:
 		ALL				= 0x0000000f,
 	};
 	
+	GET_SET ( const MOAIBox2DWorld*, World, mWorld )
+	
 	//----------------------------------------------------------------//
-					MOAIBox2DArbiter		();
-					MOAIBox2DArbiter        ( const MOAIBox2DWorld &world );
+					MOAIBox2DArbiter		( ZLContext& context );
 					~MOAIBox2DArbiter		();
 	
 };

@@ -51,7 +51,7 @@ int MOAIBox2DBody::_addChain ( lua_State* L ) {
 		}
 		b2FixtureDef fixtureDef;
 		fixtureDef.shape = &chainShape;
-		MOAIBox2DFixture* fixture = new MOAIBox2DFixture ();
+		MOAIBox2DFixture* fixture = new MOAIBox2DFixture ( self->GetContext ());
 		fixture->SetFixture ( self->mBody->CreateFixture ( &fixtureDef ));
 		fixture->SetWorld ( self->mWorld );
 		self->mWorld->LuaRetain ( fixture );
@@ -89,7 +89,7 @@ int MOAIBox2DBody::_addCircle ( lua_State* L ) {
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &circleShape;
 	
-	MOAIBox2DFixture* fixture = new MOAIBox2DFixture ();
+	MOAIBox2DFixture* fixture = new MOAIBox2DFixture ( self->GetContext ());
 	fixture->SetFixture ( self->mBody->CreateFixture ( &fixtureDef ));
 	fixture->SetWorld ( self->mWorld );
 	self->mWorld->LuaRetain ( fixture );
@@ -131,7 +131,7 @@ int MOAIBox2DBody::_addEdges ( lua_State* L ) {
 				edgeShape.Set(verts[i], verts[i+1]);
 				b2FixtureDef fixtureDef;
 				fixtureDef.shape = &edgeShape;
-				MOAIBox2DFixture* fixture = new MOAIBox2DFixture ();
+				MOAIBox2DFixture* fixture = new MOAIBox2DFixture ( self->GetContext ());
 				fixture->SetFixture ( self->mBody->CreateFixture ( &fixtureDef ));
 				fixture->SetWorld ( self->mWorld );
 				self->mWorld->LuaRetain ( fixture );
@@ -183,7 +183,7 @@ int MOAIBox2DBody::_addPolygon ( lua_State* L ) {
 		b2FixtureDef fixtureDef;
 		fixtureDef.shape = &polyShape;
 		
-		MOAIBox2DFixture* fixture = new MOAIBox2DFixture ();
+		MOAIBox2DFixture* fixture = new MOAIBox2DFixture ( self->GetContext ());
 		fixture->SetFixture ( self->mBody->CreateFixture ( &fixtureDef ));
 		fixture->SetWorld ( self->mWorld );
 		self->mWorld->LuaRetain ( fixture );
@@ -233,7 +233,7 @@ int MOAIBox2DBody::_addRect ( lua_State* L ) {
 	b2FixtureDef fixtureDef;
 	fixtureDef.shape = &polygonShape;
 	
-	MOAIBox2DFixture* fixture = new MOAIBox2DFixture ();
+	MOAIBox2DFixture* fixture = new MOAIBox2DFixture ( self->GetContext ());
 	fixture->SetFixture ( self->mBody->CreateFixture ( &fixtureDef ));
 	fixture->SetWorld ( self->mWorld );
 	self->mWorld->LuaRetain ( fixture );
@@ -1043,7 +1043,14 @@ void MOAIBox2DBody::Destroy () {
 }
 
 //----------------------------------------------------------------//
-MOAIBox2DBody::MOAIBox2DBody () :
+MOAIBox2DBody::MOAIBox2DBody ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIBox2DPrim ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIAbstractBaseTransform ( context ),
 	mBody ( 0 ) {
 	
 	RTTI_BEGIN ( MOAIBox2DBody )

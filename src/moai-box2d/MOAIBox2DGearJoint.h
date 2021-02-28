@@ -36,7 +36,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIBox2DGearJoint )
 	
 	//----------------------------------------------------------------//
-					MOAIBox2DGearJoint		();
+					MOAIBox2DGearJoint		( ZLContext& context );
 					~MOAIBox2DGearJoint		();
 };
 

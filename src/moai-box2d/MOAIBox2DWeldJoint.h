@@ -31,7 +31,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIBox2DWeldJoint )
 	
 	//----------------------------------------------------------------//
-					MOAIBox2DWeldJoint		();
+					MOAIBox2DWeldJoint		( ZLContext& context );
 					~MOAIBox2DWeldJoint		();
 };
 

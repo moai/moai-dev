@@ -142,7 +142,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	ZLAffine3D				GetBillboardMtx				( const ZLAffine3D& faceCameraMtx ) const;
-							MOAITransform				();
+							MOAITransform				( ZLContext& context );
 							~MOAITransform				();
 	void					SetLoc						( float x, float y, float z );
 	void					SetPiv						( float x, float y, float z );

@@ -37,7 +37,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	ZLViewport		GetWorldViewport		() const;
-					MOAIViewport			();
+					MOAIViewport			( ZLContext& context );
 					~MOAIViewport			();
 };
 

@@ -34,7 +34,7 @@ public:
 
 	//----------------------------------------------------------------//
 	ZLRect			GetScissorRect			( const ZLMatrix4x4& worldToWndMtx ) const;
-					MOAIScissorRect			();
+					MOAIScissorRect			( ZLContext& context );
 					~MOAIScissorRect		();
 };
 

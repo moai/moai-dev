@@ -138,7 +138,11 @@ int MOAIBox2DPulleyJoint::_getRatio ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIBox2DPulleyJoint::MOAIBox2DPulleyJoint () {
+MOAIBox2DPulleyJoint::MOAIBox2DPulleyJoint ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIBox2DPrim ( context ),
+	MOAIBox2DJoint ( context ) {
 	
 	RTTI_BEGIN ( MOAIBox2DPulleyJoint )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIBox2DPulleyJoint >)

@@ -21,7 +21,10 @@ bool MOAIShader::IsReadyForUse () const {
 }
 
 //----------------------------------------------------------------//
-MOAIShader::MOAIShader () {
+MOAIShader::MOAIShader ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIHasGfxScript ( context ) {
 	
 	RTTI_BEGIN ( MOAIShader )
 		RTTI_EXTEND ( MOAIHasGfxScript )

@@ -54,7 +54,7 @@ int MOAIColor::_moveColor ( lua_State* L ) {
 	
 		u32 mode = state.GetValue < u32 >( 7, ZLInterpolate::kSmooth );
 		
-		MOAIEaseDriver* action = new MOAIEaseDriver ();
+		MOAIEaseDriver* action = new MOAIEaseDriver ( self->GetContext ());
 		
 		action->ParseForMove ( state, 2, self, 4, mode,
 			AttrID::Pack ( ATTR_R_COL ).ToRaw (), 0.0f,
@@ -122,7 +122,7 @@ int MOAIColor::_seekColor ( lua_State* L ) {
 	
 		u32 mode = state.GetValue < u32 >( 7, ZLInterpolate::kSmooth );
 		
-		MOAIEaseDriver* action = new MOAIEaseDriver ();
+		MOAIEaseDriver* action = new MOAIEaseDriver ( self->GetContext ());
 		
 		action->ParseForSeek ( state, 2, self, 4, mode,
 			AttrID::Pack ( ATTR_R_COL ).ToRaw (), self->mR, 0.0f,
@@ -223,7 +223,7 @@ MOAIColor* MOAIColor::AffirmColor ( MOAILuaState& state, int idx ) {
 		float b = state.GetValue < float >( 4, 0.0f );
 		float a = state.GetValue < float >( 5, 1.0f );
 
-		color = new MOAIColor ();
+		color = new MOAIColor ( state.GetContext ());
 		color->Set ( r, g, b, a );
 		color->ScheduleUpdate ();
 	}
@@ -243,7 +243,12 @@ bool MOAIColor::IsClear () {
 }
 
 //----------------------------------------------------------------//
-MOAIColor::MOAIColor () {
+MOAIColor::MOAIColor ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ) {
 	
 	RTTI_BEGIN ( MOAIColor )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIColor >)

@@ -94,7 +94,7 @@ void MOAISurfaceClearColor::ClearSurface () const {
 
 	if ( !this->mClearFlags ) return;
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr = this->Get < MOAIGfxMgr >();
 
 	if ( this->mClearFlags & MOAIClearFlagsEnum::COLOR_BUFFER_BIT ) {
 		ZLColorVec colorVec = this->GetClearColorVec ();
@@ -114,7 +114,9 @@ ZLColorVec MOAISurfaceClearColor::GetClearColorVec () const {
 }
 
 //----------------------------------------------------------------//
-MOAISurfaceClearColor::MOAISurfaceClearColor () :
+MOAISurfaceClearColor::MOAISurfaceClearColor ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
 	mClearFlags ( MOAIClearFlagsEnum::COLOR_BUFFER_BIT | MOAIClearFlagsEnum::DEPTH_BUFFER_BIT ),
 	mClearColor ( ZLColor::PackRGBA ( 0.0f, 0.0f, 0.0f, 1.0f )) {
 	

@@ -110,7 +110,15 @@ ZLRect MOAIScissorRect::GetScissorRect ( const ZLMatrix4x4& worldToWndMtx ) cons
 }
 
 //----------------------------------------------------------------//
-MOAIScissorRect::MOAIScissorRect () :
+MOAIScissorRect::MOAIScissorRect ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIAbstractBaseTransform ( context ),
+	MOAIAbstractChildTransform ( context ),
+	MOAITransform ( context ),
  	mRect ( ZLRect::EMPTY ) {
 	
 	RTTI_BEGIN ( MOAIScissorRect )

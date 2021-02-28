@@ -70,7 +70,7 @@ public:
 	MOAIVertexFormat*			GetFormat					( MOAIVertexFormatPresetEnum formatID );
 	MOAIVertexFormat* 			GetFormat 					( lua_State* L, int idx );
 	u32							GetVertexSize				( MOAIVertexFormatPresetEnum formatID );
-								MOAIVertexFormatMgr			();
+								MOAIVertexFormatMgr			( ZLContext& context );
 								~MOAIVertexFormatMgr		();
 };
 

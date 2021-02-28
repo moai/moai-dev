@@ -36,7 +36,7 @@ public:
 	DECL_LUA_SINGLETON ( MOAIDraw )
 
 	//----------------------------------------------------------------//
-					MOAIDraw						();
+					MOAIDraw						( ZLContext& context );
 					~MOAIDraw						();
 };
 

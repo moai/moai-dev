@@ -12,6 +12,6 @@
 // setup
 AKU_API void			AKUGfxAppFinalize				();
 AKU_API void			AKUGfxAppInitialize				();
-AKU_API void			AKUGfxContextInitialize			();
+AKU_API void			AKUGfxContextInitialize			( AKUContextID contextID );
 
 #endif

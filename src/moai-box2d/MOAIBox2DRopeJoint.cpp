@@ -9,14 +9,6 @@
 #include <moai-box2d/MOAIBox2DRopeJoint.h>
 #include <moai-box2d/MOAIBox2DWorld.h>
 
-MOAIBox2DRopeJoint::MOAIBox2DRopeJoint () {
-	
-	RTTI_BEGIN ( MOAIBox2DRopeJoint )
-		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIBox2DRopeJoint >)
-		RTTI_EXTEND ( MOAIBox2DJoint )
-	RTTI_END
-}
-
 //----------------------------------------------------------------//
 /**	@lua	getLimitState
  @text	See Box2D documentation.
@@ -86,9 +78,25 @@ int MOAIBox2DRopeJoint::_setMaxLength ( lua_State* L ) {
 	return 1;
 }
 
+//================================================================//
+// MOAIBox2DRopeJoint
+//================================================================//
+
+//----------------------------------------------------------------//
+MOAIBox2DRopeJoint::MOAIBox2DRopeJoint ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIBox2DPrim ( context ),
+	MOAIBox2DJoint ( context ) {
+	
+	RTTI_BEGIN ( MOAIBox2DRopeJoint )
+		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIBox2DRopeJoint >)
+		RTTI_EXTEND ( MOAIBox2DJoint )
+	RTTI_END
+}
+
 //----------------------------------------------------------------//
 MOAIBox2DRopeJoint::~MOAIBox2DRopeJoint () {
-	
 }
 
 //================================================================//

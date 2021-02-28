@@ -135,7 +135,9 @@ void MOAIGfxMgr_VertexCache::FlushToGPU () {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxMgr_VertexCache::MOAIGfxMgr_VertexCache () :
+MOAIGfxMgr_VertexCache::MOAIGfxMgr_VertexCache ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAIGfxMgrComponents ( context ),
 	mIsDrawing ( false ),
 	mVtxBase ( 0 ),
 	mIdxBase ( 0 ),

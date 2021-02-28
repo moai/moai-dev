@@ -13,11 +13,10 @@
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIVertexFormatMgr::_getFormat ( lua_State* L ) {
-	MOAILuaState state ( L );
+	MOAI_LUA_SETUP_SINGLE ( MOAIVertexFormatMgr, "" )
 
 	u32 formatID = ( u32 )state.GetValue < u32 >( 1, ( u32 )MOAIVertexFormatPresetEnum::UNKNOWN_FORMAT );
-	
-	state.Push ( MOAIVertexFormatMgr::Get ().GetFormat (( MOAIVertexFormatPresetEnum )formatID ));
+	state.Push ( self->Get < MOAIVertexFormatMgr >().GetFormat (( MOAIVertexFormatPresetEnum )formatID ));
 	return 1;
 }
 
@@ -36,7 +35,7 @@ MOAIVertexFormat* MOAIVertexFormatMgr::GetFormat ( MOAIVertexFormatPresetEnum fo
 		
 		if ( !format ) {
 
-			format = MOAIGfxMgr::Get ().CreateVertexFormat ();
+			format = this->Get < MOAIGfxMgr >().CreateVertexFormat ();
 			this->LuaRetain ( format );
 			
 			switch ( formatID ) {
@@ -110,7 +109,10 @@ u32 MOAIVertexFormatMgr::GetVertexSize ( MOAIVertexFormatPresetEnum formatID ) {
 }
 
 //----------------------------------------------------------------//
-MOAIVertexFormatMgr::MOAIVertexFormatMgr () {
+MOAIVertexFormatMgr::MOAIVertexFormatMgr ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	ZLContextClass ( context ),
+	MOAILuaObject ( context ) {
 		
 	RTTI_BEGIN ( MOAIVertexFormatMgr )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIVertexFormatMgr >)

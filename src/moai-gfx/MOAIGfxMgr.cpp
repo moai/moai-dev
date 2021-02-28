@@ -178,7 +178,7 @@ size_t MOAIGfxMgr::GetTextureMemoryUsage () const {
 //----------------------------------------------------------------//
 MOAIVertexFormat* MOAIGfxMgr::GetVertexFormatPreset ( MOAIVertexFormatPresetEnum preset ) const {
 
-	return MOAIVertexFormatMgr::Get ().GetFormat ( preset );
+	return this->Get < MOAIVertexFormatMgr >().GetFormat ( preset );
 }
 
 //----------------------------------------------------------------//
@@ -239,7 +239,16 @@ ZLMatrix4x4 MOAIGfxMgr::GetWndToWorldMtx ( const ZLRect& wndRect ) {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxMgr::MOAIGfxMgr () {
+MOAIGfxMgr::MOAIGfxMgr ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIGlobalEventSource ( context ),
+	MOAIGfxMgrComponents ( context ),
+	MOAIGfxMgr_CPUCache ( context ),
+	MOAIGfxMgr_GPUCache ( context ),
+	MOAIGfxMgr_RenderTree ( context ),
+	MOAIGfxMgr_VertexCache ( context ) {
 		
 	RTTI_BEGIN ( MOAIGfxMgr )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIGfxMgr >)

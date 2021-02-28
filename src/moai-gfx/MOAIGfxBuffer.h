@@ -32,7 +32,7 @@ public:
 	//----------------------------------------------------------------//
 	void				Initialize					( ZLSize size );
 	void				Initialize					( ZLStream& stream, size_t size );
-						MOAIGfxBuffer				();
+						MOAIGfxBuffer				( ZLContext& context );
 						~MOAIGfxBuffer				();
 };
 

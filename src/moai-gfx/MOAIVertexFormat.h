@@ -176,8 +176,8 @@ public:
 	void							WriteNormal						( ZLStream& stream, ZLIndex idx, float x, float y, float z ) const;
 	void							WriteUV							( ZLStream& stream, ZLIndex idx, float x, float y, float z ) const;
 	
-									MOAIVertexFormat		();
-									~MOAIVertexFormat		();
+									MOAIVertexFormat				( ZLContext& context );
+									~MOAIVertexFormat				();
 	
 	//----------------------------------------------------------------//
 	inline void* GetAttributeAddress ( const MOAIVertexAttribute& attribute, void* vertexBuffer, u32 vtxIdx ) const {

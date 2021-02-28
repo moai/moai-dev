@@ -156,7 +156,10 @@ MOAIVertexFormat* MOAIMesh::GetVertexFormat ( ZLIndex idx ) {
 }
 
 //----------------------------------------------------------------//
-MOAIMesh::MOAIMesh () :
+MOAIMesh::MOAIMesh ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIGfxResource ( context ),
 	mTotalElements ( 0 ),
 	mPrimType ( MOAIGfxTopologyEnum::TRIANGLE_LIST ),
 	mPenWidth ( 1.0f ) {

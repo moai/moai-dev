@@ -136,7 +136,7 @@ int MOAIBox2DJoint::_getReactionForce ( lua_State* L ) {
 		return 0;
 	}
 	
-	float step = ( float )( 1.0 / MOAISim::Get ().GetStep ());
+	float step = ( float )( 1.0 / self->Get < MOAIUpdateMgr >().GetStep ());
 	
 	b2Vec2 force = self->mJoint->GetReactionForce ( step );
 	lua_pushnumber ( state, force.x / unitsToMeters );
@@ -160,7 +160,7 @@ int MOAIBox2DJoint::_getReactionTorque ( lua_State* L ) {
 		return 0;
 	}
 	
-	float step = ( float )( 1.0 / MOAISim::Get ().GetStep ());
+	float step = ( float )( 1.0 / self->Get < MOAIUpdateMgr >().GetStep ());
 	
 	/* Convert from N-m (kg m / s^2) * m to (kg unit / s^2) * unit */
 	float unitsToMeters = self->GetUnitsToMeters();
@@ -212,7 +212,10 @@ void MOAIBox2DJoint::Destroy () {
 }
 
 //----------------------------------------------------------------//
-MOAIBox2DJoint::MOAIBox2DJoint () :
+MOAIBox2DJoint::MOAIBox2DJoint ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIBox2DPrim ( context ),
 	mJoint ( 0 ) {
 	
 	RTTI_BEGIN ( MOAIBox2DJoint )

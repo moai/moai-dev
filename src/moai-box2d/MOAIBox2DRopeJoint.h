@@ -30,7 +30,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIBox2DRopeJoint )
 	
 	//----------------------------------------------------------------//
-					MOAIBox2DRopeJoint		();
+					MOAIBox2DRopeJoint		( ZLContext& context );
 					~MOAIBox2DRopeJoint		();
 };
 

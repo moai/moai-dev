@@ -23,7 +23,7 @@ public:
 	GET_SET		( bool, Landscape, mLandscape )
 
 	//----------------------------------------------------------------//
-					MOAIFrameBuffer				();
+					MOAIFrameBuffer				( ZLContext& context );
 					~MOAIFrameBuffer			();
 	ZLRect			WndRectToDevice 			( ZLRect rect ) const;
 };

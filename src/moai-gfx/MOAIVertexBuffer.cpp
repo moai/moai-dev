@@ -113,7 +113,12 @@ int MOAIVertexBuffer::_printVertices ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIVertexBuffer::MOAIVertexBuffer () {
+MOAIVertexBuffer::MOAIVertexBuffer ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIGfxResource ( context ),
+	MOAIStream ( context ),
+	MOAIGfxBuffer ( context ) {
 	
 	RTTI_BEGIN ( MOAIVertexBuffer )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIVertexBuffer >)

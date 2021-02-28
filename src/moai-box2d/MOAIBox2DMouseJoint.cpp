@@ -211,7 +211,11 @@ int MOAIBox2DMouseJoint::_setTarget ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIBox2DMouseJoint::MOAIBox2DMouseJoint () {
+MOAIBox2DMouseJoint::MOAIBox2DMouseJoint ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIBox2DPrim ( context ),
+	MOAIBox2DJoint ( context ) {
 	
 	RTTI_BEGIN ( MOAIBox2DMouseJoint )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIBox2DMouseJoint >)

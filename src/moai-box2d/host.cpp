@@ -18,20 +18,23 @@ void AKUBox2DAppInitialize () {
 }
 
 //----------------------------------------------------------------//
-void AKUBox2DContextInitialize () {
+void AKUBox2DContextInitialize ( AKUContextID contextID ) {
 
-	REGISTER_LUA_CLASS ( MOAIBox2DArbiter )
-	REGISTER_LUA_CLASS ( MOAIBox2DBody )
-	REGISTER_LUA_CLASS ( MOAIBox2DDistanceJoint )
-	REGISTER_LUA_CLASS ( MOAIBox2DFixture )
-	REGISTER_LUA_CLASS ( MOAIBox2DFrictionJoint )
-	REGISTER_LUA_CLASS ( MOAIBox2DGearJoint )
-	REGISTER_LUA_CLASS ( MOAIBox2DMouseJoint )
-	REGISTER_LUA_CLASS ( MOAIBox2DPrismaticJoint )
-	REGISTER_LUA_CLASS ( MOAIBox2DPulleyJoint )
-	REGISTER_LUA_CLASS ( MOAIBox2DRopeJoint )
-	REGISTER_LUA_CLASS ( MOAIBox2DRevoluteJoint )
-	REGISTER_LUA_CLASS ( MOAIBox2DWeldJoint )
-	REGISTER_LUA_CLASS ( MOAIBox2DWheelJoint )
-	REGISTER_LUA_CLASS ( MOAIBox2DWorld )
+	assert ( contextID );
+	ZLContext* context = ( ZLContext* )contextID;
+
+	REGISTER_LUA_CLASS ( context, MOAIBox2DArbiter )
+	REGISTER_LUA_CLASS ( context, MOAIBox2DBody )
+	REGISTER_LUA_CLASS ( context, MOAIBox2DDistanceJoint )
+	REGISTER_LUA_CLASS ( context, MOAIBox2DFixture )
+	REGISTER_LUA_CLASS ( context, MOAIBox2DFrictionJoint )
+	REGISTER_LUA_CLASS ( context, MOAIBox2DGearJoint )
+	REGISTER_LUA_CLASS ( context, MOAIBox2DMouseJoint )
+	REGISTER_LUA_CLASS ( context, MOAIBox2DPrismaticJoint )
+	REGISTER_LUA_CLASS ( context, MOAIBox2DPulleyJoint )
+	REGISTER_LUA_CLASS ( context, MOAIBox2DRopeJoint )
+	REGISTER_LUA_CLASS ( context, MOAIBox2DRevoluteJoint )
+	REGISTER_LUA_CLASS ( context, MOAIBox2DWeldJoint )
+	REGISTER_LUA_CLASS ( context, MOAIBox2DWheelJoint )
+	REGISTER_LUA_CLASS ( context, MOAIBox2DWorld )
 }

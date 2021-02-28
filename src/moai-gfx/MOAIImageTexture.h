@@ -29,7 +29,7 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-					MOAIImageTexture			();
+					MOAIImageTexture			( ZLContext& context );
 					~MOAIImageTexture			();
 	void			UpdateRegion				();
 	void			UpdateRegion				( ZLIntRect rect );

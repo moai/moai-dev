@@ -23,6 +23,7 @@ public:
 
 	//----------------------------------------------------------------//
 	template < typename TYPE > TYPE& 	Get 		();
+	template < typename TYPE > TYPE& 	Get 		() const;
 	template < typename TYPE > bool 	IsValid 	();
 	
 	//----------------------------------------------------------------//
@@ -199,6 +200,13 @@ public:
 //----------------------------------------------------------------//
 template < typename TYPE >
 TYPE& ZLHasContext::Get () {
+
+	return this->mContext.Get < TYPE >();
+}
+
+//----------------------------------------------------------------//
+template < typename TYPE >
+TYPE& ZLHasContext::Get () const {
 
 	return this->mContext.Get < TYPE >();
 }
