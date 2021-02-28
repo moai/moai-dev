@@ -313,7 +313,7 @@ bool MOAIFrameBufferGL::MOAIGfxResourceGL_OnGPUUpdate () {
 //	this->ClearSurface ();
 //
 //	if ( this->mRenderTable ) {
-//		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+//		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 //		state.Push ( this->mRenderTable );
 //		this->RenderTable ( state, -1 );
 //		state.Pop ( 1 );
@@ -345,7 +345,7 @@ bool MOAIFrameBufferGL::MOAIGfxResourceGL_OnGPUUpdate () {
 //		image->Init ( buffer.GetConstBuffer (), this->mBufferWidth, this->mBufferHeight, ZLColor::RGBA_8888 );
 //
 //		if ( this->mOnFrameFinish ) {
-//			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+//			MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 //			if ( this->mOnFrameFinish.PushRef ( state )) {
 //				this->mFrameImage.PushRef ( state );
 //				state.DebugCall ( 1, 0 );

@@ -15,7 +15,8 @@ void MOAILuaRefTable::Clear () {
 
 	if ( this->mTableID != LUA_NOREF ) {
 
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		assert ( this->mRuntime );
+		MOAIScopedLuaState state = this->mRuntime->State ();
 
 		luaL_unref ( state, LUA_REGISTRYINDEX, this->mTableID );
 		this->mTableID = LUA_NOREF;
@@ -26,9 +27,12 @@ void MOAILuaRefTable::Clear () {
 }
 
 //----------------------------------------------------------------//
-void MOAILuaRefTable::InitStrong () {
+void MOAILuaRefTable::InitStrong ( MOAILuaRuntime& runtime ) {
 
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	this->Clear ();
+
+	this->mRuntime = &runtime;
+	MOAIScopedLuaState state = this->mRuntime->State ();
 
 	// create the table
 	lua_newtable ( state );
@@ -38,9 +42,12 @@ void MOAILuaRefTable::InitStrong () {
 }
 
 //----------------------------------------------------------------//
-void MOAILuaRefTable::InitWeak () {
+void MOAILuaRefTable::InitWeak ( MOAILuaRuntime& runtime ) {
 
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	this->Clear ();
+
+	this->mRuntime = &runtime;
+	MOAIScopedLuaState state = this->mRuntime->State ();
 
 	// create the table
 	lua_newtable ( state );
@@ -61,6 +68,7 @@ void MOAILuaRefTable::InitWeak () {
 
 //----------------------------------------------------------------//
 MOAILuaRefTable::MOAILuaRefTable () :
+	mRuntime ( NULL ),
 	mTableID ( LUA_NOREF ),
 	mRefIDStackTop ( 0 ) {
 }
@@ -73,6 +81,7 @@ MOAILuaRefTable::~MOAILuaRefTable () {
 void MOAILuaRefTable::PushRef ( MOAILuaState& state, int refID ) {
 
 	assert ( this->mTableID != LUA_NOREF );
+	assert ( this->mRuntime == &state.Get < MOAILuaRuntime >());
 	
 	// push table[refID]
 	lua_rawgeti ( state, LUA_REGISTRYINDEX, this->mTableID );
@@ -90,6 +99,7 @@ void MOAILuaRefTable::PushRefTable ( MOAILuaState& state ) {
 int MOAILuaRefTable::Ref ( MOAILuaState& state, int idx ) {
 
 	assert ( this->mTableID != LUA_NOREF );
+	assert ( this->mRuntime == &state.Get < MOAILuaRuntime >());
 
 	idx = state.AbsIndex ( idx );
 	int refID = this->ReserveRefID ();
@@ -139,8 +149,9 @@ int MOAILuaRefTable::ReserveRefID () {
 void MOAILuaRefTable::Unref ( int refID ) {
 
 	assert ( this->mTableID != LUA_NOREF );
+	assert ( this->mRuntime );
 
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = this->mRuntime->State ();
 
 	// table[refID] = NULL
 	lua_rawgeti ( state, LUA_REGISTRYINDEX, this->mTableID );

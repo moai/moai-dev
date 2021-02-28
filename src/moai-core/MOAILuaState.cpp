@@ -204,7 +204,7 @@ int MOAILuaState::DebugCall ( int nArgs, int nResults ) {
 	
 	int errIdx = this->AbsIndex ( -( nArgs + 1 ));
 
-	MOAILuaRuntime::Get ().PushTraceback ( *this );
+	this->Get < MOAILuaRuntime >().PushTraceback ( *this );
 	lua_insert ( this->mState, errIdx );
 
 	int status = lua_pcall ( this->mState, nArgs, nResults, errIdx );
@@ -339,6 +339,19 @@ u32 MOAILuaState::GetColor32 ( int idx, float r, float g, float b, float a ) {
 
 	ZLColorVec color = this->GetColor ( idx, r, g, b, a );
 	return color.PackRGBA ();
+}
+
+//----------------------------------------------------------------//
+ZLContext* MOAILuaState::GetContext () {
+
+	if ( !this->mContext ) {
+		MOAILuaRuntime::PushContextKey ( *this );
+		lua_gettable ( this->mState, LUA_REGISTRYINDEX );
+		this->mContext = ( ZLContext* )lua_touserdata ( this->mState, -1 );
+		lua_pop ( this->mState, 1 );
+		assert ( this->mContext );
+	}
+    return this->mContext;
 }
 
 //----------------------------------------------------------------//
@@ -1062,7 +1075,7 @@ bool MOAILuaState::LogErrors ( u32 level, FILE* file, int status ) {
 		cc8* error = lua_tostring ( this->mState, -1 );
 		if ( error ) {
 			STLString msg = lua_tostring ( this->mState, -1 );
-			ZLLog::Get ().LogF ( level, file, "-- %s\n", msg.c_str ());
+			ZLLog::Get ()->LogF ( level, file, "-- %s\n", msg.c_str ());
 		}
 		lua_pop ( this->mState, 1 ); // pop error message
 		return true;
@@ -1073,23 +1086,31 @@ bool MOAILuaState::LogErrors ( u32 level, FILE* file, int status ) {
 //----------------------------------------------------------------//
 void MOAILuaState::LogStackDump ( u32 level, FILE* file ) {
 	STLString stackDump = this->GetStackDump ();
-	ZLLog::Get ().LogF ( level, file, stackDump );
+	ZLLog::Get ()->LogF ( level, file, stackDump );
 }
 
 //----------------------------------------------------------------//
 void MOAILuaState::LogStackTrace ( u32 level, FILE* file, cc8* title, int stackLevel ) {
 	STLString stackTrace = this->GetStackTrace ( title, stackLevel );
-	ZLLog::Get ().LogF ( level, file, stackTrace.str ());
+	ZLLog::Get ()->LogF ( level, file, stackTrace.str ());
+}
+
+//----------------------------------------------------------------//
+bool MOAILuaState::LuaSetupClass ( MOAILuaState& state, cc8* typeStr ) {
+
+	return state.CheckParams ( 1, typeStr, true );
 }
 
 //----------------------------------------------------------------//
 MOAILuaState::MOAILuaState () :
-	mState ( 0 ) {
+	mState ( NULL ),
+	mContext ( NULL ) {
 }
 
 //----------------------------------------------------------------//
 MOAILuaState::MOAILuaState ( lua_State* state ) :
-	mState ( state ) {
+	mState ( state ),
+	mContext ( NULL ) {
 }
 
 //----------------------------------------------------------------//

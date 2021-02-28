@@ -36,7 +36,7 @@
 	@const	INTERFACE_ORIENTATION_LANDSCAPE_RIGHT		Interface orientation UIInterfaceOrientationLandscapeRight.
 */
 class MOAIAppIOS :
-	public ZLContextClass < MOAIAppIOS >,
+	public virtual ZLContextClass,
 	public virtual MOAIGlobalEventSource {
 private:
 	

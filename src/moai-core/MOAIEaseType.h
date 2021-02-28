@@ -47,7 +47,7 @@
 	@const	BACK_SMOOTH		
 */
 class MOAIEaseType :
-	public ZLContextClass < MOAIEaseType >,
+	public virtual ZLContextClass,
 	public virtual MOAILuaObject {
 protected:
 

@@ -21,10 +21,9 @@
 	@out	nil
 */
 int MOAICoroutine::_blockOnAction ( lua_State* L ) {
-	MOAILuaState state ( L );
-	if ( !state.CheckParams ( 1, "U" )) return 0;
+	MOAI_LUA_SETUP_CLASS ( "U" )
 
-	MOAIAction* current = MOAIActionMgr::Get ().GetCurrent ();
+	MOAIAction* current = state.Get < MOAIActionMgr >().GetCurrent ();
 	if ( !current ) return 0;
 	
 	MOAIAction* blocker = state.GetLuaObject < MOAIAction >( 1, true );
@@ -42,9 +41,9 @@ int MOAICoroutine::_blockOnAction ( lua_State* L ) {
 	@out	MOAICoroutine currentThread	Current thread or nil.
 */
 int MOAICoroutine::_currentThread ( lua_State* L ) {
-	MOAILuaState state ( L );
+	MOAI_LUA_SETUP_CLASS ( "" )
 
-	MOAIAction* current = MOAIActionMgr::Get ().GetCurrent ();
+	MOAIAction* current = state.Get < MOAIActionMgr >().GetCurrent ();
 	if ( !current ) return 0;
 	
 	current->PushLuaUserdata ( state );
@@ -56,7 +55,7 @@ int MOAICoroutine::_currentThread ( lua_State* L ) {
 int MOAICoroutine::_getHistogram ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICoroutine, "U" )
 	
-	MOAILuaRuntime::Get ().PushHistogram ( state, self->mTrackingGroup );
+	self->Get < MOAILuaRuntime >().PushHistogram ( state, self->mTrackingGroup );
 	return 1;
 }
 
@@ -75,7 +74,7 @@ int MOAICoroutine::_reportHistogram ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICoroutine, "U" )
 
 	cc8* filename = state.GetValue < cc8* >( 1, 0 );
-	MOAILuaRuntime::Get ().ReportHistogram ( filename, self->mTrackingGroup );
+	self->Get < MOAILuaRuntime >().ReportHistogram ( filename, self->mTrackingGroup );
 	
 	return 0;
 }
@@ -86,7 +85,7 @@ int MOAICoroutine::_reportLeaks ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICoroutine, "U" )
 	
 	cc8* filename = state.GetValue < cc8* >( 1, 0 );
-	MOAILuaRuntime::Get ().ReportLeaksFormatted ( filename, self->mTrackingGroup );
+	self->Get < MOAILuaRuntime >().ReportLeaksFormatted ( filename, self->mTrackingGroup );
 	
 	return 0;
 }
@@ -103,7 +102,7 @@ int MOAICoroutine::_reportLeaks ( lua_State* L ) {
 int MOAICoroutine::_run ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAICoroutine, "U" )
 
-	if ( !MOAIUpdateMgr::IsValid ()) return 0;
+	if ( !self->IsValid < MOAIUpdateMgr >()) return 0;
 
 	bool defer = false;
 	int baseParam = 2;
@@ -111,7 +110,7 @@ int MOAICoroutine::_run ( lua_State* L ) {
 		defer = state.GetValue < bool >( baseParam++, false );
 	}
 
-	if ( MOAIActionMgr::Get ().GetActionTree ().GetThreadInfoEnabled ()) {
+	if ( self->Get < MOAIActionMgr >().GetActionTree ().GetThreadInfoEnabled ()) {
 
 		// Get a copy of the function's debug info and store it so we can
 		// refer to it in any debugging info regarding this thread.
@@ -178,8 +177,8 @@ int MOAICoroutine::_setTrackingGroup ( lua_State* L ) {
 	
 	self->mTrackingGroup = state.GetValue < cc8* >( 2, "" );
 	
-	if ( MOAIActionMgr::Get ().GetCurrent () == self ) {
-		MOAILuaRuntime::Get ().SetTrackingGroup ( self->mTrackingGroup );
+	if ( self->Get < MOAIActionMgr >().GetCurrent () == self ) {
+		self->Get < MOAILuaRuntime >().SetTrackingGroup ( self->mTrackingGroup );
 	}
 	return 0;
 }
@@ -238,7 +237,9 @@ int MOAICoroutine::Resume ( float step ) {
 	
 	int returnCount = 0;
 	
-	MOAILuaRuntime::Get ().SetTrackingGroup ( this->mTrackingGroup );
+	MOAILuaRuntime& runtime = this->Get < MOAILuaRuntime >();
+	
+	runtime.SetTrackingGroup ( this->mTrackingGroup );
 	
 	if ( this->mState ) {
 		
@@ -252,8 +253,8 @@ int MOAICoroutine::Resume ( float step ) {
 			narg = 1;
 		}
 		
-		MOAIActionMgr& coroutineMgr = MOAIActionMgr::Get ();
-		coroutineMgr.Push ( *this );
+		MOAIActionMgr& actionMgr = this->Get < MOAIActionMgr >();
+		actionMgr.Push ( *this );
 		
 		#if LUA_VERSION_NUM < 502
 			result = lua_resume ( this->mState, narg );
@@ -261,7 +262,7 @@ int MOAICoroutine::Resume ( float step ) {
 			result = lua_resume ( this->mState, NULL, narg );
 		#endif
 		
-		coroutineMgr.Pop ();
+		actionMgr.Pop ();
 		
 		if (( result != LUA_YIELD )) {
 		
@@ -283,7 +284,7 @@ int MOAICoroutine::Resume ( float step ) {
 				#else
 				
 					// run the custom stack trace
-					MOAILuaRuntime::Get ().PushTraceback ( state );
+					runtime.PushTraceback ( state );
 					state.Push ( msg );
 					lua_call ( this->mState, 1, 0 );
 					lua_pop ( this->mState, 1 );
@@ -299,7 +300,7 @@ int MOAICoroutine::Resume ( float step ) {
 		}
 	}
 	
-	MOAILuaRuntime::Get ().SetTrackingGroup ();
+	runtime.SetTrackingGroup ();
 	
 	return returnCount;
 }
@@ -372,12 +373,12 @@ void MOAICoroutine::MOAIAction_Start () {
 void MOAICoroutine::MOAIAction_Stop () {
 	MOAIAction::MOAIAction_Stop ();
 	
+	MOAIActionMgr& actionMgr = this->Get < MOAIActionMgr >();
+	
 	// if we're stopping the thread from outside of its coroutine, clear out the ref
-	if ( MOAIActionMgr::IsValid ()) {
-		if ( MOAIActionMgr::Get ().GetCurrent () != this ) {
-			this->mRef.Clear ();
-			this->mState = 0;
-		}
+	if ( actionMgr.IsValid () && ( actionMgr.GetCurrent () != this )) {
+		this->mRef.Clear ();
+		this->mState = 0;
 	}
 }
 

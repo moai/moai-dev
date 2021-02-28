@@ -118,7 +118,7 @@
 	@const OS_BRAND_UNAVAILABLE		Signifies that the operating system cannot be determined
 */
 class MOAIEnvironment :
-	public ZLContextClass < MOAIEnvironment >,
+	public virtual ZLContextClass,
 	public virtual MOAIGlobalEventSource {
 private:
 	
@@ -158,7 +158,7 @@ public:
 	template < typename TYPE >
 	void SetValue ( cc8* key, TYPE value ) {
 	
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 		
 		state.Push ( key );
 		state.Push ( value );

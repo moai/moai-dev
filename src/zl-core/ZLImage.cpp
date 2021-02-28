@@ -1664,13 +1664,13 @@ bool ZLImage::IsOK () const {
 }
 
 //----------------------------------------------------------------//
-bool ZLImage::Load ( cc8* filename, u32 transform ) {
+bool ZLImage::Load ( ZLImageFormatMgr& imageFormatMgr, cc8* filename, u32 transform ) {
 
 	this->Clear ();
 	
 	ZLFileStream stream;
 	if ( stream.OpenRead ( filename )) {
-		this->ZLImage::Load ( stream, transform ); // TODO: use file extension as name
+		this->ZLImage::Load ( imageFormatMgr, stream, transform ); // TODO: use file extension as name
 		stream.Close ();
 		this->NotifyStatusChanged ();
 	}
@@ -1678,13 +1678,13 @@ bool ZLImage::Load ( cc8* filename, u32 transform ) {
 }
 
 //----------------------------------------------------------------//
-bool ZLImage::Load ( ZLStream& stream, u32 transform ) {
+bool ZLImage::Load ( ZLImageFormatMgr& imageFormatMgr, ZLStream& stream, u32 transform ) {
 	UNUSED ( stream );
 	UNUSED ( transform );
 
 	this->Clear ();
 	
-	ZLImageFormat* format = ZLImageFormatMgr::Get ().FindFormat ( stream ); // TODO: make use of name
+	ZLImageFormat* format = imageFormatMgr.FindFormat ( stream ); // TODO: make use of name
 	if ( format ) {
 		format->ReadImage ( *this, stream, transform );
 		this->NotifyStatusChanged ();
@@ -2051,9 +2051,9 @@ void ZLImage::Transform ( u32 transform ) {
 }
 
 //----------------------------------------------------------------//
-bool ZLImage::Write ( ZLStream& stream, cc8* formatName ) const {
+bool ZLImage::Write ( ZLImageFormatMgr& imageFormatMgr, ZLStream& stream, cc8* formatName ) {
 
-	ZLImageFormat* format = ZLImageFormatMgr::Get ().FindFormat ( formatName );
+	ZLImageFormat* format = imageFormatMgr.FindFormat ( formatName );
 	return format && format->WriteImage ( *this, stream );
 }
 

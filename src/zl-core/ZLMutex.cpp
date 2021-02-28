@@ -35,17 +35,25 @@ void ZLMutex::Unlock () {
 }
 
 //================================================================//
-// MOAIAutoLock
+// ZLScopedLock
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIAutoLock::MOAIAutoLock ( ZLMutex& mutex ) :
-	mMutex( mutex ) {
-	this->mMutex.Lock ();
+ZLScopedLock::ZLScopedLock ( ZLMutex& mutex ) :
+	mMutex ( &mutex ) {
+	this->mMutex->Lock ();
 }
 
 //----------------------------------------------------------------//
-MOAIAutoLock::~MOAIAutoLock () {
-	this->mMutex.Unlock ();
+ZLScopedLock::ZLScopedLock ( const ZLScopedLock& other ) {
+	this->mMutex = other.mMutex;
+	(( ZLScopedLock& )other ).mMutex = NULL;
+}
+
+//----------------------------------------------------------------//
+ZLScopedLock::~ZLScopedLock () {
+	if ( this->mMutex ) {
+		this->mMutex->Unlock ();
+	}
 }
 

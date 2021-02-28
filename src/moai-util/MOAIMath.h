@@ -9,7 +9,7 @@
 //================================================================//
 // TODO: doxygen
 class MOAIMath :
-	public ZLContextClass < MOAIMath >,
+	public virtual ZLContextClass,
 	public virtual MOAILuaObject {
 private:
 	

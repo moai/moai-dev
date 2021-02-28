@@ -71,7 +71,7 @@ TEST_F ( GTESTMoaiContext, MOAILuaLifecycle ) {
 		GTESTMoaiLuaBoundClass test;
 		test.Track ( memberTable, "test" );
 		
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 		state.Push ( &test );
 		
 		ASSERT_TRUE ( test.IsBound ());
@@ -79,7 +79,7 @@ TEST_F ( GTESTMoaiContext, MOAILuaLifecycle ) {
 	ASSERT_FALSE ( memberTable.contains ( "test" ));
 	
 	{
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 	
 		{
 			GTESTMoaiLuaBoundClass test;
@@ -94,7 +94,7 @@ TEST_F ( GTESTMoaiContext, MOAILuaLifecycle ) {
 	}
 	
 	{
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 	
 		luaL_loadstring ( state, "return GTESTMoaiLuaBoundClass.new ()" );
 		
@@ -110,7 +110,7 @@ TEST_F ( GTESTMoaiContext, MOAILuaLifecycle ) {
 	}
 	
 	{
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 	
 		GTESTMoaiLuaBoundClass* test = new GTESTMoaiLuaBoundClass ();
 		test->Track ( memberTable, "test" );
@@ -122,7 +122,7 @@ TEST_F ( GTESTMoaiContext, MOAILuaLifecycle ) {
 	}
 	
 	{
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 		
 		GTESTMoaiLuaBoundClass* test = new GTESTMoaiLuaBoundClass ();
 		test->Track ( memberTable, "test" );
@@ -133,7 +133,7 @@ TEST_F ( GTESTMoaiContext, MOAILuaLifecycle ) {
 	}
 	
 	{
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 		
 		GTESTMoaiLuaBoundClass* test = new GTESTMoaiLuaBoundClass ();
 		test->Track ( memberTable, "test" );
@@ -152,7 +152,7 @@ TEST_F ( GTESTMoaiContext, MOAILuaLifecycle ) {
 	}
 	
 	{
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 		
 		GTESTMoaiLuaBoundClass* test = new GTESTMoaiLuaBoundClass ();
 		test->Track ( memberTable, "test" );

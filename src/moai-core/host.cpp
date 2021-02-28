@@ -11,44 +11,20 @@
 // AKUContext
 //================================================================//
 class AKUContext :
-	public ZLContextClass < AKUContext >{
+	public virtual ZLContextClass {
 public:
 
 	void*				mUserdata;
 	MOAILuaStrongRef	mLuaFunc;
-	
-	//----------------------------------------------------------------//
-	AKUContext () :
-		mUserdata ( 0 ) {
-		
-		//this->mGlobals = ZLContextMgr::Create ();
-	}
-	
-	//----------------------------------------------------------------//
-	~AKUContext () {
-	
-//		if ( this->mGlobals ) {
-//			ZLContextMgr::Delete ( this->mGlobals );
-//			this->mGlobals = 0;
-//		}
-	}
 };
-
-//typedef STLMap < AKUContextID, AKUContext* >::iterator ContextMapIt;
-//typedef STLMap < AKUContextID, AKUContext* > ContextMap;
-//
-//static ContextMap*		sContextMap = 0;
-//static AKUContextID		sContextIDCounter = 0;
-//static AKUContextID		sContextID = 0;
-//static AKUContext*		sContext = 0;
 
 //================================================================//
 // local
 //================================================================//
 
 int			_debugCallWithArgs		( MOAILuaState& state, int totalArgs, int asParams );
-int			_loadContextFunc		( MOAILuaState& state );
-int			_loadFuncFromBuffer		( MOAIDataBuffer& buffer, cc8* chunkname, int compressed );
+int			_loadContextFunc		( ZLContext& context, MOAILuaState& state );
+int			_loadFuncFromBuffer		( ZLContext& context, MOAIDataBuffer& buffer, cc8* chunkname, int compressed );
 void		_pushArgOrParam			( MOAILuaState& state, int index, char* arg, int asParam );
 void		_setupArgs				( MOAILuaState& state, char* exeName, char* scriptName, int asParams );
 
@@ -69,9 +45,9 @@ int _debugCallWithArgs ( MOAILuaState& state, int totalArgs, int asParams ) {
 }
 
 //----------------------------------------------------------------//
-int _loadContextFunc ( MOAILuaState& state ) {
+int _loadContextFunc ( ZLContext& context, MOAILuaState& state ) {
 
-	AKUContext& akuContext = AKUContext::Get ();
+	AKUContext& akuContext = context.Get < AKUContext >();
 
 	if ( akuContext.mLuaFunc ) {
 		state.Push ( akuContext.mLuaFunc );
@@ -79,18 +55,20 @@ int _loadContextFunc ( MOAILuaState& state ) {
 		return AKU_OK;
 	}
 	
-	ZLLog_ErrorF ( ZLLog::CONSOLE, "Missing function to call; use AKULoadFunc* to load a function\n" );
+	context.Get < ZLLog >().LogF ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, "Missing function to call; use AKULoadFunc* to load a function\n" );
 	return AKU_ERROR;
 }
 
 //----------------------------------------------------------------//
-int _loadFuncFromBuffer ( MOAIDataBuffer& buffer, cc8* chunkname, int compressed ) {
+int _loadFuncFromBuffer ( ZLContext& context, MOAIDataBuffer& buffer, cc8* chunkname, int compressed ) {
 
 	if ( compressed == AKU_DATA_ZIPPED ) {
 		buffer.Inflate ( ZLDeflateWriter::DEFAULT_WBITS );
 	}
 
 	if ( !buffer.Size ()) return AKU_ERROR;
+
+	ZLLog& log = context.Get < ZLLog >();
 
 	u8* data;
 	size_t size;
@@ -107,7 +85,7 @@ int _loadFuncFromBuffer ( MOAIDataBuffer& buffer, cc8* chunkname, int compressed
 		sysHeader.Init ();
 		
 		if ( !sysHeader.IsCompatible ( header )) {
-			ZLLog_ErrorF ( ZLLog::CONSOLE, "ERROR: Attempt to load incompatible Lua bytecode.\n" );
+			log.LogF ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, "ERROR: Attempt to load incompatible Lua bytecode.\n" );
 			return AKU_ERROR;
 		}
 	}
@@ -120,11 +98,11 @@ int _loadFuncFromBuffer ( MOAIDataBuffer& buffer, cc8* chunkname, int compressed
 		while (( size > 1 ) && ( data [ size - 1 ] == 0 )) --size;
 	#endif
 	
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = context.Get < MOAILuaRuntime >().State ();
 
 	lua_getglobal ( state, "loadstring" );
 	if ( !state.IsType ( -1, LUA_TFUNCTION )) {
-		ZLLog_ErrorF ( ZLLog::CONSOLE, "Missing global Lua function 'loadstring'\n" );
+		log.LogF ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, "Missing global Lua function 'loadstring'\n" );
 	}
 	
 	state.Push ( data, size );
@@ -138,12 +116,12 @@ int _loadFuncFromBuffer ( MOAIDataBuffer& buffer, cc8* chunkname, int compressed
 	
 	if ( state.IsType ( -1, LUA_TSTRING )) {
 	
-		ZLLog_ErrorF ( ZLLog::CONSOLE, "Error loading script:\n" );
-		ZLLog_ErrorF ( ZLLog::CONSOLE, "%s\n", state.GetValue < cc8* >( -1, "" ));
+		log.LogF ( ZLLog::LOG_ERROR,  ZLLog::CONSOLE, "Error loading script:\n" );
+		log.LogF ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, "%s\n", state.GetValue < cc8* >( -1, "" ));
 		return AKU_ERROR;
 	}
 	
-	AKUContext& akuContext = AKUContext::Get ();
+	AKUContext& akuContext = context.Get < AKUContext >();
 	akuContext.mLuaFunc.SetRef ( state, -2 );
 	assert ( !akuContext.mLuaFunc.IsNil ());
 	return AKU_OK;
@@ -196,7 +174,7 @@ void AKUAppFinalize () {
 //		sContextMap = 0;
 //	}
 	
-	ZLContextMgr::Finalize ();
+//	ZLContextMgr::Finalize ();
 	zl_cleanup ();
 }
 
@@ -225,10 +203,13 @@ void AKUAppInitialize () {
 }
 
 //----------------------------------------------------------------//
-int AKUCallFunc () {
+int AKUCallFunc ( AKUContextID contextID ) {
 
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	if ( _loadContextFunc ( state ) != 0 ) return AKU_ERROR;
+	assert ( contextID );
+	ZLContext& context = *( ZLContext* )contextID;
+
+	MOAIScopedLuaState state = context.Get < MOAILuaRuntime >().State ();
+	if ( _loadContextFunc ( context, state ) != 0 ) return AKU_ERROR;
 	int status = state.DebugCall ( 0, 0 );
 	return state.LogErrors ( ZLLog::LOG_ERROR, ZLLog::CONSOLE, status ) ? AKU_ERROR : AKU_OK;
 }
@@ -239,10 +220,13 @@ int AKUCallFunc () {
 // arg[1]  => next arg/option/script
 // arg[2]  => next arg/option/script
 // ...
-int AKUCallFuncWithArgArray ( char* exeName, char* scriptName, int argc, char** argv, int asParams ) {
+int AKUCallFuncWithArgArray ( AKUContextID contextID, char* exeName, char* scriptName, int argc, char** argv, int asParams ) {
 
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	if ( _loadContextFunc ( state ) != 0 ) return AKU_ERROR;
+	assert ( contextID );
+	ZLContext& context = *( ZLContext* )contextID;
+
+	MOAIScopedLuaState state = context.Get < MOAILuaRuntime >().State ();
+	if ( _loadContextFunc ( context, state ) != 0 ) return AKU_ERROR;
 
 	_setupArgs ( state, exeName, scriptName, asParams );
 	
@@ -253,10 +237,13 @@ int AKUCallFuncWithArgArray ( char* exeName, char* scriptName, int argc, char** 
 }
 
 //----------------------------------------------------------------//
-int AKUCallFuncWithArgString ( char* exeName, char* scriptName, char* args, int asParams ) {
+int AKUCallFuncWithArgString ( AKUContextID contextID, char* exeName, char* scriptName, char* args, int asParams ) {
 
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
-	if ( _loadContextFunc ( state ) != 0 ) return AKU_ERROR;
+	assert ( contextID );
+	ZLContext& context = *( ZLContext* )contextID;
+
+	MOAIScopedLuaState state = context.Get < MOAILuaRuntime >().State ();
+	if ( _loadContextFunc ( context, state ) != 0 ) return AKU_ERROR;
 
 	_setupArgs ( state, exeName, scriptName, asParams );
 	
@@ -272,12 +259,12 @@ int AKUCallFuncWithArgString ( char* exeName, char* scriptName, char* args, int 
 	return _debugCallWithArgs ( state, numParams, asParams );
 }
 
-//----------------------------------------------------------------//
-int AKUCheckContext ( AKUContextID contextID ) {
-	
-	//return sContextMap->contains ( contextID ) ? 0 : -1;
-	return ZLContextMgr::Check (( ZLContext* )contextID );
-}
+////----------------------------------------------------------------//
+//int AKUCheckContext ( AKUContextID contextID ) {
+//
+//	//return sContextMap->contains ( contextID ) ? 0 : -1;
+//	return ZLContextMgr::Check (( ZLContext* )contextID );
+//}
 
 //----------------------------------------------------------------//
 void AKUClearMemPool () {
@@ -290,66 +277,66 @@ void AKUClearMemPool () {
 	}
 }
 
-//----------------------------------------------------------------//
-int AKUCountContexts () {
-
-	return ( int )ZLContextMgr::CountContexts ();
-}
+////----------------------------------------------------------------//
+//int AKUCountContexts () {
+//
+//	return ( int )ZLContextMgr::CountContexts ();
+//}
 
 //----------------------------------------------------------------//
 AKUContextID AKUCreateContext () {
 
 	assert ( sizeof ( void* ) <= sizeof ( AKU_CONTEXT_ID_TYPE ));
 
-	ZLContext* context = ZLContextMgr::Create ();
+	ZLContext* context = new ZLContext ();
 
-	AKUContext::Affirm ();
+	context->Affirm < AKUContext >();
 
-	MOAILuaRuntime::Affirm ();
-	MOAITrace::Affirm ();
-	MOAILogMgr::Affirm ();
-	MOAITestMgr::Affirm ();
+	context->Affirm < MOAILuaRuntime >();
+	context->Affirm < MOAITrace >();
+	context->Affirm < MOAILogMgr >();
+//	context->Affirm < MOAITestMgr >();
 	
-	MOAILuaRuntime& luaRuntime = MOAILuaRuntime::Get ();
+	MOAILuaRuntime& luaRuntime = context->Get < MOAILuaRuntime >();
 	luaRuntime.Open ();
 	luaRuntime.LoadLibs ();
 	
-	MOAIPool::Affirm ();
-	MOAIActionMgr::Affirm ();
-	MOAIFooMgr::Affirm ();
-	MOAIEaseType::Affirm ();
-	MOAIEnvironment::Affirm ();
-	MOAINodeMgr::Affirm ();
+	context->Affirm < MOAIPool >();
+	context->Affirm < MOAIActionMgr >();
+	context->Affirm < MOAIFooMgr >();
+	context->Affirm < MOAIEaseType >();
+	context->Affirm < MOAIEnvironment >();
+	context->Affirm < MOAINodeMgr >();
 	
-	REGISTER_LUA_CLASS ( MOAIAction )
-	REGISTER_LUA_CLASS ( MOAIActionMgr )
-	REGISTER_LUA_CLASS ( MOAIActionTree )
-	REGISTER_LUA_CLASS ( MOAIAnim )
-	REGISTER_LUA_CLASS ( MOAIAnimCurveBone )
-	REGISTER_LUA_CLASS ( MOAIAnimCurveFloat )
-	REGISTER_LUA_CLASS ( MOAIAnimCurveIndex )
-	REGISTER_LUA_CLASS ( MOAIAnimCurveQuat )
-	REGISTER_LUA_CLASS ( MOAIAnimCurveVec )
-	REGISTER_LUA_CLASS ( MOAICanary )
-	REGISTER_LUA_CLASS ( MOAIEaseDriver )
-	REGISTER_LUA_CLASS ( MOAIEaseType )
-	REGISTER_LUA_CLASS ( MOAIFoo )
-	REGISTER_LUA_CLASS ( MOAIImmediateCmdStream )
-	REGISTER_LUA_CLASS ( MOAILuaRuntime )
-	REGISTER_LUA_CLASS ( MOAIEnvironment )
-	REGISTER_LUA_CLASS ( MOAIDeserializer )
-	REGISTER_LUA_CLASS ( MOAILogMgr )
-	REGISTER_LUA_CLASS ( MOAINode )
-	REGISTER_LUA_CLASS ( MOAINodeMgr )
-	REGISTER_LUA_CLASS ( MOAIPool )
-	REGISTER_LUA_CLASS ( MOAIScope )
-	REGISTER_LUA_CLASS ( MOAIRetainedCmdStream )
-	REGISTER_LUA_CLASS ( MOAISerializer )
-	REGISTER_LUA_CLASS ( MOAITimer )
-	REGISTER_LUA_CLASS ( MOAITrace )
-	REGISTER_LUA_CLASS ( MOAITestMgr )
+	REGISTER_LUA_CLASS ( context, MOAIAction )
+	REGISTER_LUA_CLASS ( context, MOAIActionMgr )
+	REGISTER_LUA_CLASS ( context, MOAIActionTree )
+	REGISTER_LUA_CLASS ( context, MOAIAnim )
+	REGISTER_LUA_CLASS ( context, MOAIAnimCurveBone )
+	REGISTER_LUA_CLASS ( context, MOAIAnimCurveFloat )
+	REGISTER_LUA_CLASS ( context, MOAIAnimCurveIndex )
+	REGISTER_LUA_CLASS ( context, MOAIAnimCurveQuat )
+	REGISTER_LUA_CLASS ( context, MOAIAnimCurveVec )
+	REGISTER_LUA_CLASS ( context, MOAICanary )
+	REGISTER_LUA_CLASS ( context, MOAIEaseDriver )
+	REGISTER_LUA_CLASS ( context, MOAIEaseType )
+	REGISTER_LUA_CLASS ( context, MOAIFoo )
+	REGISTER_LUA_CLASS ( context, MOAIImmediateCmdStream )
+	REGISTER_LUA_CLASS ( context, MOAILuaRuntime )
+	REGISTER_LUA_CLASS ( context, MOAIEnvironment )
+	REGISTER_LUA_CLASS ( context, MOAIDeserializer )
+	REGISTER_LUA_CLASS ( context, MOAILogMgr )
+	REGISTER_LUA_CLASS ( context, MOAINode )
+	REGISTER_LUA_CLASS ( context, MOAINodeMgr )
+	REGISTER_LUA_CLASS ( context, MOAIPool )
+	REGISTER_LUA_CLASS ( context, MOAIScope )
+	REGISTER_LUA_CLASS ( context, MOAIRetainedCmdStream )
+	REGISTER_LUA_CLASS ( context, MOAISerializer )
+	REGISTER_LUA_CLASS ( context, MOAITimer )
+	REGISTER_LUA_CLASS ( context, MOAITrace )
+//	REGISTER_LUA_CLASS ( context, MOAITestMgr )
 
-	MOAIEnvironment::Get ().DetectEnvironment ();
+	context->Get < MOAIEnvironment >().DetectEnvironment ();
 
 	return ( AKUContextID )context;
 }
@@ -357,38 +344,34 @@ AKUContextID AKUCreateContext () {
 //----------------------------------------------------------------//
 void AKUDeleteContext ( AKUContextID contextID ) {
 	
+	if ( !contextID ) return;
 	ZLContext* context = ( ZLContext* )contextID;
 	
-	AKUSetContext ( contextID );
-	if ( !context ) return;
-	
 	// MOAILusRuntime needs to clean up first; release all of the lua state and lua-bound objects
-	MOAILuaRuntime::Get ().Close (); // call this ahead of everything to purge all the Lua bindings
+	context->Get < MOAILuaRuntime >().Close (); // call this ahead of everything to purge all the Lua bindings
 	
-	ZLContextMgr::Delete ( context );
-	
-	AKUSetContext ( 0 );
+	delete context;
 }
 
-//----------------------------------------------------------------//
-AKUContextID AKUGetContext () {
-	
-	return ( AKUContextID )ZLContextMgr::Get ();
-}
+////----------------------------------------------------------------//
+//AKUContextID AKUGetContext () {
+//	
+//	return ( AKUContextID )ZLContextMgr::Get ();
+//}
+//
+////----------------------------------------------------------------//
+//void* AKUGetUserdata () {
+//	
+//	if ( AKUContext::IsValid ()) {
+//		return AKUContext::Get ().mUserdata;
+//	}
+//	return 0;
+//}
 
 //----------------------------------------------------------------//
-void* AKUGetUserdata () {
-	
-	if ( AKUContext::IsValid ()) {
-		return AKUContext::Get ().mUserdata;
-	}
-	return 0;
-}
+lua_State* AKUGetLuaState ( AKUContextID contextID ) {
 
-//----------------------------------------------------------------//
-lua_State* AKUGetLuaState () {
-
-	return MOAILuaRuntime::Get ().State ();
+	return (( ZLContext* )contextID )->Get < MOAILuaRuntime >().State ();
 }
 
 //----------------------------------------------------------------//
@@ -434,20 +417,20 @@ void AKUInitMemPool ( size_t bytes ) {
 }
 
 //----------------------------------------------------------------//
-int AKULoadFuncFromBuffer ( void* data, size_t size, const char* chunkname, int compressed ) {
+int AKULoadFuncFromBuffer ( AKUContextID contextID, void* data, size_t size, const char* chunkname, int compressed ) {
 
-	AKUContext::Get ().mLuaFunc.Clear ();
+	(( ZLContext* )contextID )->Get < AKUContext >().mLuaFunc.Clear ();
 
 	MOAIDataBuffer buffer;
 	buffer.Load ( data, size );
 	
-	return _loadFuncFromBuffer ( buffer, chunkname, compressed );
+	return _loadFuncFromBuffer ( *( ZLContext* )contextID, buffer, chunkname, compressed );
 }
 
 //----------------------------------------------------------------//
-int AKULoadFuncFromFile ( const char* filename ) {
+int AKULoadFuncFromFile ( AKUContextID contextID, const char* filename ) {
 
-	AKUContext::Get ().mLuaFunc.Clear ();
+	(( ZLContext* )contextID )->Get < AKUContext >().mLuaFunc.Clear ();
 
 	if ( !ZLFileSys::CheckFileExists ( filename )) {
 		ZLLog_ErrorF ( ZLLog::CONSOLE, "Could not find file %s \n", filename );
@@ -458,13 +441,13 @@ int AKULoadFuncFromFile ( const char* filename ) {
 	if ( !buffer.Load ( filename )) return AKU_ERROR;
 	if ( !buffer.Size ()) return AKU_ERROR;
 	
-	return _loadFuncFromBuffer ( buffer, filename, AKU_DATA_UNCOMPRESSED );
+	return _loadFuncFromBuffer ( *( ZLContext* )contextID, buffer, filename, AKU_DATA_UNCOMPRESSED );
 }
 
 //----------------------------------------------------------------//
-int AKULoadFuncFromString ( const char* script, size_t size, const char* chunkname ) {
+int AKULoadFuncFromString ( AKUContextID contextID, const char* script, size_t size, const char* chunkname ) {
 
-	return AKULoadFuncFromBuffer (( void* )script, size, chunkname, AKU_DATA_UNCOMPRESSED );
+	return AKULoadFuncFromBuffer ( contextID, ( void* )script, size, chunkname, AKU_DATA_UNCOMPRESSED );
 }
 
 //----------------------------------------------------------------//
@@ -477,45 +460,47 @@ int AKUMountVirtualDirectory ( char const* virtualPath, char const* archive ) {
 	return result;
 }
 
-//----------------------------------------------------------------//
-int AKUSetContext ( AKUContextID contextID ) {
-	
-//	if ( sContextID != contextID ) {
-//		
-//		sContextID = contextID;
-//		sContext = sContextMap->value_for_key ( contextID );
-//		
-//		if ( sContext ) {
-//			ZLContextMgr::Set ( sContext->mGlobals );
-//			return 0;
-//		}
-//		ZLContextMgr::Set ( 0 );
-//		return -1;
-//	}
-	
-	// TODO: restore check for valid context (once work is done to share ZLContextMgr's
-	// context set across multiple threads).
-    ZLContextMgr::Set (( ZLContext* )contextID );
-	return 0;
-}
+////----------------------------------------------------------------//
+//int AKUSetContext ( AKUContextID contextID ) {
+//	
+////	if ( sContextID != contextID ) {
+////		
+////		sContextID = contextID;
+////		sContext = sContextMap->value_for_key ( contextID );
+////		
+////		if ( sContext ) {
+////			ZLContextMgr::Set ( sContext->mGlobals );
+////			return 0;
+////		}
+////		ZLContextMgr::Set ( 0 );
+////		return -1;
+////	}
+//	
+//	// TODO: restore check for valid context (once work is done to share ZLContextMgr's
+//	// context set across multiple threads).
+//    ZLContextMgr::Set (( ZLContext* )contextID );
+//	return 0;
+//}
 
 //----------------------------------------------------------------//
-void AKUSetFunc_ErrorTraceback ( AKUErrorTracebackFunc func ) {
+void AKUSetFunc_ErrorTraceback ( AKUContextID contextID, AKUErrorTracebackFunc func ) {
 
-	MOAILuaRuntime::Get ().SetTracebackFunc ( func );
+	(( ZLContext* )contextID )->Get < MOAILuaRuntime >().SetTracebackFunc ( func );
 }
 
 //----------------------------------------------------------------//
 void AKUSetLogLevel ( int logLevel ) {
 
-	ZLLog::Get ().SetLogLevel ( logLevel );
+	ZLLog::Get ()->SetLogLevel ( logLevel );
 }
 
 //----------------------------------------------------------------//
-void AKUSetUserdata ( void* userdata ) {
+void AKUSetUserdata ( AKUContextID contextID, void* userdata ) {
 
-	if ( AKUContext::IsValid ()) {
-		AKUContext::Get ().mUserdata = userdata;
+	AKUContext& aku = (( ZLContext* )contextID )->Get < AKUContext >();
+
+	if ( aku.IsValid ()) {
+		aku.mUserdata = userdata;
 	}
 }
 

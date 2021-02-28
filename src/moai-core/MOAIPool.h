@@ -14,7 +14,7 @@ class MOAIScope;
 //================================================================//
 // TODO: doxygen
 class MOAIPool :
-	public ZLContextClass < MOAIPool >,
+	public virtual ZLContextClass,
 	public virtual MOAILuaObject {
 private:
 	

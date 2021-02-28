@@ -14,7 +14,7 @@
 	@text	Base class for input streams and device sets.
 */
 class MOAIInputMgr :
-	public ZLContextClass < MOAIInputMgr >,
+	public virtual ZLContextClass,
 	public virtual MOAILuaObject,
 	public virtual ZLMemStream {
 private:

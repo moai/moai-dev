@@ -100,7 +100,7 @@ protected:
 		if ( state.IsType ( idx, LUA_TNUMBER )) {
 
 			u32 eventID = state.GetValue < u32 >( idx, 0 );
-			TYPE& global = TYPE::Get ();
+			TYPE& global = state.Get < TYPE >();
 			if ( global.PushListener( eventID, state )) {
 				return 1;
 			}
@@ -131,7 +131,7 @@ protected:
 		
 		if ( state.IsType ( idx, LUA_TNUMBER )) {
 		
-			TYPE& global = TYPE::Get ();
+			TYPE& global = state.Get < TYPE >();
 			global.SetListener ( L, idx );
 		}
 		return 0;

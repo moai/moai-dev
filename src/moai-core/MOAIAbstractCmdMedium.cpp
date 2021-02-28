@@ -11,7 +11,7 @@
 // MOAICmdLuaInterfaceMgr
 //================================================================//
 class MOAICmdLuaInterfaceMgr :
-	public ZLContextClass < MOAICmdLuaInterfaceMgr > {
+	public virtual ZLContextClass {
 public:
 
 	int		mRefID;
@@ -82,7 +82,7 @@ int MOAIAbstractCmdMedium::PushCmdInterfaceWithHandler ( MOAILuaState& state, in
 	MOAIAbstractCmdHandler* handler = NULL;
 
 	if ( lua_istable ( state, idx )) {
-		handler = MOAILuaRuntime::Get ().GetSingletonForClass < MOAIAbstractCmdHandler >( state, idx );
+		handler = state.Get < MOAILuaRuntime >().GetSingletonForClass < MOAIAbstractCmdHandler >( state, idx );
 	}
 	else {
 		handler = state.GetLuaObject < MOAIAbstractCmdHandler >( 2, false );
@@ -113,7 +113,7 @@ void MOAIAbstractCmdMedium::PushLuaCmdAPI ( MOAILuaState& state ) {
 
 	ZLType::RAW_ID rawAPITypeID = ZLType::ToRaw ( adapter.mAPITypeID );
 
-	MOAICmdLuaInterfaceMgr& mgr = MOAICmdLuaInterfaceMgr::Affirm ();
+	MOAICmdLuaInterfaceMgr& mgr = state.GetContext ()->Affirm < MOAICmdLuaInterfaceMgr >();
 
 	// affirm the table of interfaces
 	if ( mgr.mRefID == LUA_NOREF ) {

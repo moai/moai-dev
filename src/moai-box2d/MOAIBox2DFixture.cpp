@@ -252,7 +252,7 @@ void MOAIBox2DFixture::HandleCollision ( u32 eventType, MOAIBox2DFixture* other,
 		
 			if ( this->mCollisionHandler ) {
 			
-				MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+				MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 				if ( this->mCollisionHandler.PushRef ( state )) {
 					
 					state.Push ( eventType );

@@ -325,7 +325,7 @@ void MOAILuaClass::InitLuaSingletonClass ( MOAILuaObject& data, MOAILuaState& st
 //	state.Push ( &data );
 //	lua_setfield ( state, -2, "instance" );
 
-	MOAILuaRuntime::Get ().RegisterSingleton ( data );
+	this->Get < MOAILuaRuntime >().RegisterSingleton ( data );
 }
 
 //----------------------------------------------------------------//

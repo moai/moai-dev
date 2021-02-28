@@ -256,7 +256,7 @@ void MOAIMotionMgrIOS::Init () {
 	inputMgr.SetSensor < MOAIVectorSensor >( this->mInputDeviceID, MOAIDeviceMotionSensorID::GYRO, "gyro" );
 	inputMgr.SetSensor < MOAIVectorSensor >( this->mInputDeviceID, MOAIDeviceMotionSensorID::MAGNETOMETER, "magnetometer" );
 	
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 	
 	this->PushMemberTable ( state );
 	

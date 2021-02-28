@@ -120,7 +120,7 @@ MOAIScope::~MOAIScope () {
 //----------------------------------------------------------------//
 void MOAIScope::Purge () {
 
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 	this->PushMemberTable ( state );
 	
 	u32 idx = state.AbsIndex ( -1 );

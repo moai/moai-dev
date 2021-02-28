@@ -7,26 +7,6 @@
 #include <moai-core/MOAILua.h>
 #include <moai-core/strings.h>
 
-// TODO: these have never made a lot of sense here. find someplace better for them.
-
-#define MOAI_LUA_SETUP(type,str)												\
-	MOAILuaState state ( L );													\
-	type* self = MOAILogMgr::Get ().LuaSetup < type >( state, str );			\
-	if ( !self ) return 0;
-
-#define MOAI_LUA_SETUP_CLASS(str)												\
-	MOAILuaState state ( L );													\
-	if ( !MOAILogMgr::Get ().LuaSetupClass ( state, str )) return 0;
-
-#define MOAI_LUA_SETUP_SINGLE(type,str)											\
-	MOAILuaState state ( L );													\
-	type* self = MOAILogMgr::Get ().LuaSetupSingle < type >( state, str );		\
-	if ( !self ) return 0;
-
-#define MOAI_LUA_RETURN_SELF													\
-	lua_pushvalue ( state, 1 );													\
-	return 1;
-
 //================================================================//
 // MOAILogMgr
 //================================================================//
@@ -40,7 +20,7 @@
 	@const LOG_DEBUG	Debug level
 */
 class MOAILogMgr :
-	public ZLContextClass < MOAILogMgr >,
+	public virtual ZLContextClass,
 	public virtual MOAILuaObject {
 private:
 
@@ -70,35 +50,15 @@ public:
 	static bool		CheckIndexPlusOne		( size_t idx, size_t size, lua_State* L = 0 );
 	static bool		CheckReserve			( size_t idx, size_t size, lua_State* L = 0 );
 	void			CloseFile				();
-	void			LogF					( lua_State *L, u32 level, cc8* message, ... );
-	void			LogV					( lua_State *L, u32 level, cc8* message, va_list args );
+	static void		LogF					( lua_State *L, u32 level, cc8* message, ... );
+	static void		LogV					( lua_State *L, u32 level, cc8* message, va_list args );
 	bool			LuaSetupClass			( MOAILuaState& state, cc8* typeStr );
 					MOAILogMgr				();
 					~MOAILogMgr				();
 	void			OpenFile				( cc8* filename );
-	
-	//----------------------------------------------------------------//
-	template < typename TYPE >
-	TYPE* LuaSetup ( MOAILuaState& state, cc8* typeStr ) {
-	
-		if ( this->mTypeCheckLuaParams && typeStr ) {
-			if ( !state.CheckParams ( 1, typeStr, true )) return 0;
-		}
-		return state.GetLuaObject < TYPE >( 1, true );
-	}
-	
-	//----------------------------------------------------------------//
-	template < typename TYPE >
-	TYPE* LuaSetupSingle ( MOAILuaState& state, cc8* typeStr ) {
-	
-		if ( this->mTypeCheckLuaParams && typeStr ) {
-			if ( !state.CheckParams ( 1, typeStr, true )) return 0;
-		}
-		return ZLContextMgr::Get ()->GetGlobal < TYPE >();
-	}
 };
 
-#define MOAILogF(L,level,message,...)		MOAILogMgr::Get ().LogF ( L, level, message, ##__VA_ARGS__ )
-#define MOAILogV(L,level,message,args)		MOAILogMgr::Get ().LogV ( L, level, message, args )
+#define MOAILogF(L,level,message,...)		MOAILogMgr::LogF ( L, level, message, ##__VA_ARGS__ )
+#define MOAILogV(L,level,message,args)		MOAILogMgr::LogV ( L, level, message, args )
 
 #endif

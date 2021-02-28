@@ -301,7 +301,7 @@ int MOAIAction::_throttle ( lua_State* L ) {
 int MOAIAction::_update ( lua_State* L ) {
     MOAI_LUA_SETUP ( MOAIAction, "U" )
     
-    double step = state.GetValue < double >( 2, MOAIUpdateMgr::Get ().GetStep ());
+    double step = state.GetValue < double >( 2, self->Get < MOAIUpdateMgr >().GetStep ());
     self->MOAIAction_Update ( step );
     
     return 0;
@@ -469,7 +469,8 @@ void MOAIAction::Update ( MOAIActionTree& tree, double step ) {
 
 	if ( this->IsPaused () || this->IsBlocked ()) return;
 
-	MOAIActionMgr::Get ().Push ( *this );
+	MOAIActionMgr& actionMgr = this->Get < MOAIActionMgr >();
+	actionMgr.Push ( *this );
 
 	double t0 = 0.0;
 	bool profilingEnabled = false;
@@ -541,13 +542,13 @@ void MOAIAction::Update ( MOAIActionTree& tree, double step ) {
 		this->Detach ();
 	}
 	
-	MOAIActionMgr::Get ().Pop ();
+	actionMgr.Pop ();
 }
 
 //----------------------------------------------------------------//
 void MOAIAction::Start ( MOAIAction* parent, bool defer ) {
 
-	parent = parent ? parent : MOAIActionMgr::Get ().GetDefaultParent ();
+	parent = parent ? parent : this->Get < MOAIActionMgr >().GetDefaultParent ();
 	this->Attach ( parent, defer );
 	this->mActionFlags &= ~FLAGS_IS_PAUSED;
 }

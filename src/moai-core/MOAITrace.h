@@ -88,7 +88,7 @@ public:
 	@text	Internal debugging and hooking class.
 */
 class MOAITrace :
-	public ZLContextClass < MOAITrace >,
+	public virtual ZLContextClass,
 	public virtual MOAILuaObject {
 protected:
 

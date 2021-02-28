@@ -243,7 +243,7 @@ TEST_F ( GTESTMoaiContext, MOAICmd ) {
 		.Baz ()
 		;
 	
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 	luaL_loadstring ( state, MOAICmd_lua );
 	state.DebugCall ( 0, 0 );
 }

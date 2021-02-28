@@ -542,7 +542,7 @@ void MOAIHttpTaskBase::Finish () {
 	this->mBusy = false;
 	if ( this->mOnFinish ) {
 		
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 		if ( this->mOnFinish.PushRef ( state )) {
 			this->PushLuaUserdata ( state );
 			state.Push ( this->GetResponseCode ());

@@ -13,7 +13,7 @@ class MOAIUrlMgrOpaque;
 // MOAIUrlMgrNaCl
 //================================================================//
 class MOAIUrlMgrNaCl :
-	public ZLContextClass < MOAIUrlMgrNaCl > {
+	public virtual ZLContextClass {
 private:
 
 	STLList < MOAIHttpTaskNaCl* > mTasks;

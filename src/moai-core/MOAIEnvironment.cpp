@@ -53,12 +53,10 @@ int MOAIEnvironment::_getMACAddress ( lua_State* L ) {
 	@out	nil
 */
 int MOAIEnvironment::_setValue ( lua_State* L ) {
-	MOAILuaState state ( L );
+	MOAI_LUA_SETUP_SINGLE ( MOAIEnvironment, "" )
 	
 	if ( state.IsType ( 1, LUA_TSTRING )) {
-	
-		MOAIEnvironment& environment = MOAIEnvironment::Get ();
-		environment.SetValue ( state );
+		self->SetValue ( state );
 	}
 	return 0;
 }
@@ -198,7 +196,7 @@ MOAIEnvironment::~MOAIEnvironment () {
 //----------------------------------------------------------------//
 void MOAIEnvironment::SetValue ( cc8* key ) {
 
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 	this->PushLuaClassTable ( state );
 	state.ClearField ( -1, key );
 	state.Pop ( 1 );

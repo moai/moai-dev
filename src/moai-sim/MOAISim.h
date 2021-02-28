@@ -15,7 +15,7 @@ class MOAIProp;
 //================================================================//
 // TODO: doxygen
 class MOAISim :
-	public ZLContextClass < MOAISim >,
+	public virtual ZLContextClass,
 	public virtual MOAIUpdateMgr {
 public:
 

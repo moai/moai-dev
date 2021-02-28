@@ -121,7 +121,7 @@ ZLBounds MOAIDrawDeck::MOAIDeck_GetBounds ( ZLIndex idx ) {
 	
 	if ( this->mOnBounds ) {
 	
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 		
 		this->mOnBounds.PushRef ( state );
 		
@@ -145,7 +145,7 @@ void MOAIDrawDeck::MOAIDeck_Render ( ZLIndex idx, MOAIRenderPhaseEnum::_ renderP
 		MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
 		ZLVec3D stretch = this->BindStretchVertexTransform ();
 	
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 		this->mOnDraw.PushRef ( state );
 	
 		MOAIDraw::Get ().PushCmdInterface ( state );

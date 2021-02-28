@@ -11,6 +11,6 @@
 
 AKU_API void	AKUUtilAppFinalize					();
 AKU_API void	AKUUtilAppInitialize				();
-AKU_API void	AKUUtilContextInitialize			();
+AKU_API void	AKUUtilContextInitialize			( AKUContextID contextID );
 
 #endif

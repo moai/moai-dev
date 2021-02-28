@@ -291,7 +291,7 @@ void AKUSetViewSize ( int width, int height ) {
 	
 		gfxMgr.GetDefaultFrameBuffer ()->SetFrameSize ( width, height );
 		
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 		if ( gfxMgr.PushListener ( MOAIGfxMgr::EVENT_RESIZE, state )) {
 			lua_pushnumber ( state, width );
 			lua_pushnumber ( state, height );
@@ -327,7 +327,7 @@ void AKUSimContextInitialize () {
 	MOAIInputMgr::Affirm ();
 	MOAIDraw::Affirm ();
 	
-	// this is a stopgap; eventuall MOAISim will be split up.
+	// this is a stopgap; eventually MOAISim will be split up.
 	// right now it's just a bag of legacy.
 	MOAISim::Affirm ();
 	MOAISim::RegisterAlias < MOAIUpdateMgr >();

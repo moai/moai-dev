@@ -25,7 +25,7 @@ protected:
 // MOAIGfxMgrGL
 //================================================================//
 class MOAIGfxMgrGL :
-	public ZLContextClass < MOAIGfxMgrGL >,
+	public virtual ZLContextClass,
 	public virtual MOAIGfxMgrGLComponents,
 	public virtual MOAIGfxMgr,
 	public virtual MOAIGfxMgrGL_DisplayListClerkGL,

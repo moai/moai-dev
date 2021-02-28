@@ -75,11 +75,10 @@ MOAIImageLoadTask::~MOAIImageLoadTask () {
 //----------------------------------------------------------------//
 void MOAIImageLoadTask::Publish () {
 
-	// This provides some degree of thread-safety
 	this->mTarget->Take ( this->mImage );
 
 	if ( this->mOnFinish ) {
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = this->mTarget->Get < MOAILuaRuntime >().State ();
 		if ( this->mOnFinish.PushRef ( state )) {
 			this->mTarget->PushLuaUserdata ( state );
 			state.DebugCall ( 1, 0 );

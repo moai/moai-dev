@@ -851,7 +851,7 @@ int MOAIImage::_loadAsync ( lua_State *L ) {
 		task->Init ( filename, *self, transform );
 	}
 	task->SetCallback ( L, 4 );
-	task->Start ( *queue, MOAIMainThreadTaskSubscriber::Get ());
+	task->Start ( *queue, self->Get < MOAIMainThreadTaskSubscriber >());
 	
 	return 0;
 }
@@ -881,7 +881,7 @@ int MOAIImage::_loadFromBuffer ( lua_State* L ) {
 		stream.SetBuffer ( bytes, size );
 		stream.SetLength ( size );
 
-		self->ZLImage::Load ( stream, transform );
+		self->Load ( stream, transform );
 
 		buffer->Unlock();
 	}
@@ -1284,6 +1284,18 @@ MOAIImage* MOAIImage::AffirmImage ( MOAILuaState& state, int idx ) {
 }
 
 //----------------------------------------------------------------//
+bool MOAIImage::Load ( cc8* filename, u32 transform ) {
+
+	return this->ZLImage::Load ( this->Get < ZLImageFormatMgr >(), filename, transform );
+}
+
+//----------------------------------------------------------------//
+bool MOAIImage::Load ( ZLStream& stream, u32 transform ) {
+
+	return this->ZLImage::Load ( this->Get < ZLImageFormatMgr >(), stream, transform );
+}
+
+//----------------------------------------------------------------//
 MOAIImage::MOAIImage () {
 		
 	RTTI_BEGIN ( MOAIImage )
@@ -1294,6 +1306,12 @@ MOAIImage::MOAIImage () {
 
 //----------------------------------------------------------------//
 MOAIImage::~MOAIImage () {
+}
+
+//----------------------------------------------------------------//
+bool MOAIImage::Write ( ZLStream& stream, cc8* formatName ) {
+
+	return this->ZLImage::Write ( this->Get < ZLImageFormatMgr >(), stream, formatName );
 }
 
 //================================================================//

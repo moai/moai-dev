@@ -330,7 +330,7 @@ void MOAIInputMgr::SetAutotimestamp ( bool autotimestamp ) {
 //----------------------------------------------------------------//
 void MOAIInputMgr::SetConfigurationName ( cc8* name ) {
 
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 	this->PushLuaClassTable ( state );
 	
 	state.SetField ( -1, LUAVAR_CONFIGURATION, name );
@@ -351,7 +351,7 @@ void MOAIInputMgr::SetDevice ( ZLIndex deviceID, cc8* name ) {
 	
 		device->SetName ( name );
 	
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 		this->PushMemberTable ( state );
 		device->PushLuaUserdata ( state );
 		lua_setfield ( state, -2, name );

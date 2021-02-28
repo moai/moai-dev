@@ -78,7 +78,7 @@ int MOAIHttpServer::_logMessage ( const mg_connection* connection, const char* m
 int MOAIHttpServer::HandleRequest ( mg_connection* connection, mg_request_info* info ) {
 
 	if ( MOAILuaRuntime::IsValid ()) {
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 		if ( this->PushListenerAndSelf ( EVENT_HANDLE_REQUEST, state )) {
 
 			// http://localhost:8080/foo/bar/baz?a=b&c=d

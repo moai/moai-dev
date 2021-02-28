@@ -8,6 +8,24 @@ class MOAILuaMemberRef;
 class MOAILuaObject;
 class MOAILuaRef;
 
+#define MOAI_LUA_SETUP(type,str)									\
+	MOAILuaState state ( L );										\
+	type* self = state.LuaSetup < type >( state, str );				\
+	if ( !self ) return 0;
+
+#define MOAI_LUA_SETUP_CLASS(str)									\
+	MOAILuaState state ( L );										\
+	if ( !state.LuaSetupClass ( state, str )) return 0;
+
+#define MOAI_LUA_SETUP_SINGLE(type,str)								\
+	MOAILuaState state ( L );										\
+	type* self = state.LuaSetupSingle < type >( state, str );		\
+	if ( !self ) return 0;
+
+#define MOAI_LUA_RETURN_SELF										\
+	lua_pushvalue ( state, 1 );										\
+	return 1;
+
 //================================================================//
 // MOAILuaCast
 //================================================================//
@@ -67,6 +85,7 @@ private:
 	friend class MOAIScopedLuaState;
 
 	lua_State*	mState;
+	ZLContext*	mContext;
 
 	//----------------------------------------------------------------//
 	bool			Decode					( int idx, ZLStreamAdapter& reader );
@@ -102,6 +121,7 @@ public:
 	ZLBox			GetBox						( int idx );
 	ZLColorVec		GetColor					( int idx, float r, float g, float b, float a );
 	u32				GetColor32					( int idx, float r, float g, float b, float a );
+	ZLContext*		GetContext					();
 	static cc8*		GetLuaTypeName				( int type );
 	ZLMatrix4x4		GetMatrix					( int idx, size_t size );
 	void*			GetPtrUserData				( int idx );
@@ -134,6 +154,8 @@ public:
 	bool			LogErrors					( u32 level, FILE* file, int status );
 	void			LogStackDump				( u32 level, FILE* file );
 	void			LogStackTrace				( u32 level, FILE* file, cc8* title, int stackLevel );
+	
+	static bool		LuaSetupClass				( MOAILuaState& state, cc8* typeStr );
 	
 					MOAILuaState				();
 					MOAILuaState				( lua_State* state );
@@ -214,8 +236,33 @@ public:
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
+	TYPE& Get () {
+		return this->GetContext ()->Get < TYPE >();
+	}
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
 	TYPE GetEnum ( int idx, TYPE value ) {
 		return ( TYPE )this->GetValue < u32 >( idx, ( u32 )value );
+	}
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	static TYPE* LuaSetup ( MOAILuaState& state, cc8* typeStr ) {
+		UNUSED ( typeStr );
+	
+		if ( !state.CheckParams ( 1, typeStr, true )) return NULL;
+		return state.GetLuaObject < TYPE >( 1, true );
+	}
+	
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	static TYPE* LuaSetupSingle ( MOAILuaState& state, cc8* typeStr ) {
+		UNUSED ( typeStr );
+	
+		if ( !state.CheckParams ( 1, typeStr, true )) return NULL;
+		ZLContext* context = state.GetContext ();
+		return &context->Get < TYPE >();
 	}
 	
 	//----------------------------------------------------------------//

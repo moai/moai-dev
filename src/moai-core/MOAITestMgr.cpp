@@ -3,6 +3,10 @@
 
 #include "pch.h"
 
+SUPPRESS_EMPTY_FILE_WARNING
+
+#if 0
+
 #include <jansson.h>
 #include <moai-core/MOAITestMgr.h>
 
@@ -340,7 +344,7 @@ void MOAITestMgr::SetTimeout ( float seconds ) {
 void MOAITestMgr::Step () {
 
 	if ( this->mStepFunc ) {
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 		this->mStepFunc.PushRef ( state );
 		state.DebugCall ( 0, 0 );
 	}
@@ -395,3 +399,6 @@ void MOAITestMgr::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState&
 	UNUSED ( state );
 	if ( history.Visit ( *this )) return;
 }
+
+#endif
+

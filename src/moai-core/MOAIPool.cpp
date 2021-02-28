@@ -111,7 +111,7 @@ MOAILuaObject* MOAIPool::Provision ( u32 poolType, MOAIScope* scope ) {
 	
 	if ( !resource ) {
 		
-		resource = factory->Create ();
+		resource = factory->Create ( *this->mContext );
 		if ( !resource ) return NULL;
 		
 		assert ( !resource->IsInPool ());

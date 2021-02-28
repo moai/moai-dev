@@ -14,7 +14,7 @@
 // MOAIMotionMgrIOS
 //================================================================//
 class MOAIMotionMgrIOS :
-	public ZLContextClass < MOAIMotionMgrIOS >,
+	public virtual ZLContextClass,
 	public virtual MOAIAction {
 private:
 

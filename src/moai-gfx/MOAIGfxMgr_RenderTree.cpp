@@ -14,7 +14,7 @@
 void MOAIGfxMgr_RenderTree::AffirmRenderRoot () {
 
 	if ( !this->mRenderRoot ) {
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 		MOAIRenderNode* node = MOAIGfxMgr::Get ().CreateRenderRoot ();
 		node->PushLuaUserdata ( state );
 		this->mRenderRoot.SetRef ( state, -1 );
@@ -35,7 +35,7 @@ MOAIGfxMgr_RenderTree::~MOAIGfxMgr_RenderTree () {
 //----------------------------------------------------------------//
 void MOAIGfxMgr_RenderTree::PushRenderable ( MOAIAbstractRenderable& node ) {
 
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 	node.PushLuaUserdata ( state );
 	this->PushRenderable ( state, -1 );
 }
@@ -86,7 +86,7 @@ void MOAIGfxMgr_RenderTree::Render () {
 	// Measure performance
 	double startTime = ZLDeviceTime::GetTimeInSeconds ();
 	
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 	state.Push ( this->mRenderRoot );
 	MOAIRenderNode::Render ( MOAIRenderPhaseEnum::RENDER_PHASE_DRAW, state, -1 );
 

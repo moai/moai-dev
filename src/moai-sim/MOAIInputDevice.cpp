@@ -111,7 +111,7 @@ void MOAIInputDevice::SetSensor ( ZLIndex sensorID, cc8* name, MOAISensor* senso
 	this->mSensors [ sensorID ] = sensor;
 	this->LuaRetain ( sensor );
 	
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 	this->PushLuaUserdata ( state );
 	
 	sensor->PushLuaUserdata ( state );

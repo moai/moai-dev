@@ -5,6 +5,7 @@
 #define	ZLIMAGEFORMAT_H
 
 #include <zl-core/ZLImage.h>
+#include <zl-core/ZLRtti.h>
 
 //================================================================//
 // ZLImageFormat

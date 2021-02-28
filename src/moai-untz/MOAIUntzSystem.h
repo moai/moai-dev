@@ -14,7 +14,7 @@
 	@text	Untz system singleton.
 */
 class MOAIUntzSystem :
-	public ZLContextClass < MOAIUntzSystem >,
+	public virtual ZLContextClass,
 	public virtual MOAILuaObject {
 private:
 

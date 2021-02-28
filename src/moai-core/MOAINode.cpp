@@ -378,7 +378,7 @@ void MOAINode::Activate ( MOAINode& activator ) {
 	if ( this->mState != STATE_IDLE ) return;
 
 	// insert before activator
-	MOAINodeMgr::Get ().InsertBefore ( activator, *this );
+	this->Get < MOAINodeMgr >().InsertBefore ( activator, *this );
 	this->mState = STATE_ACTIVE;
 
 	// activate source nodes
@@ -404,7 +404,7 @@ void MOAINode::ActivateOnLink ( MOAINode& srcNode ) {
 		}
 		else {
 		
-			MOAINodeMgr& depNodeMgr = MOAINodeMgr::Get ();
+			MOAINodeMgr& depNodeMgr = this->Get < MOAINodeMgr >();
 			
 			if ( srcNode.IsNodeUpstream ( this ) && this->mState != STATE_UPDATING ) {
 				
@@ -569,8 +569,10 @@ MOAINode::~MOAINode () {
 		delete link;
 	}
 
-	if (( this->mState != STATE_IDLE ) && ( MOAINodeMgr::IsValid ())) {
-		MOAINodeMgr::Get ().Remove ( *this );
+	MOAINodeMgr& nodeMgr = this->Get < MOAINodeMgr >();
+
+	if (( this->mState != STATE_IDLE ) && ( nodeMgr.IsValid ())) {
+		nodeMgr.Remove ( *this );
 	}
 }
 
@@ -645,7 +647,7 @@ void MOAINode::RemoveDepLink ( MOAIDepLink& link ) {
 //----------------------------------------------------------------//
 void MOAINode::ScheduleUpdate () {
 	
-	MOAINodeMgr& nodeMgr = MOAINodeMgr::Get ();
+	MOAINodeMgr& nodeMgr = this->Get < MOAINodeMgr >();
 	
 	if ( nodeMgr.IsValid ()) {
 	

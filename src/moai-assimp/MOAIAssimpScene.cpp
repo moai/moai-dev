@@ -402,7 +402,7 @@ MOAILuaMemberRef* MOAIAssimpScene::GetMaterial ( ZLIndex idx ) {
 	
 		aiMaterial* currentMaterial = this->mScene->mMaterials [ idx ];
 	
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 		
 		lua_newtable ( state );
 		

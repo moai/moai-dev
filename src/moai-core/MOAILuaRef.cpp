@@ -14,11 +14,12 @@
 //----------------------------------------------------------------//
 void MOAILuaRef::Clear () {
 
-	if ( this->mOwnsRef && MOAILuaRuntime::IsValid () ) {
-		MOAILuaRuntime::Get ().ClearRef ( this->mRefID );
+	if ( this->mOwnsRef && this->mRuntime && this->mRuntime->IsValid () ) {
+		this->mRuntime->ClearRef ( this->mRefID );
 	}
-	this->mOwnsRef = false;
-	this->mRefID = LUA_NOREF;
+	this->mRuntime 		= NULL;
+	this->mOwnsRef 		= false;
+	this->mRefID 		= LUA_NOREF;
 }
 
 //----------------------------------------------------------------//
@@ -32,7 +33,7 @@ MOAIScopedLuaState MOAILuaRef::GetSelf () {
 
 	assert ( !this->IsNil ());
 
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = this->mRuntime->State ();
 	this->PushRef ( state );
 	return state;
 }
@@ -46,17 +47,20 @@ bool MOAILuaRef::IsNil () {
 //----------------------------------------------------------------//
 void MOAILuaRef::MakeStrong () {
 
-	this->mRefID = MOAILuaRuntime::Get ().MakeStrong ( this->mRefID );
+	assert ( this->mRuntime );
+	this->mRefID = this->mRuntime->MakeStrong ( this->mRefID );
 }
 
 //----------------------------------------------------------------//
 void MOAILuaRef::MakeWeak () {
 
-	this->mRefID = MOAILuaRuntime::Get ().MakeWeak ( this->mRefID );
+	assert ( this->mRuntime );
+	this->mRefID = this->mRuntime->MakeWeak ( this->mRefID );
 }
 
 //----------------------------------------------------------------//
 MOAILuaRef::MOAILuaRef () :
+	mRuntime ( NULL ),
 	mOwnsRef ( false ),
 	mRefID ( LUA_NOREF ) {
 }
@@ -77,7 +81,9 @@ MOAILuaRef::~MOAILuaRef () {
 //----------------------------------------------------------------//
 bool MOAILuaRef::PushRef ( MOAILuaState& state ) {
 
-	bool result = MOAILuaRuntime::Get ().PushRef ( state, this->mRefID );
+	assert ( this->mRuntime == &state.Get < MOAILuaRuntime >());
+
+	bool result = this->mRuntime->PushRef ( state, this->mRefID );
 	
 	if ( !result ) {
 		this->Clear ();
@@ -89,7 +95,12 @@ bool MOAILuaRef::PushRef ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAILuaRef::SetRef ( MOAILuaObject* object, u32 type ) {
 
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	if ( !object ) {
+		this->Clear ();
+		return;
+	}
+
+	MOAIScopedLuaState state = object->Get < MOAILuaRuntime >().State ();
 	state.Push ( object );
 	this->SetRef ( state, -1, type );
 	state.Pop ( 1 );
@@ -99,7 +110,9 @@ void MOAILuaRef::SetRef ( MOAILuaObject* object, u32 type ) {
 void MOAILuaRef::SetRef ( MOAILuaState& state, int idx, u32 type ) {
 
 	this->Clear ();
-	this->mRefID = MOAILuaRuntime::Get ().GetRef ( state, idx, type );
+	
+	this->mRuntime = &state.Get < MOAILuaRuntime >();
+	this->mRefID = this->mRuntime->GetRef ( state, idx, type );
 	this->mOwnsRef = ( this->mRefID != LUA_NOREF );
 }
 
@@ -108,8 +121,9 @@ void MOAILuaRef::Take ( const MOAILuaRef& assign ) {
 
 	this->Clear ();
 
-	this->mRefID = assign.mRefID;
-	this->mOwnsRef = assign.mOwnsRef;
+	this->mRuntime 		= assign.mRuntime;
+	this->mRefID 		= assign.mRefID;
+	this->mOwnsRef 		= assign.mOwnsRef;
 
 	// cast the const away
 	(( MOAILuaRef& )assign ).mOwnsRef = false;
@@ -169,9 +183,12 @@ void MOAILuaWeakRef::SetRef ( MOAILuaState& state, int idx ) {
 void MOAILuaMemberRef::Clear () {
 
 	if ( this->mRefID != LUA_NOREF ) {
+	
+		assert ( this->mOwner );
+		MOAILuaRuntime& runtime = this->mOwner->Get < MOAILuaRuntime >();
 
-		if ( this->mOwner->IsBound () && MOAILuaRuntime::IsValid ()) {
-			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		if ( this->mOwner->IsBound () && runtime.IsValid ()) {
+			MOAIScopedLuaState state = runtime.State ();
 			if ( this->mOwner->PushRefTable ( state )) {
 				luaL_unref ( state, -1, this->mRefID );
 			}

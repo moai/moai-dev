@@ -483,7 +483,7 @@ MOAIAppIOS::~MOAIAppIOS () {
 //----------------------------------------------------------------//
 void MOAIAppIOS::OpenUrl ( NSURL* url, NSString* sourceApplication ) {
 
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 	if ( this->PushListener ( OPEN_URL, state )) {
 		[[ url absoluteString ] toLua:state ];
 		[ sourceApplication toLua:state ];

@@ -17,6 +17,7 @@ class MOAIScopedLuaState;
 class MOAILuaRef {
 private:
 
+	MOAILuaRuntime*			mRuntime;
 	bool					mOwnsRef;
 	int						mRefID;
 

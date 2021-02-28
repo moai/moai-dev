@@ -12,7 +12,7 @@ class MOAINode;
 // MOAINodeMgr
 //================================================================//
 class MOAINodeMgr :
-	public ZLContextClass < MOAINodeMgr >,
+	public virtual ZLContextClass,
 	public virtual MOAILuaObject {
 private:
 

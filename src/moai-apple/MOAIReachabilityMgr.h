@@ -12,7 +12,7 @@
 // MOAIReachabilityMgr
 //================================================================//
 class MOAIReachabilityMgr :
-	public ZLContextClass < MOAIReachabilityMgr > {
+	public virtual ZLContextClass {
 private:
 	
 	MOAIReachabilityListener*	mReachabilityListener;

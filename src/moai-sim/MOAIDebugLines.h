@@ -57,7 +57,7 @@ public:
 //================================================================//
 // TODO: doxygen
 class MOAIDebugLinesMgr :
-	public ZLContextClass < MOAIDebugLinesMgr >,
+	public virtual ZLContextClass,
 	public virtual MOAILuaObject {
 private:
 

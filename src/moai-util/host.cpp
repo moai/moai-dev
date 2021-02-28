@@ -18,44 +18,46 @@ void AKUUtilAppInitialize () {
 }
 
 //----------------------------------------------------------------//
-void AKUUtilContextInitialize () {
+void AKUUtilContextInitialize ( AKUContextID contextID ) {
 
-	ZLImageFormatMgr::Affirm ();
+	assert ( contextID );
+	ZLContext* context = ( ZLContext* )contextID;
 
-	MOAIMainThreadTaskSubscriber::Affirm ();
-	
-	MOAIMath::Affirm ();
-	MOAIFileSystem::Affirm ();
-	MOAILuaUtil::Affirm ();
-	MOAIJsonParser::Affirm ();
+	context->Affirm < ZLImageFormatMgr >();
+	context->Affirm < MOAIMainThreadTaskSubscriber >();
+
+	context->Affirm < MOAIMath >();
+	context->Affirm < MOAIFileSystem >();
+	context->Affirm < MOAILuaUtil >();
+	context->Affirm < MOAIJsonParser >();
 	
 	// MOAI
-	REGISTER_LUA_CLASS ( MOAIByteStream )
-	REGISTER_LUA_CLASS ( MOAIDataBuffer )
-	REGISTER_LUA_CLASS ( MOAIDataBufferStream )
-	REGISTER_LUA_CLASS ( MOAIFileStream )
-	REGISTER_LUA_CLASS ( MOAIFileSystem )
-	REGISTER_LUA_CLASS ( MOAIFourier )
+	REGISTER_LUA_CLASS ( context, MOAIByteStream )
+	REGISTER_LUA_CLASS ( context, MOAIDataBuffer )
+	REGISTER_LUA_CLASS ( context, MOAIDataBufferStream )
+	REGISTER_LUA_CLASS ( context, MOAIFileStream )
+	REGISTER_LUA_CLASS ( context, MOAIFileSystem )
+	REGISTER_LUA_CLASS ( context, MOAIFourier )
 	
 	#ifndef MOAI_WITH_LUAJIT
-		REGISTER_LUA_CLASS ( MOAILuaUtil )
+		REGISTER_LUA_CLASS ( context, MOAILuaUtil )
 	#endif
 
-	REGISTER_LUA_CLASS ( MOAIHashWriter )
-	REGISTER_LUA_CLASS ( MOAIMath )
-	REGISTER_LUA_CLASS ( MOAIMemStream )
-	REGISTER_LUA_CLASS ( MOAIStreamAdapter )
-	REGISTER_LUA_CLASS ( MOAITaskQueue )
+	REGISTER_LUA_CLASS ( context, MOAIHashWriter )
+	REGISTER_LUA_CLASS ( context, MOAIMath )
+	REGISTER_LUA_CLASS ( context, MOAIMemStream )
+	REGISTER_LUA_CLASS ( context, MOAIStreamAdapter )
+	REGISTER_LUA_CLASS ( context, MOAITaskQueue )
 	
 	#if MOAI_WITH_JANSSON
-		REGISTER_LUA_CLASS ( MOAIJsonParser )
+		REGISTER_LUA_CLASS ( context, MOAIJsonParser )
 	#endif
 	
 	#if MOAI_WITH_GPB
-		REGISTER_LUA_CLASS ( MOAIParser )
+		REGISTER_LUA_CLASS ( context, MOAIParser )
 	#endif
 	
 	#if MOAI_WITH_TINYXML && MOAI_WITH_EXPAT
-  		REGISTER_LUA_CLASS ( MOAIXmlParser )
+  		REGISTER_LUA_CLASS ( context, MOAIXmlParser )
 	#endif
 }

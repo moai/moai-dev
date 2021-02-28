@@ -12,7 +12,7 @@
 // MOAIUrlMgrCurl
 //================================================================//
 class MOAIUrlMgrCurl :
-	public ZLContextClass < MOAIUrlMgrCurl > {
+	public virtual ZLContextClass {
 private:
 
 	STLMap < CURL*, MOAIHttpTaskCurl* > mHandleMap;

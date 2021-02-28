@@ -8,19 +8,11 @@
 
 class MOAILuaState;
 
-#define REGISTER_LUA_CLASS(type)							\
-	type::RegisterLuaType ();								\
-	MOAIPool::Get ().AffirmFactory < type >();
-
-#define REGISTER_LUA_CLASS_WITH_ALIAS(type, alias)			\
-	type::RegisterLuaType ();								\
-	MOAILuaRuntime::Get ().AliasGlobal ( #type, alias );
-
 //================================================================//
 // MOAILuaClass
 //================================================================//
 class MOAILuaClass :
-	public ZLContextClassBase {
+	public virtual ZLContextClass {
 protected:
 
 	friend MOAILuaRuntime;
@@ -77,7 +69,7 @@ private:
 public:
 	
 	//----------------------------------------------------------------//
-	static MOAILuaFactoryClass&		Get						();
+//	static MOAILuaFactoryClass&		Get						();
 									MOAILuaFactoryClass		();
 	void							Register				( MOAILuaObject* instance );
 };
@@ -101,7 +93,7 @@ private:
 public:
 	
 	//----------------------------------------------------------------//
-	static MOAILuaSingletonClass&	Get						();
+//	static MOAILuaSingletonClass&	Get						();
 	MOAILuaObject*					GetSingleton			();
 									MOAILuaSingletonClass	();
 	void							Register				( MOAILuaObject* instance );

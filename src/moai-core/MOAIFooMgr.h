@@ -19,7 +19,7 @@
 			using the REGISTER_LUA_CLASS macro (see moaicore.cpp).
 */
 class MOAIFooMgr :
-	public ZLContextClass < MOAIFooMgr >,
+	public virtual ZLContextClass,
 	public virtual MOAILuaObject {
 private:
 	

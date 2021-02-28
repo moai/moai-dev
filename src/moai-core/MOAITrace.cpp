@@ -10,16 +10,18 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-void MOAITrace::_callback ( lua_State *L, lua_Debug* ar ) {
+void MOAITrace::_callback ( lua_State* L, lua_Debug* ar ) {
+	
+	MOAILuaState state ( L );
 
-	MOAITrace::Get ().Callback ( L, ar );
+	state.GetContext ()->Get < MOAITrace >().Callback ( L, ar );
 }
 
 //----------------------------------------------------------------//
 int MOAITrace::_reportTrace ( lua_State* L ) {
-	UNUSED ( L );
+	MOAI_LUA_SETUP_SINGLE ( MOAITrace, "" )
 
-	MOAITrace::Get ().ReportTrace ();
+	self->ReportTrace ();
 	return 0;
 }
 
@@ -32,17 +34,17 @@ int MOAITrace::_run ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 int MOAITrace::_setVerbose ( lua_State* L ) {
-	MOAILuaState state ( L );
+	MOAI_LUA_SETUP_SINGLE ( MOAITrace, "" )
 
-	MOAITrace::Get ().SetVerbose ( state.GetValue < bool >( 1, true ));
+	self->SetVerbose ( state.GetValue < bool >( 1, true ));
 	return 0;
 }
 
 //----------------------------------------------------------------//
 int MOAITrace::_start ( lua_State* L ) {
-	UNUSED ( L );
+	MOAI_LUA_SETUP_SINGLE ( MOAITrace, "" )
 
-	MOAITrace::Get ().Start ();
+	self->Start ();
 	return 0;
 }
 
@@ -264,7 +266,7 @@ void MOAITrace::Start () {
 	if ( this->mIsActive ) return;
 	this->mIsActive = true;
 
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 	lua_sethook ( state, MOAITrace::_callback, LUA_MASKCALL | LUA_MASKRET | LUA_MASKLINE, 0 );
 	
 	this->mLastRunAt = ZLDeviceTime::GetTimeInSeconds ();

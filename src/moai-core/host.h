@@ -67,35 +67,31 @@ typedef void ( *AKUErrorTracebackFunc )         ( const char* message, struct lu
 // context api
 AKU_API void			AKUAppFinalize					();
 AKU_API void			AKUAppInitialize				();
-AKU_API int				AKUCheckContext					( AKUContextID context );
+AKU_API int				AKUCheckContext					( AKUContextID contextID );
 AKU_API void			AKUClearMemPool					();
-AKU_API int				AKUCountContexts				();
 AKU_API AKUContextID	AKUCreateContext				();
-AKU_API void			AKUDeleteContext				( AKUContextID context );
-AKU_API AKUContextID	AKUGetContext					();
-AKU_API void*			AKUGetUserdata					();
+AKU_API void			AKUDeleteContext				( AKUContextID contextID );
 
 AKU_API void			AKUInitMemPool					( size_t sizeInBytes );
-AKU_API int				AKUSetContext					( AKUContextID context );
 AKU_API void			AKUSetLogLevel					( int logLevel );
-AKU_API void			AKUSetUserdata					( void* user );
+AKU_API void			AKUSetUserdata					( AKUContextID contextID, void* user );
 
 // management api
-AKU_API int				AKUCallFunc						();
-AKU_API int				AKUCallFuncWithArgArray			( char* exeName, char* scriptName, int argc, char** argv, int asParams );
-AKU_API int				AKUCallFuncWithArgString		( char* exeName, char* scriptName, char* args, int asParams );
-AKU_API lua_State*		AKUGetLuaState					();
+AKU_API int				AKUCallFunc						( AKUContextID contextID );
+AKU_API int				AKUCallFuncWithArgArray			( AKUContextID contextID, char* exeName, char* scriptName, int argc, char** argv, int asParams );
+AKU_API int				AKUCallFuncWithArgString		( AKUContextID contextID, char* exeName, char* scriptName, char* args, int asParams );
+AKU_API lua_State*		AKUGetLuaState					( AKUContextID contextID );
 AKU_API char*			AKUGetMoaiAuthor				( char* buffer, size_t length );
 AKU_API char*			AKUGetMoaiCommit				( char* buffer, size_t length );
 AKU_API char*			AKUGetMoaiVersion				( char* buffer, size_t length );
 AKU_API char*			AKUGetWorkingDirectory			( char* buffer, size_t length );
-AKU_API int				AKULoadFuncFromBuffer			( void* data, size_t size, const char* chunkname, int compressed );
-AKU_API int				AKULoadFuncFromFile				( const char* filename );
-AKU_API int				AKULoadFuncFromString			( const char* script, size_t size, const char* chunkname );
+AKU_API int				AKULoadFuncFromBuffer			( AKUContextID contextID, void* data, size_t size, const char* chunkname, int compressed );
+AKU_API int				AKULoadFuncFromFile				( AKUContextID contextID, const char* filename );
+AKU_API int				AKULoadFuncFromString			( AKUContextID contextID, const char* script, size_t size, const char* chunkname );
 AKU_API int				AKUMountVirtualDirectory		( char const* virtualPath, char const* archive );
 AKU_API int				AKUSetWorkingDirectory			( char const* path );
 
 // callback management
-AKU_API void			AKUSetFunc_ErrorTraceback		( AKUErrorTracebackFunc func );
+AKU_API void			AKUSetFunc_ErrorTraceback		( AKUContextID contextID, AKUErrorTracebackFunc func );
 
 #endif

@@ -22,7 +22,7 @@
 	@const	DIALOG_RESULT_CANCEL	Result code when the dialog is dismissed by pressing the cancel button.
 */
 class MOAIDialogIOS :
-	public ZLContextClass < MOAIDialogIOS >,
+	public virtual ZLContextClass,
 	public virtual MOAILuaObject {
 private:
 

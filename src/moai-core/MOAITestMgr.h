@@ -4,6 +4,8 @@
 #ifndef	MOAITESTMGR_H
 #define	MOAITESTMGR_H
 
+#if 0
+
 #include <moai-core/MOAIEventSource.h>
 #include <moai-core/MOAILua.h>
 
@@ -34,7 +36,7 @@ public:
 //================================================================//
 // TODO: doxygen
 class MOAITestMgr :
-	public ZLContextClass < MOAITestMgr >,
+	public virtual ZLContextClass,
 	public virtual MOAILuaObject {
 private:
 
@@ -89,4 +91,5 @@ public:
 	void			Step					();
 };
 
+#endif
 #endif

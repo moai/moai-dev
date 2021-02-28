@@ -145,7 +145,7 @@ MOAIParser::~MOAIParser () {
 void MOAIParser::OnEndNonterminal ( ZLSyntaxNode* node ) {
 
 	if ( this->mOnEndNonterminal ) {
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 		if ( this->mOnEndNonterminal.PushRef ( state )) {
 			state.Push ( node->GetID ());
 			state.DebugCall ( 1, 0 );
@@ -157,7 +157,7 @@ void MOAIParser::OnEndNonterminal ( ZLSyntaxNode* node ) {
 void MOAIParser::OnStartNonterminal ( ZLSyntaxNode* node ) {
 
 	if ( this->mOnStartNonterminal ) {
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 		if ( this->mOnStartNonterminal.PushRef ( state )) {
 			state.Push ( node->GetID ());
 			state.Push ( node->GetLine ());
@@ -171,7 +171,7 @@ void MOAIParser::OnStartNonterminal ( ZLSyntaxNode* node ) {
 void MOAIParser::OnTerminal ( ZLSyntaxNode* node ) {
 
 	if ( this->mOnTerminal ) {
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 		if ( this->mOnTerminal.PushRef ( state )) {
 			state.Push ( node->GetID ());
 			state.Push ( node->GetLine ());

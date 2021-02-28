@@ -16,7 +16,7 @@ SUPPRESS_EMPTY_FILE_WARNING
 //----------------------------------------------------------------//
 void MOAIUrlMgrCurl::AddHandle ( MOAIHttpTaskCurl& task ) {
 
-	MOAIAutoLock autolock( this->mLock );
+	ZLScopedLock autolock( this->mLock );
 
 	CURL* handle = task.mEasyHandle;
 	if ( !handle ) return;
@@ -34,7 +34,7 @@ void MOAIUrlMgrCurl::AddHandle ( MOAIHttpTaskCurl& task ) {
 void MOAIUrlMgrCurl::RemoveHandle ( MOAIHttpTaskCurl& task ) {
 	
 	{
-		MOAIAutoLock autolock( this->mLock );
+		ZLScopedLock autolock( this->mLock );
 
 		CURL* handle = task.mEasyHandle;
 		if ( !handle ) return;
@@ -92,7 +92,7 @@ void MOAIUrlMgrCurl::ProcessAsync () {
 	FD_ZERO(&excfds);
 	
 	{
-		MOAIAutoLock autolock( this->mLock );
+		ZLScopedLock autolock( this->mLock );
 		
 		long int curl_timeout;
 		
@@ -189,7 +189,7 @@ bool MOAIUrlMgrCurl::Process () {
 	
 		if ( msg && ( msg->msg == CURLMSG_DONE )) {
 			
-//			MOAIAutoLock autolock( this->mLock );
+//			ZLScopedLock autolock( this->mLock );
 			this->mLock.Lock ();
 			
 			CURL* handle = msg->easy_handle;

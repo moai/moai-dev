@@ -18,9 +18,10 @@
 	@out	nil
 */
 int MOAILogMgr::_closeFile ( lua_State* L ) {
-	UNUSED ( L );
+	MOAILuaState state ( L );
 
-	MOAILogMgr::Get ().CloseFile ();
+	ZLContext* context = state.GetContext ();
+	context->Get < MOAILogMgr >().CloseFile ();
 
 	return 0;
 }
@@ -89,7 +90,7 @@ int MOAILogMgr::_log ( lua_State* L ) {
 	STLString log;
 	log.write ( "[%s-%d] %s", token, level, msg );
 
-	ZLLog::Get ().LogF ( level, ZLLog::CONSOLE, "%s", log.c_str ());	// Caller's string may contain % and should NOT be used as a format to LogF
+	ZLLog::Get ()->LogF ( level, ZLLog::CONSOLE, "%s", log.c_str ());	// Caller's string may contain % and should NOT be used as a format to LogF
 
 	return 0;
 }
@@ -107,7 +108,7 @@ int MOAILogMgr::_openFile ( lua_State* L ) {
 	if ( !state.CheckParams ( 1, "S" )) return 0;
 
 	cc8* filename = state.GetValue < cc8* >( 1, "" );
-	MOAILogMgr::Get ().OpenFile ( filename );
+	state.GetContext ()->Get < MOAILogMgr >().OpenFile ( filename );
 
 	return 0;
 }
@@ -124,7 +125,7 @@ int MOAILogMgr::_setLogLevel ( lua_State* L ) {
 	MOAILuaState state ( L );
 
 	u32 level = state.GetValue < u32 >( 1, ZLLog::LOG_NONE );
-	ZLLog::Get ().SetLogLevel ( level );
+	ZLLog::Get ()->SetLogLevel ( level );
 
 	return 0;
 }
@@ -141,7 +142,7 @@ int MOAILogMgr::_setTypeCheckLuaParams ( lua_State* L ) {
 	MOAILuaState state ( L );
 
 	bool check = state.GetValue < bool >( 1, false );
-	MOAILogMgr::Get ().mTypeCheckLuaParams = check;
+	state.GetContext ()->Get < MOAILogMgr >().mTypeCheckLuaParams = check;
 
 	return 0;
 }
@@ -207,7 +208,7 @@ void MOAILogMgr::CloseFile () {
 	if ( this->mFile ) {
 		fclose ( this->mFile );
 		this->mFile = 0;
-		ZLLog::Get ().SetRedirect ( 0 );
+		ZLLog::Get ()->SetRedirect ( 0 );
 	}
 }
 
@@ -217,7 +218,7 @@ void MOAILogMgr::LogF ( lua_State *L, u32 level, cc8* message, ... ) {
 	va_list args;
 	va_start ( args, message );
 
-	this->LogV ( L, level, message, args );
+	MOAILogMgr::LogV ( L, level, message, args );
 
 	va_end ( args );
 }
@@ -225,35 +226,28 @@ void MOAILogMgr::LogF ( lua_State *L, u32 level, cc8* message, ... ) {
 //----------------------------------------------------------------//
 void MOAILogMgr::LogV ( lua_State *L, u32 level, cc8* message, va_list args ) {
 
-	if ( ZLLog::Get ().IsEnabled ( level )) {
+	ZLLog::Ref log = ZLLog::Get ();
+
+	if ( log->IsEnabled ( level )) {
 
 		if ( L ) {
-			ZLLog::Get ().LogF ( level, ZLLog::CONSOLE, "----------------------------------------------------------------\n" );
+			log->LogF ( level, ZLLog::CONSOLE, "----------------------------------------------------------------\n" );
 		}
 
-		ZLLog::Get ().LogV ( level, ZLLog::CONSOLE, message, args );
+		log->LogV ( level, ZLLog::CONSOLE, message, args );
 		
 		size_t msgSize = strlen ( message );
 		if ( msgSize && ( message [ msgSize - 1 ] != '\n' )) {
-			ZLLog::Get ().LogF ( level, ZLLog::CONSOLE, "\n" );
+			log->LogF ( level, ZLLog::CONSOLE, "\n" );
 		}
 		
 		if ( L ) {
-			ZLLog::Get ().LogF ( level, ZLLog::CONSOLE, "\n" );
+			log->LogF ( level, ZLLog::CONSOLE, "\n" );
 			MOAILuaState state ( L );
 			state.LogStackTrace ( level, ZLLog::CONSOLE, NULL, 0 );
-			ZLLog::Get ().LogF ( level, ZLLog::CONSOLE, "\n" );
+			log->LogF ( level, ZLLog::CONSOLE, "\n" );
 		}
 	}
-}
-
-//----------------------------------------------------------------//
-bool MOAILogMgr::LuaSetupClass( MOAILuaState& state, cc8* typeStr ) {
-
-	if ( this->mTypeCheckLuaParams && typeStr ) {
-		return state.CheckParams ( 1, typeStr, true );
-	}
-	return false;
 }
 
 //----------------------------------------------------------------//
@@ -281,7 +275,7 @@ void MOAILogMgr::OpenFile ( cc8* filename ) {
 	FILE* file = fopen ( filename, "w" );
 	if ( file ) {
 		this->mFile = file;
-		ZLLog::Get ().SetRedirect ( file );
+		ZLLog::Get ()->SetRedirect ( file );
 	}
 }
 

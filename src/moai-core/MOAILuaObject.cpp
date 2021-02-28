@@ -29,11 +29,13 @@ int MOAILuaObject::_gc ( lua_State* L ) {
 	MOAILuaState state ( L );
 	MOAILuaObject* self = ( MOAILuaObject* )state.GetPtrUserData ( 1 );
 	
+	MOAILuaRuntime& runtime = state.GetContext ()->Get < MOAILuaRuntime >();
+	
 	// edgecase: ignore _gc() called by previous Lua userdata
 	self->mActiveUserdataCount--;
 	if ( self->mActiveUserdataCount > 0 ) return 0;
 	
-	if ( MOAILuaRuntime::IsValid ()) {
+	if ( runtime.IsValid ()) {
 		
 		if ( self->mFinalizer ) {
 			self->mFinalizer.PushRef ( state );
@@ -49,7 +51,7 @@ int MOAILuaObject::_gc ( lua_State* L ) {
 			self->mFinalizer.Clear ();
 		}
 		
-		if ( MOAILuaRuntime::Get ().mReportGC ) {
+		if ( runtime.mReportGC ) {
 			printf ( "GC %s <%p>\n", self->TypeName (), self );
 		}
 		
@@ -209,8 +211,10 @@ void MOAILuaObject::BindToLua ( MOAILuaState& state ) {
 
 	assert ( !this->mUserdata );
 	
-	if ( MOAILuaRuntime::IsValid ()) {
-		MOAILuaRuntime::Get ().RegisterObject ( state, *this );
+	MOAILuaRuntime& runtime = this->Get < MOAILuaRuntime >();
+	
+	if ( runtime.IsValid ()) {
+		runtime.RegisterObject ( state, *this );
 	}
 	
 	MOAILuaClass* type = this->GetLuaClass ();
@@ -225,7 +229,7 @@ void MOAILuaObject::BindToLua ( MOAILuaState& state ) {
 	
 	// hang on to the userdata in case this object was created on the stack
 	// shouldn't need to do this for singletons
-	MOAILuaRuntime::Get ().CacheUserdata ( state, -1 );
+	runtime.CacheUserdata ( state, -1 );
 	
 	// instances get the 'full stack' of metatables
 	lua_newtable ( state ); // ref table
@@ -250,7 +254,7 @@ MOAILuaClass* MOAILuaObject::GetLuaClass () {
 //----------------------------------------------------------------//
 MOAIScopedLuaState MOAILuaObject::GetSelf () {
 
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 	this->PushLuaUserdata ( state );
 	return state;
 }
@@ -258,7 +262,7 @@ MOAIScopedLuaState MOAILuaObject::GetSelf () {
 //----------------------------------------------------------------//
 void MOAILuaObject::GetRef ( MOAILuaRef& ref ) {
 
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 	this->PushLuaUserdata ( state );
 	ref.SetRef ( state, -1 );
 }
@@ -315,8 +319,10 @@ void MOAILuaObject::LuaRelease ( MOAILuaObject* object ) {
 
 	if ( !object ) return;
 	
-	if (( this->IsBound ()) && MOAILuaRuntime::IsValid ()) {
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAILuaRuntime& runtime = this->Get < MOAILuaRuntime >();
+	
+	if (( this->IsBound ()) && runtime.IsValid ()) {
+		MOAIScopedLuaState state = runtime.State ();
 		if ( this->PushRefTable ( state )) {
 			if ( object->PushLuaUserdata ( state )) {
 			
@@ -361,7 +367,7 @@ void MOAILuaObject::LuaRetain ( MOAILuaObject* object ) {
 	if ( !object ) return;
 	object->Retain (); // strong ref
 
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 	
 	if ( this->PushRefTable ( state )) {
 		if ( object->PushLuaUserdata ( state )) {
@@ -392,8 +398,10 @@ MOAILuaObject::MOAILuaObject () :
 		RTTI_EXTEND ( RTTIBase )
 	RTTI_END
 
-	if ( MOAILuaRuntime::IsValid ()) {
-		MOAILuaRuntime::Get ().RegisterObject ( *this );
+	MOAILuaRuntime& runtime = this->Get < MOAILuaRuntime >();
+
+	if ( runtime.IsValid ()) {
+		runtime.RegisterObject ( *this );
 	}
 }
 
@@ -449,7 +457,7 @@ void MOAILuaObject::MakeLuaBinding ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAILuaObject::PrintTracking () {
 
-	MOAILuaRuntime::Get ().PrintTracking ( *this );
+	this->Get < MOAILuaRuntime >().PrintTracking ( *this );
 }
 
 //----------------------------------------------------------------//
@@ -598,17 +606,19 @@ void MOAILuaObject::SetMemberTable ( MOAILuaState& state, int idx ) {
 //----------------------------------------------------------------//
 void MOAILuaObject::Unbind ( MOAILuaObject* object, MOAILuaWeakRef& userdata ) {
 
-	if ( MOAILuaRuntime::IsValid () && userdata ) {
+	MOAILuaRuntime& runtime = object->Get < MOAILuaRuntime >();
+
+	if ( runtime.IsValid () && userdata ) {
 		
-		MOAILuaRuntime::Get ().DeregisterObject ( *object );
+		runtime.DeregisterObject ( *object );
 		
 		// TODO: change from both patrick's fork and the community branch; double check
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = runtime.State ();
 		
 		// clear out the gc
 		userdata.PushRef ( state );
 		
-		MOAILuaRuntime::Get ().PurgeUserdata ( state, -1 );
+		runtime.PurgeUserdata ( state, -1 );
 		
 		if ( lua_getmetatable ( state, -1 )) {
 			lua_pushnil ( state );
@@ -671,7 +681,7 @@ void MOAILuaObject::ZLRefCountedObjectBase_OnRelease ( u32 refCount ) {
 		if ( refCount == 0 ) {
 			this->Retain ();
 		}
-		MOAIPool::Get ().Remit ( this );
+		this->Get < MOAIPool >().Remit ( this );
 	}
 	
 	// The engine is done with this object, so it's OK to delete

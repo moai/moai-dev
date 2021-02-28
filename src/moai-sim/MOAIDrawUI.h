@@ -11,7 +11,7 @@ class MOAIFont;
 //================================================================//
 // TODO: doxygen
 class MOAIDrawUI :
-	public ZLContextClass < MOAIDrawUI > {
+	public virtual ZLContextClass {
 private:
 	
 //	//----------------------------------------------------------------//

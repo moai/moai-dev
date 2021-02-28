@@ -23,7 +23,7 @@ class MOAIShaderProgramGL;
 	@const MESH_SHADER
 */
 class MOAIShaderMgrGL :
-	public ZLContextClass < MOAIShaderMgrGL >,
+	public virtual ZLContextClass,
 	public virtual MOAILuaObject {
 private:
 	

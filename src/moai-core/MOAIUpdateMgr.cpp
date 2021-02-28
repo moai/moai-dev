@@ -37,8 +37,8 @@
 	@out	nil
 */
 int MOAIUpdateMgr::_clearLoopFlags ( lua_State* L ) {
-	MOAILuaState state ( L );
-	MOAIUpdateMgr::Get ().mLoopFlags &= ~state.GetValue < u32 >( 1, 0xffffffff );
+	MOAI_LUA_SETUP_SINGLE ( MOAIUpdateMgr, "" )
+	self->mLoopFlags &= ~state.GetValue < u32 >( 1, 0xffffffff );
 	return 0;
 }
 
@@ -52,8 +52,8 @@ int MOAIUpdateMgr::_collectgarbage ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: deprecate
 int MOAIUpdateMgr::_forceGC ( lua_State* L ) {
-	UNUSED ( L );
-	MOAILuaRuntime::Get ().ForceGarbageCollection ();
+	MOAI_LUA_SETUP_SINGLE ( MOAIUpdateMgr, "" )
+	self->Get < MOAILuaRuntime >().ForceGarbageCollection ();
 	return 0;
 }
 
@@ -65,14 +65,10 @@ int MOAIUpdateMgr::_forceGC ( lua_State* L ) {
 	@out	number time			The equivalent number of seconds for the specified number of frames.
 */
 int MOAIUpdateMgr::_framesToTime ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIUpdateMgr, "N" )
 
-	MOAILuaState state ( L );
-	if ( !state.CheckParams ( 1, "N" )) return 0;
-	
 	float frames = state.GetValue < float >( 1, 0.0f );
-	
-	MOAIUpdateMgr& sim = MOAIUpdateMgr::Get ();
-	lua_pushnumber ( state, frames * sim.mStep );
+	lua_pushnumber ( state, frames * self->mStep );
 	
 	return 1;
 }
@@ -96,8 +92,8 @@ int MOAIUpdateMgr::_getDeviceTime ( lua_State* L ) {
 	@out	number time			The number of elapsed seconds.
 */
 int MOAIUpdateMgr::_getElapsedTime ( lua_State* L ) {
-	
-	lua_pushnumber ( L, MOAIUpdateMgr::Get ().mSimTime );
+	MOAI_LUA_SETUP_SINGLE ( MOAIUpdateMgr, "" )
+	lua_pushnumber ( L, self->mSimTime );
 	return 1;
 }
 
@@ -108,7 +104,8 @@ int MOAIUpdateMgr::_getElapsedTime ( lua_State* L ) {
 	@out	number mask
 */
 int MOAIUpdateMgr::_getLoopFlags ( lua_State* L ) {
-	lua_pushnumber ( L, MOAIUpdateMgr::Get ().mLoopFlags );
+	MOAI_LUA_SETUP_SINGLE ( MOAIUpdateMgr, "" )
+	lua_pushnumber ( L, self->mLoopFlags );
 	return 1;
 }
 
@@ -119,8 +116,8 @@ int MOAIUpdateMgr::_getLoopFlags ( lua_State* L ) {
 	@out	number size			The size of the frame; the time it takes for one frame to pass.
 */
 int MOAIUpdateMgr::_getStep ( lua_State* L ) {
-	
-	lua_pushnumber ( L, MOAIUpdateMgr::Get ().GetStep ());
+	MOAI_LUA_SETUP_SINGLE ( MOAIUpdateMgr, "" )
+	lua_pushnumber ( L, self->GetStep ());
 	return 1;
 }
 
@@ -131,8 +128,8 @@ int MOAIUpdateMgr::_getStep ( lua_State* L ) {
 	@out	number steps		The number of times the sim was stepped.
 */
 int MOAIUpdateMgr::_getStepCount ( lua_State* L ) {
-	
-	lua_pushnumber ( L, MOAIUpdateMgr::Get ().mStepCount );
+	MOAI_LUA_SETUP_SINGLE ( MOAIUpdateMgr, "" )
+	lua_pushnumber ( L, self->mStepCount );
 	return 1;
 }
 
@@ -144,15 +141,15 @@ int MOAIUpdateMgr::_getStepCount ( lua_State* L ) {
 	@out	nil
 */
 int MOAIUpdateMgr::_pauseTimer ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIUpdateMgr, "" )
 	
-	MOAILuaState state ( L );
 	bool pause = state.GetValue < bool >( 1, true );
 	
 	if ( pause ) {
-		MOAIUpdateMgr::Get ().Pause ();
+		self->Pause ();
 	}
 	else {
-		MOAIUpdateMgr::Get ().Resume ();
+		self->Resume ();
 	}
 	return 0;
 }
@@ -169,8 +166,8 @@ int MOAIUpdateMgr::_pauseTimer ( lua_State* L ) {
 	@out	nil
 */
 int MOAIUpdateMgr::_setBoostThreshold ( lua_State* L ) {
-	MOAILuaState state ( L );
-	MOAIUpdateMgr::Get ().mBoostThreshold = state.GetValue < double >( 1, DEFAULT_BOOST_THRESHOLD );
+	MOAI_LUA_SETUP_SINGLE ( MOAIUpdateMgr, "" )
+	self->mBoostThreshold = state.GetValue < double >( 1, DEFAULT_BOOST_THRESHOLD );
 	return 0;
 }
 
@@ -183,8 +180,8 @@ int MOAIUpdateMgr::_setBoostThreshold ( lua_State* L ) {
 	@out	nil
 */
 int MOAIUpdateMgr::_setCpuBudget ( lua_State* L ) {
-	MOAILuaState state ( L );
-	MOAIUpdateMgr::Get ().mCpuBudget = state.GetValue < u32 >( 1, DEFAULT_CPU_BUDGET );
+	MOAI_LUA_SETUP_SINGLE ( MOAIUpdateMgr, "" )
+	self->mCpuBudget = state.GetValue < u32 >( 1, DEFAULT_CPU_BUDGET );
 	return 0;
 }
 
@@ -196,8 +193,8 @@ int MOAIUpdateMgr::_setCpuBudget ( lua_State* L ) {
 	@out	nil
 */
 int MOAIUpdateMgr::_setGCActive ( lua_State* L ) {
-	MOAILuaState state ( L );
-	MOAIUpdateMgr::Get ().mGCActive = state.GetValue < bool >( 1, false );
+	MOAI_LUA_SETUP_SINGLE ( MOAIUpdateMgr, "" )
+	self->mGCActive = state.GetValue < bool >( 1, false );
 	return 0;
 }
 
@@ -209,8 +206,8 @@ int MOAIUpdateMgr::_setGCActive ( lua_State* L ) {
 	@out	nil
 */
 int MOAIUpdateMgr::_setGCStep ( lua_State* L ) {
-	MOAILuaState state ( L );
-	MOAIUpdateMgr::Get ().mGCStep = state.GetValue < u32 >( 1, 0 );
+	MOAI_LUA_SETUP_SINGLE ( MOAIUpdateMgr, "" )
+	self->mGCStep = state.GetValue < u32 >( 1, 0 );
 	return 0;
 }
 
@@ -224,8 +221,8 @@ int MOAIUpdateMgr::_setGCStep ( lua_State* L ) {
 	@out	nil
 */
 int MOAIUpdateMgr::_setLongDelayThreshold ( lua_State* L ) {
-	MOAILuaState state ( L );
-	MOAIUpdateMgr::Get ().mLongDelayThreshold = state.GetValue < double >( 1, DEFAULT_LONG_DELAY_THRESHOLD );
+	MOAI_LUA_SETUP_SINGLE ( MOAIUpdateMgr, "" )
+	self->mLongDelayThreshold = state.GetValue < double >( 1, DEFAULT_LONG_DELAY_THRESHOLD );
 	return 0;
 }
 
@@ -248,8 +245,8 @@ int MOAIUpdateMgr::_setLongDelayThreshold ( lua_State* L ) {
 	@out	nil	
 */
 int MOAIUpdateMgr::_setLoopFlags ( lua_State* L ) {
-	MOAILuaState state ( L );
-	MOAIUpdateMgr::Get ().mLoopFlags |= state.GetValue < u32 >( 1, 0 );
+	MOAI_LUA_SETUP_SINGLE ( MOAIUpdateMgr, "" )
+	self->mLoopFlags |= state.GetValue < u32 >( 1, 0 );
 	return 0;
 }
 
@@ -264,8 +261,8 @@ int MOAIUpdateMgr::_setLoopFlags ( lua_State* L ) {
 	@out	nil
 */
 int MOAIUpdateMgr::_setStepMultiplier ( lua_State* L ) {
-	MOAILuaState state ( L );
-	MOAIUpdateMgr::Get ().mStepMultiplier = state.GetValue < u32 >( 1, DEFAULT_STEP_MULTIPLIER );
+	MOAI_LUA_SETUP_SINGLE ( MOAIUpdateMgr, "" )
+	self->mStepMultiplier = state.GetValue < u32 >( 1, DEFAULT_STEP_MULTIPLIER );
 	return 0;
 }
 
@@ -280,15 +277,13 @@ int MOAIUpdateMgr::_setStepMultiplier ( lua_State* L ) {
 	@out	nil
 */
 int MOAIUpdateMgr::_setStepSmoothing ( lua_State *L ) {
-	MOAILuaState state ( L );
+	MOAI_LUA_SETUP_SINGLE ( MOAIUpdateMgr, "" )
 
 	u32 size = state.GetValue < u32 >( 1, 0 );
-
-	MOAIUpdateMgr& device = MOAIUpdateMgr::Get ();
 	
-	device.mSmoothBuffer.Init ( size );
-	device.mSmoothBuffer.Fill ( device.mStep );
-	device.mSmoothIdx = 0;
+	self->mSmoothBuffer.Init ( size );
+	self->mSmoothBuffer.Fill ( self->mStep );
+	self->mSmoothIdx = 0;
 	
 	return 0;
 }
@@ -302,8 +297,8 @@ int MOAIUpdateMgr::_setStepSmoothing ( lua_State *L ) {
 	@out	nil
 */
 int MOAIUpdateMgr::_setTimerError ( lua_State* L ) {
-	MOAILuaState state ( L );
-	MOAIUpdateMgr::Get ().mTimerError = state.GetValue < double >( 1, 0.0 );
+	MOAI_LUA_SETUP_SINGLE ( MOAIUpdateMgr, "" )
+	self->mTimerError = state.GetValue < double >( 1, 0.0 );
 	return 0;
 }
 
@@ -315,14 +310,10 @@ int MOAIUpdateMgr::_setTimerError ( lua_State* L ) {
 	@out	number frames		The equivalent number of frames for the specified number of seconds.
 */
 int MOAIUpdateMgr::_timeToFrames ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-	if ( !state.CheckParams ( 1, "N" )) return 0;
+	MOAI_LUA_SETUP_SINGLE ( MOAIUpdateMgr, "N" )
 	
 	float time = state.GetValue < float >( 1, 0.0f );
-	
-	MOAIUpdateMgr& device = MOAIUpdateMgr::Get ();
-	lua_pushnumber ( state, time / device.mStep );
+	lua_pushnumber ( state, time / self->mStep );
 	
 	return 1;
 }
@@ -460,23 +451,23 @@ double MOAIUpdateMgr::StepSim ( double step, u32 multiplier ) {
 
 	double time = ZLDeviceTime::GetTimeInSeconds ();
 
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 
 	for ( u32 s = 0; s < multiplier; ++s ) {
 		
 		lua_gc ( state, LUA_GCSTOP, 0 );
 		
-		MOAITestMgr::Get ().Step ();
+//		MOAITestMgr::Get ().Step ();
 		this->MOAIUpdateMgr_WillStep ( step );
 		
 		this->InvokeListener ( EVENT_STEP );
 		
 		double t = ZLDeviceTime::GetTimeInSeconds ();
-		MOAIActionMgr::Get ().GetActionTree ().Update ( step );
+		this->Get < MOAIActionMgr >().GetActionTree ().Update ( step );
 		this->mActionTreeTime = this->mActionTreeTime + ZLDeviceTime::GetTimeInSeconds () - t;
 		
 		t = ZLDeviceTime::GetTimeInSeconds ();
-		MOAINodeMgr::Get ().Update ();
+		this->Get < MOAINodeMgr >().Update ();
 		this->mNodeMgrTime = this->mNodeMgrTime + ZLDeviceTime::GetTimeInSeconds () - t;
 		
 		this->mSimTime += step;
@@ -485,7 +476,7 @@ double MOAIUpdateMgr::StepSim ( double step, u32 multiplier ) {
 		if ( this->mGCActive ) {
 			
 			// empty the userdata cache
-			MOAILuaRuntime::Get ().PurgeUserdataCache ();
+			this->Get < MOAILuaRuntime >().PurgeUserdataCache ();
 		
 			// crank the garbage collector
 			lua_gc ( state, LUA_GCSTEP, this->mGCStep );
@@ -497,7 +488,7 @@ double MOAIUpdateMgr::StepSim ( double step, u32 multiplier ) {
 //----------------------------------------------------------------//
 void MOAIUpdateMgr::Update () {
 
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 
 	if ( !this->mLuaGCFunc ) {
 	

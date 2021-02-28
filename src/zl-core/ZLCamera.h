@@ -6,6 +6,7 @@
 
 #include <zl-core/ZLAccessors.h>
 #include <zl-core/ZLMatrix4x4.h>
+#include <zl-core/ZLRtti.h>
 #include <zl-core/ZLViewport.h>
 
 class ZLViewport;

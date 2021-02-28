@@ -97,7 +97,7 @@ void MOAIScriptNode::NamedAttrAdd ( ZLIndex attrID, ZLAttribute &attr ) {
 			
 			if ( value != 0.0f ) {
 				
-				MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+				MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 				this->PushMemberTable ( state );
 				float cur = state.GetFieldValue < cc8*, float >( -1, attrName, 0.0f );
 				state.SetField ( -1, attrName, cur + value );
@@ -108,7 +108,7 @@ void MOAIScriptNode::NamedAttrAdd ( ZLIndex attrID, ZLAttribute &attr ) {
 			int value = ( int )attr.GetValue ( 0 );
 			
 			if ( value != 0 ) {
-				MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+				MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 				this->PushMemberTable ( state );
 				int cur = state.GetFieldValue < cc8*, int >( -1, attrName, 0 );
 				state.SetField ( -1, attrName, cur + value );
@@ -123,7 +123,7 @@ void MOAIScriptNode::NamedAttrGet ( ZLIndex attrID, ZLAttribute &attr ) {
 	
 	cc8* attrName = this->mAttrNames [ attrID ];
 	
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 	this->PushMemberTable ( state );
 	state.PushField ( -1, attrName );
 	
@@ -149,7 +149,7 @@ void MOAIScriptNode::NamedAttrSet ( ZLIndex attrID, ZLAttribute &attr ) {
 		case ZLAttribute::ATTR_TYPE_FLOAT_32: {
 
 			float value = attr.GetValue ( 0.0f );
-			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+			MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 			this->PushMemberTable ( state );
 			state.SetField ( -1, attrName, value );
 			
@@ -158,7 +158,7 @@ void MOAIScriptNode::NamedAttrSet ( ZLIndex attrID, ZLAttribute &attr ) {
 		case ZLAttribute::ATTR_TYPE_INT_32: {
 			
 			int value = attr.GetValue ( 0 );
-			MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+			MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 			this->PushMemberTable ( state );
 			state.SetField ( -1, attrName, value );
 			
@@ -173,7 +173,7 @@ void MOAIScriptNode::NamedAttrSet ( ZLIndex attrID, ZLAttribute &attr ) {
 			
 			if ( source && sourceField ) {
 			
-				MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+				MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 				source->PushMemberTable ( state );
 				this->PushMemberTable ( state );
 				state.PushField ( -2, sourceField );
@@ -250,7 +250,7 @@ void MOAIScriptNode::MOAINode_Update () {
 
 	if ( this->mOnUpdate ) {
 		
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 		if ( this->mOnUpdate.PushRef ( state )) {
 			this->PushLuaUserdata ( state );
 			state.DebugCall ( 1, 0 );

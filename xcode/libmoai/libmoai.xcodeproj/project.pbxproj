@@ -470,8 +470,6 @@
 		CD0DD3CE18E1392900FBA4B5 /* MOAIVectorUtil.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4C050D18500C18005B0520 /* MOAIVectorUtil.cpp */; };
 		CD0DD3CF18E1393000FBA4B5 /* MOAIVectorStyle.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD4C050C18500C18005B0520 /* MOAIVectorStyle.cpp */; };
 		CD0E3A5724EDDE5A00E6C92C /* MOAIAbstractCmdHandlerWithAPI.h in Headers */ = {isa = PBXBuildFile; fileRef = CD0E3A5524EDDE5A00E6C92C /* MOAIAbstractCmdHandlerWithAPI.h */; };
-		CD0E3A5A24EE260400E6C92C /* MOAIAbstractGfxScriptCallback.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD0E3A5824EE260400E6C92C /* MOAIAbstractGfxScriptCallback.cpp */; };
-		CD0E3A5B24EE260400E6C92C /* MOAIAbstractGfxScriptCallback.h in Headers */ = {isa = PBXBuildFile; fileRef = CD0E3A5924EE260400E6C92C /* MOAIAbstractGfxScriptCallback.h */; };
 		CD0E3A6624F0817500E6C92C /* MOAICmdMediumPolymorphic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD0E3A6424F0817500E6C92C /* MOAICmdMediumPolymorphic.cpp */; };
 		CD0E3A6724F0817500E6C92C /* MOAICmdMediumPolymorphic.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD0E3A6424F0817500E6C92C /* MOAICmdMediumPolymorphic.cpp */; };
 		CD0E3A6824F0817500E6C92C /* MOAICmdMediumPolymorphic.h in Headers */ = {isa = PBXBuildFile; fileRef = CD0E3A6524F0817500E6C92C /* MOAICmdMediumPolymorphic.h */; };
@@ -1818,6 +1816,9 @@
 		CD37D42725E84F5D006536C0 /* ZLSyntaxNode.h in Headers */ = {isa = PBXBuildFile; fileRef = CD37D32C25E84F5C006536C0 /* ZLSyntaxNode.h */; };
 		CD37D45B25E86116006536C0 /* zl_platform.h in Headers */ = {isa = PBXBuildFile; fileRef = CD37D45925E86116006536C0 /* zl_platform.h */; };
 		CD37D45C25E86116006536C0 /* zl_types.h in Headers */ = {isa = PBXBuildFile; fileRef = CD37D45A25E86116006536C0 /* zl_types.h */; };
+		CD37D45F25E94DD6006536C0 /* ZLApplication.h in Headers */ = {isa = PBXBuildFile; fileRef = CD37D45D25E94DD5006536C0 /* ZLApplication.h */; };
+		CD37D46025E94DD6006536C0 /* ZLApplication.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD37D45E25E94DD5006536C0 /* ZLApplication.cpp */; };
+		CD37D46225EA1F7F006536C0 /* ZLSingleton.h in Headers */ = {isa = PBXBuildFile; fileRef = CD37D46125EA1F7F006536C0 /* ZLSingleton.h */; };
 		CD38E6371F7384CB00802DDB /* ZLHashWriterMbedTLS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD38E6361F7384CA00802DDB /* ZLHashWriterMbedTLS.cpp */; };
 		CD38E6381F7384CB00802DDB /* ZLHashWriterMbedTLS.cpp in Sources */ = {isa = PBXBuildFile; fileRef = CD38E6361F7384CA00802DDB /* ZLHashWriterMbedTLS.cpp */; };
 		CD38E6391F7384E200802DDB /* aes.c in Sources */ = {isa = PBXBuildFile; fileRef = CD38E61D1F7383DF00802DDB /* aes.c */; };
@@ -6248,6 +6249,9 @@
 		CD37D32C25E84F5C006536C0 /* ZLSyntaxNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLSyntaxNode.h; sourceTree = "<group>"; };
 		CD37D45925E86116006536C0 /* zl_platform.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zl_platform.h; sourceTree = "<group>"; };
 		CD37D45A25E86116006536C0 /* zl_types.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = zl_types.h; sourceTree = "<group>"; };
+		CD37D45D25E94DD5006536C0 /* ZLApplication.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLApplication.h; sourceTree = "<group>"; };
+		CD37D45E25E94DD5006536C0 /* ZLApplication.cpp */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.cpp.cpp; path = ZLApplication.cpp; sourceTree = "<group>"; };
+		CD37D46125EA1F7F006536C0 /* ZLSingleton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ZLSingleton.h; sourceTree = "<group>"; };
 		CD38E5EE1F7383D200802DDB /* ecjpake.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = ecjpake.c; path = ../../3rdparty/mbedtls/library/ecjpake.c; sourceTree = "<group>"; };
 		CD38E5EF1F7383D200802DDB /* ecp_curves.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = ecp_curves.c; path = ../../3rdparty/mbedtls/library/ecp_curves.c; sourceTree = "<group>"; };
 		CD38E5F01F7383D200802DDB /* asn1parse.c */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.c; name = asn1parse.c; path = ../../3rdparty/mbedtls/library/asn1parse.c; sourceTree = "<group>"; };
@@ -8729,6 +8733,8 @@
 				CD37D45925E86116006536C0 /* zl_platform.h */,
 				CD37D45A25E86116006536C0 /* zl_types.h */,
 				CD37D27B25E84F35006536C0 /* ZLAccessors.h */,
+				CD37D45E25E94DD5006536C0 /* ZLApplication.cpp */,
+				CD37D45D25E94DD5006536C0 /* ZLApplication.h */,
 				CD37D30925E84F54006536C0 /* ZLArrayKey.h */,
 				CD37D28125E84F36006536C0 /* ZLAttribute.h */,
 				CD37D2B325E84F41006536C0 /* ZLAttrID.h */,
@@ -8754,6 +8760,7 @@
 				CD37D2AF25E84F40006536C0 /* ZLPrimitiveWithDefault.h */,
 				CD37D27925E84F34006536C0 /* ZLRefKey.h */,
 				CD37D26125E84F2C006536C0 /* ZLResult.h */,
+				CD37D46125EA1F7F006536C0 /* ZLSingleton.h */,
 				CD37D2B525E84F42006536C0 /* ZLTypedPtr.cpp */,
 				CD37D2E225E84F4B006536C0 /* ZLTypedPtr.h */,
 				CD37D24225E84F25006536C0 /* ZLUnion.h */,
@@ -13691,7 +13698,6 @@
 				89BE6D471739A42500DFE837 /* MOAITaskQueue.h in Headers */,
 				CD4283641A0476D20069392E /* MOAIByteStream.h in Headers */,
 				CD4C3856242CBFB700B1AC6A /* MOAIUpdateMgr.h in Headers */,
-				CD0E3A5B24EE260400E6C92C /* MOAIAbstractGfxScriptCallback.h in Headers */,
 				CD4C387A242CC32200B1AC6A /* MOAIEaseDriver.h in Headers */,
 				89BE6D4B1739A42500DFE837 /* MOAITaskSubscriber.h in Headers */,
 				CD17127722F446C500381882 /* MOAINodeMgr.h in Headers */,
@@ -15395,10 +15401,12 @@
 				CD37D3DE25E84F5C006536C0 /* ZLFactory.h in Headers */,
 				CD37D32E25E84F5C006536C0 /* ZLRefCountedObjectBase.h in Headers */,
 				CD37D3D325E84F5C006536C0 /* ZLPolyScanner.h in Headers */,
+				CD37D45F25E94DD6006536C0 /* ZLApplication.h in Headers */,
 				CD37D3B725E84F5C006536C0 /* ZLVfsZipStream.h in Headers */,
 				CD37D36E25E84F5C006536C0 /* ZLIndexOp.h in Headers */,
 				CD37D37325E84F5C006536C0 /* ZLPlane.h in Headers */,
 				CD37D36F25E84F5C006536C0 /* ZLVfsDirectoryItr.h in Headers */,
+				CD37D46225EA1F7F006536C0 /* ZLSingleton.h in Headers */,
 				CD37D35425E84F5C006536C0 /* zl_replace_stdio.h in Headers */,
 				CD37D45B25E86116006536C0 /* zl_platform.h in Headers */,
 				CD37D3AB25E84F5C006536C0 /* ZLWeakPtr.h in Headers */,
@@ -17175,7 +17183,6 @@
 				CD0E3A7524F090EA00E6C92C /* MOAIAbstractCmdMedium.cpp in Sources */,
 				89BE6CFD1739A42500DFE837 /* host.cpp in Sources */,
 				89BE6D011739A42500DFE837 /* MOAIDataBuffer.cpp in Sources */,
-				CD0E3A5A24EE260400E6C92C /* MOAIAbstractGfxScriptCallback.cpp in Sources */,
 				89BE6D051739A42500DFE837 /* MOAIDataBufferStream.cpp in Sources */,
 				89BE6D091739A42500DFE837 /* MOAIDataIOTask.cpp in Sources */,
 				89BE6D0D1739A42500DFE837 /* MOAIFileStream.cpp in Sources */,
@@ -18919,6 +18926,7 @@
 				CD37D34325E84F5C006536C0 /* ZLZipFile.cpp in Sources */,
 				CD37D3A425E84F5C006536C0 /* ZLThread_win32.cpp in Sources */,
 				CD37D40225E84F5C006536C0 /* ZLConditionVariable_win32.cpp in Sources */,
+				CD37D46025E94DD6006536C0 /* ZLApplication.cpp in Sources */,
 				CD37D35725E84F5C006536C0 /* ZLRefCountedObjectBase.cpp in Sources */,
 				CD37D3A925E84F5C006536C0 /* ZLHashWriterCRC32.cpp in Sources */,
 				CD37D3BD25E84F5C006536C0 /* ZLByteStream.cpp in Sources */,

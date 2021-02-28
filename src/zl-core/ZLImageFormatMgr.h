@@ -4,14 +4,15 @@
 #ifndef	ZLIMAGEFORMATMGR_H
 #define	ZLIMAGEFORMATMGR_H
 
-#include <zl-core/ZLImageFormat.h>
 #include <zl-core/STLMap.h>
+#include <zl-core/ZLContext.h>
+#include <zl-core/ZLImageFormat.h>
 
 //================================================================//
 // ZLImageFormatMgr
 //================================================================//
 class ZLImageFormatMgr :
-	public ZLContextClass < ZLImageFormatMgr > {
+	public ZLContextClass {
 public:
 
 	typedef STLMap < u32, ZLImageFormat* >::iterator FormatIt;

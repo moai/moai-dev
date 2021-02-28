@@ -9,53 +9,51 @@
 #include <zl-core/ZLRtti.h>
 #include <zl-core/ZLThreadLocalPtr.h>
 
+class ZLContext;
+
 //================================================================//
-// ZLContextClassIDBase
+// ZLHasContext
 //================================================================//
-class ZLContextClassIDBase {
+class ZLHasContext {
 protected:
 
-	//----------------------------------------------------------------//
-	static ZLIndex GetUniqueID () {
-	
-		static ZLIndex counter = 0;
-		return counter++;
-	};
-};
+	ZLContext*		mContext;
 
-//================================================================//
-// ZLContextClassID
-//================================================================//
-template < typename	TYPE >
-class ZLContextClassID :
-	public ZLContextClassIDBase {
 public:
+
+	//----------------------------------------------------------------//
+	template < typename TYPE > TYPE& 	Get 		();
+	template < typename TYPE > bool 	IsValid 	();
 	
 	//----------------------------------------------------------------//
-	static ZLIndex GetID ( void	) {
-	
-		static ZLIndex type	= GetUniqueID ();
-		return type;
-	};
+	void			InitializeContext		( ZLContext* context );
+					ZLHasContext			();
+					~ZLHasContext			();
 };
 
 //================================================================//
-// ZLContextClassBase
+// ZLContextClass
 //================================================================//
-class ZLContextClassBase {
+class ZLContextClass :
+	public virtual ZLHasContext {
 protected:
 
 	friend class ZLContext;
+	
+	ZLIndex				mContextID;
 	
 	//----------------------------------------------------------------//
 	virtual void		ZLContextClass_Finalize		();
 	virtual void		ZLContextClass_Initialize	();
 
+public:
+
 	//----------------------------------------------------------------//
 	void				Finalize					();
 	void				Initialize					();
-						ZLContextClassBase			();
-	virtual				~ZLContextClassBase			();
+	bool				IsValid						();
+						ZLContextClass				();
+	virtual				~ZLContextClass				();
 };
 
 //================================================================//
@@ -64,7 +62,7 @@ protected:
 class ZLContextPair {
 public:
 
-	ZLContextClassBase*			mGlobalBase;
+	ZLContextClass*				mGlobalBase;
 	void*						mGlobal;
 	bool						mIsValid;
 
@@ -77,7 +75,7 @@ public:
 		mGlobal ( NULL ),
 		mIsValid ( false ),
 		mAliasOf ( NULL ),
-		mAliasID ( 0) {
+		mAliasID ( 0 ) {
 	}
 };
 
@@ -87,8 +85,6 @@ public:
 class ZLContext {
 private:
 
-	friend class ZLContextMgr;
-
 	enum {
 		CHUNK_SIZE = 32,
 	};
@@ -96,70 +92,77 @@ private:
 	ZLLeanArray < ZLContextPair >	mGlobals;
 
 	//----------------------------------------------------------------//
+	static ZLIndex GetUniqueID () {
+	
+		static ZLIndex counter = 0;
+		return counter++;
+	};
+
+	//----------------------------------------------------------------//
+	template < typename TYPE >
+	static ZLIndex GetClassID () {
+	
+		static ZLIndex type	= ZLContext::GetUniqueID ();
+		return type;
+	};
+
+	//----------------------------------------------------------------//
 	void		AffirmSize			( ZLSize size );
-				ZLContext			();
-				~ZLContext			();
 
 public:
 	
 	//----------------------------------------------------------------//
+				ZLContext			();
+				~ZLContext			();
+	
+	//----------------------------------------------------------------//
 	template < typename TYPE >
-	TYPE* AffirmGlobal () {
+	TYPE& Affirm () {
 		
-		ZLIndex globalID = ZLContextClassID < TYPE >::GetID ();
+		ZLIndex globalID = this->GetClassID < TYPE >();
 		this->AffirmSize (( ZLSize )globalID + 1 );
 		
 		if ( !this->mGlobals [ globalID ].mGlobal ) {
 			
 			TYPE* global = new TYPE;
+			ZLContextClass* contextClass = global;
+			contextClass->mContext 		= this;
+			contextClass->mContextID 	= globalID;
 			
 			ZLContextPair& pair = this->mGlobals [ globalID ];
 			
-			pair.mGlobalBase	= global;
+			pair.mGlobalBase	= contextClass;
 			pair.mGlobal		= global;
 			pair.mAliasOf		= NULL;
 			pair.mIsValid		= true;
 			
 			pair.mGlobalBase->Initialize ();
 		}
-		
-		if ( !this->mGlobals [ globalID ].mIsValid ) {
-			return 0;
-		}
-		
-		return ( TYPE* )this->mGlobals [ globalID ].mGlobal;
+		return *( TYPE* )this->mGlobals [ globalID ].mGlobal;
 	}
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
-	TYPE* GetGlobal () {
+	TYPE& Get () {
 		
-		ZLIndex globalID = ZLContextClassID < TYPE >::GetID ();
+		TYPE* type = NULL;
+		
+		ZLIndex globalID = this->GetClassID < TYPE >();
 		if ( globalID < this->mGlobals.Size ()) {
 			ZLContextPair& pair = this->mGlobals [ globalID ];
 			if ((( pair.mAliasOf == NULL ) && pair.mIsValid ) || ( pair.mAliasOf && pair.mAliasOf->mIsValid )) {
-				return ( TYPE* )pair.mGlobal;
+				type = ( TYPE* )pair.mGlobal;
 			}
 		}
-		return 0;
-	}
-	
-	//----------------------------------------------------------------//
-	template < typename TYPE >
-	void Invalidate () {
-		
-		ZLIndex id = ZLContextClassID < TYPE >::GetID ();
-		
-		if ( id < this->mGlobals.Size ()) {
-			this->mGlobals [ id ].mIsValid = false;
-		}
+		assert ( type );
+		return *type;
 	}
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE >
 	bool IsValid () {
 		
-		ZLIndex globalID = ZLContextClassID < TYPE >::GetID ();
+		ZLIndex globalID = this->GetClassID < TYPE >();
 		
 		if ( globalID < this->mGlobals.Size ()) {
 			ZLContextPair& pair = this->mGlobals [ globalID ];
@@ -170,15 +173,15 @@ public:
 	
 	//----------------------------------------------------------------//
 	template < typename TYPE, typename ALIAS_TYPE >
-	ALIAS_TYPE* RegisterGlobalAlias () {
+	ALIAS_TYPE* RegisterAlias () {
 		
-		ZLIndex globalID = ZLContextClassID < TYPE >::GetID ();
+		ZLIndex globalID = this->GetClassID < TYPE >();
 		assert ( globalID < this->mGlobals.Size ());
 		ZLContextPair& globalPair = this->mGlobals [ globalID ];
 		TYPE* global = ( TYPE* )globalPair.mGlobal;
 		assert ( global );
 
-		ZLIndex aliasID = ZLContextClassID < ALIAS_TYPE >::GetID ();
+		ZLIndex aliasID = this->GetClassID < TYPE >();
 		this->AffirmSize (( ZLSize )aliasID + 1 );
 
 		ALIAS_TYPE* alias = global;
@@ -193,127 +196,19 @@ public:
 	}
 };
 
-//================================================================//
-// ZLContextMgr
-//================================================================//
-class ZLContextMgr {
-private:
-
-	friend class ZLContextClassBase;
-
-	typedef STLSet < ZLContext* >::iterator GlobalsSetIt;
-	typedef STLSet < ZLContext* > GlobalsSet;
-
-	// TODO: sGlobalsSet needs to be shared across all threads and wrapped in a mutex.
-	// should no longer be a ZLThreadLocalPtr.
-	static ZLThreadLocalPtr < GlobalsSet >		sGlobalsSet;
-	static ZLThreadLocalPtr < ZLContext >		sInstance;
-
-	//----------------------------------------------------------------//
-							ZLContextMgr			();
-							~ZLContextMgr			();
-
-public:
-
-	//----------------------------------------------------------------//
-	static bool				Check					( ZLContext* globals );
-	static u32				CountContexts			();
-	static ZLContext*		Create					();
-	static void				Delete					( ZLContext* globals );
-	static void				Finalize				();
-	static ZLContext*		Get						();
-	static ZLContext*		Set						( ZLContext* globals );
-};
-
-//================================================================//
-// ZLContextClass
-//================================================================//
-/**	@lua	ZLContextClass
-	@text	Base class for Moai singletons.
-*/
+//----------------------------------------------------------------//
 template < typename TYPE >
-class ZLContextClass :
-	public virtual ZLContextClassBase {
-public:
+TYPE& ZLHasContext::Get () {
 	
-	//----------------------------------------------------------------//
-	static TYPE& Affirm () {
-		assert ( ZLContextMgr::Get ());
-		TYPE* global = ZLContextMgr::Get ()->AffirmGlobal < TYPE >();
-		assert ( global );
-		return *global;
-	}
-	
-	//----------------------------------------------------------------//
-	inline static TYPE& Get () {
-		assert ( ZLContextMgr::Get ());
-		TYPE* global = ZLContextMgr::Get ()->GetGlobal < TYPE >();
-		assert ( global );
-		return *global;
-	}
-	
-	//----------------------------------------------------------------//
-	void InvalidateContext () {
-		assert ( ZLContextMgr::Get ());
-		ZLContextMgr::Get ()->Invalidate < TYPE >();
-	}
-	
-	//----------------------------------------------------------------//
-	inline static bool IsValid () {
-		assert ( ZLContextMgr::Get ());
-		return ZLContextMgr::Get ()->IsValid < TYPE >();
-	}
+	assert ( this->mContext );
+	return this->mContext->Get < TYPE >();
+}
 
-	//----------------------------------------------------------------//
-	template < typename ALIAS_TYPE >
-	static ALIAS_TYPE& RegisterAlias () {
-		assert ( ZLContextMgr::Get ());
-		ALIAS_TYPE* alias = ZLContextMgr::Get ()->RegisterGlobalAlias < TYPE, ALIAS_TYPE >();
-		assert ( alias );
-		return *alias;
-	}
-};
-
-//================================================================//
-// ZLContextClassAlias
-//================================================================//
-/**	@lua	ZLContextClassAlias
-	@text	Base class for Moai singleton aliases.
-*/
+//----------------------------------------------------------------//
 template < typename TYPE >
-class ZLContextClassAlias :
-	public virtual ZLContextClassBase {
-public:
+bool ZLHasContext::IsValid () {
 	
-	//----------------------------------------------------------------//
-	inline static TYPE& Get () {
-		assert ( ZLContextMgr::Get ());
-		TYPE* global = ZLContextMgr::Get ()->GetGlobal < TYPE >();
-		assert ( global );
-		return *global;
-	}
-
-	//----------------------------------------------------------------//
-	inline static bool IsValid () {
-		assert ( ZLContextMgr::Get ());
-		return ZLContextMgr::Get ()->IsValid < TYPE >();
-	}
-};
-
-//================================================================//
-// ZLScopedContext
-//================================================================//
-class ZLScopedContext {
-private:
-
-	ZLContext*		mOriginalContext;
-
-public:
-	
-	//----------------------------------------------------------------//
-	void				Clear						();
-						ZLScopedContext				();
-						~ZLScopedContext			();
-};
+	return this->mContext ? this->mContext->IsValid < TYPE >() : false;
+}
 
 #endif

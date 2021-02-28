@@ -53,7 +53,7 @@ private:
 // MOAILuaRuntime
 //================================================================//
 class MOAILuaRuntime :
-	public ZLContextClass < MOAILuaRuntime >,
+	public virtual ZLContextClass,
 	public virtual MOAILuaObject {
 public:
 
@@ -138,10 +138,11 @@ private:
 	void					FindLuaRefs				( lua_State* L, int idx, FILE* file, STLString path, cc8* trackingGroup, MOAILuaTraversalState& traversalState );
 	int						GetRef					( MOAILuaState& state, int idx, u32 type );
 	static bool				IsLuaIdentifier			( const char *str );
-	void					PushSingletonForClass	( MOAILuaState& state, int idx );
 	int						MakeStrong				( int refID );
 	int						MakeWeak				( int refID );
 	void					OnGlobalsFinalize		();
+	static const void*		PushContextKey			( MOAILuaState& state );
+	void					PushSingletonForClass	( MOAILuaState& state, int idx );
 	void					RegisterObject			( MOAILuaObject& object );
 	void					RegisterObject			( MOAILuaState& state, MOAILuaObject& object );
 	void					RegisterSingleton		( MOAILuaObject& singleton );

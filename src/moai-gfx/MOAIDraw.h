@@ -14,7 +14,7 @@ class MOAIGfxMgr;
 // TODO: doxygen
 class MOAIDraw :
 	public virtual MOAIAbstractCmdHandlerWithAPI < MOAIDrawAPI >,
-	public ZLContextClass < MOAIDraw > {
+	public virtual ZLContextClass {
 protected:
 
 	//----------------------------------------------------------------//

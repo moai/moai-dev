@@ -18,6 +18,7 @@
 #include <zl-core/ZLAccessors.h>
 #include <zl-core/ZLAdapterInfo.h>
 #include <zl-core/ZLAffine2D.h>
+#include <zl-core/ZLApplication.h>
 #include <zl-core/ZLArrayKey.h>
 #include <zl-core/ZLAttribute.h>
 #include <zl-core/ZLAttrID.h>

@@ -17,15 +17,15 @@ class MOAIAbstractPooledObjectFactory :
 protected:
 	
 	//----------------------------------------------------------------//
-	virtual MOAILuaObject*			MOAIAbstractPooledObjectFactory_Create 				() = 0;
+	virtual MOAILuaObject*			MOAIAbstractPooledObjectFactory_Create 				( ZLContext& context ) = 0;
 	virtual void 					MOAIAbstractPooledObjectFactory_OnProvision 		( MOAILuaObject& object, MOAIScope* scope ) = 0;
 	virtual void 					MOAIAbstractPooledObjectFactory_OnRemit 			( MOAILuaObject& object ) = 0;
 
 public:
 
 	//----------------------------------------------------------------//
-	MOAILuaObject* Create () {
-		return MOAIAbstractPooledObjectFactory_Create ();
+	MOAILuaObject* Create ( ZLContext& context ) {
+		return MOAIAbstractPooledObjectFactory_Create ( context );
 	}
 
 	//----------------------------------------------------------------//
@@ -61,11 +61,11 @@ protected:
 	MOAILuaStrongRef		mOnRemit;
 	
 	//----------------------------------------------------------------//
-	MOAILuaObject* MOAIAbstractPooledObjectFactory_Create () {
+	MOAILuaObject* MOAIAbstractPooledObjectFactory_Create ( ZLContext& context ) {
 		
 		assert ( this->mFactory );
 		
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = context.Get < MOAILuaRuntime >().State ();
 		state.Push ( this->mFactory );
 		state.DebugCall ( 0, 1 );
 		MOAILuaObject* object = state.GetLuaObject < MOAILuaObject >( -1, false );
@@ -78,7 +78,7 @@ protected:
 
 		if ( !( this->mOnProvision )) return;
 		
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = object.Get < MOAILuaRuntime >().State ();
 		state.Push ( this->mOnProvision );
 		state.Push ( object );
 		if ( scope ) {
@@ -95,7 +95,7 @@ protected:
 
 		if ( !( this->mOnRemit )) return;
 		
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = object.Get < MOAILuaRuntime >().State ();
 		state.Push ( this->mOnRemit );
 		state.Push ( &object );
 		state.DebugCall ( 1, 0 );
@@ -117,8 +117,10 @@ class MOAIPooledObjectFactory :
 protected:
 	
 	//----------------------------------------------------------------//
-	MOAILuaObject* MOAIAbstractPooledObjectFactory_Create () {
-		return new TYPE ();
+	MOAILuaObject* MOAIAbstractPooledObjectFactory_Create ( ZLContext& context ) {
+		MOAILuaObject* object = new TYPE ();
+		object->InitializeContext ( &context );
+		return object;
 	}
 
 	//----------------------------------------------------------------//

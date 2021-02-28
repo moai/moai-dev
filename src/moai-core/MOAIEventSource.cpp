@@ -109,8 +109,10 @@ void MOAIInstanceEventSource::AffirmListenerTable ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIInstanceEventSource::InvokeListener ( u32 eventID ) {
 
-	if ( MOAILuaRuntime::IsValid ()) {
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAILuaRuntime& runtime = this->Get < MOAILuaRuntime >();
+
+	if ( runtime.IsValid ()) {
+		MOAIScopedLuaState state = runtime.State ();
 		if ( this->PushListener ( eventID, state )) {
 			state.DebugCall ( 0, 0 );
 		}
@@ -120,8 +122,10 @@ void MOAIInstanceEventSource::InvokeListener ( u32 eventID ) {
 //----------------------------------------------------------------//
 void MOAIInstanceEventSource::InvokeListenerWithSelf ( u32 eventID ) {
 
-	if ( MOAILuaRuntime::IsValid ()) {
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAILuaRuntime& runtime = this->Get < MOAILuaRuntime >();
+
+	if ( runtime.IsValid ()) {
+		MOAIScopedLuaState state = runtime.State ();
 		if ( this->PushListenerAndSelf ( eventID, state )) {
 			state.DebugCall ( 1, 0 );
 		}
@@ -200,8 +204,10 @@ void MOAIGlobalEventSource::AffirmListenerTable ( MOAILuaState& state ) {
 //----------------------------------------------------------------//
 void MOAIGlobalEventSource::InvokeListener ( u32 eventID ) {
 
-	if ( MOAILuaRuntime::IsValid ()) {
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAILuaRuntime& runtime = this->Get < MOAILuaRuntime >();
+
+	if ( runtime.IsValid ()) {
+		MOAIScopedLuaState state = runtime.State ();
 		if ( this->PushListener ( eventID, state )) {
 			state.DebugCall ( 0, 0 );
 		}

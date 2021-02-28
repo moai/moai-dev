@@ -11,7 +11,7 @@
 // MOAIDialogSDL
 //================================================================//
 class MOAIDialogSDL :
-	public ZLContextClass < MOAIDialogSDL >,
+	public virtual ZLContextClass,
 	public virtual MOAILuaObject {
 private:
 

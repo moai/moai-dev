@@ -114,7 +114,7 @@ u32 MOAIDeserializer::IsLuaFile ( cc8* filename ) {
 MOAILuaObject* MOAIDeserializer::MemberIDToObject ( ObjID objectID ) {
 
 	if ( this->mObjectMap.contains ( objectID )) {
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 		MOAISerializerObjectEntry& entry = this->mObjectMap [ objectID ];
 		return entry.mObject;
 	}
@@ -140,7 +140,7 @@ u32 MOAIDeserializer::SerializeFromFile ( cc8* filename ) {
 	this->Clear ();
 	
 	int status;
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 
 	// load the lua file
 	status = luaL_loadfile ( state, filename );

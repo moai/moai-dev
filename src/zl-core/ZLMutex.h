@@ -33,19 +33,78 @@ public:
 };
 
 //================================================================//
-// MOAIAutoLock
+// ZLScopedLock
 //================================================================//
-// TODO: rename to MOAIScopedLock?
-class MOAIAutoLock {
+class ZLScopedLock {
 private:
 
-	ZLMutex&		mMutex;
+	ZLMutex*		mMutex;
 	
 public:
 	
 	//----------------------------------------------------------------//
-					MOAIAutoLock		( ZLMutex& );
-					~MOAIAutoLock		();
+					ZLScopedLock		( ZLMutex& mutex );
+					ZLScopedLock		( const ZLScopedLock& other );
+					~ZLScopedLock		();
+};
+
+//================================================================//
+// ZLScopedRef
+//================================================================//
+template < typename TYPE >
+class ZLScopedRef :
+	public ZLScopedLock {
+private:
+
+	TYPE&			mRef;
+	
+public:
+	
+	//----------------------------------------------------------------//
+	TYPE& operator * () {
+		return this->mRef;
+	}
+
+	//----------------------------------------------------------------//
+	const TYPE& operator * () const {
+		return this->mRef;
+	}
+
+	//----------------------------------------------------------------//
+	TYPE* operator -> () {
+		return &this->mRef;
+	}
+	
+	//----------------------------------------------------------------//
+	const TYPE* operator -> () const {
+		return &this->mRef;
+	}
+
+	//----------------------------------------------------------------//
+	operator TYPE* () {
+		return &this->mRef;
+	}
+
+	//----------------------------------------------------------------//
+	operator const TYPE* () const {
+		return &this->mRef;
+	}
+	
+	//----------------------------------------------------------------//
+	ZLScopedRef ( ZLMutex& mutex, TYPE& ref ) :
+		ZLScopedLock ( mutex ),
+		mRef ( ref ) {
+	}
+	
+	//----------------------------------------------------------------//
+	ZLScopedRef ( const ZLScopedRef < TYPE >& other ) :
+		ZLScopedLock ( other ),
+		mRef ( other.mRef ) {
+	}
+	
+	//----------------------------------------------------------------//
+	~ZLScopedRef () {
+	}
 };
 
 #endif

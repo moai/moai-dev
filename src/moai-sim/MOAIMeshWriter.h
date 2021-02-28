@@ -24,7 +24,7 @@ class MOAIRegion;
 			by finding redundant vertices.
 */
 class MOAIMeshWriter :
-	public ZLContextClass < MOAIMeshWriter >,
+	public virtual ZLContextClass,
 	public virtual MOAILuaObject {
 private:
 	

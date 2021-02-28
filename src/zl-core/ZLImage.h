@@ -9,6 +9,8 @@
 #include <zl-core/ZLCopyOnWrite.h>
 #include <zl-core/ZLFrameSize.h>
 
+class ZLImageFormatMgr;
+
 //================================================================//
 // ZLImageTransform
 //================================================================//
@@ -131,8 +133,8 @@ public:
 	bool					IsPow2							();
 	static bool				IsPow2							( u32 n );
 	bool					IsOK							() const;
-	bool					Load							( cc8* filename, u32 transform = 0 );
-	bool					Load							( ZLStream& stream, u32 transform );
+	bool					Load							( ZLImageFormatMgr& imageFormatMgr, cc8* filename, u32 transform = 0 );
+	bool					Load							( ZLImageFormatMgr& imageFormatMgr, ZLStream& stream, u32 transform );
 	bool					MipReduce						();
 	void					Mix								( const ZLImage& image, const ZLMatrix4x4& mtx, float K );
 	void					PadToPow2						( const ZLImage& image );
@@ -147,7 +149,7 @@ public:
 	void					SimpleThreshold					( const ZLImage& image, float rT, float gT, float bT, float aT );
 	void					Take							( ZLImage& image );
 	void					Transform						( u32 transform );
-	bool					Write							( ZLStream& stream, cc8* formatName ) const;
+	bool					Write							( ZLImageFormatMgr& imageFormatMgr, ZLStream& stream, cc8* formatName );
 							ZLImage							();
 	virtual					~ZLImage						();
 	

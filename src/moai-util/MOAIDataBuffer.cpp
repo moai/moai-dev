@@ -293,7 +293,7 @@ int MOAIDataBuffer::_loadAsync ( lua_State* L ) {
 		task->SetInflateOnLoad ( true, inflateAsync, windowBits );
 	}
 	
-	task->Start ( *queue, MOAIMainThreadTaskSubscriber::Get ());
+	task->Start ( *queue, self->Get < MOAIMainThreadTaskSubscriber >());
 
 	return 0;
 }
@@ -340,7 +340,7 @@ int MOAIDataBuffer::_saveAsync ( lua_State* L ) {
 	task->Init ( filename, *self, MOAIDataIOTask::SAVE_ACTION );
 	task->SetCallback ( L, 4 );
 	
-	task->Start ( *queue, MOAIMainThreadTaskSubscriber::Get ());
+	task->Start ( *queue, self->Get < MOAIMainThreadTaskSubscriber >());
 
 	return 0;
 }

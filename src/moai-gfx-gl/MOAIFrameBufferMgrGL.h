@@ -48,7 +48,7 @@ public:
 //================================================================//
 // TODO: doxygen
 class MOAIFrameBufferMgrGL :
-	public ZLContextClass < MOAIFrameBufferMgrGL >,
+	public virtual ZLContextClass,
 	public virtual MOAILuaObject {
 private:
 

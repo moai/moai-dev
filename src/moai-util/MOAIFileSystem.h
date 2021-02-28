@@ -11,7 +11,7 @@
 	@text	Functions for manipulating the file system.
 */
 class MOAIFileSystem :
-	public ZLContextClass < MOAIFileSystem >,
+	public virtual ZLContextClass,
 	public virtual MOAILuaObject {
 private:
 

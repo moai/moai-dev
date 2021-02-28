@@ -13,7 +13,7 @@ class MOAIActionTree;
 // MOAIActionMgr
 //================================================================//
 class MOAIActionMgr :
-	public ZLContextClass < MOAIActionMgr >,
+	public virtual ZLContextClass,
 	public MOAILuaObject {
 private:
 	

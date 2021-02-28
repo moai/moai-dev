@@ -72,7 +72,7 @@ bool MOAIGfxResource::Reload () {
 	this->ClearReloadable ();
 
 	if ( this->mReloader ) {
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 		if ( this->mReloader.PushRef ( state )) {
 			state.DebugCall ( 0, 0 );
 			return true;

@@ -387,7 +387,7 @@ MOAIWebViewIOS::~MOAIWebViewIOS () {
 //----------------------------------------------------------------//
 void MOAIWebViewIOS::RaiseDidFailLoadWithErrorEvent ( NSError* error ) {
 	
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 	if ( this->PushListenerAndSelf ( DID_FAIL_LOAD_WITH_ERROR, state )) {
 		[ error toLua:state ];
 		state.DebugCall ( 2, 0 );
@@ -401,7 +401,7 @@ BOOL MOAIWebViewIOS::RaiseShouldStartLoadWithRequestEvent ( NSURLRequest* reques
 	int nav = ( int )navType;
 	bool result = true;
 	
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 	if ( this->PushListenerAndSelf ( SHOULD_START_LOAD_WITH_REQUEST, state )) {
 		
 		lua_pushstring ( state, urlString );
@@ -416,7 +416,7 @@ BOOL MOAIWebViewIOS::RaiseShouldStartLoadWithRequestEvent ( NSURLRequest* reques
 //----------------------------------------------------------------//
 void MOAIWebViewIOS::RaiseWebViewDidFinishLoadEvent () {
 
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 	if ( this->PushListenerAndSelf ( WEB_VIEW_DID_FINISH_LOAD, state )) {
 			state.DebugCall ( 1, 0 );
 	}
@@ -425,7 +425,7 @@ void MOAIWebViewIOS::RaiseWebViewDidFinishLoadEvent () {
 //----------------------------------------------------------------//
 void MOAIWebViewIOS::RaiseWebViewDidStartLoadEvent () {
 
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 	if ( this->PushListenerAndSelf ( WEB_VIEW_DID_START_LOAD, state )) {
 			state.DebugCall ( 1, 0 );
 	}
@@ -434,7 +434,7 @@ void MOAIWebViewIOS::RaiseWebViewDidStartLoadEvent () {
 //----------------------------------------------------------------//
 void MOAIWebViewIOS::RaiseWebViewDidHideEvent () {
 	
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 	if ( this->PushListenerAndSelf ( WEB_VIEW_DID_HIDE, state )) {
 		state.DebugCall ( 1, 0 );
 	}

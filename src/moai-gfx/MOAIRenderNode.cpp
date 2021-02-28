@@ -54,7 +54,7 @@ MOAIRenderNode::~MOAIRenderNode () {
 //----------------------------------------------------------------//
 void MOAIRenderNode::PushChild ( MOAIAbstractRenderable& node ) {
 
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 	node.PushLuaUserdata ( state );
 	this->PushChild ( state, -1 );
 }
@@ -84,7 +84,7 @@ void MOAIRenderNode::PushChild ( MOAILuaState& state, int idx ) {
 void MOAIRenderNode::Render ( MOAIRenderPhaseEnum::_ renderPhase, MOAILuaMemberRef& ref ) {
 
 	if ( ref ) {
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 		state.Push ( ref );
 		MOAIRenderNode::Render ( renderPhase, state, -1 );
 		state.Pop ( 1 );
@@ -158,7 +158,7 @@ void MOAIRenderNode::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaSta
 void MOAIRenderNode::MOAIAbstractRenderNode_Render ( MOAIRenderPhaseEnum::_ renderPhase ) {
 
 	if ( this->mRenderRoot ) {
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 		state.Push ( this->mRenderRoot );
 		MOAIRenderNode::Render ( renderPhase, state, -1 );
 	}

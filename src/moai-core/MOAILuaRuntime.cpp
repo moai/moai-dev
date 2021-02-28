@@ -180,10 +180,10 @@ typedef STLSet < struct Table* > TableSet;
 
 //----------------------------------------------------------------//
 int MOAILuaRuntime::_clearRef ( lua_State* L ) {
-	MOAILuaState state ( L );
+	MOAI_LUA_SETUP_SINGLE ( MOAILuaRuntime, "" )
 
 	int ref = state.GetValue < int >( 2, false );
-	MOAILuaRuntime::Get ().ClearRef ( ref );
+	self->ClearRef ( ref );
 
 	return 0;
 }
@@ -200,10 +200,10 @@ int MOAILuaRuntime::_debugCall ( lua_State* L ) {
 
 //----------------------------------------------------------------//
 int MOAILuaRuntime::_deref ( lua_State* L ) {
-	MOAILuaState state ( L );
+	MOAI_LUA_SETUP_SINGLE ( MOAILuaRuntime, "" )
 
 	int ref = state.GetValue < int >( 2, false );
-	MOAILuaRuntime::Get ().PushRef ( state, ref );
+	self->PushRef ( state, ref );
 
 	return 1;
 }
@@ -259,8 +259,8 @@ int MOAILuaRuntime::_dumpStack ( lua_State* L ) {
 	@out	nil
 */
 int MOAILuaRuntime::_forceGC ( lua_State* L ) {
-	UNUSED ( L );
-	MOAILuaRuntime::Get ().ForceGarbageCollection ();
+	MOAI_LUA_SETUP_SINGLE ( MOAILuaRuntime, "" )
+	self->ForceGarbageCollection ();
 	return 0;
 }
 
@@ -274,10 +274,10 @@ int MOAILuaRuntime::_forceGC ( lua_State* L ) {
 	@out	table histogram
 */
 int MOAILuaRuntime::_getHistogram ( lua_State* L ) {
-	MOAILuaState state ( L );
+	MOAI_LUA_SETUP_SINGLE ( MOAILuaRuntime, "" )
 	
 	cc8* trackingGroup = state.GetValue < cc8* >( 1, 0 );
-	MOAILuaRuntime::Get ().PushHistogram ( state, trackingGroup );
+	self->PushHistogram ( state, trackingGroup );
 	return 1;
 }
 
@@ -289,16 +289,17 @@ int MOAILuaRuntime::_getHistogram ( lua_State* L ) {
 	@out	number count
 */
 int MOAILuaRuntime::_getObjectCount ( lua_State* L ) {
-	lua_pushnumber ( L, ( lua_Number )MOAILuaRuntime::Get ().GetObjectCount ());
+	MOAI_LUA_SETUP_SINGLE ( MOAILuaRuntime, "" )
+	lua_pushnumber ( L, ( lua_Number )self->GetObjectCount ());
 	return 1;
 }
 
 //----------------------------------------------------------------//
 int MOAILuaRuntime::_getRef ( lua_State* L ) {
-	MOAILuaState state ( L );
+	MOAI_LUA_SETUP_SINGLE ( MOAILuaRuntime, "" )
 
 	u32 type = state.GetValue < bool >( 2, false ) ? MOAILuaRef::MAKE_WEAK : MOAILuaRef::MAKE_STRONG;
-	state.Push ( MOAILuaRuntime::Get ().GetRef ( state, 1, type ));
+	state.Push ( self->GetRef ( state, 1, type ));
 
 	return 1;
 }
@@ -315,9 +316,9 @@ int MOAILuaRuntime::_panic ( lua_State *L ) {
 
 //----------------------------------------------------------------//
 int MOAILuaRuntime::_reportGC ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAILuaRuntime, "" )
 
-	MOAILuaState state ( L );
-	MOAILuaRuntime::Get ().mReportGC = state.GetValue < bool >( -1, false );
+	self->mReportGC = state.GetValue < bool >( -1, false );
 	return 0;
 }
 
@@ -330,12 +331,12 @@ int MOAILuaRuntime::_reportGC ( lua_State* L ) {
 	@out	nil
 */
 int MOAILuaRuntime::_reportHistogram ( lua_State* L ) {
-	MOAILuaState state ( L );
+	MOAI_LUA_SETUP_SINGLE ( MOAILuaRuntime, "" )
 
 	cc8* filename			= state.GetValue < cc8* >( 1, 0 );
 	cc8* trackingGroup		= state.GetValue < cc8* >( 2, 0 );
 	
-	MOAILuaRuntime::Get ().ReportHistogram ( filename, trackingGroup );
+	self->ReportHistogram ( filename, trackingGroup );
 	
 	return 0;
 }
@@ -355,12 +356,12 @@ int MOAILuaRuntime::_reportHistogram ( lua_State* L ) {
 	@out	nil
 */
 int MOAILuaRuntime::_reportLeaks ( lua_State* L ) {
-	MOAILuaState state ( L );
+	MOAI_LUA_SETUP_SINGLE ( MOAILuaRuntime, "" )
 	
 	cc8* filename			= state.GetValue < cc8* >( 1, 0 );
 	cc8* trackingGroup		= state.GetValue < cc8* >( 2, 0 );
 	
-	MOAILuaRuntime::Get ().ReportLeaksFormatted ( filename, trackingGroup );
+	self->ReportLeaksFormatted ( filename, trackingGroup );
 	
 	return 0;
 }
@@ -373,8 +374,8 @@ int MOAILuaRuntime::_reportLeaks ( lua_State* L ) {
 	@out	nil
 */
 int MOAILuaRuntime::_setAllocLogEnabled ( lua_State* L ) {
-	MOAILuaState state ( L );
-	MOAILuaRuntime::Get ().SetAllocLogEnabled ( state.GetValue < bool >( 1, false ));
+	MOAI_LUA_SETUP_SINGLE ( MOAILuaRuntime, "" )
+	self->SetAllocLogEnabled ( state.GetValue < bool >( 1, false ));
 	return 0;
 }
 
@@ -386,10 +387,8 @@ int MOAILuaRuntime::_setAllocLogEnabled ( lua_State* L ) {
 	@out	nil
 */
 int MOAILuaRuntime::_setTraceback ( lua_State* L ) {
-	UNUSED ( L );
-	
-	MOAILuaRuntime::Get ().GetTracebackRef ().SetRef ( MOAILuaRuntime::Get ().GetMainState(), 1 );
-	
+	MOAI_LUA_SETUP_SINGLE ( MOAILuaRuntime, "" )
+	self->GetTracebackRef ().SetRef ( self->GetMainState(), 1 );
 	return 0;
 }
 
@@ -406,39 +405,33 @@ int MOAILuaRuntime::_setTraceback ( lua_State* L ) {
 	@out	nil
 */
 int MOAILuaRuntime::_setTrackingFlags ( lua_State* L ) {
-
-	MOAILuaState state ( L );
-	MOAILuaRuntime::Get ().SetTrackingFlags ( state.GetValue < u32 >( -1, 0 ));
+	MOAI_LUA_SETUP_SINGLE ( MOAILuaRuntime, "" )
+	self->SetTrackingFlags ( state.GetValue < u32 >( -1, 0 ));
 	return 0;
 }
 
 //----------------------------------------------------------------//
 int MOAILuaRuntime::_traceback ( lua_State *L ) {
-	
-	MOAILuaRuntime& runtime = MOAILuaRuntime::Get ();
-	MOAILuaState state ( L );
+	MOAI_LUA_SETUP_SINGLE ( MOAILuaRuntime, "" )
 	
 	cc8* msg = NULL;
 	if ( lua_isstring ( L, 1 )) {  // 'message' a string?
 		msg = lua_tostring ( L, 1 );
 	}
 	
-	if ( runtime.mTracebackFunc ) {
-		runtime.mTracebackFunc ( msg, L, 0 );
+	if ( self->mTracebackFunc ) {
+		self->mTracebackFunc ( msg, L, 0 );
 	}
 	
-	if ( runtime.mTracebackRef ) {
-		
-		if ( runtime.mTracebackRef.PushRef ( state )) {
+	if ( self->mTracebackRef && self->mTracebackRef.PushRef ( state )) {
 			
-			lua_pushvalue ( state, 1 );
-			int result = lua_pcall ( state, 1, 0, 2 );
+		lua_pushvalue ( state, 1 );
+		int result = lua_pcall ( state, 1, 0, 2 );
 
-			if ( !result ) return 0;
-			
-			ZLLog_ErrorF ( ZLLog::CONSOLE, "error in user supplied traceback func\n" );
-			ZLLog_ErrorF ( ZLLog::CONSOLE, "falling back on default error handler:\n" );
-		}
+		if ( !result ) return 0;
+		
+		ZLLog_ErrorF ( ZLLog::CONSOLE, "error in user supplied traceback func\n" );
+		ZLLog_ErrorF ( ZLLog::CONSOLE, "falling back on default error handler:\n" );
 	}
 
 	if ( msg ) {
@@ -451,10 +444,10 @@ int MOAILuaRuntime::_traceback ( lua_State *L ) {
 
 //----------------------------------------------------------------//
 void* MOAILuaRuntime::_trackingAlloc ( void *ud, void *ptr, size_t osize, size_t nsize ) {
-	UNUSED ( ud );
 	
-	if ( MOAILuaRuntime::IsValid ()) {
-		MOAILuaRuntime& self = MOAILuaRuntime::Get ();
+	MOAILuaRuntime& self = *( MOAILuaRuntime* )ud;
+	
+	if ( self.IsValid ()) {
 		
 		if ( nsize == 0 ) {
 			self.mTotalBytes -= osize;
@@ -552,11 +545,12 @@ void MOAILuaRuntime::ClearRef ( int refID ) {
 void MOAILuaRuntime::Close () {
 
 	if ( this->mState ) {
-		MOAIPool::Get ().PurgeAll ();
+		this->Get < MOAIPool >().PurgeAll ();
 		lua_close ( this->mState );
 		this->mState = 0;
 	}
-	this->InvalidateContext ();
+	// TODO: need to early invalidate MOAILuaRuntime?
+//	this->InvalidateContext ();
 }
 
 //----------------------------------------------------------------//
@@ -947,14 +941,18 @@ MOAIScopedLuaState MOAILuaRuntime::Open () {
 	#if (MOAI_WITH_LUAJIT && (defined(__x86_64 ) || defined(__amd64)) )
 		this->mState = luaL_newstate ();  //luajit doesn't support custom allocs on 64bit
 	#else
-		this->mState = lua_newstate ( _trackingAlloc, NULL );
+		this->mState = lua_newstate ( _trackingAlloc, this );
 	#endif
 	
 	lua_atpanic ( this->mState, &_panic );
 
+	this->PushContextKey ( this->mState );
+	lua_pushlightuserdata ( this->mState, ( void* )this->mContext );
+	lua_settable ( this->mState, LUA_REGISTRYINDEX );
+	
 	// set up the ref tables
-	this->mStrongRefs.InitStrong ();
-	this->mWeakRefs.InitWeak ();
+	this->mStrongRefs.InitStrong ( *this );
+	this->mWeakRefs.InitWeak ( *this );
 	
 	// set up a table to hold singletons
 	lua_newtable ( this->mState );
@@ -981,6 +979,15 @@ void MOAILuaRuntime::PurgeUserdata ( MOAILuaState& state, int idx ) {
 void MOAILuaRuntime::PurgeUserdataCache () {
 
 	this->mUserdataCache.Clear ();
+}
+
+//----------------------------------------------------------------//
+const void* MOAILuaRuntime::PushContextKey ( MOAILuaState& state ) {
+
+	// use the address of a static variable, per Lua recommendation
+	static u32 key = 0; // value of this key doesn't matter
+	lua_pushlightuserdata ( state, ( void* )&key );
+	return &key;
 }
 
 //----------------------------------------------------------------//

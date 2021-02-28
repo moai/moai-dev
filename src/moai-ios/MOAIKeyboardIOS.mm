@@ -24,7 +24,7 @@
 	//----------------------------------------------------------------//
 	-( void ) onChanged :( NSString* )string {
 	
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 		MOAIKeyboardIOS& keyboard = MOAIKeyboardIOS::Get ();
 		
 		if ( keyboard.PushListener ( MOAIKeyboardIOS::EVENT_INPUT, state )) {
@@ -71,7 +71,7 @@
 		
 		BOOL result = YES;
 		
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 		MOAIKeyboardIOS& keyboard = MOAIKeyboardIOS::Get ();
 		
 		if ( keyboard.PushListener ( MOAIKeyboardIOS::EVENT_RETURN, state )) {

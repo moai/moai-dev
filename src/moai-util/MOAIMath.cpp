@@ -19,7 +19,7 @@
 	//----------------------------------------------------------------//
 	// TODO: doxygen
 	int MOAIMath::_randSFMT ( lua_State* L ) {
-		MOAILuaState state ( L );
+		MOAI_LUA_SETUP_SINGLE ( MOAIMath, "" )
 		
 		double lower = 0.0;
 		double upper = 1.0;
@@ -34,7 +34,7 @@
 			}
 		}
 		
-		double r = sfmt_genrand_real1 ( MOAIMath::Get ().mSFMT ); // [0, 1]
+		double r = sfmt_genrand_real1 ( self->mSFMT ); // [0, 1]
 		state.Push ( lower + ( r * ( upper - lower )));
 		return 1;
 	}
@@ -42,10 +42,10 @@
 	//----------------------------------------------------------------//
 	// TODO: doxygen
 	int MOAIMath::_seedSFMT ( lua_State* L ) {
-		MOAILuaState state ( L );
+		MOAI_LUA_SETUP_SINGLE ( MOAIMath, "" )
 		
 		u32 seed = state.GetValue < u32 >( 1, 0 );
-		sfmt_init_gen_rand ( MOAIMath::Get ().mSFMT, seed );
+		sfmt_init_gen_rand ( self->mSFMT, seed );
 		
 		return 0;
 	}

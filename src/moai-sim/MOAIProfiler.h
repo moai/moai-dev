@@ -14,7 +14,7 @@
 // MOAIProfiler
 //================================================================//
 class MOAIProfiler :
-	public ZLContextClass < MOAIProfiler > {
+	public virtual ZLContextClass {
 private:
 
 	enum {

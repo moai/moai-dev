@@ -22,7 +22,8 @@ class ZLCopyOnWrite;
 //================================================================//
 // ZLGfx
 //================================================================//
-class ZLGfx {
+class ZLGfx :
+	public virtual ZLHasContext {
 private:
 
 	friend class ZLGfxImmediate;
@@ -125,8 +126,8 @@ public:
 	virtual void					UseProgram					( ZLGfxResource& program ) = 0;
 	virtual void					VertexAttribPointer			( u32 index, u32 size, ZLGfxEnum::_ type, bool normalized, u32 stride, ZLSharedConstBuffer* buffer, size_t offset ) = 0;
 	virtual void					Viewport					( s32 x, s32 y, u32 w, u32 h ) = 0;
-									ZLGfx						() {}
-	virtual							~ZLGfx						() {}
+									ZLGfx						();
+	virtual							~ZLGfx						();
 };
 
 #endif

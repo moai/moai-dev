@@ -27,7 +27,7 @@ class MOAIPipelineLayoutVK;
 	@const MESH_SHADER
 */
 class MOAIShaderMgrVK :
-	public ZLContextClass < MOAIShaderMgrVK >,
+	public virtual ZLContextClass,
 	public virtual MOAILuaObject {
 private:
 	

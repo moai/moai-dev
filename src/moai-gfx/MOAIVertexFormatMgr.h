@@ -10,7 +10,7 @@
 // MOAIVertexFormatMgr
 //================================================================//
 class MOAIVertexFormatMgr :
-	public ZLContextClass < MOAIVertexFormatMgr >,
+	public virtual ZLContextClass,
 	public virtual MOAILuaObject {
 private:
 	

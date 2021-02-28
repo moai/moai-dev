@@ -32,7 +32,7 @@
 	@const	REMOTE_NOTIFICATION_ALERT					Notification type alerts.
 */
 class MOAINotificationsIOS :
-	public ZLContextClass < MOAINotificationsIOS >,
+	public virtual ZLContextClass,
 	public virtual MOAILuaObject {
 private:
 

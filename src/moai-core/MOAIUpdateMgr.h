@@ -35,7 +35,7 @@
 	@const DEFAULT_STEP_MULTIPLIER			Value is 1
 */
 class MOAIUpdateMgr :
-	public ZLContextClassAlias < MOAIUpdateMgr >,
+	public virtual ZLContextClass,
 	public virtual MOAIGlobalEventSource {
 public:
 

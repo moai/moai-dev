@@ -764,7 +764,7 @@ void MOAIFont::RenderGlyph ( MOAIGlyph& glyph ) {
 		float x = glyph.mSrcX - glyph.mBearingX;
 		float y = glyph.mSrcY + glyph.mBearingY;
 
-		MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+		MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 		if ( this->PushListenerAndSelf ( EVENT_RENDER_GLYPH, state )) {
 			
 			state.Push ( fontReader );

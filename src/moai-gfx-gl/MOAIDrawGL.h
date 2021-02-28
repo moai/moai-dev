@@ -12,7 +12,7 @@
 // TODO: doxygen
 class MOAIDrawGL :
 	public virtual MOAIAbstractCmdHandlerWithAPI < MOAIDrawAPIGL >,
-	public ZLContextClass < MOAIDrawGL > {
+	public virtual ZLContextClass {
 protected:
 
 	//----------------------------------------------------------------//

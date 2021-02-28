@@ -42,7 +42,7 @@ protected:
 // MOAIGfxMgrVK
 //================================================================//
 class MOAIGfxMgrVK :
-	public ZLContextClass < MOAIGfxMgrVK >,
+	public virtual ZLContextClass,
 	public virtual MOAIGfxMgrVKComponents,
 	public virtual MOAIGfxMgr,
 	public virtual MOAIGfxMgrVK_GPUCacheVK,

@@ -9,33 +9,65 @@
 //#define ZL_ENABLE_CONTEXT_DEBUG_LOG
 
 //================================================================//
-// ZLContextClassBase
+// ZLHasContext
 //================================================================//
 
 //----------------------------------------------------------------//
-void ZLContextClassBase::Finalize () {
+template < typename TYPE >
+TYPE& ZLHasContext::Get () {
+	assert ( this->mContext );
+	return this->mContext->Get < TYPE >();
+}
+
+//----------------------------------------------------------------//
+void ZLHasContext::InitializeContext ( ZLContext* context ) {
+	assert ( context );
+	assert (( this->mContext == NULL ) || ( this->mContext == context ));
+	this->mContext = context;
+}
+
+//----------------------------------------------------------------//
+ZLHasContext::ZLHasContext () :
+	mContext ( NULL ) {
+}
+
+//----------------------------------------------------------------//
+ZLHasContext::~ZLHasContext () {
+}
+
+//================================================================//
+// ZLContextClass
+//================================================================//
+
+//----------------------------------------------------------------//
+void ZLContextClass::Finalize () {
 	this->ZLContextClass_Finalize ();
 }
 
 //----------------------------------------------------------------//
-void ZLContextClassBase::Initialize () {
+void ZLContextClass::Initialize () {
 	this->ZLContextClass_Initialize ();
 }
 
 //----------------------------------------------------------------//
-ZLContextClassBase::ZLContextClassBase () {
+bool ZLContextClass::IsValid () {
+	return this->mContext != NULL;
 }
 
 //----------------------------------------------------------------//
-ZLContextClassBase::~ZLContextClassBase () {
+ZLContextClass::ZLContextClass () {
 }
 
 //----------------------------------------------------------------//
-void ZLContextClassBase::ZLContextClass_Finalize () {
+ZLContextClass::~ZLContextClass () {
 }
 
 //----------------------------------------------------------------//
-void ZLContextClassBase::ZLContextClass_Initialize () {
+void ZLContextClass::ZLContextClass_Finalize () {
+}
+
+//----------------------------------------------------------------//
+void ZLContextClass::ZLContextClass_Initialize () {
 }
 
 //================================================================//
@@ -75,17 +107,10 @@ ZLContext::~ZLContext () {
 
 	size_t total = this->mGlobals.Size ();
 	
-	// TODO: move to higher level context cleanup; ZLContext should not know about this
-	//MOAILuaRuntime::Get ().Close (); // call this ahead of everything to purge all the Lua bindings
-	
-	// Lua runtime gets special treatment
-	//u32 luaRuntimeID = ZLContextClassID < MOAILuaRuntime >::GetID ();
-	//this->mGlobals [ luaRuntimeID ].mIsValid = false;
-	
 	// finalize everything
 	for ( size_t i = 1; i <= total; ++i ) {
 		ZLContextPair& pair = this->mGlobals [ total - i ];
-		ZLContextClassBase* global = pair.mGlobalBase;
+		ZLContextClass* global = pair.mGlobalBase;
 
 		if ( global && ( pair.mAliasOf == NULL )) {
 		
@@ -112,7 +137,7 @@ ZLContext::~ZLContext () {
 	// and officially delete everything
 	for ( size_t i = 1; i <= total; ++i ) {
 		ZLContextPair& pair = this->mGlobals [ total - i ];
-		ZLContextClassBase* global = pair.mGlobalBase;
+		ZLContextClass* global = pair.mGlobalBase;
 
 		if ( global && ( pair.mAliasOf == NULL )) {
 		
@@ -123,141 +148,4 @@ ZLContext::~ZLContext () {
 			delete global;
 		}
 	}
-}
-
-//================================================================//
-// ZLContextMgr
-//================================================================//
-
-ZLThreadLocalPtr < ZLContextMgr::GlobalsSet >		ZLContextMgr::sGlobalsSet;
-ZLThreadLocalPtr < ZLContext >						ZLContextMgr::sInstance;
-
-//----------------------------------------------------------------//
-bool ZLContextMgr::Check ( ZLContext* globals ) {
-
-	GlobalsSet* globalSet = sGlobalsSet.Get ();
-	return globalSet ? globalSet->contains ( globals ) : false;
-}
-
-//----------------------------------------------------------------//
-u32 ZLContextMgr::CountContexts () {
-
-	GlobalsSet* globalSet = sGlobalsSet.Get ();
-	return globalSet ? globalSet->size () : 0;
-}
-
-//----------------------------------------------------------------//
-ZLContext* ZLContextMgr::Create () {
-	
-	GlobalsSet* globalSet = sGlobalsSet.Get ();
-	
-	if ( !globalSet ) {
-		globalSet = new GlobalsSet ();
-		sGlobalsSet.Set ( globalSet );
-	}
-
-	ZLContext* globals = new ZLContext ();
-	
-	globalSet->insert ( globals );
-	sInstance.Set ( globals );
-	
-	ZLLog::Affirm ();
-
-	return globals;
-}
-
-//----------------------------------------------------------------//
-void ZLContextMgr::Delete ( ZLContext* globals ) {
-		
-	GlobalsSet* globalSet = sGlobalsSet.Get ();
-	ZLContext* prevInstance = sInstance.Get ();
-	
-	if ( globalSet ) {
-		if ( globalSet->contains ( globals )) {
-			
-			sInstance.Set ( globals );
-			delete globals;
-			globalSet->erase ( globals );
-			sInstance.Set ( 0 );
-		}
-		
-		// if the global set is empty, delete it
-		if ( globalSet->size () == 0 ) {
-			delete globalSet;
-        	sGlobalsSet.Set ( 0 );
-		}
-	}
-	
-	// don't set this to nil until *after* deleting it!
-	if ( prevInstance != globals ) {
-		sInstance.Set ( prevInstance );
-	}
-}
-
-//----------------------------------------------------------------//
-void ZLContextMgr::Finalize () {
-
-	GlobalsSet* globalSet = sGlobalsSet.Get ();
-
-    if ( globalSet ) {
-
-        GlobalsSetIt globalsIt = globalSet->begin ();
-        for ( ; globalsIt != globalSet->end (); ++globalsIt ) {
-			ZLContext* instance = *globalsIt;
-            sInstance.Set ( instance );
-            delete instance;
-        }
-        
-        globalSet->clear ();
-        sInstance.Set ( 0 );
-        
-        delete globalSet;
-        sGlobalsSet.Set ( 0 );
-    }
-}
-
-//----------------------------------------------------------------//
-ZLContext* ZLContextMgr::Get () {
-
-	return sInstance.Get ();
-}
-
-//----------------------------------------------------------------//
-ZLContext* ZLContextMgr::Set ( ZLContext* globals ) {
-
-//	ZLLog_DebugF ( ZLLog::CONSOLE, "ZLContextMgr: setting context %p\n", globals );
-
-	ZLContext* prev = sInstance.Get ();
-	sInstance.Set ( globals );
-	return prev;
-}
-
-//----------------------------------------------------------------//
-ZLContextMgr::ZLContextMgr () {
-}
-
-//----------------------------------------------------------------//
-ZLContextMgr::~ZLContextMgr () {
-}
-
-//================================================================//
-// ZLScopedContext
-//================================================================//
-
-//----------------------------------------------------------------//
-void ZLScopedContext::Clear () {
-
-	this->mOriginalContext = 0;
-}
-
-//----------------------------------------------------------------//
-ZLScopedContext::ZLScopedContext () {
-
-	this->mOriginalContext = ZLContextMgr::Get ();
-}
-
-//----------------------------------------------------------------//
-ZLScopedContext::~ZLScopedContext () {
-
-	ZLContextMgr::Set ( this->mOriginalContext );
 }

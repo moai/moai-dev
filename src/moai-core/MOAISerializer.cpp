@@ -436,7 +436,7 @@ void MOAISerializer::WriteObjectDecls ( ZLStream& stream ) {
 
 	if ( !this->mObjectMap.size ()) return;
 
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 
 	stream.Print ( "\t--Declaring Instances\n" );
 	ObjectMapIt objectIt;
@@ -459,7 +459,7 @@ void MOAISerializer::WriteObjectDecls ( ZLStream& stream ) {
 //----------------------------------------------------------------//
 void MOAISerializer::WriteObjectInits ( ZLStream& stream ) {
 	
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 	
 	ObjectMapIt objectMapIt = this->mObjectMap.begin ();
 	for ( ; objectMapIt != this->mObjectMap.end (); ++objectMapIt ) {
@@ -650,7 +650,7 @@ void MOAISerializer::WriteTableInits ( ZLStream& stream ) {
 	stream.Print ( "\t--Initializing Tables\n" );
 	stream.Print ( "\tlocal table\n\n" );
 
-	MOAIScopedLuaState state = MOAILuaRuntime::Get ().State ();
+	MOAIScopedLuaState state = this->Get < MOAILuaRuntime >().State ();
 
 	TableMapIt tableIt = this->mTableMap.begin ();
 	for ( ; tableIt != this->mTableMap.end (); ++tableIt ) {

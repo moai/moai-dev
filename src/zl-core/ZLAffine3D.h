@@ -383,9 +383,11 @@ public:
 	//----------------------------------------------------------------//
 	void Print ( u32 level = ZLLog::LOG_REPORT, ZLFILE* file = ZLLog::CONSOLE ) const {
 	
-		ZLLog::Get ().LogF ( level, file, "[ %f, %f, %f, %f ]\n", m [ C0_R0 ], m [ C1_R0 ], m [ C2_R0 ], m [ C3_R0 ]);
-		ZLLog::Get ().LogF ( level, file, "[ %f, %f, %f, %f ]\n", m [ C0_R1 ], m [ C1_R1 ], m [ C2_R1 ], m [ C3_R1 ]);
-		ZLLog::Get ().LogF ( level, file, "[ %f, %f, %f, %f ]\n", m [ C0_R2 ], m [ C1_R2 ], m [ C2_R2 ], m [ C3_R2 ]);
+		ZLLog::Ref log = ZLLog::Get ();
+	
+		log->LogF ( level, file, "[ %f, %f, %f, %f ]\n", m [ C0_R0 ], m [ C1_R0 ], m [ C2_R0 ], m [ C3_R0 ]);
+		log->LogF ( level, file, "[ %f, %f, %f, %f ]\n", m [ C0_R1 ], m [ C1_R1 ], m [ C2_R1 ], m [ C3_R1 ]);
+		log->LogF ( level, file, "[ %f, %f, %f, %f ]\n", m [ C0_R2 ], m [ C1_R2 ], m [ C2_R2 ], m [ C3_R2 ]);
 	}
 
 	//----------------------------------------------------------------//
