@@ -40,7 +40,7 @@ int	MOAIGfxResourceGL::_destroy ( lua_State* L ) {
 int MOAIGfxResourceGL::_getAge ( lua_State* L ) {
 	MOAI_LUA_SETUP ( MOAIGfxResourceGL, "U" )
 
-	u32 age = MOAIGfxMgr::Get ().GetRenderCounter () - self->GetLastRenderCount ();
+	u32 age = self->Get < MOAIGfxMgr >().GetRenderCounter () - self->GetLastRenderCount ();
 	lua_pushnumber ( state, age );
 
 	return 1;
@@ -171,8 +171,13 @@ bool MOAIGfxResourceGL::DoGPUUpdate () {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxResourceGL::MOAIGfxResourceGL () :
-	mGfxMgr ( &MOAIGfxMgrGL::Get ()),
+MOAIGfxResourceGL::MOAIGfxResourceGL ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIGfxResource ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	mGfxMgr ( &context.Get < MOAIGfxMgrGL >()),
 	mState ( STATE_UNINITIALIZED ),
 	mLastRenderCount ( 0 ) {
 

@@ -29,7 +29,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIVertexBufferGL )
 	
 	//----------------------------------------------------------------//
-					MOAIVertexBufferGL		();
+					MOAIVertexBufferGL		( ZLContext& context );
 					~MOAIVertexBufferGL		();
 };
 

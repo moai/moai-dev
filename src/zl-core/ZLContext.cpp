@@ -18,6 +18,11 @@ ZLContext& ZLHasContext::GetContext () {
 }
 
 //----------------------------------------------------------------//
+ZLContext& ZLHasContext::GetContext () const {
+	return this->mContext;
+}
+
+//----------------------------------------------------------------//
 void ZLHasContext::InitializeContext ( ZLContext& context ) {
 	assert ( context );
 	assert (( this->mContext == NULL ) || ( this->mContext == context ));

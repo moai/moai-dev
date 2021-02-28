@@ -57,7 +57,7 @@ public:
 	void					GatherUniforms				();
 	MOAIUniformHandle		GetUniformHandle			( ZLIndex uniformID, ZLIndex index );
 	bool					HasDirtyUniforms			();
-							MOAIShaderGL				();
+							MOAIShaderGL				( ZLContext& context );
 							~MOAIShaderGL				();
 	void					ResizeUniformArray			( u32 uniformID, u32 count );
 	void					SetProgram					( MOAIShaderProgramGL* program );

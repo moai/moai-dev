@@ -50,7 +50,7 @@ public:
 	GET_CONST ( ZLGfxHandle&, GLRenderBuffer, mGLRenderBuffer );
 
 	//----------------------------------------------------------------//
-						MOAIRenderBufferGL			();
+						MOAIRenderBufferGL			( ZLContext& context );
 						~MOAIRenderBufferGL			();
 };
 

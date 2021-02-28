@@ -49,7 +49,15 @@ ZLSharedConstBuffer* MOAIGfxBufferGL::GetBufferForBind ( ZLGfx& gfx ) {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxBufferGL::MOAIGfxBufferGL () :
+MOAIGfxBufferGL::MOAIGfxBufferGL ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIGfxResource ( context ),
+	MOAIStream ( context ),
+	MOAIGfxBuffer ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAIGfxResourceGL ( context ),
 	mCurrentVBO ( 0 ),
 	mTarget ( ZLGfxEnum::BUFFER_TARGET_ARRAY ),
 	mCopyOnUpdate ( false ) {

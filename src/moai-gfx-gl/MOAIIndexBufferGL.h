@@ -26,7 +26,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIIndexBufferGL )
 	
 	//----------------------------------------------------------------//
-					MOAIIndexBufferGL		();
+					MOAIIndexBufferGL		( ZLContext& context );
 					~MOAIIndexBufferGL		();
 };
 

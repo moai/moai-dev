@@ -10,7 +10,18 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIImageTextureGL::MOAIImageTextureGL () {
+MOAIImageTextureGL::MOAIImageTextureGL ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIImage ( context ),
+	MOAIGfxResource ( context ),
+	MOAITexture ( context ),
+	MOAIImageTexture ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAIGfxResourceGL ( context ),
+	MOAIFrameBufferAttachableGL ( context ),
+	MOAITextureGL ( context ) {
 	
 	RTTI_BEGIN ( MOAIImageTextureGL )
 		RTTI_EXTEND ( MOAIImageTexture )

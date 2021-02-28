@@ -10,7 +10,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIDrawGL::MOAIDrawGL () {
+MOAIDrawGL::MOAIDrawGL ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIAbstractCmdHandler ( context ),
+	MOAIAbstractCmdHandlerWithAPI < MOAIDrawAPIGL >( context ),
+	ZLContextClass ( context ) {
 
 	RTTI_BEGIN ( MOAIDrawGL )
 		RTTI_EXTEND ( MOAIAbstractCmdHandler )
@@ -28,7 +33,7 @@ MOAIDrawGL::~MOAIDrawGL () {
 //----------------------------------------------------------------//
 void MOAIDrawGL::MOAIAbstractCmdHandler_HandleCommand ( u32 cmd, const void* param ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr = this->Get < MOAIGfxMgr >();
 
 	switch ( cmd ) {
 	

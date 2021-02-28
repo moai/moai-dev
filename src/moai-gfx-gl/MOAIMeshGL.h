@@ -72,7 +72,7 @@ public:
 	DECL_LUA_FACTORY ( MOAIMeshGL )
 	
 	//----------------------------------------------------------------//
-							MOAIMeshGL					();
+							MOAIMeshGL					( ZLContext& context );
 							~MOAIMeshGL					();
 };
 

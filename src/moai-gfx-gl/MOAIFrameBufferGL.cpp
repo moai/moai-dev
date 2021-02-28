@@ -70,7 +70,14 @@ void MOAIFrameBufferGL::DetectGLFrameBufferID ( MOAIGfxMgrGL& gfxMgr ) {
 //}
 
 //----------------------------------------------------------------//
-MOAIFrameBufferGL::MOAIFrameBufferGL () :
+MOAIFrameBufferGL::MOAIFrameBufferGL ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIFrameBuffer ( context ),
+	MOAIGfxResource ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAIGfxResourceGL ( context ),
 	mIsDefaultBuffer ( false ) {
 	
 	RTTI_BEGIN ( MOAIFrameBufferGL )

@@ -23,90 +23,126 @@ void AKUGfxGLAppInitialize () {
 }
 
 //----------------------------------------------------------------//
-void AKUGfxGLContextInitialize () {
+void AKUGfxGLContextInitialize ( AKUContextID contextID ) {
 
-	AKUGfxContextInitialize ();
+	assert ( contextID );
+	ZLContext* context = ( ZLContext* )contextID;
 
-	MOAIDrawGL::Affirm ();
-	MOAIGfxMgrGL::Affirm ();
-	MOAIGfxMgrGL::RegisterAlias < MOAIGfxMgr >();
-	MOAIShaderMgrGL::Affirm ();
+	AKUGfxContextInitialize ( contextID );
 
-	MOAIGfxMgrGL::Get ().SetDefaultFrameBuffer ( new MOAIFrameBufferGL ());
+	context->Affirm < MOAIDrawGL >();
+	context->Affirm < MOAIGfxMgrGL >();
+	context->Affirm < MOAIShaderMgrGL >();
 
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIFrameBufferGL, 			"MOAIFrameBuffer" )
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIGfxMgrGL, 				"MOAIGfxMgr" )
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIImageTextureGL, 		"MOAIImageTexture" )
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIIndexBufferGL, 			"MOAIIndexBuffer" )
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIMeshGL, 				"MOAIMesh" )
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIRenderBufferGL,			"MOAIRenderBuffer" )
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIShaderGL, 				"MOAIShader" )
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIShaderMgrGL, 			"MOAIShaderMgr" )
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIShaderProgramGL, 		"MOAIShaderProgram" )
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAITexture2DGL,			"MOAITexture" )
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIVertexBufferGL, 		"MOAIVertexBuffer" )
-	REGISTER_LUA_CLASS_WITH_ALIAS ( MOAIVertexFormatGL, 		"MOAIVertexFormat" )
+	context->RegisterAlias < MOAIGfxMgrGL, MOAIGfxMgr >();
+
+	context->Get < MOAIGfxMgrGL >().SetDefaultFrameBuffer ( new MOAIFrameBufferGL ( *context ));
+
+	REGISTER_LUA_CLASS_WITH_ALIAS ( context, MOAIFrameBufferGL, 		"MOAIFrameBuffer" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( context, MOAIGfxMgrGL, 				"MOAIGfxMgr" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( context, MOAIImageTextureGL, 		"MOAIImageTexture" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( context, MOAIIndexBufferGL, 		"MOAIIndexBuffer" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( context, MOAIMeshGL, 				"MOAIMesh" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( context, MOAIRenderBufferGL,		"MOAIRenderBuffer" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( context, MOAIShaderGL, 				"MOAIShader" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( context, MOAIShaderMgrGL, 			"MOAIShaderMgr" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( context, MOAIShaderProgramGL, 		"MOAIShaderProgram" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( context, MOAITexture2DGL,			"MOAITexture" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( context, MOAIVertexBufferGL, 		"MOAIVertexBuffer" )
+	REGISTER_LUA_CLASS_WITH_ALIAS ( context, MOAIVertexFormatGL, 		"MOAIVertexFormat" )
 }
 
 //----------------------------------------------------------------//
-void AKUDetectFramebuffer () {
+void AKUDetectFramebuffer ( AKUContextID contextID ) {
 
-	MOAIGfxMgrGL::Get ().DetectFramebuffer ();
+	assert ( contextID );
+	ZLContext* context = ( ZLContext* )contextID;
+	MOAIGfxMgrGL& gfxMgr = context->Get < MOAIGfxMgrGL >();
+
+	context->Get < MOAIGfxMgrGL >().DetectFramebuffer ();
 }
 
 //----------------------------------------------------------------//
-void AKUDetectGfxContext () {
+void AKUDetectGfxContext ( AKUContextID contextID ) {
 
-	MOAIGfxMgrGL::Get ().DetectContext ();
-	MOAIShaderMgrGL::Get ().AffirmAll ();
-//	MOAIGfxMgrGL::Get ().RenewResources (); // TODO: ZLGfx
+	assert ( contextID );
+	ZLContext* context = ( ZLContext* )contextID;
+
+	context->Get < MOAIGfxMgrGL >().DetectContext ();
+	context->Get < MOAIShaderMgrGL >().AffirmAll ();
+//	gfxMgr.RenewResources (); // TODO: ZLGfx
 }
 
 //----------------------------------------------------------------//
-void AKUDiscardGfxResources () {
+void AKUDiscardGfxResources ( AKUContextID contextID ) {
 
-	MOAIGfxMgrGL::Get ().DiscardResources ();
+	assert ( contextID );
+	ZLContext* context = ( ZLContext* )contextID;
+
+	context->Get < MOAIGfxMgrGL >().DiscardResources ();
 }
 
 //----------------------------------------------------------------//
-void AKUDisplayListBeginPhase ( int phase ) {
+void AKUDisplayListBeginPhase ( AKUContextID contextID, int phase ) {
 
-	MOAIGfxMgrGL::Get ().BeginPhase ( phase );
+	assert ( contextID );
+	ZLContext* context = ( ZLContext* )contextID;
+
+	context->Get < MOAIGfxMgrGL >().BeginPhase ( phase );
 }
 
 //----------------------------------------------------------------//
-void AKUDisplayListEnable ( int list ) {
+void AKUDisplayListEnable ( AKUContextID contextID, int list ) {
 
-	MOAIGfxMgrGL::Get ().EnableQueue ( list );
+	assert ( contextID );
+	ZLContext* context = ( ZLContext* )contextID;
+
+	context->Get < MOAIGfxMgrGL >().EnableQueue ( list );
 }
 
 //----------------------------------------------------------------//
-void AKUDisplayListEndPhase ( int phase ) {
+void AKUDisplayListEndPhase ( AKUContextID contextID, int phase ) {
 
-	MOAIGfxMgrGL::Get ().EndPhase ( phase );
+	assert ( contextID );
+	ZLContext* context = ( ZLContext* )contextID;
+
+	context->Get < MOAIGfxMgrGL >().EndPhase ( phase );
 }
 
 //----------------------------------------------------------------//
-bool AKUDisplayListHasContent ( int list ) {
+bool AKUDisplayListHasContent ( AKUContextID contextID, int list ) {
 
-	return MOAIGfxMgrGL::Get ().HasContent ( list );
+	assert ( contextID );
+	ZLContext* context = ( ZLContext* )contextID;
+
+	return context->Get < MOAIGfxMgrGL >().HasContent ( list );
 }
 
 //----------------------------------------------------------------//
-bool AKUDisplayListIsEnabled ( int list ) {
+bool AKUDisplayListIsEnabled ( AKUContextID contextID, int list ) {
 
-	return MOAIGfxMgrGL::Get ().IsQueueEnabled ( list );
+	assert ( contextID );
+	ZLContext* context = ( ZLContext* )contextID;
+
+	return context->Get < MOAIGfxMgrGL >().IsQueueEnabled ( list );
 }
 
 //----------------------------------------------------------------//
-void AKUDisplayListProcess ( int list ) {
+void AKUDisplayListProcess ( AKUContextID contextID, int list ) {
 
-	MOAIGfxMgrGL::Get ().ProcessQueue ( list );
+	assert ( contextID );
+	ZLContext* context = ( ZLContext* )contextID;
+
+	context->Get < MOAIGfxMgrGL >().ProcessQueue ( list );
 }
 
 //----------------------------------------------------------------//
-void AKUDisplayListPublishAndReset () {
+void AKUDisplayListPublishAndReset ( AKUContextID contextID ) {
 
-	MOAIGfxMgrGL::Get ().PublishAndReset ( MOAIGfxMgrGL::LOADING_QUEUE );
-	MOAIGfxMgrGL::Get ().PublishAndReset ( MOAIGfxMgrGL::DRAWING_QUEUE );
+	assert ( contextID );
+	ZLContext* context = ( ZLContext* )contextID;
+	MOAIGfxMgrGL& gfxMgr = context->Get < MOAIGfxMgrGL >();
+
+	gfxMgr.PublishAndReset ( MOAIGfxMgrGL::LOADING_QUEUE );
+	gfxMgr.PublishAndReset ( MOAIGfxMgrGL::DRAWING_QUEUE );
 }

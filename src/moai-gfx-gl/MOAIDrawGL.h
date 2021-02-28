@@ -23,7 +23,7 @@ public:
 	DECL_LUA_SINGLETON ( MOAIDrawGL )
 
 	//----------------------------------------------------------------//
-					MOAIDrawGL					();
+					MOAIDrawGL					( ZLContext& context );
 					~MOAIDrawGL					();
 };
 

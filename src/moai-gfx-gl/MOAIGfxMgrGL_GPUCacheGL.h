@@ -66,7 +66,7 @@ protected:
 public:
 	
 	//----------------------------------------------------------------//
-					MOAIGfxMgrGL_GPUCacheGL			();
+					MOAIGfxMgrGL_GPUCacheGL			( ZLContext& context );
 	virtual			~MOAIGfxMgrGL_GPUCacheGL		();
 };
 

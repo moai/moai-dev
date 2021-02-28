@@ -25,7 +25,7 @@ public:
 		
 	//----------------------------------------------------------------//
 	bool				Attach								( ZLGfx& gfx, ZLGfxEnum::_ target, ZLGfxEnum::_ attachment, s32 level, s32 layer );
-						MOAIFrameBufferAttachableGL			();
+						MOAIFrameBufferAttachableGL			( ZLContext& context );
 						~MOAIFrameBufferAttachableGL		();
 };
 

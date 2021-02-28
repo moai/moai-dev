@@ -25,7 +25,7 @@ protected:
 public:
 	
 	//----------------------------------------------------------------//
-					MOAIGfxMgrGL_VertexCacheGL				();
+					MOAIGfxMgrGL_VertexCacheGL				( ZLContext& context );
 					~MOAIGfxMgrGL_VertexCacheGL				();
 };
 

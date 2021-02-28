@@ -596,7 +596,10 @@ void MOAIGfxMgrGL_GPUCacheGL::FlushViewRect () {
 //}
 
 //----------------------------------------------------------------//
-MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgrGL_GPUCacheGL () :
+MOAIGfxMgrGL_GPUCacheGL::MOAIGfxMgrGL_GPUCacheGL ( ZLContext& context ) :
+	MOAIGfxMgrComponents ( context ),
+	MOAIGfxMgrGLComponents ( context ),
+	MOAIGfxMgr_GPUCache ( context ),
 	mBoundIdxBuffer ( NULL ),
 	mBoundVtxBuffer ( NULL ) {
 	

@@ -112,7 +112,14 @@ void MOAIMeshGL::BindVertexArrayItems () {
 }
 
 //----------------------------------------------------------------//
-MOAIMeshGL::MOAIMeshGL () {
+MOAIMeshGL::MOAIMeshGL ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIGfxResource ( context ),
+	MOAIMesh ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAIGfxResourceGL ( context ) {
 	
 	RTTI_BEGIN ( MOAIMeshGL )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIMeshGL >)

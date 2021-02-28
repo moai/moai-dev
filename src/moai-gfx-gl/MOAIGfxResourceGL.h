@@ -92,7 +92,7 @@ public:
 	IS ( Pending, mState, STATE_PENDING )
 
 	//----------------------------------------------------------------//
-					MOAIGfxResourceGL			();
+					MOAIGfxResourceGL			( ZLContext& context );
 	virtual			~MOAIGfxResourceGL			();
 	bool			Purge						( u32 age );
 	bool			ScheduleForGPUUpdate		( PipelineHint hint = RENDER_PIPELINE );

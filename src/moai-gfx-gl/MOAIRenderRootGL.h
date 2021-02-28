@@ -17,7 +17,7 @@ protected:
 public:
 
 	//----------------------------------------------------------------//
-					MOAIRenderRootGL			();
+					MOAIRenderRootGL			( ZLContext& context );
 					~MOAIRenderRootGL			();
 };
 

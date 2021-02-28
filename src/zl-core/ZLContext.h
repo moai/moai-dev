@@ -28,6 +28,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	ZLContext&		GetContext				();
+	ZLContext&		GetContext				() const;
 					ZLHasContext			( ZLContext& context );
 					~ZLHasContext			();
 };
@@ -182,7 +183,7 @@ public:
 		TYPE* global = ( TYPE* )globalPair.mGlobal;
 		assert ( global );
 
-		ZLIndex aliasID = this->GetClassID < TYPE >();
+		ZLIndex aliasID = this->GetClassID < ALIAS_TYPE >();
 		this->AffirmSize (( ZLSize )aliasID + 1 );
 
 		ALIAS_TYPE* alias = global;

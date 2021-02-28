@@ -47,7 +47,7 @@ void MOAIGfxMgrGL_ResourceClerkGL::InsertGfxResource ( MOAIGfxResourceGL& resour
 }
 
 //----------------------------------------------------------------//
-MOAIGfxMgrGL_ResourceClerkGL::MOAIGfxMgrGL_ResourceClerkGL () {
+MOAIGfxMgrGL_ResourceClerkGL::MOAIGfxMgrGL_ResourceClerkGL ( ZLContext& context ) {
 }
 
 //----------------------------------------------------------------//

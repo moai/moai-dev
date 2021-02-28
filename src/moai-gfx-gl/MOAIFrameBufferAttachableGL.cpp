@@ -17,7 +17,13 @@ bool MOAIFrameBufferAttachableGL::Attach ( ZLGfx& gfx, ZLGfxEnum::_ attachment, 
 }
 
 //----------------------------------------------------------------//
-MOAIFrameBufferAttachableGL::MOAIFrameBufferAttachableGL () {
+MOAIFrameBufferAttachableGL::MOAIFrameBufferAttachableGL ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIGfxResource ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAIGfxResourceGL ( context ) {
 	
 	RTTI_BEGIN ( MOAIFrameBufferAttachableGL )
 		RTTI_EXTEND ( MOAIGfxResourceGL )

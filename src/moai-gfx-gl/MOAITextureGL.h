@@ -71,7 +71,7 @@ public:
 
 	//----------------------------------------------------------------//
 	static void			CheckFilterModes			( int min, int mag );
-						MOAITextureGL				();
+						MOAITextureGL				( ZLContext& context );
 						~MOAITextureGL				();
 	
 };

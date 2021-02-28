@@ -66,7 +66,7 @@ protected:
 	void								MOAIGfxMgr_BeginFrame							();
 	MOAIImageTexture*					MOAIGfxMgr_CreateImageTexture					();
 	MOAIIndexBuffer*					MOAIGfxMgr_CreateIndexBuffer					();
-	MOAIMesh*					MOAIGfxMgr_CreateMesh							();
+	MOAIMesh*							MOAIGfxMgr_CreateMesh							();
 	MOAIRenderNode*						MOAIGfxMgr_CreateRenderRoot						();
 	MOAITexture2D*						MOAIGfxMgr_CreateTexture2D						();
 	MOAIVertexBuffer*					MOAIGfxMgr_CreateVertexBuffer					();
@@ -99,17 +99,11 @@ public:
 	void					DetectContext				();
 	void					DetectFramebuffer			();
 	u32						LogErrors					();
-							MOAIGfxMgrGL				();
+							MOAIGfxMgrGL				( ZLContext& context );
 							~MOAIGfxMgrGL				();
 	void					ReportTextureAlloc 			( cc8* name, size_t size );
 	void					ReportTextureFree 			( cc8* name, size_t size );
 	void					ResetDrawCount				();
-	
-	//----------------------------------------------------------------//
-	// disambiguate
-	static MOAIGfxMgrGL& Get () {
-		return ZLContextClass < MOAIGfxMgrGL >::Get ();
-	}
 };
 
 #endif

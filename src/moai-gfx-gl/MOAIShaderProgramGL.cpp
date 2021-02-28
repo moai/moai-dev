@@ -206,7 +206,14 @@ void MOAIShaderProgramGL::Load ( cc8* vshSource, cc8* fshSource ) {
 }
 
 //----------------------------------------------------------------//
-MOAIShaderProgramGL::MOAIShaderProgramGL () :
+MOAIShaderProgramGL::MOAIShaderProgramGL ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIGfxResource ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAIGfxResourceGL ( context ),
+	MOAIHasGfxScript ( context ),
 	mUniformBufferSize ( 0 ) {
 	
 	RTTI_BEGIN ( MOAIShaderProgramGL )

@@ -25,7 +25,7 @@
 int MOAIGfxMgrGL::_enablePipelineLogging ( lua_State* L ) {
 	MOAI_LUA_SETUP_SINGLE ( MOAIGfxMgrGL, "" )
 
-	MOAIGfxMgrGL::Get ().EnableQueueLogging ( state.GetValue < bool >( 1, false ));
+	self->EnableQueueLogging ( state.GetValue < bool >( 1, false ));
 
 	ZLFileSys::DeleteDirectory ( GFX_PIPELINE_LOGGING_FOLDER, true, true );
 	ZLFileSys::AffirmPath ( GFX_PIPELINE_LOGGING_FOLDER );
@@ -40,10 +40,9 @@ int MOAIGfxMgrGL::_enablePipelineLogging ( lua_State* L ) {
 	@out	MOAIFrameBufferGL frameBuffer
 */
 int MOAIGfxMgrGL::_getFrameBuffer ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIGfxMgrGL, "" )
 
-	MOAILuaState state ( L );
-	state.Push ( MOAIGfxMgrGL::Get ().GetDefaultFrameBuffer ());
-
+	state.Push ( self->GetDefaultFrameBuffer ());
 	return 1;
 }
 
@@ -54,10 +53,9 @@ int MOAIGfxMgrGL::_getFrameBuffer ( lua_State* L ) {
 	@out	number maxTextureSize
 */
 int MOAIGfxMgrGL::_getMaxTextureSize ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIGfxMgrGL, "" )
 	
-	MOAILuaState state ( L );
-	state.Push ( MOAIGfxMgrGL::Get ().mMaxTextureSize );
-	
+	state.Push ( self->mMaxTextureSize );
 	return 1;
 }
 
@@ -68,9 +66,9 @@ int MOAIGfxMgrGL::_getMaxTextureSize ( lua_State* L ) {
 	@out	number maxTextureUnits
 */
 int MOAIGfxMgrGL::_getMaxTextureUnits ( lua_State* L ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIGfxMgrGL, "" )
 
-	lua_pushnumber ( L, ( double )MOAIGfxMgrGL::Get ().CountTextureUnits ());
-
+	lua_pushnumber ( L, ( double )self->CountTextureUnits ());
 	return 1;
 }
 
@@ -82,8 +80,9 @@ int MOAIGfxMgrGL::_getMaxTextureUnits ( lua_State* L ) {
 	@out	number height
 */
 int MOAIGfxMgrGL::_getViewSize ( lua_State* L  ) {
+	MOAI_LUA_SETUP_SINGLE ( MOAIGfxMgrGL, "" )
 
-	MOAIFrameBufferGL* frameBuffer = MOAICast < MOAIFrameBufferGL >( MOAIGfxMgrGL::Get ().GetFrameBuffer ());
+	MOAIFrameBufferGL* frameBuffer = MOAICast < MOAIFrameBufferGL >( self->GetFrameBuffer ());
 	
 	lua_pushnumber ( L, frameBuffer->GetWidth ());
 	lua_pushnumber ( L, frameBuffer->GetHeight ());
@@ -100,11 +99,11 @@ int MOAIGfxMgrGL::_getViewSize ( lua_State* L  ) {
 	@out	nil
 */
 int MOAIGfxMgrGL::_purgeResources ( lua_State* L ) {
-	MOAILuaState state ( L );
+	MOAI_LUA_SETUP_SINGLE ( MOAIGfxMgrGL, "" )
 
 	u32 age = state.GetValue < u32 >( 1, 0 );
 
-	MOAIGfxMgrGL::Get ().PurgeResources ( age );
+	self->PurgeResources ( age );
 	
 	return 0;
 }
@@ -116,9 +115,9 @@ int MOAIGfxMgrGL::_purgeResources ( lua_State* L ) {
 	@out	nil
 */
 int MOAIGfxMgrGL::_renewResources ( lua_State* L ) {
-	MOAILuaState state ( L );
+	MOAI_LUA_SETUP_SINGLE ( MOAIGfxMgrGL, "" )
 
-	MOAIGfxMgrGL::Get ().RenewResources ();
+	self->RenewResources ();
 	
 	return 0;
 }
@@ -182,7 +181,24 @@ u32 MOAIGfxMgrGL::LogErrors () {
 }
 
 //----------------------------------------------------------------//
-MOAIGfxMgrGL::MOAIGfxMgrGL () :
+MOAIGfxMgrGL::MOAIGfxMgrGL ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	ZLContextClass ( context ),
+	MOAILuaObject ( context ),
+	MOAIEventSource ( context ),
+	MOAIGlobalEventSource ( context ),
+	MOAIGfxMgrComponents ( context ),
+	MOAIGfxMgr_CPUCache ( context ),
+	MOAIGfxMgr_GPUCache ( context ),
+	MOAIGfxMgr_RenderTree ( context ),
+	MOAIGfxMgr_VertexCache ( context ),
+	MOAIGfxMgr ( context ),
+	MOAIGfxMgrGLComponents ( context ),
+	MOAIGfxMgrGL_DisplayListClerkGL ( context ),
+	MOAIGfxMgrGL_GPUCacheGL ( context ),
+	MOAIGfxMgrGL_ResourceClerkGL ( context ),
+	MOAIGfxMgrGL_VertexCacheGL ( context ),
+
 	mHasContext ( false ),
 	mIsFramebufferSupported ( 0 ),
 	#if defined ( MOAI_OS_NACL ) || defined ( MOAI_OS_IPHONE ) || defined ( MOAI_OS_ANDROID ) || defined ( EMSCRIPTEN )
@@ -280,7 +296,7 @@ MOAIShader* MOAIGfxMgrGL::MOAIGfxMgr_AffirmShader ( MOAILuaState& state, int idx
 	MOAIShaderGL* shader = 0;
 
 	if ( state.IsType ( idx, LUA_TNUMBER )) {
-		shader = MOAIShaderMgrGL::Get ().GetShader (( MOAIShaderPresetEnum )state.GetValue < u32 >( idx, ( u32 )MOAIShaderPresetEnum::UNKNOWN_SHADER ));
+		shader = this->Get < MOAIShaderMgrGL >().GetShader (( MOAIShaderPresetEnum )state.GetValue < u32 >( idx, ( u32 )MOAIShaderPresetEnum::UNKNOWN_SHADER ));
 	}
 	else {
 		shader = state.GetLuaObject < MOAIShaderGL >( idx, true );
@@ -296,7 +312,7 @@ MOAITexture* MOAIGfxMgrGL::MOAIGfxMgr_AffirmTexture ( MOAILuaState& state, int i
 	textureBase = state.GetLuaObject < MOAITextureGL >( idx, false );
 	if ( textureBase ) return textureBase;
 	
-	MOAITexture2DGL* texture = new MOAITexture2DGL ();
+	MOAITexture2DGL* texture = new MOAITexture2DGL ( this->GetContext ());
 	if ( !texture->Init ( state, idx )) {
 		// TODO: report error
 		delete texture;
@@ -311,7 +327,7 @@ void MOAIGfxMgrGL::MOAIGfxMgr_BeginFrame () {
 	this->ResetDrawingAPIs ();
 	this->UpdateResources ();
 	
-	MOAIGfxMgrGL& gfxMgr = MOAIGfxMgrGL::Get ();
+	MOAIGfxMgrGL& gfxMgr = this->Get < MOAIGfxMgrGL >();
 	ZLGfx* gfx = this->SelectDrawingAPI ( MOAIGfxMgrGL_DisplayListClerkGL::DRAWING_QUEUE );
 	if ( gfx ) {
 		ZGL_COMMENT ( *gfx, "RENDER MGR RENDER" );
@@ -321,43 +337,43 @@ void MOAIGfxMgrGL::MOAIGfxMgr_BeginFrame () {
 //----------------------------------------------------------------//
 MOAIImageTexture* MOAIGfxMgrGL::MOAIGfxMgr_CreateImageTexture () {
 
-	return new MOAIImageTextureGL ();
+	return new MOAIImageTextureGL ( this->GetContext ());
 }
 
 //----------------------------------------------------------------//
 MOAIIndexBuffer* MOAIGfxMgrGL::MOAIGfxMgr_CreateIndexBuffer () {
 
-	return new MOAIIndexBufferGL ();
+	return new MOAIIndexBufferGL ( this->GetContext ());
 }
 
 //----------------------------------------------------------------//
 MOAIMesh* MOAIGfxMgrGL::MOAIGfxMgr_CreateMesh () {
 
-	return new MOAIMeshGL ();
+	return new MOAIMeshGL ( this->GetContext ());
 }
 
 //----------------------------------------------------------------//
 MOAIRenderNode* MOAIGfxMgrGL::MOAIGfxMgr_CreateRenderRoot () {
 
-	return new MOAIRenderRootGL ();
+	return new MOAIRenderRootGL ( this->GetContext ());
 }
 
 //----------------------------------------------------------------//
 MOAITexture2D* MOAIGfxMgrGL::MOAIGfxMgr_CreateTexture2D () {
 
-	return new MOAITexture2DGL ();
+	return new MOAITexture2DGL ( this->GetContext ());
 }
 
 //----------------------------------------------------------------//
 MOAIVertexBuffer* MOAIGfxMgrGL::MOAIGfxMgr_CreateVertexBuffer () {
 
-	return new MOAIVertexBufferGL ();
+	return new MOAIVertexBufferGL ( this->GetContext ());
 }
 
 //----------------------------------------------------------------//
 MOAIVertexFormat* MOAIGfxMgrGL::MOAIGfxMgr_CreateVertexFormat () {
 
-	return new MOAIVertexFormatGL ();
+	return new MOAIVertexFormatGL ( this->GetContext ());
 }
 
 //----------------------------------------------------------------//
@@ -370,7 +386,7 @@ void MOAIGfxMgrGL::MOAIGfxMgr_EndFrame () {
 //----------------------------------------------------------------//
 MOAIShader* MOAIGfxMgrGL::MOAIGfxMgr_GetShaderPreset ( MOAIShaderPresetEnum preset ) const {
 
-	return MOAIShaderMgrGL::Get ().GetShader ( preset );
+	return this->Get < MOAIShaderMgrGL >().GetShader ( preset );
 }
 
 //----------------------------------------------------------------//

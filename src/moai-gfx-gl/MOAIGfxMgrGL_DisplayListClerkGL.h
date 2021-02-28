@@ -97,13 +97,13 @@ public:
 	void				EndPhase							( u32 phase );
 	bool				HasContent							( u32 queueID );
 	bool				IsQueueEnabled						( u32 queueID );
+						MOAIGfxMgrGL_DisplayListClerkGL		( ZLContext& context );
+	virtual				~MOAIGfxMgrGL_DisplayListClerkGL	();
 	void				ProcessQueue						( u32 queueID );
 	void				PublishAndReset						( u32 queueID );
 	void				ResetDrawingAPIs					();
 	ZLGfx*				SelectDrawingAPI					();
 	ZLGfx*				SelectDrawingAPI					( u32 queueID );
-						MOAIGfxMgrGL_DisplayListClerkGL		();
-	virtual				~MOAIGfxMgrGL_DisplayListClerkGL	();
 };
 
 #endif

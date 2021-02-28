@@ -34,7 +34,7 @@ public:
 	DECL_LUA_FACTORY ( MOAITexture2DGL )
 	
 	//----------------------------------------------------------------//
-						MOAITexture2DGL			();
+						MOAITexture2DGL			( ZLContext& context );
 						~MOAITexture2DGL		();
 };
 

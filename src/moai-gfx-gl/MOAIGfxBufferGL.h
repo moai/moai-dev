@@ -15,8 +15,8 @@ class MOAIVertexFormatGL;
 	@text	Base class for MOAIVertexBufferGL and MOAIIndexBufferGL.
 */
 class MOAIGfxBufferGL :
-	public virtual MOAIGfxResourceGL,
-	public virtual MOAIGfxBuffer {
+	public virtual MOAIGfxBuffer,
+	public virtual MOAIGfxResourceGL {
 protected:
 	
 	MOAI_LUA_OBJECT_VISITOR_FRIEND
@@ -66,7 +66,7 @@ public:
 	
 	//----------------------------------------------------------------//
 	size_t					CountVBOs					();
-							MOAIGfxBufferGL				();
+							MOAIGfxBufferGL				( ZLContext& context );
 							~MOAIGfxBufferGL			();
 	void					ReserveVBOs					( ZLSize gpuBuffers );
 	void					Update						();

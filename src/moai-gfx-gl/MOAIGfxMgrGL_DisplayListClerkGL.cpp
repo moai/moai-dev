@@ -276,7 +276,7 @@ void MOAIGfxMgrGL_DisplayListClerkGL::LogQueueRender ( ZLGfxRetained& gfx, size_
 }
 
 //----------------------------------------------------------------//
-MOAIGfxMgrGL_DisplayListClerkGL::MOAIGfxMgrGL_DisplayListClerkGL () :
+MOAIGfxMgrGL_DisplayListClerkGL::MOAIGfxMgrGL_DisplayListClerkGL ( ZLContext& context ) :
 	mDrawingAPI ( &mGfxImmediate ),
 	mDrawCount ( 0 ),
 	mQueueRenderCount ( 0 ),

@@ -11,7 +11,7 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIGfxMgrGL_VertexCacheGL::MOAIGfxMgrGL_VertexCacheGL () {
+MOAIGfxMgrGL_VertexCacheGL::MOAIGfxMgrGL_VertexCacheGL ( ZLContext& context) {
 }
 
 //----------------------------------------------------------------//

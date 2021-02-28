@@ -22,7 +22,7 @@ public:
 		
 	//----------------------------------------------------------------//
 	void				Bind							( ZLGfx& gfx, ZLSharedConstBuffer* buffer ) const;
-						MOAIVertexFormatGL				();
+						MOAIVertexFormatGL				( ZLContext& context );
 						~MOAIVertexFormatGL				();
 	void				Unbind							( ZLGfx& gfx ) const;
 };

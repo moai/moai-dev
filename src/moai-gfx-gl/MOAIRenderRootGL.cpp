@@ -9,7 +9,12 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIRenderRootGL::MOAIRenderRootGL () {
+MOAIRenderRootGL::MOAIRenderRootGL ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIHasGfxScriptsForPhases ( context ),
+	MOAIAbstractRenderable ( context ),
+	MOAIRenderNode ( context ) {
 
 	RTTI_BEGIN ( MOAIAbstractLayer )
 		RTTI_EXTEND ( MOAIRenderNode )
@@ -27,7 +32,7 @@ MOAIRenderRootGL::~MOAIRenderRootGL () {
 //----------------------------------------------------------------//
 void MOAIRenderRootGL::MOAIAbstractRenderNode_Render ( MOAIRenderPhaseEnum::_ renderPhase ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr = this->Get < MOAIGfxMgr >();
 	gfxMgr.BeginFrame ();
 	
 	gfxMgr.SetFrameBuffer ();

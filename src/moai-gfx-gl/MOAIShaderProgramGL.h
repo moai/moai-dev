@@ -86,7 +86,7 @@ public:
 	void				ReserveAttributes			( ZLSize nAttributes );
 	void				ReserveUniforms				( ZLSize nUniforms );
 	void				SetVertexAttribute			( u32 idx, cc8* attribute );
-						MOAIShaderProgramGL			();
+						MOAIShaderProgramGL			( ZLContext& context );
 						~MOAIShaderProgramGL		();
 };
 

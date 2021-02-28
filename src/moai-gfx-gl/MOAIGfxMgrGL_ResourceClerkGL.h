@@ -42,10 +42,10 @@ public:
 	//----------------------------------------------------------------//
 	void			DeleteOrDiscard						( const ZLGfxHandle& handle, bool shouldDelete );
 	void			DiscardResources					();
+					MOAIGfxMgrGL_ResourceClerkGL		( ZLContext& context );
+					~MOAIGfxMgrGL_ResourceClerkGL		();
 	void			PurgeResources						( u32 age = 0 );
 	void			UpdateResources						();
-					MOAIGfxMgrGL_ResourceClerkGL		();
-					~MOAIGfxMgrGL_ResourceClerkGL		();
 };
 
 #endif

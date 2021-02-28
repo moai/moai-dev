@@ -105,7 +105,15 @@ bool MOAIShaderGL::HasDirtyUniforms () {
 }
 
 //----------------------------------------------------------------//
-MOAIShaderGL::MOAIShaderGL () {
+MOAIShaderGL::MOAIShaderGL ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIHasGfxScript ( context ),
+	MOAIShader ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAINode ( context ),
+	MOAIAbstractUniformBuffer ( context ) {
 
 	RTTI_BEGIN ( MOAIShaderGL )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIShaderGL >)
@@ -153,7 +161,7 @@ void MOAIShaderGL::_RegisterLuaFuncs ( RTTIVisitorHistory& history, MOAILuaState
 //----------------------------------------------------------------//
 bool MOAIShaderGL::MOAIAbstractCmdStreamFilter_FilterCommand ( u32 cmd, const void* param, ZLSize paramSize ) {
 
-	MOAIGfxMgr& gfxMgr = MOAIGfxMgr::Get ();
+	MOAIGfxMgr& gfxMgr = this->Get < MOAIGfxMgr >();
 
 	switch ( cmd ) {
 	

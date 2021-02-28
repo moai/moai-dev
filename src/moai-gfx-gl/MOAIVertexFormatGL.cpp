@@ -31,7 +31,10 @@ void MOAIVertexFormatGL::Bind ( ZLGfx& gfx, ZLSharedConstBuffer* buffer ) const 
 }
 
 //----------------------------------------------------------------//
-MOAIVertexFormatGL::MOAIVertexFormatGL () {
+MOAIVertexFormatGL::MOAIVertexFormatGL ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIVertexFormat ( context ) {
 	
 	RTTI_BEGIN ( MOAIVertexFormatGL )
 		RTTI_EXTEND ( MOAIVertexFormat )

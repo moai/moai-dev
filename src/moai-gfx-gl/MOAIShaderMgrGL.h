@@ -47,7 +47,7 @@ public:
 	MOAIShaderProgramGL*	GetProgram				( MOAIShaderPresetEnum shaderID );
 	MOAIShaderGL*			GetShader				( MOAIShaderPresetEnum shaderID );
 	MOAIShaderGL*			GetShader				( lua_State* L, int idx );
-							MOAIShaderMgrGL			();
+							MOAIShaderMgrGL			( ZLContext& context );
 							~MOAIShaderMgrGL		();
 };
 

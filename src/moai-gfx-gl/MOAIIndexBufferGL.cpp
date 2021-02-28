@@ -12,7 +12,17 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIIndexBufferGL::MOAIIndexBufferGL () {
+MOAIIndexBufferGL::MOAIIndexBufferGL ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIGfxResource ( context ),
+	MOAIStream ( context ),
+	MOAIGfxBuffer ( context ),
+	MOAIIndexBuffer ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAIGfxResourceGL ( context ),
+	MOAIGfxBufferGL ( context ) {
 	
 	RTTI_BEGIN ( MOAIIndexBufferGL )
 		RTTI_EXTEND ( MOAIIndexBuffer )

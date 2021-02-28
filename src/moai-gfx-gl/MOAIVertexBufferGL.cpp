@@ -12,7 +12,17 @@
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIVertexBufferGL::MOAIVertexBufferGL () {
+MOAIVertexBufferGL::MOAIVertexBufferGL ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIGfxResource ( context ),
+	MOAIStream ( context ),
+	MOAIGfxBuffer ( context ),
+	MOAIVertexBuffer ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAIGfxResourceGL ( context ),
+	MOAIGfxBufferGL ( context ) {
 		
 	RTTI_BEGIN ( MOAIVertexBufferGL )
 		RTTI_EXTEND ( MOAIVertexBuffer )

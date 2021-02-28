@@ -29,7 +29,17 @@ int MOAITexture2DGL::_init ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAITexture2DGL::MOAITexture2DGL () {
+MOAITexture2DGL::MOAITexture2DGL ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIGfxResource ( context ),
+	MOAITexture ( context ),
+	MOAITexture2D ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAIGfxResourceGL ( context ),
+	MOAIFrameBufferAttachableGL ( context ),
+	MOAITextureGL ( context ) {
 
 	RTTI_BEGIN ( MOAITexture2DGL )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAITexture2DGL >)

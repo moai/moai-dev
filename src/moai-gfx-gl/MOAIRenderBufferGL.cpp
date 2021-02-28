@@ -50,7 +50,14 @@ int MOAIRenderBufferGL::_init ( lua_State* L ) {
 //================================================================//
 
 //----------------------------------------------------------------//
-MOAIRenderBufferGL::MOAIRenderBufferGL () :
+MOAIRenderBufferGL::MOAIRenderBufferGL ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIGfxResource ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAIGfxResourceGL ( context ),
+	MOAIFrameBufferAttachableGL ( context ),
 	mWidth ( 0 ),
 	mHeight ( 0 ),
 	mGLPixelFormat ( ZLGfxEnum::NONE ) {

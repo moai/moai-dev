@@ -348,7 +348,15 @@ bool MOAITextureGL::CreateTextureFromImage ( ZLImage& srcImage ) {
 }
 
 //----------------------------------------------------------------//
-MOAITextureGL::MOAITextureGL () :
+MOAITextureGL::MOAITextureGL ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	MOAILuaObject ( context ),
+	MOAIGfxResource ( context ),
+	MOAITexture ( context ),
+	MOAIEventSource ( context ),
+	MOAIInstanceEventSource ( context ),
+	MOAIGfxResourceGL ( context ),
+	MOAIFrameBufferAttachableGL ( context ),
 	mGLInternalFormat ( ZLGfxEnum::PIXEL_FORMAT_RGBA ),
 	mGLPixelType ( ZLGfxEnum::PIXEL_TYPE_UNSIGNED_BYTE ) {
 	

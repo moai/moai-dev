@@ -36,13 +36,13 @@
 	@out	nil
 */
 int MOAIShaderMgrGL::_getProgram ( lua_State* L ) {
-	MOAILuaState state ( L );
+	MOAI_LUA_SETUP_SINGLE ( MOAIShaderMgrGL, "" )
 
 	u32 shaderID = state.GetValue < u32 >( 1, ( u32 )MOAIShaderPresetEnum::UNKNOWN_SHADER );
 	
 	if ( shaderID < MOAIShaderPresetEnum::TOTAL_SHADERS ) {
 	
-		MOAIShaderProgramGL* program = MOAIShaderMgrGL::Get ().GetProgram (( MOAIShaderPresetEnum )shaderID );
+		MOAIShaderProgramGL* program = self->GetProgram (( MOAIShaderPresetEnum )shaderID );
 		state.Push ( program );
 		return 1;
 	}
@@ -52,13 +52,13 @@ int MOAIShaderMgrGL::_getProgram ( lua_State* L ) {
 //----------------------------------------------------------------//
 // TODO: doxygen
 int MOAIShaderMgrGL::_getShader ( lua_State* L ) {
-	MOAILuaState state ( L );
+	MOAI_LUA_SETUP_SINGLE ( MOAIShaderMgrGL, "" )
 
 	u32 shaderID = state.GetValue < u32 >( 1, ( u32 )MOAIShaderPresetEnum::UNKNOWN_SHADER );
 	
 	if ( shaderID < MOAIShaderPresetEnum::TOTAL_SHADERS ) {
 	
-		MOAIShaderGL* shader = MOAIShaderMgrGL::Get ().GetShader (( MOAIShaderPresetEnum )shaderID );
+		MOAIShaderGL* shader = self->GetShader (( MOAIShaderPresetEnum )shaderID );
 		state.Push ( shader );
 		return 1;
 	}
@@ -88,7 +88,7 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 		
 		if ( !program ) {
 
-			program = new MOAIShaderProgramGL ();
+			program = new MOAIShaderProgramGL ( this->GetContext ());
 			this->LuaRetain ( program );
 			
 			switch ( shaderID ) {
@@ -112,7 +112,7 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					program->DeclareUniform ( 0, "xSnap", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT );
 					program->DeclareUniform ( 1, "ySnap", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT );
 										
-					program->_ < MOAIDrawAPIGL >( MOAIDrawGL::Get ())
+					program->AffirmGfxScript ()._ < MOAIDrawAPIGL >( this->Get < MOAIDrawGL >())
 						.LoadShaderUniformGL ( MOAIGfxMgrGL::VIEW_HALF_WIDTH, 0, 0 )
 						.LoadShaderUniformGL ( MOAIGfxMgrGL::VIEW_HALF_HEIGHT, 1, 0 )
 						;
@@ -140,7 +140,7 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					program->DeclareUniform ( 0, "xSnap", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT );
 					program->DeclareUniform ( 1, "ySnap", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT );
 					
-					program->AffirmGfxScript ()._ < MOAIDrawAPIGL >( MOAIDrawGL::Get ())
+					program->AffirmGfxScript ()._ < MOAIDrawAPIGL >( this->Get < MOAIDrawGL >())
 						.LoadShaderUniformGL ( MOAIGfxMgrGL::VIEW_HALF_WIDTH, 0, 0 )
 						.LoadShaderUniformGL ( MOAIGfxMgrGL::VIEW_HALF_HEIGHT, 1, 0 )
 						;
@@ -165,7 +165,7 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					program->DeclareUniform ( 0, "transform", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT, MOAIUniformDescriptor::UNIFORM_WIDTH_MATRIX_4X4 );
 					program->DeclareUniform ( 1, "ucolor", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT, MOAIUniformDescriptor::UNIFORM_WIDTH_VEC_4 );
 					
-					program->AffirmGfxScript ()._ < MOAIDrawAPIGL >( MOAIDrawGL::Get ())
+					program->AffirmGfxScript ()._ < MOAIDrawAPIGL >( this->Get < MOAIDrawGL >())
 						.LoadShaderUniformGL ( MOAIGfxMgrGL::MODEL_TO_CLIP_MTX, 0, 0 )
 						.LoadShaderUniformGL ( MOAIGfxMgrGL::PEN_COLOR, 1, 0 )
 						;
@@ -184,7 +184,7 @@ MOAIShaderProgramGL* MOAIShaderMgrGL::GetProgram ( MOAIShaderPresetEnum shaderID
 					program->DeclareUniform ( 0, "transform", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT, MOAIUniformDescriptor::UNIFORM_WIDTH_MATRIX_4X4 );
 					program->DeclareUniform ( 1, "ucolor", MOAIUniformDescriptor::UNIFORM_TYPE_FLOAT, MOAIUniformDescriptor::UNIFORM_WIDTH_VEC_4 );
 					
-					program->AffirmGfxScript ()._ < MOAIDrawAPIGL >( MOAIDrawGL::Get ())
+					program->AffirmGfxScript ()._ < MOAIDrawAPIGL >( this->Get < MOAIDrawGL >())
 						.LoadShaderUniformGL ( MOAIGfxMgrGL::MODEL_TO_CLIP_MTX, 0, 0 )
 						.LoadShaderUniformGL ( MOAIGfxMgrGL::PEN_COLOR, 1, 0 )
 						;
@@ -214,7 +214,7 @@ MOAIShaderGL* MOAIShaderMgrGL::GetShader ( MOAIShaderPresetEnum shaderID ) {
 			MOAIShaderProgramGL* program = this->GetProgram ( shaderID );
 			if ( program ) {
 
-				shader = new MOAIShaderGL ();
+				shader = new MOAIShaderGL ( this->GetContext ());
 				this->LuaRetain ( shader );
 				shader->SetProgram ( program );
 				this->mShaders [ shaderID ] = shader;
@@ -240,7 +240,10 @@ MOAIShaderGL* MOAIShaderMgrGL::GetShader ( lua_State* L, int idx ) {
 }
 
 //----------------------------------------------------------------//
-MOAIShaderMgrGL::MOAIShaderMgrGL () {
+MOAIShaderMgrGL::MOAIShaderMgrGL ( ZLContext& context ) :
+	ZLHasContext ( context ),
+	ZLContextClass ( context ),
+	MOAILuaObject ( context ) {
 	
 	RTTI_BEGIN ( MOAIShaderMgrGL )
 		RTTI_VISITOR ( MOAIAbstractLuaRegistrationVisitor, MOAILuaRegistrationVisitor < MOAIShaderMgrGL >)
