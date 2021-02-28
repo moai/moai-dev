@@ -5,8 +5,8 @@
 #define	MOAISIM_H
 
 #include <moai-sim/MOAIInputMgr.h>
-#include <moai-util/MOAITaskQueue.h>
-#include <moai-util/MOAITaskSubscriber.h>
+#include <moai-core/MOAITaskQueue.h>
+#include <moai-core/MOAITaskSubscriber.h>
 
 class MOAIProp;
 

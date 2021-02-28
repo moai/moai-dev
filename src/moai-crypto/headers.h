@@ -6,7 +6,7 @@
 
 #include <zl-crypto/headers.h>
 #include <zl-core/headers.h>
-#include <moai-util/headers.h>
+#include <moai-core/headers.h>
 
 #include <moai-crypto/MOAIHashWriterCrypto.h>
 

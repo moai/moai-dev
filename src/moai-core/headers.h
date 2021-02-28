@@ -23,6 +23,10 @@
 #include <moai-core/MOAIAnimCurveQuat.h>
 #include <moai-core/MOAIAnimCurveVec.h>
 #include <moai-core/MOAIBlocker.h>
+#include <moai-core/MOAIByteStream.h>
+#include <moai-core/MOAIDataBuffer.h>
+#include <moai-core/MOAIDataBufferStream.h>
+#include <moai-core/MOAIDataIOTask.h>
 #include <moai-core/MOAICanary.h>
 #include <moai-core/MOAICmdMedium.h>
 #include <moai-core/MOAICmdMediumAdapter.h>
@@ -34,12 +38,23 @@
 #include <moai-core/MOAIEaseDriver.h>
 #include <moai-core/MOAIEnvironment.h>
 #include <moai-core/MOAIEventSource.h>
+#include <moai-core/MOAIFileStream.h>
+#include <moai-core/MOAIFileSystem.h>
+#include <moai-core/MOAIFourier.h>
 #include <moai-core/MOAIFoo.h>
 #include <moai-core/MOAIFooMgr.h>
+#include <moai-core/MOAIHashWriter.h>
+#include <moai-core/MOAIImage.h>
+#include <moai-core/MOAIImageLoadTask.h>
 #include <moai-core/MOAIImmediateCmdStream.h>
+#include <moai-core/MOAIJsonParser.h>
 #include <moai-core/MOAILua.h>
+#include <moai-core/MOAILuaUtil.h>
+#include <moai-core/MOAIMath.h>
+#include <moai-core/MOAIMemStream.h>
 #include <moai-core/MOAINode.h>
 #include <moai-core/MOAINodeMgr.h>
+#include <moai-core/MOAIParser.h>
 #include <moai-core/MOAIPool.h>
 #include <moai-core/MOAIPooledObjectFactory.h>
 #include <moai-core/MOAIRetainedCmdStream.h>
@@ -47,10 +62,19 @@
 #include <moai-core/MOAIScriptNode.h>
 #include <moai-core/MOAISerializer.h>
 #include <moai-core/MOAISerializerBase.h>
+#include <moai-core/MOAIStream.h>
+#include <moai-core/MOAIStreamAdapter.h>
+#include <moai-core/MOAIStreamReader.h>
+#include <moai-core/MOAIStreamWriter.h>
+#include <moai-core/MOAITask.h>
+#include <moai-core/MOAITaskQueue.h>
+#include <moai-core/MOAITaskSubscriber.h>
 #include <moai-core/MOAITestMgr.h>
 #include <moai-core/MOAITimer.h>
 #include <moai-core/MOAITrace.h>
 #include <moai-core/MOAIUpdateMgr.h>
 #include <moai-core/MOAIVersion.h>
+#include <moai-core/MOAIXmlParser.h>
+#include <moai-core/MOAIXmlWriter.h>
 
 #endif

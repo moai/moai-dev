@@ -2,8 +2,8 @@
 // http://getmoai.com
 
 #include "pch.h"
-#include <moai-util/host.h>
-#include <moai-util/headers.h>
+#include <moai-core/host.h>
+#include <moai-core/headers.h>
 
 //================================================================//
 // aku-util

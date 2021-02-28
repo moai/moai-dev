@@ -4,8 +4,8 @@
 #include "pch.h"
 #include <moai-core/host.h>
 #include <moai-core/headers.h>
-#include <moai-util/MOAIDataBuffer.h>
-#include <moai-util/MOAILuaUtil.h>
+#include <moai-core/MOAIDataBuffer.h>
+#include <moai-core/MOAILuaUtil.h>
 
 //================================================================//
 // AKUContext
@@ -298,21 +298,30 @@ AKUContextID AKUCreateContext () {
 
 	context->Affirm < AKUContext >();
 
+	context->Affirm < ZLImageFormatMgr >();
+
+	context->Affirm < MOAIEnvironment >();
+	
+	context->Get < MOAIEnvironment >().DetectEnvironment ();
+
 	context->Affirm < MOAILuaRuntime >();
-	context->Affirm < MOAITrace >();
-	context->Affirm < MOAILogMgr >();
-//	context->Affirm < MOAITestMgr >();
 	
 	MOAILuaRuntime& luaRuntime = context->Get < MOAILuaRuntime >();
 	luaRuntime.Open ();
 	luaRuntime.LoadLibs ();
 	
+	context->Affirm < MOAITrace >();
+	context->Affirm < MOAILogMgr >();
 	context->Affirm < MOAIPool >();
 	context->Affirm < MOAIActionMgr >();
 	context->Affirm < MOAIFooMgr >();
 	context->Affirm < MOAIEaseType >();
-	context->Affirm < MOAIEnvironment >();
 	context->Affirm < MOAINodeMgr >();
+	context->Affirm < MOAIMainThreadTaskSubscriber >();
+	context->Affirm < MOAIMath >();
+	context->Affirm < MOAIFileSystem >();
+	context->Affirm < MOAILuaUtil >();
+	context->Affirm < MOAIJsonParser >();
 	
 	REGISTER_LUA_CLASS ( context, MOAIAction )
 	REGISTER_LUA_CLASS ( context, MOAIActionMgr )
@@ -323,26 +332,50 @@ AKUContextID AKUCreateContext () {
 	REGISTER_LUA_CLASS ( context, MOAIAnimCurveIndex )
 	REGISTER_LUA_CLASS ( context, MOAIAnimCurveQuat )
 	REGISTER_LUA_CLASS ( context, MOAIAnimCurveVec )
+	REGISTER_LUA_CLASS ( context, MOAIByteStream )
 	REGISTER_LUA_CLASS ( context, MOAICanary )
+	REGISTER_LUA_CLASS ( context, MOAIDataBuffer )
+	REGISTER_LUA_CLASS ( context, MOAIDataBufferStream )
 	REGISTER_LUA_CLASS ( context, MOAIEaseDriver )
 	REGISTER_LUA_CLASS ( context, MOAIEaseType )
+	REGISTER_LUA_CLASS ( context, MOAIEnvironment )
+	REGISTER_LUA_CLASS ( context, MOAIFileStream )
+	REGISTER_LUA_CLASS ( context, MOAIFileSystem )
 	REGISTER_LUA_CLASS ( context, MOAIFoo )
+	REGISTER_LUA_CLASS ( context, MOAIFourier )
+	REGISTER_LUA_CLASS ( context, MOAIHashWriter )
 	REGISTER_LUA_CLASS ( context, MOAIImmediateCmdStream )
 	REGISTER_LUA_CLASS ( context, MOAILuaRuntime )
-	REGISTER_LUA_CLASS ( context, MOAIEnvironment )
 	REGISTER_LUA_CLASS ( context, MOAIDeserializer )
 	REGISTER_LUA_CLASS ( context, MOAILogMgr )
+	REGISTER_LUA_CLASS ( context, MOAIMath )
+	REGISTER_LUA_CLASS ( context, MOAIMemStream )
 	REGISTER_LUA_CLASS ( context, MOAINode )
 	REGISTER_LUA_CLASS ( context, MOAINodeMgr )
 	REGISTER_LUA_CLASS ( context, MOAIPool )
-	REGISTER_LUA_CLASS ( context, MOAIScope )
 	REGISTER_LUA_CLASS ( context, MOAIRetainedCmdStream )
+	REGISTER_LUA_CLASS ( context, MOAIScope )
 	REGISTER_LUA_CLASS ( context, MOAISerializer )
+	REGISTER_LUA_CLASS ( context, MOAIStreamAdapter )
+	REGISTER_LUA_CLASS ( context, MOAITaskQueue )
 	REGISTER_LUA_CLASS ( context, MOAITimer )
 	REGISTER_LUA_CLASS ( context, MOAITrace )
-//	REGISTER_LUA_CLASS ( context, MOAITestMgr )
 
-	context->Get < MOAIEnvironment >().DetectEnvironment ();
+	#if MOAI_WITH_GPB
+		REGISTER_LUA_CLASS ( context, MOAIParser )
+	#endif
+
+	#if MOAI_WITH_JANSSON
+		REGISTER_LUA_CLASS ( context, MOAIJsonParser )
+	#endif
+
+	#ifndef MOAI_WITH_LUAJIT
+		REGISTER_LUA_CLASS ( context, MOAILuaUtil )
+	#endif
+
+	#if MOAI_WITH_TINYXML && MOAI_WITH_EXPAT
+  		REGISTER_LUA_CLASS ( context, MOAIXmlParser )
+	#endif
 
 	return ( AKUContextID )context;
 }

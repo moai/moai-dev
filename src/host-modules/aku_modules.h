@@ -108,7 +108,7 @@
 #endif
 
 #if AKU_WITH_UTIL
-	#include <moai-util/host.h>
+	#include <moai-core/host.h>
 #endif
 
 #if AKU_WITH_VR
