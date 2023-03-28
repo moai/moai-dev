@@ -360,13 +360,14 @@ MOAISerializer::~MOAISerializer () {
 //----------------------------------------------------------------//
 void MOAISerializer::PrintObjectID ( ZLStream& stream, cc8* format, ObjID objID ) {
 
-	char buffer [ 32 ];
+	const size_t bufferSize = 32;
+	char buffer [ bufferSize ];
 
 	if ( objID != NULL_OBJ_ID ) {
-		sprintf ( buffer, "objects [ 0x%02X ]", objID );
+		snprintf ( buffer, bufferSize, "objects [ 0x%02X ]", objID );
 	}
 	else {
-		sprintf ( buffer, "nil" );
+		snprintf ( buffer, bufferSize, "nil" );
 	}
 	stream.Print ( format, ( cc8* )buffer );
 }
