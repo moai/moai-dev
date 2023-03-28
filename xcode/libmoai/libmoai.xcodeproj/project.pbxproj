@@ -19329,6 +19329,8 @@
 					"-Wall",
 					"-Wno-ignored-attributes",
 					"-Wno-objc-designated-initializers",
+					"-Wno-deprecated-declarations\n",
+					"-Wno-deprecated-implementations",
 				);
 			};
 			name = Release;
@@ -20142,6 +20144,8 @@
 					"-Wall",
 					"-Wno-ignored-attributes",
 					"-Wno-objc-designated-initializers",
+					"-Wno-deprecated-declarations\n",
+					"-Wno-deprecated-implementations",
 				);
 			};
 			name = Debug;
