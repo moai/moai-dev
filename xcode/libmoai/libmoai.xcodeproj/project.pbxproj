@@ -19160,6 +19160,7 @@
 					"${inherited}",
 					MACOSX,
 					LUA_USE_MACOSX,
+					"MOAI_WITH_EXPAT=0",
 				);
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
@@ -19175,6 +19176,7 @@
 					"${inherited}",
 					MACOSX,
 					LUA_USE_MACOSX,
+					"MOAI_WITH_EXPAT=0",
 				);
 				PRODUCT_NAME = "moai-osx";
 				SDKROOT = macosx;
