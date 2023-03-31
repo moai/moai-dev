@@ -20183,6 +20183,7 @@
 					"${inherited}",
 					MACOSX,
 					LUA_USE_MACOSX,
+					"MOAI_WITH_EXPAT=0",
 					"verbose=-1",
 				);
 				PRODUCT_NAME = "moai-osx-zl-core";
@@ -20201,6 +20202,7 @@
 					MACOSX,
 					LUA_USE_MACOSX,
 					"verbose=-1",
+					"MOAI_WITH_EXPAT=0",
 				);
 				PRODUCT_NAME = "moai-osx-zl-core";
 				SDKROOT = macosx;
